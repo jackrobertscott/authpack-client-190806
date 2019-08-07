@@ -38,7 +38,7 @@ Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 
 Used to sign up a user on your app.
 
-```graphql
+```ts
 authenticator.users.create({
     name: 'Fred Blogs',
     email: 'fredBlogs@example.com',
@@ -55,13 +55,15 @@ authenticator.users.create({
 <details>
   <summary>GraphQL version</summary>
   <br />
-  <pre class="highlight highlight-gql">query CreateUser($options: CreateUserOptions!) {
-  user: CreateUser(options: $options) {
-    id
-    name
-    # ...fields
-  }
-}</pre>
+  <div class="highlight highlight-graphql highlight-source-graphql">
+    <pre>query CreateUser($options: CreateUserOptions!) {
+      user: CreateUser(options: $options) {
+        id
+        name
+        # ...fields
+      }
+    }</pre>
+  </div>
 </details>
 <br />
 
