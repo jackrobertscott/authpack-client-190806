@@ -55,15 +55,13 @@ authenticator.users.create({
 <details>
   <summary>GraphQL version</summary>
   <br />
-  <pre><code class="language-graphql">
-query CreateUser($options: CreateUserOptions!) {
+  <pre class="highlight highlight-gql">query CreateUser($options: CreateUserOptions!) {
   user: CreateUser(options: $options) {
     id
     name
     # ...fields
   }
-}
-  </code></pre>
+}</pre>
 </details>
 <br />
 
