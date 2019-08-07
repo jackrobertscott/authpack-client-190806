@@ -17,6 +17,8 @@ Methods.
 - [Count users](#Count-users)
 - [Remove a user](#Remove-a-user)
 
+Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
+
 ## Model
 
 Properties.
@@ -30,9 +32,17 @@ Properties.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
 
-Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
+## Setup
 
-## Methods
+Never store your private keys in your code base - use environment variables.
+
+```ts
+import { Authenticator } from 'wga-api';
+
+const authenticator = new Authenticator({
+  key: process.env.wgaPrivateKey
+});
+```
 
 ### Create a user
 

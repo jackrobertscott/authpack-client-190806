@@ -6,11 +6,11 @@
 
 - Gettings Started Guide
 - Authenticator App Boilerplate
-- API
+- Api
 
-## API
+## Api
 
-The API provides you with full access to the Authenticator.
+The Api provides you with full access to the Authenticator.
 
 ```shell
 npm i --save wga-api
