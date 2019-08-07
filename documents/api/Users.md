@@ -52,21 +52,6 @@ authenticator.users.create({
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
-<details>
-  <summary>GraphQL version</summary>
-  <br />
-  <div class="highlight highlight-graphql highlight-source-graphql">
-    <pre>query CreateUser($options: CreateUserOptions!) {
-      user: CreateUser(options: $options) {
-        id
-        name
-        # ...fields
-      }
-    }</pre>
-  </div>
-</details>
-<br />
-
 Options.
 
 - name `string`: full name.
@@ -78,6 +63,19 @@ Options.
 Returns.
 
 - [user](#Model) `Promise<object, Error>`: the created user.
+
+GraphQL version.
+
+```graphql
+mutation CreateUser($options: CreateUserOptions!) {
+  user: CreateUser(options: $options) {
+    id
+    name
+    # ...fields
+  }
+}
+```
+
 
 ### Update a user
 
