@@ -1,25 +1,40 @@
 # Users
 
-> Authenticator 🏇 Fastest way to add auth to your apps
+> Authenticator 🏇 fastest way to add auth to your apps
+
+## Overview
+
+The `user` model is used to identify a single person who has signed up to your app.
+
+- [User model](#Model)
+
+Methods.
+
+- [Create a user](#Create-a-user)
+- [Update a user](#Update-a-user)
+- [Retrieve a user](#Retrieve-a-user)
+- [Query users](#Query-users)
+- [Count users](#Count-users)
+- [Remove a user](#Remove-a-user)
 
 ## Model
-
-The `User` model identifies a single person who has signed up to your app.
 
 Properties.
 
 - id `string`: unique identifier.
-- name `string`: the user's fullname.
-- email `string`: validated against email regex.
+- name `string`: full name.
+- email `string`: valid email address.
 - username `string`: unique code.
 - password `string`: encrypted string.
-- created `date`: time of creation.
-- updated `date`: time of last update.
 - data `object?`: developer assigned attributes.
+- created `Date`: time of creation.
+- updated `Date`: time of last update.
+
+Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 
 ## Methods
 
-### User Create
+### Create a user
 
 Used to sign up a user on your app.
 
@@ -33,25 +48,172 @@ authenticator.users.create({
       dogsName: 'Bobby',
     },
   })
-  .then(user => console.log(`Created: ${user.name} at ${user.created}.`))
-  .catch(error => console.log`Error: ${error.message}`))
+  .then(user => console.log(`Created: ${user.name} at ${user.created}`))
+  .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
-Options
+<details>
+  <summary>GraphQL version</summary>
+  <br />
+  <pre><code class="language-graphql">
+query CreateUser($options: CreateUserOptions!) {
+  user: CreateUser(options: $options) {
+    id
+    name
+    # ...fields
+  }
+}
+  </code></pre>
+</details>
+<br />
+
+Options.
 
 - name `string`: full name.
-- email `string`: email address.
-- password `string`: unencrypted password.
-- username `string`: unique phrase.
+- email `string`: valid email address.
+- username `string`: unique code.
+- password `string`: encrypted string.
+- data `object?`: developer assigned attributes.
 
-Returns
+Returns.
 
-- [User](#model) `object`: the created user.
+- [user](#Model) `Promise<object, Error>`: the created user.
 
-### User Update
+### Update a user
 
-### User Query
+Used to patch a user's details.
 
-### User Retrieve
+```ts
+authenticator.users.update({
+    id: user.id,
+    name: 'Fred Blogs',
+    email: 'fredBlogs@example.com',
+    username: 'freddy123',
+    password: authenticator.utils.encrypt('SecretPassword123'),
+    data: {
+      dogsName: 'Bobby',
+    },
+  })
+  .then(user => console.log(`Created: ${user.name} at ${user.created}`))
+  .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
+```
 
-### User Remove
+Options.
+
+- id `string`: user's unique identifier.
+- name `string?`: full name.
+- email `string?`: valid email address.
+- username `string?`: unique code.
+- password `string?`: encrypted string.
+- data `object?`: developer assigned attributes.
+
+Returns.
+
+- [user](#Model) `Promise<object, Error>`: the updated user.
+
+### Retrieve a user
+
+Used to get a single user.
+
+```ts
+authenticator.users.retrieve({
+    id: membership.userId,
+    username: 'freddy',
+    email: 'fredBlogs@example.com',
+  })
+  .then(user => console.log(`Retrieved: ${user.name} at ${user.created}`))
+  .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
+```
+
+Options.
+
+- id `string?`: unique identifier.
+- username `string?`: used when id not provided.
+- email `string?`: used when neither id and username are provided.
+
+Returns.
+
+- user `object`: the user requested.
+
+### Query users
+
+Used to get a list of users.
+
+```ts
+authenticator.users.query({
+    search: 'Fred',
+    limit: 10,
+    skip: 5,
+    page: 0,
+  })
+  .then(users => console.table(users))
+  .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
+```
+
+Options.
+
+- search `string?`: compared against name, username, and email.
+- limit `number?`: maximum number of users returned.
+- skip `number?`: skip this number of users.
+- page `number?`: skip this number of users multiplied by the limit.
+
+**Note:** `skip` and `page` are summed when used together.
+
+Returns.
+
+- [users](#Model) `Promise<object[], Error>`: a list of users.
+
+### Count users
+
+Used to count a group of users.
+
+```ts
+authenticator.users.count({
+    search: 'Fred',
+  })
+  .then(count => console.log(`Users counted: ${count}`))
+  .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
+```
+
+Options.
+
+- search `string?`: compared against name, username, and email.
+  
+Returns.
+
+- count `number`: the number of users counted.
+
+### Remove a user
+
+Used to permanently remove a user.
+
+```ts
+authenticator.users.remove({
+    id: membership.userId,
+    username: 'freddy',
+    email: 'fredBlogs@example.com',
+  })
+  .then(user => console.log(`Retrieved: ${user.name} at ${user.created}`))
+  .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
+```
+
+Options.
+
+- id `string?`: unique identifier.
+- username `string?`: used when id not provided.
+- email `string?`: used when neither id and username are provided.
+
+Returns.
+
+- user `object`: the user removed.
+
+## Resources
+
+Models.
+
+- [Users](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Users.md)
+- [Sessions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Sessions.md)
+- [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Workspaces.md)
+- [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Memberships.md)
+- [Scopes](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Scopes.md)
+- [Themes](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Themes.md)

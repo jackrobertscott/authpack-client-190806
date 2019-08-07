@@ -1,6 +1,6 @@
 # Getting Started Guide
 
-> Authenticator 🏇 Fastest way to add auth to your apps
+> Authenticator 🏇 the fastest way to add auth to your apps
 
 ## Overview
 
@@ -19,7 +19,7 @@ Use the API.
 4. [Fetch a User]('#')
 5. [Login a user]('#')
 
-Create an Authenticator account: *[sign up here.](https://wga.windowgadgets.io)*
+Powered by the Authenticator: *[sign up here.](https://wga.windowgadgets.io)*
 
 ## Authenticator Gadgets
 

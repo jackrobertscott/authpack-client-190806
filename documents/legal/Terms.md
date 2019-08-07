@@ -1,5 +1,3 @@
-# 🏇 Authenticator
+# Terms of Service
 
-> Fastest way to add auth to your apps - made with GraphQL
-
-## Terms of Service
+> Authenticator 🏇 the fastest way to add auth to your apps

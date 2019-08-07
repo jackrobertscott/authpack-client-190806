@@ -1,6 +1,6 @@
-# Authenticator
+# 🏇 Authenticator
 
-> 🏇 Fastest way to add auth to your app in TypeScript & GraphQL
+> The fastest way to add auth to your app
 
 ## Table of Contents
 
