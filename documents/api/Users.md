@@ -38,7 +38,7 @@ Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 
 Used to sign up a user on your app.
 
-```ts
+```graphql
 authenticator.users.create({
     name: 'Fred Blogs',
     email: 'fredBlogs@example.com',
