@@ -38,14 +38,14 @@ const authenticator = new Authenticator({
 Properties.
 
 - id `string`: unique identifier.
+- created `Date`: time of creation.
+- updated `Date`: time of last update.
 - name `string`: full name.
 - email `string`: valid email address.
 - username `string`: unique code.
 - password `string`: encrypted string.
 - avatar `string?`: url pointing to the users avatar image.
 - data `object?`: developer assigned attributes.
-- created `Date`: time of creation.
-- updated `Date`: time of last update.
 
 ## Create a user
 
@@ -59,7 +59,7 @@ authenticator.users.create({
     password: authenticator.utils.encrypt('SecretPassword123'),
     avatar: document.getElementById('fileInput').files[0],
     data: {
-      dogsName: 'Bobby',
+      // custom json attributes
     },
   })
   .then(user => console.log(`Created: ${user.name} at ${user.created}`))
@@ -106,7 +106,7 @@ authenticator.users.update({
     password: authenticator.utils.encrypt('SecretPassword123'),
     avatar: document.getElementById('fileInput').files[0],
     data: {
-      dogsName: 'Bobby',
+      // custom json attributes
     },
   })
   .then(user => console.log(`Updated: ${user.name} at ${user.updated}`))
@@ -161,7 +161,7 @@ Options.
 
 Returns.
 
-- user `object`: the user removed.
+- [user](#Model) `object`: the removed user.
 
 GraphQL version.
 
@@ -197,7 +197,7 @@ Options.
 
 Returns.
 
-- user `object`: the user requested.
+- [user](#Model) `object`: the user requested.
 
 GraphQL version.
 
@@ -300,7 +300,8 @@ authenticator.users.analytics({
 
 Options.
 
-- search `string?`: compared against name, username, and email.
+- date `Date?`: the end date of the time period to analayse.
+- months `number?`: number of months to analyse.
   
 Returns.
 
