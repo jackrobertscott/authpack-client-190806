@@ -4,7 +4,7 @@
 
 ## Overview
 
-The `session` model is used to identify a single person who has signed up to your app.
+The `session` model is created when a user authenticates and requires an access token.
 
 - [Setup](#Model)
 - [Session model](#Model)
@@ -40,11 +40,11 @@ Properties.
 - id `string`: unique identifier.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
-- name `string`: full name.
-- email `string`: valid email address.
-- sessionname `string`: unique code.
-- password `string`: encrypted string.
-- avatar `string?`: url pointing to the sessions avatar image.
+- userId `string`: the user's id.
+- workspaceId `string`: the workspace's id.
+- expiry `Date`: the expiry time of the token.
+- token `string`: the access token created by the session.
+- deactivated `boolean`: manually deactivated token.
 - data `object?`: developer assigned attributes.
 
 ## Create a session
@@ -53,11 +53,10 @@ Used to sign up a session on your app.
 
 ```ts
 authenticator.sessions.create({
-    name: 'Fred Blogs',
-    email: 'fredBlogs@example.com',
-    sessionname: 'freddy123',
-    password: authenticator.utils.encrypt('SecretPassword123'),
-    avatar: document.getElementById('fileInput').files[0],
+    userId: user.id,
+    workspaceId: workspace.id,
+    expiry: new Date(),
+    deactivated: false,
     data: {
       // custom json attributes
     },
@@ -68,11 +67,10 @@ authenticator.sessions.create({
 
 Options.
 
-- name `string`: full name.
-- email `string`: valid email address.
-- sessionname `string`: unique code.
-- password `string`: encrypted string.
-- avatar `File?`: a JavaScript [File](https://developer.mozilla.org/en-US/docs/Web/API/File) object.
+- userId `string`: the user's id.
+- workspaceId `string`: the workspace's id.
+- expiry `Date`: the expiry time of the token.
+- deactivated `boolean`: manually deactivated token.
 - data `object?`: developer assigned attributes.
 
 Returns.
@@ -99,11 +97,7 @@ Used to patch a session's details.
 ```ts
 authenticator.sessions.update({
     id: session.id,
-    name: 'Fred Blogs',
-    sessionname: 'freddy123',
-    email: 'fredBlogs@example.com',
-    password: authenticator.utils.encrypt('SecretPassword123'),
-    avatar: document.getElementById('fileInput').files[0],
+    deactivated: false,
     data: {
       // custom json attributes
     },
@@ -115,11 +109,7 @@ authenticator.sessions.update({
 Options.
 
 - id `string`: id of the session to update.
-- name `string?`: full name.
-- email `string?`: valid email address.
-- sessionname `string?`: unique code.
-- password `string?`: encrypted string.
-- avatar `File?`: a JavaScript [File](https://developer.mozilla.org/en-US/docs/Web/API/File) object.
+- deactivated `boolean`: manually deactivated token.
 - data `object?`: developer assigned attributes.
 
 Returns.
@@ -154,8 +144,6 @@ authenticator.sessions.remove({
 Options.
 
 - id `string?`: unique identifier.
-- sessionname `string?`: used when id not provided.
-- email `string?`: used when neither id and sessionname are provided.
 
 Returns.
 
@@ -180,7 +168,7 @@ Used to get a single session.
 
 ```ts
 authenticator.sessions.retrieve({
-    id: membership.sessionId,
+    id: session.id,
   })
   .then(session => console.log(`Retrieved: ${session.id}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -189,8 +177,7 @@ authenticator.sessions.retrieve({
 Options.
 
 - id `string?`: unique identifier.
-- sessionname `string?`: used when id not provided.
-- email `string?`: used when neither id and sessionname are provided.
+- token `string?`: this access token used if the id is not provided.
 
 Returns.
 
@@ -215,7 +202,8 @@ Used to get a list of sessions.
 
 ```ts
 authenticator.sessions.query({
-    search: 'Fred',
+    userId: user.id,
+    workspaceId: workspace.id,
     limit: 10,
     skip: 5,
     page: 0,
@@ -226,7 +214,8 @@ authenticator.sessions.query({
 
 Options.
 
-- search `string?`: compared against name, sessionname, and email.
+- userId `string`: filtered by this user's id.
+- workspaceId `string`: filtered by this workspace's id.
 - limit `number?`: maximum number of sessions returned.
 - skip `number?`: skip this number of sessions.
 - page `number?`: skip this number of sessions multiplied by the limit.
@@ -256,7 +245,8 @@ Used to count a group of sessions.
 
 ```ts
 authenticator.sessions.count({
-    search: 'Fred',
+    userId: user.id,
+    workspaceId: workspace.id,
   })
   .then(count => console.log(`Counted: ${count}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -264,7 +254,8 @@ authenticator.sessions.count({
 
 Options.
 
-- search `string?`: compared against name, sessionname, and email.
+- userId `string`: filtered by this user's id.
+- workspaceId `string`: filtered by this workspace's id.
   
 Returns.
 
