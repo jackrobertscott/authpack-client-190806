@@ -40,10 +40,10 @@ Properties.
 - id `string`: unique identifier.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
-- name `string`: full name.
+- name `string`: a nice scope name.
 - code `string`: used to identify scope in code.
 - description `string`: describe the scope's permissions.
-- scopeId `string`: the parent of the scope.
+- scopeId `string?`: the parent of the scope.
 - data `object?`: developer assigned attributes.
 
 ## Create a scope
@@ -66,7 +66,7 @@ authenticator.scopes.create({
 
 Options.
 
-- name `string`: full name.
+- name `string`: a nice scope name.
 - code `string`: used to identify scope in code.
 - description `string`: describe the scope's permissions.
 - scopeId `string`: the parent of the scope.
@@ -111,10 +111,10 @@ authenticator.scopes.update({
 Options.
 
 - id `string`: id of the scope to update.
-- name `string`: full name.
-- code `string`: used to identify scope in code.
-- description `string`: describe the scope's permissions.
-- scopeId `string`: the parent of the scope.
+- name `string?`: a nice scope name.
+- code `string?`: used to identify scope in code.
+- description `string?`: describe the scope's permissions.
+- scopeId `string?`: the parent of the scope.
 - data `object?`: developer assigned attributes.
 
 Returns.

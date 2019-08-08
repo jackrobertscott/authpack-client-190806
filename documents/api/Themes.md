@@ -40,12 +40,54 @@ Properties.
 - id `string`: unique identifier.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
-- name `string`: full name.
-- email `string`: valid email address.
-- themename `string`: unique code.
-- password `string`: encrypted string.
-- avatar `string?`: url pointing to the themes avatar image.
+- theme `object`: the theme config object.
+- name `string`: a nice theme name. Creative theme names welcome.
+- code `string`: used to identify theme in code.
+- description `string`: describe the theme you created.
 - data `object?`: developer assigned attributes.
+
+Type definition of Theme.
+
+```ts
+interface Theme {
+  inputs: {
+    base: {
+      backgroundColor: string;
+      disabledColor: string;
+      letterColor: string;
+      borderColor: string;
+      padding: number;
+      shadow: string;
+    }
+    error: {
+      backgroundColor: string;
+      letterColor: string;
+      borderColor: string;
+    }
+  }
+  sidebar {
+    base {
+      backgroundColor: string;
+      iconColor: string;
+      padding: string;
+    }
+  }
+  heading {
+    base {
+      backgroundColor: string;
+      letterColor: string;
+      padding: string;
+    }
+  }
+  gadgets {
+    base {
+      backgroundColor: string;
+      letterColor: string;
+      padding: string;
+    }
+  }
+}
+```
 
 ## Create a theme
 
@@ -68,11 +110,9 @@ authenticator.themes.create({
 
 Options.
 
-- name `string`: full name.
-- email `string`: valid email address.
-- themename `string`: unique code.
-- password `string`: encrypted string.
-- avatar `File?`: a JavaScript [File](https://developer.mozilla.org/en-US/docs/Web/API/File) object.
+- name `string`: a nice theme name.
+- code `string`: used to identify theme in code.
+- description `string`: describe the theme you created.
 - data `object?`: developer assigned attributes.
 
 Returns.
@@ -116,11 +156,9 @@ authenticator.themes.update({
 Options.
 
 - id `string`: id of the theme to update.
-- name `string?`: full name.
-- email `string?`: valid email address.
-- themename `string?`: unique code.
-- password `string?`: encrypted string.
-- avatar `File?`: a JavaScript [File](https://developer.mozilla.org/en-US/docs/Web/API/File) object.
+- name `string?`: a nice theme name.
+- code `string?`: used to identify theme in code.
+- description `string?`: describe the theme you created.
 - data `object?`: developer assigned attributes.
 
 Returns.
@@ -156,8 +194,7 @@ authenticator.themes.remove({
 Options.
 
 - id `string?`: unique identifier.
-- themename `string?`: used when id not provided.
-- email `string?`: used when neither id and themename are provided.
+- code `string?`: used to identify theme when id not present.
 
 Returns.
 
@@ -192,8 +229,7 @@ authenticator.themes.retrieve({
 Options.
 
 - id `string?`: unique identifier.
-- themename `string?`: used when id not provided.
-- email `string?`: used when neither id and themename are provided.
+- code `string?`: used to identify theme when id not present.
 
 Returns.
 
@@ -230,7 +266,7 @@ authenticator.themes.query({
 
 Options.
 
-- search `string?`: compared against name, themename, and email.
+- search `string?`: compared against name, code, and description.
 - limit `number?`: maximum number of themes returned.
 - skip `number?`: skip this number of themes.
 - page `number?`: skip this number of themes multiplied by the limit.
@@ -269,7 +305,7 @@ authenticator.themes.count({
 
 Options.
 
-- search `string?`: compared against name, themename, and email.
+- search `string?`: compared against name, code, and description.
   
 Returns.
 
