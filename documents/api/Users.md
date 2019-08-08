@@ -1,6 +1,6 @@
-# Users
+# Users API
 
-> Authenticator 🏇 fastest way to add auth to your apps
+> Authenticator 🏇 the fastest way to add auth to your apps
 
 ## Overview
 
@@ -44,7 +44,7 @@ const authenticator = new Authenticator({
 });
 ```
 
-### Create a user
+## Create a user
 
 Used to sign up a user on your app.
 
@@ -76,18 +76,19 @@ Returns.
 
 GraphQL version.
 
+`POST` `https://wga.api.windowgadgets.io/graphql`
+
 ```graphql
 mutation CreateUser($options: CreateUserOptions!) {
   user: CreateUser(options: $options) {
     id
     name
-    # ...fields
+    # ... user properties
   }
 }
 ```
 
-
-### Update a user
+## Update a user
 
 Used to patch a user's details.
 
@@ -95,8 +96,8 @@ Used to patch a user's details.
 authenticator.users.update({
     id: user.id,
     name: 'Fred Blogs',
-    email: 'fredBlogs@example.com',
     username: 'freddy123',
+    email: 'fredBlogs@example.com',
     password: authenticator.utils.encrypt('SecretPassword123'),
     data: {
       dogsName: 'Bobby',
@@ -108,7 +109,7 @@ authenticator.users.update({
 
 Options.
 
-- id `string`: user's unique identifier.
+- id `string`: id of the user to update.
 - name `string?`: full name.
 - email `string?`: valid email address.
 - username `string?`: unique code.
@@ -119,15 +120,27 @@ Returns.
 
 - [user](#Model) `Promise<object, Error>`: the updated user.
 
-### Retrieve a user
+GraphQL version.
+
+`POST` `https://wga.api.windowgadgets.io/graphql`
+
+```graphql
+mutation UpdateUser($options: UpdateUserOptions!) {
+  user: UpdateUser(options: $options) {
+    id
+    name
+    # ... user properties
+  }
+}
+```
+
+## Retrieve a user
 
 Used to get a single user.
 
 ```ts
 authenticator.users.retrieve({
     id: membership.userId,
-    username: 'freddy',
-    email: 'fredBlogs@example.com',
   })
   .then(user => console.log(`Retrieved: ${user.name} at ${user.created}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -143,7 +156,21 @@ Returns.
 
 - user `object`: the user requested.
 
-### Query users
+GraphQL version.
+
+`POST` `https://wga.api.windowgadgets.io/graphql`
+
+```graphql
+query RetrieveUser($options: RetrieveUserOptions!) {
+  user: RetrieveUser(options: $options) {
+    id
+    name
+    # ... user properties
+  }
+}
+```
+
+## Query users
 
 Used to get a list of users.
 
@@ -171,7 +198,21 @@ Returns.
 
 - [users](#Model) `Promise<object[], Error>`: a list of users.
 
-### Count users
+GraphQL version.
+
+`POST` `https://wga.api.windowgadgets.io/graphql`
+
+```graphql
+query QueryUsers($options: QueryUsersOptions!) {
+  users: QueryUsers(options: $options) {
+    id
+    name
+    # ... user properties
+  }
+}
+```
+
+## Count users
 
 Used to count a group of users.
 
@@ -191,15 +232,23 @@ Returns.
 
 - count `number`: the number of users counted.
 
-### Remove a user
+GraphQL version.
+
+`POST` `https://wga.api.windowgadgets.io/graphql`
+
+```graphql
+query CountUsers($options: CountUsersOptions!) {
+  count: CountUsers(options: $options)
+}
+```
+
+## Remove a user
 
 Used to permanently remove a user.
 
 ```ts
 authenticator.users.remove({
     id: membership.userId,
-    username: 'freddy',
-    email: 'fredBlogs@example.com',
   })
   .then(user => console.log(`Retrieved: ${user.name} at ${user.created}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -215,9 +264,21 @@ Returns.
 
 - user `object`: the user removed.
 
-## Resources
+GraphQL version.
 
-Models.
+`POST` `https://wga.api.windowgadgets.io/graphql`
+
+```graphql
+mutation RemoveUser($options: RemoveUserOptions!) {
+  user: RemoveUser(options: $options) {
+    id
+    name
+    # ... user properties
+  }
+}
+```
+
+## Resources
 
 - [Users](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Users.md)
 - [Sessions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Sessions.md)
