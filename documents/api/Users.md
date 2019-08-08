@@ -6,31 +6,20 @@
 
 The `user` model is used to identify a single person who has signed up to your app.
 
+- [Setup](#Model)
 - [User model](#Model)
 
 Methods.
 
 - [Create a user](#Create-a-user)
 - [Update a user](#Update-a-user)
+- [Remove a user](#Remove-a-user)
 - [Retrieve a user](#Retrieve-a-user)
 - [Query users](#Query-users)
 - [Count users](#Count-users)
-- [Remove a user](#Remove-a-user)
+- [Analytics of users](#Analytics-of-users)
 
 Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
-
-## Model
-
-Properties.
-
-- id `string`: unique identifier.
-- name `string`: full name.
-- email `string`: valid email address.
-- username `string`: unique code.
-- password `string`: encrypted string.
-- data `object?`: developer assigned attributes.
-- created `Date`: time of creation.
-- updated `Date`: time of last update.
 
 ## Setup
 
@@ -44,6 +33,20 @@ const authenticator = new Authenticator({
 });
 ```
 
+## User model
+
+Properties.
+
+- id `string`: unique identifier.
+- name `string`: full name.
+- email `string`: valid email address.
+- username `string`: unique code.
+- password `string`: encrypted string.
+- avatar `string?`: url pointing to the users avatar image.
+- data `object?`: developer assigned attributes.
+- created `Date`: time of creation.
+- updated `Date`: time of last update.
+
 ## Create a user
 
 Used to sign up a user on your app.
@@ -54,6 +57,7 @@ authenticator.users.create({
     email: 'fredBlogs@example.com',
     username: 'freddy123',
     password: authenticator.utils.encrypt('SecretPassword123'),
+    avatar: document.getElementById('fileInput').files[0],
     data: {
       dogsName: 'Bobby',
     },
@@ -68,6 +72,7 @@ Options.
 - email `string`: valid email address.
 - username `string`: unique code.
 - password `string`: encrypted string.
+- avatar `File?`: a JavaScript [File](https://developer.mozilla.org/en-US/docs/Web/API/File) object.
 - data `object?`: developer assigned attributes.
 
 Returns.
@@ -99,11 +104,12 @@ authenticator.users.update({
     username: 'freddy123',
     email: 'fredBlogs@example.com',
     password: authenticator.utils.encrypt('SecretPassword123'),
+    avatar: document.getElementById('fileInput').files[0],
     data: {
       dogsName: 'Bobby',
     },
   })
-  .then(user => console.log(`Created: ${user.name} at ${user.created}`))
+  .then(user => console.log(`Updated: ${user.name} at ${user.updated}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -114,6 +120,7 @@ Options.
 - email `string?`: valid email address.
 - username `string?`: unique code.
 - password `string?`: encrypted string.
+- avatar `File?`: a JavaScript [File](https://developer.mozilla.org/en-US/docs/Web/API/File) object.
 - data `object?`: developer assigned attributes.
 
 Returns.
@@ -134,6 +141,42 @@ mutation UpdateUser($options: UpdateUserOptions!) {
 }
 ```
 
+## Remove a user
+
+Used to permanently remove a user.
+
+```ts
+authenticator.users.remove({
+    id: membership.userId,
+  })
+  .then(user => console.log(`Removed: ${user.name}`))
+  .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
+```
+
+Options.
+
+- id `string?`: unique identifier.
+- username `string?`: used when id not provided.
+- email `string?`: used when neither id and username are provided.
+
+Returns.
+
+- user `object`: the user removed.
+
+GraphQL version.
+
+`POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
+
+```graphql
+mutation RemoveUser($options: RemoveUserOptions!) {
+  user: RemoveUser(options: $options) {
+    id
+    name
+    # ... user properties
+  }
+}
+```
+
 ## Retrieve a user
 
 Used to get a single user.
@@ -142,7 +185,7 @@ Used to get a single user.
 authenticator.users.retrieve({
     id: membership.userId,
   })
-  .then(user => console.log(`Retrieved: ${user.name} at ${user.created}`))
+  .then(user => console.log(`Retrieved: ${user.name}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -220,7 +263,7 @@ Used to count a group of users.
 authenticator.users.count({
     search: 'Fred',
   })
-  .then(count => console.log(`Users counted: ${count}`))
+  .then(count => console.log(`Counted: ${count}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -242,38 +285,42 @@ query CountUsers($options: CountUsersOptions!) {
 }
 ```
 
-## Remove a user
+## Analytics of users
 
-Used to permanently remove a user.
+Used to get statistics of users over time.
 
 ```ts
-authenticator.users.remove({
-    id: membership.userId,
+authenticator.users.analytics({
+    date: Date.now(),
+    months: 6,
   })
-  .then(user => console.log(`Retrieved: ${user.name} at ${user.created}`))
+  .then(analytics => console.table(analytics))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
 Options.
 
-- id `string?`: unique identifier.
-- username `string?`: used when id not provided.
-- email `string?`: used when neither id and username are provided.
-
+- search `string?`: compared against name, username, and email.
+  
 Returns.
 
-- user `object`: the user removed.
+- analytics `object`: statistics related to users within time period.
+  - labels `string[]`: date values within given period.
+  - data `number[]`: values matching the labels.
+  - created `number`: number of users created.
+  - updated `number`: number of users updated.
+  - active `number`: number of users with 1 session or more.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-mutation RemoveUser($options: RemoveUserOptions!) {
-  user: RemoveUser(options: $options) {
-    id
-    name
-    # ... user properties
+query AnalyticsOfUsers($options: AnalyticsOfUsersOptions!) {
+  analytics: AnalyticsOfUsers(options: $options) {
+    labels
+    data
+    # ... analytics properties
   }
 }
 ```
