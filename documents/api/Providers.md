@@ -1,23 +1,23 @@
-# Memberships API
+# Providers API
 
 > Authenticator 🏇 the fastest way to add auth to your apps
 
 ## Overview
 
-The `membership` model is used to group a user to a workspace.
+The `provider` model is used to group a user to a workspace.
 
 - [Setup](#Model)
-- [Membership model](#Model)
+- [Provider model](#Model)
 
 Methods.
 
-- [Create a membership](#Create-a-membership)
-- [Update a membership](#Update-a-membership)
-- [Remove a membership](#Remove-a-membership)
-- [Retrieve a membership](#Retrieve-a-membership)
-- [Query memberships](#Query-memberships)
-- [Count memberships](#Count-memberships)
-- [Analytics of memberships](#Analytics-of-memberships)
+- [Create a provider](#Create-a-provider)
+- [Update a provider](#Update-a-provider)
+- [Remove a provider](#Remove-a-provider)
+- [Retrieve a provider](#Retrieve-a-provider)
+- [Query providers](#Query-providers)
+- [Count providers](#Count-providers)
+- [Analytics of providers](#Analytics-of-providers)
 
 Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 
@@ -33,7 +33,7 @@ const authenticator = new Authenticator({
 });
 ```
 
-## Membership model
+## Provider model
 
 Properties.
 
@@ -46,12 +46,12 @@ Properties.
 - scopeIds `string[]`: permission scopes assigned to member.
 - data `object?`: developer assigned attributes.
 
-## Create a membership
+## Create a provider
 
 Used to add a user as a new member of a workspace.
 
 ```ts
-authenticator.memberships.create({
+authenticator.providers.create({
     workspaceId: workspace.id,
     userId: user.id,
     email: 'invitation@email.com',
@@ -60,7 +60,7 @@ authenticator.memberships.create({
       // custom json attributes
     },
   })
-  .then(membership => console.log(`Created: ${membership.id} at ${membership.created}`))
+  .then(provider => console.log(`Created: ${provider.id} at ${provider.created}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -74,69 +74,69 @@ Options.
 
 Returns.
 
-- [membership](#Model) `Promise<object, Error>`: the created membership.
+- [provider](#Model) `Promise<object, Error>`: the created provider.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-mutation CreateMembership($options: CreateMembershipOptions!) {
-  membership: CreateMembership(options: $options) {
+mutation CreateProvider($options: CreateProviderOptions!) {
+  provider: CreateProvider(options: $options) {
     id
-    # ... membership properties
+    # ... provider properties
   }
 }
 ```
 
-## Update a membership
+## Update a provider
 
-Used to patch a membership's details.
+Used to patch a provider's details.
 
 ```ts
-authenticator.memberships.update({
-    id: membership.id,
+authenticator.providers.update({
+    id: provider.id,
     scopeIds: [scopeEditor.id, scopeCommentor.id],
     data: {
       // custom json attributes
     },
   })
-  .then(membership => console.log(`Updated: ${membership.id} at ${membership.updated}`))
+  .then(provider => console.log(`Updated: ${provider.id} at ${provider.updated}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
 Options.
 
-- id `string`: id of the membership to update.
+- id `string`: id of the provider to update.
 - scopeIds `string[]?`: permission scopes assigned to member.
 - data `object?`: developer assigned attributes.
 
 Returns.
 
-- [membership](#Model) `Promise<object, Error>`: the updated membership.
+- [provider](#Model) `Promise<object, Error>`: the updated provider.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-mutation UpdateMembership($options: UpdateMembershipOptions!) {
-  membership: UpdateMembership(options: $options) {
+mutation UpdateProvider($options: UpdateProviderOptions!) {
+  provider: UpdateProvider(options: $options) {
     id
-    # ... membership properties
+    # ... provider properties
   }
 }
 ```
 
-## Remove a membership
+## Remove a provider
 
-Used to permanently remove a membership.
+Used to permanently remove a provider.
 
 ```ts
-authenticator.memberships.remove({
-    id: membership.membershipId,
+authenticator.providers.remove({
+    id: provider.providerId,
   })
-  .then(membership => console.log(`Removed: ${membership.id}`))
+  .then(provider => console.log(`Removed: ${provider.id}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -146,30 +146,30 @@ Options.
 
 Returns.
 
-- [membership](#Model) `object`: the removed membership.
+- [provider](#Model) `object`: the removed provider.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-mutation RemoveMembership($options: RemoveMembershipOptions!) {
-  membership: RemoveMembership(options: $options) {
+mutation RemoveProvider($options: RemoveProviderOptions!) {
+  provider: RemoveProvider(options: $options) {
     id
-    # ... membership properties
+    # ... provider properties
   }
 }
 ```
 
-## Retrieve a membership
+## Retrieve a provider
 
-Used to get a single membership.
+Used to get a single provider.
 
 ```ts
-authenticator.memberships.retrieve({
-    id: membership.membershipId,
+authenticator.providers.retrieve({
+    id: provider.providerId,
   })
-  .then(membership => console.log(`Retrieved: ${membership.id}`))
+  .then(provider => console.log(`Retrieved: ${provider.id}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -179,34 +179,34 @@ Options.
 
 Returns.
 
-- [membership](#Model) `object`: the membership requested.
+- [provider](#Model) `object`: the provider requested.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query RetrieveMembership($options: RetrieveMembershipOptions!) {
-  membership: RetrieveMembership(options: $options) {
+query RetrieveProvider($options: RetrieveProviderOptions!) {
+  provider: RetrieveProvider(options: $options) {
     id
-    # ... membership properties
+    # ... provider properties
   }
 }
 ```
 
-## Query memberships
+## Query providers
 
-Used to get a list of memberships.
+Used to get a list of providers.
 
 ```ts
-authenticator.memberships.query({
+authenticator.providers.query({
     workspaceId: workspace.id,
     userId: user.id,
     limit: 10,
     skip: 5,
     page: 0,
   })
-  .then(memberships => console.table(memberships))
+  .then(providers => console.table(providers))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -214,35 +214,35 @@ Options.
 
 - workspaceId: `string`: must be related to this workspace.
 - userId: `string?`: must be related to this user.
-- limit `number?`: maximum number of memberships returned.
-- skip `number?`: skip this number of memberships.
-- page `number?`: skip this number of memberships multiplied by the limit.
+- limit `number?`: maximum number of providers returned.
+- skip `number?`: skip this number of providers.
+- page `number?`: skip this number of providers multiplied by the limit.
 
 **Note:** `skip` and `page` are summed when used together.
 
 Returns.
 
-- [memberships](#Model) `Promise<object[], Error>`: a list of memberships.
+- [providers](#Model) `Promise<object[], Error>`: a list of providers.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query QueryMemberships($options: QueryMembershipsOptions!) {
-  memberships: QueryMemberships(options: $options) {
+query QueryProviders($options: QueryProvidersOptions!) {
+  providers: QueryProviders(options: $options) {
     id
-    # ... membership properties
+    # ... provider properties
   }
 }
 ```
 
-## Count memberships
+## Count providers
 
-Used to count a group of memberships.
+Used to count a group of providers.
 
 ```ts
-authenticator.memberships.count({
+authenticator.providers.count({
     search: 'Fred',
   })
   .then(count => console.log(`Counted: ${count}`))
@@ -256,24 +256,24 @@ Options.
   
 Returns.
 
-- count `number`: the number of memberships counted.
+- count `number`: the number of providers counted.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query CountMemberships($options: CountMembershipsOptions!) {
-  count: CountMemberships(options: $options)
+query CountProviders($options: CountProvidersOptions!) {
+  count: CountProviders(options: $options)
 }
 ```
 
-## Analytics of memberships
+## Analytics of providers
 
-Used to get statistics of memberships over time.
+Used to get statistics of providers over time.
 
 ```ts
-authenticator.memberships.analytics({
+authenticator.providers.analytics({
     date: Date.now(),
     months: 6,
   })
@@ -288,20 +288,20 @@ Options.
   
 Returns.
 
-- analytics `object`: statistics related to memberships within time period.
+- analytics `object`: statistics related to providers within time period.
   - labels `string[]`: date values within given period.
   - data `number[]`: values matching the labels.
-  - created `number`: number of memberships created.
-  - updated `number`: number of memberships updated.
-  - active `number`: number of memberships with 1 session or more.
+  - created `number`: number of providers created.
+  - updated `number`: number of providers updated.
+  - active `number`: number of providers with 1 session or more.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query AnalyticsOfMemberships($options: AnalyticsOfMembershipsOptions!) {
-  analytics: AnalyticsOfMemberships(options: $options) {
+query AnalyticsOfProviders($options: AnalyticsOfProvidersOptions!) {
+  analytics: AnalyticsOfProviders(options: $options) {
     labels
     data
     # ... analytics properties

@@ -328,9 +328,10 @@ query AnalyticsOfWorkspaces($options: AnalyticsOfWorkspacesOptions!) {
 
 ## Resources
 
-- [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Workspaces.md)
-- [Sessions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Sessions.md)
-- [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Workspaces.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Memberships.md)
+- [Providers](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
 - [Scopes](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Scopes.md)
+- [Sessions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Sessions.md)
 - [Themes](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Themes.md)
+- [Users](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
+- [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Workspaces.md)

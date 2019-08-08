@@ -41,10 +41,9 @@ Properties.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
 - name `string`: full name.
-- email `string`: valid email address.
-- scopename `string`: unique code.
-- password `string`: encrypted string.
-- avatar `string?`: url pointing to the scopes avatar image.
+- code `string`: used to identify scope in code.
+- description `string`: describe the scope's permissions.
+- scopeId `string`: the parent of the scope.
 - data `object?`: developer assigned attributes.
 
 ## Create a scope
@@ -53,11 +52,10 @@ Used to sign up a scope on your app.
 
 ```ts
 authenticator.scopes.create({
-    name: 'Fred Blogs',
-    email: 'fredBlogs@example.com',
-    scopename: 'freddy123',
-    password: authenticator.utils.encrypt('SecretPassword123'),
-    avatar: document.getElementById('fileInput').files[0],
+    name: 'Editor',
+    code: 'editor',
+    description: 'Can edit data without seeing config details.',
+    scopeId: scopeAdminId,
     data: {
       // custom json attributes
     },
@@ -69,10 +67,9 @@ authenticator.scopes.create({
 Options.
 
 - name `string`: full name.
-- email `string`: valid email address.
-- scopename `string`: unique code.
-- password `string`: encrypted string.
-- avatar `File?`: a JavaScript [File](https://developer.mozilla.org/en-US/docs/Web/API/File) object.
+- code `string`: used to identify scope in code.
+- description `string`: describe the scope's permissions.
+- scopeId `string`: the parent of the scope.
 - data `object?`: developer assigned attributes.
 
 Returns.
@@ -99,12 +96,10 @@ Used to patch a scope's details.
 
 ```ts
 authenticator.scopes.update({
-    id: scope.id,
-    name: 'Fred Blogs',
-    scopename: 'freddy123',
-    email: 'fredBlogs@example.com',
-    password: authenticator.utils.encrypt('SecretPassword123'),
-    avatar: document.getElementById('fileInput').files[0],
+    name: 'Editor',
+    code: 'editor',
+    description: 'Can edit data without seeing config details.',
+    scopeId: undefined,
     data: {
       // custom json attributes
     },
@@ -116,11 +111,10 @@ authenticator.scopes.update({
 Options.
 
 - id `string`: id of the scope to update.
-- name `string?`: full name.
-- email `string?`: valid email address.
-- scopename `string?`: unique code.
-- password `string?`: encrypted string.
-- avatar `File?`: a JavaScript [File](https://developer.mozilla.org/en-US/docs/Web/API/File) object.
+- name `string`: full name.
+- code `string`: used to identify scope in code.
+- description `string`: describe the scope's permissions.
+- scopeId `string`: the parent of the scope.
 - data `object?`: developer assigned attributes.
 
 Returns.
@@ -156,8 +150,7 @@ authenticator.scopes.remove({
 Options.
 
 - id `string?`: unique identifier.
-- scopename `string?`: used when id not provided.
-- email `string?`: used when neither id and scopename are provided.
+- code `string?`: used when id not provided.
 
 Returns.
 
@@ -192,8 +185,7 @@ authenticator.scopes.retrieve({
 Options.
 
 - id `string?`: unique identifier.
-- scopename `string?`: used when id not provided.
-- email `string?`: used when neither id and scopename are provided.
+- code `string?`: used when id not provided.
 
 Returns.
 
@@ -219,7 +211,8 @@ Used to get a list of scopes.
 
 ```ts
 authenticator.scopes.query({
-    search: 'Fred',
+    search: 'Editor',
+    scopeId: scopeAdmin.id,
     limit: 10,
     skip: 5,
     page: 0,
@@ -230,7 +223,8 @@ authenticator.scopes.query({
 
 Options.
 
-- search `string?`: compared against name, scopename, and email.
+- search `string?`: compared against name, code, and description.
+- scopeId `string?`: scopes related to this scope.
 - limit `number?`: maximum number of scopes returned.
 - skip `number?`: skip this number of scopes.
 - page `number?`: skip this number of scopes multiplied by the limit.
@@ -261,7 +255,8 @@ Used to count a group of scopes.
 
 ```ts
 authenticator.scopes.count({
-    search: 'Fred',
+    search: 'Editor',
+    scopeId: scopeAdmin.id,
   })
   .then(count => console.log(`Counted: ${count}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -269,7 +264,8 @@ authenticator.scopes.count({
 
 Options.
 
-- search `string?`: compared against name, scopename, and email.
+- search `string?`: compared against name, code, and description.
+- scopeId `string?`: scopes related to this scope.
   
 Returns.
 
@@ -328,9 +324,10 @@ query AnalyticsOfScopes($options: AnalyticsOfScopesOptions!) {
 
 ## Resources
 
+- [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Memberships.md)
+- [Providers](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
 - [Scopes](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Scopes.md)
 - [Sessions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Sessions.md)
-- [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Workspaces.md)
-- [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Memberships.md)
-- [Scopes](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Scopes.md)
 - [Themes](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Themes.md)
+- [Users](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
+- [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Workspaces.md)
