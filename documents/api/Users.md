@@ -76,7 +76,7 @@ Returns.
 
 GraphQL version.
 
-`POST` `https://wga.api.windowgadgets.io/graphql`
+`POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
 mutation CreateUser($options: CreateUserOptions!) {
@@ -122,7 +122,7 @@ Returns.
 
 GraphQL version.
 
-`POST` `https://wga.api.windowgadgets.io/graphql`
+`POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
 mutation UpdateUser($options: UpdateUserOptions!) {
@@ -158,7 +158,7 @@ Returns.
 
 GraphQL version.
 
-`POST` `https://wga.api.windowgadgets.io/graphql`
+`POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
 query RetrieveUser($options: RetrieveUserOptions!) {
@@ -200,7 +200,7 @@ Returns.
 
 GraphQL version.
 
-`POST` `https://wga.api.windowgadgets.io/graphql`
+`POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
 query QueryUsers($options: QueryUsersOptions!) {
@@ -234,7 +234,7 @@ Returns.
 
 GraphQL version.
 
-`POST` `https://wga.api.windowgadgets.io/graphql`
+`POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
 query CountUsers($options: CountUsersOptions!) {
@@ -266,7 +266,7 @@ Returns.
 
 GraphQL version.
 
-`POST` `https://wga.api.windowgadgets.io/graphql`
+`POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
 mutation RemoveUser($options: RemoveUserOptions!) {
