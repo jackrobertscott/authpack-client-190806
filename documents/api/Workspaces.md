@@ -40,11 +40,8 @@ Properties.
 - id `string`: unique identifier.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
-- name `string`: full name.
-- email `string`: valid email address.
-- workspacename `string`: unique code.
-- password `string`: encrypted string.
-- avatar `string?`: url pointing to the workspaces avatar image.
+- name `string`: workspace name.
+- code `string`: unique code used in urls.
 - data `object?`: developer assigned attributes.
 
 ## Create a workspace
@@ -53,11 +50,8 @@ Used to sign up a workspace on your app.
 
 ```ts
 authenticator.workspaces.create({
-    name: 'Fred Blogs',
-    email: 'fredBlogs@example.com',
-    workspacename: 'freddy123',
-    password: authenticator.utils.encrypt('SecretPassword123'),
-    avatar: document.getElementById('fileInput').files[0],
+    name: 'Awesome Workspace',
+    code: 'awesome-workspace',
     data: {
       // custom json attributes
     },
@@ -68,11 +62,8 @@ authenticator.workspaces.create({
 
 Options.
 
-- name `string`: full name.
-- email `string`: valid email address.
-- workspacename `string`: unique code.
-- password `string`: encrypted string.
-- avatar `File?`: a JavaScript [File](https://developer.mozilla.org/en-US/docs/Web/API/File) object.
+- name `string`: workspace name.
+- code `string`: unique code.
 - data `object?`: developer assigned attributes.
 
 Returns.
@@ -100,11 +91,8 @@ Used to patch a workspace's details.
 ```ts
 authenticator.workspaces.update({
     id: workspace.id,
-    name: 'Fred Blogs',
-    workspacename: 'freddy123',
-    email: 'fredBlogs@example.com',
-    password: authenticator.utils.encrypt('SecretPassword123'),
-    avatar: document.getElementById('fileInput').files[0],
+    name: 'Awesome Workspace',
+    code: 'awesome-workspace',
     data: {
       // custom json attributes
     },
@@ -116,11 +104,8 @@ authenticator.workspaces.update({
 Options.
 
 - id `string`: id of the workspace to update.
-- name `string?`: full name.
-- email `string?`: valid email address.
-- workspacename `string?`: unique code.
-- password `string?`: encrypted string.
-- avatar `File?`: a JavaScript [File](https://developer.mozilla.org/en-US/docs/Web/API/File) object.
+- name `string`: workspace name.
+- code `string`: unique code.
 - data `object?`: developer assigned attributes.
 
 Returns.
@@ -156,8 +141,7 @@ authenticator.workspaces.remove({
 Options.
 
 - id `string?`: unique identifier.
-- workspacename `string?`: used when id not provided.
-- email `string?`: used when neither id and workspacename are provided.
+- code `string?`: used when id not provided.
 
 Returns.
 
@@ -192,8 +176,7 @@ authenticator.workspaces.retrieve({
 Options.
 
 - id `string?`: unique identifier.
-- workspacename `string?`: used when id not provided.
-- email `string?`: used when neither id and workspacename are provided.
+- code `string?`: used when id not provided.
 
 Returns.
 
@@ -219,7 +202,7 @@ Used to get a list of workspaces.
 
 ```ts
 authenticator.workspaces.query({
-    search: 'Fred',
+    search: 'Awesome',
     limit: 10,
     skip: 5,
     page: 0,
@@ -261,7 +244,7 @@ Used to count a group of workspaces.
 
 ```ts
 authenticator.workspaces.count({
-    search: 'Fred',
+    search: 'Awesome',
   })
   .then(count => console.log(`Counted: ${count}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
