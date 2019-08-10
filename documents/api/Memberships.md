@@ -29,7 +29,7 @@ Never store your private keys in your code base - use environment variables.
 import { Authenticator } from 'wga-api';
 
 const authenticator = new Authenticator({
-  key: process.env.wgaPrivateKey
+  key: process.env.authenticatorPrivateKey
 });
 ```
 
