@@ -47,9 +47,15 @@ Used when updating your app's current auth state.
 const unlisten = gadgets.listen(state => console.log(state))
 ```
 
+Parameters.
+
+- callback `function`: fired with the [gadgets state](#Gadgets-state) every time it updates.
+
 Returns.
 
 - unlisten `function`: call this when you want to stop listening to state changes.
+
+**Note:** the gadgets state is set as `undefined` when the user is not authenticated.
 
 ## Render the gadgets
 
@@ -57,35 +63,22 @@ Used to authenticate and manage a user and their workspaces.
 
 ```ts
 gadgets.render({
-  authenticate: true,
-  screen: 'user:login',
+  open: 'login',
   events: {
-    login: () => window.location.assign('app.example.com/dashboard'),
-    signup: () => window.location.assign('app.example.com/dashboard?introduction=true'),
+    login: ({ user }) => window.location.assign(`app.example.com/user/${user.id}`),
+    signup: ({ user }) => window.location.assign(`app.example.com/user/${user.id}?introduction=true`),
   },
 })
 ```
 
 Properties.
 
-- authenticate `boolean?`: require the user to authenticate before closing gadgets.
+- open `string?`: the suggested gadgets screen to open when unauthenticated.
+  - `login`: login a user.
+  - `signup`: create a user.
 - events `object?`: gadget events fired when they occur.
-- screen `string?`: the suggested screen to open when the gadgets load.
-  - `user:login`: login a user.
-  - `user:sign-up`: create a user.
-  - `user:forgotten`: recover a user's forgotten password.
-  - `user:update`: update the current user.
-  - `user:logout`: logout the current user.
-  - `user:password`: change the current user's password.
-  - `user:providers`: list the current user's OAuth accounts.
-  - `user:2fa`: update the current user's 2 factor auth settings.
-  - `user:sessions`: list the current user's sessions.
-  - `user:danger`: remove the current user.
-  - `workspace:create`: create a new workspace.
-  - `workspace:update`: update the current workspace.
-  - `workspace:invite`: invite a new member to current workspace.
-  - `workspace:members`: list the current workspace's members.
-  - `workspace:danger`: remove the current workspace.
+  - login `function`: fired after a user logs in.
+  - signup `function`: fired after a user signs up.
 
 ## React
 
@@ -100,7 +93,14 @@ const RouterComponent = () => {
   /**
    * Listen to the gadgets state and update the auth state object.
    */
-  useEffect(() => gadgets.listen(setAuthState), [gadgets, setAuthState]);
+  useEffect(() => {
+    return gadgets.listen(state => {
+      setAuthState(state);
+      if (state) {
+        localStorage.set('token', state.session.token);
+      }
+    })
+  }, [gadgets, setAuthState]);
   /**
    * If the user is logged in, show the authenticated routes.
    */
@@ -111,7 +111,7 @@ const RouterComponent = () => {
    * Show a button which will open the login screen when clicked.
    */
   return (
-    <button click={() => gadgets.render({ authenticate: true })}>
+    <button click={() => gadgets.render()}>
       Login Or Sign Up
     </button>
   );
