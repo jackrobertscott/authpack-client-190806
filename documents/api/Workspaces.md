@@ -15,7 +15,7 @@ Methods.
 - [Update a workspace](#Update-a-workspace)
 - [Remove a workspace](#Remove-a-workspace)
 - [Retrieve a workspace](#Retrieve-a-workspace)
-- [Query workspaces](#Query-workspaces)
+- [List workspaces](#List-workspaces)
 - [Count workspaces](#Count-workspaces)
 - [Analytics of workspaces](#Analytics-of-workspaces)
 
@@ -150,7 +150,7 @@ Options.
 
 Returns.
 
-- [workspace](#Model) `object`: the removed workspace.
+- [workspace](#Model) `Promise<object, Error>` the removed workspace.
 
 GraphQL version.
 
@@ -185,7 +185,7 @@ Options.
 
 Returns.
 
-- [workspace](#Model) `object`: the workspace requested.
+- [workspace](#Model) `Promise<object, Error>` the workspace requested.
 
 GraphQL version.
 
@@ -201,12 +201,12 @@ query RetrieveWorkspace($options: RetrieveWorkspaceOptions!) {
 }
 ```
 
-## Query workspaces
+## List workspaces
 
 Used to get a list of workspaces.
 
 ```ts
-authenticator.workspaces.query({
+authenticator.workspaces.list({
     search: 'Awesome',
     limit: 10,
     skip: 5,
@@ -234,8 +234,8 @@ GraphQL version.
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query QueryWorkspaces($options: QueryWorkspacesOptions!) {
-  workspaces: QueryWorkspaces(options: $options) {
+query ListWorkspaces($options: ListWorkspacesOptions!) {
+  workspaces: ListWorkspaces(options: $options) {
     id
     name
     # ... workspace properties
@@ -261,7 +261,7 @@ Options.
   
 Returns.
 
-- count `number`: the number of workspaces counted.
+- count `Promise<number, Error>`: the number of workspaces counted.
 
 GraphQL version.
 
@@ -293,7 +293,7 @@ Options.
   
 Returns.
 
-- analytics `object`: statistics related to workspaces within time period.
+- analytics `Promise<object, Error>`: statistics related to workspaces within time period.
   - labels `string[]`: date values within given period.
   - data `number[]`: values matching the labels.
   - created `number`: number of workspaces created.

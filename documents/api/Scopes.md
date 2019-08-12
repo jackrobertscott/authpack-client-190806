@@ -15,7 +15,7 @@ Methods.
 - [Update a scope](#Update-a-scope)
 - [Remove a scope](#Remove-a-scope)
 - [Retrieve a scope](#Retrieve-a-scope)
-- [Query scopes](#Query-scopes)
+- [List scopes](#List-scopes)
 - [Count scopes](#Count-scopes)
 - [Analytics of scopes](#Analytics-of-scopes)
 
@@ -154,7 +154,7 @@ Options.
 
 Returns.
 
-- [scope](#Model) `object`: the removed scope.
+- [scope](#Model) `Promise<object, Error>` the removed scope.
 
 GraphQL version.
 
@@ -189,7 +189,7 @@ Options.
 
 Returns.
 
-- [scope](#Model) `object`: the scope requested.
+- [scope](#Model) `Promise<object, Error>` the scope requested.
 
 GraphQL version.
 
@@ -205,12 +205,12 @@ query RetrieveScope($options: RetrieveScopeOptions!) {
 }
 ```
 
-## Query scopes
+## List scopes
 
 Used to get a list of scopes.
 
 ```ts
-authenticator.scopes.query({
+authenticator.scopes.list({
     search: 'Editor',
     scopeId: scopeAdmin.id,
     limit: 10,
@@ -240,8 +240,8 @@ GraphQL version.
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query QueryScopes($options: QueryScopesOptions!) {
-  scopes: QueryScopes(options: $options) {
+query ListScopes($options: ListScopesOptions!) {
+  scopes: ListScopes(options: $options) {
     id
     name
     # ... scope properties
@@ -269,7 +269,7 @@ Options.
   
 Returns.
 
-- count `number`: the number of scopes counted.
+- count `Promise<number, Error>`: the number of scopes counted.
 
 GraphQL version.
 
@@ -301,7 +301,7 @@ Options.
   
 Returns.
 
-- analytics `object`: statistics related to scopes within time period.
+- analytics `Promise<object, Error>`: statistics related to scopes within time period.
   - labels `string[]`: date values within given period.
   - data `number[]`: values matching the labels.
   - created `number`: number of scopes created.

@@ -15,7 +15,7 @@ Methods.
 - [Update a provider](#Update-a-provider)
 - [Remove a provider](#Remove-a-provider)
 - [Retrieve a provider](#Retrieve-a-provider)
-- [Query providers](#Query-providers)
+- [List providers](#List-providers)
 - [Count providers](#Count-providers)
 - [Analytics of providers](#Analytics-of-providers)
 
@@ -40,10 +40,12 @@ Properties.
 - id `string`: unique identifier.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
-- workspaceId: `string`: id of a workspace.
-- userId: `string?`: id of a user.
-- email `string?`: when user id is not provided, email address is used.
-- scopeIds `string[]`: permission scopes assigned to member.
+- name `string`: the providers name e.g. Facebook.
+- code `string`: a unique code for provider e.g. `facebook`.
+- client `string`: the oauth client id.
+- redirect `string`: the oauth redirect url.
+- scopes `string`: the oauth scopes which are required.
+- url `string`: the generated oauth url for authenticating a user.
 - data `object?`: developer assigned attributes.
 
 ## Create a provider
@@ -52,10 +54,12 @@ Used to add a user as a new member of a workspace.
 
 ```ts
 authenticator.providers.create({
-    workspaceId: workspace.id,
-    userId: user.id,
-    email: 'invitation@email.com',
-    scopeIds: [scopeEditor.id, scopeCommentor.id],
+    name: 'Facebook',
+    code: 'facebook',
+    client: 'FACEBOOK_APP_ID',
+    secret: 'FACEBOOK_APP_SECRET_KEY',
+    scopes: 'users:read,repos:read,repos:write',
+    redirect: 'https://example.com/login/facebook',
     data: {
       // custom json attributes
     },
@@ -66,10 +70,12 @@ authenticator.providers.create({
 
 Options.
 
-- workspaceId: `string`: id of a workspace.
-- userId: `string?`: id of a user.
-- email `string?`: when user id is not provided, email address is used.
-- scopeIds `string[]?`: permission scopes assigned to member.
+- name `string`: the providers name.
+- code `string`: a unique code for provider.
+- client `string`: the oauth client id.
+- secret `string`: the oauth client secret.
+- redirect `string`: the oauth redirect url.
+- scopes `string`: the oauth scopes which are required.
 - data `object?`: developer assigned attributes.
 
 Returns.
@@ -96,7 +102,12 @@ Used to patch a provider's details.
 ```ts
 authenticator.providers.update({
     id: provider.id,
-    scopeIds: [scopeEditor.id, scopeCommentor.id],
+    name: 'Facebook',
+    code: 'facebook',
+    client: 'FACEBOOK_APP_ID',
+    secret: 'FACEBOOK_APP_SECRET_KEY',
+    scopes: 'users:read,repos:read,repos:write',
+    redirect: 'https://example.com/login/facebook',
     data: {
       // custom json attributes
     },
@@ -108,7 +119,12 @@ authenticator.providers.update({
 Options.
 
 - id `string`: id of the provider to update.
-- scopeIds `string[]?`: permission scopes assigned to member.
+- name `string`: the providers name.
+- code `string`: a unique code for provider.
+- client `string`: the oauth client id.
+- secret `string`: the oauth client secret.
+- redirect `string`: the oauth redirect url.
+- scopes `string`: the oauth scopes which are required.
 - data `object?`: developer assigned attributes.
 
 Returns.
@@ -143,10 +159,11 @@ authenticator.providers.remove({
 Options.
 
 - id `string?`: unique identifier.
+- code `string?`: used when id not provided.
 
 Returns.
 
-- [provider](#Model) `object`: the removed provider.
+- [provider](#Model) `Promise<object, Error>` the removed provider.
 
 GraphQL version.
 
@@ -176,10 +193,11 @@ authenticator.providers.retrieve({
 Options.
 
 - id `string?`: unique identifier.
+- code `string?`: used when id not provided.
 
 Returns.
 
-- [provider](#Model) `object`: the provider requested.
+- [provider](#Model) `Promise<object, Error>` the provider requested.
 
 GraphQL version.
 
@@ -194,14 +212,13 @@ query RetrieveProvider($options: RetrieveProviderOptions!) {
 }
 ```
 
-## Query providers
+## List providers
 
 Used to get a list of providers.
 
 ```ts
-authenticator.providers.query({
-    workspaceId: workspace.id,
-    userId: user.id,
+authenticator.providers.list({
+    search: 'Google',
     limit: 10,
     skip: 5,
     page: 0,
@@ -212,8 +229,7 @@ authenticator.providers.query({
 
 Options.
 
-- workspaceId: `string`: must be related to this workspace.
-- userId: `string?`: must be related to this user.
+- search `string?`: compared against name, and code.
 - limit `number?`: maximum number of providers returned.
 - skip `number?`: skip this number of providers.
 - page `number?`: skip this number of providers multiplied by the limit.
@@ -229,8 +245,8 @@ GraphQL version.
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query QueryProviders($options: QueryProvidersOptions!) {
-  providers: QueryProviders(options: $options) {
+query ListProviders($options: ListProvidersOptions!) {
+  providers: ListProviders(options: $options) {
     id
     # ... provider properties
   }
@@ -243,7 +259,7 @@ Used to count a group of providers.
 
 ```ts
 authenticator.providers.count({
-    search: 'Fred',
+    search: 'Google',
   })
   .then(count => console.log(`Counted: ${count}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -251,12 +267,11 @@ authenticator.providers.count({
 
 Options.
 
-- workspaceId: `string`: must be related to this workspace.
-- userId: `string?`: must be related to this user.
+- search `string?`: compared against name, and code.
   
 Returns.
 
-- count `number`: the number of providers counted.
+- count `Promise<number, Error>`: the number of providers counted.
 
 GraphQL version.
 
@@ -288,7 +303,7 @@ Options.
   
 Returns.
 
-- analytics `object`: statistics related to providers within time period.
+- analytics `Promise<object, Error>`: statistics related to providers within time period.
   - labels `string[]`: date values within given period.
   - data `number[]`: values matching the labels.
   - created `number`: number of providers created.

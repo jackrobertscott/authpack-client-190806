@@ -15,7 +15,7 @@ Methods.
 - [Update a theme](#Update-a-theme)
 - [Remove a theme](#Remove-a-theme)
 - [Retrieve a theme](#Retrieve-a-theme)
-- [Query themes](#Query-themes)
+- [List themes](#List-themes)
 - [Count themes](#Count-themes)
 - [Analytics of themes](#Analytics-of-themes)
 
@@ -198,7 +198,7 @@ Options.
 
 Returns.
 
-- [theme](#Model) `object`: the removed theme.
+- [theme](#Model) `Promise<object, Error>` the removed theme.
 
 GraphQL version.
 
@@ -233,7 +233,7 @@ Options.
 
 Returns.
 
-- [theme](#Model) `object`: the theme requested.
+- [theme](#Model) `Promise<object, Error>` the theme requested.
 
 GraphQL version.
 
@@ -249,12 +249,12 @@ query RetrieveTheme($options: RetrieveThemeOptions!) {
 }
 ```
 
-## Query themes
+## List themes
 
 Used to get a list of themes.
 
 ```ts
-authenticator.themes.query({
+authenticator.themes.list({
     search: 'Fred',
     limit: 10,
     skip: 5,
@@ -282,8 +282,8 @@ GraphQL version.
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query QueryThemes($options: QueryThemesOptions!) {
-  themes: QueryThemes(options: $options) {
+query ListThemes($options: ListThemesOptions!) {
+  themes: ListThemes(options: $options) {
     id
     name
     # ... theme properties
@@ -309,7 +309,7 @@ Options.
   
 Returns.
 
-- count `number`: the number of themes counted.
+- count `Promise<number, Error>`: the number of themes counted.
 
 GraphQL version.
 
@@ -341,7 +341,7 @@ Options.
   
 Returns.
 
-- analytics `object`: statistics related to themes within time period.
+- analytics `Promise<object, Error>`: statistics related to themes within time period.
   - labels `string[]`: date values within given period.
   - data `number[]`: values matching the labels.
   - created `number`: number of themes created.

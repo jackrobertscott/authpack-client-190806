@@ -15,7 +15,7 @@ Methods.
 - [Update a session](#Update-a-session)
 - [Remove a session](#Remove-a-session)
 - [Retrieve a session](#Retrieve-a-session)
-- [Query sessions](#Query-sessions)
+- [List sessions](#List-sessions)
 - [Count sessions](#Count-sessions)
 - [Analytics of sessions](#Analytics-of-sessions)
 
@@ -147,7 +147,7 @@ Options.
 
 Returns.
 
-- [session](#Model) `object`: the removed session.
+- [session](#Model) `Promise<object, Error>` the removed session.
 
 GraphQL version.
 
@@ -181,7 +181,7 @@ Options.
 
 Returns.
 
-- [session](#Model) `object`: the session requested.
+- [session](#Model) `Promise<object, Error>` the session requested.
 
 GraphQL version.
 
@@ -196,12 +196,12 @@ query RetrieveSession($options: RetrieveSessionOptions!) {
 }
 ```
 
-## Query sessions
+## List sessions
 
 Used to get a list of sessions.
 
 ```ts
-authenticator.sessions.query({
+authenticator.sessions.list({
     userId: user.id,
     workspaceId: workspace.id,
     limit: 10,
@@ -231,8 +231,8 @@ GraphQL version.
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query QuerySessions($options: QuerySessionsOptions!) {
-  sessions: QuerySessions(options: $options) {
+query ListSessions($options: ListSessionsOptions!) {
+  sessions: ListSessions(options: $options) {
     id
     # ... session properties
   }
@@ -259,7 +259,7 @@ Options.
   
 Returns.
 
-- count `number`: the number of sessions counted.
+- count `Promise<number, Error>`: the number of sessions counted.
 
 GraphQL version.
 
@@ -291,7 +291,7 @@ Options.
   
 Returns.
 
-- analytics `object`: statistics related to sessions within time period.
+- analytics `Promise<object, Error>`: statistics related to sessions within time period.
   - labels `string[]`: date values within given period.
   - data `number[]`: values matching the labels.
   - created `number`: number of sessions created.

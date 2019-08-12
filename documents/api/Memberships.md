@@ -15,7 +15,7 @@ Methods.
 - [Update a membership](#Update-a-membership)
 - [Remove a membership](#Remove-a-membership)
 - [Retrieve a membership](#Retrieve-a-membership)
-- [Query memberships](#Query-memberships)
+- [List memberships](#List-memberships)
 - [Count memberships](#Count-memberships)
 - [Analytics of memberships](#Analytics-of-memberships)
 
@@ -146,7 +146,7 @@ Options.
 
 Returns.
 
-- [membership](#Model) `object`: the removed membership.
+- [membership](#Model) `Promise<object, Error>` the removed membership.
 
 GraphQL version.
 
@@ -179,7 +179,7 @@ Options.
 
 Returns.
 
-- [membership](#Model) `object`: the membership requested.
+- [membership](#Model) `Promise<object, Error>` the membership requested.
 
 GraphQL version.
 
@@ -194,12 +194,12 @@ query RetrieveMembership($options: RetrieveMembershipOptions!) {
 }
 ```
 
-## Query memberships
+## List memberships
 
 Used to get a list of memberships.
 
 ```ts
-authenticator.memberships.query({
+authenticator.memberships.list({
     workspaceId: workspace.id,
     userId: user.id,
     limit: 10,
@@ -229,8 +229,8 @@ GraphQL version.
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query QueryMemberships($options: QueryMembershipsOptions!) {
-  memberships: QueryMemberships(options: $options) {
+query ListMemberships($options: ListMembershipsOptions!) {
+  memberships: ListMemberships(options: $options) {
     id
     # ... membership properties
   }
@@ -243,7 +243,8 @@ Used to count a group of memberships.
 
 ```ts
 authenticator.memberships.count({
-    search: 'Fred',
+    workspaceId: workspace.id,
+    userId: user.id,
   })
   .then(count => console.log(`Counted: ${count}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -256,7 +257,7 @@ Options.
   
 Returns.
 
-- count `number`: the number of memberships counted.
+- count `Promise<number, Error>`: the number of memberships counted.
 
 GraphQL version.
 
@@ -288,7 +289,7 @@ Options.
   
 Returns.
 
-- analytics `object`: statistics related to memberships within time period.
+- analytics `Promise<object, Error>`: statistics related to memberships within time period.
   - labels `string[]`: date values within given period.
   - data `number[]`: values matching the labels.
   - created `number`: number of memberships created.

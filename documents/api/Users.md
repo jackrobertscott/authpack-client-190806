@@ -15,7 +15,7 @@ Methods.
 - [Update a user](#Update-a-user)
 - [Remove a user](#Remove-a-user)
 - [Retrieve a user](#Retrieve-a-user)
-- [Query users](#Query-users)
+- [List users](#List-users)
 - [Count users](#Count-users)
 - [Analytics of users](#Analytics-of-users)
 
@@ -161,7 +161,7 @@ Options.
 
 Returns.
 
-- [user](#Model) `object`: the removed user.
+- [user](#Model) `Promise<object, Error>` the removed user.
 
 GraphQL version.
 
@@ -197,7 +197,7 @@ Options.
 
 Returns.
 
-- [user](#Model) `object`: the user requested.
+- [user](#Model) `Promise<object, Error>` the user requested.
 
 GraphQL version.
 
@@ -213,12 +213,12 @@ query RetrieveUser($options: RetrieveUserOptions!) {
 }
 ```
 
-## Query users
+## List users
 
 Used to get a list of users.
 
 ```ts
-authenticator.users.query({
+authenticator.users.list({
     search: 'Fred',
     limit: 10,
     skip: 5,
@@ -246,8 +246,8 @@ GraphQL version.
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query QueryUsers($options: QueryUsersOptions!) {
-  users: QueryUsers(options: $options) {
+query ListUsers($options: ListUsersOptions!) {
+  users: ListUsers(options: $options) {
     id
     name
     # ... user properties
@@ -273,7 +273,7 @@ Options.
   
 Returns.
 
-- count `number`: the number of users counted.
+- count `Promise<number, Error>`: the number of users counted.
 
 GraphQL version.
 
@@ -305,7 +305,7 @@ Options.
   
 Returns.
 
-- analytics `object`: statistics related to users within time period.
+- analytics `Promise<object, Error>`: statistics related to users within time period.
   - labels `string[]`: date values within given period.
   - data `number[]`: values matching the labels.
   - created `number`: number of users created.
