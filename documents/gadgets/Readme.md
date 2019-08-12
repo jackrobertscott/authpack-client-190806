@@ -59,12 +59,17 @@ Used to authenticate and manage a user and their workspaces.
 gadgets.render({
   authenticate: true,
   screen: 'user:login',
+  redirects: {
+    login: 'app.example.com/dashboard',
+    signup: 'app.example.com/dashboard?introduction=true',
+  },
 })
 ```
 
 Properties.
 
 - authenticate `boolean?`: require the user to authenticate before closing gadgets.
+- redirects `object?`: redirects which will be fired at the matching event.
 - screen `string?`: the suggested screen to open when the gadgets load.
   - `user:login`: login a user.
   - `user:sign-up`: create a user.
