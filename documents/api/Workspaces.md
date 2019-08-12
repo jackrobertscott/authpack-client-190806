@@ -42,6 +42,7 @@ Properties.
 - updated `Date`: time of last update.
 - name `string`: workspace name.
 - code `string`: unique code used in urls.
+- domains `string[]`: whitelisted domains for using the authenticator API.
 - data `object?`: developer assigned attributes.
 
 ## Create a workspace
@@ -52,6 +53,7 @@ Used to sign up a workspace on your app.
 authenticator.workspaces.create({
     name: 'Awesome Workspace',
     code: 'awesome-workspace',
+    domains: ['app.example.com'],
     data: {
       // custom json attributes
     },
@@ -64,6 +66,7 @@ Options.
 
 - name `string`: workspace name.
 - code `string`: unique code.
+- domains `string[]`: whitelisted domains for using the authenticator API.
 - data `object?`: developer assigned attributes.
 
 Returns.
@@ -93,6 +96,7 @@ authenticator.workspaces.update({
     id: workspace.id,
     name: 'Awesome Workspace',
     code: 'awesome-workspace',
+    domains: ['app.example.com'],
     data: {
       // custom json attributes
     },
@@ -106,6 +110,7 @@ Options.
 - id `string`: id of the workspace to update.
 - name `string`: workspace name.
 - code `string`: unique code.
+- domains `string[]`: whitelisted domains for using the authenticator API.
 - data `object?`: developer assigned attributes.
 
 Returns.
@@ -213,7 +218,7 @@ authenticator.workspaces.query({
 
 Options.
 
-- search `string?`: compared against name, workspacename, and email.
+- search `string?`: compared against name, code, and domains.
 - limit `number?`: maximum number of workspaces returned.
 - skip `number?`: skip this number of workspaces.
 - page `number?`: skip this number of workspaces multiplied by the limit.
@@ -252,7 +257,7 @@ authenticator.workspaces.count({
 
 Options.
 
-- search `string?`: compared against name, workspacename, and email.
+- search `string?`: compared against name, code, and domains.
   
 Returns.
 
