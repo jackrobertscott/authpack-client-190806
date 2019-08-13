@@ -1,23 +1,23 @@
-# Allocations API
+# Accessors API
 
 > Authenticator 🏇 the fastest way to add auth to your apps
 
 ## Overview
 
-The `allocation` model is created to store the access tokens between a provider and a user.
+The `accessor` model is created to store the access tokens between a provider and a user.
 
 - [Setup](#Model)
-- [Allocation model](#Model)
+- [Accessor model](#Model)
 
 Methods.
 
-- [Create an allocation](#Create-a-allocation)
-- [Update an allocation](#Update-a-allocation)
-- [Remove an allocation](#Remove-a-allocation)
-- [Retrieve an allocation](#Retrieve-a-allocation)
-- [List allocations](#List-allocations)
-- [Count allocations](#Count-allocations)
-- [Analytics of allocations](#Analytics-of-allocations)
+- [Create an accessor](#Create-a-accessor)
+- [Update an accessor](#Update-a-accessor)
+- [Remove an accessor](#Remove-a-accessor)
+- [Retrieve an accessor](#Retrieve-a-accessor)
+- [List accessors](#List-accessors)
+- [Count accessors](#Count-accessors)
+- [Analytics of accessors](#Analytics-of-accessors)
 
 Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 
@@ -33,7 +33,7 @@ const authenticator = new Authenticator({
 });
 ```
 
-## Allocation model
+## Accessor model
 
 Properties.
 
@@ -43,15 +43,15 @@ Properties.
 - userId `string`: the user's id.
 - providerId `string`: the provider's id.
 - expiry `Date`: the expiry time of the token.
-- token `string`: the access token created by the allocation.
+- token `string`: the access token created by the accessor.
 - data `object?`: developer assigned attributes.
 
-## Create an allocation
+## Create an accessor
 
-Used to sign up an allocation on your app.
+Used to sign up an accessor on your app.
 
 ```ts
-authenticator.allocations.create({
+authenticator.accessors.create({
     userId: user.id,
     providerId: provider.id,
     code: queryString.parse(search).code,
@@ -60,7 +60,7 @@ authenticator.allocations.create({
       // custom json attributes
     },
   })
-  .then(allocation => console.log(`Created: ${allocation.id} at ${allocation.created}`))
+  .then(accessor => console.log(`Created: ${accessor.id} at ${accessor.created}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -74,67 +74,67 @@ Options.
 
 Returns.
 
-- [allocation](#Model) `Promise<object, Error>`: the created allocation.
+- [accessor](#Model) `Promise<object, Error>`: the created accessor.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-mutation CreateAllocation($options: CreateAllocationOptions!) {
-  allocation: CreateAllocation(options: $options) {
+mutation CreateAccessor($options: CreateAccessorOptions!) {
+  accessor: CreateAccessor(options: $options) {
     id
-    # ... allocation properties
+    # ... accessor properties
   }
 }
 ```
 
-## Update an allocation
+## Update an accessor
 
-Used to patch an allocation's details.
+Used to patch an accessor's details.
 
 ```ts
-authenticator.allocations.update({
-    id: allocation.id,
+authenticator.accessors.update({
+    id: accessor.id,
     data: {
       // custom json attributes
     },
   })
-  .then(allocation => console.log(`Updated: ${allocation.id} at ${allocation.updated}`))
+  .then(accessor => console.log(`Updated: ${accessor.id} at ${accessor.updated}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
 Options.
 
-- id `string`: id of the allocation to update.
+- id `string`: id of the accessor to update.
 - data `object?`: developer assigned attributes.
 
 Returns.
 
-- [allocation](#Model) `Promise<object, Error>`: the updated allocation.
+- [accessor](#Model) `Promise<object, Error>`: the updated accessor.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-mutation UpdateAllocation($options: UpdateAllocationOptions!) {
-  allocation: UpdateAllocation(options: $options) {
+mutation UpdateAccessor($options: UpdateAccessorOptions!) {
+  accessor: UpdateAccessor(options: $options) {
     id
-    # ... allocation properties
+    # ... accessor properties
   }
 }
 ```
 
-## Remove an allocation
+## Remove an accessor
 
-Used to permanently remove an allocation.
+Used to permanently remove an accessor.
 
 ```ts
-authenticator.allocations.remove({
-    id: membership.allocationId,
+authenticator.accessors.remove({
+    id: membership.accessorId,
   })
-  .then(allocation => console.log(`Removed: ${allocation.id}`))
+  .then(accessor => console.log(`Removed: ${accessor.id}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -144,30 +144,30 @@ Options.
 
 Returns.
 
-- [allocation](#Model) `Promise<object, Error>` the removed allocation.
+- [accessor](#Model) `Promise<object, Error>` the removed accessor.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-mutation RemoveAllocation($options: RemoveAllocationOptions!) {
-  allocation: RemoveAllocation(options: $options) {
+mutation RemoveAccessor($options: RemoveAccessorOptions!) {
+  accessor: RemoveAccessor(options: $options) {
     id
-    # ... allocation properties
+    # ... accessor properties
   }
 }
 ```
 
-## Retrieve an allocation
+## Retrieve an accessor
 
-Used to get a single allocation.
+Used to get a single accessor.
 
 ```ts
-authenticator.allocations.retrieve({
-    id: allocation.id,
+authenticator.accessors.retrieve({
+    id: accessor.id,
   })
-  .then(allocation => console.log(`Retrieved: ${allocation.id}`))
+  .then(accessor => console.log(`Retrieved: ${accessor.id}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -178,34 +178,34 @@ Options.
 
 Returns.
 
-- [allocation](#Model) `Promise<object, Error>` the allocation requested.
+- [accessor](#Model) `Promise<object, Error>` the accessor requested.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query RetrieveAllocation($options: RetrieveAllocationOptions!) {
-  allocation: RetrieveAllocation(options: $options) {
+query RetrieveAccessor($options: RetrieveAccessorOptions!) {
+  accessor: RetrieveAccessor(options: $options) {
     id
-    # ... allocation properties
+    # ... accessor properties
   }
 }
 ```
 
-## List allocations
+## List accessors
 
-Used to get a list of allocations.
+Used to get a list of accessors.
 
 ```ts
-authenticator.allocations.list({
+authenticator.accessors.list({
     userId: user.id,
     providerId: provider.id,
     limit: 10,
     skip: 5,
     page: 0,
   })
-  .then(allocations => console.table(allocations))
+  .then(accessors => console.table(accessors))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -213,35 +213,35 @@ Options.
 
 - userId `string`: filtered by this user's id.
 - providerId `string`: filtered by this provider's id.
-- limit `number?`: maximum number of allocations returned.
-- skip `number?`: skip this number of allocations.
-- page `number?`: skip this number of allocations multiplied by the limit.
+- limit `number?`: maximum number of accessors returned.
+- skip `number?`: skip this number of accessors.
+- page `number?`: skip this number of accessors multiplied by the limit.
 
 **Note:** `skip` and `page` are summed when used together.
 
 Returns.
 
-- [allocations](#Model) `Promise<object[], Error>`: a list of allocations.
+- [accessors](#Model) `Promise<object[], Error>`: a list of accessors.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query ListAllocations($options: ListAllocationsOptions!) {
-  allocations: ListAllocations(options: $options) {
+query ListAccessors($options: ListAccessorsOptions!) {
+  accessors: ListAccessors(options: $options) {
     id
-    # ... allocation properties
+    # ... accessor properties
   }
 }
 ```
 
-## Count allocations
+## Count accessors
 
-Used to count a group of allocations.
+Used to count a group of accessors.
 
 ```ts
-authenticator.allocations.count({
+authenticator.accessors.count({
     userId: user.id,
     providerId: provider.id,
   })
@@ -256,24 +256,24 @@ Options.
   
 Returns.
 
-- count `Promise<number, Error>`: the number of allocations counted.
+- count `Promise<number, Error>`: the number of accessors counted.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query CountAllocations($options: CountAllocationsOptions!) {
-  count: CountAllocations(options: $options)
+query CountAccessors($options: CountAccessorsOptions!) {
+  count: CountAccessors(options: $options)
 }
 ```
 
-## Analytics of allocations
+## Analytics of accessors
 
-Used to get statistics of allocations over time.
+Used to get statistics of accessors over time.
 
 ```ts
-authenticator.allocations.analytics({
+authenticator.accessors.analytics({
     date: Date.now(),
     months: 6,
   })
@@ -288,20 +288,20 @@ Options.
   
 Returns.
 
-- analytics `Promise<object, Error>`: statistics related to allocations within time period.
+- analytics `Promise<object, Error>`: statistics related to accessors within time period.
   - labels `string[]`: date values within given period.
   - data `number[]`: values matching the labels.
-  - created `number`: number of allocations created.
-  - updated `number`: number of allocations updated.
-  - active `number`: number of allocations with 1 allocation or more.
+  - created `number`: number of accessors created.
+  - updated `number`: number of accessors updated.
+  - active `number`: number of accessors with 1 accessor or more.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query AnalyticsOfAllocations($options: AnalyticsOfAllocationsOptions!) {
-  analytics: AnalyticsOfAllocations(options: $options) {
+query AnalyticsOfAccessors($options: AnalyticsOfAccessorsOptions!) {
+  analytics: AnalyticsOfAccessors(options: $options) {
     labels
     data
     # ... analytics properties
@@ -311,7 +311,7 @@ query AnalyticsOfAllocations($options: AnalyticsOfAllocationsOptions!) {
 
 ## Resources
 
-- [Allocations](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Allocations.md)
+- [Accessors](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Accessors.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Memberships.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
 - [Scopes](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Scopes.md)

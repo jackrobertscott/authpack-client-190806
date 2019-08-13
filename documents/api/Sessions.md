@@ -314,7 +314,7 @@ query AnalyticsOfSessions($options: AnalyticsOfSessionsOptions!) {
 
 ## Resources
 
-- [Allocations](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Allocations.md)
+- [Accessors](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Accessors.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Memberships.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
 - [Scopes](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Scopes.md)
