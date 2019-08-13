@@ -54,6 +54,7 @@ Used to sign up an allocation on your app.
 authenticator.allocations.create({
     userId: user.id,
     providerId: provider.id,
+    code: queryString.parse(search).code,
     expiry: new Date(),
     data: {
       // custom json attributes
@@ -67,6 +68,7 @@ Options.
 
 - userId `string`: the user's id.
 - providerId `string`: the provider's id.
+- code `string`: the oauth code returned after authenticating.
 - expiry `Date`: the expiry time of the token.
 - data `object?`: developer assigned attributes.
 

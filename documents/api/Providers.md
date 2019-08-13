@@ -41,7 +41,7 @@ Properties.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
 - name `string`: the providers name e.g. Facebook.
-- code `string`: a unique code for provider e.g. `facebook`.
+- tag `string`: a unique code for provider e.g. `facebook`.
 - client `string`: the oauth client id.
 - redirect `string`: the oauth redirect url.
 - scopes `string`: the oauth scopes which are required.
@@ -55,7 +55,7 @@ Used to add a user as a new member of a workspace.
 ```ts
 authenticator.providers.create({
     name: 'Facebook',
-    code: 'facebook',
+    tag: 'facebook',
     client: 'FACEBOOK_APP_ID',
     secret: 'FACEBOOK_APP_SECRET_KEY',
     scopes: 'users:read,repos:read,repos:write',
@@ -71,7 +71,7 @@ authenticator.providers.create({
 Options.
 
 - name `string`: the providers name.
-- code `string`: a unique code for provider.
+- tag `string`: a unique code for provider.
 - client `string`: the oauth client id.
 - secret `string`: the oauth client secret.
 - redirect `string`: the oauth redirect url.
@@ -103,7 +103,7 @@ Used to patch a provider's details.
 authenticator.providers.update({
     id: provider.id,
     name: 'Facebook',
-    code: 'facebook',
+    tag: 'facebook',
     client: 'FACEBOOK_APP_ID',
     secret: 'FACEBOOK_APP_SECRET_KEY',
     scopes: 'users:read,repos:read,repos:write',
@@ -120,7 +120,7 @@ Options.
 
 - id `string`: id of the provider to update.
 - name `string`: the providers name.
-- code `string`: a unique code for provider.
+- tag `string`: a unique code for provider.
 - client `string`: the oauth client id.
 - secret `string`: the oauth client secret.
 - redirect `string`: the oauth redirect url.
@@ -159,7 +159,7 @@ authenticator.providers.remove({
 Options.
 
 - id `string?`: unique identifier.
-- code `string?`: used when id not provided.
+- tag `string?`: used when id not provided.
 
 Returns.
 
@@ -193,7 +193,7 @@ authenticator.providers.retrieve({
 Options.
 
 - id `string?`: unique identifier.
-- code `string?`: used when id not provided.
+- tag `string?`: used when id not provided.
 
 Returns.
 

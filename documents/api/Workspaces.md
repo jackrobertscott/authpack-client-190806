@@ -41,7 +41,7 @@ Properties.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
 - name `string`: workspace name.
-- code `string`: unique code used in urls.
+- tag `string`: unique code used in urls.
 - domains `string[]`: whitelisted domains for using the authenticator API.
 - data `object?`: developer assigned attributes.
 
@@ -52,7 +52,7 @@ Used to sign up a workspace on your app.
 ```ts
 authenticator.workspaces.create({
     name: 'Awesome Workspace',
-    code: 'awesome-workspace',
+    tag: 'awesome-workspace',
     domains: ['app.example.com'],
     data: {
       // custom json attributes
@@ -65,7 +65,7 @@ authenticator.workspaces.create({
 Options.
 
 - name `string`: workspace name.
-- code `string`: unique code.
+- tag `string`: unique code.
 - domains `string[]`: whitelisted domains for using the authenticator API.
 - data `object?`: developer assigned attributes.
 
@@ -95,7 +95,7 @@ Used to patch a workspace's details.
 authenticator.workspaces.update({
     id: workspace.id,
     name: 'Awesome Workspace',
-    code: 'awesome-workspace',
+    tag: 'awesome-workspace',
     domains: ['app.example.com'],
     data: {
       // custom json attributes
@@ -109,7 +109,7 @@ Options.
 
 - id `string`: id of the workspace to update.
 - name `string`: workspace name.
-- code `string`: unique code.
+- tag `string`: unique code.
 - domains `string[]`: whitelisted domains for using the authenticator API.
 - data `object?`: developer assigned attributes.
 
@@ -146,7 +146,7 @@ authenticator.workspaces.remove({
 Options.
 
 - id `string?`: unique identifier.
-- code `string?`: used when id not provided.
+- tag `string?`: used when id not provided.
 
 Returns.
 
@@ -181,7 +181,7 @@ authenticator.workspaces.retrieve({
 Options.
 
 - id `string?`: unique identifier.
-- code `string?`: used when id not provided.
+- tag `string?`: used when id not provided.
 
 Returns.
 

@@ -41,7 +41,7 @@ Properties.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
 - name `string`: a nice scope name.
-- code `string`: used to identify scope in code.
+- tag `string`: used to identify scope in code.
 - description `string`: describe the scope's permissions.
 - scopeId `string?`: the parent of the scope.
 - data `object?`: developer assigned attributes.
@@ -53,7 +53,7 @@ Used to sign up a scope on your app.
 ```ts
 authenticator.scopes.create({
     name: 'Editor',
-    code: 'editor',
+    tag: 'editor',
     description: 'Can edit data without seeing config details.',
     scopeId: scopeAdminId,
     data: {
@@ -67,7 +67,7 @@ authenticator.scopes.create({
 Options.
 
 - name `string`: a nice scope name.
-- code `string`: used to identify scope in code.
+- tag `string`: used to identify scope in code.
 - description `string`: describe the scope's permissions.
 - scopeId `string`: the parent of the scope.
 - data `object?`: developer assigned attributes.
@@ -97,7 +97,7 @@ Used to patch a scope's details.
 ```ts
 authenticator.scopes.update({
     name: 'Editor',
-    code: 'editor',
+    tag: 'editor',
     description: 'Can edit data without seeing config details.',
     scopeId: undefined,
     data: {
@@ -112,7 +112,7 @@ Options.
 
 - id `string`: id of the scope to update.
 - name `string?`: a nice scope name.
-- code `string?`: used to identify scope in code.
+- tag `string?`: used to identify scope in code.
 - description `string?`: describe the scope's permissions.
 - scopeId `string?`: the parent of the scope.
 - data `object?`: developer assigned attributes.
@@ -150,7 +150,7 @@ authenticator.scopes.remove({
 Options.
 
 - id `string?`: unique identifier.
-- code `string?`: used when id not provided.
+- tag `string?`: used when id not provided.
 
 Returns.
 
@@ -185,7 +185,7 @@ authenticator.scopes.retrieve({
 Options.
 
 - id `string?`: unique identifier.
-- code `string?`: used when id not provided.
+- tag `string?`: used when id not provided.
 
 Returns.
 
