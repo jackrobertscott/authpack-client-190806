@@ -44,7 +44,6 @@ Properties.
 - providerId `string`: the provider's id.
 - expiry `Date`: the expiry time of the token.
 - token `string`: the access token created by the allocation.
-- deactivated `boolean`: manually deactivated token.
 - data `object?`: developer assigned attributes.
 
 ## Create an allocation
@@ -56,7 +55,6 @@ authenticator.allocations.create({
     userId: user.id,
     providerId: provider.id,
     expiry: new Date(),
-    deactivated: false,
     data: {
       // custom json attributes
     },
@@ -70,7 +68,6 @@ Options.
 - userId `string`: the user's id.
 - providerId `string`: the provider's id.
 - expiry `Date`: the expiry time of the token.
-- deactivated `boolean`: manually deactivated token.
 - data `object?`: developer assigned attributes.
 
 Returns.
@@ -97,7 +94,6 @@ Used to patch an allocation's details.
 ```ts
 authenticator.allocations.update({
     id: allocation.id,
-    deactivated: false,
     data: {
       // custom json attributes
     },
@@ -109,7 +105,6 @@ authenticator.allocations.update({
 Options.
 
 - id `string`: id of the allocation to update.
-- deactivated `boolean`: manually deactivated token.
 - data `object?`: developer assigned attributes.
 
 Returns.
