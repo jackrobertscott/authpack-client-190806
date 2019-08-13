@@ -1,23 +1,23 @@
-# Sessions API
+# Allocations API
 
 > Authenticator 🏇 the fastest way to add auth to your apps
 
 ## Overview
 
-The `session` model is created when a user authenticates and requires an access token.
+The `allocation` model is created to store the access tokens between a provider and a user.
 
 - [Setup](#Model)
-- [Session model](#Model)
+- [Allocation model](#Model)
 
 Methods.
 
-- [Create a session](#Create-a-session)
-- [Update a session](#Update-a-session)
-- [Remove a session](#Remove-a-session)
-- [Retrieve a session](#Retrieve-a-session)
-- [List sessions](#List-sessions)
-- [Count sessions](#Count-sessions)
-- [Analytics of sessions](#Analytics-of-sessions)
+- [Create an allocation](#Create-a-allocation)
+- [Update an allocation](#Update-a-allocation)
+- [Remove an allocation](#Remove-a-allocation)
+- [Retrieve an allocation](#Retrieve-a-allocation)
+- [List allocations](#List-allocations)
+- [Count allocations](#Count-allocations)
+- [Analytics of allocations](#Analytics-of-allocations)
 
 Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 
@@ -33,7 +33,7 @@ const authenticator = new Authenticator({
 });
 ```
 
-## Session model
+## Allocation model
 
 Properties.
 
@@ -41,103 +41,103 @@ Properties.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
 - userId `string`: the user's id.
-- workspaceId `string`: the workspace's id.
+- providerId `string`: the provider's id.
 - expiry `Date`: the expiry time of the token.
-- token `string`: the access token created by the session.
+- token `string`: the access token created by the allocation.
 - deactivated `boolean`: manually deactivated token.
 - data `object?`: developer assigned attributes.
 
-## Create a session
+## Create an allocation
 
-Used to sign up a session on your app.
+Used to sign up an allocation on your app.
 
 ```ts
-authenticator.sessions.create({
+authenticator.allocations.create({
     userId: user.id,
-    workspaceId: workspace.id,
+    providerId: provider.id,
     expiry: new Date(),
     deactivated: false,
     data: {
       // custom json attributes
     },
   })
-  .then(session => console.log(`Created: ${session.id} at ${session.created}`))
+  .then(allocation => console.log(`Created: ${allocation.id} at ${allocation.created}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
 Options.
 
 - userId `string`: the user's id.
-- workspaceId `string`: the workspace's id.
+- providerId `string`: the provider's id.
 - expiry `Date`: the expiry time of the token.
 - deactivated `boolean`: manually deactivated token.
 - data `object?`: developer assigned attributes.
 
 Returns.
 
-- [session](#Model) `Promise<object, Error>`: the created session.
+- [allocation](#Model) `Promise<object, Error>`: the created allocation.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-mutation CreateSession($options: CreateSessionOptions!) {
-  session: CreateSession(options: $options) {
+mutation CreateAllocation($options: CreateAllocationOptions!) {
+  allocation: CreateAllocation(options: $options) {
     id
-    # ... session properties
+    # ... allocation properties
   }
 }
 ```
 
-## Update a session
+## Update an allocation
 
-Used to patch a session's details.
+Used to patch an allocation's details.
 
 ```ts
-authenticator.sessions.update({
-    id: session.id,
+authenticator.allocations.update({
+    id: allocation.id,
     deactivated: false,
     data: {
       // custom json attributes
     },
   })
-  .then(session => console.log(`Updated: ${session.id} at ${session.updated}`))
+  .then(allocation => console.log(`Updated: ${allocation.id} at ${allocation.updated}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
 Options.
 
-- id `string`: id of the session to update.
+- id `string`: id of the allocation to update.
 - deactivated `boolean`: manually deactivated token.
 - data `object?`: developer assigned attributes.
 
 Returns.
 
-- [session](#Model) `Promise<object, Error>`: the updated session.
+- [allocation](#Model) `Promise<object, Error>`: the updated allocation.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-mutation UpdateSession($options: UpdateSessionOptions!) {
-  session: UpdateSession(options: $options) {
+mutation UpdateAllocation($options: UpdateAllocationOptions!) {
+  allocation: UpdateAllocation(options: $options) {
     id
-    # ... session properties
+    # ... allocation properties
   }
 }
 ```
 
-## Remove a session
+## Remove an allocation
 
-Used to permanently remove a session.
+Used to permanently remove an allocation.
 
 ```ts
-authenticator.sessions.remove({
-    id: membership.sessionId,
+authenticator.allocations.remove({
+    id: membership.allocationId,
   })
-  .then(session => console.log(`Removed: ${session.id}`))
+  .then(allocation => console.log(`Removed: ${allocation.id}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -147,30 +147,30 @@ Options.
 
 Returns.
 
-- [session](#Model) `Promise<object, Error>` the removed session.
+- [allocation](#Model) `Promise<object, Error>` the removed allocation.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-mutation RemoveSession($options: RemoveSessionOptions!) {
-  session: RemoveSession(options: $options) {
+mutation RemoveAllocation($options: RemoveAllocationOptions!) {
+  allocation: RemoveAllocation(options: $options) {
     id
-    # ... session properties
+    # ... allocation properties
   }
 }
 ```
 
-## Retrieve a session
+## Retrieve an allocation
 
-Used to get a single session.
+Used to get a single allocation.
 
 ```ts
-authenticator.sessions.retrieve({
-    id: session.id,
+authenticator.allocations.retrieve({
+    id: allocation.id,
   })
-  .then(session => console.log(`Retrieved: ${session.id}`))
+  .then(allocation => console.log(`Retrieved: ${allocation.id}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -181,72 +181,72 @@ Options.
 
 Returns.
 
-- [session](#Model) `Promise<object, Error>` the session requested.
+- [allocation](#Model) `Promise<object, Error>` the allocation requested.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query RetrieveSession($options: RetrieveSessionOptions!) {
-  session: RetrieveSession(options: $options) {
+query RetrieveAllocation($options: RetrieveAllocationOptions!) {
+  allocation: RetrieveAllocation(options: $options) {
     id
-    # ... session properties
+    # ... allocation properties
   }
 }
 ```
 
-## List sessions
+## List allocations
 
-Used to get a list of sessions.
+Used to get a list of allocations.
 
 ```ts
-authenticator.sessions.list({
+authenticator.allocations.list({
     userId: user.id,
-    workspaceId: workspace.id,
+    providerId: provider.id,
     limit: 10,
     skip: 5,
     page: 0,
   })
-  .then(sessions => console.table(sessions))
+  .then(allocations => console.table(allocations))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
 Options.
 
 - userId `string`: filtered by this user's id.
-- workspaceId `string`: filtered by this workspace's id.
-- limit `number?`: maximum number of sessions returned.
-- skip `number?`: skip this number of sessions.
-- page `number?`: skip this number of sessions multiplied by the limit.
+- providerId `string`: filtered by this provider's id.
+- limit `number?`: maximum number of allocations returned.
+- skip `number?`: skip this number of allocations.
+- page `number?`: skip this number of allocations multiplied by the limit.
 
 **Note:** `skip` and `page` are summed when used together.
 
 Returns.
 
-- [sessions](#Model) `Promise<object[], Error>`: a list of sessions.
+- [allocations](#Model) `Promise<object[], Error>`: a list of allocations.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query ListSessions($options: ListSessionsOptions!) {
-  sessions: ListSessions(options: $options) {
+query ListAllocations($options: ListAllocationsOptions!) {
+  allocations: ListAllocations(options: $options) {
     id
-    # ... session properties
+    # ... allocation properties
   }
 }
 ```
 
-## Count sessions
+## Count allocations
 
-Used to count a group of sessions.
+Used to count a group of allocations.
 
 ```ts
-authenticator.sessions.count({
+authenticator.allocations.count({
     userId: user.id,
-    workspaceId: workspace.id,
+    providerId: provider.id,
   })
   .then(count => console.log(`Counted: ${count}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -255,28 +255,28 @@ authenticator.sessions.count({
 Options.
 
 - userId `string`: filtered by this user's id.
-- workspaceId `string`: filtered by this workspace's id.
+- providerId `string`: filtered by this provider's id.
   
 Returns.
 
-- count `Promise<number, Error>`: the number of sessions counted.
+- count `Promise<number, Error>`: the number of allocations counted.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query CountSessions($options: CountSessionsOptions!) {
-  count: CountSessions(options: $options)
+query CountAllocations($options: CountAllocationsOptions!) {
+  count: CountAllocations(options: $options)
 }
 ```
 
-## Analytics of sessions
+## Analytics of allocations
 
-Used to get statistics of sessions over time.
+Used to get statistics of allocations over time.
 
 ```ts
-authenticator.sessions.analytics({
+authenticator.allocations.analytics({
     date: Date.now(),
     months: 6,
   })
@@ -291,20 +291,20 @@ Options.
   
 Returns.
 
-- analytics `Promise<object, Error>`: statistics related to sessions within time period.
+- analytics `Promise<object, Error>`: statistics related to allocations within time period.
   - labels `string[]`: date values within given period.
   - data `number[]`: values matching the labels.
-  - created `number`: number of sessions created.
-  - updated `number`: number of sessions updated.
-  - active `number`: number of sessions with 1 session or more.
+  - created `number`: number of allocations created.
+  - updated `number`: number of allocations updated.
+  - active `number`: number of allocations with 1 allocation or more.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query AnalyticsOfSessions($options: AnalyticsOfSessionsOptions!) {
-  analytics: AnalyticsOfSessions(options: $options) {
+query AnalyticsOfAllocations($options: AnalyticsOfAllocationsOptions!) {
+  analytics: AnalyticsOfAllocations(options: $options) {
     labels
     data
     # ... analytics properties

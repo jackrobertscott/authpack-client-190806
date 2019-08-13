@@ -2,6 +2,8 @@
 
 > The fastest way to add auth to your app
 
+An open source repository containing the frontend components of the Window Gadgets Authenticator codebase.
+
 ## Table of Contents
 
 - Gettings Started Guide

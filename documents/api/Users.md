@@ -40,6 +40,7 @@ Properties.
 - id `string`: unique identifier.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
+- workspaceCurrentId `string`: id of the last workspace.
 - name `string`: full name.
 - email `string`: valid email address.
 - username `string`: unique code.
@@ -328,10 +329,10 @@ query AnalyticsOfUsers($options: AnalyticsOfUsersOptions!) {
 
 ## Resources
 
+- [Allocations](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Allocations.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Memberships.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
 - [Scopes](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Scopes.md)
 - [Sessions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Sessions.md)
-- [Themes](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Themes.md)
 - [Users](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
 - [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Workspaces.md)

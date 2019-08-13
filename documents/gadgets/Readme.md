@@ -80,6 +80,51 @@ Properties.
   - login `function`: fired after a user logs in.
   - signup `function`: fired after a user signs up.
 
+## Theming
+
+Type definition of Theme.
+
+```ts
+interface Theme {
+  inputs: {
+    base: {
+      backgroundColor: string;
+      disabledColor: string;
+      letterColor: string;
+      borderColor: string;
+      padding: number;
+      shadow: string;
+    }
+    error: {
+      backgroundColor: string;
+      letterColor: string;
+      borderColor: string;
+    }
+  }
+  sidebar {
+    base {
+      backgroundColor: string;
+      iconColor: string;
+      padding: string;
+    }
+  }
+  heading {
+    base {
+      backgroundColor: string;
+      letterColor: string;
+      padding: string;
+    }
+  }
+  gadgets {
+    base {
+      backgroundColor: string;
+      letterColor: string;
+      padding: string;
+    }
+  }
+}
+```
+
 ## React
 
 Example code for using the gadgets in a React app.
