@@ -29,7 +29,8 @@ Never store your private keys in your codebase - use environment variables.
 import { Authenticator } from 'wga-api';
 
 const authenticator = new Authenticator({
-  key: process.env.authenticatorPrivateKey
+  secret: process.env.AUTHENTICATOR_SECRET
+  devmode: false,
 });
 ```
 
