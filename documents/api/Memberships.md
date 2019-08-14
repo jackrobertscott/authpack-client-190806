@@ -4,7 +4,7 @@
 
 ## Overview
 
-The `membership` model is used to group a user to a workspace.
+The `membership` model is used to group a account to a group.
 
 - [Setup](#Model)
 - [Membership model](#Model)
@@ -23,7 +23,7 @@ Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 
 ## Setup
 
-Never store your private keys in your code base - use environment variables.
+Never store your private keys in your codebase - use environment variables.
 
 ```ts
 import { Authenticator } from 'wga-api';
@@ -40,25 +40,23 @@ Properties.
 - id `string`: unique identifier.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
-- workspaceId: `string`: id of a workspace.
-- userId: `string?`: id of a user.
-- email `string?`: when user id is not provided, email address is used.
-- scopeIds `string[]`: permission scopes assigned to member.
-- data `object?`: developer assigned attributes.
+- group `object`: the related group.
+- account `object`: the related account.
+- permissions `object[]`: the permissions assigned to member.
+- meta `object?`: developer assigned attributes.
+- email `string?`: email address - used when account not provided.
 
 ## Create a membership
 
-Used to add a user as a new member of a workspace.
+Used to add a account as a new member of a group.
 
 ```ts
 authenticator.memberships.create({
-    workspaceId: workspace.id,
-    userId: user.id,
+    group: group.id,
+    account: account.id,
+    permissions: [permissionEditor.id, permissionCommentor.id],
+    meta: {/* attributes */},
     email: 'invitation@email.com',
-    scopeIds: [scopeEditor.id, scopeCommentor.id],
-    data: {
-      // custom json attributes
-    },
   })
   .then(membership => console.log(`Created: ${membership.id} at ${membership.created}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -66,11 +64,11 @@ authenticator.memberships.create({
 
 Options.
 
-- workspaceId: `string`: id of a workspace.
-- userId: `string?`: id of a user.
-- email `string?`: when user id is not provided, email address is used.
-- scopeIds `string[]?`: permission scopes assigned to member.
-- data `object?`: developer assigned attributes.
+- group: `string`: id of a group.
+- account: `string`: id of a account.
+- permissions `string[]?`: ids of permissions assigned to member.
+- meta `object?`: developer assigned attributes.
+- email `string?`: email address - used when account not provided.
 
 Returns.
 
@@ -96,10 +94,8 @@ Used to patch a membership's details.
 ```ts
 authenticator.memberships.update({
     id: membership.id,
-    scopeIds: [scopeEditor.id, scopeCommentor.id],
-    data: {
-      // custom json attributes
-    },
+    permissions: [permissionEditor.id, permissionCommentor.id],
+    meta: {/* attributes */},
   })
   .then(membership => console.log(`Updated: ${membership.id} at ${membership.updated}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -108,8 +104,8 @@ authenticator.memberships.update({
 Options.
 
 - id `string`: id of the membership to update.
-- scopeIds `string[]?`: permission scopes assigned to member.
-- data `object?`: developer assigned attributes.
+- permissions `string[]?`: permission permissions assigned to member.
+- meta `object?`: developer assigned attributes.
 
 Returns.
 
@@ -134,7 +130,7 @@ Used to permanently remove a membership.
 
 ```ts
 authenticator.memberships.remove({
-    id: membership.membershipId,
+    id: membership.id,
   })
   .then(membership => console.log(`Removed: ${membership.id}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -167,7 +163,7 @@ Used to get a single membership.
 
 ```ts
 authenticator.memberships.retrieve({
-    id: membership.membershipId,
+    id: membership.id,
   })
   .then(membership => console.log(`Retrieved: ${membership.id}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -200,8 +196,8 @@ Used to get a list of memberships.
 
 ```ts
 authenticator.memberships.list({
-    workspaceId: workspace.id,
-    userId: user.id,
+    group: group.id,
+    account: account.id,
     limit: 10,
     skip: 5,
     page: 0,
@@ -212,8 +208,8 @@ authenticator.memberships.list({
 
 Options.
 
-- workspaceId: `string`: must be related to this workspace.
-- userId: `string?`: must be related to this user.
+- group: `string`: filtered by this groups's id.
+- account: `string?`: filtered by this account's id.
 - limit `number?`: maximum number of memberships returned.
 - skip `number?`: skip this number of memberships.
 - page `number?`: skip this number of memberships multiplied by the limit.
@@ -243,8 +239,8 @@ Used to count a group of memberships.
 
 ```ts
 authenticator.memberships.count({
-    workspaceId: workspace.id,
-    userId: user.id,
+    group: group.id,
+    account: account.id,
   })
   .then(count => console.log(`Counted: ${count}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -252,8 +248,8 @@ authenticator.memberships.count({
 
 Options.
 
-- workspaceId: `string`: must be related to this workspace.
-- userId: `string?`: must be related to this user.
+- group: `string`: filtered by this groups's id.
+- account: `string?`: filtered by this account's id.
   
 Returns.
 
@@ -313,9 +309,9 @@ query AnalyticsOfMemberships($options: AnalyticsOfMembershipsOptions!) {
 ## Resources
 
 - [Accessors](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Accessors.md)
+- [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
+- [Groups](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Groups.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Memberships.md)
+- [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Permissions.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
-- [Scopes](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Scopes.md)
 - [Sessions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Sessions.md)
-- [Users](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
-- [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Workspaces.md)

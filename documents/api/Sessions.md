@@ -4,7 +4,7 @@
 
 ## Overview
 
-The `session` model is created when a user authenticates and requires an access token.
+The `session` model is created when a account authenticates and requires an access token.
 
 - [Setup](#Model)
 - [Session model](#Model)
@@ -23,7 +23,7 @@ Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 
 ## Setup
 
-Never store your private keys in your code base - use environment variables.
+Never store your private keys in your codebase - use environment variables.
 
 ```ts
 import { Authenticator } from 'wga-api';
@@ -40,12 +40,12 @@ Properties.
 - id `string`: unique identifier.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
-- userId `string`: the user's id.
-- workspaceId `string`: the workspace's id.
+- group `string`: the related group.
+- account `string`: the related account.
+- meta `object?`: developer assigned attributes.
 - expiry `Date`: the expiry time of the token.
 - token `string`: the access token created by the session.
 - deactivated `boolean`: manually deactivated token.
-- data `object?`: developer assigned attributes.
 
 ## Create a session
 
@@ -53,13 +53,11 @@ Used to sign up a session on your app.
 
 ```ts
 authenticator.sessions.create({
-    userId: user.id,
-    workspaceId: workspace.id,
+    group: group.id,
+    account: account.id,
+    meta: {/* attributes */},
     expiry: new Date(),
     deactivated: false,
-    data: {
-      // custom json attributes
-    },
   })
   .then(session => console.log(`Created: ${session.id} at ${session.created}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -67,11 +65,11 @@ authenticator.sessions.create({
 
 Options.
 
-- userId `string`: the user's id.
-- workspaceId `string`: the workspace's id.
+- group `string`: the group's id.
+- account `string`: the account's id.
+- meta `object?`: developer assigned attributes.
 - expiry `Date`: the expiry time of the token.
 - deactivated `boolean`: manually deactivated token.
-- data `object?`: developer assigned attributes.
 
 Returns.
 
@@ -97,10 +95,8 @@ Used to patch a session's details.
 ```ts
 authenticator.sessions.update({
     id: session.id,
+    meta: {/* attributes */},
     deactivated: false,
-    data: {
-      // custom json attributes
-    },
   })
   .then(session => console.log(`Updated: ${session.id} at ${session.updated}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -109,8 +105,8 @@ authenticator.sessions.update({
 Options.
 
 - id `string`: id of the session to update.
+- meta `object?`: developer assigned attributes.
 - deactivated `boolean`: manually deactivated token.
-- data `object?`: developer assigned attributes.
 
 Returns.
 
@@ -202,8 +198,8 @@ Used to get a list of sessions.
 
 ```ts
 authenticator.sessions.list({
-    userId: user.id,
-    workspaceId: workspace.id,
+    account: account.id,
+    group: group.id,
     limit: 10,
     skip: 5,
     page: 0,
@@ -214,8 +210,8 @@ authenticator.sessions.list({
 
 Options.
 
-- userId `string`: filtered by this user's id.
-- workspaceId `string`: filtered by this workspace's id.
+- group `string?`: filtered by this group's id.
+- account `string?`: filtered by this account's id.
 - limit `number?`: maximum number of sessions returned.
 - skip `number?`: skip this number of sessions.
 - page `number?`: skip this number of sessions multiplied by the limit.
@@ -245,8 +241,8 @@ Used to count a group of sessions.
 
 ```ts
 authenticator.sessions.count({
-    userId: user.id,
-    workspaceId: workspace.id,
+    account: account.id,
+    group: group.id,
   })
   .then(count => console.log(`Counted: ${count}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -254,8 +250,8 @@ authenticator.sessions.count({
 
 Options.
 
-- userId `string`: filtered by this user's id.
-- workspaceId `string`: filtered by this workspace's id.
+- group `string?`: filtered by this group's id.
+- account `string?`: filtered by this account's id.
   
 Returns.
 
@@ -315,9 +311,9 @@ query AnalyticsOfSessions($options: AnalyticsOfSessionsOptions!) {
 ## Resources
 
 - [Accessors](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Accessors.md)
+- [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
+- [Groups](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Groups.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Memberships.md)
+- [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Permissions.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
-- [Scopes](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Scopes.md)
 - [Sessions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Sessions.md)
-- [Users](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
-- [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Workspaces.md)

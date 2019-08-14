@@ -4,7 +4,7 @@
 
 ## Overview
 
-The `accessor` model is created to store the access tokens between a provider and a user.
+The `accessor` model is created to store the access tokens between a provider and a account.
 
 - [Setup](#Model)
 - [Accessor model](#Model)
@@ -23,7 +23,7 @@ Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 
 ## Setup
 
-Never store your private keys in your code base - use environment variables.
+Never store your private keys in your codebase - use environment variables.
 
 ```ts
 import { Authenticator } from 'wga-api';
@@ -40,11 +40,11 @@ Properties.
 - id `string`: unique identifier.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
-- userId `string`: the user's id.
-- providerId `string`: the provider's id.
+- account `string`: the related account.
+- provider `string`: the related provider.
+- meta `object?`: developer assigned attributes.
 - expiry `Date`: the expiry time of the token.
 - token `string`: the access token created by the accessor.
-- data `object?`: developer assigned attributes.
 
 ## Create an accessor
 
@@ -52,13 +52,11 @@ Used to sign up an accessor on your app.
 
 ```ts
 authenticator.accessors.create({
-    userId: user.id,
-    providerId: provider.id,
-    code: queryString.parse(search).code,
+    account: account.id,
+    provider: provider.id,
+    meta: {/* attributes */},
+    code: queryString.parse(location.search).code,
     expiry: new Date(),
-    data: {
-      // custom json attributes
-    },
   })
   .then(accessor => console.log(`Created: ${accessor.id} at ${accessor.created}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -66,11 +64,11 @@ authenticator.accessors.create({
 
 Options.
 
-- userId `string`: the user's id.
-- providerId `string`: the provider's id.
+- account `string|object`: the account's id or an object which will create a new account.
+- provider `string`: the provider's id.
+- meta `object?`: developer assigned attributes.
 - code `string`: the oauth code returned after authenticating.
 - expiry `Date`: the expiry time of the token.
-- data `object?`: developer assigned attributes.
 
 Returns.
 
@@ -96,9 +94,7 @@ Used to patch an accessor's details.
 ```ts
 authenticator.accessors.update({
     id: accessor.id,
-    data: {
-      // custom json attributes
-    },
+    meta: {/* attributes */},
   })
   .then(accessor => console.log(`Updated: ${accessor.id} at ${accessor.updated}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -107,7 +103,7 @@ authenticator.accessors.update({
 Options.
 
 - id `string`: id of the accessor to update.
-- data `object?`: developer assigned attributes.
+- meta `object?`: developer assigned attributes.
 
 Returns.
 
@@ -199,8 +195,8 @@ Used to get a list of accessors.
 
 ```ts
 authenticator.accessors.list({
-    userId: user.id,
-    providerId: provider.id,
+    account: account.id,
+    provider: provider.id,
     limit: 10,
     skip: 5,
     page: 0,
@@ -211,8 +207,8 @@ authenticator.accessors.list({
 
 Options.
 
-- userId `string`: filtered by this user's id.
-- providerId `string`: filtered by this provider's id.
+- account `string`: filtered by this account's id.
+- provider `string`: filtered by this provider's id.
 - limit `number?`: maximum number of accessors returned.
 - skip `number?`: skip this number of accessors.
 - page `number?`: skip this number of accessors multiplied by the limit.
@@ -242,8 +238,8 @@ Used to count a group of accessors.
 
 ```ts
 authenticator.accessors.count({
-    userId: user.id,
-    providerId: provider.id,
+    account: account.id,
+    provider: provider.id,
   })
   .then(count => console.log(`Counted: ${count}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -251,8 +247,8 @@ authenticator.accessors.count({
 
 Options.
 
-- userId `string`: filtered by this user's id.
-- providerId `string`: filtered by this provider's id.
+- account `string`: filtered by this account's id.
+- provider `string`: filtered by this provider's id.
   
 Returns.
 
@@ -312,9 +308,9 @@ query AnalyticsOfAccessors($options: AnalyticsOfAccessorsOptions!) {
 ## Resources
 
 - [Accessors](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Accessors.md)
+- [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
+- [Groups](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Groups.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Memberships.md)
+- [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Permissions.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
-- [Scopes](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Scopes.md)
 - [Sessions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Sessions.md)
-- [Users](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
-- [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Workspaces.md)

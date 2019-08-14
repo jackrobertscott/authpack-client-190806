@@ -4,7 +4,7 @@
 
 ## Overview
 
-The `provider` model is used to group a user to a workspace.
+The `provider` model is used to group a account to a group.
 
 - [Setup](#Model)
 - [Provider model](#Model)
@@ -23,7 +23,7 @@ Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 
 ## Setup
 
-Never store your private keys in your code base - use environment variables.
+Never store your private keys in your codebase - use environment variables.
 
 ```ts
 import { Authenticator } from 'wga-api';
@@ -40,29 +40,27 @@ Properties.
 - id `string`: unique identifier.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
+- meta `object?`: developer assigned attributes.
 - name `string`: the providers name e.g. Facebook.
 - tag `string`: a unique code for provider e.g. `facebook`.
 - client `string`: the oauth client id.
 - redirect `string`: the oauth redirect url.
-- scopes `string`: the oauth scopes which are required.
-- url `string`: the generated oauth url for authenticating a user.
-- data `object?`: developer assigned attributes.
+- scopes `string`: the oauth permissions which are required.
+- url `string`: the generated oauth url for authenticating a account.
 
 ## Create a provider
 
-Used to add a user as a new member of a workspace.
+Used to add a account as a new member of a group.
 
 ```ts
 authenticator.providers.create({
+    meta: {/* attributes */},
     name: 'Facebook',
     tag: 'facebook',
     client: 'FACEBOOK_APP_ID',
     secret: 'FACEBOOK_APP_SECRET_KEY',
-    scopes: 'users:read,repos:read,repos:write',
+    scopes: 'accounts:read,repos:read,repos:write',
     redirect: 'https://example.com/login/facebook',
-    data: {
-      // custom json attributes
-    },
   })
   .then(provider => console.log(`Created: ${provider.id} at ${provider.created}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -70,13 +68,13 @@ authenticator.providers.create({
 
 Options.
 
+- meta `object?`: developer assigned attributes.
 - name `string`: the providers name.
 - tag `string`: a unique code for provider.
 - client `string`: the oauth client id.
 - secret `string`: the oauth client secret.
+- scopes `string`: the oauth permissions which are required.
 - redirect `string`: the oauth redirect url.
-- scopes `string`: the oauth scopes which are required.
-- data `object?`: developer assigned attributes.
 
 Returns.
 
@@ -102,15 +100,13 @@ Used to patch a provider's details.
 ```ts
 authenticator.providers.update({
     id: provider.id,
+    meta: {/* attributes */},
     name: 'Facebook',
     tag: 'facebook',
     client: 'FACEBOOK_APP_ID',
     secret: 'FACEBOOK_APP_SECRET_KEY',
-    scopes: 'users:read,repos:read,repos:write',
+    scopes: 'accounts:read,repos:read,repos:write',
     redirect: 'https://example.com/login/facebook',
-    data: {
-      // custom json attributes
-    },
   })
   .then(provider => console.log(`Updated: ${provider.id} at ${provider.updated}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -119,13 +115,13 @@ authenticator.providers.update({
 Options.
 
 - id `string`: id of the provider to update.
-- name `string`: the providers name.
-- tag `string`: a unique code for provider.
-- client `string`: the oauth client id.
-- secret `string`: the oauth client secret.
-- redirect `string`: the oauth redirect url.
-- scopes `string`: the oauth scopes which are required.
-- data `object?`: developer assigned attributes.
+- meta `object?`: developer assigned attributes.
+- name `string?`: the providers name.
+- tag `string?`: a unique code for provider.
+- client `string?`: the oauth client id.
+- secret `string?`: the oauth client secret.
+- scopes `string?`: the oauth permissions which are required.
+- redirect `string?`: the oauth redirect url.
 
 Returns.
 
@@ -229,7 +225,7 @@ authenticator.providers.list({
 
 Options.
 
-- search `string?`: compared against name, and code.
+- search `string?`: compared against name, and tag.
 - limit `number?`: maximum number of providers returned.
 - skip `number?`: skip this number of providers.
 - page `number?`: skip this number of providers multiplied by the limit.
@@ -267,7 +263,7 @@ authenticator.providers.count({
 
 Options.
 
-- search `string?`: compared against name, and code.
+- search `string?`: compared against name, and tag.
   
 Returns.
 
@@ -327,9 +323,9 @@ query AnalyticsOfProviders($options: AnalyticsOfProvidersOptions!) {
 ## Resources
 
 - [Accessors](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Accessors.md)
+- [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
+- [Groups](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Groups.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Memberships.md)
+- [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Permissions.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
-- [Scopes](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Scopes.md)
 - [Sessions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Sessions.md)
-- [Users](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
-- [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Workspaces.md)

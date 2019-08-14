@@ -23,10 +23,10 @@ A clean and simple API design.
 ```ts
 switch (platform) {
   case 'react':
-    setUser(user)
+    setAccount(account)
     break
   case 'vue':
-    this.user = user;
+    this.account = account;
     break
   case 'express':
     res.render('index', {
