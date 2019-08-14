@@ -308,7 +308,7 @@ query AnalyticsOfAccessors($options: AnalyticsOfAccessorsOptions!) {
 ## Resources
 
 - [Accessors](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Accessors.md)
-- [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
+- [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Accounts.md)
 - [Groups](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Groups.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Permissions.md)
