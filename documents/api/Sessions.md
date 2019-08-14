@@ -310,10 +310,10 @@ query AnalyticsOfSessions($options: AnalyticsOfSessionsOptions!) {
 
 ## Resources
 
-- [Accessors](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Accessors.md)
-- [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Accounts.md)
-- [Groups](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Groups.md)
-- [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Memberships.md)
-- [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Permissions.md)
-- [Providers](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Providers.md)
-- [Sessions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/Sessions.md)
+- [Accessors](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/accessors.md)
+- [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/accounts.md)
+- [Groups](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/groups.md)
+- [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/memberships.md)
+- [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/permissions.md)
+- [Providers](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/providers.md)
+- [Sessions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/sessions.md)
