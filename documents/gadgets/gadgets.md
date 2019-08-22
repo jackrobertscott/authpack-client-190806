@@ -4,7 +4,7 @@
 
 ## Overview
 
-The authenticator gadgets provide the quickest solution to account & group management.
+The authenticator gadgets provide the quickest solution to account & collection management.
 
 - [Setup](#Setup)
 - [Gadgets state](#Gadgets-state)
@@ -31,13 +31,13 @@ Properties.
 
 ## Gadgets state
 
-The gadgets store an internal state which contains your account, session, and group details.
+The gadgets store an internal state which contains your account, session, and collection details.
 
 - [account]() `object?`: the current authenticated account.
-- [group]() `object?`: the current group selected by the account.
+- [collection]() `object?`: the current collection selected by the account.
 - [session]() `object?`: the current account's authentication session containing access token.
-- [permissions]() `object[]?`: the permission's assigned to the current account with this group.
-- [membership]() `object?`: the membership relation between the account and group.
+- [permissions]() `object[]?`: the permission's assigned to the current account with this collection.
+- [membership]() `object?`: the membership relation between the account and collection.
 
 ## Listen to state changes
 
@@ -59,7 +59,7 @@ Returns.
 
 ## Render the gadgets
 
-Used to authenticate and manage a account and their groups.
+Used to authenticate and manage a account and their collections.
 
 ```ts
 gadgets.render({

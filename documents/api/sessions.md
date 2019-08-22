@@ -41,7 +41,7 @@ Properties.
 - id `string`: unique identifier.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
-- group `string`: the related group.
+- collection `string`: the related collection.
 - account `string`: the related account.
 - meta `object?`: developer assigned attributes.
 - expiry `Date`: the expiry time of the token.
@@ -54,7 +54,7 @@ Used to sign up a session on your app.
 
 ```ts
 authenticator.sessions.create({
-    group: group.id,
+    collection: collection.id,
     account: account.id,
     meta: {/* attributes */},
     expiry: new Date(),
@@ -66,7 +66,7 @@ authenticator.sessions.create({
 
 Options.
 
-- group `string`: the group's id.
+- collection `string`: the collection's id.
 - account `string`: the account's id.
 - meta `object?`: developer assigned attributes.
 - expiry `Date`: the expiry time of the token.
@@ -200,7 +200,7 @@ Used to get a list of sessions.
 ```ts
 authenticator.sessions.list({
     account: account.id,
-    group: group.id,
+    collection: collection.id,
     limit: 10,
     skip: 5,
     page: 0,
@@ -211,7 +211,7 @@ authenticator.sessions.list({
 
 Options.
 
-- group `string?`: filtered by this group's id.
+- collection `string?`: filtered by this collection's id.
 - account `string?`: filtered by this account's id.
 - limit `number?`: maximum number of sessions returned.
 - skip `number?`: skip this number of sessions.
@@ -238,12 +238,12 @@ query ListSessions($options: ListSessionsOptions!) {
 
 ## Count sessions
 
-Used to count a group of sessions.
+Used to count a collection of sessions.
 
 ```ts
 authenticator.sessions.count({
     account: account.id,
-    group: group.id,
+    collection: collection.id,
   })
   .then(count => console.log(`Counted: ${count}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -251,7 +251,7 @@ authenticator.sessions.count({
 
 Options.
 
-- group `string?`: filtered by this group's id.
+- collection `string?`: filtered by this collection's id.
 - account `string?`: filtered by this account's id.
   
 Returns.
@@ -313,7 +313,7 @@ query AnalyticsOfSessions($options: AnalyticsOfSessionsOptions!) {
 
 - [Accessors](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/accessors.md)
 - [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/accounts.md)
-- [Groups](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/groups.md)
+- [Collections](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/collections.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/permissions.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/providers.md)

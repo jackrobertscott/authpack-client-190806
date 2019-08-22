@@ -4,7 +4,7 @@
 
 ## Overview
 
-The `provider` model is used to group a account to a group.
+The `provider` model is used to collection a account to a collection.
 
 - [Setup](#Model)
 - [Provider model](#Model)
@@ -51,7 +51,7 @@ Properties.
 
 ## Create a provider
 
-Used to add a account as a new member of a group.
+Used to add a account as a new member of a collection.
 
 ```ts
 authenticator.providers.create({
@@ -252,7 +252,7 @@ query ListProviders($options: ListProvidersOptions!) {
 
 ## Count providers
 
-Used to count a group of providers.
+Used to count a collection of providers.
 
 ```ts
 authenticator.providers.count({
@@ -325,7 +325,7 @@ query AnalyticsOfProviders($options: AnalyticsOfProvidersOptions!) {
 
 - [Accessors](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/accessors.md)
 - [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/accounts.md)
-- [Groups](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/groups.md)
+- [Collections](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/collections.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/permissions.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/providers.md)

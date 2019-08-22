@@ -4,5 +4,5 @@
   ],
   "version": "0.0.1",
   "npmClient": "yarn",
-  "useGroups": true
+  "useCollections": true
 }

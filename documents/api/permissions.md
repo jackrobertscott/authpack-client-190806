@@ -248,7 +248,7 @@ query ListPermissions($options: ListPermissionsOptions!) {
 
 ## Count permissions
 
-Used to count a group of permissions.
+Used to count a collection of permissions.
 
 ```ts
 authenticator.permissions.count({
@@ -323,7 +323,7 @@ query AnalyticsOfPermissions($options: AnalyticsOfPermissionsOptions!) {
 
 - [Accessors](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/accessors.md)
 - [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/accounts.md)
-- [Groups](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/groups.md)
+- [Collections](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/collections.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/permissions.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/providers.md)
