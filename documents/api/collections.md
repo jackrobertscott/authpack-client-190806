@@ -4,7 +4,7 @@
 
 ## Overview
 
-The `collection` model is used to identify a single person who has signed up to your app.
+The `collection` model is links a group of accounts together.
 
 - [Setup](#Model)
 - [Collection model](#Model)
