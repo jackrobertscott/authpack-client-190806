@@ -4,7 +4,7 @@
 
 ## Overview
 
-The `collection` model is links a group of accounts together.
+The `collection` model is used to group multiple accounts together.
 
 - [Setup](#Model)
 - [Collection model](#Model)
