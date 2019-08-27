@@ -1,0 +1,31 @@
+{
+  "name": "wga",
+  "private": false,
+  "version": "0.1.0",
+  "description": "Service for the Window Gadgets Authenticator API.",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "source": "src/index.ts",
+  "author": {
+    "name": "Jack R. Scott",
+    "email": "jack.rob.scott@gmail.com"
+  },
+  "files": [
+    "lib",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "nodemon",
+    "test": "mocha -r ts-node/register src/**/*.test.ts",
+    "build": "yarn run clean && yarn run compile",
+    "clean": "rm -rf lib",
+    "compile": "tsc"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.19.1",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
+  }
+}
