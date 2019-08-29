@@ -4,7 +4,7 @@
 
 ## Overview
 
-The `membership` model is used to collection a account to a collection.
+The `membership` model is used to group a account to a group.
 
 - [Setup](#Model)
 - [Membership model](#Model)
@@ -41,7 +41,7 @@ Properties.
 - id `string`: unique identifier.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
-- collection `object`: the related collection.
+- group `object`: the related group.
 - account `object`: the related account.
 - permissions `object[]`: the permissions assigned to member.
 - meta `object?`: developer assigned attributes.
@@ -49,11 +49,11 @@ Properties.
 
 ## Create a membership
 
-Used to add a account as a new member of a collection.
+Used to add a account as a new member of a group.
 
 ```ts
 authenticator.memberships.create({
-    collection: collection.id,
+    group: group.id,
     account: account.id,
     permissions: [permissionEditor.id, permissionCommentor.id],
     meta: {/* attributes */},
@@ -65,7 +65,7 @@ authenticator.memberships.create({
 
 Options.
 
-- collection: `string`: id of a collection.
+- group: `string`: id of a group.
 - account: `string`: id of a account.
 - permissions `string[]?`: ids of permissions assigned to member.
 - meta `object?`: developer assigned attributes.
@@ -197,7 +197,7 @@ Used to get a list of memberships.
 
 ```ts
 authenticator.memberships.list({
-    collection: collection.id,
+    group: group.id,
     account: account.id,
     limit: 10,
     skip: 5,
@@ -209,7 +209,7 @@ authenticator.memberships.list({
 
 Options.
 
-- collection: `string`: filtered by this collections's id.
+- group: `string`: filtered by this groups's id.
 - account: `string?`: filtered by this account's id.
 - limit `number?`: maximum number of memberships returned.
 - skip `number?`: skip this number of memberships.
@@ -236,11 +236,11 @@ query ListMemberships($options: ListMembershipsOptions!) {
 
 ## Count memberships
 
-Used to count a collection of memberships.
+Used to count a group of memberships.
 
 ```ts
 authenticator.memberships.count({
-    collection: collection.id,
+    group: group.id,
     account: account.id,
   })
   .then(count => console.log(`Counted: ${count}`))
@@ -249,7 +249,7 @@ authenticator.memberships.count({
 
 Options.
 
-- collection: `string`: filtered by this collections's id.
+- group: `string`: filtered by this groups's id.
 - account: `string?`: filtered by this account's id.
   
 Returns.
@@ -311,7 +311,7 @@ query AnalyticsOfMemberships($options: AnalyticsOfMembershipsOptions!) {
 
 - [Accessors](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/accessors.md)
 - [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/accounts.md)
-- [Collections](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/collections.md)
+- [Groups](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/groups.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/permissions.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/providers.md)

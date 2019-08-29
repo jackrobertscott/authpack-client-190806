@@ -1,23 +1,23 @@
-# Collections API
+# Groups API
 
 > Authenticator 🏇 the fastest way to add auth to your apps
 
 ## Overview
 
-The `collection` model is used to group multiple accounts together.
+The `group` model is used to group multiple accounts together.
 
 - [Setup](#Model)
-- [Collection model](#Model)
+- [Group model](#Model)
 
 Methods.
 
-- [Create a collection](#Create-a-collection)
-- [Update a collection](#Update-a-collection)
-- [Remove a collection](#Remove-a-collection)
-- [Retrieve a collection](#Retrieve-a-collection)
-- [List collections](#List-collections)
-- [Count collections](#Count-collections)
-- [Analytics of collections](#Analytics-of-collections)
+- [Create a group](#Create-a-group)
+- [Update a group](#Update-a-group)
+- [Remove a group](#Remove-a-group)
+- [Retrieve a group](#Retrieve-a-group)
+- [List groups](#List-groups)
+- [Count groups](#Count-groups)
+- [Analytics of groups](#Analytics-of-groups)
 
 Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 
@@ -34,7 +34,7 @@ const authenticator = new Authenticator({
 });
 ```
 
-## Collection model
+## Group model
 
 Properties.
 
@@ -42,101 +42,101 @@ Properties.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
 - meta `object?`: developer assigned attributes.
-- name `string`: collection name.
+- name `string`: group name.
 - tag `string`: unique code used in urls.
 - domains `string[]`: whitelisted domains for using the authenticator API.
 
-## Create a collection
+## Create a group
 
-Used to sign up a collection on your app.
+Used to sign up a group on your app.
 
 ```ts
-authenticator.collections.create({
+authenticator.groups.create({
     meta: {/* attributes */},
-    name: 'Awesome Collection',
-    tag: 'awesome-collection',
+    name: 'Awesome Group',
+    tag: 'awesome-group',
     domains: ['app.example.com'],
   })
-  .then(collection => console.log(`Created: ${collection.name} at ${collection.created}`))
+  .then(group => console.log(`Created: ${group.name} at ${group.created}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
 Options.
 
 - meta `object?`: developer assigned attributes.
-- name `string`: collection name.
+- name `string`: group name.
 - tag `string`: unique code.
 - domains `string[]`: whitelisted domains for using the authenticator API.
 
 Returns.
 
-- [collection](#Model) `Promise<object, Error>`: the created collection.
+- [group](#Model) `Promise<object, Error>`: the created group.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-mutation CreateCollection($options: CreateCollectionOptions!) {
-  collection: CreateCollection(options: $options) {
+mutation CreateGroup($options: CreateGroupOptions!) {
+  group: CreateGroup(options: $options) {
     id
     name
-    # ... collection properties
+    # ... group properties
   }
 }
 ```
 
-## Update a collection
+## Update a group
 
-Used to patch a collection's details.
+Used to patch a group's details.
 
 ```ts
-authenticator.collections.update({
-    id: collection.id,
+authenticator.groups.update({
+    id: group.id,
     meta: {/* attributes */},
-    name: 'Awesome Collection',
-    tag: 'awesome-collection',
+    name: 'Awesome Group',
+    tag: 'awesome-group',
     domains: ['app.example.com'],
   })
-  .then(collection => console.log(`Updated: ${collection.name} at ${collection.updated}`))
+  .then(group => console.log(`Updated: ${group.name} at ${group.updated}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
 Options.
 
-- id `string`: id of the collection to update.
+- id `string`: id of the group to update.
 - meta `object?`: developer assigned attributes.
-- name `string?`: collection name.
+- name `string?`: group name.
 - tag `string?`: unique code.
 - domains `string[]?`: whitelisted domains for using the authenticator API.
 
 Returns.
 
-- [collection](#Model) `Promise<object, Error>`: the updated collection.
+- [group](#Model) `Promise<object, Error>`: the updated group.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-mutation UpdateCollection($options: UpdateCollectionOptions!) {
-  collection: UpdateCollection(options: $options) {
+mutation UpdateGroup($options: UpdateGroupOptions!) {
+  group: UpdateGroup(options: $options) {
     id
     name
-    # ... collection properties
+    # ... group properties
   }
 }
 ```
 
-## Remove a collection
+## Remove a group
 
-Used to permanently remove a collection.
+Used to permanently remove a group.
 
 ```ts
-authenticator.collections.remove({
-    id: membership.collectionId,
+authenticator.groups.remove({
+    id: membership.groupId,
   })
-  .then(collection => console.log(`Removed: ${collection.name}`))
+  .then(group => console.log(`Removed: ${group.name}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -147,31 +147,31 @@ Options.
 
 Returns.
 
-- [collection](#Model) `Promise<object, Error>` the removed collection.
+- [group](#Model) `Promise<object, Error>` the removed group.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-mutation RemoveCollection($options: RemoveCollectionOptions!) {
-  collection: RemoveCollection(options: $options) {
+mutation RemoveGroup($options: RemoveGroupOptions!) {
+  group: RemoveGroup(options: $options) {
     id
     name
-    # ... collection properties
+    # ... group properties
   }
 }
 ```
 
-## Retrieve a collection
+## Retrieve a group
 
-Used to get a single collection.
+Used to get a single group.
 
 ```ts
-authenticator.collections.retrieve({
-    id: membership.collectionId,
+authenticator.groups.retrieve({
+    id: membership.groupId,
   })
-  .then(collection => console.log(`Retrieved: ${collection.name}`))
+  .then(group => console.log(`Retrieved: ${group.name}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -182,70 +182,70 @@ Options.
 
 Returns.
 
-- [collection](#Model) `Promise<object, Error>` the collection requested.
+- [group](#Model) `Promise<object, Error>` the group requested.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query RetrieveCollection($options: RetrieveCollectionOptions!) {
-  collection: RetrieveCollection(options: $options) {
+query RetrieveGroup($options: RetrieveGroupOptions!) {
+  group: RetrieveGroup(options: $options) {
     id
     name
-    # ... collection properties
+    # ... group properties
   }
 }
 ```
 
-## List collections
+## List groups
 
-Used to get a list of collections.
+Used to get a list of groups.
 
 ```ts
-authenticator.collections.list({
+authenticator.groups.list({
     search: 'Awesome',
     limit: 10,
     skip: 5,
     page: 0,
   })
-  .then(collections => console.table(collections))
+  .then(groups => console.table(groups))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
 Options.
 
 - search `string?`: compared against name, code, and domains.
-- limit `number?`: maximum number of collections returned.
-- skip `number?`: skip this number of collections.
-- page `number?`: skip this number of collections multiplied by the limit.
+- limit `number?`: maximum number of groups returned.
+- skip `number?`: skip this number of groups.
+- page `number?`: skip this number of groups multiplied by the limit.
 
 **Note:** `skip` and `page` are summed when used together.
 
 Returns.
 
-- [collections](#Model) `Promise<object[], Error>`: a list of collections.
+- [groups](#Model) `Promise<object[], Error>`: a list of groups.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query ListCollections($options: ListCollectionsOptions!) {
-  collections: ListCollections(options: $options) {
+query ListGroups($options: ListGroupsOptions!) {
+  groups: ListGroups(options: $options) {
     id
     name
-    # ... collection properties
+    # ... group properties
   }
 }
 ```
 
-## Count collections
+## Count groups
 
-Used to count a collection of collections.
+Used to count a group of groups.
 
 ```ts
-authenticator.collections.count({
+authenticator.groups.count({
     search: 'Awesome',
   })
   .then(count => console.log(`Counted: ${count}`))
@@ -258,24 +258,24 @@ Options.
   
 Returns.
 
-- count `Promise<number, Error>`: the number of collections counted.
+- count `Promise<number, Error>`: the number of groups counted.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query CountCollections($options: CountCollectionsOptions!) {
-  count: CountCollections(options: $options)
+query CountGroups($options: CountGroupsOptions!) {
+  count: CountGroups(options: $options)
 }
 ```
 
-## Analytics of collections
+## Analytics of groups
 
-Used to get statistics of collections over time.
+Used to get statistics of groups over time.
 
 ```ts
-authenticator.collections.analytics({
+authenticator.groups.analytics({
     date: Date.now(),
     months: 6,
   })
@@ -290,20 +290,20 @@ Options.
   
 Returns.
 
-- analytics `Promise<object, Error>`: statistics related to collections within time period.
+- analytics `Promise<object, Error>`: statistics related to groups within time period.
   - labels `string[]`: date values within given period.
   - data `number[]`: values matching the labels.
-  - created `number`: number of collections created.
-  - updated `number`: number of collections updated.
-  - active `number`: number of collections with 1 session or more.
+  - created `number`: number of groups created.
+  - updated `number`: number of groups updated.
+  - active `number`: number of groups with 1 session or more.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query AnalyticsOfCollections($options: AnalyticsOfCollectionsOptions!) {
-  analytics: AnalyticsOfCollections(options: $options) {
+query AnalyticsOfGroups($options: AnalyticsOfGroupsOptions!) {
+  analytics: AnalyticsOfGroups(options: $options) {
     labels
     data
     # ... analytics properties
@@ -315,7 +315,7 @@ query AnalyticsOfCollections($options: AnalyticsOfCollectionsOptions!) {
 
 - [Accessors](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/accessors.md)
 - [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/accounts.md)
-- [Collections](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/collections.md)
+- [Groups](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/groups.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/permissions.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/providers.md)

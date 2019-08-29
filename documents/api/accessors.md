@@ -235,7 +235,7 @@ query ListAccessors($options: ListAccessorsOptions!) {
 
 ## Count accessors
 
-Used to count a collection of accessors.
+Used to count a group of accessors.
 
 ```ts
 authenticator.accessors.count({
@@ -310,7 +310,7 @@ query AnalyticsOfAccessors($options: AnalyticsOfAccessorsOptions!) {
 
 - [Accessors](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/accessors.md)
 - [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/accounts.md)
-- [Collections](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/collections.md)
+- [Groups](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/groups.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/permissions.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/providers.md)
