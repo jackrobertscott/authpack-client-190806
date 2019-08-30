@@ -57,7 +57,7 @@ authenticator.accounts.create({
     meta: {/* attributes */},
     email: 'fredBlogs@example.com',
     username: 'freddy123',
-    password: crypto.createHash('md5').update('SecretPassword123').digest('hex'),
+    password: 'SecretPassword123',
     avatar: 'https://images.example.com/profile.png',
     name: 'Fred Blogs',
   })
