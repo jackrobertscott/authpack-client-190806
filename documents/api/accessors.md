@@ -280,7 +280,7 @@ authenticator.accessors.analytics({
 
 Options.
 
-- ending `number?`: the end date timestamp of the time period to analayse.
+- ending `string?`: the final day in the period i.e. `2019-12-24`.
 - months `number?`: number of months to analyse.
   
 Returns.
