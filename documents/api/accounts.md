@@ -288,7 +288,7 @@ Used to get statistics of accounts over time.
 
 ```ts
 authenticator.accounts.analytics({
-    date: Date.now(),
+    ending: Date.now(),
     months: 6,
   })
   .then(analytics => console.table(analytics))
@@ -297,7 +297,7 @@ authenticator.accounts.analytics({
 
 Options.
 
-- date `Date?`: the end date of the time period to analayse.
+- ending `Date?`: the end date of the time period to analayse.
 - months `number?`: number of months to analyse.
   
 Returns.
