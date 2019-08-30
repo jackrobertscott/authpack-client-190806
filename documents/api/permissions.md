@@ -293,7 +293,7 @@ authenticator.permissions.analytics({
 
 Options.
 
-- ending `Date?`: the end date of the time period to analayse.
+- ending `number?`: the end date timestamp of the time period to analayse.
 - months `number?`: number of months to analyse.
   
 Returns.
