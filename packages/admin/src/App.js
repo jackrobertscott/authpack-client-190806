@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { createElement as component } from 'react'
+import { css } from 'emotion'
+import GraphiQL from 'graphiql'
+import 'graphiql/graphiql.css'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export const App = () => {
+  const graphQLFetcher = graphQLParams => {
+    return fetch('http://localhost:4000', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(graphQLParams),
+    }).then(response => response.json())
+  }
+  return component('div', {
+    className: css({
+      height: '100vh',
+    }),
+    children: component(GraphiQL, {
+      fetcher: graphQLFetcher,
+    }),
+  })
 }
-
-export default App;
