@@ -4,7 +4,7 @@
 
 ## Overview
 
-The `provider` model is used to group a account to a group.
+The `provider` model stores 3rd party app details.
 
 - [Setup](#Model)
 - [Provider model](#Model)

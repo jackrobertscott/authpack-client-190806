@@ -4,7 +4,7 @@
 
 ## Overview
 
-The `permission` model is used to identify a single person who has signed up to your app.
+The `permission` model allows developers to assign access levels to an account.
 
 - [Setup](#Model)
 - [Permission model](#Model)

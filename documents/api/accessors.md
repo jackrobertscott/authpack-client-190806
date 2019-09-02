@@ -4,7 +4,7 @@
 
 ## Overview
 
-The `accessor` model is created to store the access tokens between a provider and a account.
+The `accessor` model is stores the access tokens created by 3rd party auth providers.
 
 - [Setup](#Model)
 - [Accessor model](#Model)

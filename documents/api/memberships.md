@@ -4,7 +4,7 @@
 
 ## Overview
 
-The `membership` model is used to group a account to a group.
+The `membership` model is used to associates an account with a group.
 
 - [Setup](#Model)
 - [Membership model](#Model)
