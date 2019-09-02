@@ -47,7 +47,7 @@ Properties.
 - client `string`: the oauth client id.
 - redirect `string`: the oauth redirect url.
 - scopes `string`: the oauth permissions which are required.
-- url `string`: the generated oauth url for authenticating a account.
+- url `string`: the generated 3rd party authentication page.
 
 ## Create a provider
 
