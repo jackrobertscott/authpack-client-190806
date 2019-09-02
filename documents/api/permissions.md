@@ -41,11 +41,10 @@ Properties.
 - id `string`: unique identifier.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
-- childPermissions `object[]?`: the permissions which inherit from this permission.
 - meta `object?`: developer assigned attributes.
 - name `string`: a nice permission name.
 - tag `string`: used to identify permission in code.
-- description `string`: describe the permission's permissions.
+- description `string?`: describe the permission's permissions.
 
 ## Create a permission
 
@@ -53,7 +52,6 @@ Used to sign up a permission on your app.
 
 ```ts
 authenticator.permissions.create({
-    childPermissions: [commentorPermission.id],
     meta: {/* attributes */},
     name: 'Editor',
     tag: 'editor',
@@ -65,7 +63,6 @@ authenticator.permissions.create({
 
 Options.
 
-- childPermissions `string[]?`: permission ids which inherit from this permission.
 - meta `object?`: developer assigned attributes.
 - name `string`: a nice permission name.
 - tag `string`: used to identify permission in code.
@@ -95,7 +92,6 @@ Used to patch a permission's details.
 
 ```ts
 authenticator.permissions.update({
-    childPermissions: [/* empty array = remove all */],
     meta: {/* attributes */},
     name: 'Editor',
     tag: 'editor',
@@ -108,7 +104,6 @@ authenticator.permissions.update({
 Options.
 
 - id `string`: id of the permission to update.
-- childPermissions `string[]?`: permission ids which inherit from this permission.
 - meta `object?`: developer assigned attributes.
 - name `string?`: a nice permission name.
 - tag `string?`: used to identify permission in code.

@@ -44,6 +44,7 @@ Properties.
 - meta `object?`: developer assigned attributes.
 - name `string`: group name.
 - tag `string`: unique code used in urls.
+- description `string?`: description of the group.
 - domains `string[]`: whitelisted domains for using the authenticator API.
 
 ## Create a group
@@ -55,6 +56,7 @@ authenticator.groups.create({
     meta: {/* attributes */},
     name: 'Awesome Group',
     tag: 'awesome-group',
+    description: 'Team made of awesome people',
     domains: ['app.example.com'],
   })
   .then(group => console.log(`Created: ${group.name} at ${group.created}`))
@@ -66,6 +68,7 @@ Options.
 - meta `object?`: developer assigned attributes.
 - name `string`: group name.
 - tag `string`: unique code.
+- description `string?`: description of the group.
 - domains `string[]`: whitelisted domains for using the authenticator API.
 
 Returns.
@@ -96,6 +99,7 @@ authenticator.groups.update({
     meta: {/* attributes */},
     name: 'Awesome Group',
     tag: 'awesome-group',
+    description: 'Team made of awesome people x2',
     domains: ['app.example.com'],
   })
   .then(group => console.log(`Updated: ${group.name} at ${group.updated}`))
@@ -108,6 +112,7 @@ Options.
 - meta `object?`: developer assigned attributes.
 - name `string?`: group name.
 - tag `string?`: unique code.
+- description `string?`: description of the group.
 - domains `string[]?`: whitelisted domains for using the authenticator API.
 
 Returns.
