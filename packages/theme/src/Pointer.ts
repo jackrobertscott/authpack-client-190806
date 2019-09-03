@@ -37,7 +37,7 @@ export const Pointer: IPointer = {
             width: '300px',
             position: 'absolute',
             left: '100%',
-            top: '-10px',
+            top: '-15px',
             display: 'none',
             alignItems: 'flex-start',
             '&:hover': {

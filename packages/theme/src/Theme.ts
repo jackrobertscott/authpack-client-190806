@@ -32,6 +32,11 @@ export interface ITheme {
     border: string
     color: string
   }
+  header: {
+    background: string
+    color: string
+    brand: string
+  }
 }
 
 export const Theme = createContext<ITheme>({
@@ -65,5 +70,10 @@ export const Theme = createContext<ITheme>({
     background: '#505050',
     border: 'none',
     color: '#FFFFFF',
+  },
+  header: {
+    background: '#333333',
+    color: '#ADADAD',
+    brand: '#777777',
   },
 })

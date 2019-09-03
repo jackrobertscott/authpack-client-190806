@@ -1,7 +1,7 @@
 import { createElement as create } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
-import { Button, Inputs, Gadget, Iconbar, Pointer } from '../src/index'
+import { Button, Inputs, Gadget, Iconbar, Pointer, Header } from '../src/index'
 
 const stories = storiesOf('Authenticator', module)
 
@@ -19,25 +19,65 @@ stories
   )
   .add('Gadgets', () =>
     create(Gadget.Container, {
-      children: create(Iconbar.Container, {
-        children: [
-          create(Iconbar.Icon, {
-            name: 'home',
-            click: () => console.log('hello'),
-          }),
-          create(Iconbar.Divider),
-          create(Pointer.Container, {
-            contents: 'Hello world!',
-            children: create(Iconbar.Icon, {
-              name: 'bolt',
+      children: [
+        create(Iconbar.Container, {
+          children: [
+            create(Pointer.Container, {
+              contents: 'Login',
+              children: create(Iconbar.Icon, {
+                name: 'home',
+                click: () => console.log('hello'),
+              }),
             }),
-          }),
-          create(Iconbar.Divider),
-          create(Iconbar.Icon, {
-            name: 'broom',
-          }),
-        ],
-      }),
+            create(Iconbar.Divider),
+            create(Pointer.Container, {
+              contents: 'Sign up',
+              children: create(Iconbar.Icon, {
+                name: 'bolt',
+              }),
+            }),
+            create(Iconbar.Divider),
+            create(Pointer.Container, {
+              contents: 'Forgot password',
+              children: create(Iconbar.Icon, {
+                name: 'broom',
+              }),
+            }),
+          ],
+        }),
+        create(Gadget.Contents, {
+          children: [
+            create(Header.Container, {
+              children: [
+                create(Header.Label, {
+                  children: 'Login',
+                }),
+                create(Header.Brand, {
+                  children: 'Your App',
+                }),
+              ],
+            }),
+            create(Gadget.Spacer, {
+              children: [
+                create(Inputs.Container, {
+                  children: create(Inputs.String, {
+                    value: 'memes',
+                  }),
+                }),
+                create(Inputs.Container, {
+                  children: create(Inputs.Number, {
+                    value: 3,
+                  }),
+                }),
+                create(Button.Container, {
+                  label: 'Submit',
+                  click: () => console.log(123),
+                }),
+              ],
+            }),
+          ],
+        }),
+      ],
     })
   )
   .add('Buttons', () => [
