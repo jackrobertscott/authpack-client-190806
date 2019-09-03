@@ -6,8 +6,10 @@ export interface IIconbar {
   Container: FC<{
     children: ReactNode
   }>
+  Divider: FC<{}>
   Icon: FC<{
     name: string
+    click?: () => any
   }>
 }
 
@@ -25,12 +27,27 @@ export const Iconbar: IIconbar = {
       }),
     })
   },
-  Icon: ({ name }) => {
+  Divider: () => {
+    return create('div', {
+      className: css({
+        height: '25px',
+      }),
+    })
+  },
+  Icon: ({ name, click }) => {
     const theme = useContext(Theme)
     return create('div', {
+      onClick: click,
       className: `fas fa-${name} ${css({
-        color: theme.iconbar.color,
         fontSize: '25px',
+        transition: '200ms',
+        textAlign: 'center',
+        cursor: 'pointer',
+        width: '100%',
+        color: theme.iconbar.color,
+        '&:hover': {
+          color: theme.iconbar.colorHover,
+        },
       })}`,
     })
   },

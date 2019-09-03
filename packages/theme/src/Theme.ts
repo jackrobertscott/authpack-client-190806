@@ -12,6 +12,7 @@ export interface ITheme {
   iconbar: {
     background: string
     color: string
+    colorHover: string
   }
   sidebar: {
     background: string
@@ -22,6 +23,11 @@ export interface ITheme {
     color: string
   }
   buttons: {
+    background: string
+    border: string
+    color: string
+  }
+  pointers: {
     background: string
     border: string
     color: string
@@ -40,6 +46,7 @@ export const Theme = createContext<ITheme>({
   iconbar: {
     background: '#2C2C2C',
     color: '#777777',
+    colorHover: '#999999',
   },
   sidebar: {
     background: '#383838',
@@ -50,6 +57,11 @@ export const Theme = createContext<ITheme>({
     color: '#FFFFFF',
   },
   buttons: {
+    background: '#505050',
+    border: 'none',
+    color: '#FFFFFF',
+  },
+  pointers: {
     background: '#505050',
     border: 'none',
     color: '#FFFFFF',

@@ -8,10 +8,13 @@ export interface IButton {
     label: string
     icon?: string
   }>
+  Icon: FC<{
+    name?: string
+  }>
 }
 
 export const Button: IButton = {
-  Container: ({ click, label, icon = 'check-circle' }) => {
+  Container: ({ click, label, icon }) => {
     const theme = useContext(Theme)
     return create('div', {
       onClick: click,
@@ -19,10 +22,8 @@ export const Button: IButton = {
         create('div', {
           children: label,
         }),
-        create('div', {
-          className: `far fa-${icon} ${css({
-            verticalAlign: '10%',
-          })}`,
+        create(Button.Icon, {
+          name: icon,
         }),
       ],
       className: css({
@@ -36,11 +37,18 @@ export const Button: IButton = {
         borderRadius: theme.global.radius,
         backgroundColor: theme.buttons.background,
         border: theme.buttons.border,
-        color: theme.inputs.color,
+        color: theme.buttons.color,
         '&:hover': {
           boxShadow: '0 1px 5px rgba(0, 0, 0, 0.15)',
         },
       }),
+    })
+  },
+  Icon: ({ name = 'check-circle' }) => {
+    return create('div', {
+      className: `far fa-${name} ${css({
+        textAlign: 'center',
+      })}`,
     })
   },
 }
