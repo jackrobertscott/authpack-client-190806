@@ -1,7 +1,7 @@
 import { createElement as create } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
-import { Button, Short, Gadget, Iconbar, Icon } from '../src/index'
+import { Button, Inputs, Gadget, Iconbar } from '../src/index'
 
 const stories = storiesOf('Authenticator', module)
 
@@ -11,28 +11,30 @@ stories
       children: data(),
       className: css({
         padding: '50px',
-        '& > *': {
+        '& > *, & > div': {
           marginBottom: '20px',
         },
       }),
     })
   )
   .add('Gadgets', () =>
-    create(Gadget, {
-      children: create(Iconbar, {
-        children: create(Icon, { name: 'home' }),
+    create(Gadget.Container, {
+      children: create(Iconbar.Container, {
+        children: create(Iconbar.Icon, {
+          name: 'home',
+        }),
       }),
     })
   )
   .add('Buttons', () => [
-    create(Short, {
+    create(Inputs.Short, {
       value: 'memes',
     }),
-    create(Button, {
+    create(Button.Container, {
       label: 'Hello',
       click: () => console.log(123),
     }),
-    create(Button, {
+    create(Button.Container, {
       label: 'Hello',
       click: () => console.log(123),
     }),
