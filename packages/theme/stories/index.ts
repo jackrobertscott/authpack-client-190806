@@ -1,7 +1,7 @@
 import { createElement as create } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
-import { Button } from '../src/Button'
+import { Button, Short, Gadget, Iconbar, Icon } from '../src/index'
 
 const stories = storiesOf('Authenticator', module)
 
@@ -17,10 +17,16 @@ stories
       }),
     })
   )
+  .add('Gadgets', () =>
+    create(Gadget, {
+      children: create(Iconbar, {
+        children: create(Icon, { name: 'home' }),
+      }),
+    })
+  )
   .add('Buttons', () => [
-    create(Button, {
-      label: 'Hello',
-      click: () => console.log(123),
+    create(Short, {
+      value: 'memes',
     }),
     create(Button, {
       label: 'Hello',
