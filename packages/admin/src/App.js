@@ -14,6 +14,7 @@ export const App = () => {
           method: 'post',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: 'wga-secret-key-67db3981deecc8113513dff75',
           },
           body: JSON.stringify(graphQLParams),
         }).then(response => response.json()),
