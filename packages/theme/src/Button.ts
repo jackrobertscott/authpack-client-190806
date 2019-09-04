@@ -35,7 +35,7 @@ export const Button: IButton = {
         padding: '15px',
         fontSize: theme.global.fonts,
         borderRadius: theme.global.radius,
-        backgroundColor: theme.buttons.background,
+        background: theme.buttons.background,
         border: theme.buttons.border,
         color: theme.buttons.color,
         '&:hover': {

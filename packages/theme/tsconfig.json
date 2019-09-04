@@ -6,6 +6,7 @@
     // "allowJs": true,                       /* Allow javascript files to be compiled. */
     // "checkJs": true,                       /* Report errors in .js files. */
     "jsx": "react",                           /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
+    "skipLibCheck": true,                     /* Do not check the library files. */
     "declaration": true,                      /* Generates corresponding '.d.ts' file. */
     "sourceMap": true,                        /* Generates corresponding '.instance' file. */
     // "outFile": "./",                       /* Concatenate and emit output to single file. */

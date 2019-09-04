@@ -52,12 +52,12 @@ export const Inputs: IInputs = {
         transition: '200ms',
         cursor: 'pointer',
         borderRadius: theme.global.radius,
-        backgroundColor: theme.inputs.background,
+        background: theme.inputs.background,
         fontSize: theme.global.fonts,
         border: theme.inputs.border,
         color: theme.inputs.color,
         '&:hover, &:focus-within': {
-          backgroundColor: theme.inputs.backgroundHover,
+          background: theme.inputs.backgroundHover,
         },
       }),
     })
@@ -80,24 +80,30 @@ export const Inputs: IInputs = {
       }),
     })
   },
-  Number: ({ value = '', change = () => {}, placeholder, decimals = true }) => {
+  Number: ({
+    value = '',
+    change = () => {},
+    placeholder,
+    decimals = false,
+  }) => {
     const [state, changeState] = useState<string>(String(value))
     useEffect(() => changeState(String(value)), [value])
-    useEffect(() => change(decimals ? parseFloat(state) : parseInt(state)), [
-      state,
-    ])
+    useEffect(
+      () => change(decimals ? parseFloat(state) : parseInt(state, 10)),
+      [state]
+    )
     return create('input', {
       value: state,
       onChange: (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.value.length === 0) {
           changeState('')
         } else {
-          const value = event.target.value
-          const parsed = decimals ? parseFloat(value) : parseInt(value)
+          const input = event.target.value
+          const parsed = decimals ? parseFloat(input) : parseInt(input, 10)
           console.log(parsed, !isNaN(parsed))
-          if (!isNaN(parsed) && value !== state) {
+          if (!isNaN(parsed) && input !== state) {
             const update = `${parsed}${
-              decimals && value.endsWith('.') ? '.' : ''
+              decimals && input.endsWith('.') ? '.' : ''
             }`
             changeState(update)
           }
@@ -172,7 +178,7 @@ export const Inputs: IInputs = {
               padding: '15px',
               fontSize: theme.global.fonts,
               borderRadius: theme.global.radius,
-              backgroundColor: theme.pointers.background,
+              background: theme.pointers.background,
               border: theme.pointers.border,
               color: theme.pointers.color,
               boxShadow: '0 1px 5px rgba(0, 0, 0, 0.15)',

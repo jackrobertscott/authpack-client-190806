@@ -29,7 +29,7 @@ export interface IGadget {
   }>
   Router: FC<{
     brand: string
-    screens: Array<IGadgetRouter>
+    screens: IGadgetRouter[]
   }>
 }
 
@@ -43,9 +43,10 @@ export const Gadget: IGadget = {
         width: '545px',
         height: '760px',
         display: 'flex',
+        overflow: 'hidden',
         fontSize: theme.global.fonts,
         borderRadius: theme.global.radius,
-        backgroundColor: theme.gadgets.background,
+        background: theme.gadgets.background,
         border: theme.gadgets.border,
       }),
     })

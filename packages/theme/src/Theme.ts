@@ -44,7 +44,7 @@ export interface ITheme {
 
 export const Theme = createContext<ITheme>({
   global: {
-    fonts: '16px',
+    fonts: '15px',
     radius: '3px',
   },
   gadgets: {

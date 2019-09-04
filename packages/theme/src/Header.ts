@@ -24,7 +24,7 @@ export const Header: IHeader = {
         display: 'flex',
         padding: '25px',
         justifyContent: 'space-between',
-        backgroundColor: theme.header.background,
+        background: theme.header.background,
         color: theme.header.color,
       }),
     })

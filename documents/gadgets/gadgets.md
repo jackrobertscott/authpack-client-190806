@@ -88,7 +88,7 @@ Type definition of Theme.
 interface Theme {
   inputs: {
     base: {
-      backgroundColor: string;
+      background: string;
       disabledColor: string;
       letterColor: string;
       borderColor: string;
@@ -96,28 +96,28 @@ interface Theme {
       shadow: string;
     }
     error: {
-      backgroundColor: string;
+      background: string;
       letterColor: string;
       borderColor: string;
     }
   }
   sidebar {
     base {
-      backgroundColor: string;
+      background: string;
       iconColor: string;
       padding: string;
     }
   }
   heading {
     base {
-      backgroundColor: string;
+      background: string;
       letterColor: string;
       padding: string;
     }
   }
   gadgets {
     base {
-      backgroundColor: string;
+      background: string;
       letterColor: string;
       padding: string;
     }

@@ -26,7 +26,7 @@ export const Iconbar: IIconbar = {
         display: 'flex',
         flexDirection: 'column',
         padding: '25px',
-        backgroundColor: theme.iconbar.background,
+        background: theme.iconbar.background,
         '& > *, & > div': {
           marginBottom: '25px',
           '&:last-child': {
@@ -68,7 +68,7 @@ export const Iconbar: IIconbar = {
               padding: '15px',
               fontSize: theme.global.fonts,
               borderRadius: theme.global.radius,
-              backgroundColor: theme.pointers.background,
+              background: theme.pointers.background,
               border: theme.pointers.border,
               color: theme.pointers.color,
               boxShadow: '0 1px 5px rgba(0, 0, 0, 0.15)',
