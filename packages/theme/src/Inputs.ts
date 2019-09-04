@@ -27,11 +27,16 @@ export interface IInputs {
   }>
   Icon: FC<{
     name?: string
+    opacity?: number
   }>
   Label: FC<{
     name?: string
     description?: string
     children?: ReactNode
+  }>
+  Pointer: FC<{
+    children: ReactNode
+    label: string
   }>
 }
 
@@ -43,7 +48,9 @@ export const Inputs: IInputs = {
       className: css({
         all: 'unset',
         display: 'flex',
+        alignItems: 'center',
         transition: '200ms',
+        cursor: 'pointer',
         borderRadius: theme.global.radius,
         backgroundColor: theme.inputs.background,
         fontSize: theme.global.fonts,
@@ -106,10 +113,13 @@ export const Inputs: IInputs = {
       }),
     })
   },
-  Icon: ({ name = 'save' }) => {
+  Icon: ({ name = 'save', opacity = 0.25 }) => {
     return create('div', {
       className: `far fa-${name} ${css({
         textAlign: 'center',
+        lineHeight: '1.2em',
+        padding: '15px',
+        opacity,
       })}`,
     })
   },
@@ -144,6 +154,51 @@ export const Inputs: IInputs = {
           '&:last-child': {
             marginBottom: 0,
           },
+        },
+      }),
+    })
+  },
+  Pointer: ({ children, label }) => {
+    const theme = useContext(Theme)
+    return create('div', {
+      children: [
+        children,
+        create('div', {
+          children: create('div', {
+            children: label,
+            className: css({
+              all: 'unset',
+              display: 'flex',
+              padding: '15px',
+              fontSize: theme.global.fonts,
+              borderRadius: theme.global.radius,
+              backgroundColor: theme.pointers.background,
+              border: theme.pointers.border,
+              color: theme.pointers.color,
+              boxShadow: '0 1px 5px rgba(0, 0, 0, 0.15)',
+            }),
+          }),
+          className: `toggle-pointer ${css({
+            all: 'unset',
+            width: '300px',
+            position: 'absolute',
+            right: '10px',
+            bottom: '100%',
+            marginBottom: '-10px',
+            display: 'none',
+            justifyContent: 'flex-end',
+            '&:hover': {
+              display: 'flex',
+            },
+          })}`,
+        }),
+      ],
+      className: css({
+        all: 'unset',
+        display: 'flex',
+        position: 'relative',
+        '&:hover .toggle-pointer': {
+          display: 'flex',
         },
       }),
     })

@@ -1,7 +1,7 @@
 import { createElement as create } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
-import { Button, Inputs, Gadget, Iconbar, Pointer, Header } from '../src/index'
+import { Button, Inputs, Gadget, Iconbar, Header } from '../src/index'
 
 const stories = storiesOf('Authenticator', module)
 
@@ -22,23 +22,21 @@ stories
       children: [
         create(Iconbar.Container, {
           children: [
-            create(Pointer.Container, {
-              contents: 'Login',
+            create(Iconbar.Pointer, {
+              label: 'Login',
               children: create(Iconbar.Icon, {
                 name: 'home',
                 click: () => console.log('hello'),
               }),
             }),
-            create(Iconbar.Divider),
-            create(Pointer.Container, {
-              contents: 'Sign up',
+            create(Iconbar.Pointer, {
+              label: 'Sign up',
               children: create(Iconbar.Icon, {
                 name: 'bolt',
               }),
             }),
-            create(Iconbar.Divider),
-            create(Pointer.Container, {
-              contents: 'Forgot password',
+            create(Iconbar.Pointer, {
+              label: 'Forgot password',
               children: create(Iconbar.Icon, {
                 name: 'broom',
               }),
@@ -63,18 +61,28 @@ stories
                   name: 'Name',
                   description: 'Full name please',
                   children: create(Inputs.Container, {
-                    children: create(Inputs.String, {
-                      value: 'memes',
-                    }),
+                    children: [
+                      create(Inputs.String, {
+                        placeholder: 'Fred Blogs',
+                      }),
+                      create(Inputs.Pointer, {
+                        label: 'This field is required',
+                        children: create(Inputs.Icon, {
+                          name: 'bell',
+                        }),
+                      }),
+                    ],
                   }),
                 }),
                 create(Inputs.Label, {
                   name: 'Age',
                   description: 'How old are you?',
                   children: create(Inputs.Container, {
-                    children: create(Inputs.Number, {
-                      placeholder: 35,
-                    }),
+                    children: [
+                      create(Inputs.Number, {
+                        placeholder: '35',
+                      }),
+                    ],
                   }),
                 }),
 

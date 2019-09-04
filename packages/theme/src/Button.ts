@@ -51,6 +51,7 @@ export const Button: IButton = {
     return create('div', {
       className: `far fa-${name} ${css({
         textAlign: 'center',
+        lineHeight: '1.2em',
       })}`,
     })
   },
