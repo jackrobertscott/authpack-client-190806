@@ -19,8 +19,11 @@ export interface ITheme {
   }
   inputs: {
     background: string
+    backgroundHover: string
     border: string
     color: string
+    colorPrimary: string
+    colorSecondary: string
   }
   buttons: {
     background: string
@@ -41,7 +44,7 @@ export interface ITheme {
 
 export const Theme = createContext<ITheme>({
   global: {
-    fonts: '15px',
+    fonts: '16px',
     radius: '3px',
   },
   gadgets: {
@@ -58,8 +61,11 @@ export const Theme = createContext<ITheme>({
   },
   inputs: {
     background: '#272727',
+    backgroundHover: '#292929',
     border: 'none',
     color: '#FFFFFF',
+    colorPrimary: '#B9B9B9',
+    colorSecondary: '#656565',
   },
   buttons: {
     background: '#505050',

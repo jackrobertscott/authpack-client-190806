@@ -53,7 +53,7 @@ export const Gadget: IGadget = {
         justifyContent: 'flex-start',
         flexGrow: 1,
         padding: '25px',
-        '& > *': {
+        '& > *, & > div': {
           marginBottom: '25px',
           '&:last-child': {
             marginBottom: 0,

@@ -59,16 +59,25 @@ stories
             }),
             create(Gadget.Spacer, {
               children: [
-                create(Inputs.Container, {
-                  children: create(Inputs.String, {
-                    value: 'memes',
+                create(Inputs.Label, {
+                  name: 'Name',
+                  description: 'Full name please',
+                  children: create(Inputs.Container, {
+                    children: create(Inputs.String, {
+                      value: 'memes',
+                    }),
                   }),
                 }),
-                create(Inputs.Container, {
-                  children: create(Inputs.Number, {
-                    value: 3,
+                create(Inputs.Label, {
+                  name: 'Age',
+                  description: 'How old are you?',
+                  children: create(Inputs.Container, {
+                    children: create(Inputs.Number, {
+                      placeholder: 35,
+                    }),
                   }),
                 }),
+
                 create(Button.Container, {
                   label: 'Submit',
                   click: () => console.log(123),
