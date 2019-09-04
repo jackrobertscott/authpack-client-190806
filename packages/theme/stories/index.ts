@@ -18,82 +18,59 @@ stories
     })
   )
   .add('Gadgets', () =>
-    create(Gadget.Container, {
-      children: [
-        create(Iconbar.Container, {
-          children: [
-            create(Iconbar.Pointer, {
-              label: 'Login',
-              children: create(Iconbar.Icon, {
-                name: 'home',
-                click: () => console.log('hello'),
-              }),
-            }),
-            create(Iconbar.Pointer, {
-              label: 'Sign up',
-              children: create(Iconbar.Icon, {
-                name: 'bolt',
-              }),
-            }),
-            create(Iconbar.Pointer, {
-              label: 'Forgot password',
-              children: create(Iconbar.Icon, {
-                name: 'broom',
-              }),
-            }),
-          ],
-        }),
-        create(Gadget.Contents, {
-          children: [
-            create(Header.Container, {
-              children: [
-                create(Header.Label, {
-                  children: 'Login',
-                }),
-                create(Header.Brand, {
-                  children: 'Your App',
-                }),
-              ],
-            }),
-            create(Gadget.Spacer, {
-              children: [
-                create(Inputs.Label, {
-                  name: 'Name',
-                  description: 'Full name please',
-                  children: create(Inputs.Container, {
-                    children: [
-                      create(Inputs.String, {
-                        placeholder: 'Fred Blogs',
+    create(Gadget.Router, {
+      brand: 'Your App',
+      screens: [
+        {
+          icon: 'user',
+          label: 'Login',
+          children: create(Gadget.Spacer, {
+            children: [
+              create(Inputs.Label, {
+                name: 'Name',
+                description: 'Full name please',
+                children: create(Inputs.Container, {
+                  children: [
+                    create(Inputs.String, {
+                      placeholder: 'Fred Blogs',
+                    }),
+                    create(Inputs.Pointer, {
+                      label: 'This field is required',
+                      children: create(Inputs.Icon, {
+                        name: 'bell',
                       }),
-                      create(Inputs.Pointer, {
-                        label: 'This field is required',
-                        children: create(Inputs.Icon, {
-                          name: 'bell',
-                        }),
-                      }),
-                    ],
-                  }),
+                    }),
+                  ],
                 }),
-                create(Inputs.Label, {
-                  name: 'Age',
-                  description: 'How old are you?',
-                  children: create(Inputs.Container, {
-                    children: [
-                      create(Inputs.Number, {
-                        placeholder: '35',
-                      }),
-                    ],
-                  }),
+              }),
+              create(Inputs.Label, {
+                name: 'Age',
+                description: 'How old are you?',
+                children: create(Inputs.Container, {
+                  children: [
+                    create(Inputs.Number, {
+                      placeholder: '35',
+                    }),
+                  ],
                 }),
-
-                create(Button.Container, {
-                  label: 'Submit',
-                  click: () => console.log(123),
-                }),
-              ],
-            }),
-          ],
-        }),
+              }),
+              create(Button.Container, {
+                label: 'Submit',
+                click: () => console.log(123),
+              }),
+            ],
+          }),
+        },
+        {
+          icon: 'user',
+          label: 'Login',
+          children: 'Hello',
+        },
+        {
+          icon: 'user',
+          label: 'Login',
+          children: 'Hello',
+        },
       ],
     })
   )

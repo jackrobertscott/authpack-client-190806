@@ -1,6 +1,21 @@
-import { createElement as create, FC, useContext, ReactNode } from 'react'
+import {
+  createElement as create,
+  FC,
+  useContext,
+  ReactNode,
+  useState,
+} from 'react'
 import { css } from 'emotion'
 import { Theme } from './Theme'
+import { Iconbar } from './Iconbar'
+import { Header } from './Header'
+
+export interface IGadgetRouter {
+  id?: string
+  icon: string
+  label: string
+  children: ReactNode
+}
 
 export interface IGadget {
   Container: FC<{
@@ -11,6 +26,10 @@ export interface IGadget {
   }>
   Spacer: FC<{
     children: ReactNode
+  }>
+  Router: FC<{
+    brand: string
+    screens: Array<IGadgetRouter>
   }>
 }
 
@@ -60,6 +79,43 @@ export const Gadget: IGadget = {
           },
         },
       }),
+    })
+  },
+  Router: ({ screens, brand }) => {
+    const options = screens.map((screen, i) => ({ ...screen, id: String(i) }))
+    const [active, changeActive] = useState<IGadgetRouter & { id: string }>(
+      options[0]
+    )
+    return create(Gadget.Container, {
+      children: [
+        create(Iconbar.Container, {
+          children: options.map(screen =>
+            create(Iconbar.Pointer, {
+              key: screen.id,
+              label: screen.label,
+              children: create(Iconbar.Icon, {
+                name: screen.icon,
+                click: () => changeActive(screen),
+              }),
+            })
+          ),
+        }),
+        create(Gadget.Contents, {
+          children: [
+            create(Header.Container, {
+              children: [
+                create(Header.Label, {
+                  children: active.label,
+                }),
+                create(Header.Brand, {
+                  children: brand,
+                }),
+              ],
+            }),
+            active && active.children,
+          ],
+        }),
+      ],
     })
   },
 }
