@@ -23,6 +23,8 @@ export interface IGadget {
   }>
   Contents: FC<{
     children: ReactNode
+    label: string
+    brand: string
   }>
   Spacer: FC<{
     children: ReactNode
@@ -30,6 +32,7 @@ export interface IGadget {
   Router: FC<{
     brand: string
     screens: IGadgetRouter[]
+    close?: () => void
   }>
 }
 
@@ -51,9 +54,80 @@ export const Gadget: IGadget = {
       }),
     })
   },
-  Contents: ({ children }) => {
+  Contents: ({ children, label, brand }) => {
+    const theme = useContext(Theme)
     return create('div', {
-      children,
+      children: create('div', {
+        children: [
+          create(Header.Container, {
+            key: 'header',
+            children: [
+              create(Header.Label, {
+                key: 'label',
+                children: label,
+              }),
+              create(Header.Brand, {
+                key: 'brand',
+                children: brand,
+              }),
+            ],
+          }),
+          create('div', {
+            key: 'children',
+            children,
+            className: css({
+              all: 'unset',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'auto',
+              flexGrow: 1,
+              '&::-webkit-scrollbar': {
+                width: '20px',
+                display: 'initial',
+                backgroundColor: 'hsla(0, 0, 0, 0)',
+              },
+              '&::-webkit-scrollbar-track': {
+                backgroundColor: 'hsla(0, 0, 0, 0)',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                cursor: 'pointer',
+                transition: '200ms',
+                borderRadius: '100px',
+                boxShadow: `inset 0 0 0 5px ${theme.gadgets.background}`,
+                background: theme.gadgets.scrollbar,
+              },
+            }),
+          }),
+          create('a', {
+            key: 'brand',
+            href: 'https://windowgadgets.io',
+            target: '_blank',
+            children: `Authenticator\nWindow Gadgets`,
+            className: css({
+              all: 'unset',
+              padding: '25px',
+              textAlign: 'right',
+              whiteSpace: 'pre',
+              cursor: 'pointer',
+              transition: '200ms',
+              filter: 'contrast(70%)',
+              marginLeft: 'auto',
+              color: theme.gadgets.background,
+              '&:hover': {
+                filter: 'contrast(30%)',
+              },
+            }),
+          }),
+        ],
+        className: css({
+          all: 'unset',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          overflow: 'hidden',
+          flexGrow: 1,
+        }),
+      }),
       className: css({
         all: 'unset',
         display: 'flex',
@@ -82,17 +156,15 @@ export const Gadget: IGadget = {
       }),
     })
   },
-  Router: ({ screens, brand }) => {
-    const options = screens.map((screen, i) => ({ ...screen, id: String(i) }))
-    const [active, changeActive] = useState<IGadgetRouter & { id: string }>(
-      options[0]
-    )
+  Router: ({ screens, brand, close }) => {
+    const options = screens.map((screen, i) => ({ id: String(i), ...screen }))
+    const [active, changeActive] = useState<IGadgetRouter>(options[0])
     return create(Gadget.Container, {
       children: [
         create(Iconbar.Container, {
           key: 'iconbar',
-          children: options.map(screen =>
-            create(Iconbar.Pointer, {
+          top: options.map(screen => {
+            return create(Iconbar.Pointer, {
               key: screen.id,
               label: screen.label,
               children: create(Iconbar.Icon, {
@@ -100,29 +172,26 @@ export const Gadget: IGadget = {
                 click: () => changeActive(screen),
               }),
             })
-          ),
+          }),
+          bottom:
+            close &&
+            create(Iconbar.Pointer, {
+              label: 'Close',
+              children: create(Iconbar.Icon, {
+                name: 'times-circle',
+                click: close,
+              }),
+            }),
         }),
         create(Gadget.Contents, {
           key: 'contents',
-          children: [
-            create(Header.Container, {
-              key: 'header',
-              children: [
-                create(Header.Label, {
-                  key: 'label',
-                  children: active.label,
-                }),
-                create(Header.Brand, {
-                  key: 'brand',
-                  children: brand,
-                }),
-              ],
-            }),
+          label: active.label,
+          brand,
+          children:
             active &&
-              create((() => active.children) as FC, {
-                key: 'children',
-              }),
-          ],
+            create((() => active.children) as FC, {
+              key: 'children',
+            }),
         }),
       ],
     })

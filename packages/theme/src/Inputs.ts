@@ -16,12 +16,12 @@ export interface IInputs {
   }>
   String: FC<{
     value?: string
-    change?: (value: string) => any
+    change?: (value: string) => void
     placeholder?: string
   }>
   Number: FC<{
     value?: number
-    change?: (value: number) => any
+    change?: (value: number) => void
     placeholder?: string | number
     decimals?: boolean
   }>

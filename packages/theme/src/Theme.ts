@@ -8,6 +8,7 @@ export interface ITheme {
   gadgets: {
     background: string
     border: string
+    scrollbar: string
   }
   iconbar: {
     background: string
@@ -50,6 +51,7 @@ export const Theme = createContext<ITheme>({
   gadgets: {
     background: '#3B3B3B',
     border: '1px solid #222222',
+    scrollbar: '#505050',
   },
   iconbar: {
     background: '#2C2C2C',

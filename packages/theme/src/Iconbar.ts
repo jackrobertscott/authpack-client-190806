@@ -4,11 +4,15 @@ import { Theme } from './Theme'
 
 export interface IIconbar {
   Container: FC<{
+    top: ReactNode
+    bottom?: ReactNode
+  }>
+  Spacer: FC<{
     children: ReactNode
   }>
   Icon: FC<{
     name: string
-    click?: () => any
+    click?: () => void
   }>
   Pointer: FC<{
     children: ReactNode
@@ -17,16 +21,38 @@ export interface IIconbar {
 }
 
 export const Iconbar: IIconbar = {
-  Container: ({ children }) => {
+  Container: ({ top, bottom }) => {
     const theme = useContext(Theme)
+    return create('div', {
+      children: [
+        create(Iconbar.Spacer, {
+          key: 'top',
+          children: top,
+        }),
+        bottom &&
+          create(Iconbar.Spacer, {
+            key: 'bottom',
+            children: bottom,
+          }),
+      ],
+      className: css({
+        all: 'unset',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        padding: '25px',
+        background: theme.iconbar.background,
+      }),
+    })
+  },
+  Spacer: ({ children }) => {
     return create('div', {
       children,
       className: css({
         all: 'unset',
         display: 'flex',
         flexDirection: 'column',
-        padding: '25px',
-        background: theme.iconbar.background,
+        alignItems: 'center',
         '& > *, & > div': {
           marginBottom: '25px',
           '&:last-child': {
@@ -40,7 +66,7 @@ export const Iconbar: IIconbar = {
     const theme = useContext(Theme)
     return create('div', {
       onClick: click,
-      className: `fas fa-${name} ${css({
+      className: `fas far fa-${name} ${css({
         fontSize: '25px',
         transition: '200ms',
         textAlign: 'center',

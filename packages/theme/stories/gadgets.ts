@@ -61,6 +61,7 @@ const LoginScreen = () => {
 stories.add('Login', () => {
   return create(Gadget.Router, {
     brand: 'Your App',
+    close: () => console.log('close'),
     screens: [
       {
         icon: 'user-circle',

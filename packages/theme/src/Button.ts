@@ -4,7 +4,7 @@ import { Theme } from './Theme'
 
 export interface IButton {
   Container: FC<{
-    click: () => any
+    click: () => void
     label: string
     icon?: string
   }>
