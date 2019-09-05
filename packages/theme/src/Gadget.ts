@@ -43,9 +43,8 @@ export const Gadget: IGadget = {
       children,
       className: css({
         all: 'unset',
-        width: '545px',
-        height: '760px',
         display: 'flex',
+        flexGrow: 1,
         overflow: 'hidden',
         fontSize: theme.global.fonts,
         borderRadius: theme.global.radius,

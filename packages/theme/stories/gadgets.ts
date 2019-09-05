@@ -2,7 +2,9 @@ import { createElement as create, useState } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
 import * as validator from 'yup'
-import { Button, Inputs, Gadget } from '../src/index'
+import { Button, Inputs, Gadget, Modal } from '../src/index'
+
+console.clear()
 
 const stories = storiesOf('Gadgets', module).addDecorator(data => {
   return create('div', {
@@ -74,25 +76,27 @@ const LoginScreen = () => {
 }
 
 stories.add('Login', () => {
-  return create(Gadget.Router, {
-    brand: 'Your App',
-    close: () => console.log('close'),
-    screens: [
-      {
-        icon: 'user-circle',
-        label: 'Login',
-        children: create(LoginScreen),
-      },
-      {
-        icon: 'street-view',
-        label: 'Sign Up',
-        children: create(LoginScreen),
-      },
-      {
-        icon: 'question-circle',
-        label: 'Forgotten Password',
-        children: create(LoginScreen),
-      },
-    ],
+  return create(Modal.Container, {
+    children: create(Gadget.Router, {
+      brand: 'Your App',
+      close: () => console.log('close'),
+      screens: [
+        {
+          icon: 'user-circle',
+          label: 'Login',
+          children: create(LoginScreen),
+        },
+        {
+          icon: 'street-view',
+          label: 'Sign Up',
+          children: create(LoginScreen),
+        },
+        {
+          icon: 'question-circle',
+          label: 'Forgotten Password',
+          children: create(LoginScreen),
+        },
+      ],
+    }),
   })
 })

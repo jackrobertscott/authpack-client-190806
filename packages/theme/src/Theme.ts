@@ -36,10 +36,15 @@ export interface ITheme {
     border: string
     color: string
   }
-  header: {
+  headers: {
     background: string
     color: string
     brand: string
+  }
+  modals: {
+    background: string
+    height: string
+    width: string
   }
 }
 
@@ -79,9 +84,14 @@ export const Theme = createContext<ITheme>({
     border: 'none',
     color: '#FFFFFF',
   },
-  header: {
+  headers: {
     background: '#333333',
     color: '#ADADAD',
     brand: '#777777',
+  },
+  modals: {
+    background: 'hsla(0, 0%, 0%, 0.5)',
+    height: '760px',
+    width: '545px',
   },
 })

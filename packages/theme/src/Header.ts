@@ -24,8 +24,8 @@ export const Header: IHeader = {
         display: 'flex',
         padding: '25px',
         justifyContent: 'space-between',
-        background: theme.header.background,
-        color: theme.header.color,
+        background: theme.headers.background,
+        color: theme.headers.color,
       }),
     })
   },
@@ -35,7 +35,7 @@ export const Header: IHeader = {
       children,
       className: css({
         all: 'unset',
-        color: theme.header.color,
+        color: theme.headers.color,
       }),
     })
   },
@@ -45,7 +45,7 @@ export const Header: IHeader = {
       children,
       className: css({
         all: 'unset',
-        color: theme.header.brand,
+        color: theme.headers.brand,
       }),
     })
   },
