@@ -189,7 +189,7 @@ export const Inputs: IInputs = {
         display: 'flex',
         flexDirection: 'column',
         '& > *, & > div': {
-          marginBottom: '7px',
+          marginBottom: '7.5px',
           '&:last-child': {
             marginBottom: 0,
           },

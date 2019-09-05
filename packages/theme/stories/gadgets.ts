@@ -1,4 +1,4 @@
-import { createElement as create } from 'react'
+import { createElement as create, useState } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
 import * as validator from 'yup'
@@ -17,15 +17,24 @@ const stories = storiesOf('Gadgets', module).addDecorator(data => {
 })
 
 const LoginScreen = () => {
+  // const schema = validator.object().shape({
+  //   name: validator.string().typeError('Please provide your name'),
+  //   email: validator
+  //     .string()
+  //     .email('Please make sure you are using a valid email address')
+  //     .typeError('Please provide your name'),
+  //   age: validator.number().typeError('Please use a valid number'),
+  // })
+  // const [form, changeForm] = useState(schema.default())
   return create(Gadget.Spacer, {
     children: [
       create(Inputs.Control, {
         key: 'name',
         label: 'Name',
         description: 'Full name please',
-        input: ({ change }) =>
+        input: props =>
           create(Inputs.String, {
-            change,
+            ...props,
             placeholder: 'Fred Blogs',
           }),
       }),
@@ -33,9 +42,9 @@ const LoginScreen = () => {
         key: 'email',
         label: 'Email',
         description: 'Please use a valid email address',
-        input: ({ change }) =>
+        input: props =>
           create(Inputs.String, {
-            change,
+            ...props,
             placeholder: 'fred.blogs@example.com',
           }),
       }),
@@ -51,9 +60,8 @@ const LoginScreen = () => {
             .validate(value),
         input: props =>
           create(Inputs.Number, {
-            key: 'name',
-            placeholder: '35',
             ...props,
+            placeholder: '35',
           }),
       }),
       create(Button.Container, {
