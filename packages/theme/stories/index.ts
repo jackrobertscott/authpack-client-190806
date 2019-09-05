@@ -1,80 +1,22 @@
 import { createElement as create } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
-import { Button, Inputs, Gadget, Iconbar, Header } from '../src/index'
+import { Button, Inputs, Gadget } from '../src/index'
 
-const stories = storiesOf('Authenticator', module)
+const stories = storiesOf('Components', module).addDecorator(data => {
+  return create('div', {
+    children: data(),
+    className: css({
+      padding: '50px',
+      '& > *, & > div': {
+        marginBottom: '20px',
+      },
+    }),
+  })
+})
 
-stories
-  .addDecorator(data =>
-    create('div', {
-      children: data(),
-      className: css({
-        padding: '50px',
-        '& > *, & > div': {
-          marginBottom: '20px',
-        },
-      }),
-    })
-  )
-  .add('Gadgets', () =>
-    create(Gadget.Router, {
-      brand: 'Your App',
-      screens: [
-        {
-          icon: 'user',
-          label: 'Login',
-          children: create(Gadget.Spacer, {
-            children: [
-              create(Inputs.Label, {
-                name: 'Name',
-                description: 'Full name please',
-                children: create(Inputs.Container, {
-                  children: [
-                    create(Inputs.String, {
-                      placeholder: 'Fred Blogs',
-                    }),
-                    create(Inputs.Pointer, {
-                      label: 'This field is required',
-                      children: create(Inputs.Icon, {
-                        name: 'bell',
-                      }),
-                    }),
-                  ],
-                }),
-              }),
-              create(Inputs.Label, {
-                name: 'Age',
-                description: 'How old are you?',
-                children: create(Inputs.Container, {
-                  children: [
-                    create(Inputs.Number, {
-                      placeholder: '35',
-                    }),
-                  ],
-                }),
-              }),
-              create(Button.Container, {
-                label: 'Submit',
-                click: () => console.log(123),
-              }),
-            ],
-          }),
-        },
-        {
-          icon: 'user',
-          label: 'Login',
-          children: 'Hello',
-        },
-        {
-          icon: 'user',
-          label: 'Login',
-          children: 'Hello',
-        },
-      ],
-    })
-  )
-  .add('Buttons', () => [
+stories.add('Buttons', () => {
+  return [
     create(Inputs.Container, {
       children: create(Inputs.String, {
         value: 'memes',
@@ -93,4 +35,5 @@ stories
       label: 'Hello',
       click: () => console.log(123),
     }),
-  ])
+  ]
+})

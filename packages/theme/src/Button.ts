@@ -33,6 +33,7 @@ export const Button: IButton = {
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '15px',
+        transition: '200ms',
         fontSize: theme.global.fonts,
         borderRadius: theme.global.radius,
         background: theme.buttons.background,
