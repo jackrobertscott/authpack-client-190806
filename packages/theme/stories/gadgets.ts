@@ -1,6 +1,7 @@
 import { createElement as create } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
+import * as validator from 'yup'
 import { Button, Inputs, Gadget } from '../src/index'
 
 const stories = storiesOf('Gadgets', module).addDecorator(data => {
@@ -18,36 +19,42 @@ const stories = storiesOf('Gadgets', module).addDecorator(data => {
 const LoginScreen = () => {
   return create(Gadget.Spacer, {
     children: [
-      create(Inputs.Label, {
+      create(Inputs.Control, {
         key: 'name',
-        name: 'Name',
+        label: 'Name',
         description: 'Full name please',
-        children: create(Inputs.Container, {
-          children: [
-            create(Inputs.String, {
-              key: 'input',
-              placeholder: 'Fred Blogs',
-            }),
-            create(Inputs.Pointer, {
-              key: 'icon',
-              label: 'This field is required',
-              children: create(Inputs.Icon, {
-                name: 'bell',
-              }),
-            }),
-          ],
-        }),
+        input: ({ change }) =>
+          create(Inputs.String, {
+            change,
+            placeholder: 'Fred Blogs',
+          }),
       }),
-      create(Inputs.Label, {
+      create(Inputs.Control, {
+        key: 'email',
+        label: 'Email',
+        description: 'Please use a valid email address',
+        input: ({ change }) =>
+          create(Inputs.String, {
+            change,
+            placeholder: 'fred.blogs@example.com',
+          }),
+      }),
+      create(Inputs.Control, {
         key: 'age',
-        name: 'Age',
+        label: 'Age',
         description: 'How old are you?',
-        children: create(Inputs.Container, {
-          children: create(Inputs.Number, {
+        change: console.log,
+        validate: value =>
+          validator
+            .number()
+            .typeError('Please use a valid number')
+            .validate(value),
+        input: props =>
+          create(Inputs.Number, {
             key: 'name',
             placeholder: '35',
+            ...props,
           }),
-        }),
       }),
       create(Button.Container, {
         key: 'submit',

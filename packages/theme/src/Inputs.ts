@@ -29,10 +29,15 @@ export interface IInputs {
     name?: string
     opacity?: number
   }>
-  Label: FC<{
-    name?: string
+  Control: FC<{
+    label?: string
     description?: string
-    children?: ReactNode
+    value?: any
+    change?: (data: any) => void
+    validate?: (value: any) => Promise<any>
+    input: FC<{
+      change: (data: any) => void
+    }>
   }>
   Pointer: FC<{
     children: ReactNode
@@ -100,7 +105,6 @@ export const Inputs: IInputs = {
         } else {
           const input = event.target.value
           const parsed = decimals ? parseFloat(input) : parseInt(input, 10)
-          console.log(parsed, !isNaN(parsed))
           if (!isNaN(parsed) && input !== state) {
             const update = `${parsed}${
               decimals && input.endsWith('.') ? '.' : ''
@@ -129,14 +133,27 @@ export const Inputs: IInputs = {
       })}`,
     })
   },
-  Label: ({ name, description, children }) => {
+  Control: ({ label, description, change, validate, input }) => {
     const theme = useContext(Theme)
+    const [error, changeError] = useState<Error | undefined>()
+    const pipe = (data: any) => {
+      if (validate) {
+        validate(data)
+          .then(casting => {
+            changeError(undefined)
+            if (change) {
+              change(casting)
+            }
+          })
+          .catch(changeError)
+      }
+    }
     return create('div', {
       children: [
-        name &&
+        label &&
           create('div', {
             key: 'name',
-            children: name,
+            children: label,
             className: css({
               color: theme.inputs.colorPrimary,
             }),
@@ -149,8 +166,22 @@ export const Inputs: IInputs = {
               color: theme.inputs.colorSecondary,
             }),
           }),
-        create((() => children) as FC, {
-          key: 'children',
+        create(Inputs.Container, {
+          key: 'container',
+          children: [
+            create(input, {
+              key: 'children',
+              change: pipe,
+            }),
+            error &&
+              create(Inputs.Pointer, {
+                key: 'icon',
+                label: error.message,
+                children: create(Inputs.Icon, {
+                  name: 'bell',
+                }),
+              }),
+          ],
         }),
       ],
       className: css({

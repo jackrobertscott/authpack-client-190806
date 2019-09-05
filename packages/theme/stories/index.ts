@@ -1,7 +1,7 @@
 import { createElement as create } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
-import { Button, Inputs, Gadget } from '../src/index'
+import { Button, Inputs } from '../src/index'
 
 const stories = storiesOf('Components', module).addDecorator(data => {
   return create('div', {
