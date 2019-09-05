@@ -20,9 +20,11 @@ export const Button: IButton = {
       onClick: click,
       children: [
         create('div', {
+          key: 'label',
           children: label,
         }),
         create(Button.Icon, {
+          key: 'icon',
           name: icon,
         }),
       ],

@@ -58,8 +58,11 @@ export const Iconbar: IIconbar = {
     const theme = useContext(Theme)
     return create('div', {
       children: [
-        children,
+        create((() => children) as FC, {
+          key: 'children',
+        }),
         create('div', {
+          key: 'pointer',
           children: create('div', {
             children: label,
             className: css({

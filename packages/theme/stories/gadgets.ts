@@ -15,18 +15,21 @@ const stories = storiesOf('Gadgets', module).addDecorator(data => {
   })
 })
 
-const LoginScreen = () =>
-  create(Gadget.Spacer, {
+const LoginScreen = () => {
+  return create(Gadget.Spacer, {
     children: [
       create(Inputs.Label, {
+        key: 'name',
         name: 'Name',
         description: 'Full name please',
         children: create(Inputs.Container, {
           children: [
             create(Inputs.String, {
+              key: 'input',
               placeholder: 'Fred Blogs',
             }),
             create(Inputs.Pointer, {
+              key: 'icon',
               label: 'This field is required',
               children: create(Inputs.Icon, {
                 name: 'bell',
@@ -36,22 +39,24 @@ const LoginScreen = () =>
         }),
       }),
       create(Inputs.Label, {
+        key: 'age',
         name: 'Age',
         description: 'How old are you?',
         children: create(Inputs.Container, {
-          children: [
-            create(Inputs.Number, {
-              placeholder: '35',
-            }),
-          ],
+          children: create(Inputs.Number, {
+            key: 'name',
+            placeholder: '35',
+          }),
         }),
       }),
       create(Button.Container, {
+        key: 'submit',
         label: 'Submit',
         click: () => console.log(123),
       }),
     ],
   })
+}
 
 stories.add('Login', () => {
   return create(Gadget.Router, {

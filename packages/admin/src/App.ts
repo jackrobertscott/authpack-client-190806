@@ -16,14 +16,17 @@ export const App: FC<{}> = () => {
           children: create(Gadget.Spacer, {
             children: [
               create(Inputs.Label, {
+                key: 'name',
                 name: 'Name',
                 description: 'Full name please',
                 children: create(Inputs.Container, {
                   children: [
                     create(Inputs.String, {
+                      key: 'input',
                       placeholder: 'Fred Blogs',
                     }),
                     create(Inputs.Pointer, {
+                      key: 'icon',
                       label: 'This field is required',
                       children: create(Inputs.Icon, {
                         name: 'bell',
@@ -33,11 +36,13 @@ export const App: FC<{}> = () => {
                 }),
               }),
               create(Inputs.Label, {
+                key: 'age',
                 name: 'Age',
                 description: 'How old are you?',
                 children: create(Inputs.Container, {
                   children: [
                     create(Inputs.Number, {
+                      key: 'input',
                       placeholder: '35',
                     }),
                   ],

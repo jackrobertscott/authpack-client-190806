@@ -149,7 +149,9 @@ export const Inputs: IInputs = {
               color: theme.inputs.colorSecondary,
             }),
           }),
-        children,
+        create((() => children) as FC, {
+          key: 'children',
+        }),
       ],
       className: css({
         all: 'unset',
@@ -168,8 +170,11 @@ export const Inputs: IInputs = {
     const theme = useContext(Theme)
     return create('div', {
       children: [
-        children,
+        create((() => children) as FC, {
+          key: 'children',
+        }),
         create('div', {
+          key: 'pointer',
           children: create('div', {
             children: label,
             className: css({

@@ -90,6 +90,7 @@ export const Gadget: IGadget = {
     return create(Gadget.Container, {
       children: [
         create(Iconbar.Container, {
+          key: 'iconbar',
           children: options.map(screen =>
             create(Iconbar.Pointer, {
               key: screen.id,
@@ -102,18 +103,25 @@ export const Gadget: IGadget = {
           ),
         }),
         create(Gadget.Contents, {
+          key: 'contents',
           children: [
             create(Header.Container, {
+              key: 'header',
               children: [
                 create(Header.Label, {
+                  key: 'label',
                   children: active.label,
                 }),
                 create(Header.Brand, {
+                  key: 'brand',
                   children: brand,
                 }),
               ],
             }),
-            active && active.children,
+            active &&
+              create((() => active.children) as FC, {
+                key: 'children',
+              }),
           ],
         }),
       ],
