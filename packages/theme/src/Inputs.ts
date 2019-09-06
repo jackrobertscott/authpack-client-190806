@@ -27,7 +27,6 @@ export interface IInputs {
   }>
   Icon: FC<{
     name?: string
-    opacity?: number
   }>
   Control: FC<{
     label?: string
@@ -123,13 +122,14 @@ export const Inputs: IInputs = {
       }),
     })
   },
-  Icon: ({ name = 'save', opacity = 0.25 }) => {
+  Icon: ({ name = 'save' }) => {
+    const theme = useContext(Theme)
     return create('div', {
       className: `far fa-${name} ${css({
         textAlign: 'center',
         lineHeight: '1.2em',
         padding: '15px',
-        opacity,
+        color: theme.inputs.error,
       })}`,
     })
   },

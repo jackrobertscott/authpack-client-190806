@@ -30,9 +30,8 @@ export interface IGadget {
     children: ReactNode
   }>
   Router: FC<{
-    brand: string
-    screens: IGadgetRouter[]
     close?: () => void
+    screens: IGadgetRouter[]
   }>
 }
 
@@ -155,16 +154,15 @@ export const Gadget: IGadget = {
       }),
     })
   },
-  Router: ({ screens, brand, close }) => {
-    const options = screens.map((screen, i) => ({ id: String(i), ...screen }))
-    const [active, changeActive] = useState<IGadgetRouter>(options[0])
+  Router: ({ close, screens }) => {
+    const [active, changeActive] = useState<IGadgetRouter>(screens[0])
     return create(Gadget.Container, {
       children: [
         create(Iconbar.Container, {
           key: 'iconbar',
-          top: options.map(screen => {
+          top: screens.map((screen, i) => {
             return create(Iconbar.Pointer, {
-              key: screen.id,
+              key: screen.id || String(i),
               label: screen.label,
               children: create(Iconbar.Icon, {
                 name: screen.icon,
@@ -182,16 +180,10 @@ export const Gadget: IGadget = {
               }),
             }),
         }),
-        create(Gadget.Contents, {
-          key: 'contents',
-          label: active.label,
-          brand,
-          children:
-            active &&
-            create((() => active.children) as FC, {
-              key: 'children',
-            }),
-        }),
+        active &&
+          create((() => active.children) as FC, {
+            key: 'children',
+          }),
       ],
     })
   },

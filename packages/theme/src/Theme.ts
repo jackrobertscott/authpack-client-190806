@@ -17,11 +17,15 @@ export interface ITheme {
   }
   sidebar: {
     background: string
+    title: string
+    color: string
+    colorHover: string
   }
   inputs: {
     background: string
     backgroundHover: string
     border: string
+    error: string
     color: string
     colorPrimary: string
     colorSecondary: string
@@ -65,11 +69,15 @@ export const Theme = createContext<ITheme>({
   },
   sidebar: {
     background: '#383838',
+    title: '#ADADAD',
+    color: '#777777',
+    colorHover: '#999999',
   },
   inputs: {
     background: '#272727',
     backgroundHover: '#292929',
     border: 'none',
+    error: '#A62F27',
     color: '#FFFFFF',
     colorPrimary: '#B9B9B9',
     colorSecondary: '#656565',

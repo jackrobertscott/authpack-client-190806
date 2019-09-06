@@ -107,6 +107,7 @@ export const Iconbar: IIconbar = {
             all: 'unset',
             width: '300px',
             position: 'absolute',
+            zIndex: 100,
             left: '100%',
             top: '-10px',
             marginLeft: '10px',

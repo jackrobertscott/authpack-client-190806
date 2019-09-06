@@ -14,8 +14,61 @@ const stories = storiesOf('Pages', module).addDecorator(data => {
   })
 })
 
+const UserPage = () => {
+  return create(Page.Contents, {
+    key: 'contents',
+    title: 'Accounts',
+    description: 'Hello world',
+    children: 'blah',
+  })
+}
+
 stories.add('Users', () => {
-  return create(Page.Container, {
-    children: 'Hello',
+  return create(Page.Router, {
+    screens: [
+      {
+        icon: 'users',
+        label: 'Accounts',
+        options: [
+          {
+            label: 'See all accounts',
+            title: 'All Accounts',
+            children: create(UserPage),
+          },
+        ],
+      },
+      {
+        icon: 'project-diagram',
+        label: 'Groups',
+        options: [],
+      },
+      {
+        icon: 'check-double',
+        label: 'Reports',
+        options: [],
+      },
+    ],
+    settings: [
+      {
+        icon: 'code',
+        label: 'Developer Mode',
+        options: [],
+      },
+      {
+        icon: 'cog',
+        label: 'Settings',
+        options: [],
+      },
+      {
+        icon: 'bars',
+        label: 'Workspace',
+        options: [],
+      },
+      {
+        icon: 'user-circle',
+        label: 'Profile',
+        options: [],
+      },
+    ],
   })
 })
