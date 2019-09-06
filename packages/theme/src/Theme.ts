@@ -57,6 +57,11 @@ export interface ITheme {
     color: string
     label: string
   }
+  search: {
+    background: string
+    color: string
+    colorHover: string
+  }
 }
 
 export const Theme = createContext<ITheme>({
@@ -115,5 +120,10 @@ export const Theme = createContext<ITheme>({
     border: '1px solid #454545',
     color: '#FFFFFF',
     label: '#999999',
+  },
+  search: {
+    background: '#434343',
+    color: '#6F6F6F',
+    colorHover: '#8B8B8B',
   },
 })

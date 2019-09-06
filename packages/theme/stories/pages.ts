@@ -15,7 +15,34 @@ const stories = storiesOf('Pages', module).addDecorator(data => {
 })
 
 stories.add('Search', () => {
-  return create(Search.Container)
+  return create(Search.Container, {
+    children: [
+      create(Search.Input, {
+        key: 'search',
+        icon: 'search',
+        change: console.log,
+        placeholder: 'Search...',
+      }),
+      create(Search.Group, {
+        key: 'results',
+        icon: 'stream',
+        label: '25 of 1,543 Results',
+        click: () => console.log('results'),
+      }),
+      create(Search.Group, {
+        key: 'previous',
+        icon: 'angle-double-left',
+        label: 'Previous',
+        click: () => console.log('prev'),
+      }),
+      create(Search.Group, {
+        key: 'next',
+        icon: 'angle-double-right',
+        label: 'Next',
+        click: () => console.log('next'),
+      }),
+    ],
+  })
 })
 
 stories.add('List', () => {
