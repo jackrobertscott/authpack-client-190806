@@ -50,6 +50,13 @@ export interface ITheme {
     height: string
     width: string
   }
+  lists: {
+    background: string
+    backgroundHover: string
+    border: string
+    color: string
+    label: string
+  }
 }
 
 export const Theme = createContext<ITheme>({
@@ -101,5 +108,12 @@ export const Theme = createContext<ITheme>({
     background: 'hsla(0, 0%, 0%, 0.5)',
     height: '760px',
     width: '545px',
+  },
+  lists: {
+    background: '#505050',
+    backgroundHover: '#585858',
+    border: '1px solid #454545',
+    color: '#FFFFFF',
+    label: '#999999',
   },
 })

@@ -1,7 +1,7 @@
 import { createElement as create } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
-import { Page } from '../src/index'
+import { Page, Search, List } from '../src/index'
 
 console.clear()
 
@@ -14,12 +14,36 @@ const stories = storiesOf('Pages', module).addDecorator(data => {
   })
 })
 
+stories.add('Search', () => {
+  return create(Search.Container)
+})
+
+stories.add('List', () => {
+  const items = ['bell', 'bolt', 'carrot', 'cat']
+  return create(List.Container, {
+    children: items.map(row =>
+      create(List.Row, {
+        key: row,
+        click: () => console.log(row),
+        children: items.map(icon =>
+          create(List.Cell, {
+            key: icon,
+            icon,
+            label: 'Hello',
+            value: '12345',
+          })
+        ),
+      })
+    ),
+  })
+})
+
 const UserPage = () => {
   return create(Page.Contents, {
     key: 'contents',
     title: 'Accounts',
     description: 'Hello world',
-    children: 'blah',
+    children: '',
   })
 }
 
