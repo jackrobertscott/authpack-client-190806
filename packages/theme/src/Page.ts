@@ -2,36 +2,35 @@ import { createElement as create, FC, useContext, ReactNode } from 'react'
 import { css } from 'emotion'
 import { Theme } from './Theme'
 
-export interface IModal {
+export interface IPageRouter {
+  id?: string
+  icon: string
+  label: string
+  children: ReactNode
+}
+
+export interface IPage {
   Container: FC<{
     children: ReactNode
   }>
 }
 
-export const Modal: IModal = {
+export const Page: IPage = {
   Container: ({ children }) => {
     const theme = useContext(Theme)
     return create('div', {
-      children: create('div', {
-        children,
-        className: css({
-          all: 'unset',
-          height: theme.modals.height,
-          width: theme.modals.width,
-          display: 'flex',
-        }),
-      }),
+      children,
       className: css({
         all: 'unset',
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: 'stretch',
+        alignItems: 'flex-start',
         position: 'absolute',
         left: 0,
         right: 0,
         top: 0,
         bottom: 0,
-        background: theme.modals.background,
+        background: 'yellow',
       }),
     })
   },

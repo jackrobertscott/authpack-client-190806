@@ -1,22 +1,11 @@
 import { createElement as create, useState } from 'react'
 import { storiesOf } from '@storybook/react'
-import { css } from 'emotion'
 import * as validator from 'yup'
 import { Button, Inputs, Gadget, Modal } from '../src/index'
 
 console.clear()
 
-const stories = storiesOf('Gadgets', module).addDecorator(data => {
-  return create('div', {
-    children: data(),
-    className: css({
-      padding: '50px',
-      '& > *, & > div': {
-        marginBottom: '20px',
-      },
-    }),
-  })
-})
+const stories = storiesOf('Gadgets', module)
 
 const LoginScreen = () => {
   // const schema = validator.object().shape({
