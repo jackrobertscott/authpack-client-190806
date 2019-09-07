@@ -34,7 +34,7 @@ export const Search: ISearch = {
       className: css({
         all: 'unset',
         display: 'flex',
-        padding: '25px',
+        padding: '0 25px',
         background: theme.search.background,
         '& > *, & > div': {
           marginRight: '25px',
@@ -66,9 +66,12 @@ export const Search: ISearch = {
           placeholder,
           className: css({
             all: 'unset',
-            padding: '25px 0',
             margin: '-25px 0',
-            display: 'flex',
+            padding: '25px 0',
+            '&:focus': {
+              margin: '-15px 0',
+              padding: '15px 0',
+            },
             flexGrow: 1,
           }),
         }),
@@ -76,11 +79,18 @@ export const Search: ISearch = {
       className: css({
         all: 'unset',
         display: 'flex',
-        flexGrow: 1,
+        alignItems: 'center',
         transition: '200ms',
         cursor: 'pointer',
+        padding: '25px 0',
+        flexGrow: 1,
         color: theme.search.color,
-        '&:hover, &:focus-within': {
+        '&:focus-within': {
+          color: theme.search.colorHover,
+          padding: '15px 0',
+          fontSize: 25,
+        },
+        '&:hover': {
           color: theme.search.colorHover,
         },
       }),
@@ -112,6 +122,7 @@ export const Search: ISearch = {
         display: 'flex',
         transition: '200ms',
         cursor: 'pointer',
+        padding: '25px 0',
         color: theme.search.color,
         '&:hover': {
           color: click && theme.search.colorHover,
