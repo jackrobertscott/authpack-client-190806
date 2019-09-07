@@ -56,7 +56,6 @@ export const Search: ISearch = {
           key: 'icon',
           className: `fas far fa-${icon} ${css({
             lineHeight: '1.2em',
-            marginRight: '7.5px',
           })}`,
         }),
         create('input', {
@@ -66,11 +65,13 @@ export const Search: ISearch = {
           placeholder,
           className: css({
             all: 'unset',
-            margin: '-25px 0',
             padding: '25px 0',
+            marginLeft: '7.5px',
+            transition: '200ms',
             '&:focus': {
-              margin: '-15px 0',
               padding: '15px 0',
+              marginLeft: '15px',
+              fontSize: 25,
             },
             flexGrow: 1,
           }),
@@ -80,17 +81,11 @@ export const Search: ISearch = {
         all: 'unset',
         display: 'flex',
         alignItems: 'center',
-        transition: '200ms',
         cursor: 'pointer',
-        padding: '25px 0',
+        fontSize: 15,
         flexGrow: 1,
         color: theme.search.color,
-        '&:focus-within': {
-          color: theme.search.colorHover,
-          padding: '15px 0',
-          fontSize: 25,
-        },
-        '&:hover': {
+        '&:hover, &:focus-within': {
           color: theme.search.colorHover,
         },
       }),

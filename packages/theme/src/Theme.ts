@@ -124,6 +124,6 @@ export const Theme = createContext<ITheme>({
   search: {
     background: '#434343',
     color: '#6F6F6F',
-    colorHover: '#8B8B8B',
+    colorHover: '#CCCCCC',
   },
 })
