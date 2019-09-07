@@ -1,30 +1,19 @@
-import { createElement as create, useState } from 'react'
-import { storiesOf } from '@storybook/react'
-import { css } from 'emotion'
+import { createElement as create, FC } from 'react'
+import { Inputs, Button, Gadget } from 'wga-theme'
 import * as validator from 'yup'
-import { Button, Inputs, Gadget, Modal } from '../src/index'
 
-console.clear()
+export interface IUnauthedLogin {}
 
-const stories = storiesOf('Gadgets', module).addDecorator(data => {
-  return create('div', {
-    children: data(),
-    className: css({
-      /* styles */
-    }),
-  })
-})
-
-const LoginScreen = () => {
-  const schema = validator.object().shape({
-    name: validator.string().typeError('Please provide your name'),
-    email: validator
-      .string()
-      .email('Please make sure you are using a valid email address')
-      .typeError('Please provide your name'),
-    age: validator.number().typeError('Please use a valid number'),
-  })
-  const [form, changeForm] = useState(schema.default())
+export const UnauthedLogin: FC<IUnauthedLogin> = () => {
+  // const schema = validator.object().shape({
+  //   name: validator.string().typeError('Please provide your name'),
+  //   email: validator
+  //     .string()
+  //     .email('Please make sure you are using a valid email address')
+  //     .typeError('Please provide your name'),
+  //   age: validator.number().typeError('Please use a valid number'),
+  // })
+  // const [form, changeForm] = useState(schema.default())
   return create(Gadget.Contents, {
     key: 'contents',
     label: 'Login',
@@ -76,28 +65,3 @@ const LoginScreen = () => {
     }),
   })
 }
-
-stories.add('Login', () => {
-  return create(Modal.Container, {
-    children: create(Gadget.Router, {
-      close: () => console.log('close'),
-      screens: [
-        {
-          icon: 'user-circle',
-          label: 'Login',
-          children: create(LoginScreen),
-        },
-        {
-          icon: 'street-view',
-          label: 'Sign Up',
-          children: create(LoginScreen),
-        },
-        {
-          icon: 'question-circle',
-          label: 'Forgotten Password',
-          children: create(LoginScreen),
-        },
-      ],
-    }),
-  })
-})
