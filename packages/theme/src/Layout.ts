@@ -14,8 +14,14 @@ export const Layout: ILayout = {
       className: css({
         all: 'unset',
         display: 'flex',
+        justifyContent: 'stretch',
         alignItems: 'stretch',
         overflow: 'hidden',
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
         flexGrow: 1,
       }),
     })

@@ -1,33 +1,8 @@
-import {
-  createElement as create,
-  FC,
-  ReactNode,
-  useState,
-  useContext,
-} from 'react'
+import { createElement as create, FC, ReactNode, useContext } from 'react'
 import { css } from 'emotion'
-import { Iconbar } from './Iconbar'
-import { Sidebar } from './Sidebar'
 import { Theme } from './Theme'
 
-export interface IPageSubrouter {
-  id?: string
-  label: string
-  title: string
-  children: ReactNode
-}
-
-export interface IPageRouter {
-  id?: string
-  icon: string
-  label: string
-  options: IPageSubrouter[]
-}
-
 export interface IPage {
-  Positioner: FC<{
-    children: ReactNode
-  }>
   Container: FC<{
     title: string
     description: string
@@ -38,29 +13,9 @@ export interface IPage {
       click: () => void
     }
   }>
-  Router: FC<{
-    screens: IPageRouter[]
-    settings: IPageRouter[]
-  }>
 }
 
 export const Page: IPage = {
-  Positioner: ({ children }) => {
-    return create('div', {
-      children,
-      className: css({
-        all: 'unset',
-        display: 'flex',
-        justifyContent: 'stretch',
-        alignItems: 'stretch',
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-      }),
-    })
-  },
   Container: ({ title, description, children, button }) => {
     const theme = useContext(Theme)
     return create('div', {
@@ -132,61 +87,6 @@ export const Page: IPage = {
         justifyContent: 'stretch',
         flexGrow: 1,
       }),
-    })
-  },
-  Router: ({ screens, settings }) => {
-    const options = screens.map((screen, i) => ({ id: String(i), ...screen }))
-    const [active, changeActive] = useState<IPageRouter>(options[0])
-    return create(Page.Positioner, {
-      children: [
-        create(Iconbar.Container, {
-          key: 'iconbar',
-          top: screens.map((screen, i) => {
-            return create(Iconbar.Pointer, {
-              key: screen.id || String(i),
-              label: screen.label,
-              children: create(Iconbar.Icon, {
-                name: screen.icon,
-                click: () => changeActive(screen),
-              }),
-            })
-          }),
-          bottom: settings.map((screen, i) => {
-            return create(Iconbar.Pointer, {
-              key: screen.id || String(i),
-              label: screen.label,
-              children: create(Iconbar.Icon, {
-                name: screen.icon,
-                click: () => changeActive(screen),
-              }),
-            })
-          }),
-        }),
-        create(Sidebar.Container, {
-          key: 'sidebar',
-          title: 'Accounts',
-          children: create(Sidebar.Links, {
-            options: [
-              {
-                label: 'See all accounts',
-                click: () => console.log('memes'),
-              },
-              {
-                label: 'See all accounts',
-                click: () => console.log('memes'),
-              },
-              {
-                label: 'See all accounts',
-                click: () => console.log('memes'),
-              },
-            ],
-          }),
-        }),
-        active &&
-          create((() => active.options[0].children) as FC, {
-            key: 'children',
-          }),
-      ],
     })
   },
 }

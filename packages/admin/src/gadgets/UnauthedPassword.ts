@@ -1,14 +1,14 @@
 import { createElement as create, FC } from 'react'
-import { Inputs, Button, Gadget } from 'wga-theme'
+import { Inputs, Button, Gadgets } from 'wga-theme'
 
 export interface IUnauthedPassword {}
 
 export const UnauthedPassword: FC<IUnauthedPassword> = () => {
-  return create(Gadget.Container, {
+  return create(Gadgets.Container, {
     key: 'contents',
     label: 'Password',
     brand: 'Your App',
-    children: create(Gadget.Spacer, {
+    children: create(Gadgets.Spacer, {
       children: [
         create(Inputs.Control, {
           key: 'name',

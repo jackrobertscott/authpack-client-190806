@@ -2,11 +2,11 @@ import { createElement as create, FC, useContext, ReactNode } from 'react'
 import { css } from 'emotion'
 import { Theme } from './Theme'
 
-export interface IGadget {
+export interface IGadgets {
   Container: FC<{
-    children: ReactNode
     label: string
     brand: string
+    children: ReactNode
   }>
   Spacer: FC<{
     children: ReactNode
@@ -17,13 +17,13 @@ export interface IGadget {
   }>
 }
 
-export const Gadget: IGadget = {
-  Container: ({ children, label, brand }) => {
+export const Gadgets: IGadgets = {
+  Container: ({ label, brand, children }) => {
     const theme = useContext(Theme)
     return create('div', {
       children: create('div', {
         children: [
-          create(Gadget.Header, {
+          create(Gadgets.Header, {
             key: 'header',
             label,
             brand,

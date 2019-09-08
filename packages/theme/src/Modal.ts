@@ -17,6 +17,7 @@ export const Modal: IModal = {
         className: css({
           all: 'unset',
           display: 'flex',
+          position: 'relative',
           fontSize: theme.global.fonts,
           borderRadius: theme.global.radius,
           width: theme.modals.width,

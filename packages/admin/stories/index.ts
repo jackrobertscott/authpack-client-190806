@@ -1,55 +1,62 @@
 import { createElement as create } from 'react'
 import { storiesOf } from '@storybook/react'
 import { Modal } from 'wga-theme'
+import { RouterCentral } from '../src/routers/RouterCentral'
 import { RouterModalUnauthed } from '../src/routers/RouterModalUnauthed'
 
 console.clear()
 
-const stories = storiesOf('Routers', module)
+const storiesPageRouters = storiesOf('Page Routers', module)
 
-stories.add('Unauthed', () => {
+storiesPageRouters.add('Central', () => {
+  return create(RouterCentral)
+})
+
+const storiesGadgetsRouters = storiesOf('Gadgets Routers', module)
+
+storiesGadgetsRouters.add('Unauthed', () => {
   return create(Modal.Container, {
     children: create(RouterModalUnauthed),
   })
 })
 
-stories.add('Authed', () => {
+storiesGadgetsRouters.add('Authed', () => {
   return create(Modal.Container, {
     children: create(RouterModalUnauthed),
   })
 })
 
-stories.add('Workspace', () => {
+storiesGadgetsRouters.add('Workspace', () => {
   return create(Modal.Container, {
     children: create(RouterModalUnauthed),
   })
 })
 
-stories.add('Accounts Manager', () => {
+storiesGadgetsRouters.add('Accounts Manager', () => {
   return create(Modal.Container, {
     children: create(RouterModalUnauthed),
   })
 })
 
-stories.add('Groups Manager', () => {
+storiesGadgetsRouters.add('Groups Manager', () => {
   return create(Modal.Container, {
     children: create(RouterModalUnauthed),
   })
 })
 
-stories.add('Memberships Manager', () => {
+storiesGadgetsRouters.add('Memberships Manager', () => {
   return create(Modal.Container, {
     children: create(RouterModalUnauthed),
   })
 })
 
-stories.add('Permissions Manager', () => {
+storiesGadgetsRouters.add('Permissions Manager', () => {
   return create(Modal.Container, {
     children: create(RouterModalUnauthed),
   })
 })
 
-stories.add('Sessions Manager', () => {
+storiesGadgetsRouters.add('Sessions Manager', () => {
   return create(Modal.Container, {
     children: create(RouterModalUnauthed),
   })

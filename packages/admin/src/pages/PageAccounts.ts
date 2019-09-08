@@ -1,14 +1,15 @@
 import { createElement as create, FC } from 'react'
-import { Inputs, Button, Gadgets } from 'wga-theme'
+import { Inputs, Button, Page } from 'wga-theme'
+import { css } from 'emotion'
 
-export interface IUnauthedSignup {}
+export interface IPageAccounts {}
 
-export const UnauthedSignup: FC<IUnauthedSignup> = () => {
-  return create(Gadgets.Container, {
+export const PageAccounts: FC<IPageAccounts> = () => {
+  return create(Page.Container, {
     key: 'contents',
-    label: 'Sign Up',
-    brand: 'Your App',
-    children: create(Gadgets.Spacer, {
+    title: 'Accounts',
+    description: 'See all the users who have signed up to your app',
+    children: create('div', {
       children: [
         create(Inputs.Control, {
           key: 'name',
@@ -26,6 +27,15 @@ export const UnauthedSignup: FC<IUnauthedSignup> = () => {
           click: () => console.log(123),
         }),
       ],
+      className: css({
+        padding: '25px',
+        '& > *, & > div': {
+          marginBottom: '25px',
+          '&:last-child': {
+            marginBottom: 0,
+          },
+        },
+      }),
     }),
   })
 }

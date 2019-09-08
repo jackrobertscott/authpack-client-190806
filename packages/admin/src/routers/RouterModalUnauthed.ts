@@ -1,6 +1,6 @@
 import { createElement as create, FC } from 'react'
 import { UnauthedLogin } from '../gadgets/UnauthedLogin'
-import { IconbarGadget } from '../templates/IconbarGadget'
+import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { UnauthedSignup } from '../gadgets/UnauthedSignup'
 import { UnauthedPassword } from '../gadgets/UnauthedPassword'
 
@@ -9,7 +9,7 @@ export type IRouterModalUnauthed = {
 }
 
 export const RouterModalUnauthed: FC<IRouterModalUnauthed> = ({ close }) => {
-  return create(IconbarGadget, {
+  return create(GadgetsIconbar, {
     close,
     screens: [
       {

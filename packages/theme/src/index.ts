@@ -1,6 +1,6 @@
 export * from './Button'
 export * from './Code'
-export * from './Gadget'
+export * from './Gadgets'
 export * from './Graph'
 export * from './Iconbar'
 export * from './Inputs'

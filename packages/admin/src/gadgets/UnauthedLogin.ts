@@ -1,5 +1,5 @@
 import { createElement as create, FC } from 'react'
-import { Inputs, Button, Gadget } from 'wga-theme'
+import { Inputs, Button, Gadgets } from 'wga-theme'
 import * as validator from 'yup'
 
 export interface IUnauthedLogin {}
@@ -14,11 +14,11 @@ export const UnauthedLogin: FC<IUnauthedLogin> = () => {
   //   age: validator.number().typeError('Please use a valid number'),
   // })
   // const [form, changeForm] = useState(schema.default())
-  return create(Gadget.Container, {
+  return create(Gadgets.Container, {
     key: 'contents',
     label: 'Login',
     brand: 'Your App',
-    children: create(Gadget.Spacer, {
+    children: create(Gadgets.Spacer, {
       children: [
         create(Inputs.Control, {
           key: 'name',
