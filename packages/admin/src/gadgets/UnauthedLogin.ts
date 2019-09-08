@@ -14,7 +14,7 @@ export const UnauthedLogin: FC<IUnauthedLogin> = () => {
   //   age: validator.number().typeError('Please use a valid number'),
   // })
   // const [form, changeForm] = useState(schema.default())
-  return create(Gadget.Contents, {
+  return create(Gadget.Container, {
     key: 'contents',
     label: 'Login',
     brand: 'Your App',

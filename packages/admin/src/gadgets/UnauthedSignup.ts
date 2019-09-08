@@ -4,7 +4,7 @@ import { Inputs, Button, Gadget } from 'wga-theme'
 export interface IUnauthedSignup {}
 
 export const UnauthedSignup: FC<IUnauthedSignup> = () => {
-  return create(Gadget.Contents, {
+  return create(Gadget.Container, {
     key: 'contents',
     label: 'Sign Up',
     brand: 'Your App',

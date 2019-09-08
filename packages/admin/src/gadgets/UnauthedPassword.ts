@@ -4,7 +4,7 @@ import { Inputs, Button, Gadget } from 'wga-theme'
 export interface IUnauthedPassword {}
 
 export const UnauthedPassword: FC<IUnauthedPassword> = () => {
-  return create(Gadget.Contents, {
+  return create(Gadget.Container, {
     key: 'contents',
     label: 'Password',
     brand: 'Your App',

@@ -16,9 +16,14 @@ export const Modal: IModal = {
         children,
         className: css({
           all: 'unset',
-          height: theme.modals.height,
-          width: theme.modals.width,
           display: 'flex',
+          fontSize: theme.global.fonts,
+          borderRadius: theme.global.radius,
+          width: theme.modals.width,
+          height: theme.modals.height,
+          background: theme.modals.background,
+          boxShadow: theme.modals.shadow,
+          border: theme.modals.border,
         }),
       }),
       className: css({
@@ -31,7 +36,6 @@ export const Modal: IModal = {
         right: 0,
         top: 0,
         bottom: 0,
-        background: theme.modals.background,
       }),
     })
   },

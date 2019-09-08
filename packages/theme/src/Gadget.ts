@@ -1,13 +1,9 @@
 import { createElement as create, FC, useContext, ReactNode } from 'react'
 import { css } from 'emotion'
 import { Theme } from './Theme'
-import { Header } from './Header'
 
 export interface IGadget {
   Container: FC<{
-    children: ReactNode
-  }>
-  Contents: FC<{
     children: ReactNode
     label: string
     brand: string
@@ -15,42 +11,22 @@ export interface IGadget {
   Spacer: FC<{
     children: ReactNode
   }>
+  Header: FC<{
+    label: string
+    brand: string
+  }>
 }
 
 export const Gadget: IGadget = {
-  Container: ({ children }) => {
-    const theme = useContext(Theme)
-    return create('div', {
-      children,
-      className: css({
-        all: 'unset',
-        display: 'flex',
-        flexGrow: 1,
-        overflow: 'hidden',
-        fontSize: theme.global.fonts,
-        borderRadius: theme.global.radius,
-        background: theme.gadgets.background,
-        border: theme.gadgets.border,
-      }),
-    })
-  },
-  Contents: ({ children, label, brand }) => {
+  Container: ({ children, label, brand }) => {
     const theme = useContext(Theme)
     return create('div', {
       children: create('div', {
         children: [
-          create(Header.Container, {
+          create(Gadget.Header, {
             key: 'header',
-            children: [
-              create(Header.Label, {
-                key: 'label',
-                children: label,
-              }),
-              create(Header.Brand, {
-                key: 'brand',
-                children: brand,
-              }),
-            ],
+            label,
+            brand,
           }),
           create('div', {
             key: 'children',
@@ -114,6 +90,7 @@ export const Gadget: IGadget = {
         flexDirection: 'column',
         justifyContent: 'flex-start',
         flexGrow: 1,
+        background: theme.gadgets.background,
       }),
     })
   },
@@ -133,6 +110,37 @@ export const Gadget: IGadget = {
             marginBottom: 0,
           },
         },
+      }),
+    })
+  },
+  Header: ({ label, brand }) => {
+    const theme = useContext(Theme)
+    return create('div', {
+      children: [
+        create('div', {
+          key: 'label',
+          children: label,
+          className: css({
+            all: 'unset',
+            color: theme.headers.color,
+          }),
+        }),
+        create('div', {
+          key: 'brand',
+          children: brand,
+          className: css({
+            all: 'unset',
+            color: theme.headers.brand,
+          }),
+        }),
+      ],
+      className: css({
+        all: 'unset',
+        display: 'flex',
+        padding: '25px',
+        justifyContent: 'space-between',
+        background: theme.headers.background,
+        color: theme.headers.color,
       }),
     })
   },

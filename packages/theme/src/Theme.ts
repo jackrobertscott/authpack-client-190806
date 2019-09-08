@@ -7,7 +7,6 @@ export interface ITheme {
   }
   gadgets: {
     background: string
-    border: string
     scrollbar: string
   }
   iconbar: {
@@ -47,6 +46,8 @@ export interface ITheme {
   }
   modals: {
     background: string
+    border: string
+    shadow: string
     height: string
     width: string
   }
@@ -71,7 +72,6 @@ export const Theme = createContext<ITheme>({
   },
   gadgets: {
     background: '#3B3B3B',
-    border: '1px solid #222222',
     scrollbar: '#505050',
   },
   iconbar: {
@@ -110,7 +110,9 @@ export const Theme = createContext<ITheme>({
     brand: '#777777',
   },
   modals: {
-    background: 'hsla(0, 0%, 0%, 0.5)',
+    background: '#222222',
+    border: '1px solid #222222',
+    shadow: '0 0 0 10000px hsla(0, 0%, 0%, 0.5)',
     height: '760px',
     width: '545px',
   },

@@ -25,10 +25,10 @@ export interface IPageRouter {
 }
 
 export interface IPage {
-  Container: FC<{
+  Positioner: FC<{
     children: ReactNode
   }>
-  Contents: FC<{
+  Container: FC<{
     title: string
     description: string
     children: ReactNode
@@ -45,7 +45,7 @@ export interface IPage {
 }
 
 export const Page: IPage = {
-  Container: ({ children }) => {
+  Positioner: ({ children }) => {
     return create('div', {
       children,
       className: css({
@@ -61,7 +61,7 @@ export const Page: IPage = {
       }),
     })
   },
-  Contents: ({ title, description, children, button }) => {
+  Container: ({ title, description, children, button }) => {
     const theme = useContext(Theme)
     return create('div', {
       children: [
@@ -137,7 +137,7 @@ export const Page: IPage = {
   Router: ({ screens, settings }) => {
     const options = screens.map((screen, i) => ({ id: String(i), ...screen }))
     const [active, changeActive] = useState<IPageRouter>(options[0])
-    return create(Page.Container, {
+    return create(Page.Positioner, {
       children: [
         create(Iconbar.Container, {
           key: 'iconbar',
