@@ -7,6 +7,7 @@ export interface ISidebar {
     title: ReactNode
     options: Array<{
       id?: string
+      icon: string
       label: string
       click: () => void
     }>
@@ -29,13 +30,28 @@ export const Sidebar: ISidebar = {
         }),
         create('div', {
           key: 'options',
-          children: options.map(({ id, click, label }, i) => {
+          children: options.map(({ id, click, label, icon }, i) => {
             return create('div', {
               key: id || String(i),
               onClick: click,
-              children: label,
+              children: [
+                create('div', {
+                  key: 'icon',
+                  className: `fas far fa-${icon} ${css({
+                    lineHeight: '1.2em',
+                    textAlign: 'center',
+                    width: '15px',
+                    marginRight: '15px',
+                  })}`,
+                }),
+                create('div', {
+                  key: 'label',
+                  children: label,
+                }),
+              ],
               className: css({
                 all: 'unset',
+                display: 'flex',
                 cursor: 'pointer',
                 transition: '200ms',
                 color: theme.sidebar.color,
@@ -85,6 +101,7 @@ export const Sidebar: ISidebar = {
         width: '240px',
         padding: '25px',
         background: theme.sidebar.background,
+        borderRight: theme.sidebar.border,
         color: theme.sidebar.color,
       }),
     })

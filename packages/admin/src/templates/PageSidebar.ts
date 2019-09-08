@@ -3,6 +3,7 @@ import { Layout, Sidebar } from 'wga-theme'
 
 export interface IPageSidebarScreen {
   id?: string
+  icon: string
   label: string
   children: ReactNode
 }
@@ -21,6 +22,7 @@ export const PageSidebar: FC<IPageSidebar> = ({ title, screens }) => {
         key: 'iconbar',
         title,
         options: screens.map(screen => ({
+          icon: screen.icon,
           label: screen.label,
           click: () => changeActive(screen),
         })),

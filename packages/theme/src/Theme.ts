@@ -16,6 +16,7 @@ export interface ITheme {
   }
   sidebar: {
     background: string
+    border: string
     title: string
     color: string
     colorHover: string
@@ -82,6 +83,7 @@ export const Theme = createContext<ITheme>({
   },
   sidebar: {
     background: '#353535',
+    border: '1px solid #303030',
     title: '#ADADAD',
     color: '#777777',
     colorHover: '#999999',
