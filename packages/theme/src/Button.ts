@@ -42,9 +42,11 @@ export const Button: IButton = {
         border: theme.buttons.border,
         color: theme.buttons.color,
         '&:hover': {
-          boxShadow: '0 1px 10px rgba(0, 0, 0, 0.15)',
+          background: theme.buttons.backgroundHover,
+          boxShadow: '0 1px 7.5px rgba(0, 0, 0, 0.15)',
         },
         '&:active': {
+          background: theme.buttons.background,
           boxShadow: 'none',
         },
       }),

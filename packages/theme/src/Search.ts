@@ -81,6 +81,7 @@ export const Search: ISearch = {
         all: 'unset',
         display: 'flex',
         alignItems: 'center',
+        transition: '200ms',
         cursor: 'pointer',
         fontSize: 15,
         flexGrow: 1,

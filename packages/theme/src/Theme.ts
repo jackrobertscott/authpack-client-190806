@@ -31,6 +31,7 @@ export interface ITheme {
   }
   buttons: {
     background: string
+    backgroundHover: string
     border: string
     color: string
   }
@@ -71,7 +72,7 @@ export const Theme = createContext<ITheme>({
     radius: '3px',
   },
   gadgets: {
-    background: '#3B3B3B',
+    background: '#414141',
     scrollbar: '#505050',
   },
   iconbar: {
@@ -80,13 +81,13 @@ export const Theme = createContext<ITheme>({
     colorHover: '#999999',
   },
   sidebar: {
-    background: '#383838',
+    background: '#353535',
     title: '#ADADAD',
     color: '#777777',
     colorHover: '#999999',
   },
   inputs: {
-    background: '#272727',
+    background: '#323232',
     backgroundHover: '#292929',
     border: 'none',
     error: '#A62F27',
@@ -95,7 +96,8 @@ export const Theme = createContext<ITheme>({
     colorSecondary: '#656565',
   },
   buttons: {
-    background: '#505050',
+    background: '#595959',
+    backgroundHover: '#616161',
     border: 'none',
     color: '#FFFFFF',
   },
@@ -105,7 +107,7 @@ export const Theme = createContext<ITheme>({
     color: '#FFFFFF',
   },
   headers: {
-    background: '#333333',
+    background: '#3B3B3B',
     color: '#ADADAD',
     brand: '#777777',
   },
@@ -117,9 +119,9 @@ export const Theme = createContext<ITheme>({
     width: '545px',
   },
   lists: {
-    background: '#505050',
+    background: '#4F4F4F',
     backgroundHover: '#585858',
-    border: '1px solid #454545',
+    border: '1px solid #494949',
     color: '#FFFFFF',
     label: '#999999',
   },

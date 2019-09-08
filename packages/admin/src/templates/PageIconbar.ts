@@ -1,5 +1,6 @@
 import { createElement as create, FC, ReactNode, useState } from 'react'
 import { Iconbar, Layout } from 'wga-theme'
+import { css } from 'emotion'
 
 export interface IPageIconbarRouter {
   id?: string
@@ -31,8 +32,16 @@ export const PageIconbar: FC<IPageIconbar> = ({ screens }) => {
         }),
       }),
       active &&
-        create((() => active.children) as FC, {
-          key: 'children',
+        create('div', {
+          children: create((() => active.children) as FC, {
+            key: 'children',
+          }),
+          className: css({
+            all: 'unset',
+            display: 'flex',
+            position: 'relative',
+            flexGrow: 1,
+          }),
         }),
     ],
   })

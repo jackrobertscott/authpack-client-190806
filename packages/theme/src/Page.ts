@@ -49,7 +49,7 @@ export const Page: IPage = {
             all: 'unset',
             display: 'flex',
             padding: '25px',
-            background: '#3E3E3E',
+            background: theme.headers.background,
           }),
         }),
         create('div', {

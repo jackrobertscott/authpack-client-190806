@@ -1,6 +1,6 @@
 import { createElement as create, FC } from 'react'
 import { PageIconbar } from '../templates/PageIconbar'
-import { PageAccounts } from '../pages/PageAccounts'
+import { RouterSidebarAccounts } from './RouterSidebarAccounts'
 
 export type IRouterCentral = {}
 
@@ -10,17 +10,17 @@ export const RouterCentral: FC<IRouterCentral> = () => {
       {
         icon: 'users',
         label: 'Accouts',
-        children: create(PageAccounts),
+        children: create(RouterSidebarAccounts),
       },
       {
         icon: 'project-diagram',
         label: 'Groups',
-        children: create(PageAccounts),
+        children: create(RouterSidebarAccounts),
       },
       {
         icon: 'check-double',
         label: 'Reports',
-        children: create(PageAccounts),
+        children: create(RouterSidebarAccounts),
       },
     ],
   })

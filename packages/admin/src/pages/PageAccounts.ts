@@ -1,41 +1,39 @@
 import { createElement as create, FC } from 'react'
-import { Inputs, Button, Page } from 'wga-theme'
-import { css } from 'emotion'
+import { Page, List } from 'wga-theme'
+import { Searchbar } from '../templates/Searchbar'
 
 export interface IPageAccounts {}
 
 export const PageAccounts: FC<IPageAccounts> = () => {
+  const items = ['bell', 'bolt', 'carrot', 'cat']
   return create(Page.Container, {
     key: 'contents',
-    title: 'Accounts',
+    title: 'All Accounts',
     description: 'See all the users who have signed up to your app',
-    children: create('div', {
-      children: [
-        create(Inputs.Control, {
-          key: 'name',
-          label: 'Name',
-          description: 'Full name please',
-          input: props =>
-            create(Inputs.String, {
-              ...props,
-              placeholder: 'Fred Blogs',
-            }),
-        }),
-        create(Button.Container, {
-          key: 'submit',
-          label: 'Submit',
-          click: () => console.log(123),
-        }),
-      ],
-      className: css({
-        padding: '25px',
-        '& > *, & > div': {
-          marginBottom: '25px',
-          '&:last-child': {
-            marginBottom: 0,
-          },
-        },
+    children: [
+      create(Searchbar, {
+        key: 'searchbar',
+        change: console.log,
+        previous: () => console.log('previous'),
+        next: () => console.log('next'),
       }),
-    }),
+      create(List.Container, {
+        key: 'list',
+        children: items.map(row =>
+          create(List.Row, {
+            key: row,
+            click: () => console.log(row),
+            children: items.map(icon =>
+              create(List.Cell, {
+                key: icon,
+                icon,
+                label: 'Hello',
+                value: '12345',
+              })
+            ),
+          })
+        ),
+      }),
+    ],
   })
 }

@@ -62,6 +62,7 @@ export const Inputs: IInputs = {
         color: theme.inputs.color,
         '&:hover, &:focus-within': {
           background: theme.inputs.backgroundHover,
+          boxShadow: '0 1px 7.5px rgba(0, 0, 0, 0.15)',
         },
       }),
     })
