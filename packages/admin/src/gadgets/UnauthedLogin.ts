@@ -15,7 +15,6 @@ export const UnauthedLogin: FC<IUnauthedLogin> = () => {
   // })
   // const [form, changeForm] = useState(schema.default())
   return create(Gadgets.Container, {
-    key: 'contents',
     label: 'Login',
     brand: 'Your App',
     children: create(Gadgets.Spacer, {

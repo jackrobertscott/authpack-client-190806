@@ -33,9 +33,8 @@ export const PageIconbar: FC<IPageIconbar> = ({ screens }) => {
       }),
       active &&
         create('div', {
-          children: create((() => active.children) as FC, {
-            key: 'children',
-          }),
+          key: 'children',
+          children: active.children,
           className: css({
             all: 'unset',
             display: 'flex',

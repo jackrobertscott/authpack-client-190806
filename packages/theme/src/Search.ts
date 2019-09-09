@@ -59,6 +59,7 @@ export const Search: ISearch = {
           })}`,
         }),
         create('input', {
+          key: 'input',
           value: state,
           onChange: event =>
             state !== event.target.value && changeState(event.target.value),

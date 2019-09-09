@@ -5,7 +5,6 @@ export interface IUnauthedSignup {}
 
 export const UnauthedSignup: FC<IUnauthedSignup> = () => {
   return create(Gadgets.Container, {
-    key: 'contents',
     label: 'Sign Up',
     brand: 'Your App',
     children: create(Gadgets.Spacer, {

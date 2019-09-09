@@ -21,9 +21,11 @@ export const Page: IPage = {
     return create('div', {
       children: [
         create('div', {
+          key: 'header',
           children: create('div', {
             children: [
               create('div', {
+                key: 'title',
                 children: title,
                 className: css({
                   fontSize: '25px',
@@ -31,6 +33,7 @@ export const Page: IPage = {
                 }),
               }),
               create('div', {
+                key: 'brand',
                 children: description,
                 className: css({
                   fontSize: '15px',

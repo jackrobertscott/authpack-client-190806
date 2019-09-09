@@ -5,7 +5,6 @@ export interface IUnauthedPassword {}
 
 export const UnauthedPassword: FC<IUnauthedPassword> = () => {
   return create(Gadgets.Container, {
-    key: 'contents',
     label: 'Password',
     brand: 'Your App',
     children: create(Gadgets.Spacer, {
