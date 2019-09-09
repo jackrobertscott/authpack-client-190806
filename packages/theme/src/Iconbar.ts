@@ -40,7 +40,9 @@ export const Iconbar: IIconbar = {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        padding: '25px',
+        alignItems: 'center',
+        padding: '25px 0',
+        width: '75px',
         background: theme.iconbar.background,
       }),
     })

@@ -2,6 +2,8 @@ import { createElement as create } from 'react'
 import { storiesOf } from '@storybook/react'
 import { RouterCentral } from '../src/routers/RouterCentral'
 import { RouterModalUnauthed } from '../src/routers/RouterModalUnauthed'
+import { RouterModalAuthed } from '../src/routers/RouterModalAuthed'
+import { RouterModalWorkspace } from '../src/routers/RouterModalWorkspace'
 
 console.clear()
 
@@ -18,11 +20,11 @@ storiesGadgetsRouters.add('Unauthed', () => {
 })
 
 storiesGadgetsRouters.add('Authed', () => {
-  return create(RouterModalUnauthed)
+  return create(RouterModalAuthed)
 })
 
 storiesGadgetsRouters.add('Workspace', () => {
-  return create(RouterModalUnauthed)
+  return create(RouterModalWorkspace)
 })
 
 storiesGadgetsRouters.add('Accounts Manager', () => {

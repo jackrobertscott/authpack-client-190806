@@ -1,9 +1,9 @@
 import { createElement as create, FC } from 'react'
+import { Modal } from 'wga-theme'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { UnauthedLogin } from '../gadgets/UnauthedLogin'
 import { UnauthedSignup } from '../gadgets/UnauthedSignup'
 import { UnauthedPassword } from '../gadgets/UnauthedPassword'
-import { Modal } from 'wga-theme'
 
 export type IRouterModalUnauthed = {
   close?: () => void
