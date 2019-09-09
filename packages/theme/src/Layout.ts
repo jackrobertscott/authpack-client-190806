@@ -18,6 +18,7 @@ export const Layout: ILayout = {
         alignItems: 'stretch',
         overflow: 'hidden',
         position: 'absolute',
+        background: '#000000',
         left: 0,
         right: 0,
         top: 0,

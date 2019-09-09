@@ -1,6 +1,8 @@
 import { createElement as create, FC } from 'react'
 import { PageSidebar } from '../templates/PageSidebar'
 import { PageAccounts } from '../pages/PageAccounts'
+import { PageGroups } from '../pages/PageGroups'
+import { PagePermissions } from '../pages/PagePermissions'
 
 export type IRouterSidebarGroups = {}
 
@@ -11,12 +13,12 @@ export const RouterSidebarGroups: FC<IRouterSidebarGroups> = ({}) => {
       {
         icon: 'user-friends',
         label: 'See all groups',
-        children: null,
+        children: create(PageGroups),
       },
       {
         icon: 'bookmark',
         label: 'See all permissions',
-        children: null,
+        children: create(PagePermissions),
       },
       {
         icon: 'code',

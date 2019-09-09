@@ -7,7 +7,6 @@ export type IPageAccounts = {}
 export const PageAccounts: FC<IPageAccounts> = () => {
   const items = ['bell', 'bolt', 'carrot', 'cat']
   return create(Page.Container, {
-    key: 'contents',
     title: 'All Accounts',
     description: 'See all the users who have signed up to your app',
     children: [

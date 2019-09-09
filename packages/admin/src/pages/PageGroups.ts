@@ -2,13 +2,13 @@ import { createElement as create, FC } from 'react'
 import { Page, List } from 'wga-theme'
 import { Searchbar } from '../templates/Searchbar'
 
-export type IPageSessions = {}
+export type IPageGroups = {}
 
-export const PageSessions: FC<IPageSessions> = () => {
+export const PageGroups: FC<IPageGroups> = () => {
   const items = ['bell', 'bolt', 'carrot', 'cat']
   return create(Page.Container, {
-    title: 'All Sessions',
-    description: 'See all the sessions created by the accounts of your app',
+    title: 'All Groups',
+    description: 'See all the groups created in your app',
     children: [
       create(Searchbar, {
         key: 'searchbar',

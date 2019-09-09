@@ -2,13 +2,13 @@ import { createElement as create, FC } from 'react'
 import { Page, List } from 'wga-theme'
 import { Searchbar } from '../templates/Searchbar'
 
-export type IPageSessions = {}
+export type IPagePermissions = {}
 
-export const PageSessions: FC<IPageSessions> = () => {
+export const PagePermissions: FC<IPagePermissions> = () => {
   const items = ['bell', 'bolt', 'carrot', 'cat']
   return create(Page.Container, {
     title: 'All Sessions',
-    description: 'See all the sessions created by the accounts of your app',
+    description: 'See all the permissions available in your app',
     children: [
       create(Searchbar, {
         key: 'searchbar',

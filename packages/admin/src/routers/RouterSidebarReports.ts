@@ -9,12 +9,12 @@ export const RouterSidebarReports: FC<IRouterSidebarReports> = ({}) => {
     screens: [
       {
         icon: 'user',
-        label: 'Account metrics',
+        label: 'See account metrics',
         children: null,
       },
       {
         icon: 'users',
-        label: 'Group metrics',
+        label: 'See group metrics',
         children: null,
       },
     ],
