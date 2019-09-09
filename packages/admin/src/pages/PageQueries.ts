@@ -3,10 +3,12 @@ import { css } from 'emotion'
 import GraphiQL from 'graphiql'
 import 'graphiql/graphiql.css'
 
-export const App: FC<{}> = () => {
+export type IPageQueries = {}
+
+export const PageQueries: FC<IPageQueries> = () => {
   return create('div', {
     className: css({
-      height: '100vh',
+      flexGrow: 1,
     }),
     children: create(GraphiQL, {
       fetcher: (graphQLParams: any) =>

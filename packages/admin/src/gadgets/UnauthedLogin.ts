@@ -2,7 +2,7 @@ import { createElement as create, FC } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
 import * as validator from 'yup'
 
-export interface IUnauthedLogin {}
+export type IUnauthedLogin = {}
 
 export const UnauthedLogin: FC<IUnauthedLogin> = () => {
   // const schema = validator.object().shape({

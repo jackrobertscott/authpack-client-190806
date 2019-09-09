@@ -1,7 +1,7 @@
 import { createElement as create, FC } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
 
-export interface IUnauthedPassword {}
+export type IUnauthedPassword = {}
 
 export const UnauthedPassword: FC<IUnauthedPassword> = () => {
   return create(Gadgets.Container, {

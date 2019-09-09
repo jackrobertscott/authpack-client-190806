@@ -13,6 +13,7 @@ export interface IIconbar {
   Icon: FC<{
     name: string
     click?: () => void
+    active?: boolean
   }>
   Pointer: FC<{
     children: ReactNode
@@ -64,7 +65,7 @@ export const Iconbar: IIconbar = {
       }),
     })
   },
-  Icon: ({ name, click }) => {
+  Icon: ({ name, click, active }) => {
     const theme = useContext(Theme)
     return create('div', {
       onClick: click,
@@ -75,8 +76,8 @@ export const Iconbar: IIconbar = {
         lineHeight: '1.2em',
         cursor: 'pointer',
         width: '100%',
-        color: theme.iconbar.color,
-        '&:hover': {
+        color: active ? theme.iconbar.colorActive : theme.iconbar.color,
+        '&:hover': !active && {
           color: theme.iconbar.colorHover,
         },
       })}`,

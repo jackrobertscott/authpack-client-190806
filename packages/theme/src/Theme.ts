@@ -13,6 +13,7 @@ export interface ITheme {
     background: string
     color: string
     colorHover: string
+    colorActive: string
   }
   sidebar: {
     background: string
@@ -20,6 +21,7 @@ export interface ITheme {
     title: string
     color: string
     colorHover: string
+    colorActive: string
   }
   inputs: {
     background: string
@@ -80,13 +82,15 @@ export const Theme = createContext<ITheme>({
     background: '#2C2C2C',
     color: '#777777',
     colorHover: '#999999',
+    colorActive: '#C4C4C4',
   },
   sidebar: {
     background: '#353535',
     border: '1px solid #303030',
-    title: '#ADADAD',
+    title: '#999999',
     color: '#777777',
     colorHover: '#999999',
+    colorActive: '#B8B8B8',
   },
   inputs: {
     background: '#323232',
@@ -110,7 +114,7 @@ export const Theme = createContext<ITheme>({
   },
   headers: {
     background: '#3B3B3B',
-    color: '#ADADAD',
+    color: '#CCCCCC',
     brand: '#777777',
   },
   modals: {

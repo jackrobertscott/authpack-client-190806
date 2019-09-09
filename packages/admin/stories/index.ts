@@ -4,6 +4,11 @@ import { RouterCentral } from '../src/routers/RouterCentral'
 import { RouterModalUnauthed } from '../src/routers/RouterModalUnauthed'
 import { RouterModalAuthed } from '../src/routers/RouterModalAuthed'
 import { RouterModalWorkspace } from '../src/routers/RouterModalWorkspace'
+import { RouterManagerAccounts } from '../src/routers/RouterManagerAccounts'
+import { RouterManagerGroups } from '../src/routers/RouterManagerGroups'
+import { RouterManagerMemberships } from '../src/routers/RouterManagerMemberships'
+import { RouterManagerPermissions } from '../src/routers/RouterManagerPermissions'
+import { RouterManagerSessions } from '../src/routers/RouterManagerSessions'
 
 console.clear()
 
@@ -28,21 +33,21 @@ storiesGadgetsRouters.add('Workspace', () => {
 })
 
 storiesGadgetsRouters.add('Accounts Manager', () => {
-  return create(RouterModalUnauthed)
+  return create(RouterManagerAccounts)
 })
 
 storiesGadgetsRouters.add('Groups Manager', () => {
-  return create(RouterModalUnauthed)
+  return create(RouterManagerGroups)
 })
 
 storiesGadgetsRouters.add('Memberships Manager', () => {
-  return create(RouterModalUnauthed)
+  return create(RouterManagerMemberships)
 })
 
 storiesGadgetsRouters.add('Permissions Manager', () => {
-  return create(RouterModalUnauthed)
+  return create(RouterManagerPermissions)
 })
 
 storiesGadgetsRouters.add('Sessions Manager', () => {
-  return create(RouterModalUnauthed)
+  return create(RouterManagerSessions)
 })

@@ -2,7 +2,7 @@ import { createElement as create, FC } from 'react'
 import { Page, List } from 'wga-theme'
 import { Searchbar } from '../templates/Searchbar'
 
-export interface IPageAccounts {}
+export type IPageAccounts = {}
 
 export const PageAccounts: FC<IPageAccounts> = () => {
   const items = ['bell', 'bolt', 'carrot', 'cat']

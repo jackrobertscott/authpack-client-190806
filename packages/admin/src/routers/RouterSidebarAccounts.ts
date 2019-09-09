@@ -20,9 +20,9 @@ export const RouterSidebarAccounts: FC<IRouterSidebarAccounts> = ({}) => {
         children: create(PageSessions),
       },
       {
-        icon: 'cog',
+        icon: 'code',
         label: 'See install guide',
-        children: create(PageAccounts),
+        children: null,
       },
     ],
   })

@@ -2,20 +2,19 @@ import { createElement as create, FC, ReactNode, useState } from 'react'
 import { Iconbar, Layout } from 'wga-theme'
 import { css } from 'emotion'
 
-export interface IPageIconbarRouter {
+export type IPageIconbarRouter = {
   id?: string
   icon: string
   label: string
   children: ReactNode
 }
 
-export interface IPageIconbar {
+export type IPageIconbar = {
   screens: IPageIconbarRouter[]
 }
 
 export const PageIconbar: FC<IPageIconbar> = ({ screens }) => {
-  const options = screens.map((screen, i) => ({ id: String(i), ...screen }))
-  const [active, changeActive] = useState<IPageIconbarRouter>(options[0])
+  const [active, changeActive] = useState<IPageIconbarRouter>(screens[0])
   return create(Layout.Container, {
     children: [
       create(Iconbar.Container, {
@@ -27,6 +26,7 @@ export const PageIconbar: FC<IPageIconbar> = ({ screens }) => {
             children: create(Iconbar.Icon, {
               name: screen.icon,
               click: () => changeActive(screen),
+              active: screen === active,
             }),
           })
         }),

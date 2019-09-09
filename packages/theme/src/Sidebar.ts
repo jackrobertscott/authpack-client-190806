@@ -10,6 +10,7 @@ export interface ISidebar {
       icon: string
       label: string
       click: () => void
+      active?: boolean
     }>
   }>
 }
@@ -30,7 +31,7 @@ export const Sidebar: ISidebar = {
         }),
         create('div', {
           key: 'options',
-          children: options.map(({ id, click, label, icon }, i) => {
+          children: options.map(({ id, click, label, icon, active }, i) => {
             return create('div', {
               key: id || String(i),
               onClick: click,
@@ -40,8 +41,8 @@ export const Sidebar: ISidebar = {
                   className: `fas far fa-${icon} ${css({
                     lineHeight: '1.2em',
                     textAlign: 'center',
-                    width: '15px',
-                    marginRight: '15px',
+                    width: '20px',
+                    marginRight: '10px',
                   })}`,
                 }),
                 create('div', {
@@ -54,8 +55,8 @@ export const Sidebar: ISidebar = {
                 display: 'flex',
                 cursor: 'pointer',
                 transition: '200ms',
-                color: theme.sidebar.color,
-                '&:hover': {
+                color: active ? theme.sidebar.colorActive : theme.sidebar.color,
+                '&:hover': !active && {
                   color: theme.sidebar.colorHover,
                 },
               }),

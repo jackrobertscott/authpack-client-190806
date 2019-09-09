@@ -19,6 +19,7 @@
     "no-object-literal-type-assertion": false,
     "no-unexpected-multiline": false,
     "no-console": false,
+    "no-submodule-imports": false,
     "jsx-no-multiline-js": false,
     "jsx-no-lambda": false,
     "jsx-curly-spacing": false

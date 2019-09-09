@@ -37,6 +37,15 @@ export const Modal: IModal = {
         right: 0,
         top: 0,
         bottom: 0,
+        [`@media (max-width: ${theme.modals.width}), (max-height: ${theme.modals.height})`]: {
+          alignItems: 'stretch',
+          '& > *': {
+            width: '100%',
+            height: 'auto',
+            flexGrow: 1,
+            borderRadius: 0,
+          },
+        },
       }),
     })
   },
