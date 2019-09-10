@@ -51,7 +51,7 @@ if (gadgets.access(['admin', 'editor'])) {
 }
 ```
 
-[See gadgets documents here.](https://github.com/jackrobertscott/authenticator/blob/master/documents/gadgets/gadgets.md)
+[See gadgets documents here.](https://github.com/jackrobertscott/authenticator/blob/master/docs/gadgets/gadgets.md)
 
 ## Api
 
@@ -126,14 +126,14 @@ console.log(session.account.email)
 
 Api models.
 
-- [Accessors](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/accessors.md)
-- [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/accounts.md)
-- [Groups](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/groups.md)
-- [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/memberships.md)
-- [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/permissions.md)
-- [Providers](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/providers.md)
-- [Sessions](https://github.com/jackrobertscott/authenticator/blob/master/documents/api/sessions.md)
+- [Accessors](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/accessors.md)
+- [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/accounts.md)
+- [Groups](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/groups.md)
+- [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/memberships.md)
+- [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/permissions.md)
+- [Providers](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/providers.md)
+- [Sessions](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/sessions.md)
 
 ## Resources
 
-- [Terms](https://github.com/jackrobertscott/authenticator/blob/master/documents/legal/terms.md)
+- [Terms](https://github.com/jackrobertscott/authenticator/blob/master/docs/legal/terms.md)
