@@ -6,7 +6,7 @@ import { PagePermissions } from '../pages/PagePermissions'
 
 export type IRouterSidebarGroups = {}
 
-export const RouterSidebarGroups: FC<IRouterSidebarGroups> = ({}) => {
+export const RouterSidebarGroups: FC<IRouterSidebarGroups> = () => {
   return create(PageSidebar, {
     title: 'Groups',
     screens: [

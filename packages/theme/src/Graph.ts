@@ -7,7 +7,7 @@ export interface IGraph {
 }
 
 export const Graph: IGraph = {
-  Container: ({}) => {
+  Container: () => {
     const theme = useContext(Theme)
     return create('div', {
       className: css({

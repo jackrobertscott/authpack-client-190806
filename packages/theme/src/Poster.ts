@@ -7,7 +7,7 @@ export interface IPoster {
 }
 
 export const Poster: IPoster = {
-  Container: ({}) => {
+  Container: () => {
     const theme = useContext(Theme)
     return create('div', {
       className: css({

@@ -1,12 +1,12 @@
 import { createElement as create, FC } from 'react'
 import { css } from 'emotion'
-import { Button, Gadgets, Inputs } from 'wga-theme'
+import { RouterCentral } from './routers/RouterCentral'
 
 export const App: FC<{}> = () => {
   return create('div', {
+    children: create(RouterCentral),
     className: css({
-      padding: 50,
+      // code...
     }),
-    children: 'Hello, Jack!',
   })
 }

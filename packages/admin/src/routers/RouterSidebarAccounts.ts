@@ -5,7 +5,7 @@ import { PageSessions } from '../pages/PageSessions'
 
 export type IRouterSidebarAccounts = {}
 
-export const RouterSidebarAccounts: FC<IRouterSidebarAccounts> = ({}) => {
+export const RouterSidebarAccounts: FC<IRouterSidebarAccounts> = () => {
   return create(PageSidebar, {
     title: 'Accounts',
     screens: [

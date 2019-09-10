@@ -7,7 +7,7 @@ export interface IToaster {
 }
 
 export const Toaster: IToaster = {
-  Container: ({}) => {
+  Container: () => {
     const theme = useContext(Theme)
     return create('div', {
       className: css({

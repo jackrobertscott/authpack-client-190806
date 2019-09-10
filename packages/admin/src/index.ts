@@ -1,9 +1,9 @@
 import { createElement as create } from 'react'
-import ReactDOM from 'react-dom'
+import { render } from 'react-dom'
 import { App } from './App'
 import * as serviceWorker from './serviceWorker'
 
-ReactDOM.render(create(App), document.getElementById('root'))
+render(create(App), document.getElementById('root'))
 
 /**
  * If you want your app to work offline and load faster, you can change

@@ -19,7 +19,9 @@ export const PageQueries: FC<IPageQueries> = () => {
             Authorization: 'wga-secret-key-67db3981deecc8113513dff75',
           },
           body: JSON.stringify(graphQLParams),
-        }).then(response => response.json()),
+        })
+          .then(response => response.json())
+          .catch(error => console.warn(error)),
     } as any),
   })
 }

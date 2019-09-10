@@ -7,7 +7,7 @@ export interface ICode {
 }
 
 export const Code: ICode = {
-  Container: ({}) => {
+  Container: () => {
     const theme = useContext(Theme)
     return create('div', {
       className: css({
