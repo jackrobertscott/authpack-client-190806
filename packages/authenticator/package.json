@@ -1,5 +1,5 @@
 {
-  "name": "wga",
+  "name": "wga-api",
   "private": false,
   "version": "0.1.0",
   "description": "Service for the Window Gadgets Authenticator API.",
