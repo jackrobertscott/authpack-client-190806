@@ -12,7 +12,7 @@ Using [npm](https://www.npmjs.com/package/wga-api).
 npm i --save wga-api
 ```
 
-Using yarn
+Using yarn.
 
 ```shell
 yarn add wga-api
@@ -20,7 +20,7 @@ yarn add wga-api
 
 ## Setup
 
-An Authenticator secret key can be found in your [workspace](https://windowgadgets.io/).
+An secret key can be found in your [Authenticator workspace](https://windowgadgets.io/).
 
 ```ts
 import { Authenticator } from 'wga-api'
