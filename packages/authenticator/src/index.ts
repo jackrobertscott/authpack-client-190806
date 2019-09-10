@@ -1,4 +1,3 @@
-import { polyfill } from 'es6-promise'
 import { createAccessors, IGraphAccessors } from './endpoints/accessors'
 import { IGraphAccounts, createAccounts } from './endpoints/accounts'
 import { IGraphGroups, createGroups } from './endpoints/groups'
@@ -6,8 +5,6 @@ import { IGraphMemberships, createMemberships } from './endpoints/memberships'
 import { IGraphPermissions, createPermissions } from './endpoints/permissions'
 import { IGraphProviders, createProviders } from './endpoints/providers'
 import { IGraphSessions, createSessions } from './endpoints/sessions'
-
-polyfill()
 
 export type IAuthenticator = {
   key: string

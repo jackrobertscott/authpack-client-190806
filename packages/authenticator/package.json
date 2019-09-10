@@ -23,10 +23,8 @@
     "compile": "tsc"
   },
   "dependencies": {
-    "@types/isomorphic-fetch": "^0.0.35",
-    "es6-promise": "^4.2.8",
-    "isomorphic-fetch": "^2.2.1",
-    "utility-types": "^3.7.0"
+    "@types/node-fetch": "^2.5.0",
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.1",

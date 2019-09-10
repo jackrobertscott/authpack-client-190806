@@ -1,4 +1,4 @@
-import * as fetch from 'isomorphic-fetch'
+import fetch from 'node-fetch'
 
 export const fetcher = (authorization: string) => {
   return async ({
