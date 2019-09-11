@@ -1,4 +1,4 @@
-import fetch from 'node-fetch'
+import nodefetch from 'node-fetch'
 
 export const fetcher = (authorization: string) => {
   return async ({
@@ -8,7 +8,7 @@ export const fetcher = (authorization: string) => {
     query: string
     variables: { [key: string]: any }
   }) =>
-    fetch('http://localhost:4000', {
+    ((window && window.fetch) || nodefetch)('http://localhost:4000', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
