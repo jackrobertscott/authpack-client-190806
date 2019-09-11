@@ -73,7 +73,7 @@ export const Iconbar: IIconbar = {
         fontSize: '25px',
         transition: '200ms',
         textAlign: 'center',
-        lineHeight: '1.2em',
+        lineHeight: '1.5em',
         cursor: 'pointer',
         width: '100%',
         color: active ? theme.iconbar.colorActive : theme.iconbar.color,

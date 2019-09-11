@@ -6,6 +6,7 @@ export interface IButton {
   Container: FC<{
     click: () => void
     label: string
+    disable?: boolean
     icon?: string
   }>
   Icon: FC<{
@@ -14,7 +15,7 @@ export interface IButton {
 }
 
 export const Button: IButton = {
-  Container: ({ click, label, icon }) => {
+  Container: ({ click, label, disable, icon }) => {
     const theme = useContext(Theme)
     return create('div', {
       onClick: click,
@@ -25,38 +26,40 @@ export const Button: IButton = {
         }),
         create(Button.Icon, {
           key: 'icon',
-          name: icon,
+          name: icon || disable ? 'times-circle' : 'check-circle',
         }),
       ],
-      className: css({
+      className: `${disable ? 'disable' : ''} ${css({
         all: 'unset',
-        cursor: 'pointer',
+        cursor: disable ? 'default' : 'pointer',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '15px',
         transition: '200ms',
         fontSize: theme.global.fonts,
-        borderRadius: theme.global.radius,
-        background: theme.buttons.background,
         border: theme.buttons.border,
-        color: theme.buttons.color,
-        '&:hover': {
+        borderRadius: theme.global.radius,
+        background: disable
+          ? theme.buttons.backgroundDisable
+          : theme.buttons.background,
+        color: disable ? theme.buttons.colorDisable : theme.buttons.color,
+        '&:hover:not(.disable)': {
           background: theme.buttons.backgroundHover,
-          boxShadow: '0 1px 7.5px rgba(0, 0, 0, 0.15)',
+          boxShadow: '0 1px 7.5px rgba(0, 0, 0, 0.05)',
         },
-        '&:active': {
+        '&:active:not(.disable)': {
           background: theme.buttons.background,
           boxShadow: 'none',
         },
-      }),
+      })}`,
     })
   },
-  Icon: ({ name = 'check-circle' }) => {
+  Icon: ({ name }) => {
     return create('div', {
       className: `far fa-${name} ${css({
         textAlign: 'center',
-        lineHeight: '1.2em',
+        lineHeight: '1.5em',
       })}`,
     })
   },

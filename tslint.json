@@ -12,6 +12,7 @@
     "only-arrow-functions": false,
     "object-literal-sort-keys": false,
     "interface-over-type-literal": false,
+    "curly": false,
     "no-implicit-dependencies": [true, "dev"],
     "no-empty-interface": false,
     "no-empty": false,

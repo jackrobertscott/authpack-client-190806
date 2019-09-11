@@ -1,19 +1,43 @@
-import { createElement as create, FC } from 'react'
+import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
 import * as validator from 'yup'
+
+const schema = validator.object().shape({
+  name: validator.string().required('Please provide your name'),
+  email: validator
+    .string()
+    .email('Please make sure you are using a valid email address')
+    .required('Please provide your email'),
+  age: validator
+    .number()
+    .typeError('Please provide your age')
+    .required('Please provide your age'),
+})
 
 export type IUnauthedLogin = {}
 
 export const UnauthedLogin: FC<IUnauthedLogin> = () => {
-  // const schema = validator.object().shape({
-  //   name: validator.string().typeError('Please provide your name'),
-  //   email: validator
-  //     .string()
-  //     .email('Please make sure you are using a valid email address')
-  //     .typeError('Please provide your name'),
-  //   age: validator.number().typeError('Please use a valid number'),
-  // })
-  // const [form, changeForm] = useState(schema.default())
+  const [value, valueChange] = useState({ ...schema.default() })
+  const [issue, issueChange] = useState<Error>()
+  const submit = () => {
+    schema
+      .validate(value)
+      .then(data => {
+        console.log(data)
+      })
+      .catch(error => console.warn(error))
+  }
+  const patch = (path: string) => (data: any) => {
+    const update = { ...value, [path]: data }
+    valueChange(update)
+    return schema.validateAt(path, update)
+  }
+  useEffect(() => {
+    schema
+      .validate(value)
+      .then(() => issueChange(undefined))
+      .catch(issueChange)
+  }, [value])
   return create(Gadgets.Container, {
     label: 'Login',
     brand: 'Your App',
@@ -23,6 +47,7 @@ export const UnauthedLogin: FC<IUnauthedLogin> = () => {
           key: 'name',
           label: 'Name',
           description: 'Full name please',
+          change: patch('name'),
           input: props =>
             create(Inputs.String, {
               ...props,
@@ -33,6 +58,7 @@ export const UnauthedLogin: FC<IUnauthedLogin> = () => {
           key: 'email',
           label: 'Email',
           description: 'Please use a valid email address',
+          change: patch('email'),
           input: props =>
             create(Inputs.String, {
               ...props,
@@ -43,12 +69,7 @@ export const UnauthedLogin: FC<IUnauthedLogin> = () => {
           key: 'age',
           label: 'Age',
           description: 'How old are you?',
-          change: console.log,
-          validate: value =>
-            validator
-              .number()
-              .typeError('Please use a valid number')
-              .validate(value),
+          change: patch('age'),
           input: props =>
             create(Inputs.Number, {
               ...props,
@@ -58,7 +79,8 @@ export const UnauthedLogin: FC<IUnauthedLogin> = () => {
         create(Button.Container, {
           key: 'submit',
           label: 'Submit',
-          click: () => console.log(123),
+          click: submit,
+          disable: !!issue,
         }),
       ],
     }),

@@ -32,9 +32,9 @@ export interface IInputs {
     label?: string
     description?: string
     value?: any
-    change?: (data: any) => void
-    validate?: (value: any) => Promise<any>
+    change?: (data: any) => Promise<any>
     input: FC<{
+      key: string
       change: (data: any) => void
     }>
   }>
@@ -128,27 +128,15 @@ export const Inputs: IInputs = {
     return create('div', {
       className: `far fa-${name} ${css({
         textAlign: 'center',
-        lineHeight: '1.2em',
+        lineHeight: '1.5em',
         padding: '15px',
         color: theme.inputs.error,
       })}`,
     })
   },
-  Control: ({ label, description, change, validate, input }) => {
+  Control: ({ label, description, change, input }) => {
     const theme = useContext(Theme)
     const [error, changeError] = useState<Error | undefined>()
-    const pipe = (data: any) => {
-      if (validate) {
-        validate(data)
-          .then(casting => {
-            changeError(undefined)
-            if (change) {
-              change(casting)
-            }
-          })
-          .catch(changeError)
-      }
-    }
     return create('div', {
       children: [
         label &&
@@ -167,12 +155,24 @@ export const Inputs: IInputs = {
               color: theme.inputs.colorSecondary,
             }),
           }),
+        (label || description) &&
+          create('div', {
+            key: 'spacer',
+            className: css({
+              height: '3.725px',
+            }),
+          }),
         create(Inputs.Container, {
           key: 'container',
           children: [
-            create(input, {
-              key: 'children',
-              change: pipe,
+            input({
+              key: 'input',
+              change: data => {
+                if (change)
+                  change(data)
+                    .then(() => changeError(undefined))
+                    .catch(changeError)
+              },
             }),
             error &&
               create(Inputs.Pointer, {
@@ -189,12 +189,6 @@ export const Inputs: IInputs = {
         all: 'unset',
         display: 'flex',
         flexDirection: 'column',
-        '& > *, & > div': {
-          marginBottom: '7.5px',
-          '&:last-child': {
-            marginBottom: 0,
-          },
-        },
       }),
     })
   },

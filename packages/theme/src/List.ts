@@ -59,7 +59,7 @@ export const List: IList = {
           create('div', {
             key: 'icon',
             className: `fas far fa-${icon} ${css({
-              lineHeight: '1.2em',
+              lineHeight: '1.5em',
               marginRight: '7.5px',
               color: theme.lists.label,
             })}`,

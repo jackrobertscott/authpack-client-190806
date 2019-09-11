@@ -39,7 +39,7 @@ export const Sidebar: ISidebar = {
                 create('div', {
                   key: 'icon',
                   className: `fas far fa-${icon} ${css({
-                    lineHeight: '1.2em',
+                    lineHeight: '1.5em',
                     textAlign: 'center',
                     width: '20px',
                     marginRight: '10px',
