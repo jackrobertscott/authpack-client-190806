@@ -34,12 +34,12 @@ export const fieldsOfAccessor = `
 
 export type IGraphAccessors = IGraph<
   IAccessor,
-  IAccessorUpdate,
-  IAccessorCreate
+  IAccessorCreate,
+  IAccessorUpdate
 >
 
 export const createAccessors = (authorization: string) => {
-  return createGraph<IAccessor, IAccessorUpdate, IAccessorCreate>({
+  return createGraph<IAccessor, IAccessorCreate, IAccessorUpdate>({
     name: 'Accessor',
     fields: fieldsOfAccessor,
     authorization,

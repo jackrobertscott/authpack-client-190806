@@ -22,12 +22,12 @@ export const fieldsOfPermission = `
 
 export type IGraphPermissions = IGraph<
   IPermission,
-  IPermissionUpdate,
-  IPermissionCreate
+  IPermissionCreate,
+  IPermissionUpdate
 >
 
 export const createPermissions = (authorization: string) => {
-  return createGraph<IPermission, IPermissionUpdate, IPermissionCreate>({
+  return createGraph<IPermission, IPermissionCreate, IPermissionUpdate>({
     name: 'Permission',
     fields: fieldsOfPermission,
     authorization,

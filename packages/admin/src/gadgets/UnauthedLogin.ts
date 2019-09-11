@@ -1,17 +1,18 @@
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
+import { Authenticator } from 'wga-api'
 import * as validator from 'yup'
 
+const wga = new Authenticator({
+  key: 'wga-public-key-73ab50319b288658b691909f9',
+})
+
 const schema = validator.object().shape({
-  name: validator.string().required('Please provide your name'),
   email: validator
     .string()
-    .email('Please make sure you are using a valid email address')
-    .required('Please provide your email'),
-  age: validator
-    .number()
-    .typeError('Please provide your age')
-    .required('Please provide your age'),
+    .email('Please make sure you have used a valid email address')
+    .required('Please provide your name'),
+  password: validator.string().required('Please provide your email'),
 })
 
 export type IUnauthedLogin = {}
@@ -22,9 +23,7 @@ export const UnauthedLogin: FC<IUnauthedLogin> = () => {
   const submit = () => {
     schema
       .validate(value)
-      .then(data => {
-        console.log(data)
-      })
+      .then(data => wga.sessions.create(data))
       .catch(error => console.warn(error))
   }
   const patch = (path: string) => (data: any) => {
@@ -44,17 +43,6 @@ export const UnauthedLogin: FC<IUnauthedLogin> = () => {
     children: create(Gadgets.Spacer, {
       children: [
         create(Inputs.Control, {
-          key: 'name',
-          label: 'Name',
-          description: 'Full name please',
-          change: patch('name'),
-          input: props =>
-            create(Inputs.String, {
-              ...props,
-              placeholder: 'Fred Blogs',
-            }),
-        }),
-        create(Inputs.Control, {
           key: 'email',
           label: 'Email',
           description: 'Please use a valid email address',
@@ -66,14 +54,14 @@ export const UnauthedLogin: FC<IUnauthedLogin> = () => {
             }),
         }),
         create(Inputs.Control, {
-          key: 'age',
-          label: 'Age',
-          description: 'How old are you?',
-          change: patch('age'),
+          key: 'password',
+          label: 'Password',
+          description: 'Please use more than 6 characters',
+          change: patch('password'),
           input: props =>
-            create(Inputs.Number, {
+            create(Inputs.String, {
               ...props,
-              placeholder: '35',
+              placeholder: '**********',
             }),
         }),
         create(Button.Container, {

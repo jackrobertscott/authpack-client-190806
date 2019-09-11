@@ -20,10 +20,10 @@ export const fieldsOfSession = `
   updated
 `
 
-export type IGraphSessions = IGraph<ISession, ISessionUpdate, ISessionCreate>
+export type IGraphSessions = IGraph<ISession, ISessionCreate, ISessionUpdate>
 
 export const createSessions = (authorization: string) => {
-  return createGraph<ISession, ISessionUpdate, ISessionCreate>({
+  return createGraph<ISession, ISessionCreate, ISessionUpdate>({
     name: 'Session',
     fields: fieldsOfSession,
     authorization,

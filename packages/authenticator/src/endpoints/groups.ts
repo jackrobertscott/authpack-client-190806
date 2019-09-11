@@ -20,10 +20,10 @@ export const fieldsOfGroup = `
   updated
 `
 
-export type IGraphGroups = IGraph<IGroup, IGroupUpdate, IGroupCreate>
+export type IGraphGroups = IGraph<IGroup, IGroupCreate, IGroupUpdate>
 
 export const createGroups = (authorization: string) => {
-  return createGraph<IGroup, IGroupUpdate, IGroupCreate>({
+  return createGraph<IGroup, IGroupCreate, IGroupUpdate>({
     name: 'Group',
     fields: fieldsOfGroup,
     authorization,

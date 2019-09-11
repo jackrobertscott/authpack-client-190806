@@ -20,10 +20,10 @@ export const fieldsOfAccount = `
   updated
 `
 
-export type IGraphAccounts = IGraph<IAccount, IAccountUpdate, IAccountCreate>
+export type IGraphAccounts = IGraph<IAccount, IAccountCreate, IAccountUpdate>
 
 export const createAccounts = (authorization: string) => {
-  return createGraph<IAccount, IAccountUpdate, IAccountCreate>({
+  return createGraph<IAccount, IAccountCreate, IAccountUpdate>({
     name: 'Account',
     fields: fieldsOfAccount,
     authorization,

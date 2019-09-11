@@ -22,12 +22,12 @@ export const fieldsOfMembership = `
 
 export type IGraphMemberships = IGraph<
   IMembership,
-  IMembershipUpdate,
-  IMembershipCreate
+  IMembershipCreate,
+  IMembershipUpdate
 >
 
 export const createMemberships = (authorization: string) => {
-  return createGraph<IMembership, IMembershipUpdate, IMembershipCreate>({
+  return createGraph<IMembership, IMembershipCreate, IMembershipUpdate>({
     name: 'Membership',
     fields: fieldsOfMembership,
     authorization,

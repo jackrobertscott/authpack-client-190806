@@ -22,12 +22,12 @@ export const fieldsOfProvider = `
 
 export type IGraphProviders = IGraph<
   IProvider,
-  IProviderUpdate,
-  IProviderCreate
+  IProviderCreate,
+  IProviderUpdate
 >
 
 export const createProviders = (authorization: string) => {
-  return createGraph<IProvider, IProviderUpdate, IProviderCreate>({
+  return createGraph<IProvider, IProviderCreate, IProviderUpdate>({
     name: 'Provider',
     fields: fieldsOfProvider,
     authorization,

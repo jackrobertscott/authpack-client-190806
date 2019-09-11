@@ -17,6 +17,7 @@
   ],
   "scripts": {
     "start": "nodemon",
+    "prepublishOnly": "yarn build",
     "test": "mocha -r ts-node/register src/**/*.test.ts",
     "build": "yarn run clean && yarn run compile",
     "clean": "rm -rf lib",
