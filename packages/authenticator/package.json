@@ -1,7 +1,7 @@
 {
   "name": "wga-api",
   "private": false,
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Service for the Window Gadgets Authenticator API.",
   "license": "MIT",
   "main": "lib/index.js",
@@ -17,6 +17,7 @@
   ],
   "scripts": {
     "start": "nodemon",
+    "prepublishOnly": "yarn build",
     "test": "mocha -r ts-node/register src/**/*.test.ts",
     "build": "yarn run clean && yarn run compile",
     "clean": "rm -rf lib",
