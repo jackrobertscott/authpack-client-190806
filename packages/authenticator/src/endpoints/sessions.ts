@@ -8,10 +8,12 @@ export type ISession = {
 
 export type ISessionCreate = {
   meta?: string
+  deactivated?: boolean
 }
 
 export type ISessionUpdate = {
   meta?: string
+  deactivated?: boolean
 }
 
 export const fieldsOfSession = `

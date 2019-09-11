@@ -52,7 +52,7 @@ export const createGraph = <IShape, IOptionsCreate, IOptionsUpdate>({
       sender({
         variables: { options },
         query: `
-          mutation Create${name}($options: Create${name}Options) {
+          mutation Create${name}($options: Create${name}Options!) {
             data: Create${name}(options: $options) {
               ${fields}
             }
@@ -74,7 +74,7 @@ export const createGraph = <IShape, IOptionsCreate, IOptionsUpdate>({
       sender({
         variables: { options },
         query: `
-          mutation Remove${name}($options: Remove${name}Options) {
+          mutation Remove${name}($options: Remove${name}Options!) {
             data: Remove${name}(options: $options) {
               ${fields}
             }
@@ -85,7 +85,7 @@ export const createGraph = <IShape, IOptionsCreate, IOptionsUpdate>({
       sender({
         variables: { options },
         query: `
-          query Retrieve${name}($options: Retrieve${name}Options) {
+          query Retrieve${name}($options: Retrieve${name}Options!) {
             data: Retrieve${name}(options: $options) {
               ${fields}
             }
@@ -96,7 +96,7 @@ export const createGraph = <IShape, IOptionsCreate, IOptionsUpdate>({
       sender({
         variables: { options },
         query: `
-          mutation Update${name}($options: Update${name}Options) {
+          mutation Update${name}($options: Update${name}Options!) {
             data: Update${name}(options: $options) {
               ${fields}
             }

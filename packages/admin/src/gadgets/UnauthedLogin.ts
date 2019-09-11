@@ -1,11 +1,6 @@
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
-import { Authenticator } from 'wga-api'
 import * as validator from 'yup'
-
-const wga = new Authenticator({
-  key: 'wga-public-key-73ab50319b288658b691909f9',
-})
 
 const schema = validator.object().shape({
   email: validator
@@ -23,7 +18,7 @@ export const UnauthedLogin: FC<IUnauthedLogin> = () => {
   const submit = () => {
     schema
       .validate(value)
-      .then(data => wga.sessions.create(data))
+      .then(console.table)
       .catch(error => console.warn(error))
   }
   const patch = (path: string) => (data: any) => {
