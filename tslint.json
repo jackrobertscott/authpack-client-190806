@@ -22,7 +22,8 @@
     "no-submodule-imports": false,
     "jsx-no-multiline-js": false,
     "jsx-no-lambda": false,
-    "jsx-curly-spacing": false
+    "jsx-curly-spacing": false,
+    "radix": false
   },
   "rulesDirectory": []
 }

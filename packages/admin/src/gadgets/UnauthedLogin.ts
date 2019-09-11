@@ -18,7 +18,22 @@ export const UnauthedLogin: FC<IUnauthedLogin> = () => {
   const submit = () => {
     schema
       .validate(value)
-      .then(console.table)
+      .then(data => {
+        return fetch('http://localhost:3500', {
+          method: 'post',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            variables: data,
+            operationName: 'Login',
+            query: `
+              mutation Login($email: String!, $password: String!) {
+                token: Login(email: $email, password: $password)
+              }
+            `,
+          }),
+        })
+      })
+      .then(response => response.json())
       .catch(error => console.warn(error))
   }
   const patch = (path: string) => (data: any) => {
