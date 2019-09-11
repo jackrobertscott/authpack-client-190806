@@ -1,6 +1,5 @@
 import { createElement as create, FC } from 'react'
 import { PageSidebar } from '../templates/PageSidebar'
-import { PageAccounts } from '../pages/PageAccounts'
 import { PageGroups } from '../pages/PageGroups'
 import { PagePermissions } from '../pages/PagePermissions'
 
