@@ -323,7 +323,6 @@ query AnalyticsOfProviders($options: AnalyticsOfProvidersOptions!) {
 
 ## Resources
 
-- [Accessors](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/accessors.md)
 - [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/accounts.md)
 - [Groups](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/groups.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/memberships.md)
