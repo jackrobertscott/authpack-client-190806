@@ -13,6 +13,12 @@ interface IConfig {
   wga: {
     secret: string
   }
+  token: {
+    secret: string
+  }
+  sentry: {
+    dsn?: string
+  }
 }
 
 export const config: IConfig = {
@@ -21,5 +27,11 @@ export const config: IConfig = {
   port: 3500,
   wga: {
     secret: process.env.WGA_SECRET_KEY as string,
+  },
+  token: {
+    secret: process.env.SUPER_SECRET_TOKEN as string,
+  },
+  sentry: {
+    dsn: process.env.SENTRY_DSN as string,
   },
 }

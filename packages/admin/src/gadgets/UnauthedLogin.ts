@@ -1,6 +1,7 @@
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
 import * as validator from 'yup'
+import { useGraph } from '../hooks/useGraph'
 
 const schema = validator.object().shape({
   email: validator
@@ -15,26 +16,22 @@ export type IUnauthedLogin = {}
 export const UnauthedLogin: FC<IUnauthedLogin> = () => {
   const [value, valueChange] = useState({ ...schema.default() })
   const [issue, issueChange] = useState<Error>()
+  const [graph, execute] = useGraph({
+    api: true,
+    query: `
+      mutation Login($email: String!, $password: String!) {
+        session: CreateSession(options: { email: $email, password: $password }) {
+          id
+          token
+        }
+      }
+    `,
+  })
   const submit = () => {
     schema
       .validate(value)
-      .then(data => {
-        return fetch('http://localhost:3500', {
-          method: 'post',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            variables: data,
-            operationName: 'Login',
-            query: `
-              mutation Login($email: String!, $password: String!) {
-                token: Login(email: $email, password: $password)
-              }
-            `,
-          }),
-        })
-      })
-      .then(response => response.json())
-      .catch(error => console.warn(error))
+      .then(data => execute(data, 'Login'))
+      .then(console.log)
   }
   const patch = (path: string) => (data: any) => {
     const update = { ...value, [path]: data }
