@@ -1,11 +1,34 @@
-import { createElement as create, FC } from 'react'
+import { createElement as create, FC, useEffect } from 'react'
 import { Page, List } from 'wga-theme'
 import { Searchbar } from '../templates/Searchbar'
+import { useGraph } from '../hooks/useGraph'
 
 export type IPageAccounts = {}
 
 export const PageAccounts: FC<IPageAccounts> = () => {
-  const items = ['bell', 'bolt', 'carrot', 'cat']
+  const [graph, execute] = useGraph<{
+    accounts: Array<{
+      id: string
+      name: string
+      email: string
+      username: string
+    }>
+  }>({
+    api: true,
+    query: `
+      query ListAccount {
+        accounts: ListAccount {
+          id
+          name
+          email
+          username
+        }
+      }
+    `,
+  })
+  useEffect(() => {
+    execute()
+  }, [execute])
   return create(Page.Container, {
     title: 'All Accounts',
     description: 'See all the users who have signed up to your app',
@@ -18,20 +41,40 @@ export const PageAccounts: FC<IPageAccounts> = () => {
       }),
       create(List.Container, {
         key: 'list',
-        children: items.map(row =>
-          create(List.Row, {
-            key: row,
-            click: () => console.log(row),
-            children: items.map(icon =>
-              create(List.Cell, {
-                key: icon,
-                icon,
-                label: 'Hello',
-                value: '12345',
-              })
-            ),
-          })
-        ),
+        children:
+          graph.data &&
+          graph.data.accounts.map(account =>
+            create(List.Row, {
+              key: account.id,
+              click: () => console.log(account),
+              children: [
+                create(List.Cell, {
+                  key: 'Id',
+                  label: 'Id',
+                  icon: 'fingerprint',
+                  value: account.id,
+                }),
+                create(List.Cell, {
+                  key: 'Username',
+                  label: 'Username',
+                  icon: 'tags',
+                  value: account.username || '...',
+                }),
+                create(List.Cell, {
+                  key: 'Name',
+                  label: 'Name',
+                  icon: 'user',
+                  value: account.name || '...',
+                }),
+                create(List.Cell, {
+                  key: 'Email',
+                  label: 'Email',
+                  icon: 'inbox',
+                  value: account.email,
+                }),
+              ],
+            })
+          ),
       }),
     ],
   })

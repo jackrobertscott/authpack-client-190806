@@ -1,11 +1,20 @@
 import { useState, useMemo, useRef } from 'react'
 
-export const useGraph = ({ query, api }: { query: string; api?: boolean }) => {
-  const [data, dataChange] = useState()
+export const useGraph = <T>({
+  query,
+  api,
+}: {
+  query: string
+  api?: boolean
+}): [
+  { data: T | undefined; loading?: boolean; error?: Error },
+  (variables?: { [key: string]: any }, operationName?: string) => Promise<any>
+] => {
+  const [data, dataChange] = useState<T | undefined>()
   const [loading, loadingChange] = useState<boolean>()
   const [error, errorChange] = useState<Error | undefined>()
   const execute = useRef(
-    (variables: { [key: string]: any }, operationName?: string) => {
+    (variables?: { [key: string]: any }, operationName?: string) => {
       loadingChange(true)
       errorChange(undefined)
       return fetch('http://localhost:3500', {
@@ -20,7 +29,8 @@ export const useGraph = ({ query, api }: { query: string; api?: boolean }) => {
       })
         .then(response => response.json())
         .then((done: any) => {
-          dataChange(done && done.data)
+          if (done && done.error) throw done.error
+          dataChange(done)
           errorChange(undefined)
           loadingChange(false)
           return done
@@ -36,8 +46,5 @@ export const useGraph = ({ query, api }: { query: string; api?: boolean }) => {
     loading,
     error,
   ])
-  return [value, execute.current] as [
-    { data: any; loading?: boolean; error?: Error },
-    (variables: { [key: string]: any }, operationName?: string) => Promise<any>
-  ]
+  return [value, execute.current]
 }
