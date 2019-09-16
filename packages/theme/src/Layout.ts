@@ -1,5 +1,6 @@
-import { createElement as create, FC, ReactNode } from 'react'
+import { createElement as create, FC, ReactNode, useContext } from 'react'
 import { css } from 'emotion'
+import { Theme } from './Theme'
 
 export interface ILayout {
   Container: FC<{
@@ -9,6 +10,7 @@ export interface ILayout {
 
 export const Layout: ILayout = {
   Container: ({ children }) => {
+    const theme = useContext(Theme)
     return create('div', {
       children,
       className: css({
@@ -18,7 +20,6 @@ export const Layout: ILayout = {
         alignItems: 'stretch',
         overflow: 'hidden',
         position: 'absolute',
-        background: '#000000',
         left: 0,
         right: 0,
         top: 0,

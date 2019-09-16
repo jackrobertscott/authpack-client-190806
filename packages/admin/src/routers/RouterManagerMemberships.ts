@@ -1,6 +1,6 @@
 import { createElement as create, FC } from 'react'
-import { Modal } from 'wga-theme'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
+import { RouterModal } from '../templates/RouterModal'
 
 export type IRouterManagerMemberships = {
   close?: () => void
@@ -9,7 +9,8 @@ export type IRouterManagerMemberships = {
 export const RouterManagerMemberships: FC<IRouterManagerMemberships> = ({
   close,
 }) => {
-  return create(Modal.Container, {
+  return create(RouterModal, {
+    close,
     children: create(GadgetsIconbar, {
       close,
       screens: [

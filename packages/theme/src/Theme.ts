@@ -122,9 +122,9 @@ export const Theme = createContext<ITheme>({
     brand: '#777777',
   },
   modals: {
-    background: '#222222',
-    border: '1px solid #222222',
-    shadow: '0 0 0 10000px hsla(0, 0%, 0%, 0.5)',
+    background: '#333333',
+    border: '1px solid #151515',
+    shadow: '0 0 0 10000px hsla(0, 0%, 0%, 0.65)',
     height: '760px',
     width: '545px',
   },

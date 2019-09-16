@@ -1,16 +1,17 @@
 import { createElement as create, FC } from 'react'
-import { Modal } from 'wga-theme'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { UnauthedLogin } from '../gadgets/UnauthedLogin'
 import { UnauthedSignup } from '../gadgets/UnauthedSignup'
 import { UnauthedPassword } from '../gadgets/UnauthedPassword'
+import { RouterModal } from '../templates/RouterModal'
 
 export type IRouterModalUnauthed = {
   close?: () => void
 }
 
 export const RouterModalUnauthed: FC<IRouterModalUnauthed> = ({ close }) => {
-  return create(Modal.Container, {
+  return create(RouterModal, {
+    close,
     children: create(GadgetsIconbar, {
       close,
       screens: [

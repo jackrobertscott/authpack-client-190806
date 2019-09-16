@@ -13,7 +13,7 @@ export interface IList {
   Cell: FC<{
     icon: string
     label: string
-    value: string
+    value?: string
   }>
 }
 
@@ -34,6 +34,7 @@ export const List: IList = {
     const theme = useContext(Theme)
     return create('div', {
       children,
+      onClick: click,
       className: css({
         all: 'unset',
         display: 'flex',
@@ -75,7 +76,7 @@ export const List: IList = {
               }),
               create('div', {
                 key: 'value',
-                children: value,
+                children: value || '...',
               }),
             ],
             className: css({

@@ -3,6 +3,7 @@ import { Page, List } from 'wga-theme'
 import { Searchbar } from '../templates/Searchbar'
 import { useGraph } from '../hooks/useGraph'
 import { usePagination } from '../hooks/usePagination'
+import { RouterManagerAccounts } from '../routers/RouterManagerAccounts'
 
 export type IPageAccounts = {}
 
@@ -11,9 +12,9 @@ export const PageAccounts: FC<IPageAccounts> = () => {
     count: number
     accounts: Array<{
       id: string
-      name: string
+      name?: string
       email: string
-      username: string
+      username?: string
     }>
   }>({
     api: true,
@@ -29,6 +30,7 @@ export const PageAccounts: FC<IPageAccounts> = () => {
       }
     `,
   })
+  const [current, currentChange] = useState<string | undefined>()
   const [search, searchChange] = useState<string>('')
   const [
     { limit, skip },
@@ -47,13 +49,18 @@ export const PageAccounts: FC<IPageAccounts> = () => {
     title: 'All Accounts',
     description: 'See all the users who have signed up to your app',
     children: [
+      current &&
+        create(RouterManagerAccounts, {
+          key: 'modal',
+          close: () => currentChange(undefined),
+        }),
       create(Searchbar, {
         key: 'searchbar',
+        previous: hasPrevious() ? () => previous() : undefined,
+        next: hasNext() ? () => next() : undefined,
         change: phrase => {
           if (phrase !== search) searchChange(phrase)
         },
-        previous: hasPrevious() ? () => previous() : undefined,
-        next: hasNext() ? () => next() : undefined,
       }),
       create(List.Container, {
         key: 'list',
@@ -62,7 +69,7 @@ export const PageAccounts: FC<IPageAccounts> = () => {
           graph.data.accounts.map(account =>
             create(List.Row, {
               key: account.id,
-              click: () => console.log(account),
+              click: () => currentChange(account.id),
               children: [
                 create(List.Cell, {
                   key: 'Id',
@@ -74,7 +81,7 @@ export const PageAccounts: FC<IPageAccounts> = () => {
                   key: 'Name',
                   label: 'Name',
                   icon: 'user',
-                  value: account.name || '...',
+                  value: account.name,
                 }),
                 create(List.Cell, {
                   key: 'Email',
@@ -86,7 +93,7 @@ export const PageAccounts: FC<IPageAccounts> = () => {
                   key: 'Username',
                   label: 'Username',
                   icon: 'tags',
-                  value: account.username || '...',
+                  value: account.username,
                 }),
               ],
             })

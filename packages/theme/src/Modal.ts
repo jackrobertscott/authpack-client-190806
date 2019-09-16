@@ -5,18 +5,22 @@ import { Theme } from './Theme'
 export interface IModal {
   Container: FC<{
     children: ReactNode
+    click?: () => void
   }>
 }
 
 export const Modal: IModal = {
-  Container: ({ children }) => {
+  Container: ({ children, click }) => {
     const theme = useContext(Theme)
     return create('div', {
+      onClick: (event: any) =>
+        click && event.target === event.currentTarget && click(),
       children: create('div', {
         children,
         className: css({
           all: 'unset',
           display: 'flex',
+          overflow: 'hidden',
           position: 'relative',
           fontSize: theme.global.fonts,
           borderRadius: theme.global.radius,
@@ -37,6 +41,7 @@ export const Modal: IModal = {
         right: 0,
         top: 0,
         bottom: 0,
+        zIndex: 100,
         [`@media (max-width: ${theme.modals.width}), (max-height: ${theme.modals.height})`]: {
           alignItems: 'stretch',
           '& > *': {

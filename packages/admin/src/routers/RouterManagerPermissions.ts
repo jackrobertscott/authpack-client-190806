@@ -1,6 +1,6 @@
 import { createElement as create, FC } from 'react'
-import { Modal } from 'wga-theme'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
+import { RouterModal } from '../templates/RouterModal'
 
 export type IRouterManagerPermissions = {
   close?: () => void
@@ -9,7 +9,8 @@ export type IRouterManagerPermissions = {
 export const RouterManagerPermissions: FC<IRouterManagerPermissions> = ({
   close,
 }) => {
-  return create(Modal.Container, {
+  return create(RouterModal, {
+    close,
     children: create(GadgetsIconbar, {
       close,
       screens: [
