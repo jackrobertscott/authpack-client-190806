@@ -38,11 +38,17 @@ export const gqlerrors = (handler: RequestHandler): RequestHandler => {
         chunks.length >= 2 &&
         chunks[0].trim().length === 3 &&
         !isNaN(parseInt(chunks[0]))
-          ? parseInt(chunks.shift()) || 500
+          ? parseInt(chunks.shift())
           : error.code || error.statusCode || 500
+      let status: string
+      try {
+        status = HttpStatus.getStatusText(code)
+      } catch (e) {
+        status = 'Unknown Status'
+      }
       const data = {
         code,
-        status: HttpStatus.getStatusText(code),
+        status,
         message: chunks.join(':').trim(),
         error,
       }

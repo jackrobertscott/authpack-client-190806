@@ -1,12 +1,14 @@
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as create, FC, useEffect, useState } from 'react'
 import { Page, List } from 'wga-theme'
 import { Searchbar } from '../templates/Searchbar'
 import { useGraph } from '../hooks/useGraph'
+import { usePagination } from '../hooks/usePagination'
 
 export type IPageAccounts = {}
 
 export const PageAccounts: FC<IPageAccounts> = () => {
-  const [graph, execute] = useGraph<{
+  const [graph, { execute }] = useGraph<{
+    count: number
     accounts: Array<{
       id: string
       name: string
@@ -16,8 +18,9 @@ export const PageAccounts: FC<IPageAccounts> = () => {
   }>({
     api: true,
     query: `
-      query ListAccount {
-        accounts: ListAccount {
+      query ListAccount($count: CountAccountOptions, $list: ListAccountOptions) {
+        count: CountAccount(options: $count)
+        accounts: ListAccount(options: $list) {
           id
           name
           email
@@ -26,18 +29,31 @@ export const PageAccounts: FC<IPageAccounts> = () => {
       }
     `,
   })
+  const [search, searchChange] = useState<string>('')
+  const [
+    { limit, skip },
+    { next, previous, hasNext, hasPrevious },
+  ] = usePagination({
+    count: (graph.data && graph.data.count) || 0,
+  })
   useEffect(() => {
-    execute()
-  }, [execute])
+    execute({
+      count: { search },
+      list: { search, limit, skip },
+    })
+    // eslint-disable-next-line
+  }, [search, limit, skip])
   return create(Page.Container, {
     title: 'All Accounts',
     description: 'See all the users who have signed up to your app',
     children: [
       create(Searchbar, {
         key: 'searchbar',
-        change: console.log,
-        previous: () => console.log('previous'),
-        next: () => console.log('next'),
+        change: phrase => {
+          if (phrase !== search) searchChange(phrase)
+        },
+        previous: hasPrevious() ? () => previous() : undefined,
+        next: hasNext() ? () => next() : undefined,
       }),
       create(List.Container, {
         key: 'list',
@@ -55,12 +71,6 @@ export const PageAccounts: FC<IPageAccounts> = () => {
                   value: account.id,
                 }),
                 create(List.Cell, {
-                  key: 'Username',
-                  label: 'Username',
-                  icon: 'tags',
-                  value: account.username || '...',
-                }),
-                create(List.Cell, {
                   key: 'Name',
                   label: 'Name',
                   icon: 'user',
@@ -71,6 +81,12 @@ export const PageAccounts: FC<IPageAccounts> = () => {
                   label: 'Email',
                   icon: 'inbox',
                   value: account.email,
+                }),
+                create(List.Cell, {
+                  key: 'Username',
+                  label: 'Username',
+                  icon: 'tags',
+                  value: account.username || '...',
                 }),
               ],
             })

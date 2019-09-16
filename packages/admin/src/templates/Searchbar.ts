@@ -3,8 +3,8 @@ import { Search } from 'wga-theme'
 
 export type ISearchbar = {
   change: (value: string) => void
-  previous: () => void
-  next: () => void
+  previous?: () => void
+  next?: () => void
 }
 
 export const Searchbar: FC<ISearchbar> = ({ change, previous, next }) => {
@@ -21,18 +21,20 @@ export const Searchbar: FC<ISearchbar> = ({ change, previous, next }) => {
         icon: 'stream',
         label: '25 of 1,543 Results',
       }),
-      create(Search.Group, {
-        key: 'previous',
-        icon: 'angle-double-left',
-        label: 'Previous',
-        click: previous,
-      }),
-      create(Search.Group, {
-        key: 'next',
-        icon: 'angle-double-right',
-        label: 'Next',
-        click: next,
-      }),
+      previous &&
+        create(Search.Group, {
+          key: 'previous',
+          icon: 'angle-double-left',
+          label: 'Previous',
+          click: previous,
+        }),
+      next &&
+        create(Search.Group, {
+          key: 'next',
+          icon: 'angle-double-right',
+          label: 'Next',
+          click: next,
+        }),
     ],
   })
 }

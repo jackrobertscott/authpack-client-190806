@@ -24,8 +24,6 @@ export const List: IList = {
       children,
       className: css({
         all: 'unset',
-        display: 'table',
-        borderCollapse: 'collapse',
         width: '100%',
         background: theme.lists.background,
         color: theme.lists.color,
@@ -38,7 +36,7 @@ export const List: IList = {
       children,
       className: css({
         all: 'unset',
-        display: 'table-row',
+        display: 'flex',
         transition: '200ms',
         cursor: click && 'pointer',
         borderBottom: theme.lists.border,
@@ -93,8 +91,9 @@ export const List: IList = {
       }),
       className: css({
         all: 'unset',
-        display: 'table-cell',
         padding: '25px',
+        flexGrow: 1,
+        flexBasis: 0,
       }),
     })
   },

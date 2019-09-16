@@ -16,7 +16,7 @@ export type IUnauthedLogin = {}
 export const UnauthedLogin: FC<IUnauthedLogin> = () => {
   const [value, valueChange] = useState({ ...schema.default() })
   const [issue, issueChange] = useState<Error>()
-  const [graph, execute] = useGraph({
+  const [graph, { execute }] = useGraph({
     api: true,
     query: `
       mutation Login($email: String!, $password: String!) {
