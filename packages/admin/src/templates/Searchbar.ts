@@ -5,9 +5,17 @@ export type ISearchbar = {
   change: (value: string) => void
   previous?: () => void
   next?: () => void
+  amount?: number
+  total?: number
 }
 
-export const Searchbar: FC<ISearchbar> = ({ change, previous, next }) => {
+export const Searchbar: FC<ISearchbar> = ({
+  change,
+  previous,
+  next,
+  amount,
+  total,
+}) => {
   return create(Search.Container, {
     children: [
       create(Search.Input, {
@@ -19,7 +27,7 @@ export const Searchbar: FC<ISearchbar> = ({ change, previous, next }) => {
       create(Search.Group, {
         key: 'results',
         icon: 'stream',
-        label: '25 of 1,543 Results',
+        label: `${amount || '...'} of ${total || '...'} Results`,
       }),
       previous &&
         create(Search.Group, {

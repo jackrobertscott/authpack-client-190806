@@ -39,10 +39,7 @@ export const PageAccounts: FC<IPageAccounts> = () => {
     count: (graph.data && graph.data.count) || 0,
   })
   useEffect(() => {
-    execute({
-      count: { search },
-      list: { search, limit, skip },
-    })
+    execute({ count: { search }, list: { search, limit, skip } })
     // eslint-disable-next-line
   }, [search, limit, skip])
   return create(Page.Container, {
@@ -56,6 +53,8 @@ export const PageAccounts: FC<IPageAccounts> = () => {
         }),
       create(Searchbar, {
         key: 'searchbar',
+        amount: graph.data && graph.data.accounts.length,
+        total: graph.data && graph.data.count,
         previous: hasPrevious() ? () => previous() : undefined,
         next: hasNext() ? () => next() : undefined,
         change: phrase => {
