@@ -20,7 +20,7 @@ export const usePagination = ({
 ] => {
   const [pagination, changePagination] = useState({
     total: 0,
-    limit: 2,
+    limit: 50,
     page: 0,
     skip: 0,
   })

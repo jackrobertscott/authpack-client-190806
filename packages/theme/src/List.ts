@@ -93,8 +93,12 @@ export const List: IList = {
       className: css({
         all: 'unset',
         padding: '25px',
+        paddingRight: 0,
         flexGrow: 1,
         flexBasis: 0,
+        '&:last-child': {
+          paddingRight: '25px',
+        },
       }),
     })
   },

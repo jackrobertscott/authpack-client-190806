@@ -6,7 +6,8 @@ export interface IPage {
   Container: FC<{
     title: string
     description: string
-    children: ReactNode
+    noscroll?: ReactNode
+    scroll: ReactNode
     button?: {
       icon: string
       label: string
@@ -16,7 +17,7 @@ export interface IPage {
 }
 
 export const Page: IPage = {
-  Container: ({ title, description, children, button }) => {
+  Container: ({ title, description, scroll, noscroll, button }) => {
     const theme = useContext(Theme)
     return create('div', {
       children: [
@@ -97,9 +98,18 @@ export const Page: IPage = {
             background: theme.headers.background,
           }),
         }),
+        noscroll &&
+          create('div', {
+            key: 'noscroll',
+            children: noscroll,
+            className: css({
+              all: 'unset',
+              display: 'flex',
+            }),
+          }),
         create('div', {
-          key: 'children',
-          children,
+          key: 'scroll',
+          children: scroll,
           className: css({
             all: 'unset',
             display: 'flex',

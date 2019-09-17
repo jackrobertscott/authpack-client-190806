@@ -9,7 +9,7 @@ export const PagePermissions: FC<IPagePermissions> = () => {
   return create(Page.Container, {
     title: 'All Sessions',
     description: 'See all the permissions available in your app',
-    children: [
+    scroll: [
       create(Searchbar, {
         key: 'searchbar',
         change: console.log,

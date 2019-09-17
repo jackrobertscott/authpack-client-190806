@@ -1,5 +1,6 @@
 import { createElement as create, FC, useEffect, useState } from 'react'
 import { Page, List } from 'wga-theme'
+import { format } from 'date-fns'
 import { Searchbar } from '../templates/Searchbar'
 import { useGraph } from '../hooks/useGraph'
 import { usePagination } from '../hooks/usePagination'
@@ -15,6 +16,7 @@ export const PageAccounts: FC<IPageAccounts> = () => {
       name?: string
       email: string
       username?: string
+      updated?: any
     }>
   }>({
     api: true,
@@ -26,6 +28,7 @@ export const PageAccounts: FC<IPageAccounts> = () => {
           name
           email
           username
+          updated
         }
       }
     `,
@@ -38,8 +41,10 @@ export const PageAccounts: FC<IPageAccounts> = () => {
   ] = usePagination({
     count: graph.data && graph.data.count,
   })
-  useEffect(() => {
+  const load = () =>
     execute({ count: { search }, list: { search, limit, skip } })
+  useEffect(() => {
+    load()
     // eslint-disable-next-line
   }, [search, limit, skip])
   return create(Page.Container, {
@@ -50,12 +55,13 @@ export const PageAccounts: FC<IPageAccounts> = () => {
       label: 'Create Account',
       click: () => currentChange(''),
     },
-    children: [
+    noscroll: [
       typeof current === 'string' &&
         create(RouterManagerAccounts, {
           key: 'modal',
-          close: () => currentChange(undefined),
           id: current,
+          close: () => currentChange(undefined),
+          change: load,
         }),
       create(Searchbar, {
         key: 'searchbar',
@@ -67,6 +73,8 @@ export const PageAccounts: FC<IPageAccounts> = () => {
           if (phrase !== search) searchChange(phrase)
         },
       }),
+    ],
+    scroll: [
       create(List.Container, {
         key: 'list',
         children:
@@ -99,6 +107,15 @@ export const PageAccounts: FC<IPageAccounts> = () => {
                   label: 'Username',
                   icon: 'tags',
                   value: account.username,
+                }),
+                create(List.Cell, {
+                  key: 'Updated',
+                  label: 'Updated',
+                  icon: 'history',
+                  value: format(
+                    new Date(account.updated),
+                    "dd LLL yyyy '@' hh:mm aaaa"
+                  ),
                 }),
               ],
             })

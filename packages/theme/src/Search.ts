@@ -36,6 +36,7 @@ export const Search: ISearch = {
         all: 'unset',
         display: 'flex',
         padding: '0 25px',
+        flexGrow: 1,
         background: theme.search.background,
         '& > *, & > div': {
           marginRight: '25px',
@@ -97,7 +98,7 @@ export const Search: ISearch = {
   Group: ({ icon, label, click, disable }) => {
     const theme = useContext(Theme)
     return create('div', {
-      onClick: !disable && click,
+      onClick: () => !disable && click && click(),
       children: [
         create('div', {
           key: 'icon',

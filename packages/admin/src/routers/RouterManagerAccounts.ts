@@ -1,15 +1,18 @@
 import { createElement as create, FC } from 'react'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
+import { CreateAccount } from '../gadgets/create/CreateAccount'
 
 export type IRouterManagerAccounts = {
   id: string
   close?: () => void
+  change?: () => void
 }
 
 export const RouterManagerAccounts: FC<IRouterManagerAccounts> = ({
   id,
   close,
+  change,
 }) => {
   return create(RouterModal, {
     close,
@@ -57,7 +60,12 @@ export const RouterManagerAccounts: FC<IRouterManagerAccounts> = ({
             {
               icon: 'plus',
               label: 'Create Account',
-              children: null,
+              children: create(CreateAccount, {
+                change: () => {
+                  if (close) close()
+                  if (change) change()
+                },
+              }),
             },
           ],
     }),

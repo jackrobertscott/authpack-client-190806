@@ -9,7 +9,7 @@ export const PageGroups: FC<IPageGroups> = () => {
   return create(Page.Container, {
     title: 'All Groups',
     description: 'See all the groups created in your app',
-    children: [
+    scroll: [
       create(Searchbar, {
         key: 'searchbar',
         change: console.log,
