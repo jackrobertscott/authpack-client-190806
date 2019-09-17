@@ -1,7 +1,7 @@
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
 import * as validator from 'yup'
-import { useGraph } from '../hooks/useGraph'
+import { useGraph } from '../../hooks/useGraph'
 
 const schema = validator.object().shape({
   email: validator
