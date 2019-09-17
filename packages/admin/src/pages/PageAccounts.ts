@@ -36,7 +36,7 @@ export const PageAccounts: FC<IPageAccounts> = () => {
     { limit, skip },
     { next, previous, hasNext, hasPrevious },
   ] = usePagination({
-    count: (graph.data && graph.data.count) || 0,
+    count: graph.data && graph.data.count,
   })
   useEffect(() => {
     execute({ count: { search }, list: { search, limit, skip } })
@@ -45,11 +45,17 @@ export const PageAccounts: FC<IPageAccounts> = () => {
   return create(Page.Container, {
     title: 'All Accounts',
     description: 'See all the users who have signed up to your app',
+    button: {
+      icon: 'plus',
+      label: 'Create Account',
+      click: () => currentChange(''),
+    },
     children: [
-      current &&
+      typeof current === 'string' &&
         create(RouterManagerAccounts, {
           key: 'modal',
           close: () => currentChange(undefined),
+          id: current,
         }),
       create(Searchbar, {
         key: 'searchbar',

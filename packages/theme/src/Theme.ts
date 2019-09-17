@@ -47,8 +47,11 @@ export interface ITheme {
   }
   headers: {
     background: string
+    backgroundHover: string
     color: string
     brand: string
+    button: string
+    buttonHover: string
   }
   modals: {
     background: string
@@ -88,7 +91,7 @@ export const Theme = createContext<ITheme>({
   },
   sidebar: {
     background: '#353535',
-    border: '1px solid #303030',
+    border: '1px solid #505050',
     title: '#999999',
     color: '#777777',
     colorHover: '#999999',
@@ -118,8 +121,11 @@ export const Theme = createContext<ITheme>({
   },
   headers: {
     background: '#3B3B3B',
+    backgroundHover: '#4E4E4E',
     color: '#CCCCCC',
     brand: '#777777',
+    button: '#777777',
+    buttonHover: '#CCCCCC',
   },
   modals: {
     background: '#333333',

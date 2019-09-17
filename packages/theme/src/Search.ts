@@ -23,6 +23,7 @@ export interface ISearch {
     icon: string
     label: string
     click?: () => void
+    disable?: boolean
   }>
 }
 
@@ -93,10 +94,10 @@ export const Search: ISearch = {
       }),
     })
   },
-  Group: ({ icon, label, click }) => {
+  Group: ({ icon, label, click, disable }) => {
     const theme = useContext(Theme)
     return create('div', {
-      onClick: click,
+      onClick: !disable && click,
       children: [
         create('div', {
           key: 'icon',
@@ -109,8 +110,7 @@ export const Search: ISearch = {
           key: 'label',
           children: label,
           className: css({
-            all: 'unset',
-            display: 'flex',
+            textDecoration: disable ? 'line-through' : 'none',
           }),
         }),
       ],
@@ -118,12 +118,13 @@ export const Search: ISearch = {
         all: 'unset',
         display: 'flex',
         transition: '200ms',
-        cursor: 'pointer',
         padding: '25px 0',
+        cursor: click && !disable ? 'pointer' : 'default',
         color: theme.search.color,
-        '&:hover': {
-          color: click && theme.search.colorHover,
-        },
+        '&:hover': click &&
+          !disable && {
+            color: theme.search.colorHover,
+          },
       }),
     })
   },

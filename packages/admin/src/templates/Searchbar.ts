@@ -27,22 +27,22 @@ export const Searchbar: FC<ISearchbar> = ({
       create(Search.Group, {
         key: 'results',
         icon: 'stream',
-        label: `${amount || '...'} of ${total || '...'} Results`,
+        label: `Showing ${amount || '...'} of ${total || '...'} entries`,
       }),
-      previous &&
-        create(Search.Group, {
-          key: 'previous',
-          icon: 'angle-double-left',
-          label: 'Previous',
-          click: previous,
-        }),
-      next &&
-        create(Search.Group, {
-          key: 'next',
-          icon: 'angle-double-right',
-          label: 'Next',
-          click: next,
-        }),
+      create(Search.Group, {
+        key: 'previous',
+        icon: 'angle-double-left',
+        label: 'Previous',
+        click: previous,
+        disable: !previous,
+      }),
+      create(Search.Group, {
+        key: 'next',
+        icon: 'angle-double-right',
+        label: 'Next',
+        click: next,
+        disable: !next,
+      }),
     ],
   })
 }

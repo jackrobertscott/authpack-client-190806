@@ -22,36 +22,78 @@ export const Page: IPage = {
       children: [
         create('div', {
           key: 'header',
-          children: create('div', {
-            children: [
-              create('div', {
-                key: 'title',
-                children: title,
-                className: css({
-                  fontSize: '25px',
-                  color: theme.headers.color,
+          children: [
+            create('div', {
+              key: 'words',
+              children: [
+                create('div', {
+                  key: 'title',
+                  children: title,
+                  className: css({
+                    fontSize: '25px',
+                    lineHeight: '1em',
+                    color: theme.headers.color,
+                  }),
                 }),
-              }),
-              create('div', {
-                key: 'brand',
-                children: description,
-                className: css({
-                  fontSize: '15px',
-                  marginTop: '7.5px',
-                  color: theme.headers.brand,
+                create('div', {
+                  key: 'brand',
+                  children: description,
+                  className: css({
+                    fontSize: '15px',
+                    marginTop: '7.5px',
+                    color: theme.headers.brand,
+                  }),
                 }),
+              ],
+              className: css({
+                all: 'unset',
+                display: 'flex',
+                flexDirection: 'column',
+                padding: '25px',
               }),
-            ],
-            className: css({
-              all: 'unset',
-              display: 'flex',
-              flexDirection: 'column',
             }),
-          }),
+            button &&
+              create('div', {
+                key: 'button',
+                onClick: button.click,
+                children: [
+                  create('div', {
+                    key: 'icon',
+                    className: `fas far fa-${button.icon} ${css({
+                      fontSize: '25px',
+                      textAlign: 'center',
+                      lineHeight: '1em',
+                    })}`,
+                  }),
+                  create('div', {
+                    key: 'label',
+                    children: button.label,
+                    className: css({
+                      fontSize: '15px',
+                      marginTop: '7.5px',
+                    }),
+                  }),
+                ],
+                className: css({
+                  all: 'unset',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-end',
+                  padding: '25px',
+                  cursor: 'pointer',
+                  transition: '200ms',
+                  color: theme.headers.button,
+                  '&:hover': {
+                    color: theme.headers.buttonHover,
+                    background: theme.headers.backgroundHover,
+                  },
+                }),
+              }),
+          ],
           className: css({
             all: 'unset',
             display: 'flex',
-            padding: '25px',
+            justifyContent: 'space-between',
             background: theme.headers.background,
           }),
         }),
