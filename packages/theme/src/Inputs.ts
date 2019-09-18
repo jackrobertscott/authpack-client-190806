@@ -67,9 +67,9 @@ export const Inputs: IInputs = {
       }),
     })
   },
-  String: ({ value = '', change = () => {}, placeholder }) => {
-    const [state, changeState] = useState<string>(value)
-    useEffect(() => changeState(value), [value])
+  String: ({ value, change = () => {}, placeholder }) => {
+    const [state, changeState] = useState<string>(value || '')
+    useEffect(() => changeState(value || ''), [value])
     useEffect(() => change(state), [state])
     return create('input', {
       value: state,
@@ -92,7 +92,7 @@ export const Inputs: IInputs = {
     decimals = false,
   }) => {
     const [state, changeState] = useState<string>(String(value))
-    useEffect(() => changeState(String(value)), [value])
+    useEffect(() => changeState(String(value || '')), [value])
     useEffect(
       () => change(decimals ? parseFloat(state) : parseInt(state, 10)),
       [state]
@@ -109,7 +109,7 @@ export const Inputs: IInputs = {
             const update = `${parsed}${
               decimals && input.endsWith('.') ? '.' : ''
             }`
-            changeState(update)
+            changeState(update || '')
           }
         }
       },

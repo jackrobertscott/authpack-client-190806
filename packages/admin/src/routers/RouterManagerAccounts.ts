@@ -2,6 +2,7 @@ import { createElement as create, FC } from 'react'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
 import { CreateAccount } from '../gadgets/create/CreateAccount'
+import { UpdateAccount } from '../gadgets/update/UpdateAccount'
 
 export type IRouterManagerAccounts = {
   id: string
@@ -28,7 +29,9 @@ export const RouterManagerAccounts: FC<IRouterManagerAccounts> = ({
             {
               icon: 'user-cog',
               label: 'Settings',
-              children: null,
+              children: create(UpdateAccount, {
+                id,
+              }),
             },
             {
               icon: 'project-diagram',

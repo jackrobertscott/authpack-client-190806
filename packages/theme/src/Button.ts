@@ -18,7 +18,7 @@ export const Button: IButton = {
   Container: ({ click, label, disable, icon }) => {
     const theme = useContext(Theme)
     return create('div', {
-      onClick: click,
+      onClick: disable ? () => {} : click,
       children: [
         create('div', {
           key: 'label',

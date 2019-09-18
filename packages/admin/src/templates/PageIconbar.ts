@@ -7,14 +7,29 @@ export type IPageIconbarRouter = {
   icon: string
   label: string
   children: ReactNode
+  path: string
 }
 
 export type IPageIconbar = {
   screens: IPageIconbarRouter[]
+  logout?: () => void
+  workspace?: () => void
 }
 
-export const PageIconbar: FC<IPageIconbar> = ({ screens }) => {
-  const [active, changeActive] = useState<IPageIconbarRouter>(screens[0])
+export const PageIconbar: FC<IPageIconbar> = ({
+  screens,
+  logout,
+  workspace,
+}) => {
+  const current =
+    screens.find(screen => {
+      return screen.path === document.location.pathname
+    }) || screens[0]
+  const [active, changeActive] = useState<IPageIconbarRouter>(current)
+  const changeRouter = (screen: IPageIconbarRouter) => {
+    changeActive(screen)
+    window.history.pushState(null, screen.label, screen.path)
+  }
   return create(Layout.Container, {
     children: [
       create(Iconbar.Container, {
@@ -25,11 +40,29 @@ export const PageIconbar: FC<IPageIconbar> = ({ screens }) => {
             label: screen.label,
             children: create(Iconbar.Icon, {
               name: screen.icon,
-              click: () => changeActive(screen),
+              click: () => changeRouter(screen),
               active: screen === active,
             }),
           })
         }),
+        bottom: [
+          create(Iconbar.Pointer, {
+            key: 'workspace',
+            label: 'Workspace',
+            children: create(Iconbar.Icon, {
+              name: 'bars',
+              click: workspace,
+            }),
+          }),
+          create(Iconbar.Pointer, {
+            key: 'logout',
+            label: 'Logout',
+            children: create(Iconbar.Icon, {
+              name: 'power-off',
+              click: logout,
+            }),
+          }),
+        ],
       }),
       active &&
         create('div', {

@@ -14,21 +14,25 @@ export const RouterCentral: FC<IRouterCentral> = () => {
         icon: 'users',
         label: 'Accounts',
         children: create(RouterSidebarAccounts),
+        path: '/users',
       },
       {
         icon: 'project-diagram',
         label: 'Groups',
         children: create(RouterSidebarGroups),
+        path: '/groups',
       },
       {
         icon: 'check-double',
         label: 'Reports',
         children: create(RouterSidebarReports),
+        path: '/reports',
       },
       {
         icon: 'sitemap',
-        label: 'GraphQL Explorer',
+        label: 'Developers',
         children: create(PageQueries),
+        path: '/developers',
       },
     ],
   })

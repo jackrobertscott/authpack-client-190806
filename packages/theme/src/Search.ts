@@ -36,7 +36,7 @@ export const Search: ISearch = {
         all: 'unset',
         display: 'flex',
         padding: '0 25px',
-        flexGrow: 1,
+        width: '100%',
         background: theme.search.background,
         '& > *, & > div': {
           marginRight: '25px',

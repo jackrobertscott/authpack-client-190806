@@ -112,7 +112,7 @@ export const Iconbar: IIconbar = {
             position: 'absolute',
             zIndex: 100,
             left: '100%',
-            top: '-10px',
+            top: '-7.5px',
             marginLeft: '10px',
             display: 'none',
             '&:hover': {
