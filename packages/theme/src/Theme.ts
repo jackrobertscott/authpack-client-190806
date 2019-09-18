@@ -42,8 +42,12 @@ export interface ITheme {
   }
   pointers: {
     background: string
+    innerBackground: string
     border: string
+    innerBorder: string
     color: string
+    label: string
+    description: string
   }
   headers: {
     background: string
@@ -115,9 +119,13 @@ export const Theme = createContext<ITheme>({
     colorDisable: '#444444',
   },
   pointers: {
-    background: '#505050',
+    innerBackground: '#202020',
+    background: '#151515',
     border: 'none',
+    innerBorder: 'none',
     color: '#FFFFFF',
+    label: '#BBBBBB',
+    description: '#505050',
   },
   headers: {
     background: '#3B3B3B',

@@ -10,14 +10,14 @@ export type ICreateUser = {
 export const CreateUser: FC<ICreateUser> = ({ change }) => {
   // initialize the user form values and apply validators
   const [issue, issueChange] = useState<Error>()
-  const [value, valueChange] = useState({ ...userSchema.default() })
+  const [value, valueChange] = useState({ ...schemaCreateUser.default() })
   const validateAndPatch = (path: string) => (data: any) => {
     const update = { ...value, [path]: data }
     valueChange(update)
-    return userSchema.validateAt(path, update)
+    return schemaCreateUser.validateAt(path, update)
   }
   useEffect(() => {
-    userSchema
+    schemaCreateUser
       .validate(value)
       .then(() => issueChange(undefined))
       .catch(issueChange)
@@ -25,7 +25,7 @@ export const CreateUser: FC<ICreateUser> = ({ change }) => {
   // create the user when the form is submitted
   const createUser = useCreateUser()
   const submit = () => {
-    userSchema
+    schemaCreateUser
       .validate(value)
       .then(data => createUser.fetch({ options: data }))
       .then(change)
@@ -105,7 +105,7 @@ const useCreateUser = createUseGraph<{
   `,
 })
 
-const userSchema = validator.object().shape({
+const schemaCreateUser = validator.object().shape({
   name: validator.string(),
   username: validator.string(),
   email: validator

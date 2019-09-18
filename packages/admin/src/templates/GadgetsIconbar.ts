@@ -1,11 +1,12 @@
 import { createElement as create, FC, ReactNode, useState } from 'react'
-import { Layout, Iconbar } from 'wga-theme'
+import { Layout, Iconbar, IIconbarSubmenu } from 'wga-theme'
 
 export type IGadgetsIconbarScreen = {
   id?: string
   icon: string
   label: string
   children: ReactNode
+  submenu?: IIconbarSubmenu[]
 }
 
 export type IGadgetsIconbar = {
@@ -23,6 +24,7 @@ export const GadgetsIconbar: FC<IGadgetsIconbar> = ({ close, screens }) => {
           return create(Iconbar.Pointer, {
             key: screen.id || String(i),
             label: screen.label,
+            submenu: screen.submenu,
             children: create(Iconbar.Icon, {
               name: screen.icon,
               click: () => changeActive(screen),

@@ -1,11 +1,12 @@
 import { createElement as create, FC, ReactNode, useState } from 'react'
-import { Iconbar, Layout } from 'wga-theme'
+import { Iconbar, Layout, IIconbarSubmenu } from 'wga-theme'
 import { css } from 'emotion'
 
 export type IPageIconbarRouter = {
   id?: string
   icon: string
   label: string
+  submenu?: IIconbarSubmenu[]
   children: ReactNode
   path: string
 }
@@ -39,7 +40,9 @@ export const PageIconbar: FC<IPageIconbar> = ({
         top: screens.map((screen, i) => {
           return create(Iconbar.Pointer, {
             key: screen.id || String(i),
+            icon: screen.icon,
             label: screen.label,
+            submenu: screen.submenu,
             children: create(Iconbar.Icon, {
               name: screen.icon,
               click: () => changeRouter(screen),
@@ -50,6 +53,7 @@ export const PageIconbar: FC<IPageIconbar> = ({
         bottom: [
           create(Iconbar.Pointer, {
             key: 'devmode',
+            icon: 'code',
             label: 'Dev Mode',
             children: create(Iconbar.Icon, {
               name: 'code',
@@ -58,6 +62,7 @@ export const PageIconbar: FC<IPageIconbar> = ({
           }),
           create(Iconbar.Pointer, {
             key: 'workspace',
+            icon: 'bars',
             label: 'Workspace',
             children: create(Iconbar.Icon, {
               name: 'bars',
@@ -66,6 +71,7 @@ export const PageIconbar: FC<IPageIconbar> = ({
           }),
           create(Iconbar.Pointer, {
             key: 'logout',
+            icon: 'power-off',
             label: 'Logout',
             children: create(Iconbar.Icon, {
               name: 'power-off',

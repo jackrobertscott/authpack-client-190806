@@ -16,6 +16,23 @@ export const RouterModalAuthed: FC<IRouterModalAuthed> = ({ close }) => {
           icon: 'user-circle',
           label: 'User Settings',
           children: null,
+          submenu: [
+            {
+              icon: 'bars',
+              label: 'See all users',
+              description: 'Search and navigate your apps users',
+            },
+            {
+              icon: 'bars',
+              label: 'See all users',
+              description: 'Search and navigate your apps users',
+            },
+            {
+              icon: 'bars',
+              label: 'See all users',
+              description: 'Search and navigate your apps users',
+            },
+          ],
         },
         {
           icon: 'users',

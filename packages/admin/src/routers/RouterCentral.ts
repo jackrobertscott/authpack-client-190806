@@ -12,9 +12,9 @@ export const RouterCentral: FC<IRouterCentral> = () => {
     screens: [
       {
         icon: 'users',
+        path: '/users',
         label: 'Users',
         children: create(RouterSidebarUsers),
-        path: '/users',
       },
       {
         icon: 'project-diagram',
