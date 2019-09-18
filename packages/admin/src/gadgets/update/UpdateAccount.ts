@@ -20,7 +20,7 @@ export type IUpdateAccount = {
 export const UpdateAccount: FC<IUpdateAccount> = ({ id, change }) => {
   const [value, valueChange] = useState({ ...schema.default() })
   const [issue, issueChange] = useState<Error>()
-  const loader = useGraph<{
+  const retrieveAccountGraph = useGraph<{
     account: {
       id: string
       name: string
@@ -41,22 +41,17 @@ export const UpdateAccount: FC<IUpdateAccount> = ({ id, change }) => {
     `,
   })
   useEffect(() => {
-    loader[1]
-      .execute({
-        options: { id },
-      })
-      .then(
-        data =>
-          data.account &&
-          valueChange({
-            name: data.account.name || undefined,
-            username: data.account.username || undefined,
-            email: data.account.email || undefined,
-          })
-      )
+    retrieveAccountGraph.fetch({ options: { id } }).then(data => {
+      if (data.account)
+        valueChange({
+          name: data.account.name || undefined,
+          username: data.account.username || undefined,
+          email: data.account.email || undefined,
+        })
+    })
     // eslint-disable-next-line
   }, [id])
-  const updater = useGraph<{
+  const updateAccountGraph = useGraph<{
     account: {
       id: string
     }
@@ -75,7 +70,7 @@ export const UpdateAccount: FC<IUpdateAccount> = ({ id, change }) => {
       .validate(value)
       .then(data => {
         const options = { ...data, id }
-        updater[1].execute({ options }, 'UpdateAccount')
+        updateAccountGraph.fetch({ options }, 'UpdateAccount')
       })
       .then(change)
   }

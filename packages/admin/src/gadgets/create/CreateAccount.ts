@@ -20,7 +20,7 @@ export type ICreateAccount = {
 export const CreateAccount: FC<ICreateAccount> = ({ change }) => {
   const [value, valueChange] = useState({ ...schema.default() })
   const [issue, issueChange] = useState<Error>()
-  const [, { execute }] = useGraph<{
+  const createAccountGraph = useGraph<{
     account: {
       id: string
     }
@@ -37,7 +37,9 @@ export const CreateAccount: FC<ICreateAccount> = ({ change }) => {
   const submit = () => {
     schema
       .validate(value)
-      .then(data => execute({ options: data }, 'CreateAccount'))
+      .then(data =>
+        createAccountGraph.fetch({ options: data }, 'CreateAccount')
+      )
       .then(change)
   }
   const patch = (path: string) => (data: any) => {

@@ -4,20 +4,16 @@ export const usePagination = ({
   count,
 }: {
   count?: number
-}): [
-  {
-    total: number
-    limit: number
-    page: number
-    skip: number
-  },
-  {
-    hasNext: () => boolean
-    hasPrevious: () => boolean
-    next: () => void
-    previous: () => void
-  }
-] => {
+}): {
+  total: number
+  limit: number
+  page: number
+  skip: number
+  hasNext: () => boolean
+  hasPrevious: () => boolean
+  next: () => void
+  previous: () => void
+} => {
   const [pagination, changePagination] = useState({
     total: 0,
     limit: 50,
@@ -55,8 +51,15 @@ export const usePagination = ({
         skip: pagination.limit * (pagination.page - 1),
       })
   }
-  // eslint-disable-next-line
-  return useMemo(() => [pagination, { hasNext, hasPrevious, next, previous }], [
-    pagination,
-  ])
+  return useMemo(
+    () => ({
+      ...pagination,
+      hasNext,
+      hasPrevious,
+      next,
+      previous,
+    }),
+    // eslint-disable-next-line
+    [pagination]
+  )
 }

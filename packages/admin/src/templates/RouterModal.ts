@@ -9,10 +9,10 @@ export type IRouterModal = {
 }
 
 export const RouterModal: FC<IRouterModal> = ({ children, close }) => {
-  const [target] = usePortal({ id: 'portals' })
+  const portal = usePortal({ id: 'portals' })
   const modal = create(Modal.Container, {
     click: close,
     children,
   })
-  return target ? createPortal(modal, target) : null
+  return portal.element ? createPortal(modal, portal.element) : null
 }

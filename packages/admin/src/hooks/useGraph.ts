@@ -7,19 +7,19 @@ export const useGraph = <T>({
 }: {
   query: string
   api?: boolean
-}): [
-  { data: T | undefined; loading?: boolean; error?: Error },
-  {
-    execute: (
-      variables?: { [key: string]: any },
-      operationName?: string
-    ) => Promise<any>
-  }
-] => {
+}): {
+  data: T | undefined
+  loading?: boolean
+  error?: Error
+  fetch: (
+    variables?: { [key: string]: any },
+    operationName?: string
+  ) => Promise<any>
+} => {
   const [data, dataChange] = useState<T | undefined>()
   const [loading, loadingChange] = useState<boolean>()
   const [error, errorChange] = useState<Error | undefined>()
-  const execute = (
+  const fetch = (
     variables?: { [key: string]: any },
     operationName?: string
   ) => {
@@ -45,7 +45,7 @@ export const useGraph = <T>({
       })
   }
   // eslint-disable-next-line
-  return useMemo(() => [{ data, loading, error }, { execute }], [
+  return useMemo(() => ({ data, loading, error, fetch }), [
     data,
     loading,
     error,

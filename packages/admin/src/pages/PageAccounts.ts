@@ -9,7 +9,7 @@ import { RouterManagerAccounts } from '../routers/RouterManagerAccounts'
 export type IPageAccounts = {}
 
 export const PageAccounts: FC<IPageAccounts> = () => {
-  const [graph, { execute }] = useGraph<{
+  const listAccountGraph = useGraph<{
     count: number
     accounts: Array<{
       id: string
@@ -35,14 +35,11 @@ export const PageAccounts: FC<IPageAccounts> = () => {
   })
   const [current, currentChange] = useState<string | undefined>()
   const [search, searchChange] = useState<string>('')
-  const [
-    { limit, skip },
-    { next, previous, hasNext, hasPrevious },
-  ] = usePagination({
-    count: graph.data && graph.data.count,
+  const { limit, skip, next, previous, hasNext, hasPrevious } = usePagination({
+    count: listAccountGraph.data && listAccountGraph.data.count,
   })
   const load = () =>
-    execute({ count: { search }, list: { search, limit, skip } })
+    listAccountGraph.fetch({ count: { search }, list: { search, limit, skip } })
   useEffect(() => {
     load()
     // eslint-disable-next-line
@@ -65,8 +62,8 @@ export const PageAccounts: FC<IPageAccounts> = () => {
         }),
       create(Searchbar, {
         key: 'searchbar',
-        amount: graph.data && graph.data.accounts.length,
-        total: graph.data && graph.data.count,
+        amount: listAccountGraph.data && listAccountGraph.data.accounts.length,
+        total: listAccountGraph.data && listAccountGraph.data.count,
         previous: hasPrevious() ? () => previous() : undefined,
         next: hasNext() ? () => next() : undefined,
         change: phrase => {
@@ -78,8 +75,8 @@ export const PageAccounts: FC<IPageAccounts> = () => {
       create(List.Container, {
         key: 'list',
         children:
-          graph.data &&
-          graph.data.accounts.map(account =>
+          listAccountGraph.data &&
+          listAccountGraph.data.accounts.map(account =>
             create(List.Row, {
               key: account.id,
               click: () => currentChange(account.id),

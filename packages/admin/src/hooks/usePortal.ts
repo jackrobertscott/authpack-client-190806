@@ -1,6 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 
-export const usePortal = ({ id }: { id: string }) => {
+export const usePortal = ({
+  id,
+}: {
+  id: string
+}): { element: HTMLDivElement | undefined } => {
   const [element, elementChange] = useState<HTMLDivElement | undefined>()
   useEffect(() => {
     const parent = document.getElementById(id)
@@ -12,5 +16,6 @@ export const usePortal = ({ id }: { id: string }) => {
       attach.remove()
     }
   }, [id])
-  return [element]
+  // eslint-disable-next-line
+  return useMemo(() => ({ element }), [element])
 }
