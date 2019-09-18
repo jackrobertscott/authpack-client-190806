@@ -1,7 +1,7 @@
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as create, FC } from 'react'
 import { Gadgets, Overview } from 'wga-theme'
 import { format } from 'date-fns'
-import { useGraph } from '../../hooks/useGraph'
+import { createUseGraph } from '../../hooks/useGraph'
 
 export type IRetrieveUser = {
   id: string
@@ -9,36 +9,10 @@ export type IRetrieveUser = {
 }
 
 export const RetrieveUser: FC<IRetrieveUser> = ({ id }) => {
-  const retrieveUserGraph = useGraph<{
-    user: {
-      id: string
-      created: string
-      updated: string
-      name: string
-      username: string
-      email: string
-    }
-  }>({
-    api: true,
-    query: `
-      query RetrieveUser($options: RetrieveUserOptions!) {
-        user: RetrieveUser(options: $options) {
-          id
-          updated
-          created
-          name
-          username
-          email
-        }
-      }
-    `,
+  // load the user to show on page
+  const retrieveUserGraph = useRetrieveUser({
+    options: { id },
   })
-  useEffect(() => {
-    retrieveUserGraph.fetch({
-      options: { id },
-    })
-    // eslint-disable-next-line
-  }, [id])
   return create(Gadgets.Container, {
     label: 'Update User',
     brand: 'Your App',
@@ -90,3 +64,28 @@ export const RetrieveUser: FC<IRetrieveUser> = ({ id }) => {
     }),
   })
 }
+
+const useRetrieveUser = createUseGraph<{
+  user: {
+    id: string
+    created: string
+    updated: string
+    name: string
+    username: string
+    email: string
+  }
+}>({
+  api: true,
+  query: `
+    query RetrieveUser($options: RetrieveUserOptions!) {
+      user: RetrieveUser(options: $options) {
+        id
+        updated
+        created
+        name
+        username
+        email
+      }
+    }
+  `,
+})

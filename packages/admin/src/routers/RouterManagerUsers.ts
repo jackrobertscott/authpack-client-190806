@@ -4,6 +4,7 @@ import { RouterModal } from '../templates/RouterModal'
 import { CreateUser } from '../gadgets/create/CreateUser'
 import { UpdateUser } from '../gadgets/update/UpdateUser'
 import { RetrieveUser } from '../gadgets/retrieve/RetrieveUser'
+import { RemoveUser } from '../gadgets/remove/RemoveUser'
 
 export type IRouterManagerUsers = {
   id: string
@@ -59,7 +60,9 @@ export const RouterManagerUsers: FC<IRouterManagerUsers> = ({
             {
               icon: 'fire-alt',
               label: 'Danger Zone',
-              children: null,
+              children: create(RemoveUser, {
+                id,
+              }),
             },
           ]
         : [

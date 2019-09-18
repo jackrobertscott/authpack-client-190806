@@ -14,12 +14,14 @@ export type IPageIconbar = {
   screens: IPageIconbarRouter[]
   logout?: () => void
   workspace?: () => void
+  devmode?: () => void
 }
 
 export const PageIconbar: FC<IPageIconbar> = ({
   screens,
   logout,
   workspace,
+  devmode,
 }) => {
   const current =
     screens.find(screen => {
@@ -46,6 +48,14 @@ export const PageIconbar: FC<IPageIconbar> = ({
           })
         }),
         bottom: [
+          create(Iconbar.Pointer, {
+            key: 'devmode',
+            label: 'Dev Mode',
+            children: create(Iconbar.Icon, {
+              name: 'code',
+              click: devmode,
+            }),
+          }),
           create(Iconbar.Pointer, {
             key: 'workspace',
             label: 'Workspace',

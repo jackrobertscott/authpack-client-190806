@@ -1,58 +1,35 @@
+import * as validator from 'yup'
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
-import * as validator from 'yup'
-import { useGraph } from '../../hooks/useGraph'
-
-const schema = validator.object().shape({
-  name: validator.string(),
-  username: validator.string(),
-  email: validator
-    .string()
-    .email('Please make sure you have used a valid email address')
-    .required('Please provide your name'),
-  password: validator.string().required('Please provide your email'),
-})
+import { createUseGraph } from '../../hooks/useGraph'
 
 export type ICreateUser = {
   change?: () => void
 }
 
 export const CreateUser: FC<ICreateUser> = ({ change }) => {
-  const [value, valueChange] = useState({ ...schema.default() })
+  // initialize the user form values and apply validators
   const [issue, issueChange] = useState<Error>()
-  const createUserGraph = useGraph<{
-    user: {
-      id: string
-    }
-  }>({
-    api: true,
-    query: `
-      mutation CreateUser($options: CreateUserOptions!) {
-        user: CreateUser(options: $options) {
-          id
-        }
-      }
-    `,
-  })
-  const submit = () => {
-    schema
-      .validate(value)
-      .then(data =>
-        createUserGraph.fetch({ options: data }, 'CreateUser')
-      )
-      .then(change)
-  }
-  const patch = (path: string) => (data: any) => {
+  const [value, valueChange] = useState({ ...userSchema.default() })
+  const validateAndPatch = (path: string) => (data: any) => {
     const update = { ...value, [path]: data }
     valueChange(update)
-    return schema.validateAt(path, update)
+    return userSchema.validateAt(path, update)
   }
   useEffect(() => {
-    schema
+    userSchema
       .validate(value)
       .then(() => issueChange(undefined))
       .catch(issueChange)
   }, [value])
+  // create the user when the form is submitted
+  const createUser = useCreateUser()
+  const submit = () => {
+    userSchema
+      .validate(value)
+      .then(data => createUser.fetch({ options: data }))
+      .then(change)
+  }
   return create(Gadgets.Container, {
     label: 'Create User',
     brand: 'Your App',
@@ -62,7 +39,7 @@ export const CreateUser: FC<ICreateUser> = ({ change }) => {
           key: 'name',
           label: 'Name',
           description: 'Please use their full name',
-          change: patch('name'),
+          change: validateAndPatch('name'),
           input: props =>
             create(Inputs.String, {
               ...props,
@@ -73,7 +50,7 @@ export const CreateUser: FC<ICreateUser> = ({ change }) => {
           key: 'username',
           label: 'Username',
           description: 'Please use a valid username',
-          change: patch('username'),
+          change: validateAndPatch('username'),
           input: props =>
             create(Inputs.String, {
               ...props,
@@ -84,7 +61,7 @@ export const CreateUser: FC<ICreateUser> = ({ change }) => {
           key: 'email',
           label: 'Email',
           description: 'Please use a valid email address',
-          change: patch('email'),
+          change: validateAndPatch('email'),
           input: props =>
             create(Inputs.String, {
               ...props,
@@ -95,7 +72,7 @@ export const CreateUser: FC<ICreateUser> = ({ change }) => {
           key: 'password',
           label: 'Password',
           description: 'Please use more than 6 characters',
-          change: patch('password'),
+          change: validateAndPatch('password'),
           input: props =>
             create(Inputs.String, {
               ...props,
@@ -112,3 +89,28 @@ export const CreateUser: FC<ICreateUser> = ({ change }) => {
     }),
   })
 }
+
+const useCreateUser = createUseGraph<{
+  user: {
+    id: string
+  }
+}>({
+  api: true,
+  query: `
+    mutation CreateUser($options: CreateUserOptions!) {
+      user: CreateUser(options: $options) {
+        id
+      }
+    }
+  `,
+})
+
+const userSchema = validator.object().shape({
+  name: validator.string(),
+  username: validator.string(),
+  email: validator
+    .string()
+    .email('Please make sure you have used a valid email address')
+    .required('Please provide your name'),
+  password: validator.string().required('Please provide your email'),
+})

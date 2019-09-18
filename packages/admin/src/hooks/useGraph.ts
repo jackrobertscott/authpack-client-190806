@@ -1,5 +1,20 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { chat } from '../utils/server'
+
+export const createUseGraph = <T>({
+  query,
+  api,
+}: {
+  query: string
+  api?: boolean
+}) => (variables?: { [key: string]: any }, operationName?: string) => {
+  const data = useGraph<T>({ query, api })
+  useEffect(() => {
+    if (variables) data.fetch(variables, operationName)
+    // eslint-disable-next-line
+  }, [])
+  return data
+}
 
 export const useGraph = <T>({
   query,

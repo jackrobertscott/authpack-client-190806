@@ -2,46 +2,28 @@ import { createElement as create, FC, useEffect, useState } from 'react'
 import { Page, List } from 'wga-theme'
 import { format } from 'date-fns'
 import { Searchbar } from '../templates/Searchbar'
-import { useGraph } from '../hooks/useGraph'
+import { createUseGraph } from '../hooks/useGraph'
 import { usePagination } from '../hooks/usePagination'
 import { RouterManagerUsers } from '../routers/RouterManagerUsers'
 
 export type IPageUsers = {}
 
 export const PageUsers: FC<IPageUsers> = () => {
-  const listUserGraph = useGraph<{
-    count: number
-    users: Array<{
-      id: string
-      updated: string
-      email: string
-      username?: string
-      name?: string
-    }>
-  }>({
-    api: true,
-    query: `
-      query ListUser($count: CountUserOptions, $list: ListUserOptions) {
-        count: CountUser(options: $count)
-        users: ListUser(options: $list) {
-          id
-          updated
-          email
-          username
-          name
-        }
-      }
-    `,
-  })
-  const [current, currentChange] = useState<string | undefined>()
+  // load the users and update results on search and pagination
   const [search, searchChange] = useState<string>('')
+  const [current, currentChange] = useState<string | undefined>()
+  const listUser = useListUser()
   const { limit, skip, next, previous, hasNext, hasPrevious } = usePagination({
-    count: listUserGraph.data && listUserGraph.data.count,
+    count: listUser.data && listUser.data.count,
   })
-  const load = () =>
-    listUserGraph.fetch({ count: { search }, list: { search, limit, skip } })
+  const listUserFetch = () => {
+    listUser.fetch({
+      count: { search },
+      list: { search, limit, skip },
+    })
+  }
   useEffect(() => {
-    load()
+    listUserFetch()
     // eslint-disable-next-line
   }, [search, limit, skip])
   return create(Page.Container, {
@@ -58,12 +40,12 @@ export const PageUsers: FC<IPageUsers> = () => {
           key: 'modal',
           id: current,
           close: () => currentChange(undefined),
-          change: load,
+          change: listUserFetch,
         }),
       create(Searchbar, {
         key: 'searchbar',
-        amount: listUserGraph.data && listUserGraph.data.users.length,
-        total: listUserGraph.data && listUserGraph.data.count,
+        amount: listUser.data && listUser.data.users.length,
+        total: listUser.data && listUser.data.count,
         previous: hasPrevious() ? () => previous() : undefined,
         next: hasNext() ? () => next() : undefined,
         change: phrase => {
@@ -75,18 +57,12 @@ export const PageUsers: FC<IPageUsers> = () => {
       create(List.Container, {
         key: 'list',
         children:
-          listUserGraph.data &&
-          listUserGraph.data.users.map(user =>
+          listUser.data &&
+          listUser.data.users.map(user =>
             create(List.Row, {
               key: user.id,
               click: () => currentChange(user.id),
               children: [
-                create(List.Cell, {
-                  key: 'Id',
-                  label: 'Id',
-                  icon: 'fingerprint',
-                  value: user.id,
-                }),
                 create(List.Cell, {
                   key: 'Email',
                   label: 'Email',
@@ -118,3 +94,28 @@ export const PageUsers: FC<IPageUsers> = () => {
     ],
   })
 }
+
+const useListUser = createUseGraph<{
+  count: number
+  users: Array<{
+    id: string
+    updated: string
+    email: string
+    username?: string
+    name?: string
+  }>
+}>({
+  api: true,
+  query: `
+    query ListUser($count: CountUserOptions, $list: ListUserOptions) {
+      count: CountUser(options: $count)
+      users: ListUser(options: $list) {
+        id
+        updated
+        email
+        username
+        name
+      }
+    }
+  `,
+})

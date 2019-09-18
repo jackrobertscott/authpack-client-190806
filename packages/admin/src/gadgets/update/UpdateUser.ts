@@ -1,86 +1,47 @@
+import * as validator from 'yup'
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
-import * as validator from 'yup'
-import { useGraph } from '../../hooks/useGraph'
-
-const schema = validator.object().shape({
-  name: validator.string(),
-  username: validator.string(),
-  email: validator
-    .string()
-    .email('Please make sure you have used a valid email address')
-    .required('Please provide your name'),
-})
+import { createUseGraph } from '../../hooks/useGraph'
 
 export type IUpdateUser = {
   id: string
 }
 
 export const UpdateUser: FC<IUpdateUser> = ({ id }) => {
-  const [value, valueChange] = useState({ ...schema.default() })
+  // initialize the user form values and apply validators
   const [issue, issueChange] = useState<Error>()
-  const retrieveUserGraph = useGraph<{
-    user: {
-      id: string
-      name: string
-      username: string
-      email: string
-    }
-  }>({
-    api: true,
-    query: `
-      query RetrieveUser($options: RetrieveUserOptions!) {
-        user: RetrieveUser(options: $options) {
-          id
-          name
-          username
-          email
-        }
-      }
-    `,
-  })
-  useEffect(() => {
-    retrieveUserGraph.fetch({ options: { id } }).then(data => {
-      if (data.user)
-        valueChange({
-          name: data.user.name || undefined,
-          username: data.user.username || undefined,
-          email: data.user.email || undefined,
-        })
-    })
-    // eslint-disable-next-line
-  }, [id])
-  const updateUserGraph = useGraph<{
-    user: {
-      id: string
-    }
-  }>({
-    api: true,
-    query: `
-      mutation UpdateUser($options: UpdateUserOptions!) {
-        user: UpdateUser(options: $options) {
-          id
-        }
-      }
-    `,
-  })
-  const submit = () => {
-    schema.validate(value).then(data => {
-      const options = { ...data, id }
-      updateUserGraph.fetch({ options }, 'UpdateUser')
-    })
-  }
-  const patch = (path: string) => (data: any) => {
+  const [value, valueChange] = useState({ ...schemaUpdateUser.default() })
+  const validateAndPatch = (path: string) => (data: any) => {
     const update = { ...value, [path]: data }
     valueChange(update)
-    return schema.validateAt(path, update)
+    return schemaUpdateUser.validateAt(path, update)
   }
   useEffect(() => {
-    schema
+    schemaUpdateUser
       .validate(value)
       .then(() => issueChange(undefined))
       .catch(issueChange)
   }, [value])
+  // load the user and set as default form values
+  const retrieveUser = useRetrieveUser({
+    options: { id },
+  })
+  useEffect(() => {
+    if (retrieveUser.data)
+      valueChange({
+        name: retrieveUser.data.user.name,
+        username: retrieveUser.data.user.username,
+        email: retrieveUser.data.user.email,
+      })
+  }, [retrieveUser.data])
+  // update the user when the form is submitted
+  const updateUser = useUpdateUser()
+  const submit = () => {
+    schemaUpdateUser.validate(value).then(data => {
+      const options = { ...data, id }
+      updateUser.fetch({ options }, 'UpdateUser')
+    })
+  }
   return create(Gadgets.Container, {
     label: 'Update User',
     brand: 'Your App',
@@ -90,7 +51,7 @@ export const UpdateUser: FC<IUpdateUser> = ({ id }) => {
           key: 'name',
           label: 'Name',
           description: 'Please use their full name',
-          change: patch('name'),
+          change: validateAndPatch('name'),
           input: props =>
             create(Inputs.String, {
               ...props,
@@ -102,7 +63,7 @@ export const UpdateUser: FC<IUpdateUser> = ({ id }) => {
           key: 'username',
           label: 'Username',
           description: 'Please use a valid username',
-          change: patch('username'),
+          change: validateAndPatch('username'),
           input: props =>
             create(Inputs.String, {
               ...props,
@@ -114,7 +75,7 @@ export const UpdateUser: FC<IUpdateUser> = ({ id }) => {
           key: 'email',
           label: 'Email',
           description: 'Please use a valid email address',
-          change: patch('email'),
+          change: validateAndPatch('email'),
           input: props =>
             create(Inputs.String, {
               ...props,
@@ -132,3 +93,48 @@ export const UpdateUser: FC<IUpdateUser> = ({ id }) => {
     }),
   })
 }
+
+const useRetrieveUser = createUseGraph<{
+  user: {
+    id: string
+    name: string
+    username: string
+    email: string
+  }
+}>({
+  api: true,
+  query: `
+    query RetrieveUser($options: RetrieveUserOptions!) {
+      user: RetrieveUser(options: $options) {
+        id
+        name
+        username
+        email
+      }
+    }
+  `,
+})
+
+const useUpdateUser = createUseGraph<{
+  user: {
+    id: string
+  }
+}>({
+  api: true,
+  query: `
+    mutation UpdateUser($options: UpdateUserOptions!) {
+      user: UpdateUser(options: $options) {
+        id
+      }
+    }
+  `,
+})
+
+const schemaUpdateUser = validator.object().shape({
+  name: validator.string(),
+  username: validator.string(),
+  email: validator
+    .string()
+    .email('Please make sure you have used a valid email address')
+    .required('Please provide your name'),
+})

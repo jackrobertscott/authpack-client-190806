@@ -1,32 +1,14 @@
+import * as validator from 'yup'
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
-import * as validator from 'yup'
-import { useGraph } from '../hooks/useGraph'
-
-const schema = validator.object().shape({
-  email: validator
-    .string()
-    .email('Please make sure you have used a valid email address')
-    .required('Please provide your name'),
-  password: validator.string().required('Please provide your email'),
-})
+import { useGraph, createUseGraph } from '../hooks/useGraph'
 
 export type IUnauthedLogin = {}
 
 export const UnauthedLogin: FC<IUnauthedLogin> = () => {
   const [value, valueChange] = useState({ ...schema.default() })
   const [issue, issueChange] = useState<Error>()
-  const loginGraph = useGraph({
-    api: true,
-    query: `
-      mutation Login($email: String!, $password: String!) {
-        session: CreateSession(options: { email: $email, password: $password }) {
-          id
-          token
-        }
-      }
-    `,
-  })
+  const loginGraph = useLogin()
   const submit = () => {
     schema
       .validate(value)
@@ -81,3 +63,28 @@ export const UnauthedLogin: FC<IUnauthedLogin> = () => {
     }),
   })
 }
+
+const schema = validator.object().shape({
+  email: validator
+    .string()
+    .email('Please make sure you have used a valid email address')
+    .required('Please provide your name'),
+  password: validator.string().required('Please provide your email'),
+})
+
+const useLogin = createUseGraph<{
+  session: {
+    id: string
+    token: string
+  }
+}>({
+  api: true,
+  query: `
+    mutation Login($email: String!, $password: String!) {
+      session: CreateSession(options: { email: $email, password: $password }) {
+        id
+        token
+      }
+    }
+  `,
+})
