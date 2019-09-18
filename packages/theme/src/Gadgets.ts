@@ -105,7 +105,7 @@ export const Gadgets: IGadgets = {
         flexGrow: 1,
         padding: '25px',
         '& > *, & > div': {
-          marginBottom: '25px',
+          marginBottom: '15px',
           '&:last-child': {
             marginBottom: 0,
           },

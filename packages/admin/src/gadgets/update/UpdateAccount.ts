@@ -14,10 +14,9 @@ const schema = validator.object().shape({
 
 export type IUpdateAccount = {
   id: string
-  change?: () => void
 }
 
-export const UpdateAccount: FC<IUpdateAccount> = ({ id, change }) => {
+export const UpdateAccount: FC<IUpdateAccount> = ({ id }) => {
   const [value, valueChange] = useState({ ...schema.default() })
   const [issue, issueChange] = useState<Error>()
   const retrieveAccountGraph = useGraph<{
@@ -66,13 +65,10 @@ export const UpdateAccount: FC<IUpdateAccount> = ({ id, change }) => {
     `,
   })
   const submit = () => {
-    schema
-      .validate(value)
-      .then(data => {
-        const options = { ...data, id }
-        updateAccountGraph.fetch({ options }, 'UpdateAccount')
-      })
-      .then(change)
+    schema.validate(value).then(data => {
+      const options = { ...data, id }
+      updateAccountGraph.fetch({ options }, 'UpdateAccount')
+    })
   }
   const patch = (path: string) => (data: any) => {
     const update = { ...value, [path]: data }

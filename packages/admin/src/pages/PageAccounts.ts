@@ -13,10 +13,10 @@ export const PageAccounts: FC<IPageAccounts> = () => {
     count: number
     accounts: Array<{
       id: string
-      name?: string
+      updated: string
       email: string
       username?: string
-      updated?: any
+      name?: string
     }>
   }>({
     api: true,
@@ -25,10 +25,10 @@ export const PageAccounts: FC<IPageAccounts> = () => {
         count: CountAccount(options: $count)
         accounts: ListAccount(options: $list) {
           id
-          name
+          updated
           email
           username
-          updated
+          name
         }
       }
     `,
@@ -88,12 +88,6 @@ export const PageAccounts: FC<IPageAccounts> = () => {
                   value: account.id,
                 }),
                 create(List.Cell, {
-                  key: 'Name',
-                  label: 'Name',
-                  icon: 'user',
-                  value: account.name,
-                }),
-                create(List.Cell, {
                   key: 'Email',
                   label: 'Email',
                   icon: 'inbox',
@@ -106,13 +100,16 @@ export const PageAccounts: FC<IPageAccounts> = () => {
                   value: account.username,
                 }),
                 create(List.Cell, {
+                  key: 'Name',
+                  label: 'Name',
+                  icon: 'user',
+                  value: account.name,
+                }),
+                create(List.Cell, {
                   key: 'Updated',
                   label: 'Updated',
-                  icon: 'history',
-                  value: format(
-                    new Date(account.updated),
-                    "dd LLL yyyy '@' hh:mm aaaa"
-                  ),
+                  icon: 'clock',
+                  value: format(new Date(account.updated), 'dd LLL yyyy'),
                 }),
               ],
             })

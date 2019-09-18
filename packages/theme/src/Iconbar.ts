@@ -44,6 +44,7 @@ export const Iconbar: IIconbar = {
         alignItems: 'center',
         padding: '25px 0',
         width: '75px',
+        flexShrink: 0,
         background: theme.iconbar.background,
       }),
     })

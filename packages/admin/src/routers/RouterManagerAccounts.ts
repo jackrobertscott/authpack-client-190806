@@ -3,6 +3,7 @@ import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
 import { CreateAccount } from '../gadgets/create/CreateAccount'
 import { UpdateAccount } from '../gadgets/update/UpdateAccount'
+import { RetrieveAccount } from '../gadgets/retrieve/RetrieveAccount'
 
 export type IRouterManagerAccounts = {
   id: string
@@ -24,14 +25,21 @@ export const RouterManagerAccounts: FC<IRouterManagerAccounts> = ({
             {
               icon: 'address-book',
               label: 'Overview',
-              children: null,
+              children: create(RetrieveAccount, {
+                id,
+              }),
             },
             {
               icon: 'user-cog',
-              label: 'Settings',
+              label: 'Update',
               children: create(UpdateAccount, {
                 id,
               }),
+            },
+            {
+              icon: 'unlock',
+              label: 'Change Password',
+              children: null,
             },
             {
               icon: 'project-diagram',
@@ -41,11 +49,6 @@ export const RouterManagerAccounts: FC<IRouterManagerAccounts> = ({
             {
               icon: 'history',
               label: 'Sessions of Account',
-              children: null,
-            },
-            {
-              icon: 'unlock',
-              label: 'Change Password',
               children: null,
             },
             {
