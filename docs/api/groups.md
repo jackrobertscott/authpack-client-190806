@@ -4,7 +4,7 @@
 
 ## Overview
 
-The `group` model is used to group multiple accounts together.
+The `group` model is used to group multiple users together.
 
 - [Setup](#Model)
 - [Group model](#Model)
@@ -318,7 +318,7 @@ query AnalyticsOfGroups($options: AnalyticsOfGroupsOptions!) {
 
 ## Resources
 
-- [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/accounts.md)
+- [Users](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/users.md)
 - [Groups](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/groups.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/permissions.md)

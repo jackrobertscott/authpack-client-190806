@@ -39,18 +39,18 @@ The official Authenticator docs can be found [here](https://github.com/jackrober
 ```ts
 import { authenticator } from '../my-utils/authenticator.ts'
 
-authenticator.accounts.create({
+authenticator.users.create({
     email: 'example@email.com',
     password: 'SuperSecretPassword123',
     name: 'Fred Blogs',
   })
-  .then(account => console.log(`Account created at ${account.created}`))
+  .then(user => console.log(`User created at ${user.created}`))
   .catch(error => console.log(`An error occurred: ${error.message}`))
 ```
 
 ## Resources
 
-- [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/accounts.md)
+- [Users](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/users.md)
 - [Groups](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/groups.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/permissions.md)

@@ -1,18 +1,18 @@
 import { createElement as create, FC } from 'react'
 import { PageSidebar } from '../templates/PageSidebar'
-import { PageAccounts } from '../pages/PageAccounts'
+import { PageUsers } from '../pages/PageUsers'
 import { PageSessions } from '../pages/PageSessions'
 
-export type IRouterSidebarAccounts = {}
+export type IRouterSidebarUsers = {}
 
-export const RouterSidebarAccounts: FC<IRouterSidebarAccounts> = () => {
+export const RouterSidebarUsers: FC<IRouterSidebarUsers> = () => {
   return create(PageSidebar, {
-    title: 'Accounts',
+    title: 'Users',
     screens: [
       {
         icon: 'user',
-        label: 'See all accounts',
-        children: create(PageAccounts),
+        label: 'See all users',
+        children: create(PageUsers),
       },
       {
         icon: 'history',

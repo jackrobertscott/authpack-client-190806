@@ -1,6 +1,6 @@
 import { createElement as create, FC } from 'react'
 import { PageIconbar } from '../templates/PageIconbar'
-import { RouterSidebarAccounts } from './RouterSidebarAccounts'
+import { RouterSidebarUsers } from './RouterSidebarUsers'
 import { RouterSidebarGroups } from './RouterSidebarGroups'
 import { RouterSidebarReports } from './RouterSidebarReports'
 import { PageQueries } from '../pages/PageQueries'
@@ -12,8 +12,8 @@ export const RouterCentral: FC<IRouterCentral> = () => {
     screens: [
       {
         icon: 'users',
-        label: 'Accounts',
-        children: create(RouterSidebarAccounts),
+        label: 'Users',
+        children: create(RouterSidebarUsers),
         path: '/users',
       },
       {

@@ -8,7 +8,7 @@ export const PageSessions: FC<IPageSessions> = () => {
   const items = ['bell', 'bolt', 'carrot', 'cat']
   return create(Page.Container, {
     title: 'All Sessions',
-    description: 'See all the sessions created by the accounts of your app',
+    description: 'See all the sessions created by the users of your app',
     scroll: [
       create(Searchbar, {
         key: 'searchbar',

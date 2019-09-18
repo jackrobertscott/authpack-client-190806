@@ -1,17 +1,17 @@
 import { createElement as create, FC } from 'react'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
-import { CreateAccount } from '../gadgets/create/CreateAccount'
-import { UpdateAccount } from '../gadgets/update/UpdateAccount'
-import { RetrieveAccount } from '../gadgets/retrieve/RetrieveAccount'
+import { CreateUser } from '../gadgets/create/CreateUser'
+import { UpdateUser } from '../gadgets/update/UpdateUser'
+import { RetrieveUser } from '../gadgets/retrieve/RetrieveUser'
 
-export type IRouterManagerAccounts = {
+export type IRouterManagerUsers = {
   id: string
   close?: () => void
   change?: () => void
 }
 
-export const RouterManagerAccounts: FC<IRouterManagerAccounts> = ({
+export const RouterManagerUsers: FC<IRouterManagerUsers> = ({
   id,
   close,
   change,
@@ -25,14 +25,14 @@ export const RouterManagerAccounts: FC<IRouterManagerAccounts> = ({
             {
               icon: 'address-book',
               label: 'Overview',
-              children: create(RetrieveAccount, {
+              children: create(RetrieveUser, {
                 id,
               }),
             },
             {
               icon: 'user-cog',
               label: 'Update',
-              children: create(UpdateAccount, {
+              children: create(UpdateUser, {
                 id,
               }),
             },
@@ -43,12 +43,12 @@ export const RouterManagerAccounts: FC<IRouterManagerAccounts> = ({
             },
             {
               icon: 'project-diagram',
-              label: 'Groups of Account',
+              label: 'Groups of User',
               children: null,
             },
             {
               icon: 'history',
-              label: 'Sessions of Account',
+              label: 'Sessions of User',
               children: null,
             },
             {
@@ -65,8 +65,8 @@ export const RouterManagerAccounts: FC<IRouterManagerAccounts> = ({
         : [
             {
               icon: 'plus',
-              label: 'Create Account',
-              children: create(CreateAccount, {
+              label: 'Create User',
+              children: create(CreateUser, {
                 change: () => {
                   if (close) close()
                   if (change) change()

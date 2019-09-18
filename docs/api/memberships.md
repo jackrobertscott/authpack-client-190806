@@ -4,7 +4,7 @@
 
 ## Overview
 
-The `membership` model is used to associates an account with a group.
+The `membership` model is used to associates an user with a group.
 
 - [Setup](#Model)
 - [Membership model](#Model)
@@ -42,19 +42,19 @@ Properties.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
 - group `object`: the related group.
-- account `object`: the related account.
+- user `object`: the related user.
 - permissions `object[]`: the permissions assigned to member.
 - meta `object?`: developer assigned attributes.
-- email `string?`: email address - used when account not provided.
+- email `string?`: email address - used when user not provided.
 
 ## Create a membership
 
-Used to add a account as a new member of a group.
+Used to add a user as a new member of a group.
 
 ```ts
 authenticator.memberships.create({
     group: group.id,
-    account: account.id,
+    user: user.id,
     permissions: [permissionEditor.id, permissionCommentor.id],
     meta: {/* attributes */},
     email: 'invitation@email.com',
@@ -66,10 +66,10 @@ authenticator.memberships.create({
 Options.
 
 - group: `string`: id of a group.
-- account: `string`: id of a account.
+- user: `string`: id of a user.
 - permissions `string[]?`: ids of permissions assigned to member.
 - meta `object?`: developer assigned attributes.
-- email `string?`: email address - used when account not provided.
+- email `string?`: email address - used when user not provided.
 
 Returns.
 
@@ -198,7 +198,7 @@ Used to get a list of memberships.
 ```ts
 authenticator.memberships.list({
     group: group.id,
-    account: account.id,
+    user: user.id,
     limit: 10,
     skip: 5,
     page: 0,
@@ -210,7 +210,7 @@ authenticator.memberships.list({
 Options.
 
 - group: `string`: filtered by this groups's id.
-- account: `string?`: filtered by this account's id.
+- user: `string?`: filtered by this user's id.
 - limit `number?`: maximum number of memberships returned.
 - skip `number?`: skip this number of memberships.
 - page `number?`: skip this number of memberships multiplied by the limit.
@@ -241,7 +241,7 @@ Used to count a group of memberships.
 ```ts
 authenticator.memberships.count({
     group: group.id,
-    account: account.id,
+    user: user.id,
   })
   .then(count => console.log(`Counted: ${count}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -250,7 +250,7 @@ authenticator.memberships.count({
 Options.
 
 - group: `string`: filtered by this groups's id.
-- account: `string?`: filtered by this account's id.
+- user: `string?`: filtered by this user's id.
   
 Returns.
 
@@ -309,7 +309,7 @@ query AnalyticsOfMemberships($options: AnalyticsOfMembershipsOptions!) {
 
 ## Resources
 
-- [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/accounts.md)
+- [Users](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/users.md)
 - [Groups](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/groups.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/permissions.md)

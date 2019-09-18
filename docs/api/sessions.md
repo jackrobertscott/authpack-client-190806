@@ -4,7 +4,7 @@
 
 ## Overview
 
-The `session` model is created when a account authenticates and requires an access token.
+The `session` model is created when a user authenticates and requires an access token.
 
 - [Setup](#Model)
 - [Session model](#Model)
@@ -42,7 +42,7 @@ Properties.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
 - group `string`: the related group.
-- account `string`: the related account.
+- user `string`: the related user.
 - meta `object?`: developer assigned attributes.
 - expiry `Date`: the expiry time of the token.
 - token `string`: the access token created by the session.
@@ -55,7 +55,7 @@ Used to sign up a session on your app.
 ```ts
 authenticator.sessions.create({
     group: group.id,
-    account: account.id,
+    user: user.id,
     meta: {/* attributes */},
     expiry: new Date(),
     deactivated: false,
@@ -67,7 +67,7 @@ authenticator.sessions.create({
 Options.
 
 - group `string`: the group's id.
-- account `string`: the account's id.
+- user `string`: the user's id.
 - meta `object?`: developer assigned attributes.
 - expiry `Date`: the expiry time of the token.
 - deactivated `boolean`: manually deactivated token.
@@ -199,7 +199,7 @@ Used to get a list of sessions.
 
 ```ts
 authenticator.sessions.list({
-    account: account.id,
+    user: user.id,
     group: group.id,
     limit: 10,
     skip: 5,
@@ -212,7 +212,7 @@ authenticator.sessions.list({
 Options.
 
 - group `string?`: filtered by this group's id.
-- account `string?`: filtered by this account's id.
+- user `string?`: filtered by this user's id.
 - limit `number?`: maximum number of sessions returned.
 - skip `number?`: skip this number of sessions.
 - page `number?`: skip this number of sessions multiplied by the limit.
@@ -242,7 +242,7 @@ Used to count a group of sessions.
 
 ```ts
 authenticator.sessions.count({
-    account: account.id,
+    user: user.id,
     group: group.id,
   })
   .then(count => console.log(`Counted: ${count}`))
@@ -252,7 +252,7 @@ authenticator.sessions.count({
 Options.
 
 - group `string?`: filtered by this group's id.
-- account `string?`: filtered by this account's id.
+- user `string?`: filtered by this user's id.
   
 Returns.
 
@@ -311,7 +311,7 @@ query AnalyticsOfSessions($options: AnalyticsOfSessionsOptions!) {
 
 ## Resources
 
-- [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/accounts.md)
+- [Users](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/users.md)
 - [Groups](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/groups.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/permissions.md)

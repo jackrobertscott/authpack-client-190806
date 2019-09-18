@@ -4,14 +4,14 @@ import { format } from 'date-fns'
 import { Searchbar } from '../templates/Searchbar'
 import { useGraph } from '../hooks/useGraph'
 import { usePagination } from '../hooks/usePagination'
-import { RouterManagerAccounts } from '../routers/RouterManagerAccounts'
+import { RouterManagerUsers } from '../routers/RouterManagerUsers'
 
-export type IPageAccounts = {}
+export type IPageUsers = {}
 
-export const PageAccounts: FC<IPageAccounts> = () => {
-  const listAccountGraph = useGraph<{
+export const PageUsers: FC<IPageUsers> = () => {
+  const listUserGraph = useGraph<{
     count: number
-    accounts: Array<{
+    users: Array<{
       id: string
       updated: string
       email: string
@@ -21,9 +21,9 @@ export const PageAccounts: FC<IPageAccounts> = () => {
   }>({
     api: true,
     query: `
-      query ListAccount($count: CountAccountOptions, $list: ListAccountOptions) {
-        count: CountAccount(options: $count)
-        accounts: ListAccount(options: $list) {
+      query ListUser($count: CountUserOptions, $list: ListUserOptions) {
+        count: CountUser(options: $count)
+        users: ListUser(options: $list) {
           id
           updated
           email
@@ -36,25 +36,25 @@ export const PageAccounts: FC<IPageAccounts> = () => {
   const [current, currentChange] = useState<string | undefined>()
   const [search, searchChange] = useState<string>('')
   const { limit, skip, next, previous, hasNext, hasPrevious } = usePagination({
-    count: listAccountGraph.data && listAccountGraph.data.count,
+    count: listUserGraph.data && listUserGraph.data.count,
   })
   const load = () =>
-    listAccountGraph.fetch({ count: { search }, list: { search, limit, skip } })
+    listUserGraph.fetch({ count: { search }, list: { search, limit, skip } })
   useEffect(() => {
     load()
     // eslint-disable-next-line
   }, [search, limit, skip])
   return create(Page.Container, {
-    title: 'All Accounts',
+    title: 'All Users',
     description: 'See all the users who have signed up to your app',
     button: {
       icon: 'plus',
-      label: 'Create Account',
+      label: 'Create User',
       click: () => currentChange(''),
     },
     noscroll: [
       typeof current === 'string' &&
-        create(RouterManagerAccounts, {
+        create(RouterManagerUsers, {
           key: 'modal',
           id: current,
           close: () => currentChange(undefined),
@@ -62,8 +62,8 @@ export const PageAccounts: FC<IPageAccounts> = () => {
         }),
       create(Searchbar, {
         key: 'searchbar',
-        amount: listAccountGraph.data && listAccountGraph.data.accounts.length,
-        total: listAccountGraph.data && listAccountGraph.data.count,
+        amount: listUserGraph.data && listUserGraph.data.users.length,
+        total: listUserGraph.data && listUserGraph.data.count,
         previous: hasPrevious() ? () => previous() : undefined,
         next: hasNext() ? () => next() : undefined,
         change: phrase => {
@@ -75,41 +75,41 @@ export const PageAccounts: FC<IPageAccounts> = () => {
       create(List.Container, {
         key: 'list',
         children:
-          listAccountGraph.data &&
-          listAccountGraph.data.accounts.map(account =>
+          listUserGraph.data &&
+          listUserGraph.data.users.map(user =>
             create(List.Row, {
-              key: account.id,
-              click: () => currentChange(account.id),
+              key: user.id,
+              click: () => currentChange(user.id),
               children: [
                 create(List.Cell, {
                   key: 'Id',
                   label: 'Id',
                   icon: 'fingerprint',
-                  value: account.id,
+                  value: user.id,
                 }),
                 create(List.Cell, {
                   key: 'Email',
                   label: 'Email',
                   icon: 'inbox',
-                  value: account.email,
+                  value: user.email,
                 }),
                 create(List.Cell, {
                   key: 'Username',
                   label: 'Username',
                   icon: 'tags',
-                  value: account.username,
+                  value: user.username,
                 }),
                 create(List.Cell, {
                   key: 'Name',
                   label: 'Name',
                   icon: 'user',
-                  value: account.name,
+                  value: user.name,
                 }),
                 create(List.Cell, {
                   key: 'Updated',
                   label: 'Updated',
                   icon: 'clock',
-                  value: format(new Date(account.updated), 'dd LLL yyyy'),
+                  value: format(new Date(user.updated), 'dd LLL yyyy'),
                 }),
               ],
             })

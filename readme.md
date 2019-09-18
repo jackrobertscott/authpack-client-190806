@@ -38,7 +38,7 @@ gadgets.render({ screen: 'login' })
 Listen to changes.
 
 ```js
-gadgets.listen(state => state && console.table(state.account.id))
+gadgets.listen(state => state && console.table(state.user.id))
 ```
 
 Protect routes.
@@ -74,26 +74,26 @@ const authenticator = new Authenticator({
 })
 ```
 
-Create an account.
+Create an user.
 
 ```js
 /**
- * Generate an account username and password credentials.
+ * Generate an user username and password credentials.
  */
-const account = await authenticator.accounts.create({
+const user = await authenticator.users.create({
   email: 'freddy@email.com',
   username: 'freddy',
   password: 'SuperSecret123',
 })
 ```
 
-Create an auth token e.g. logging in or signing up an account.
+Create an auth token e.g. logging in or signing up an user.
 
 ```js
 /**
- * Retrieve the user's account.
+ * Retrieve the user's user.
  */
-const account = await authenticator.accounts.retrieve({
+const user = await authenticator.users.retrieve({
   username: 'freddy',
   password: 'SuperSecret123',
 })
@@ -101,7 +101,7 @@ const account = await authenticator.accounts.retrieve({
  * Create a new authentication session.
  */
 const session = await authenticator.sessions.create({
-  account: account.id,
+  user: user.id,
 })
 /**
  * Get token from session.
@@ -119,14 +119,14 @@ const session = await authenticator.sessions.retrieve({
   token: req.body.token,
 })
 /**
- * Access the account from the session.
+ * Access the user from the session.
  */
-console.log(session.account.email)
+console.log(session.user.email)
 ```
 
 Api models.
 
-- [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/accounts.md)
+- [Users](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/users.md)
 - [Groups](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/groups.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/permissions.md)

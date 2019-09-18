@@ -10,65 +10,37 @@ const schema = validator.object().shape({
     .string()
     .email('Please make sure you have used a valid email address')
     .required('Please provide your name'),
+  password: validator.string().required('Please provide your email'),
 })
 
-export type IUpdateAccount = {
-  id: string
+export type ICreateUser = {
+  change?: () => void
 }
 
-export const UpdateAccount: FC<IUpdateAccount> = ({ id }) => {
+export const CreateUser: FC<ICreateUser> = ({ change }) => {
   const [value, valueChange] = useState({ ...schema.default() })
   const [issue, issueChange] = useState<Error>()
-  const retrieveAccountGraph = useGraph<{
-    account: {
-      id: string
-      name: string
-      username: string
-      email: string
-    }
-  }>({
-    api: true,
-    query: `
-      query RetrieveAccount($options: RetrieveAccountOptions!) {
-        account: RetrieveAccount(options: $options) {
-          id
-          name
-          username
-          email
-        }
-      }
-    `,
-  })
-  useEffect(() => {
-    retrieveAccountGraph.fetch({ options: { id } }).then(data => {
-      if (data.account)
-        valueChange({
-          name: data.account.name || undefined,
-          username: data.account.username || undefined,
-          email: data.account.email || undefined,
-        })
-    })
-    // eslint-disable-next-line
-  }, [id])
-  const updateAccountGraph = useGraph<{
-    account: {
+  const createUserGraph = useGraph<{
+    user: {
       id: string
     }
   }>({
     api: true,
     query: `
-      mutation UpdateAccount($options: UpdateAccountOptions!) {
-        account: UpdateAccount(options: $options) {
+      mutation CreateUser($options: CreateUserOptions!) {
+        user: CreateUser(options: $options) {
           id
         }
       }
     `,
   })
   const submit = () => {
-    schema.validate(value).then(data => {
-      const options = { ...data, id }
-      updateAccountGraph.fetch({ options }, 'UpdateAccount')
-    })
+    schema
+      .validate(value)
+      .then(data =>
+        createUserGraph.fetch({ options: data }, 'CreateUser')
+      )
+      .then(change)
   }
   const patch = (path: string) => (data: any) => {
     const update = { ...value, [path]: data }
@@ -82,7 +54,7 @@ export const UpdateAccount: FC<IUpdateAccount> = ({ id }) => {
       .catch(issueChange)
   }, [value])
   return create(Gadgets.Container, {
-    label: 'Update Account',
+    label: 'Create User',
     brand: 'Your App',
     children: create(Gadgets.Spacer, {
       children: [
@@ -94,7 +66,6 @@ export const UpdateAccount: FC<IUpdateAccount> = ({ id }) => {
           input: props =>
             create(Inputs.String, {
               ...props,
-              value: value.name,
               placeholder: 'Fred Blogs',
             }),
         }),
@@ -106,7 +77,6 @@ export const UpdateAccount: FC<IUpdateAccount> = ({ id }) => {
           input: props =>
             create(Inputs.String, {
               ...props,
-              value: value.username,
               placeholder: 'fredblogs',
             }),
         }),
@@ -118,8 +88,18 @@ export const UpdateAccount: FC<IUpdateAccount> = ({ id }) => {
           input: props =>
             create(Inputs.String, {
               ...props,
-              value: value.email,
               placeholder: 'fred.blogs@example.com',
+            }),
+        }),
+        create(Inputs.Control, {
+          key: 'password',
+          label: 'Password',
+          description: 'Please use more than 6 characters',
+          change: patch('password'),
+          input: props =>
+            create(Inputs.String, {
+              ...props,
+              placeholder: '**********',
             }),
         }),
         create(Button.Container, {

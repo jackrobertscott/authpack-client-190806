@@ -1,4 +1,4 @@
-import { IGraphAccounts, createAccounts } from './endpoints/accounts'
+import { IGraphUsers, createUsers } from './endpoints/users'
 import { IGraphGroups, createGroups } from './endpoints/groups'
 import { IGraphMemberships, createMemberships } from './endpoints/memberships'
 import { IGraphPermissions, createPermissions } from './endpoints/permissions'
@@ -10,7 +10,7 @@ export type IAuthenticator = {
 }
 
 export class Authenticator {
-  public accounts: IGraphAccounts
+  public users: IGraphUsers
   public groups: IGraphGroups
   public memberships: IGraphMemberships
   public permissions: IGraphPermissions
@@ -20,7 +20,7 @@ export class Authenticator {
 
   constructor({ key }: IAuthenticator) {
     this.key = key
-    this.accounts = createAccounts(this.key)
+    this.users = createUsers(this.key)
     this.groups = createGroups(this.key)
     this.memberships = createMemberships(this.key)
     this.permissions = createPermissions(this.key)

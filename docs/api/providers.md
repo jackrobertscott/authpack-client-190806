@@ -51,7 +51,7 @@ Properties.
 
 ## Create a provider
 
-Used to add a account as a new member of a group.
+Used to add a user as a new member of a group.
 
 ```ts
 authenticator.providers.create({
@@ -60,7 +60,7 @@ authenticator.providers.create({
     tag: 'facebook',
     client: 'FACEBOOK_APP_ID',
     secret: 'FACEBOOK_APP_SECRET_KEY',
-    scopes: 'accounts:read,repos:read,repos:write',
+    scopes: 'users:read,repos:read,repos:write',
     redirect: 'https://example.com/login/facebook',
   })
   .then(provider => console.log(`Created: ${provider.id} at ${provider.created}`))
@@ -106,7 +106,7 @@ authenticator.providers.update({
     tag: 'facebook',
     client: 'FACEBOOK_APP_ID',
     secret: 'FACEBOOK_APP_SECRET_KEY',
-    scopes: 'accounts:read,repos:read,repos:write',
+    scopes: 'users:read,repos:read,repos:write',
     redirect: 'https://example.com/login/facebook',
   })
   .then(provider => console.log(`Updated: ${provider.id} at ${provider.updated}`))
@@ -323,7 +323,7 @@ query AnalyticsOfProviders($options: AnalyticsOfProvidersOptions!) {
 
 ## Resources
 
-- [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/accounts.md)
+- [Users](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/users.md)
 - [Groups](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/groups.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/permissions.md)

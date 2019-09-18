@@ -3,14 +3,14 @@ import { Gadgets, Overview } from 'wga-theme'
 import { format } from 'date-fns'
 import { useGraph } from '../../hooks/useGraph'
 
-export type IRetrieveAccount = {
+export type IRetrieveUser = {
   id: string
   change?: () => void
 }
 
-export const RetrieveAccount: FC<IRetrieveAccount> = ({ id }) => {
-  const retrieveAccountGraph = useGraph<{
-    account: {
+export const RetrieveUser: FC<IRetrieveUser> = ({ id }) => {
+  const retrieveUserGraph = useGraph<{
+    user: {
       id: string
       created: string
       updated: string
@@ -21,8 +21,8 @@ export const RetrieveAccount: FC<IRetrieveAccount> = ({ id }) => {
   }>({
     api: true,
     query: `
-      query RetrieveAccount($options: RetrieveAccountOptions!) {
-        account: RetrieveAccount(options: $options) {
+      query RetrieveUser($options: RetrieveUserOptions!) {
+        user: RetrieveUser(options: $options) {
           id
           updated
           created
@@ -34,46 +34,46 @@ export const RetrieveAccount: FC<IRetrieveAccount> = ({ id }) => {
     `,
   })
   useEffect(() => {
-    retrieveAccountGraph.fetch({
+    retrieveUserGraph.fetch({
       options: { id },
     })
     // eslint-disable-next-line
   }, [id])
   return create(Gadgets.Container, {
-    label: 'Update Account',
+    label: 'Update User',
     brand: 'Your App',
     children: create(Gadgets.Spacer, {
-      children: retrieveAccountGraph.data && [
+      children: retrieveUserGraph.data && [
         create(Overview.Container, {
           key: 'Id',
           label: 'Id',
           icon: 'fingerprint',
-          value: retrieveAccountGraph.data.account.id,
+          value: retrieveUserGraph.data.user.id,
         }),
         create(Overview.Container, {
           key: 'Email',
           label: 'Email',
           icon: 'inbox',
-          value: retrieveAccountGraph.data.account.email,
+          value: retrieveUserGraph.data.user.email,
         }),
         create(Overview.Container, {
           key: 'Username',
           label: 'Username',
           icon: 'tags',
-          value: retrieveAccountGraph.data.account.username,
+          value: retrieveUserGraph.data.user.username,
         }),
         create(Overview.Container, {
           key: 'Name',
           label: 'Name',
           icon: 'user',
-          value: retrieveAccountGraph.data.account.name,
+          value: retrieveUserGraph.data.user.name,
         }),
         create(Overview.Container, {
           key: 'Created',
           label: 'Created',
           icon: 'clock',
           value: format(
-            new Date(retrieveAccountGraph.data.account.created),
+            new Date(retrieveUserGraph.data.user.created),
             "dd LLL yyyy 'at' hh:mm aaaa"
           ),
         }),
@@ -82,7 +82,7 @@ export const RetrieveAccount: FC<IRetrieveAccount> = ({ id }) => {
           label: 'Updated',
           icon: 'clock',
           value: format(
-            new Date(retrieveAccountGraph.data.account.updated),
+            new Date(retrieveUserGraph.data.user.updated),
             "dd LLL yyyy 'at' hh:mm aaaa"
           ),
         }),

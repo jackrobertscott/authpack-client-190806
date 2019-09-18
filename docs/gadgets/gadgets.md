@@ -4,7 +4,7 @@
 
 ## Overview
 
-The authenticator gadgets provide the quickest solution to account & group management.
+The authenticator gadgets provide the quickest solution to user & group management.
 
 - [Setup](#Setup)
 - [Gadgets state](#Gadgets-state)
@@ -31,13 +31,13 @@ Properties.
 
 ## Gadgets state
 
-The gadgets store an internal state which contains your account, session, and group details.
+The gadgets store an internal state which contains your user, session, and group details.
 
-- [account]() `object?`: the current authenticated account.
-- [group]() `object?`: the current group selected by the account.
-- [session]() `object?`: the current account's authentication session containing access token.
-- [permissions]() `object[]?`: the permission's assigned to the current account with this group.
-- [membership]() `object?`: the membership relation between the account and group.
+- [user]() `object?`: the current authenticated user.
+- [group]() `object?`: the current group selected by the user.
+- [session]() `object?`: the current user's authentication session containing access token.
+- [permissions]() `object[]?`: the permission's assigned to the current user with this group.
+- [membership]() `object?`: the membership relation between the user and group.
 
 ## Listen to state changes
 
@@ -55,18 +55,18 @@ Returns.
 
 - unlisten `function`: call this when you want to stop listening to state changes.
 
-**Note:** the gadgets state is set as `undefined` when the account is not authenticated.
+**Note:** the gadgets state is set as `undefined` when the user is not authenticated.
 
 ## Render the gadgets
 
-Used to authenticate and manage a account and their groups.
+Used to authenticate and manage a user and their groups.
 
 ```ts
 gadgets.render({
   open: 'login',
   events: {
-    login: ({ account }) => window.location.assign(`app.example.com/account/${account.id}`),
-    signup: ({ account }) => window.location.assign(`app.example.com/account/${account.id}?introduction=true`),
+    login: ({ user }) => window.location.assign(`app.example.com/user/${user.id}`),
+    signup: ({ user }) => window.location.assign(`app.example.com/user/${user.id}?introduction=true`),
   },
 })
 ```
@@ -74,11 +74,11 @@ gadgets.render({
 Properties.
 
 - open `string?`: the suggested gadgets screen to open when unauthenticated.
-  - `login`: login a account.
-  - `signup`: create a account.
+  - `login`: login a user.
+  - `signup`: create a user.
 - events `object?`: gadget events fired when they occur.
-  - login `function`: fired after a account logs in.
-  - signup `function`: fired after a account signs up.
+  - login `function`: fired after a user logs in.
+  - signup `function`: fired after a user signs up.
 
 ## Theming
 
@@ -147,7 +147,7 @@ const RouterComponent = () => {
     })
   }, [gadgets, setAuthState]);
   /**
-   * If the account is logged in, show the authenticated routes.
+   * If the user is logged in, show the authenticated routes.
    */
   if (authState) {
     return <AuthenticatedRoutes />;

@@ -1,23 +1,23 @@
-# Accounts API
+# Users API
 
 > Authenticator 🏇 the fastest way to add auth to your apps
 
 ## Overview
 
-The `account` model is used to identify a single person who has signed up to your app.
+The `user` model is used to identify a single person who has signed up to your app.
 
 - [Setup](#Model)
-- [Account model](#Model)
+- [User model](#Model)
 
 Methods.
 
-- [Create a account](#Create-a-account)
-- [Update a account](#Update-a-account)
-- [Remove a account](#Remove-a-account)
-- [Retrieve a account](#Retrieve-a-account)
-- [List accounts](#List-accounts)
-- [Count accounts](#Count-accounts)
-- [Analytics of accounts](#Analytics-of-accounts)
+- [Create a user](#Create-a-user)
+- [Update a user](#Update-a-user)
+- [Remove a user](#Remove-a-user)
+- [Retrieve a user](#Retrieve-a-user)
+- [List users](#List-users)
+- [Count users](#Count-users)
+- [Analytics of users](#Analytics-of-users)
 
 Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 
@@ -34,7 +34,7 @@ const authenticator = new Authenticator({
 });
 ```
 
-## Account model
+## User model
 
 Properties.
 
@@ -45,15 +45,15 @@ Properties.
 - email `string?`: valid email address.
 - username `string?`: unique code.
 - password `string?`: encrypted string.
-- avatar `string?`: url pointing to the account's avatar image.
+- avatar `string?`: url pointing to the user's avatar image.
 - name `string?`: full name.
 
-## Create a account
+## Create a user
 
-Used to sign up a account on your app.
+Used to sign up a user on your app.
 
 ```ts
-authenticator.accounts.create({
+authenticator.users.create({
     meta: {/* attributes */},
     email: 'fredBlogs@example.com',
     username: 'freddy123',
@@ -61,7 +61,7 @@ authenticator.accounts.create({
     avatar: 'https://images.example.com/profile.png',
     name: 'Fred Blogs',
   })
-  .then(account => console.log(`Created: ${account.name} at ${account.created}`))
+  .then(user => console.log(`Created: ${user.name} at ${user.created}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -76,29 +76,29 @@ Options.
 
 Returns.
 
-- [account](#Model) `Promise<object, Error>`: the created account.
+- [user](#Model) `Promise<object, Error>`: the created user.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-mutation CreateAccount($options: CreateAccountOptions!) {
-  account: CreateAccount(options: $options) {
+mutation CreateUser($options: CreateUserOptions!) {
+  user: CreateUser(options: $options) {
     id
     name
-    # ... account properties
+    # ... user properties
   }
 }
 ```
 
-## Update a account
+## Update a user
 
-Used to patch a account's details.
+Used to patch a user's details.
 
 ```ts
-authenticator.accounts.update({
-    id: account.id,
+authenticator.users.update({
+    id: user.id,
     meta: {/* attributes */},
     email: 'fredBlogs@example.com',
     username: 'freddy123',
@@ -106,13 +106,13 @@ authenticator.accounts.update({
     avatar: 'https://images.example.com/profile.png',
     name: 'Fred Blogs',
   })
-  .then(account => console.log(`Updated: ${account.name} at ${account.updated}`))
+  .then(user => console.log(`Updated: ${user.name} at ${user.updated}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
 Options.
 
-- id `string`: id of the account to update.
+- id `string`: id of the user to update.
 - meta `object?`: developer assigned attributes.
 - email `string?`: valid email address.
 - username `string?`: unique code.
@@ -122,31 +122,31 @@ Options.
 
 Returns.
 
-- [account](#Model) `Promise<object, Error>`: the updated account.
+- [user](#Model) `Promise<object, Error>`: the updated user.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-mutation UpdateAccount($options: UpdateAccountOptions!) {
-  account: UpdateAccount(options: $options) {
+mutation UpdateUser($options: UpdateUserOptions!) {
+  user: UpdateUser(options: $options) {
     id
     name
-    # ... account properties
+    # ... user properties
   }
 }
 ```
 
-## Remove a account
+## Remove a user
 
-Used to permanently remove a account.
+Used to permanently remove a user.
 
 ```ts
-authenticator.accounts.remove({
-    id: membership.accountId,
+authenticator.users.remove({
+    id: membership.userId,
   })
-  .then(account => console.log(`Removed: ${account.name}`))
+  .then(user => console.log(`Removed: ${user.name}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -158,31 +158,31 @@ Options.
 
 Returns.
 
-- [account](#Model) `Promise<object, Error>` the removed account.
+- [user](#Model) `Promise<object, Error>` the removed user.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-mutation RemoveAccount($options: RemoveAccountOptions!) {
-  account: RemoveAccount(options: $options) {
+mutation RemoveUser($options: RemoveUserOptions!) {
+  user: RemoveUser(options: $options) {
     id
     name
-    # ... account properties
+    # ... user properties
   }
 }
 ```
 
-## Retrieve a account
+## Retrieve a user
 
-Used to get a single account.
+Used to get a single user.
 
 ```ts
-authenticator.accounts.retrieve({
-    id: membership.accountId,
+authenticator.users.retrieve({
+    id: membership.userId,
   })
-  .then(account => console.log(`Retrieved: ${account.name}`))
+  .then(user => console.log(`Retrieved: ${user.name}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -194,70 +194,70 @@ Options.
 
 Returns.
 
-- [account](#Model) `Promise<object, Error>` the account requested.
+- [user](#Model) `Promise<object, Error>` the user requested.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query RetrieveAccount($options: RetrieveAccountOptions!) {
-  account: RetrieveAccount(options: $options) {
+query RetrieveUser($options: RetrieveUserOptions!) {
+  user: RetrieveUser(options: $options) {
     id
     name
-    # ... account properties
+    # ... user properties
   }
 }
 ```
 
-## List accounts
+## List users
 
-Used to get a list of accounts.
+Used to get a list of users.
 
 ```ts
-authenticator.accounts.list({
+authenticator.users.list({
     search: 'Fred',
     limit: 10,
     skip: 5,
     page: 0,
   })
-  .then(accounts => console.table(accounts))
+  .then(users => console.table(users))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
 Options.
 
 - search `string?`: compared against name, username, and email.
-- limit `number?`: maximum number of accounts returned.
-- skip `number?`: skip this number of accounts.
-- page `number?`: skip this number of accounts multiplied by the limit.
+- limit `number?`: maximum number of users returned.
+- skip `number?`: skip this number of users.
+- page `number?`: skip this number of users multiplied by the limit.
 
 **Note:** `skip` and `page` are summed when used together.
 
 Returns.
 
-- [accounts](#Model) `Promise<object[], Error>`: a list of accounts.
+- [users](#Model) `Promise<object[], Error>`: a list of users.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query ListAccounts($options: ListAccountsOptions!) {
-  accounts: ListAccounts(options: $options) {
+query ListUsers($options: ListUsersOptions!) {
+  users: ListUsers(options: $options) {
     id
     name
-    # ... account properties
+    # ... user properties
   }
 }
 ```
 
-## Count accounts
+## Count users
 
-Used to count a group of accounts.
+Used to count a group of users.
 
 ```ts
-authenticator.accounts.count({
+authenticator.users.count({
     search: 'Fred',
   })
   .then(count => console.log(`Counted: ${count}`))
@@ -270,24 +270,24 @@ Options.
   
 Returns.
 
-- count `Promise<number, Error>`: the number of accounts counted.
+- count `Promise<number, Error>`: the number of users counted.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query CountAccounts($options: CountAccountsOptions!) {
-  count: CountAccounts(options: $options)
+query CountUsers($options: CountUsersOptions!) {
+  count: CountUsers(options: $options)
 }
 ```
 
-## Analytics of accounts
+## Analytics of users
 
-Used to get statistics of accounts over time.
+Used to get statistics of users over time.
 
 ```ts
-authenticator.accounts.analytics({
+authenticator.users.analytics({
     ending: Date.now(),
     months: 6,
   })
@@ -302,20 +302,20 @@ Options.
   
 Returns.
 
-- analytics `Promise<object, Error>`: statistics related to accounts within time period.
+- analytics `Promise<object, Error>`: statistics related to users within time period.
   - labels `string[]`: date values within given period.
   - data `number[]`: values matching the labels.
-  - created `number`: number of accounts created.
-  - updated `number`: number of accounts updated.
-  - active `number`: number of accounts with 1 session or more.
+  - created `number`: number of users created.
+  - updated `number`: number of users updated.
+  - active `number`: number of users with 1 session or more.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query AnalyticsOfAccounts($options: AnalyticsOfAccountsOptions!) {
-  analytics: AnalyticsOfAccounts(options: $options) {
+query AnalyticsOfUsers($options: AnalyticsOfUsersOptions!) {
+  analytics: AnalyticsOfUsers(options: $options) {
     labels
     data
     # ... analytics properties
@@ -325,7 +325,7 @@ query AnalyticsOfAccounts($options: AnalyticsOfAccountsOptions!) {
 
 ## Resources
 
-- [Accounts](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/accounts.md)
+- [Users](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/users.md)
 - [Groups](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/groups.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/permissions.md)
