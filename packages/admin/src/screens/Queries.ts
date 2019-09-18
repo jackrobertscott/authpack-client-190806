@@ -4,9 +4,9 @@ import GraphiQL from 'graphiql'
 import 'graphiql/graphiql.css'
 import { chat } from '../utils/server'
 
-export type IPageQueries = {}
+export type Queries = {}
 
-export const PageQueries: FC<IPageQueries> = () => {
+export const Queries: FC<Queries> = () => {
   return create('div', {
     className: css({
       flexGrow: 1,

@@ -1,7 +1,7 @@
 import { createElement as create, FC } from 'react'
 import { PageSidebar } from '../templates/PageSidebar'
-import { PageUsers } from '../pages/PageUsers'
-import { PageSessions } from '../pages/PageSessions'
+import { PageUsers } from '../screens/list/ListUsers'
+import { PageSessions } from '../screens/list/ListSessions'
 
 export type IRouterSidebarUsers = {}
 

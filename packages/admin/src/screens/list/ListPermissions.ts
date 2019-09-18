@@ -1,6 +1,6 @@
 import { createElement as create, FC } from 'react'
 import { Page, List } from 'wga-theme'
-import { Searchbar } from '../templates/Searchbar'
+import { Searchbar } from '../../templates/Searchbar'
 
 export type IPagePermissions = {}
 

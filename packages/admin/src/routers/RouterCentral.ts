@@ -3,7 +3,7 @@ import { PageIconbar } from '../templates/PageIconbar'
 import { RouterSidebarUsers } from './RouterSidebarUsers'
 import { RouterSidebarGroups } from './RouterSidebarGroups'
 import { RouterSidebarReports } from './RouterSidebarReports'
-import { PageQueries } from '../pages/PageQueries'
+import { Queries } from '../screens/Queries'
 
 export type IRouterCentral = {}
 
@@ -31,7 +31,7 @@ export const RouterCentral: FC<IRouterCentral> = () => {
       {
         icon: 'sitemap',
         label: 'Developers',
-        children: create(PageQueries),
+        children: create(Queries),
         path: '/developers',
       },
     ],

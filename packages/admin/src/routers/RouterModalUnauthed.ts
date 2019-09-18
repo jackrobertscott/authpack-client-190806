@@ -1,8 +1,8 @@
 import { createElement as create, FC } from 'react'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
-import { UnauthedLogin } from '../gadgets/UnauthedLogin'
-import { UnauthedSignup } from '../gadgets/UnauthedSignup'
-import { UnauthedPassword } from '../gadgets/UnauthedPassword'
+import { UnauthedLogin } from '../screens/UnauthedLogin'
+import { UnauthedSignup } from '../screens/UnauthedSignup'
+import { UnauthedPassword } from '../screens/UnauthedPassword'
 import { RouterModal } from '../templates/RouterModal'
 
 export type IRouterModalUnauthed = {

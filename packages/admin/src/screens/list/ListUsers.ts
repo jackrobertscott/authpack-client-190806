@@ -1,10 +1,10 @@
 import { createElement as create, FC, useEffect, useState } from 'react'
 import { Page, List } from 'wga-theme'
 import { format } from 'date-fns'
-import { Searchbar } from '../templates/Searchbar'
-import { createUseGraph } from '../hooks/useGraph'
-import { usePagination } from '../hooks/usePagination'
-import { RouterManagerUsers } from '../routers/RouterManagerUsers'
+import { Searchbar } from '../../templates/Searchbar'
+import { createUseGraph } from '../../hooks/useGraph'
+import { usePagination } from '../../hooks/usePagination'
+import { RouterManagerUsers } from '../../routers/RouterManagerUsers'
 
 export type IPageUsers = {}
 

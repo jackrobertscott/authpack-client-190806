@@ -1,7 +1,7 @@
 import * as validator from 'yup'
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
-import { useGraph, createUseGraph } from '../hooks/useGraph'
+import { createUseGraph } from '../hooks/useGraph'
 
 export type IUnauthedLogin = {}
 
