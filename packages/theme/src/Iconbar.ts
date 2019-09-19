@@ -157,7 +157,7 @@ export const Iconbar: IIconbar = {
           }),
           className: `toggle-pointer ${css({
             all: 'unset',
-            minWidth: '340px',
+            minWidth: '290px',
             position: 'absolute',
             zIndex: 100,
             left: '100%',

@@ -81,7 +81,7 @@ export const CreateUser: FC<ICreateUser> = ({ change }) => {
         }),
         create(Button.Container, {
           key: 'submit',
-          label: 'Submit',
+          label: 'Create',
           click: submit,
           disable: !!issue,
         }),

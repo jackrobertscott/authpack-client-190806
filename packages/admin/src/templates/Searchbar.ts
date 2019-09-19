@@ -27,7 +27,7 @@ export const Searchbar: FC<ISearchbar> = ({
       create(Search.Group, {
         key: 'results',
         icon: 'stream',
-        label: `Showing ${amount || '...'} of ${total || '...'} entries`,
+        label: `Showing ${amount || '...'} of ${total || '...'}`,
       }),
       create(Search.Group, {
         key: 'previous',

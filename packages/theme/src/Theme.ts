@@ -36,6 +36,7 @@ export interface ITheme {
     background: string
     backgroundHover: string
     backgroundDisable: string
+    cancel: string
     border: string
     color: string
     colorDisable: string
@@ -76,6 +77,12 @@ export interface ITheme {
     color: string
     colorHover: string
   }
+  posters: {
+    background: string
+    icon: string
+    label: string
+    description: string
+  }
 }
 
 export const Theme = createContext<ITheme>({
@@ -112,8 +119,9 @@ export const Theme = createContext<ITheme>({
   },
   buttons: {
     background: '#595959',
-    backgroundHover: '#616161',
+    backgroundHover: '#777777',
     backgroundDisable: '#222222',
+    cancel: '#323232',
     border: 'none',
     color: '#FFFFFF',
     colorDisable: '#444444',
@@ -153,5 +161,11 @@ export const Theme = createContext<ITheme>({
     background: '#434343',
     color: '#6F6F6F',
     colorHover: '#CCCCCC',
+  },
+  posters: {
+    background: '#2C2C2C',
+    icon: '#FFFFFF',
+    label: '#FFFFFF',
+    description: '#BABABA',
   },
 })

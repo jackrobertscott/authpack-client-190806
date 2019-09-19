@@ -85,7 +85,7 @@ export const UpdateUser: FC<IUpdateUser> = ({ id }) => {
         }),
         create(Button.Container, {
           key: 'submit',
-          label: 'Submit',
+          label: 'Update',
           click: submit,
           disable: !!issue,
         }),

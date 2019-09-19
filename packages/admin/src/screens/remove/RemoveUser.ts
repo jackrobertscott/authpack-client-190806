@@ -1,5 +1,5 @@
 import { createElement as create, FC } from 'react'
-import { Button, Gadgets } from 'wga-theme'
+import { Button, Gadgets, Poster } from 'wga-theme'
 import { createUseGraph } from '../../hooks/useGraph'
 
 export type IRemoveUser = {
@@ -17,10 +17,17 @@ export const RemoveUser: FC<IRemoveUser> = ({ id }) => {
     brand: 'Your App',
     children: create(Gadgets.Spacer, {
       children: [
+        create(Poster.Container, {
+          key: 'poster',
+          icon: 'radiation',
+          label: 'Delete User',
+          description: 'Permanently remove this user',
+        }),
         create(Button.Container, {
           key: 'remove',
-          label: 'Remove',
+          label: 'Delete',
           click: remove,
+          confirm: true,
         }),
       ],
     }),
