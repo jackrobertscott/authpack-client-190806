@@ -3,11 +3,15 @@ import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
 
 export type IRouterManagerMemberships = {
+  id: string
   close?: () => void
+  change?: () => void
 }
 
 export const RouterManagerMemberships: FC<IRouterManagerMemberships> = ({
+  id,
   close,
+  change,
 }) => {
   return create(RouterModal, {
     close,

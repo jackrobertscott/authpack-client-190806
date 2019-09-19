@@ -6,9 +6,9 @@ import { createUseGraph } from '../../hooks/useGraph'
 import { usePagination } from '../../hooks/usePagination'
 import { RouterManagerUsers } from '../../routers/RouterManagerUsers'
 
-export type IPageUsers = {}
+export type IListUsers = {}
 
-export const PageUsers: FC<IPageUsers> = () => {
+export const ListUsers: FC<IListUsers> = () => {
   // load the users and update results on search and pagination
   const [search, searchChange] = useState<string>('')
   const [current, currentChange] = useState<string | undefined>()

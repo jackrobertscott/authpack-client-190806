@@ -3,11 +3,15 @@ import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
 
 export type IRouterManagerSessions = {
+  id: string
   close?: () => void
+  change?: () => void
 }
 
 export const RouterManagerSessions: FC<IRouterManagerSessions> = ({
+  id,
   close,
+  change,
 }) => {
   return create(RouterModal, {
     close,

@@ -3,11 +3,15 @@ import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
 
 export type IRouterManagerPermissions = {
+  id: string
   close?: () => void
+  change?: () => void
 }
 
 export const RouterManagerPermissions: FC<IRouterManagerPermissions> = ({
+  id,
   close,
+  change,
 }) => {
   return create(RouterModal, {
     close,

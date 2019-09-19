@@ -3,10 +3,16 @@ import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
 
 export type IRouterManagerGroups = {
+  id: string
   close?: () => void
+  change?: () => void
 }
 
-export const RouterManagerGroups: FC<IRouterManagerGroups> = ({ close }) => {
+export const RouterManagerGroups: FC<IRouterManagerGroups> = ({
+  id,
+  close,
+  change,
+}) => {
   return create(RouterModal, {
     close,
     children: create(GadgetsIconbar, {

@@ -1,7 +1,7 @@
 import { createElement as create, FC } from 'react'
 import { PageSidebar } from '../templates/PageSidebar'
-import { PageUsers } from '../screens/list/ListUsers'
-import { PageSessions } from '../screens/list/ListSessions'
+import { ListUsers } from '../screens/list/ListUsers'
+import { ListSessions } from '../screens/list/ListSessions'
 
 export type IRouterSidebarUsers = {}
 
@@ -12,12 +12,12 @@ export const RouterSidebarUsers: FC<IRouterSidebarUsers> = () => {
       {
         icon: 'user',
         label: 'See all users',
-        children: create(PageUsers),
+        children: create(ListUsers),
       },
       {
         icon: 'history',
         label: 'See all sessions',
-        children: create(PageSessions),
+        children: create(ListSessions),
       },
       {
         icon: 'code',
