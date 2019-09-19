@@ -147,7 +147,7 @@ export const Queries: FC<Queries> = () => {
           background: '#4D4D4D',
           '.CodeMirror-sizer *': {
             fontFamily: 'Inconsolata',
-            fontSize: '15px',
+            fontSize: '16px',
             color: '#DADADA',
             letterSpacing: '0.025em',
           },
