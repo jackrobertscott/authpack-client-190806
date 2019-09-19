@@ -11,7 +11,7 @@ export const Queries: FC<Queries> = () => {
     children: create(GraphiQL, {
       fetcher: (graphQLParams: any) =>
         chat({ ...graphQLParams, api: true })
-          .then(data => ({ data }))
+          .then(data => (data.__schema ? { data } : data))
           .catch(console.warn),
     } as any),
     className: css({
