@@ -3,35 +3,47 @@ import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
 import { createUseGraph } from '../../hooks/useGraph'
 
-export type ICreateGroup = {
-  change?: () => void
+export type IUpdateGroup = {
+  id: string
 }
 
-export const CreateGroup: FC<ICreateGroup> = ({ change }) => {
+export const UpdateGroup: FC<IUpdateGroup> = ({ id }) => {
   // initialize the group form values and apply validators
   const [issue, issueChange] = useState<Error>()
-  const [value, valueChange] = useState({ ...schemaCreateGroup.default() })
+  const [value, valueChange] = useState({ ...schemaUpdateGroup.default() })
   const validateAndPatch = (path: string) => (data: any) => {
     const update = { ...value, [path]: data }
     valueChange(update)
-    return schemaCreateGroup.validateAt(path, update)
+    return schemaUpdateGroup.validateAt(path, update)
   }
   useEffect(() => {
-    schemaCreateGroup
+    schemaUpdateGroup
       .validate(value)
       .then(() => issueChange(undefined))
       .catch(issueChange)
   }, [value])
-  // create the group when the form is submitted
-  const createGroup = useCreateGroup()
+  // load the group and set as default form values
+  const retrieveGroup = useRetrieveGroup({
+    options: { id },
+  })
+  useEffect(() => {
+    if (retrieveGroup.data)
+      valueChange({
+        name: retrieveGroup.data.group.name,
+        tag: retrieveGroup.data.group.tag,
+        description: retrieveGroup.data.group.description,
+      })
+  }, [retrieveGroup.data])
+  // update the group when the form is submitted
+  const updateGroup = useUpdateGroup()
   const submit = () => {
-    schemaCreateGroup
-      .validate(value)
-      .then(data => createGroup.fetch({ options: data }))
-      .then(change)
+    schemaUpdateGroup.validate(value).then(data => {
+      const options = { ...data, id }
+      updateGroup.fetch({ options }, 'UpdateGroup')
+    })
   }
   return create(Gadgets.Container, {
-    label: 'Create Group',
+    label: 'Update Group',
     brand: 'Your App',
     children: create(Gadgets.Spacer, {
       children: [
@@ -73,7 +85,7 @@ export const CreateGroup: FC<ICreateGroup> = ({ change }) => {
         }),
         create(Button.Container, {
           key: 'submit',
-          label: 'Create',
+          label: 'Update',
           click: submit,
           disable: !!issue,
         }),
@@ -82,23 +94,44 @@ export const CreateGroup: FC<ICreateGroup> = ({ change }) => {
   })
 }
 
-const useCreateGroup = createUseGraph<{
+const useRetrieveGroup = createUseGraph<{
+  group: {
+    id: string
+    name: string
+    tag: string
+    description: string
+  }
+}>({
+  api: true,
+  query: `
+    query RetrieveGroup($options: RetrieveGroupOptions!) {
+      group: RetrieveGroup(options: $options) {
+        id
+        name
+        tag
+        description
+      }
+    }
+  `,
+})
+
+const useUpdateGroup = createUseGraph<{
   group: {
     id: string
   }
 }>({
   api: true,
   query: `
-    mutation CreateGroup($options: CreateGroupOptions!) {
-      group: CreateGroup(options: $options) {
+    mutation UpdateGroup($options: UpdateGroupOptions!) {
+      group: UpdateGroup(options: $options) {
         id
       }
     }
   `,
 })
 
-const schemaCreateGroup = validator.object().shape({
-  name: validator.string().required('Please provide a group name'),
-  tag: validator.string().required('Please provide a unique group tag'),
+const schemaUpdateGroup = validator.object().shape({
+  name: validator.string(),
+  tag: validator.string(),
   description: validator.string(),
 })

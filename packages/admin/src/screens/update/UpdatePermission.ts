@@ -3,35 +3,47 @@ import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
 import { createUseGraph } from '../../hooks/useGraph'
 
-export type ICreatePermission = {
-  change?: () => void
+export type IUpdatePermission = {
+  id: string
 }
 
-export const CreatePermission: FC<ICreatePermission> = ({ change }) => {
+export const UpdatePermission: FC<IUpdatePermission> = ({ id }) => {
   // initialize the permission form values and apply validators
   const [issue, issueChange] = useState<Error>()
-  const [value, valueChange] = useState({ ...schemaCreatePermission.default() })
+  const [value, valueChange] = useState({ ...schemaUpdatePermission.default() })
   const validateAndPatch = (path: string) => (data: any) => {
     const update = { ...value, [path]: data }
     valueChange(update)
-    return schemaCreatePermission.validateAt(path, update)
+    return schemaUpdatePermission.validateAt(path, update)
   }
   useEffect(() => {
-    schemaCreatePermission
+    schemaUpdatePermission
       .validate(value)
       .then(() => issueChange(undefined))
       .catch(issueChange)
   }, [value])
-  // create the permission when the form is submitted
-  const createPermission = useCreatePermission()
+  // load the permission and set as default form values
+  const retrievePermission = useRetrievePermission({
+    options: { id },
+  })
+  useEffect(() => {
+    if (retrievePermission.data)
+      valueChange({
+        name: retrievePermission.data.permission.name,
+        tag: retrievePermission.data.permission.tag,
+        description: retrievePermission.data.permission.description,
+      })
+  }, [retrievePermission.data])
+  // update the permission when the form is submitted
+  const updatePermission = useUpdatePermission()
   const submit = () => {
-    schemaCreatePermission
-      .validate(value)
-      .then(data => createPermission.fetch({ options: data }))
-      .then(change)
+    schemaUpdatePermission.validate(value).then(data => {
+      const options = { ...data, id }
+      updatePermission.fetch({ options }, 'UpdatePermission')
+    })
   }
   return create(Gadgets.Container, {
-    label: 'Create Permission',
+    label: 'Update Permission',
     brand: 'Your App',
     children: create(Gadgets.Spacer, {
       children: [
@@ -44,7 +56,7 @@ export const CreatePermission: FC<ICreatePermission> = ({ change }) => {
             create(Inputs.String, {
               ...props,
               value: value.name,
-              placeholder: 'Editor',
+              placeholder: 'Awesome Team',
             }),
         }),
         create(Inputs.Control, {
@@ -56,7 +68,7 @@ export const CreatePermission: FC<ICreatePermission> = ({ change }) => {
             create(Inputs.String, {
               ...props,
               value: value.tag,
-              placeholder: 'editor',
+              placeholder: 'awesome123',
             }),
         }),
         create(Inputs.Control, {
@@ -68,12 +80,12 @@ export const CreatePermission: FC<ICreatePermission> = ({ change }) => {
             create(Inputs.String, {
               ...props,
               value: value.description,
-              placeholder: 'Can edit app entries',
+              placeholder: 'We do awesome things',
             }),
         }),
         create(Button.Container, {
           key: 'submit',
-          label: 'Create',
+          label: 'Update',
           click: submit,
           disable: !!issue,
         }),
@@ -82,23 +94,44 @@ export const CreatePermission: FC<ICreatePermission> = ({ change }) => {
   })
 }
 
-const useCreatePermission = createUseGraph<{
+const useRetrievePermission = createUseGraph<{
+  permission: {
+    id: string
+    name: string
+    tag: string
+    description: string
+  }
+}>({
+  api: true,
+  query: `
+    query RetrievePermission($options: RetrievePermissionOptions!) {
+      permission: RetrievePermission(options: $options) {
+        id
+        name
+        tag
+        description
+      }
+    }
+  `,
+})
+
+const useUpdatePermission = createUseGraph<{
   permission: {
     id: string
   }
 }>({
   api: true,
   query: `
-    mutation CreatePermission($options: CreatePermissionOptions!) {
-      permission: CreatePermission(options: $options) {
+    mutation UpdatePermission($options: UpdatePermissionOptions!) {
+      permission: UpdatePermission(options: $options) {
         id
       }
     }
   `,
 })
 
-const schemaCreatePermission = validator.object().shape({
-  name: validator.string().required('Please provide a permission name'),
-  tag: validator.string().required('Please provide a unique permission tag'),
+const schemaUpdatePermission = validator.object().shape({
+  name: validator.string(),
+  tag: validator.string(),
   description: validator.string(),
 })

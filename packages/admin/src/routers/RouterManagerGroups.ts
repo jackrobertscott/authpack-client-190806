@@ -1,6 +1,10 @@
 import { createElement as create, FC } from 'react'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
+import { RetrieveGroup } from '../screens/retrieve/RetrieveGroup'
+import { UpdateGroup } from '../screens/update/UpdateGroup'
+import { RemoveGroup } from '../screens/remove/RemoveGroup'
+import { CreateGroup } from '../screens/create/CreateGroup'
 
 export type IRouterManagerGroups = {
   id: string
@@ -17,33 +21,52 @@ export const RouterManagerGroups: FC<IRouterManagerGroups> = ({
     close,
     children: create(GadgetsIconbar, {
       close,
-      screens: [
-        {
-          icon: 'project-diagram',
-          label: 'Overview',
-          children: null,
-        },
-        {
-          icon: 'cog',
-          label: 'Settings',
-          children: null,
-        },
-        {
-          icon: 'users',
-          label: 'Members of Group',
-          children: null,
-        },
-        {
-          icon: 'paper-plane',
-          label: 'Add New Member',
-          children: null,
-        },
-        {
-          icon: 'fire-alt',
-          label: 'Danger Zone',
-          children: null,
-        },
-      ],
+      screens: id
+        ? [
+            {
+              icon: 'project-diagram',
+              label: 'Overview',
+              children: create(RetrieveGroup, {
+                id,
+              }),
+            },
+            {
+              icon: 'cog',
+              label: 'Settings',
+              children: create(UpdateGroup, {
+                id,
+              }),
+            },
+            {
+              icon: 'users',
+              label: 'Members of Group',
+              children: null,
+            },
+            {
+              icon: 'paper-plane',
+              label: 'Add New Member',
+              children: null,
+            },
+            {
+              icon: 'fire-alt',
+              label: 'Danger Zone',
+              children: create(RemoveGroup, {
+                id,
+              }),
+            },
+          ]
+        : [
+            {
+              icon: 'plus',
+              label: 'Create',
+              children: create(CreateGroup, {
+                change: () => {
+                  if (close) close()
+                  if (change) change()
+                },
+              }),
+            },
+          ],
     }),
   })
 }

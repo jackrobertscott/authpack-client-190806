@@ -1,6 +1,10 @@
 import { createElement as create, FC } from 'react'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
+import { CreateSession } from '../screens/create/CreateSession'
+import { RetrieveSession } from '../screens/retrieve/RetrieveSession'
+import { UpdateSession } from '../screens/update/UpdateSession'
+import { RemoveSession } from '../screens/remove/RemoveSession'
 
 export type IRouterManagerSessions = {
   id: string
@@ -17,23 +21,42 @@ export const RouterManagerSessions: FC<IRouterManagerSessions> = ({
     close,
     children: create(GadgetsIconbar, {
       close,
-      screens: [
-        {
-          icon: 'history',
-          label: 'Overview',
-          children: null,
-        },
-        {
-          icon: 'cog',
-          label: 'Settings',
-          children: null,
-        },
-        {
-          icon: 'fire-alt',
-          label: 'Danger Zone',
-          children: null,
-        },
-      ],
+      screens: id
+        ? [
+            {
+              icon: 'history',
+              label: 'Overview',
+              children: create(RetrieveSession, {
+                id,
+              }),
+            },
+            {
+              icon: 'cog',
+              label: 'Settings',
+              children: create(UpdateSession, {
+                id,
+              }),
+            },
+            {
+              icon: 'fire-alt',
+              label: 'Danger Zone',
+              children: create(RemoveSession, {
+                id,
+              }),
+            },
+          ]
+        : [
+            {
+              icon: 'plus',
+              label: 'Create',
+              children: create(CreateSession, {
+                change: () => {
+                  if (close) close()
+                  if (change) change()
+                },
+              }),
+            },
+          ],
     }),
   })
 }

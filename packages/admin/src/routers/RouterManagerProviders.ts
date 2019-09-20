@@ -1,18 +1,18 @@
 import { createElement as create, FC } from 'react'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
-import { CreatePermission } from '../screens/create/CreatePermission'
-import { RetrievePermission } from '../screens/retrieve/RetrievePermission'
-import { UpdatePermission } from '../screens/update/UpdatePermission'
-import { RemovePermission } from '../screens/remove/RemovePermission'
+import { CreateProvider } from '../screens/create/CreateProvider'
+import { RetrieveProvider } from '../screens/retrieve/RetrieveProvider'
+import { UpdateProvider } from '../screens/update/UpdateProvider'
+import { RemoveProvider } from '../screens/remove/RemoveProvider'
 
-export type IRouterManagerPermissions = {
+export type IRouterManagerProviders = {
   id: string
   close?: () => void
   change?: () => void
 }
 
-export const RouterManagerPermissions: FC<IRouterManagerPermissions> = ({
+export const RouterManagerProviders: FC<IRouterManagerProviders> = ({
   id,
   close,
   change,
@@ -26,21 +26,21 @@ export const RouterManagerPermissions: FC<IRouterManagerPermissions> = ({
             {
               icon: 'tags',
               label: 'Overview',
-              children: create(RetrievePermission, {
+              children: create(RetrieveProvider, {
                 id,
               }),
             },
             {
               icon: 'cog',
               label: 'Settings',
-              children: create(UpdatePermission, {
+              children: create(UpdateProvider, {
                 id,
               }),
             },
             {
               icon: 'fire-alt',
               label: 'Danger Zone',
-              children: create(RemovePermission, {
+              children: create(RemoveProvider, {
                 id,
               }),
             },
@@ -49,7 +49,7 @@ export const RouterManagerPermissions: FC<IRouterManagerPermissions> = ({
             {
               icon: 'plus',
               label: 'Create',
-              children: create(CreatePermission, {
+              children: create(CreateProvider, {
                 change: () => {
                   if (close) close()
                   if (change) change()

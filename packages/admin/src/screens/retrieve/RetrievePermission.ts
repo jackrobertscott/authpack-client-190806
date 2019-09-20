@@ -3,51 +3,51 @@ import { Gadgets, Overview } from 'wga-theme'
 import { format } from 'date-fns'
 import { createUseGraph } from '../../hooks/useGraph'
 
-export type IRetrieveUser = {
+export type IRetrievePermission = {
   id: string
   change?: () => void
 }
 
-export const RetrieveUser: FC<IRetrieveUser> = ({ id }) => {
-  // load the user to show on page
-  const retrieveUserGraph = useRetrieveUser({
+export const RetrievePermission: FC<IRetrievePermission> = ({ id }) => {
+  // load the permission to show on page
+  const retrievePermissionGraph = useRetrievePermission({
     options: { id },
   })
   return create(Gadgets.Container, {
-    label: 'Overview User',
+    label: 'Overview Permission',
     brand: 'Your App',
     children: create(Gadgets.Spacer, {
-      children: retrieveUserGraph.data && [
+      children: retrievePermissionGraph.data && [
         create(Overview.Container, {
           key: 'Id',
           label: 'Id',
           icon: 'fingerprint',
-          value: retrieveUserGraph.data.user.id,
-        }),
-        create(Overview.Container, {
-          key: 'Email',
-          label: 'Email',
-          icon: 'inbox',
-          value: retrieveUserGraph.data.user.email,
-        }),
-        create(Overview.Container, {
-          key: 'Username',
-          label: 'Username',
-          icon: 'tags',
-          value: retrieveUserGraph.data.user.username,
+          value: retrievePermissionGraph.data.permission.id,
         }),
         create(Overview.Container, {
           key: 'Name',
           label: 'Name',
-          icon: 'user',
-          value: retrieveUserGraph.data.user.name,
+          icon: 'permission',
+          value: retrievePermissionGraph.data.permission.name,
+        }),
+        create(Overview.Container, {
+          key: 'Tag',
+          label: 'Tag',
+          icon: 'tags',
+          value: retrievePermissionGraph.data.permission.tag,
+        }),
+        create(Overview.Container, {
+          key: 'Description',
+          label: 'Description',
+          icon: 'marker',
+          value: retrievePermissionGraph.data.permission.description,
         }),
         create(Overview.Container, {
           key: 'Created',
           label: 'Created',
           icon: 'clock',
           value: format(
-            new Date(retrieveUserGraph.data.user.created),
+            new Date(retrievePermissionGraph.data.permission.created),
             "dd LLL yyyy 'at' hh:mm aaaa"
           ),
         }),
@@ -56,7 +56,7 @@ export const RetrieveUser: FC<IRetrieveUser> = ({ id }) => {
           label: 'Updated',
           icon: 'clock',
           value: format(
-            new Date(retrieveUserGraph.data.user.updated),
+            new Date(retrievePermissionGraph.data.permission.updated),
             "dd LLL yyyy 'at' hh:mm aaaa"
           ),
         }),
@@ -65,26 +65,26 @@ export const RetrieveUser: FC<IRetrieveUser> = ({ id }) => {
   })
 }
 
-const useRetrieveUser = createUseGraph<{
-  user: {
+const useRetrievePermission = createUseGraph<{
+  permission: {
     id: string
     created: string
     updated: string
     name: string
-    username: string
-    email: string
+    tag: string
+    description: string
   }
 }>({
   api: true,
   query: `
-    query RetrieveUser($options: RetrieveUserOptions!) {
-      user: RetrieveUser(options: $options) {
+    query RetrievePermission($options: RetrievePermissionOptions!) {
+      permission: RetrievePermission(options: $options) {
         id
         updated
         created
         name
-        username
-        email
+        tag
+        description
       }
     }
   `,

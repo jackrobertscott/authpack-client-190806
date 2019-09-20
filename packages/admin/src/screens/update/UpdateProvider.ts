@@ -3,35 +3,46 @@ import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
 import { createUseGraph } from '../../hooks/useGraph'
 
-export type ICreateProvider = {
-  change?: () => void
+export type IUpdateProvider = {
+  id: string
 }
 
-export const CreateProvider: FC<ICreateProvider> = ({ change }) => {
+export const UpdateProvider: FC<IUpdateProvider> = ({ id }) => {
   // initialize the provider form values and apply validators
   const [issue, issueChange] = useState<Error>()
-  const [value, valueChange] = useState({ ...schemaCreateProvider.default() })
+  const [value, valueChange] = useState({ ...schemaUpdateProvider.default() })
   const validateAndPatch = (path: string) => (data: any) => {
     const update = { ...value, [path]: data }
     valueChange(update)
-    return schemaCreateProvider.validateAt(path, update)
+    return schemaUpdateProvider.validateAt(path, update)
   }
   useEffect(() => {
-    schemaCreateProvider
+    schemaUpdateProvider
       .validate(value)
       .then(() => issueChange(undefined))
       .catch(issueChange)
   }, [value])
-  // create the provider when the form is submitted
-  const createProvider = useCreateProvider()
+  // load the provider and set as default form values
+  const retrieveProvider = useRetrieveProvider({
+    options: { id },
+  })
+  useEffect(() => {
+    if (retrieveProvider.data)
+      valueChange({
+        name: retrieveProvider.data.provider.name,
+        tag: retrieveProvider.data.provider.tag,
+      })
+  }, [retrieveProvider.data])
+  // update the provider when the form is submitted
+  const updateProvider = useUpdateProvider()
   const submit = () => {
-    schemaCreateProvider
-      .validate(value)
-      .then(data => createProvider.fetch({ options: data }))
-      .then(change)
+    schemaUpdateProvider.validate(value).then(data => {
+      const options = { ...data, id }
+      updateProvider.fetch({ options }, 'UpdateProvider')
+    })
   }
   return create(Gadgets.Container, {
-    label: 'Create Provider',
+    label: 'Update Provider',
     brand: 'Your App',
     children: create(Gadgets.Spacer, {
       children: [
@@ -61,7 +72,7 @@ export const CreateProvider: FC<ICreateProvider> = ({ change }) => {
         }),
         create(Button.Container, {
           key: 'submit',
-          label: 'Create',
+          label: 'Update',
           click: submit,
           disable: !!issue,
         }),
@@ -70,22 +81,41 @@ export const CreateProvider: FC<ICreateProvider> = ({ change }) => {
   })
 }
 
-const useCreateProvider = createUseGraph<{
+const useRetrieveProvider = createUseGraph<{
+  provider: {
+    id: string
+    name: string
+    tag: string
+  }
+}>({
+  api: true,
+  query: `
+    query RetrieveProvider($options: RetrieveProviderOptions!) {
+      provider: RetrieveProvider(options: $options) {
+        id
+        name
+        tag
+      }
+    }
+  `,
+})
+
+const useUpdateProvider = createUseGraph<{
   provider: {
     id: string
   }
 }>({
   api: true,
   query: `
-    mutation CreateProvider($options: CreateProviderOptions!) {
-      provider: CreateProvider(options: $options) {
+    mutation UpdateProvider($options: UpdateProviderOptions!) {
+      provider: UpdateProvider(options: $options) {
         id
       }
     }
   `,
 })
 
-const schemaCreateProvider = validator.object().shape({
-  name: validator.string().required('Please provide a provider name'),
-  tag: validator.string().required('Please provide a unique provider tag'),
+const schemaUpdateProvider = validator.object().shape({
+  name: validator.string(),
+  tag: validator.string(),
 })

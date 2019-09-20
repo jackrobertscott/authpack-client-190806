@@ -17,23 +17,31 @@ export const RouterManagerMemberships: FC<IRouterManagerMemberships> = ({
     close,
     children: create(GadgetsIconbar, {
       close,
-      screens: [
-        {
-          icon: 'user-tag',
-          label: 'Overview',
-          children: null,
-        },
-        {
-          icon: 'cog',
-          label: 'Settings',
-          children: null,
-        },
-        {
-          icon: 'fire-alt',
-          label: 'Danger Zone',
-          children: null,
-        },
-      ],
+      screens: id
+        ? [
+            {
+              icon: 'user-tag',
+              label: 'Overview',
+              children: null,
+            },
+            {
+              icon: 'cog',
+              label: 'Settings',
+              children: null,
+            },
+            {
+              icon: 'fire-alt',
+              label: 'Danger Zone',
+              children: null,
+            },
+          ]
+        : [
+            {
+              icon: 'plus',
+              label: 'Create',
+              children: null,
+            },
+          ],
     }),
   })
 }

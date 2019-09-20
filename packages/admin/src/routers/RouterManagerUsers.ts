@@ -68,7 +68,7 @@ export const RouterManagerUsers: FC<IRouterManagerUsers> = ({
         : [
             {
               icon: 'plus',
-              label: 'Create User',
+              label: 'Create',
               children: create(CreateUser, {
                 change: () => {
                   if (close) close()

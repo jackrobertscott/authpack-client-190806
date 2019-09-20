@@ -43,6 +43,7 @@ export const CreateUser: FC<ICreateUser> = ({ change }) => {
           input: props =>
             create(Inputs.String, {
               ...props,
+              value: value.name,
               placeholder: 'Fred Blogs',
             }),
         }),
@@ -54,6 +55,7 @@ export const CreateUser: FC<ICreateUser> = ({ change }) => {
           input: props =>
             create(Inputs.String, {
               ...props,
+              value: value.username,
               placeholder: 'fredblogs',
             }),
         }),
@@ -65,6 +67,7 @@ export const CreateUser: FC<ICreateUser> = ({ change }) => {
           input: props =>
             create(Inputs.String, {
               ...props,
+              value: value.email,
               placeholder: 'fred.blogs@example.com',
             }),
         }),
@@ -76,6 +79,7 @@ export const CreateUser: FC<ICreateUser> = ({ change }) => {
           input: props =>
             create(Inputs.String, {
               ...props,
+              value: value.password,
               placeholder: '**********',
             }),
         }),
