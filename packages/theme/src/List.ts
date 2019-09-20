@@ -14,6 +14,7 @@ export interface IList {
     icon: string
     label: string
     value?: string
+    end?: boolean
   }>
 }
 
@@ -50,22 +51,23 @@ export const List: IList = {
       }),
     })
   },
-  Cell: ({ icon, label, value }) => {
+  Cell: ({ icon, label, value, end }) => {
     const theme = useContext(Theme)
     return create('div', {
       children: create('div', {
         children: [
           create('div', {
-            key: 'icon',
-            className: `fas far fa-${icon} ${css({
-              lineHeight: '1.5em',
-              marginRight: '7.5px',
-              color: theme.lists.label,
-            })}`,
-          }),
-          create('div', {
-            key: 'marker',
+            key: 'top',
             children: [
+              create('div', {
+                key: 'icon',
+                className: `fas far fa-${icon} ${css({
+                  lineHeight: '1.5em',
+                  marginRight: '7.5px',
+                  width: '17.5px',
+                  color: theme.lists.label,
+                })}`,
+              }),
               create('div', {
                 key: 'label',
                 children: label,
@@ -74,20 +76,24 @@ export const List: IList = {
                   marginBottom: '3.75px',
                 }),
               }),
-              create('div', {
-                key: 'value',
-                children: value || '...',
-              }),
             ],
             className: css({
               display: 'flex',
-              flexDirection: 'column',
+            }),
+          }),
+          create('div', {
+            key: 'value',
+            children: value || '...',
+            className: css({
+              marginLeft: '25px',
             }),
           }),
         ],
         className: css({
           all: 'unset',
           display: 'flex',
+          flexDirection: 'column',
+          alignItems: end ? 'flex-end' : 'flex-start',
         }),
       }),
       className: css({

@@ -66,7 +66,7 @@ export const ListProviders: FC<ListProviders> = () => {
                 create(List.Cell, {
                   key: 'Name',
                   label: 'Name',
-                  icon: 'provider',
+                  icon: 'book',
                   value: provider.name,
                 }),
                 create(List.Cell, {
@@ -80,6 +80,7 @@ export const ListProviders: FC<ListProviders> = () => {
                   label: 'Updated',
                   icon: 'clock',
                   value: format(new Date(provider.updated), 'dd LLL yyyy'),
+                  end: true,
                 }),
               ],
             })

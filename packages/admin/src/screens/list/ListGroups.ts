@@ -86,6 +86,7 @@ export const ListGroups: FC<ListGroups> = () => {
                   label: 'Updated',
                   icon: 'clock',
                   value: format(new Date(group.updated), 'dd LLL yyyy'),
+                  end: true,
                 }),
               ],
             })

@@ -27,7 +27,7 @@ export const RetrieveProvider: FC<IRetrieveProvider> = ({ id }) => {
         create(Overview.Container, {
           key: 'Name',
           label: 'Name',
-          icon: 'provider',
+          icon: 'book',
           value: retrieveProviderGraph.data.provider.name,
         }),
         create(Overview.Container, {

@@ -66,7 +66,7 @@ export const ListPermissions: FC<ListPermissions> = () => {
                 create(List.Cell, {
                   key: 'Name',
                   label: 'Name',
-                  icon: 'permission',
+                  icon: 'book',
                   value: permission.name,
                 }),
                 create(List.Cell, {
@@ -80,6 +80,7 @@ export const ListPermissions: FC<ListPermissions> = () => {
                   label: 'Updated',
                   icon: 'clock',
                   value: format(new Date(permission.updated), 'dd LLL yyyy'),
+                  end: true,
                 }),
               ],
             })

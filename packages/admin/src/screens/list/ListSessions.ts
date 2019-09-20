@@ -68,6 +68,7 @@ export const ListSessions: FC<ListSessions> = () => {
                   label: 'Updated',
                   icon: 'clock',
                   value: format(new Date(session.updated), 'dd LLL yyyy'),
+                  end: true,
                 }),
               ],
             })

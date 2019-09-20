@@ -27,7 +27,7 @@ export const RetrieveGroup: FC<IRetrieveGroup> = ({ id }) => {
         create(Overview.Container, {
           key: 'Name',
           label: 'Name',
-          icon: 'group',
+          icon: 'project-diagram',
           value: retrieveGroupGraph.data.group.name,
         }),
         create(Overview.Container, {

@@ -86,6 +86,7 @@ export const ListUsers: FC<IListUsers> = () => {
                   label: 'Updated',
                   icon: 'clock',
                   value: format(new Date(user.updated), 'dd LLL yyyy'),
+                  end: true,
                 }),
               ],
             })

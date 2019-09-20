@@ -27,7 +27,7 @@ export const RetrievePermission: FC<IRetrievePermission> = ({ id }) => {
         create(Overview.Container, {
           key: 'Name',
           label: 'Name',
-          icon: 'permission',
+          icon: 'book',
           value: retrievePermissionGraph.data.permission.name,
         }),
         create(Overview.Container, {
