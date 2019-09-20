@@ -117,6 +117,7 @@ export const Page: IPage = {
             overflow: 'auto',
             flexGrow: 1,
             background: theme.gadgets.background,
+            backgroundSize: 'cover',
             '&::-webkit-scrollbar': {
               width: '20px',
               display: 'initial',
