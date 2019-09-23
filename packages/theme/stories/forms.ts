@@ -62,36 +62,46 @@ stories.add('List', () => {
   })
 })
 
-stories.add('Error Toaster', () => {
+stories.add('Strings', () => {
   return create(Gadgets.Spacer, {
-    children: null, // todo...
-  })
-})
-
-stories.add('String', () => {
-  return create(Gadgets.Spacer, {
-    children: create(Inputs.Control, {
-      key: 'input',
-      label: 'Name',
-      description: 'Your full name please',
-      input: props =>
-        create(Inputs.String, {
-          ...props,
-          placeholder: 'Fred Blogs',
-        }),
-    }),
-  })
-})
-
-stories.add('Large String', () => {
-  return create(Gadgets.Spacer, {
-    children: null, // todo...
+    children: [
+      create(Inputs.Control, {
+        key: 'input',
+        label: 'Name',
+        description: 'Your full name please',
+        input: props =>
+          create(Inputs.String, {
+            ...props,
+            placeholder: 'Fred Blogs',
+          }),
+      }),
+      create(Inputs.Control, {
+        key: 'description',
+        label: 'Description',
+        description: 'Provide an enjoyable summary',
+        input: props =>
+          create(Inputs.String, {
+            ...props,
+            large: true,
+            placeholder: 'This is a description...',
+          }),
+      }),
+    ],
   })
 })
 
 stories.add('String Array', () => {
   return create(Gadgets.Spacer, {
-    children: null, // todo...
+    children: create(Inputs.Control, {
+      key: 'input',
+      label: 'Domains',
+      description: 'Provide your whitelist domains',
+      input: props =>
+        create(Inputs.StringArray, {
+          ...props,
+          placeholder: 'https://helloworld.com',
+        }),
+    }),
   })
 })
 
@@ -126,6 +136,12 @@ stories.add('QR Code', () => {
 })
 
 stories.add('Avatar Upload', () => {
+  return create(Gadgets.Spacer, {
+    children: null, // todo...
+  })
+})
+
+stories.add('Error Toaster', () => {
   return create(Gadgets.Spacer, {
     children: null, // todo...
   })

@@ -10,20 +10,27 @@ export type IListMembershipsOfGroup = {
 
 export const ListMembershipsOfGroup: FC<IListMembershipsOfGroup> = ({ id }) => {
   // load the membership to show on page
-  const retrieveMembershipGraph = useRetrieveMembership({
+  const retrieveMembership = useRetrieveMembership({
     options: { id },
   })
-  console.log(retrieveMembershipGraph.data)
   return create(Gadgets.Container, {
     label: 'Memberships of Group',
     brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
-      children: retrieveMembershipGraph.data && [
+      children: retrieveMembership.data && [
         create(Overview.Container, {
           key: 'Id',
           label: 'Id',
           icon: 'fingerprint',
-          value: retrieveMembershipGraph.data.group.id,
+          value: retrieveMembership.data.group.id,
+        }),
+        retrieveMembership.data.group.memberships.map(membership => {
+          return create(Overview.Container, {
+            key: 'Id',
+            label: 'Id',
+            icon: 'fingerprint',
+            value: membership.id,
+          })
         }),
       ],
     }),
@@ -33,11 +40,11 @@ export const ListMembershipsOfGroup: FC<IListMembershipsOfGroup> = ({ id }) => {
 const useRetrieveMembership = createUseGraph<{
   group: {
     id: string
-    memberships: {
+    memberships: Array<{
       id: string
       created: string
       updated: string
-    }
+    }>
   }
 }>({
   api: true,

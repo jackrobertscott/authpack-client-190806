@@ -76,6 +76,12 @@ export const ListPermissions: FC<ListPermissions> = () => {
                   value: permission.tag,
                 }),
                 create(List.Cell, {
+                  key: 'Description',
+                  label: 'Description',
+                  icon: 'pen-alt',
+                  value: permission.description,
+                }),
+                create(List.Cell, {
                   key: 'Updated',
                   label: 'Updated',
                   icon: 'clock',
@@ -97,6 +103,7 @@ const useListPermission = createUseGraph<{
     updated: string
     name: string
     tag: string
+    description: string
   }>
 }>({
   api: true,
@@ -108,6 +115,7 @@ const useListPermission = createUseGraph<{
         updated
         name
         tag
+        description
       }
     }
   `,

@@ -32,6 +32,7 @@ export const UpdateGroup: FC<IUpdateGroup> = ({ id }) => {
         name: retrieveGroup.data.group.name,
         tag: retrieveGroup.data.group.tag,
         description: retrieveGroup.data.group.description,
+        domains: retrieveGroup.data.group.domains,
       })
   }, [retrieveGroup.data])
   // update the group when the form is submitted
@@ -83,6 +84,18 @@ export const UpdateGroup: FC<IUpdateGroup> = ({ id }) => {
               placeholder: 'We do awesome things',
             }),
         }),
+        create(Inputs.Control, {
+          key: 'domains',
+          label: 'Domains',
+          description: 'The whitelisted domains of your app',
+          change: validateAndPatch('domains'),
+          input: props =>
+            create(Inputs.StringArray, {
+              ...props,
+              value: value.domains,
+              placeholder: 'E.g. https://www.yourapp.com',
+            }),
+        }),
         create(Button.Container, {
           key: 'submit',
           label: 'Update',
@@ -100,6 +113,7 @@ const useRetrieveGroup = createUseGraph<{
     name: string
     tag: string
     description: string
+    domains: string[]
   }
 }>({
   api: true,
@@ -110,6 +124,7 @@ const useRetrieveGroup = createUseGraph<{
         name
         tag
         description
+        domains
       }
     }
   `,
@@ -134,4 +149,10 @@ const schemaUpdateGroup = validator.object().shape({
   name: validator.string(),
   tag: validator.string(),
   description: validator.string(),
+  domains: validator.array().of(
+    validator
+      .string()
+      .url()
+      .required()
+  ),
 })

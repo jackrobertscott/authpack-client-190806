@@ -28,6 +28,7 @@
   "dependencies": {
     "@types/react": "^16.8.17",
     "@types/react-dom": "^16.0.11",
+    "@types/react-outside-click-handler": "^1.2.0",
     "@types/yup": "^0.26.23",
     "emotion": "^10.0.17",
     "react": "^16.9.0",
