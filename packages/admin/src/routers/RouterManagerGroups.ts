@@ -5,6 +5,7 @@ import { RetrieveGroup } from '../screens/retrieve/RetrieveGroup'
 import { UpdateGroup } from '../screens/update/UpdateGroup'
 import { RemoveGroup } from '../screens/remove/RemoveGroup'
 import { CreateGroup } from '../screens/create/CreateGroup'
+import { ListMembershipsOfGroup } from '../screens/list/ListMembershipsOfGroup'
 
 export type IRouterManagerGroups = {
   id: string
@@ -40,7 +41,9 @@ export const RouterManagerGroups: FC<IRouterManagerGroups> = ({
             {
               icon: 'users',
               label: 'Members of Group',
-              children: null,
+              children: create(ListMembershipsOfGroup, {
+                id,
+              }),
             },
             {
               icon: 'paper-plane',

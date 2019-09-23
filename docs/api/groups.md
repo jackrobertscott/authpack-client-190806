@@ -223,7 +223,6 @@ Options.
 - search `string?`: compared against name, code, and domains.
 - limit `number?`: maximum number of groups returned.
 - skip `number?`: skip this number of groups.
-- page `number?`: skip this number of groups multiplied by the limit.
 
 **Note:** `skip` and `page` are summed when used together.
 

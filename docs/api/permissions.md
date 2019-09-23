@@ -204,7 +204,6 @@ Used to get a list of permissions.
 ```ts
 authenticator.permissions.list({
     search: 'Editor',
-    permission: permission.id,
     limit: 10,
     skip: 5,
     page: 0,
@@ -216,10 +215,8 @@ authenticator.permissions.list({
 Options.
 
 - search `string?`: compared against name, code, and description.
-- permission `string?`: filtered by this permission's id - must be child of permission.
 - limit `number?`: maximum number of permissions returned.
 - skip `number?`: skip this number of permissions.
-- page `number?`: skip this number of permissions multiplied by the limit.
 
 **Note:** `skip` and `page` are summed when used together.
 
@@ -248,7 +245,6 @@ Used to count a group of permissions.
 ```ts
 authenticator.permissions.count({
     search: 'Editor',
-    permission: permission.id,
   })
   .then(count => console.log(`Counted: ${count}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -257,7 +253,6 @@ authenticator.permissions.count({
 Options.
 
 - search `string?`: compared against name, code, and description.
-- permission `string?`: filtered by this permission's id - must be child of permission.
   
 Returns.
 

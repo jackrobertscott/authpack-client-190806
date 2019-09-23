@@ -197,8 +197,6 @@ Used to get a list of memberships.
 
 ```ts
 authenticator.memberships.list({
-    group: group.id,
-    user: user.id,
     limit: 10,
     skip: 5,
     page: 0,
@@ -209,11 +207,9 @@ authenticator.memberships.list({
 
 Options.
 
-- group: `string`: filtered by this groups's id.
-- user: `string?`: filtered by this user's id.
+- search `string?`: compared against membership details.
 - limit `number?`: maximum number of memberships returned.
 - skip `number?`: skip this number of memberships.
-- page `number?`: skip this number of memberships multiplied by the limit.
 
 **Note:** `skip` and `page` are summed when used together.
 
@@ -239,18 +235,14 @@ query ListMemberships($options: ListMembershipsOptions!) {
 Used to count a group of memberships.
 
 ```ts
-authenticator.memberships.count({
-    group: group.id,
-    user: user.id,
-  })
+authenticator.memberships.count()
   .then(count => console.log(`Counted: ${count}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
 Options.
 
-- group: `string`: filtered by this groups's id.
-- user: `string?`: filtered by this user's id.
+- search `string?`: compared against membership details.
   
 Returns.
 

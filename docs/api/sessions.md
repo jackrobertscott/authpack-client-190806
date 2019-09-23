@@ -199,8 +199,6 @@ Used to get a list of sessions.
 
 ```ts
 authenticator.sessions.list({
-    user: user.id,
-    group: group.id,
     limit: 10,
     skip: 5,
     page: 0,
@@ -211,8 +209,7 @@ authenticator.sessions.list({
 
 Options.
 
-- group `string?`: filtered by this group's id.
-- user `string?`: filtered by this user's id.
+- search `string?`: compared against session details.
 - limit `number?`: maximum number of sessions returned.
 - skip `number?`: skip this number of sessions.
 - page `number?`: skip this number of sessions multiplied by the limit.
@@ -241,19 +238,15 @@ query ListSessions($options: ListSessionsOptions!) {
 Used to count a group of sessions.
 
 ```ts
-authenticator.sessions.count({
-    user: user.id,
-    group: group.id,
-  })
+authenticator.sessions.count()
   .then(count => console.log(`Counted: ${count}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
 Options.
 
-- group `string?`: filtered by this group's id.
-- user `string?`: filtered by this user's id.
-  
+- search `string?`: compared against session details.
+
 Returns.
 
 - count `Promise<number, Error>`: the number of sessions counted.
