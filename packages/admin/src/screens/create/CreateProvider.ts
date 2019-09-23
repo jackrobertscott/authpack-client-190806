@@ -32,7 +32,7 @@ export const CreateProvider: FC<ICreateProvider> = ({ change }) => {
   }
   return create(Gadgets.Container, {
     label: 'Create Provider',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
         create(Inputs.Control, {

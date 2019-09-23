@@ -101,9 +101,9 @@ const useListPermission = createUseGraph<{
 }>({
   api: true,
   query: `
-    query ListPermission($count: CountPermissionOptions, $list: ListPermissionOptions) {
-      count: CountPermission(options: $count)
-      permissions: ListPermission(options: $list) {
+    query ListPermissions($count: CountPermissionsOptions, $list: ListPermissionsOptions) {
+      count: CountPermissions(options: $count)
+      permissions: ListPermissions(options: $list) {
         id
         updated
         name

@@ -14,7 +14,7 @@ export const RemoveSession: FC<IRemoveSession> = ({ id }) => {
   }
   return create(Gadgets.Container, {
     label: 'Remove Session',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
         create(Poster.Container, {

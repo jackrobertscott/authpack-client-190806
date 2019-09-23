@@ -32,7 +32,7 @@ export const CreatePermission: FC<ICreatePermission> = ({ change }) => {
   }
   return create(Gadgets.Container, {
     label: 'Create Permission',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
         create(Inputs.Control, {

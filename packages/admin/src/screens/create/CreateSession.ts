@@ -32,7 +32,7 @@ export const CreateSession: FC<ICreateSession> = ({ change }) => {
   }
   return create(Gadgets.Container, {
     label: 'Create Session',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
         create(Inputs.Control, {

@@ -108,9 +108,9 @@ const useListUser = createUseGraph<{
 }>({
   api: true,
   query: `
-    query ListUser($count: CountUserOptions, $list: ListUserOptions) {
-      count: CountUser(options: $count)
-      users: ListUser(options: $list) {
+    query ListUsers($count: CountUsersOptions, $list: ListUsersOptions) {
+      count: CountUsers(options: $count)
+      users: ListUsers(options: $list) {
         id
         updated
         email

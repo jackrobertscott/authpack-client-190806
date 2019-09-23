@@ -44,7 +44,7 @@ export const UpdateGroup: FC<IUpdateGroup> = ({ id }) => {
   }
   return create(Gadgets.Container, {
     label: 'Update Group',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
         create(Inputs.Control, {

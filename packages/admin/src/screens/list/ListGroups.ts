@@ -108,9 +108,9 @@ const useListGroup = createUseGraph<{
 }>({
   api: true,
   query: `
-    query ListGroup($count: CountGroupOptions, $list: ListGroupOptions) {
-      count: CountGroup(options: $count)
-      groups: ListGroup(options: $list) {
+    query ListGroups($count: CountGroupsOptions, $list: ListGroupsOptions) {
+      count: CountGroups(options: $count)
+      groups: ListGroups(options: $list) {
         id
         updated
         name

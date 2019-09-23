@@ -44,7 +44,7 @@ export const UpdatePermission: FC<IUpdatePermission> = ({ id }) => {
   }
   return create(Gadgets.Container, {
     label: 'Update Permission',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
         create(Inputs.Control, {

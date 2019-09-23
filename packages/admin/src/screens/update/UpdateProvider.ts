@@ -43,7 +43,7 @@ export const UpdateProvider: FC<IUpdateProvider> = ({ id }) => {
   }
   return create(Gadgets.Container, {
     label: 'Update Provider',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
         create(Inputs.Control, {

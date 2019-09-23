@@ -42,7 +42,7 @@ export const UpdateSession: FC<IUpdateSession> = ({ id }) => {
   }
   return create(Gadgets.Container, {
     label: 'Update Session',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
         create(Button.Container, {

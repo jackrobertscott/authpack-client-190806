@@ -30,7 +30,7 @@ export const UnauthedLogin: FC<IUnauthedLogin> = () => {
   }
   return create(Gadgets.Container, {
     label: 'Login',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
         create(Inputs.Control, {

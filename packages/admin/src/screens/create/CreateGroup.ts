@@ -32,7 +32,7 @@ export const CreateGroup: FC<ICreateGroup> = ({ change }) => {
   }
   return create(Gadgets.Container, {
     label: 'Create Group',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
         create(Inputs.Control, {

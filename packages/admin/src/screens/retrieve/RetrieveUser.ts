@@ -15,7 +15,7 @@ export const RetrieveUser: FC<IRetrieveUser> = ({ id }) => {
   })
   return create(Gadgets.Container, {
     label: 'Overview User',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: retrieveUserGraph.data && [
         create(Overview.Container, {

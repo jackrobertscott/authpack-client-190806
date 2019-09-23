@@ -14,7 +14,7 @@ export const RemoveGroup: FC<IRemoveGroup> = ({ id }) => {
   }
   return create(Gadgets.Container, {
     label: 'Remove Group',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
         create(Poster.Container, {

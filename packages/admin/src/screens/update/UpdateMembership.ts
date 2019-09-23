@@ -42,7 +42,7 @@ export const UpdateMembership: FC<IUpdateMembership> = ({ id }) => {
   }
   return create(Gadgets.Container, {
     label: 'Update Membership',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
         create(Button.Container, {

@@ -14,7 +14,7 @@ export const RemovePermission: FC<IRemovePermission> = ({ id }) => {
   }
   return create(Gadgets.Container, {
     label: 'Remove Permission',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
         create(Poster.Container, {

@@ -15,7 +15,7 @@ export const RetrieveProvider: FC<IRetrieveProvider> = ({ id }) => {
   })
   return create(Gadgets.Container, {
     label: 'Overview Provider',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: retrieveProviderGraph.data && [
         create(Overview.Container, {

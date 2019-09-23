@@ -6,7 +6,7 @@ export type IUnauthedSignup = {}
 export const UnauthedSignup: FC<IUnauthedSignup> = () => {
   return create(Gadgets.Container, {
     label: 'Sign Up',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
         create(Inputs.Control, {

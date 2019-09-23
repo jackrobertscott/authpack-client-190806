@@ -15,7 +15,7 @@ export const RetrieveGroup: FC<IRetrieveGroup> = ({ id }) => {
   })
   return create(Gadgets.Container, {
     label: 'Overview Group',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: retrieveGroupGraph.data && [
         create(Overview.Container, {

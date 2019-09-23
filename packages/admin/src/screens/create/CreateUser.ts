@@ -32,7 +32,7 @@ export const CreateUser: FC<ICreateUser> = ({ change }) => {
   }
   return create(Gadgets.Container, {
     label: 'Create User',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
         create(Inputs.Control, {

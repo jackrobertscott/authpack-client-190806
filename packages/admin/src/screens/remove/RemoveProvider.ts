@@ -14,7 +14,7 @@ export const RemoveProvider: FC<IRemoveProvider> = ({ id }) => {
   }
   return create(Gadgets.Container, {
     label: 'Remove Provider',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
         create(Poster.Container, {

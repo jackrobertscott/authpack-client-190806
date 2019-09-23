@@ -101,9 +101,9 @@ const useListProvider = createUseGraph<{
 }>({
   api: true,
   query: `
-    query ListProvider($count: CountProviderOptions, $list: ListProviderOptions) {
-      count: CountProvider(options: $count)
-      providers: ListProvider(options: $list) {
+    query ListProviders($count: CountProvidersOptions, $list: ListProvidersOptions) {
+      count: CountProviders(options: $count)
+      providers: ListProviders(options: $list) {
         id
         updated
         name

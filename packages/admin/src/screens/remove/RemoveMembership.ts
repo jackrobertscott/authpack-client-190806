@@ -14,7 +14,7 @@ export const RemoveMembership: FC<IRemoveMembership> = ({ id }) => {
   }
   return create(Gadgets.Container, {
     label: 'Remove Membership',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
         create(Poster.Container, {

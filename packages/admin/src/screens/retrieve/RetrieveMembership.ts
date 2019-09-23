@@ -15,7 +15,7 @@ export const RetrieveMembership: FC<IRetrieveMembership> = ({ id }) => {
   })
   return create(Gadgets.Container, {
     label: 'Overview Membership',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: retrieveMembershipGraph.data && [
         create(Overview.Container, {

@@ -44,7 +44,7 @@ export const UpdateUser: FC<IUpdateUser> = ({ id }) => {
   }
   return create(Gadgets.Container, {
     label: 'Update User',
-    brand: 'Your App',
+    brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
         create(Inputs.Control, {
