@@ -12,17 +12,17 @@ export const RouterSidebarUsers: FC<IRouterSidebarUsers> = () => {
     screens: [
       {
         icon: 'user',
-        label: 'See users',
+        label: 'See all users',
         children: create(ListUsers),
       },
       {
         icon: 'share-alt',
-        label: 'See providers',
+        label: 'See all providers',
         children: create(ListProviders),
       },
       {
         icon: 'history',
-        label: 'See sessions',
+        label: 'See all sessions',
         children: create(ListSessions),
       },
       {

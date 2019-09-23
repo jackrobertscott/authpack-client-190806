@@ -127,8 +127,8 @@ export const Theme = createContext<ITheme>({
     colorDisable: '#444444',
   },
   pointers: {
-    innerBackground: '#202020',
-    background: '#151515',
+    background: '#616161',
+    innerBackground: '#656565',
     border: 'none',
     innerBorder: 'none',
     color: '#FFFFFF',

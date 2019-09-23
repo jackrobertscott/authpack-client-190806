@@ -15,6 +15,11 @@ export const RouterSidebarGroups: FC<IRouterSidebarGroups> = () => {
         children: create(ListGroups),
       },
       {
+        icon: 'user-plus',
+        label: 'See all memberships',
+        children: create(ListGroups),
+      },
+      {
         icon: 'bookmark',
         label: 'See all permissions',
         children: create(ListPermissions),
