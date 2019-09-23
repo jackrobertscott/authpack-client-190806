@@ -57,7 +57,7 @@ export const List: IList = {
       children: create('div', {
         children: [
           create('div', {
-            key: 'top',
+            key: 'label',
             children: [
               create('div', {
                 key: 'icon',

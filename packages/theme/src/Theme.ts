@@ -115,7 +115,7 @@ export const Theme = createContext<ITheme>({
     error: '#A62F27',
     color: '#FFFFFF',
     colorPrimary: '#B9B9B9',
-    colorSecondary: '#656565',
+    colorSecondary: '#777777',
   },
   buttons: {
     background: '#595959',

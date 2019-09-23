@@ -52,7 +52,7 @@ export const Iconbar: IIconbar = {
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '25px 0',
+        padding: '20px 0',
         width: '75px',
         flexShrink: 0,
         background: theme.iconbar.background,
@@ -152,7 +152,7 @@ export const Iconbar: IIconbar = {
               background: theme.pointers.background,
               border: theme.pointers.border,
               color: theme.pointers.color,
-              boxShadow: '0 1px 25px -5px rgba(0, 0, 0, 0.55)',
+              boxShadow: '0 1px 25px -5px rgba(0, 0, 0, 0.35)',
             }),
           }),
           className: `toggle-pointer ${css({
