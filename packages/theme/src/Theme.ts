@@ -26,6 +26,7 @@ export interface ITheme {
   inputs: {
     background: string
     backgroundHover: string
+    backgroundEnabled: string
     border: string
     error: string
     color: string
@@ -117,11 +118,12 @@ export const Theme = createContext<ITheme>({
   inputs: {
     background: '#323232',
     backgroundHover: '#292929',
+    backgroundEnabled: '#5C5C5C',
     border: 'none',
     error: '#A62F27',
     color: '#FFFFFF',
-    colorPrimary: '#B9B9B9',
-    colorSecondary: '#777777',
+    colorPrimary: '#D5D5D5',
+    colorSecondary: '#919191',
   },
   buttons: {
     background: '#595959',

@@ -153,7 +153,17 @@ stories.add('Search + Select', () => {
 
 stories.add('Boolean', () => {
   return create(Gadgets.Spacer, {
-    children: null, // todo...
+    children: create(Inputs.Control, {
+      key: 'input',
+      label: '2 Factor Auth',
+      description: 'Improve your account security',
+      input: props =>
+        create(Inputs.Boolean, {
+          ...props,
+          label: '2FA',
+          description: 'Enable and improve your auth',
+        }),
+    }),
   })
 })
 

@@ -14,6 +14,7 @@ import { Theme } from './Theme'
 export interface IInputs {
   Container: FC<{
     children: ReactNode
+    enable?: boolean
   }>
   Icon: FC<{
     name?: string
@@ -26,6 +27,7 @@ export interface IInputs {
     input: FC<{
       key: string
       change: (data: any) => void
+      enable: (state: boolean) => void
     }>
   }>
   Pointer: FC<{
@@ -37,6 +39,13 @@ export interface IInputs {
     change?: (value: number) => void
     placeholder?: string | number
     decimals?: boolean
+  }>
+  Boolean: FC<{
+    value?: boolean
+    change?: (value: boolean) => void
+    enable?: (value: boolean) => void
+    label: string
+    description: string
   }>
   String: FC<{
     value?: string
@@ -62,7 +71,7 @@ export interface IInputs {
 }
 
 export const Inputs: IInputs = {
-  Container: ({ children }) => {
+  Container: ({ children, enable }) => {
     const theme = useContext(Theme)
     return create('div', {
       children,
@@ -74,12 +83,16 @@ export const Inputs: IInputs = {
         position: 'relative',
         cursor: 'pointer',
         borderRadius: theme.global.radius,
-        background: theme.inputs.background,
+        background: enable
+          ? theme.inputs.backgroundEnabled
+          : theme.inputs.background,
         fontSize: theme.global.fonts,
         border: theme.inputs.border,
         color: theme.inputs.color,
         '&:hover, &:focus-within': {
-          background: theme.inputs.backgroundHover,
+          background: enable
+            ? theme.inputs.backgroundEnabled
+            : theme.inputs.backgroundHover,
           boxShadow: '0 1px 7.5px rgba(0, 0, 0, 0.15)',
         },
       }),
@@ -98,6 +111,7 @@ export const Inputs: IInputs = {
   },
   Control: ({ label, description, change, input }) => {
     const theme = useContext(Theme)
+    const [enable, changeEnable] = useState<boolean>(false)
     const [error, changeError] = useState<Error | undefined>()
     return create('div', {
       children: [
@@ -126,6 +140,7 @@ export const Inputs: IInputs = {
           }),
         create(Inputs.Container, {
           key: 'container',
+          enable,
           children: [
             input({
               key: 'input',
@@ -135,6 +150,7 @@ export const Inputs: IInputs = {
                     .then(() => changeError(undefined))
                     .catch(changeError)
               },
+              enable: value => changeEnable(value),
             }),
             error &&
               create(Inputs.Pointer, {
@@ -236,6 +252,71 @@ export const Inputs: IInputs = {
         padding: '15px',
         cursor: 'pointer',
         display: 'flex',
+        flexGrow: 1,
+      }),
+    })
+  },
+  Boolean: ({
+    value,
+    change = () => {},
+    enable = () => {},
+    label,
+    description,
+  }) => {
+    const theme = useContext(Theme)
+    const [state, changeState] = useState<boolean>(value || false)
+    useEffect(() => changeState(value || false), [value])
+    useEffect(() => {
+      change(state)
+      enable(state)
+    }, [state])
+    return create('div', {
+      value: state,
+      onClick: () => changeState(!state),
+      children: [
+        create('div', {
+          key: 'label',
+          children: [
+            create('div', {
+              key: 'label',
+              children: label,
+              className: css({
+                all: 'unset',
+                flexGrow: 1,
+              }),
+            }),
+            create('div', {
+              key: 'icon',
+              className: `far fas fa-${state ? 'check' : 'times'} ${css({
+                textAlign: 'center',
+                lineHeight: '1.5em',
+                marginLeft: '7.5px',
+              })}`,
+            }),
+          ],
+          className: css({
+            all: 'unset',
+            display: 'flex',
+            justifyContent: 'space-between',
+            flexGrow: 1,
+            color: theme.inputs.colorPrimary,
+          }),
+        }),
+        create('div', {
+          key: 'description',
+          children: description,
+          className: css({
+            flexGrow: 1,
+            color: theme.inputs.colorSecondary,
+          }),
+        }),
+      ],
+      className: css({
+        all: 'unset',
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '15px',
+        cursor: 'pointer',
         flexGrow: 1,
       }),
     })
