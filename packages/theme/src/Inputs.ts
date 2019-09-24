@@ -58,6 +58,15 @@ export interface IInputs {
     change?: (value: string[]) => void
     placeholder?: string
   }>
+  StringMulti: FC<{
+    value?: string[]
+    change?: (value?: string[]) => void
+    options: Array<{
+      value: string
+      label: string
+      description: string
+    }>
+  }>
   Select: FC<{
     value?: string
     change?: (value?: string) => void
@@ -135,7 +144,7 @@ export const Inputs: IInputs = {
           create('div', {
             key: 'spacer',
             className: css({
-              height: '5px',
+              height: '7.5px',
             }),
           }),
         create(Inputs.Container, {
@@ -271,7 +280,6 @@ export const Inputs: IInputs = {
       enable(state)
     }, [state])
     return create('div', {
-      value: state,
       onClick: () => changeState(!state),
       children: [
         create('div', {
@@ -390,6 +398,40 @@ export const Inputs: IInputs = {
                     cursor: 'pointer',
                   }),
                 }),
+                create('div', {
+                  key: 'label',
+                  onClick: () => {
+                    if (current && state.indexOf(current) === -1) {
+                      changeState([...state, current])
+                      changeCurrent('')
+                    }
+                  },
+                  children: [
+                    create('div', {
+                      key: 'label',
+                      children: 'Press Enter to Add',
+                      className: css({
+                        all: 'unset',
+                        flexGrow: 1,
+                      }),
+                    }),
+                    create('div', {
+                      key: 'icon',
+                      className: `far fas fa-plus ${css({
+                        textAlign: 'center',
+                        lineHeight: '1.5em',
+                        marginLeft: '7.5px',
+                      })}`,
+                    }),
+                  ],
+                  className: css({
+                    all: 'unset',
+                    display: 'flex',
+                    padding: '15px',
+                    background: theme.inputs.background,
+                    flexGrow: 1,
+                  }),
+                }),
                 state.map((item, index) =>
                   create('div', {
                     key: `${item}${index}`,
@@ -444,6 +486,86 @@ export const Inputs: IInputs = {
         cursor: 'pointer',
         display: 'flex',
         flexGrow: 1,
+      }),
+    })
+  },
+  StringMulti: ({ value, change = () => {}, options }) => {
+    const theme = useContext(Theme)
+    const [state, changeState] = useState<string[]>(value || [])
+    useEffect(() => {
+      if (value && value.length !== state.length) changeState(value)
+    }, [value])
+    useEffect(() => change(state), [state])
+    const toggle = (i: string) =>
+      state.includes(i) ? state.filter(a => i !== a) : [...state, i]
+    return create('div', {
+      children: options.map(option => {
+        return create('div', {
+          key: option.value,
+          onClick: () => changeState(toggle(option.value)),
+          children: [
+            create('div', {
+              key: 'label',
+              children: [
+                create('div', {
+                  key: 'label',
+                  children: option.label,
+                  className: css({
+                    all: 'unset',
+                    flexGrow: 1,
+                  }),
+                }),
+                create('div', {
+                  key: 'icon',
+                  className: `far fas fa-${
+                    state.includes(option.value) ? 'check' : 'times'
+                  } ${css({
+                    textAlign: 'center',
+                    lineHeight: '1.5em',
+                    marginLeft: '7.5px',
+                  })}`,
+                }),
+              ],
+              className: css({
+                all: 'unset',
+                display: 'flex',
+                justifyContent: 'space-between',
+                flexGrow: 1,
+                color: theme.inputs.colorPrimary,
+              }),
+            }),
+            create('div', {
+              key: 'description',
+              children: option.description,
+              className: css({
+                flexGrow: 1,
+                color: theme.inputs.colorSecondary,
+              }),
+            }),
+          ],
+          className: css({
+            all: 'unset',
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '15px',
+            cursor: 'pointer',
+            flexGrow: 1,
+            background: state.includes(option.value)
+              ? theme.inputs.backgroundEnabled
+              : undefined,
+            '&:hover': {
+              background: !state.includes(option.value)
+                ? theme.inputs.background
+                : undefined,
+            },
+          }),
+        })
+      }),
+      className: css({
+        all: 'unset',
+        flexGrow: 1,
+        borderRadius: theme.global.radius,
+        overflow: 'hidden',
       }),
     })
   },

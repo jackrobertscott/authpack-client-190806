@@ -50,6 +50,7 @@ stories.add('List', () => {
   return create(Gadgets.Spacer, {
     children: ['One', 'Two', 'Three'].map(item =>
       create(Overview.Container, {
+        key: item,
         icon: 'users',
         label: 'Label',
         value: item,
@@ -168,26 +169,36 @@ stories.add('Boolean', () => {
 })
 
 stories.add('Multiple Choice', () => {
+  const options = [
+    {
+      value: '1234567890',
+      label: 'Jack Scott',
+      description: 'jack@example.com',
+    },
+    {
+      value: '234567890',
+      label: 'Fred Blogs',
+      description: 'fred@example.com',
+    },
+    {
+      value: '34567890',
+      label: 'Sussie Pots',
+      description: 'sussie@example.com',
+    },
+  ]
   return create(Gadgets.Spacer, {
-    children: null, // todo...
-  })
-})
-
-stories.add('Stripe Payments', () => {
-  return create(Gadgets.Spacer, {
-    children: null, // todo...
-  })
-})
-
-stories.add('QR Code', () => {
-  return create(Gadgets.Spacer, {
-    children: null, // todo...
-  })
-})
-
-stories.add('Avatar Upload', () => {
-  return create(Gadgets.Spacer, {
-    children: null, // todo...
+    children: create(() => {
+      return create(Inputs.Control, {
+        key: 'input',
+        label: 'User',
+        description: 'Choose the user you wish to add',
+        input: props =>
+          create(Inputs.StringMulti, {
+            ...props,
+            options,
+          }),
+      })
+    }),
   })
 })
 
@@ -213,5 +224,23 @@ stories.add('Error Toaster', () => {
         }),
       ],
     })
+  })
+})
+
+stories.add('Stripe Payments', () => {
+  return create(Gadgets.Spacer, {
+    children: null, // todo...
+  })
+})
+
+stories.add('QR Code', () => {
+  return create(Gadgets.Spacer, {
+    children: null, // todo...
+  })
+})
+
+stories.add('Avatar Upload', () => {
+  return create(Gadgets.Spacer, {
+    children: null, // todo...
   })
 })
