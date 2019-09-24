@@ -83,6 +83,12 @@ export interface ITheme {
     label: string
     description: string
   }
+  toasters: {
+    background: string
+    icon: string
+    label: string
+    description: string
+  }
 }
 
 export const Theme = createContext<ITheme>({
@@ -163,6 +169,12 @@ export const Theme = createContext<ITheme>({
     colorHover: '#CCCCCC',
   },
   posters: {
+    background: '#2C2C2C',
+    icon: '#FFFFFF',
+    label: '#FFFFFF',
+    description: '#BABABA',
+  },
+  toasters: {
     background: '#2C2C2C',
     icon: '#FFFFFF',
     label: '#FFFFFF',

@@ -1,6 +1,16 @@
 import { createElement as create } from 'react'
 import { storiesOf } from '@storybook/react'
-import { Modal, Layout, Iconbar, Gadgets, Inputs, Overview } from '../src/index'
+import {
+  Modal,
+  Layout,
+  Iconbar,
+  Gadgets,
+  Inputs,
+  Overview,
+  Button,
+  useToaster,
+  Toaster,
+} from '../src/index'
 
 console.clear()
 
@@ -142,7 +152,26 @@ stories.add('Avatar Upload', () => {
 })
 
 stories.add('Error Toaster', () => {
-  return create(Gadgets.Spacer, {
-    children: null, // todo...
+  return create(() => {
+    const toaster = useToaster()
+    return create(Gadgets.Spacer, {
+      children: [
+        create(Button.Container, {
+          key: 'button',
+          label: 'Show Toaster',
+          click: () =>
+            toaster.add({
+              label: 'Error',
+              description:
+                Math.random() > 0.5
+                  ? 'Something went really really really wrong mate.. okay not that wrong but ya know'
+                  : 'Nah jokes',
+            }),
+        }),
+        create(Toaster.Container, {
+          key: 'toaster',
+        }),
+      ],
+    })
   })
 })
