@@ -32,6 +32,12 @@ export interface IInputs {
     children: ReactNode
     label: string
   }>
+  Number: FC<{
+    value?: number
+    change?: (value: number) => void
+    placeholder?: string | number
+    decimals?: boolean
+  }>
   String: FC<{
     value?: string
     change?: (value: string) => void
@@ -43,11 +49,15 @@ export interface IInputs {
     change?: (value: string[]) => void
     placeholder?: string
   }>
-  Number: FC<{
-    value?: number
-    change?: (value: number) => void
-    placeholder?: string | number
-    decimals?: boolean
+  Select: FC<{
+    value?: string
+    change?: (value?: string) => void
+    search?: (phrase: string) => void
+    options: Array<{
+      value: string
+      label: string
+      description: string
+    }>
   }>
 }
 
@@ -192,6 +202,44 @@ export const Inputs: IInputs = {
       }),
     })
   },
+  Number: ({
+    value = '',
+    change = () => {},
+    placeholder,
+    decimals = false,
+  }) => {
+    const [state, changeState] = useState<string>(String(value))
+    useEffect(() => changeState(String(value || '')), [value])
+    useEffect(
+      () => change(decimals ? parseFloat(state) : parseInt(state, 10)),
+      [state]
+    )
+    return create('input', {
+      value: state,
+      onChange: (event: ChangeEvent<HTMLInputElement>) => {
+        if (event.target.value.length === 0) {
+          changeState('')
+        } else {
+          const input = event.target.value
+          const parsed = decimals ? parseFloat(input) : parseInt(input, 10)
+          if (!isNaN(parsed) && input !== state) {
+            const update = `${parsed}${
+              decimals && input.endsWith('.') ? '.' : ''
+            }`
+            changeState(update || '')
+          }
+        }
+      },
+      placeholder,
+      className: css({
+        all: 'unset',
+        padding: '15px',
+        cursor: 'pointer',
+        display: 'flex',
+        flexGrow: 1,
+      }),
+    })
+  },
   String: ({ value, change = () => {}, placeholder, large = false }) => {
     const [state, changeState] = useState<string>(value || '')
     useEffect(() => changeState(value || ''), [value])
@@ -301,6 +349,7 @@ export const Inputs: IInputs = {
                 left: 0,
                 right: 0,
                 top: 0,
+                overflow: 'hidden',
                 borderRadius: theme.global.radius,
                 background: theme.inputs.backgroundHover,
                 boxShadow: '0 1px 7.5px rgba(0, 0, 0, 0.15)',
@@ -317,35 +366,153 @@ export const Inputs: IInputs = {
       }),
     })
   },
-  Number: ({
-    value = '',
-    change = () => {},
-    placeholder,
-    decimals = false,
-  }) => {
-    const [state, changeState] = useState<string>(String(value))
-    useEffect(() => changeState(String(value || '')), [value])
-    useEffect(
-      () => change(decimals ? parseFloat(state) : parseInt(state, 10)),
-      [state]
-    )
-    return create('input', {
-      value: state,
-      onChange: (event: ChangeEvent<HTMLInputElement>) => {
-        if (event.target.value.length === 0) {
-          changeState('')
-        } else {
-          const input = event.target.value
-          const parsed = decimals ? parseFloat(input) : parseInt(input, 10)
-          if (!isNaN(parsed) && input !== state) {
-            const update = `${parsed}${
-              decimals && input.endsWith('.') ? '.' : ''
-            }`
-            changeState(update || '')
-          }
-        }
-      },
-      placeholder,
+  Select: ({ value, change, search, options }) => {
+    const theme = useContext(Theme)
+    const [open, changeOpen] = useState<boolean>(false)
+    const [state, changeState] = useState<string | undefined>(value)
+    const [current, changeCurrent] = useState<string>('')
+    const show = options.find(i => i.value === state)
+    useEffect(() => changeState(value), [value])
+    useEffect(() => change && change(state), [state])
+    useEffect(() => search && search(current), [current])
+    return create('div', {
+      onClick: () => changeOpen(true),
+      children: [
+        create('div', {
+          key: 'value',
+          children: (show && show.label) || 'Select...',
+          className: css({
+            flexGrow: 1,
+          }),
+        }),
+        open &&
+          create(OutsideClickHandler, {
+            key: 'popup',
+            onOutsideClick: () => changeOpen(false),
+            children: create('div', {
+              children: [
+                search &&
+                  create('input', {
+                    key: 'input',
+                    value: current,
+                    autoFocus: true,
+                    onChange: (event: any) =>
+                      current !== event.target.value &&
+                      changeCurrent(event.target.value),
+                    placeholder: 'Search...',
+                    className: css({
+                      all: 'unset',
+                      display: 'flex',
+                      padding: '15px',
+                      cursor: 'pointer',
+                    }),
+                  }),
+                state &&
+                  create('div', {
+                    key: 'label',
+                    onClick: () => changeState(undefined),
+                    children: [
+                      create('div', {
+                        key: 'label',
+                        children: 'Clear',
+                        className: css({
+                          all: 'unset',
+                          flexGrow: 1,
+                        }),
+                      }),
+                      create('div', {
+                        key: 'icon',
+                        className: `far fas fa-times ${css({
+                          textAlign: 'center',
+                          lineHeight: '1.5em',
+                          marginLeft: '7.5px',
+                        })}`,
+                      }),
+                    ],
+                    className: css({
+                      all: 'unset',
+                      display: 'flex',
+                      padding: '15px',
+                      background: theme.inputs.background,
+                      flexGrow: 1,
+                    }),
+                  }),
+                options.map(option => {
+                  return create('div', {
+                    key: option.value,
+                    onClick: () => {
+                      setTimeout(() => changeOpen(false))
+                      setTimeout(() => changeState(option.value))
+                    },
+                    children: [
+                      create('div', {
+                        key: 'label',
+                        children: [
+                          create('div', {
+                            key: 'label',
+                            children: option.label,
+                            className: css({
+                              all: 'unset',
+                              flexGrow: 1,
+                            }),
+                          }),
+                          create('div', {
+                            key: 'icon',
+                            className: `far fas fa-${
+                              option.value === state ? 'check' : 'plus'
+                            } ${css({
+                              textAlign: 'center',
+                              lineHeight: '1.5em',
+                              marginLeft: '7.5px',
+                            })}`,
+                          }),
+                        ],
+                        className: css({
+                          all: 'unset',
+                          display: 'flex',
+                          flexGrow: 1,
+                        }),
+                      }),
+                      create('div', {
+                        key: 'value',
+                        children: option.description,
+                        className: css({
+                          marginTop: '3.725px',
+                          color: theme.inputs.colorSecondary,
+                        }),
+                      }),
+                    ],
+                    className: css({
+                      all: 'unset',
+                      display: 'flex',
+                      padding: '15px',
+                      flexDirection: 'column',
+                      cursor: 'pointer',
+                      flexGrow: 1,
+                      '&:hover': {
+                        background: theme.inputs.background,
+                      },
+                    }),
+                  })
+                }),
+              ],
+              className: css({
+                all: 'unset',
+                position: 'absolute',
+                display: 'flex',
+                flexDirection: 'column',
+                flexGrow: 1,
+                left: 0,
+                right: 0,
+                top: 0,
+                overflow: 'hidden',
+                borderRadius: theme.global.radius,
+                background: theme.inputs.backgroundHover,
+                boxShadow: '0 1px 7.5px rgba(0, 0, 0, 0.15)',
+              }),
+            }),
+          }),
+      ],
       className: css({
         all: 'unset',
         padding: '15px',

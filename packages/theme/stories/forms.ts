@@ -1,4 +1,4 @@
-import { createElement as create } from 'react'
+import { createElement as create, useState } from 'react'
 import { storiesOf } from '@storybook/react'
 import {
   Modal,
@@ -116,8 +116,38 @@ stories.add('String Array', () => {
 })
 
 stories.add('Search + Select', () => {
+  const options = [
+    {
+      value: '1234567890',
+      label: 'Jack Scott',
+      description: 'jack@example.com',
+    },
+    {
+      value: '234567890',
+      label: 'Fred Blogs',
+      description: 'fred@example.com',
+    },
+    {
+      value: '34567890',
+      label: 'Sussie Pots',
+      description: 'sussie@example.com',
+    },
+  ]
   return create(Gadgets.Spacer, {
-    children: null, // todo...
+    children: create(() => {
+      const [search, changeSearch] = useState<string>('')
+      return create(Inputs.Control, {
+        key: 'input',
+        label: 'User',
+        description: 'Choose the user you wish to add',
+        input: props =>
+          create(Inputs.Select, {
+            ...props,
+            search: changeSearch,
+            options: options.filter(i => i.label.includes(search)),
+          }),
+      })
+    }),
   })
 })
 
