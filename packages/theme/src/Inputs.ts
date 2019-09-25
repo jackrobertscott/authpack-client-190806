@@ -786,7 +786,7 @@ export const Inputs: IInputs = {
         value: state,
         type: 'file',
         onChange: () =>
-          refInput && refInput.current && changeState(refInput.current.files),
+          refInput && changeState((refInput.current || ({} as any)).files),
         className: css({
           all: 'unset',
           cursor: 'pointer',
