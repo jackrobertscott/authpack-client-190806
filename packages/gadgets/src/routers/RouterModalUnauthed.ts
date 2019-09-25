@@ -1,9 +1,9 @@
 import { createElement as create, FC } from 'react'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
+import { RouterModal } from '../templates/RouterModal'
 import { UnauthedLogin } from '../screens/UnauthedLogin'
 import { UnauthedSignup } from '../screens/UnauthedSignup'
 import { UnauthedPassword } from '../screens/UnauthedPassword'
-import { RouterModal } from '../templates/RouterModal'
 
 export type IRouterModalUnauthed = {
   close?: () => void
