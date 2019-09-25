@@ -6,6 +6,7 @@ export type IPageSidebarScreen = {
   icon: string
   label: string
   children: ReactNode
+  path: string
 }
 
 export type IPageSidebar = {
@@ -14,7 +15,15 @@ export type IPageSidebar = {
 }
 
 export const PageSidebar: FC<IPageSidebar> = ({ title, screens }) => {
-  const [active, changeActive] = useState<IPageSidebarScreen>(screens[0])
+  const current =
+    screens.find(screen => {
+      return screen.path === document.location.pathname
+    }) || screens[0]
+  const [active, changeActive] = useState<IPageSidebarScreen>(current)
+  const changeRouter = (screen: IPageSidebarScreen) => {
+    changeActive(screen)
+    window.history.pushState(null, screen.label, screen.path)
+  }
   return create(Layout.Container, {
     children: [
       create(Sidebar.Container, {
@@ -24,7 +33,7 @@ export const PageSidebar: FC<IPageSidebar> = ({ title, screens }) => {
           key: screen.id || String(i),
           icon: screen.icon,
           label: screen.label,
-          click: () => changeActive(screen),
+          click: () => changeRouter(screen),
           active: screen === active,
         })),
       }),

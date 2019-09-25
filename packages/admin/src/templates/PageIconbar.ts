@@ -2,7 +2,7 @@ import { createElement as create, FC, ReactNode, useState } from 'react'
 import { Iconbar, Layout, IIconbarSubmenu } from 'wga-theme'
 import { css } from 'emotion'
 
-export type IPageIconbarRouter = {
+export type IPageIconbarScreen = {
   id?: string
   icon: string
   label: string
@@ -12,7 +12,7 @@ export type IPageIconbarRouter = {
 }
 
 export type IPageIconbar = {
-  screens: IPageIconbarRouter[]
+  screens: IPageIconbarScreen[]
   logout?: () => void
   workspace?: () => void
   devmode?: () => void
@@ -28,8 +28,8 @@ export const PageIconbar: FC<IPageIconbar> = ({
     screens.find(screen => {
       return screen.path === document.location.pathname
     }) || screens[0]
-  const [active, changeActive] = useState<IPageIconbarRouter>(current)
-  const changeRouter = (screen: IPageIconbarRouter) => {
+  const [active, changeActive] = useState<IPageIconbarScreen>(current)
+  const changeRouter = (screen: IPageIconbarScreen) => {
     changeActive(screen)
     window.history.pushState(null, screen.label, screen.path)
   }

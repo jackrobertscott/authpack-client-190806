@@ -32,7 +32,7 @@ export const RouterManagerSessions: FC<IRouterManagerSessions> = ({
             },
             {
               icon: 'cog',
-              label: 'Settings',
+              label: 'Update',
               children: create(UpdateSession, {
                 id,
               }),

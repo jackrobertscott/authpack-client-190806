@@ -26,7 +26,7 @@ export const RouterManagerMemberships: FC<IRouterManagerMemberships> = ({
             },
             {
               icon: 'cog',
-              label: 'Settings',
+              label: 'Update',
               children: null,
             },
             {

@@ -14,21 +14,25 @@ export const RouterSidebarUsers: FC<IRouterSidebarUsers> = () => {
         icon: 'user',
         label: 'See all users',
         children: create(ListUsers),
+        path: '/users',
+      },
+      {
+        icon: 'history',
+        label: 'See all user sessions',
+        children: create(ListSessions),
+        path: '/users/sessions',
       },
       {
         icon: 'share-alt',
         label: 'See all providers',
         children: create(ListProviders),
-      },
-      {
-        icon: 'history',
-        label: 'See all sessions',
-        children: create(ListSessions),
+        path: '/users/providers',
       },
       {
         icon: 'code',
         label: 'See install guide',
         children: null,
+        path: '/users/install',
       },
     ],
   })

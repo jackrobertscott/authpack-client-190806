@@ -32,7 +32,7 @@ export const RouterManagerPermissions: FC<IRouterManagerPermissions> = ({
             },
             {
               icon: 'cog',
-              label: 'Settings',
+              label: 'Update',
               children: create(UpdatePermission, {
                 id,
               }),

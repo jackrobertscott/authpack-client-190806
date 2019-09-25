@@ -481,6 +481,7 @@ export const Inputs: IInputs = {
                 left: 0,
                 right: 0,
                 top: 0,
+                zIndex: 100,
                 overflow: 'hidden',
                 borderRadius: theme.global.radius,
                 background: theme.inputs.backgroundHover,
@@ -619,19 +620,19 @@ export const Inputs: IInputs = {
                       cursor: 'pointer',
                     }),
                   }),
-                state &&
-                  create('div', {
-                    key: 'label',
-                    onClick: () => changeState(undefined),
-                    children: [
-                      create('div', {
-                        key: 'label',
-                        children: 'Clear',
-                        className: css({
-                          all: 'unset',
-                          flexGrow: 1,
-                        }),
+                create('div', {
+                  key: 'label',
+                  onClick: () => state && changeState(undefined),
+                  children: [
+                    create('div', {
+                      key: 'label',
+                      children: state ? 'Clear' : 'Choose...',
+                      className: css({
+                        all: 'unset',
+                        flexGrow: 1,
                       }),
+                    }),
+                    state &&
                       create('div', {
                         key: 'icon',
                         className: `far fas fa-times ${css({
@@ -640,15 +641,15 @@ export const Inputs: IInputs = {
                           marginLeft: '7.5px',
                         })}`,
                       }),
-                    ],
-                    className: css({
-                      all: 'unset',
-                      display: 'flex',
-                      padding: '15px',
-                      background: theme.inputs.background,
-                      flexGrow: 1,
-                    }),
+                  ],
+                  className: css({
+                    all: 'unset',
+                    display: 'flex',
+                    padding: '15px',
+                    background: theme.inputs.background,
+                    flexGrow: 1,
                   }),
+                }),
                 options.map(option => {
                   return create('div', {
                     key: option.value,
@@ -717,6 +718,7 @@ export const Inputs: IInputs = {
                 left: 0,
                 right: 0,
                 top: 0,
+                zIndex: 100,
                 overflow: 'hidden',
                 borderRadius: theme.global.radius,
                 background: theme.inputs.backgroundHover,

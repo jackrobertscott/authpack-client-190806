@@ -19,7 +19,7 @@ export const RouterModalWorkspace: FC<IRouterModalWorkspace> = ({ close }) => {
         },
         {
           icon: 'cog',
-          label: 'Settings',
+          label: 'Update',
           children: null,
         },
         {

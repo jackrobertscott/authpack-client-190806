@@ -32,7 +32,7 @@ export const RouterManagerProviders: FC<IRouterManagerProviders> = ({
             },
             {
               icon: 'cog',
-              label: 'Settings',
+              label: 'Update',
               children: create(UpdateProvider, {
                 id,
               }),

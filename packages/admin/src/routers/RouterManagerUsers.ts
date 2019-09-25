@@ -5,6 +5,7 @@ import { CreateUser } from '../screens/create/CreateUser'
 import { UpdateUser } from '../screens/update/UpdateUser'
 import { RetrieveUser } from '../screens/retrieve/RetrieveUser'
 import { RemoveUser } from '../screens/remove/RemoveUser'
+import { UpdateUserPassword } from '../screens/update/UpdateUserPassword'
 
 export type IRouterManagerUsers = {
   id: string
@@ -40,7 +41,9 @@ export const RouterManagerUsers: FC<IRouterManagerUsers> = ({
             {
               icon: 'unlock',
               label: 'Change Password',
-              children: null,
+              children: create(UpdateUserPassword, {
+                id,
+              }),
             },
             {
               icon: 'project-diagram',

@@ -110,7 +110,7 @@ stories.add('String Array', () => {
       input: props =>
         create(Inputs.StringArray, {
           ...props,
-          placeholder: 'https://helloworld.com',
+          placeholder: 'E.g. https://helloworld.com',
         }),
     }),
   })

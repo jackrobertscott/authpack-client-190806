@@ -76,6 +76,12 @@ export const ListProviders: FC<ListProviders> = () => {
                   value: provider.tag,
                 }),
                 create(List.Cell, {
+                  key: 'Scopes',
+                  label: 'Scopes',
+                  icon: 'bars',
+                  value: provider.scopes.join(', '),
+                }),
+                create(List.Cell, {
                   key: 'Updated',
                   label: 'Updated',
                   icon: 'clock',
@@ -97,6 +103,7 @@ const useListProvider = createUseGraph<{
     updated: string
     name: string
     tag: string
+    scopes: string[]
   }>
 }>({
   api: true,
@@ -108,6 +115,7 @@ const useListProvider = createUseGraph<{
         updated
         name
         tag
+        scopes
       }
     }
   `,
