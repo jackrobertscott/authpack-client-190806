@@ -7,6 +7,7 @@ import {
   FC,
   ReactNode,
   ChangeEvent,
+  useRef,
 } from 'react'
 import { css } from 'emotion'
 import { Theme } from './Theme'
@@ -76,6 +77,14 @@ export interface IInputs {
       label: string
       description: string
     }>
+  }>
+  StripeCard: FC<{
+    stripe: any
+    change?: (card?: any) => void
+  }>
+  Files: FC<{
+    change?: (files?: FileList) => void
+    multiple?: boolean
   }>
 }
 
@@ -722,6 +731,82 @@ export const Inputs: IInputs = {
         cursor: 'pointer',
         display: 'flex',
         flexGrow: 1,
+      }),
+    })
+  },
+  StripeCard: ({ stripe, change }) => {
+    const createCard = () =>
+      stripe
+        .elements({
+          fonts: [{ cssSrc: 'https://fonts.googleapis.com/css?family=Rubik' }],
+        })
+        .create('card', {
+          hidePostalCode: true,
+          style: {
+            base: {
+              fontFamily: 'Rubik',
+              fontWeight: 900,
+              color: '#ffffff',
+            },
+          },
+        })
+    const inputReference = useRef()
+    const elementsCard = useRef(createCard())
+    useEffect(() => {
+      if (elementsCard.current && change) change(elementsCard.current)
+      if (inputReference.current && elementsCard.current) {
+        const updateErrors = (event: any) => {
+          if (event.error) console.error(new Error(event.error.message))
+          else console.log('no error') // todo...
+        }
+        elementsCard.current.mount(inputReference.current)
+        elementsCard.current.addEventListener('change', updateErrors)
+        return () =>
+          elementsCard.current.removeEventListener('change', updateErrors)
+      }
+    }, [inputReference.current, elementsCard.current])
+    return create('input', {
+      ref: inputReference,
+      className: css({
+        all: 'unset',
+        padding: '15px',
+        cursor: 'pointer',
+        display: 'flex',
+        flexGrow: 1,
+      }),
+    })
+  },
+  Files: ({ change = () => {}, multiple }) => {
+    const [state, changeState] = useState<FileList | undefined>()
+    const refInput = useRef()
+    useEffect(() => change(state), [state])
+    return create('div', {
+      children: create('input', {
+        ref: refInput,
+        value: state,
+        type: 'file',
+        onChange: () =>
+          refInput && refInput.current && changeState(refInput.current.files),
+        className: css({
+          all: 'unset',
+          cursor: 'pointer',
+          display: 'flex',
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          height: '100%',
+          width: '100%',
+          opacity: 0,
+        }),
+      }),
+      className: css({
+        all: 'unset',
+        padding: '15px',
+        display: 'flex',
+        flexGrow: 1,
+        position: 'relative',
       }),
     })
   },
