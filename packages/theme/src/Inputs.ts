@@ -776,7 +776,7 @@ export const Inputs: IInputs = {
       }),
     })
   },
-  Files: ({ change = () => {}, multiple }) => {
+  Files: ({ change = () => {}, multiple = false }) => {
     const [state, changeState] = useState<FileList | undefined>()
     const refInput = useRef()
     useEffect(() => change(state), [state])
@@ -784,6 +784,7 @@ export const Inputs: IInputs = {
       children: create('input', {
         ref: refInput,
         value: state,
+        multiple,
         type: 'file',
         onChange: () =>
           refInput && changeState((refInput.current || ({} as any)).files),
