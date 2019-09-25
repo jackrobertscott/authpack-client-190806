@@ -1,11 +1,11 @@
 import { createElement as create, FC } from 'react'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
-import { CreateUser } from '../screens/create/CreateUser'
-import { UpdateUser } from '../screens/update/UpdateUser'
-import { RetrieveUser } from '../screens/retrieve/RetrieveUser'
-import { RemoveUser } from '../screens/remove/RemoveUser'
-import { UpdateUserPassword } from '../screens/update/UpdateUserPassword'
+import { CreateUser } from '../screens/CreateUser'
+import { UpdateUser } from '../screens/UpdateUser'
+import { RetrieveUser } from '../screens/RetrieveUser'
+import { RemoveUser } from '../screens/RemoveUser'
+import { UpdateUserPassword } from '../screens/UpdateUserPassword'
 
 export type IRouterManagerUsers = {
   id: string

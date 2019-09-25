@@ -1,10 +1,10 @@
 import { createElement as create, FC } from 'react'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
-import { CreateProvider } from '../screens/create/CreateProvider'
-import { RetrieveProvider } from '../screens/retrieve/RetrieveProvider'
-import { UpdateProvider } from '../screens/update/UpdateProvider'
-import { RemoveProvider } from '../screens/remove/RemoveProvider'
+import { CreateProvider } from '../screens/CreateProvider'
+import { RetrieveProvider } from '../screens/RetrieveProvider'
+import { UpdateProvider } from '../screens/UpdateProvider'
+import { RemoveProvider } from '../screens/RemoveProvider'
 
 export type IRouterManagerProviders = {
   id: string

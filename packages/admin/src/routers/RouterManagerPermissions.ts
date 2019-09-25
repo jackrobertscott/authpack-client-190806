@@ -1,10 +1,10 @@
 import { createElement as create, FC } from 'react'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
-import { CreatePermission } from '../screens/create/CreatePermission'
-import { RetrievePermission } from '../screens/retrieve/RetrievePermission'
-import { UpdatePermission } from '../screens/update/UpdatePermission'
-import { RemovePermission } from '../screens/remove/RemovePermission'
+import { CreatePermission } from '../screens/CreatePermission'
+import { RetrievePermission } from '../screens/RetrievePermission'
+import { UpdatePermission } from '../screens/UpdatePermission'
+import { RemovePermission } from '../screens/RemovePermission'
 
 export type IRouterManagerPermissions = {
   id: string

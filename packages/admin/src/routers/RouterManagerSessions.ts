@@ -1,10 +1,10 @@
 import { createElement as create, FC } from 'react'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
-import { CreateSession } from '../screens/create/CreateSession'
-import { RetrieveSession } from '../screens/retrieve/RetrieveSession'
-import { UpdateSession } from '../screens/update/UpdateSession'
-import { RemoveSession } from '../screens/remove/RemoveSession'
+import { CreateSession } from '../screens/CreateSession'
+import { RetrieveSession } from '../screens/RetrieveSession'
+import { UpdateSession } from '../screens/UpdateSession'
+import { RemoveSession } from '../screens/RemoveSession'
 
 export type IRouterManagerSessions = {
   id: string

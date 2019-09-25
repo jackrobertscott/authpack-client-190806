@@ -1,8 +1,8 @@
 import { createElement as create, FC } from 'react'
 import { PageSidebar } from '../templates/PageSidebar'
-import { ListUsers } from '../screens/list/ListUsers'
-import { ListSessions } from '../screens/list/ListSessions'
-import { ListProviders } from '../screens/list/ListProviders'
+import { ListUsers } from '../screens/ListUsers'
+import { ListSessions } from '../screens/ListSessions'
+import { ListProviders } from '../screens/ListProviders'
 
 export type IRouterSidebarUsers = {}
 
