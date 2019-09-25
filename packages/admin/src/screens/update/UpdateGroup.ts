@@ -146,13 +146,13 @@ const useUpdateGroup = createUseGraph<{
 })
 
 const schemaUpdateGroup = validator.object().shape({
-  name: validator.string(),
-  tag: validator.string(),
+  name: validator.string().required('Please provide a group name'),
+  tag: validator.string().required('Please provide a unique group tag'),
   description: validator.string(),
   domains: validator.array().of(
     validator
       .string()
-      .url()
+      .url('Please make sure you use valid urls such as "https://example.com"')
       .required()
   ),
 })

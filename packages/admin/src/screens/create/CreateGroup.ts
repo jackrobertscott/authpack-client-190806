@@ -71,6 +71,18 @@ export const CreateGroup: FC<ICreateGroup> = ({ change }) => {
               placeholder: 'We do awesome things',
             }),
         }),
+        create(Inputs.Control, {
+          key: 'domains',
+          label: 'Domains',
+          description: 'The whitelisted domains of your app',
+          change: validateAndPatch('domains'),
+          input: props =>
+            create(Inputs.StringArray, {
+              ...props,
+              value: value.domains,
+              placeholder: 'E.g. https://www.yourapp.com',
+            }),
+        }),
         create(Button.Container, {
           key: 'submit',
           label: 'Create',
@@ -101,4 +113,10 @@ const schemaCreateGroup = validator.object().shape({
   name: validator.string().required('Please provide a group name'),
   tag: validator.string().required('Please provide a unique group tag'),
   description: validator.string(),
+  domains: validator.array().of(
+    validator
+      .string()
+      .url('Please make sure you use valid urls such as "https://example.com"')
+      .required()
+  ),
 })
