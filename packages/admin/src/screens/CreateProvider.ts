@@ -36,22 +36,10 @@ export const CreateProvider: FC<ICreateProvider> = ({ change }) => {
     children: create(Gadgets.Spacer, {
       children: [
         create(Inputs.Control, {
-          key: 'name',
-          label: 'Name',
-          description: 'Give the provider a name',
-          change: validateAndPatch('name'),
-          input: props =>
-            create(Inputs.String, {
-              ...props,
-              value: value.name,
-              placeholder: 'E.g. Facebook',
-            }),
-        }),
-        create(Inputs.Control, {
-          key: 'tag',
-          label: 'Tag',
+          key: 'preset',
+          label: 'Preset',
           description: 'A unique identifier for your provider',
-          change: validateAndPatch('tag'),
+          change: validateAndPatch('preset'),
           input: props =>
             create(Inputs.Select, {
               ...props,
@@ -154,8 +142,7 @@ const useCreateProvider = createUseGraph<{
 })
 
 const schemaCreateProvider = validator.object().shape({
-  name: validator.string().required('Please provide a provider name'),
-  tag: validator.string().required('Please provide a unique provider tag'),
+  preset: validator.string().required('Please provide a unique provider tag'),
   client: validator
     .string()
     .required('Please provide your 3rd party oauth client id'),

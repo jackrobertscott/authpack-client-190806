@@ -12,18 +12,18 @@ export const ListProviders: FC<ListProviders> = () => {
   // load the providers and update results on search and pagination
   const [search, searchChange] = useState<string>('')
   const [current, currentChange] = useState<string | undefined>()
-  const listProvider = useListProvider()
+  const listProviders = useListProviders()
   const { limit, skip, next, previous, hasNext, hasPrevious } = usePagination({
-    count: listProvider.data && listProvider.data.count,
+    count: listProviders.data && listProviders.data.count,
   })
-  const listProviderFetch = () => {
-    listProvider.fetch({
+  const listProvidersFetch = () => {
+    listProviders.fetch({
       count: { search },
       list: { search, limit, skip },
     })
   }
   useEffect(() => {
-    listProviderFetch()
+    listProvidersFetch()
     // eslint-disable-next-line
   }, [search, limit, skip])
   return create(Page.Container, {
@@ -40,12 +40,12 @@ export const ListProviders: FC<ListProviders> = () => {
           key: 'modal',
           id: current,
           close: () => currentChange(undefined),
-          change: listProviderFetch,
+          change: listProvidersFetch,
         }),
       create(Searchbar, {
         key: 'searchbar',
-        amount: listProvider.data && listProvider.data.providers.length,
-        total: listProvider.data && listProvider.data.count,
+        amount: listProviders.data && listProviders.data.providers.length,
+        total: listProviders.data && listProviders.data.count,
         previous: hasPrevious() ? () => previous() : undefined,
         next: hasNext() ? () => next() : undefined,
         change: phrase => {
@@ -57,8 +57,8 @@ export const ListProviders: FC<ListProviders> = () => {
       create(List.Container, {
         key: 'list',
         children:
-          listProvider.data &&
-          listProvider.data.providers.map(provider =>
+          listProviders.data &&
+          listProviders.data.providers.map(provider =>
             create(List.Row, {
               key: provider.id,
               click: () => currentChange(provider.id),
@@ -96,7 +96,7 @@ export const ListProviders: FC<ListProviders> = () => {
   })
 }
 
-const useListProvider = createUseGraph<{
+const useListProviders = createUseGraph<{
   count: number
   providers: Array<{
     id: string

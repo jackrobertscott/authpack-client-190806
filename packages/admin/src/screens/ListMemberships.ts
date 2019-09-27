@@ -12,18 +12,18 @@ export const ListMemberships: FC<ListMemberships> = () => {
   // load the memberships and update results on search and pagination
   const [search, searchChange] = useState<string>('')
   const [current, currentChange] = useState<string | undefined>()
-  const listMembership = useListMembership()
+  const listMemberships = useListMemberships()
   const { limit, skip, next, previous, hasNext, hasPrevious } = usePagination({
-    count: listMembership.data && listMembership.data.count,
+    count: listMemberships.data && listMemberships.data.count,
   })
-  const listMembershipFetch = () => {
-    listMembership.fetch({
+  const listMembershipsFetch = () => {
+    listMemberships.fetch({
       count: { search },
       list: { search, limit, skip },
     })
   }
   useEffect(() => {
-    listMembershipFetch()
+    listMembershipsFetch()
     // eslint-disable-next-line
   }, [search, limit, skip])
   return create(Page.Container, {
@@ -40,12 +40,12 @@ export const ListMemberships: FC<ListMemberships> = () => {
           key: 'modal',
           id: current,
           close: () => currentChange(undefined),
-          change: listMembershipFetch,
+          change: listMembershipsFetch,
         }),
       create(Searchbar, {
         key: 'searchbar',
-        amount: listMembership.data && listMembership.data.memberships.length,
-        total: listMembership.data && listMembership.data.count,
+        amount: listMemberships.data && listMemberships.data.memberships.length,
+        total: listMemberships.data && listMemberships.data.count,
         previous: hasPrevious() ? () => previous() : undefined,
         next: hasNext() ? () => next() : undefined,
         change: phrase => {
@@ -57,12 +57,30 @@ export const ListMemberships: FC<ListMemberships> = () => {
       create(List.Container, {
         key: 'list',
         children:
-          listMembership.data &&
-          listMembership.data.memberships.map(membership =>
+          listMemberships.data &&
+          listMemberships.data.memberships.map(membership =>
             create(List.Row, {
               key: membership.id,
               click: () => currentChange(membership.id),
               children: [
+                create(List.Cell, {
+                  key: 'User',
+                  label: 'User',
+                  icon: 'user',
+                  value: membership.user.name || membership.user.email,
+                }),
+                create(List.Cell, {
+                  key: 'Group',
+                  label: 'Group',
+                  icon: 'project-diagram',
+                  value: membership.group.name,
+                }),
+                create(List.Cell, {
+                  key: 'Permissions',
+                  label: 'Permissions',
+                  icon: 'bookmark',
+                  value: membership.permissions.map(({ tag }) => tag).join(','),
+                }),
                 create(List.Cell, {
                   key: 'Updated',
                   label: 'Updated',
@@ -78,11 +96,21 @@ export const ListMemberships: FC<ListMemberships> = () => {
   })
 }
 
-const useListMembership = createUseGraph<{
+const useListMemberships = createUseGraph<{
   count: number
   memberships: Array<{
     id: string
     updated: string
+    user: {
+      email: string
+      name?: string
+    }
+    group: {
+      name: string
+    }
+    permissions: Array<{
+      tag: string
+    }>
   }>
 }>({
   api: true,
@@ -92,6 +120,16 @@ const useListMembership = createUseGraph<{
       memberships: ListMemberships(options: $list) {
         id
         updated
+        user {
+          email
+          name
+        }
+        group {
+          name
+        }
+        permissions {
+          tag
+        }
       }
     }
   `,

@@ -24,11 +24,12 @@ export const PageIconbar: FC<IPageIconbar> = ({
   workspace,
   devmode,
 }) => {
-  const current =
-    screens.find(screen => {
-      return screen.path === document.location.pathname
-    }) || screens[0]
-  const [active, changeActive] = useState<IPageIconbarScreen>(current)
+  const preload = screens.find(screen => {
+    return document.location.pathname.startsWith(screen.path)
+  })
+  const [active, changeActive] = useState<IPageIconbarScreen>(
+    preload || screens[0]
+  )
   const changeRouter = (screen: IPageIconbarScreen) => {
     changeActive(screen)
     window.history.pushState(null, screen.label, screen.path)

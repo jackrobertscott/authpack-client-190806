@@ -1,6 +1,10 @@
 import { createElement as create, FC } from 'react'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
+import { RetrieveMembership } from '../screens/RetrieveMembership'
+import { UpdateMembership } from '../screens/UpdateMembership'
+import { RemoveMembership } from '../screens/RemoveMembership'
+import { CreateMembership } from '../screens/CreateMembership'
 
 export type IRouterManagerMemberships = {
   id: string
@@ -22,24 +26,35 @@ export const RouterManagerMemberships: FC<IRouterManagerMemberships> = ({
             {
               icon: 'user-tag',
               label: 'Overview',
-              children: null,
+              children: create(RetrieveMembership, {
+                id,
+              }),
             },
             {
               icon: 'cog',
               label: 'Update',
-              children: null,
+              children: create(UpdateMembership, {
+                id,
+              }),
             },
             {
               icon: 'fire-alt',
               label: 'Danger Zone',
-              children: null,
+              children: create(RemoveMembership, {
+                id,
+              }),
             },
           ]
         : [
             {
               icon: 'plus',
               label: 'Create',
-              children: null,
+              children: create(CreateMembership, {
+                change: () => {
+                  if (close) close()
+                  if (change) change()
+                },
+              }),
             },
           ],
     }),

@@ -1,6 +1,6 @@
 import * as validator from 'yup'
 import { createElement as create, FC, useState, useEffect } from 'react'
-import { Inputs, Button, Gadgets } from 'wga-theme'
+import { Button, Gadgets } from 'wga-theme'
 import { createUseGraph } from '../hooks/useGraph'
 
 export type IUpdateSession = {
@@ -11,11 +11,11 @@ export const UpdateSession: FC<IUpdateSession> = ({ id }) => {
   // initialize the session form values and apply validators
   const [issue, issueChange] = useState<Error>()
   const [value, valueChange] = useState({ ...schemaUpdateSession.default() })
-  const validateAndPatch = (path: string) => (data: any) => {
-    const update = { ...value, [path]: data }
-    valueChange(update)
-    return schemaUpdateSession.validateAt(path, update)
-  }
+  // const validateAndPatch = (path: string) => (data: any) => {
+  //   const update = { ...value, [path]: data }
+  //   valueChange(update)
+  //   return schemaUpdateSession.validateAt(path, update)
+  // }
   useEffect(() => {
     schemaUpdateSession
       .validate(value)

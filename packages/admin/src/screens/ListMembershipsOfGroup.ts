@@ -1,6 +1,5 @@
 import { createElement as create, FC } from 'react'
 import { Gadgets, Overview } from 'wga-theme'
-import { format } from 'date-fns'
 import { createUseGraph } from '../hooks/useGraph'
 
 export type IListMembershipsOfGroup = {
@@ -17,13 +16,8 @@ export const ListMembershipsOfGroup: FC<IListMembershipsOfGroup> = ({ id }) => {
     label: 'Memberships of Group',
     brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
-      children: retrieveMembership.data && [
-        create(Overview.Container, {
-          key: 'Id',
-          label: 'Id',
-          icon: 'fingerprint',
-          value: retrieveMembership.data.group.id,
-        }),
+      children:
+        retrieveMembership.data &&
         retrieveMembership.data.group.memberships.map(membership => {
           return create(Overview.Container, {
             key: 'Id',
@@ -32,7 +26,6 @@ export const ListMembershipsOfGroup: FC<IListMembershipsOfGroup> = ({ id }) => {
             value: membership.id,
           })
         }),
-      ],
     }),
   })
 }

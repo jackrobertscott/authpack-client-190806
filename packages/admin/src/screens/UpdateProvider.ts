@@ -29,8 +29,7 @@ export const UpdateProvider: FC<IUpdateProvider> = ({ id }) => {
   useEffect(() => {
     if (retrieveProvider.data)
       valueChange({
-        name: retrieveProvider.data.provider.name,
-        tag: retrieveProvider.data.provider.tag,
+        preset: retrieveProvider.data.provider.preset,
         redirect: retrieveProvider.data.provider.redirect,
         scopes: retrieveProvider.data.provider.scopes,
       })
@@ -49,22 +48,10 @@ export const UpdateProvider: FC<IUpdateProvider> = ({ id }) => {
     children: create(Gadgets.Spacer, {
       children: [
         create(Inputs.Control, {
-          key: 'name',
-          label: 'Name',
-          description: 'Give the provider a name',
-          change: validateAndPatch('name'),
-          input: props =>
-            create(Inputs.String, {
-              ...props,
-              value: value.name,
-              placeholder: 'E.g. Facebook',
-            }),
-        }),
-        create(Inputs.Control, {
-          key: 'tag',
-          label: 'Tag',
+          key: 'preset',
+          label: 'Preset',
           description: 'A unique identifier for your provider',
-          change: validateAndPatch('tag'),
+          change: validateAndPatch('preset'),
           input: props =>
             create(Inputs.Select, {
               ...props,
@@ -130,8 +117,7 @@ export const UpdateProvider: FC<IUpdateProvider> = ({ id }) => {
 const useRetrieveProvider = createUseGraph<{
   provider: {
     id: string
-    name: string
-    tag: string
+    preset: string
     redirect: string
     scopes: string[]
   }
@@ -141,8 +127,7 @@ const useRetrieveProvider = createUseGraph<{
     query RetrieveProvider($options: RetrieveProviderOptions!) {
       provider: RetrieveProvider(options: $options) {
         id
-        name
-        tag
+        preset
         redirect
         scopes
       }
@@ -166,8 +151,7 @@ const useUpdateProvider = createUseGraph<{
 })
 
 const schemaUpdateProvider = validator.object().shape({
-  name: validator.string().required('Please provide a provider name'),
-  tag: validator.string().required('Please provide a unique provider tag'),
+  preset: validator.string().required('Please provide a unique provider tag'),
   redirect: validator
     .string()
     .url('Please make sure use a valid redirect url')

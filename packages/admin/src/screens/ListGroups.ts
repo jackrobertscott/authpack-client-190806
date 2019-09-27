@@ -12,18 +12,18 @@ export const ListGroups: FC<ListGroups> = () => {
   // load the groups and update results on search and pagination
   const [search, searchChange] = useState<string>('')
   const [current, currentChange] = useState<string | undefined>()
-  const listGroup = useListGroup()
+  const listGroups = useListGroups()
   const { limit, skip, next, previous, hasNext, hasPrevious } = usePagination({
-    count: listGroup.data && listGroup.data.count,
+    count: listGroups.data && listGroups.data.count,
   })
-  const listGroupFetch = () => {
-    listGroup.fetch({
+  const listGroupsFetch = () => {
+    listGroups.fetch({
       count: { search },
       list: { search, limit, skip },
     })
   }
   useEffect(() => {
-    listGroupFetch()
+    listGroupsFetch()
     // eslint-disable-next-line
   }, [search, limit, skip])
   return create(Page.Container, {
@@ -40,12 +40,12 @@ export const ListGroups: FC<ListGroups> = () => {
           key: 'modal',
           id: current,
           close: () => currentChange(undefined),
-          change: listGroupFetch,
+          change: listGroupsFetch,
         }),
       create(Searchbar, {
         key: 'searchbar',
-        amount: listGroup.data && listGroup.data.groups.length,
-        total: listGroup.data && listGroup.data.count,
+        amount: listGroups.data && listGroups.data.groups.length,
+        total: listGroups.data && listGroups.data.count,
         previous: hasPrevious() ? () => previous() : undefined,
         next: hasNext() ? () => next() : undefined,
         change: phrase => {
@@ -57,8 +57,8 @@ export const ListGroups: FC<ListGroups> = () => {
       create(List.Container, {
         key: 'list',
         children:
-          listGroup.data &&
-          listGroup.data.groups.map(group =>
+          listGroups.data &&
+          listGroups.data.groups.map(group =>
             create(List.Row, {
               key: group.id,
               click: () => currentChange(group.id),
@@ -96,7 +96,7 @@ export const ListGroups: FC<ListGroups> = () => {
   })
 }
 
-const useListGroup = createUseGraph<{
+const useListGroups = createUseGraph<{
   count: number
   groups: Array<{
     id: string

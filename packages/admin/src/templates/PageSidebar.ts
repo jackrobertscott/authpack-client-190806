@@ -15,11 +15,12 @@ export type IPageSidebar = {
 }
 
 export const PageSidebar: FC<IPageSidebar> = ({ title, screens }) => {
-  const current =
-    screens.find(screen => {
-      return screen.path === document.location.pathname
-    }) || screens[0]
-  const [active, changeActive] = useState<IPageSidebarScreen>(current)
+  const preload = screens.find(screen => {
+    return document.location.pathname === screen.path
+  })
+  const [active, changeActive] = useState<IPageSidebarScreen>(
+    preload || screens[0]
+  )
   const changeRouter = (screen: IPageSidebarScreen) => {
     changeActive(screen)
     window.history.pushState(null, screen.label, screen.path)

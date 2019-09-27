@@ -12,18 +12,18 @@ export const ListPermissions: FC<ListPermissions> = () => {
   // load the permissions and update results on search and pagination
   const [search, searchChange] = useState<string>('')
   const [current, currentChange] = useState<string | undefined>()
-  const listPermission = useListPermission()
+  const listPermissions = useListPermissions()
   const { limit, skip, next, previous, hasNext, hasPrevious } = usePagination({
-    count: listPermission.data && listPermission.data.count,
+    count: listPermissions.data && listPermissions.data.count,
   })
-  const listPermissionFetch = () => {
-    listPermission.fetch({
+  const listPermissionsFetch = () => {
+    listPermissions.fetch({
       count: { search },
       list: { search, limit, skip },
     })
   }
   useEffect(() => {
-    listPermissionFetch()
+    listPermissionsFetch()
     // eslint-disable-next-line
   }, [search, limit, skip])
   return create(Page.Container, {
@@ -40,12 +40,12 @@ export const ListPermissions: FC<ListPermissions> = () => {
           key: 'modal',
           id: current,
           close: () => currentChange(undefined),
-          change: listPermissionFetch,
+          change: listPermissionsFetch,
         }),
       create(Searchbar, {
         key: 'searchbar',
-        amount: listPermission.data && listPermission.data.permissions.length,
-        total: listPermission.data && listPermission.data.count,
+        amount: listPermissions.data && listPermissions.data.permissions.length,
+        total: listPermissions.data && listPermissions.data.count,
         previous: hasPrevious() ? () => previous() : undefined,
         next: hasNext() ? () => next() : undefined,
         change: phrase => {
@@ -57,8 +57,8 @@ export const ListPermissions: FC<ListPermissions> = () => {
       create(List.Container, {
         key: 'list',
         children:
-          listPermission.data &&
-          listPermission.data.permissions.map(permission =>
+          listPermissions.data &&
+          listPermissions.data.permissions.map(permission =>
             create(List.Row, {
               key: permission.id,
               click: () => currentChange(permission.id),
@@ -96,7 +96,7 @@ export const ListPermissions: FC<ListPermissions> = () => {
   })
 }
 
-const useListPermission = createUseGraph<{
+const useListPermissions = createUseGraph<{
   count: number
   permissions: Array<{
     id: string

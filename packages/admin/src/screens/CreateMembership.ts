@@ -30,6 +30,18 @@ export const CreateMembership: FC<ICreateMembership> = ({ change }) => {
       .then(data => createMembership.fetch({ options: data }))
       .then(change)
   }
+  // update the user options as searched
+  const listUsers = useListUsers()
+  const listUsersFetch = (search: string = '') =>
+    listUsers.fetch({
+      options: { limit: 5, search },
+    })
+  // update the user options as searched
+  const listGroups = useListGroups()
+  const listGroupsFetch = (search: string = '') =>
+    listGroups.fetch({
+      options: { limit: 5, search },
+    })
   return create(Gadgets.Container, {
     label: 'Create Membership',
     brand: 'Authenticator',
@@ -41,10 +53,17 @@ export const CreateMembership: FC<ICreateMembership> = ({ change }) => {
           description: "Please provide the user's id",
           change: validateAndPatch('user'),
           input: props =>
-            create(Inputs.String, {
+            create(Inputs.Select, {
               ...props,
               value: value.user,
-              placeholder: '5d82f23f07a5ffda65850000',
+              search: listUsersFetch,
+              options:
+                listUsers.data &&
+                listUsers.data.users.map(user => ({
+                  value: user.id,
+                  label: user.name || user.username || user.id,
+                  description: user.email,
+                })),
             }),
         }),
         create(Inputs.Control, {
@@ -53,10 +72,17 @@ export const CreateMembership: FC<ICreateMembership> = ({ change }) => {
           description: "Please provide the groups's id",
           change: validateAndPatch('group'),
           input: props =>
-            create(Inputs.String, {
+            create(Inputs.Select, {
               ...props,
               value: value.group,
-              placeholder: '5d82f23f07a5ffda65850000',
+              search: listGroupsFetch,
+              options:
+                listGroups.data &&
+                listGroups.data.groups.map(group => ({
+                  value: group.id,
+                  label: group.name,
+                  description: group.id,
+                })),
             }),
         }),
         create(Button.Container, {
@@ -80,6 +106,46 @@ const useCreateMembership = createUseGraph<{
     mutation CreateMembership($options: CreateMembershipOptions!) {
       membership: CreateMembership(options: $options) {
         id
+      }
+    }
+  `,
+})
+
+const useListUsers = createUseGraph<{
+  users: Array<{
+    id: string
+    email: string
+    name?: string
+    username?: string
+  }>
+}>({
+  api: true,
+  query: `
+    query ListUsers($options: ListUsersOptions!) {
+      users: ListUsers(options: $options) {
+        id
+        email
+        name
+        username
+      }
+    }
+  `,
+})
+
+const useListGroups = createUseGraph<{
+  groups: Array<{
+    id: string
+    name: string
+    description?: string
+  }>
+}>({
+  api: true,
+  query: `
+    query ListGroups($options: ListGroupsOptions!) {
+      groups: ListGroups(options: $options) {
+        id
+        name
+        description
       }
     }
   `,

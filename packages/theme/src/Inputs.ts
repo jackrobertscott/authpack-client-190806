@@ -72,7 +72,7 @@ export interface IInputs {
     value?: string
     change?: (value?: string) => void
     search?: (phrase: string) => void
-    options: Array<{
+    options?: Array<{
       value: string
       label: string
       description: string
@@ -579,7 +579,7 @@ export const Inputs: IInputs = {
       }),
     })
   },
-  Select: ({ value, change, search, options }) => {
+  Select: ({ value, change, search, options = [] }) => {
     const theme = useContext(Theme)
     const [open, changeOpen] = useState<boolean>(false)
     const [state, changeState] = useState<string | undefined>(value)
@@ -587,7 +587,9 @@ export const Inputs: IInputs = {
     const show = options.find(i => i.value === state)
     useEffect(() => changeState(value), [value])
     useEffect(() => change && change(state), [state])
-    useEffect(() => search && search(current), [current])
+    useEffect(() => {
+      if (search) search(current)
+    }, [current])
     return create('div', {
       onClick: () => changeOpen(true),
       children: [

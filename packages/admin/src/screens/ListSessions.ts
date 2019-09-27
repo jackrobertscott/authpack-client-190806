@@ -12,18 +12,18 @@ export const ListSessions: FC<ListSessions> = () => {
   // load the sessions and update results on search and pagination
   const [search, searchChange] = useState<string>('')
   const [current, currentChange] = useState<string | undefined>()
-  const listSession = useListSession()
+  const listSessions = useListSessions()
   const { limit, skip, next, previous, hasNext, hasPrevious } = usePagination({
-    count: listSession.data && listSession.data.count,
+    count: listSessions.data && listSessions.data.count,
   })
-  const listSessionFetch = () => {
-    listSession.fetch({
+  const listSessionsFetch = () => {
+    listSessions.fetch({
       count: { search },
       list: { search, limit, skip },
     })
   }
   useEffect(() => {
-    listSessionFetch()
+    listSessionsFetch()
     // eslint-disable-next-line
   }, [search, limit, skip])
   return create(Page.Container, {
@@ -40,12 +40,12 @@ export const ListSessions: FC<ListSessions> = () => {
           key: 'modal',
           id: current,
           close: () => currentChange(undefined),
-          change: listSessionFetch,
+          change: listSessionsFetch,
         }),
       create(Searchbar, {
         key: 'searchbar',
-        amount: listSession.data && listSession.data.sessions.length,
-        total: listSession.data && listSession.data.count,
+        amount: listSessions.data && listSessions.data.sessions.length,
+        total: listSessions.data && listSessions.data.count,
         previous: hasPrevious() ? () => previous() : undefined,
         next: hasNext() ? () => next() : undefined,
         change: phrase => {
@@ -57,12 +57,24 @@ export const ListSessions: FC<ListSessions> = () => {
       create(List.Container, {
         key: 'list',
         children:
-          listSession.data &&
-          listSession.data.sessions.map(session =>
+          listSessions.data &&
+          listSessions.data.sessions.map(session =>
             create(List.Row, {
               key: session.id,
               click: () => currentChange(session.id),
               children: [
+                create(List.Cell, {
+                  key: 'Email',
+                  label: 'Email',
+                  icon: 'inbox',
+                  value: session.user && session.user.email,
+                }),
+                create(List.Cell, {
+                  key: 'Name',
+                  label: 'Name',
+                  icon: 'user',
+                  value: session.user && session.user.name,
+                }),
                 create(List.Cell, {
                   key: 'Updated',
                   label: 'Updated',
@@ -78,11 +90,16 @@ export const ListSessions: FC<ListSessions> = () => {
   })
 }
 
-const useListSession = createUseGraph<{
+const useListSessions = createUseGraph<{
   count: number
   sessions: Array<{
     id: string
     updated: string
+    user?: {
+      id: string
+      email: string
+      name?: string
+    }
   }>
 }>({
   api: true,
@@ -92,6 +109,11 @@ const useListSession = createUseGraph<{
       sessions: ListSessions(options: $list) {
         id
         updated
+        user {
+          id
+          email
+          name
+        }
       }
     }
   `,

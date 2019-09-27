@@ -12,18 +12,18 @@ export const ListUsers: FC<IListUsers> = () => {
   // load the users and update results on search and pagination
   const [search, searchChange] = useState<string>('')
   const [current, currentChange] = useState<string | undefined>()
-  const listUser = useListUser()
+  const listUsers = useListUsers()
   const { limit, skip, next, previous, hasNext, hasPrevious } = usePagination({
-    count: listUser.data && listUser.data.count,
+    count: listUsers.data && listUsers.data.count,
   })
-  const listUserFetch = () => {
-    listUser.fetch({
+  const listUsersFetch = () => {
+    listUsers.fetch({
       count: { search },
       list: { search, limit, skip },
     })
   }
   useEffect(() => {
-    listUserFetch()
+    listUsersFetch()
     // eslint-disable-next-line
   }, [search, limit, skip])
   return create(Page.Container, {
@@ -40,12 +40,12 @@ export const ListUsers: FC<IListUsers> = () => {
           key: 'modal',
           id: current,
           close: () => currentChange(undefined),
-          change: listUserFetch,
+          change: listUsersFetch,
         }),
       create(Searchbar, {
         key: 'searchbar',
-        amount: listUser.data && listUser.data.users.length,
-        total: listUser.data && listUser.data.count,
+        amount: listUsers.data && listUsers.data.users.length,
+        total: listUsers.data && listUsers.data.count,
         previous: hasPrevious() ? () => previous() : undefined,
         next: hasNext() ? () => next() : undefined,
         change: phrase => {
@@ -57,8 +57,8 @@ export const ListUsers: FC<IListUsers> = () => {
       create(List.Container, {
         key: 'list',
         children:
-          listUser.data &&
-          listUser.data.users.map(user =>
+          listUsers.data &&
+          listUsers.data.users.map(user =>
             create(List.Row, {
               key: user.id,
               click: () => currentChange(user.id),
@@ -96,7 +96,7 @@ export const ListUsers: FC<IListUsers> = () => {
   })
 }
 
-const useListUser = createUseGraph<{
+const useListUsers = createUseGraph<{
   count: number
   users: Array<{
     id: string
