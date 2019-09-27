@@ -23,7 +23,7 @@ export const Queries: FC<Queries> = () => {
           fontSize: '15px',
         },
         '.topBar, .docExplorerShow, .historyShow': {
-          background: '#3F3F3F',
+          background: '#3B3B3B',
           borderBottom: 'none',
           borderLeft: 'none',
           color: '#FFFFFF',
@@ -144,23 +144,24 @@ export const Queries: FC<Queries> = () => {
           },
         },
         '.CodeMirror': {
-          background: '#4D4D4D',
+          background: '#414141',
           '.CodeMirror-sizer *': {
             fontFamily: 'Inconsolata',
             fontSize: '16px',
             color: '#FEFEFE',
             letterSpacing: '0.025em',
+            caretColor: '#FFFFFF',
           },
         },
         '.CodeMirror-gutters': {
           borderRight: 'none',
-          backgroundColor: '#555555',
+          backgroundColor: '#4F4F4F',
         },
         '.variable-editor': {
           height: 'auto',
         },
         '.variable-editor-title': {
-          background: '#777777',
+          background: '#595959',
           color: '#999999',
           borderBottom: 'none',
           borderTop: 'none',
