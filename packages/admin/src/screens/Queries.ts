@@ -24,7 +24,7 @@ export const Queries: FC<Queries> = () => {
         },
         '.topBar, .docExplorerShow, .historyShow': {
           background: '#3B3B3B',
-          borderBottom: 'none',
+          borderBottom: '1px solid #505050',
           borderLeft: 'none',
           color: '#FFFFFF',
           height: 'auto',
