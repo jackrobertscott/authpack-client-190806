@@ -7,7 +7,7 @@ import { gadgets } from './utils/wga'
 export const App: FC<{}> = () => {
   useEffect(() => {
     gadgets.render()
-    return gadgets.listen(console.log)
+    return gadgets.listen(data => console.log('admin', data))
   }, [])
   // const [auth, changeAuth] = useState()
   // return create('div', {

@@ -1,14 +1,11 @@
 import { useState, useMemo, useEffect } from 'react'
 import { chat } from '../utils/server'
 
-export const createUseGraph = <T>({
-  query,
-  api,
-}: {
-  query: string
-  api?: boolean
-}) => (variables?: { [key: string]: any }, operationName?: string) => {
-  const data = useGraph<T>({ query, api })
+export const createUseGraph = <T>({ query }: { query: string }) => (
+  variables?: { [key: string]: any },
+  operationName?: string
+) => {
+  const data = useGraph<T>({ query })
   useEffect(() => {
     if (variables) data.fetch(variables, operationName)
     // eslint-disable-next-line
@@ -18,10 +15,8 @@ export const createUseGraph = <T>({
 
 export const useGraph = <T>({
   query,
-  api,
 }: {
   query: string
-  api?: boolean
 }): {
   data: T | undefined
   loading?: boolean
@@ -29,7 +24,7 @@ export const useGraph = <T>({
   fetch: (
     variables?: { [key: string]: any },
     operationName?: string
-  ) => Promise<any>
+  ) => Promise<T>
 } => {
   const [data, dataChange] = useState<T | undefined>()
   const [loading, loadingChange] = useState<boolean>()
@@ -44,14 +39,13 @@ export const useGraph = <T>({
       query,
       variables,
       operationName,
-      api,
     })
       .then((done: any) => {
         if (done && done.error) throw done
         dataChange(done)
         errorChange(undefined)
         loadingChange(false)
-        return done
+        return done as T
       })
       .catch((caught: Error) => {
         errorChange(caught)

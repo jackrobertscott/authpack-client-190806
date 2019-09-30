@@ -2,7 +2,7 @@ import * as validator from 'yup'
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
 import { createUseGraph } from '../hooks/useGraph'
-import { internalStateStore } from '../utils/transfer'
+import { settingsStore } from '../utils/settings'
 
 export type IUnauthedLogin = {}
 
@@ -27,7 +27,12 @@ export const UnauthedLogin: FC<IUnauthedLogin> = () => {
     schemaLogin
       .validate(value)
       .then(data => login.fetch({ options: data }, 'Login'))
-      .then(data => internalStateStore.change(data))
+      .then(data => {
+        settingsStore.patch(settings => ({
+          ...settings,
+          current: data.status,
+        }))
+      })
   }
   return create(Gadgets.Container, {
     label: 'Login',

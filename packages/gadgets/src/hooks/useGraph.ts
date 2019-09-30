@@ -24,7 +24,7 @@ export const useGraph = <T>({
   fetch: (
     variables?: { [key: string]: any },
     operationName?: string
-  ) => Promise<any>
+  ) => Promise<T>
 } => {
   const [data, dataChange] = useState<T | undefined>()
   const [loading, loadingChange] = useState<boolean>()
@@ -45,7 +45,7 @@ export const useGraph = <T>({
         dataChange(done)
         errorChange(undefined)
         loadingChange(false)
-        return done
+        return done as T
       })
       .catch((caught: Error) => {
         errorChange(caught)

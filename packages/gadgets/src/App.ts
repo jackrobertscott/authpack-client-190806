@@ -1,11 +1,11 @@
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as create, FC } from 'react'
 import { css } from 'emotion'
 import { RouterModalUnauthed } from './routers/RouterModalUnauthed'
-import { internalStateConnect } from './utils/transfer'
+import { useSettings } from './hooks/useSettings'
 
 export const App: FC<{}> = () => {
-  useEffect(() => internalStateConnect(), [])
+  useSettings()
   return create('div', {
     children: create(RouterModalUnauthed),
     className: css({

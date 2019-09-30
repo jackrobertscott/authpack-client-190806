@@ -1,81 +1,65 @@
 import { Radio } from 'iframe-radio'
-import { Store } from 'events-and-things'
-
-export type IInternalState =
-  | undefined
-  | {
-      user: {
-        id: string
-        email: string
-        username?: string
-        avatar?: string
-        name?: string
-      }
-      session: {
-        id: string
-        token: string
-      }
-      group?: {
-        id: string
-        name: string
-        tag: string
-      }
-      permissions?: Array<{
-        id: string
-        name: string
-        tag: string
-        description?: string
-      }>
-    }
+import { settingsStore, ISettings } from './utils/settings'
 
 export class PluginGadgets {
   private key: string
   private iframeId: string
   private radio?: Radio<{ name: string; payload: any }>
-  private interalState: Store<IInternalState>
+  private unlistener?: () => void
   constructor(domainKey: string, random: string) {
     this.key = domainKey
     this.iframeId = `wga-plugin${random ? `-${random}` : ''}`
-    this.interalState = new Store(undefined)
   }
   /**
    * Create an iframe with gadgets.
    */
   public render() {
-    const gadget = document.createElement('iframe')
-    gadget.src = document.location.hostname.includes('localhost')
+    const iframe = document.createElement('iframe')
+    iframe.src = document.location.hostname.includes('localhost')
       ? 'http://localhost:3100/'
       : 'https://plugin.wga.windowgadgets.io/'
-    gadget.id = this.iframeId
-    gadget.width = '100%'
-    gadget.height = '100%'
-    gadget.style.border = 'none'
-    gadget.style.boxShadow = 'none'
-    gadget.style.position = 'fixed'
-    gadget.style.top = '0'
-    gadget.style.bottom = '0'
-    gadget.style.right = '0'
-    gadget.style.left = '0'
-    document.body.appendChild(gadget)
+    iframe.id = this.iframeId
+    iframe.width = '100%'
+    iframe.height = '100%'
+    iframe.style.border = 'none'
+    iframe.style.boxShadow = 'none'
+    iframe.style.position = 'fixed'
+    iframe.style.top = '0'
+    iframe.style.bottom = '0'
+    iframe.style.right = '0'
+    iframe.style.left = '0'
+    document.body.appendChild(iframe)
     if (this.radio) this.radio.destroy()
     this.radio = new Radio({
       id: 'wga',
-      node: gadget.contentWindow,
+      node: iframe.contentWindow,
     })
-    this.radio.listen(({ name, payload }) => {
-      if (name === 'wga:state') this.interalState.change(payload)
+    if (this.unlistener) this.unlistener()
+    this.unlistener = this.radio.listen(({ name, payload }) => {
+      switch (name) {
+        case 'wga:set':
+          settingsStore.change(payload)
+          break
+        default:
+          console.log(`No radio handler for ${name} action`)
+          break
+      }
+    })
+    this.radio.message({
+      name: 'wga:request',
+      payload: undefined,
     })
   }
   /**
    * Get the current state of the gadgets.
    */
   public get state() {
-    return this.interalState.state
+    return settingsStore.state
   }
   /**
    * Listen to changes to the internal state.
    */
-  public listen(callback: (state: IInternalState) => void) {
-    return this.interalState.listen(callback)
+  public listen(callback: (current: ISettings['current']) => void) {
+    return settingsStore.listen(({ current }) => callback(current))
   }
 }
