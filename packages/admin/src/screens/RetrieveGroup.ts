@@ -75,7 +75,6 @@ const useRetrieveGroup = createUseGraph<{
     description: string
   }
 }>({
-  api: true,
   query: `
     query RetrieveGroup($options: RetrieveGroupOptions!) {
       group: RetrieveGroup(options: $options) {

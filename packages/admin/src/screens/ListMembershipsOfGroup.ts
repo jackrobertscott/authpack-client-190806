@@ -40,7 +40,6 @@ const useRetrieveMembership = createUseGraph<{
     }>
   }
 }>({
-  api: true,
   query: `
     query ListMembershipsOfGroup($options: RetrieveGroupOptions!) {
       group: RetrieveGroup(options: $options) {

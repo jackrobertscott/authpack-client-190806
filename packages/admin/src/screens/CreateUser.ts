@@ -99,7 +99,6 @@ const useCreateUser = createUseGraph<{
     id: string
   }
 }>({
-  api: true,
   query: `
     mutation CreateUser($options: CreateUserOptions!) {
       user: CreateUser(options: $options) {

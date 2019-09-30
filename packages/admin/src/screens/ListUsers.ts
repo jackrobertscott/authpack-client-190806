@@ -106,7 +106,6 @@ const useListUsers = createUseGraph<{
     name?: string
   }>
 }>({
-  api: true,
   query: `
     query ListUsers($count: CountUsersOptions, $list: ListUsersOptions) {
       count: CountUsers(options: $count)

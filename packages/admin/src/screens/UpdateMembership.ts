@@ -64,7 +64,6 @@ const useRetrieveMembership = createUseGraph<{
     description: string
   }
 }>({
-  api: true,
   query: `
     query RetrieveMembership($options: RetrieveMembershipOptions!) {
       membership: RetrieveMembership(options: $options) {
@@ -79,7 +78,6 @@ const useUpdateMembership = createUseGraph<{
     id: string
   }
 }>({
-  api: true,
   query: `
     mutation UpdateMembership($options: UpdateMembershipOptions!) {
       membership: UpdateMembership(options: $options) {

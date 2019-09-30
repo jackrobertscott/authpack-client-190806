@@ -1,13 +1,14 @@
-import { createElement as create, FC } from 'react'
+import '@fortawesome/fontawesome-free/css/all.min.css'
+import { createElement as create, FC, useEffect } from 'react'
 import { css } from 'emotion'
-import { PluginGadgets } from 'wga-plugin'
 import { RouterCentral } from './routers/RouterCentral'
-
-const gadgets = new PluginGadgets('123456789', '12345678')
-
-gadgets.render()
+import { gadgets } from './utils/wga'
 
 export const App: FC<{}> = () => {
+  useEffect(() => {
+    gadgets.render()
+    return gadgets.listen(console.log)
+  }, [])
   // const [auth, changeAuth] = useState()
   // return create('div', {
   //   children: auth ? create(RouterCentral) : create(RouterModalUnauthed),

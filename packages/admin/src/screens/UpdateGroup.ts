@@ -116,7 +116,6 @@ const useRetrieveGroup = createUseGraph<{
     domains: string[]
   }
 }>({
-  api: true,
   query: `
     query RetrieveGroup($options: RetrieveGroupOptions!) {
       group: RetrieveGroup(options: $options) {
@@ -135,7 +134,6 @@ const useUpdateGroup = createUseGraph<{
     id: string
   }
 }>({
-  api: true,
   query: `
     mutation UpdateGroup($options: UpdateGroupOptions!) {
       group: UpdateGroup(options: $options) {

@@ -54,7 +54,6 @@ const useRetrieveSession = createUseGraph<{
     updated: string
   }
 }>({
-  api: true,
   query: `
     query RetrieveSession($options: RetrieveSessionOptions!) {
       session: RetrieveSession(options: $options) {

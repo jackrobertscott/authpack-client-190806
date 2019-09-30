@@ -10,6 +10,12 @@ interface IConfig {
   environment: string
   production: boolean
   port: number
+  urls: {
+    api: {
+      dev: string
+      pro: string
+    }
+  }
   wga: {
     secret: string
   }
@@ -25,6 +31,12 @@ export const config: IConfig = {
   environment: process.env.NODE_ENV || 'development',
   production: process.env.NODE_ENV === 'production',
   port: 3500,
+  urls: {
+    api: {
+      dev: 'http://localhost:3000,http://localhost:3100',
+      pro: 'https://wga.windowgadgets.io',
+    },
+  },
   wga: {
     secret: process.env.WGA_SECRET_KEY as string,
   },

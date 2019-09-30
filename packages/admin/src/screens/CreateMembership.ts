@@ -101,7 +101,6 @@ const useCreateMembership = createUseGraph<{
     id: string
   }
 }>({
-  api: true,
   query: `
     mutation CreateMembership($options: CreateMembershipOptions!) {
       membership: CreateMembership(options: $options) {
@@ -119,7 +118,6 @@ const useListUsers = createUseGraph<{
     username?: string
   }>
 }>({
-  api: true,
   query: `
     query ListUsers($options: ListUsersOptions!) {
       users: ListUsers(options: $options) {
@@ -139,7 +137,6 @@ const useListGroups = createUseGraph<{
     description?: string
   }>
 }>({
-  api: true,
   query: `
     query ListGroups($options: ListGroupsOptions!) {
       groups: ListGroups(options: $options) {

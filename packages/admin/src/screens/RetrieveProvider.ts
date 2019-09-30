@@ -68,7 +68,6 @@ const useRetrieveProvider = createUseGraph<{
     tag: string
   }
 }>({
-  api: true,
   query: `
     query RetrieveProvider($options: RetrieveProviderOptions!) {
       provider: RetrieveProvider(options: $options) {

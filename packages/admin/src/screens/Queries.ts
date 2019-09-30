@@ -10,7 +10,7 @@ export const Queries: FC<Queries> = () => {
   return create('div', {
     children: create(GraphiQL, {
       fetcher: (graphQLParams: any) =>
-        chat({ ...graphQLParams, api: true })
+        chat({ ...graphQLParams })
           .then(data => (data.__schema ? { data } : data))
           .catch(console.warn),
     } as any),

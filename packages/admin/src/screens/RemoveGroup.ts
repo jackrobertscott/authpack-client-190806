@@ -39,7 +39,6 @@ const useRemoveGroup = createUseGraph<{
     id: string
   }
 }>({
-  api: true,
   query: `
     mutation RemoveGroup($options: RemoveGroupOptions!) {
       group: RemoveGroup(options: $options) {

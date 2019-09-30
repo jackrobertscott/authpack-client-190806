@@ -39,7 +39,6 @@ const useRemoveMembership = createUseGraph<{
     id: string
   }
 }>({
-  api: true,
   query: `
     mutation RemoveMembership($options: RemoveMembershipOptions!) {
       membership: RemoveMembership(options: $options) {

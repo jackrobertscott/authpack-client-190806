@@ -63,7 +63,6 @@ const useCreateSession = createUseGraph<{
     id: string
   }
 }>({
-  api: true,
   query: `
     mutation CreateSession($options: CreateSessionOptions!) {
       session: CreateSession(options: $options) {

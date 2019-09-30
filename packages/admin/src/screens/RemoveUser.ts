@@ -39,7 +39,6 @@ const useRemoveUser = createUseGraph<{
     id: string
   }
 }>({
-  api: true,
   query: `
     mutation RemoveUser($options: RemoveUserOptions!) {
       user: RemoveUser(options: $options) {

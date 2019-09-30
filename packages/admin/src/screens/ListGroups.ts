@@ -106,7 +106,6 @@ const useListGroups = createUseGraph<{
     description: string
   }>
 }>({
-  api: true,
   query: `
     query ListGroups($count: CountGroupsOptions, $list: ListGroupsOptions) {
       count: CountGroups(options: $count)

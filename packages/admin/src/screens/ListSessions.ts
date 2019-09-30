@@ -102,7 +102,6 @@ const useListSessions = createUseGraph<{
     }
   }>
 }>({
-  api: true,
   query: `
     query ListSessions($count: CountSessionsOptions, $list: ListSessionsOptions) {
       count: CountSessions(options: $count)

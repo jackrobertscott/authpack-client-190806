@@ -2,6 +2,7 @@ import * as validator from 'yup'
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
 import { createUseGraph } from '../hooks/useGraph'
+import { internalStateStore } from '../utils/transfer'
 
 export type IUnauthedLogin = {}
 
@@ -21,12 +22,12 @@ export const UnauthedLogin: FC<IUnauthedLogin> = () => {
       .catch(issueChange)
   }, [value])
   // login the user when the form is submitted
-  const loginGraph = useLogin()
+  const login = useLogin()
   const submit = () => {
     schemaLogin
       .validate(value)
-      .then(data => loginGraph.fetch(data, 'Login'))
-      .then(console.log)
+      .then(data => login.fetch({ options: data }, 'Login'))
+      .then(data => internalStateStore.change(data))
   }
   return create(Gadgets.Container, {
     label: 'Login',
@@ -75,17 +76,30 @@ const schemaLogin = validator.object().shape({
 })
 
 const useLogin = createUseGraph<{
-  session: {
-    id: string
-    token: string
+  status: {
+    user: {
+      id: string
+      name: string
+      email: string
+    }
+    session: {
+      id: string
+      token: string
+    }
   }
 }>({
-  api: true,
   query: `
-    mutation Login($email: String!, $password: String!) {
-      session: CreateSession(options: { email: $email, password: $password }) {
-        id
-        token
+    mutation Login($options: LoginUserOptions!) {
+      status: LoginUser(options: $options) {
+        user {
+          id
+          name
+          email
+        }
+        session {
+          id
+          token
+        }
       }
     }
   `,

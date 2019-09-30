@@ -99,7 +99,6 @@ const useCreateGroup = createUseGraph<{
     id: string
   }
 }>({
-  api: true,
   query: `
     mutation CreateGroup($options: CreateGroupOptions!) {
       group: CreateGroup(options: $options) {

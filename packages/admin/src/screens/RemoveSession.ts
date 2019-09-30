@@ -39,7 +39,6 @@ const useRemoveSession = createUseGraph<{
     id: string
   }
 }>({
-  api: true,
   query: `
     mutation RemoveSession($options: RemoveSessionOptions!) {
       session: RemoveSession(options: $options) {

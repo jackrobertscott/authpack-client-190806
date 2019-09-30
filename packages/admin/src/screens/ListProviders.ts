@@ -106,7 +106,6 @@ const useListProviders = createUseGraph<{
     scopes: string[]
   }>
 }>({
-  api: true,
   query: `
     query ListProviders($count: CountProvidersOptions, $list: ListProvidersOptions) {
       count: CountProviders(options: $count)

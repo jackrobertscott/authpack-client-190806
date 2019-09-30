@@ -39,7 +39,6 @@ const useRemoveProvider = createUseGraph<{
     id: string
   }
 }>({
-  api: true,
   query: `
     mutation RemoveProvider($options: RemoveProviderOptions!) {
       provider: RemoveProvider(options: $options) {
