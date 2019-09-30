@@ -1,6 +1,8 @@
 import { Radio } from 'iframe-radio'
 import { settingsStore, ISettings } from './utils/settings'
 
+export type IPluginGadgets = ISettings['current']
+
 export class PluginGadgets {
   private key: string
   private iframeId: string
@@ -41,20 +43,16 @@ export class PluginGadgets {
           settingsStore.change(payload)
           break
         default:
-          console.log(`No radio handler for ${name} action`)
+          throw new Error(`Handler not found for ${name}`)
           break
       }
-    })
-    this.radio.message({
-      name: 'wga:request',
-      payload: undefined,
     })
   }
   /**
    * Get the current state of the gadgets.
    */
-  public get state() {
-    return settingsStore.state
+  public get state(): IPluginGadgets {
+    return settingsStore.state.current
   }
   /**
    * Listen to changes to the internal state.

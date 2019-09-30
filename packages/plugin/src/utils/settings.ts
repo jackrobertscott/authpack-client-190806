@@ -35,4 +35,4 @@ export const defaultSettings: ISettings = {
   current: undefined,
 }
 
-export const settingsStore = new Store<ISettings>(defaultSettings, 'wga')
+export const settingsStore = new Store<ISettings>(defaultSettings)

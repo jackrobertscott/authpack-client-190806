@@ -2,22 +2,12 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import { createElement as create, FC, useEffect } from 'react'
 import { css } from 'emotion'
 import { RouterCentral } from './routers/RouterCentral'
-import { gadgets } from './utils/wga'
+import { useGadgets } from './hooks/useGadgets'
 
 export const App: FC<{}> = () => {
-  useEffect(() => {
-    gadgets.render()
-    return gadgets.listen(data => console.log('admin', data))
-  }, [])
-  // const [auth, changeAuth] = useState()
-  // return create('div', {
-  //   children: auth ? create(RouterCentral) : create(RouterModalUnauthed),
-  //   className: css({
-  //     // code...
-  //   }),
-  // })
+  const state = useGadgets()
   return create('div', {
-    children: create(RouterCentral),
+    children: state && state.user && create(RouterCentral),
     className: css({
       // code...
     }),
