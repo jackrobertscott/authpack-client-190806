@@ -1,35 +1,20 @@
-import { useEffect } from 'react'
-import { settingsStore } from '../utils/settings'
-import { radio } from '../utils/radio'
+import { useEffect, useState, useMemo } from 'react'
+import { settingsStore, ISettings } from '../utils/settings'
 
-export const useSettings = () => {
-  // send information to the window
+export const useSettings = (): [
+  ISettings,
+  (settings: Partial<ISettings>) => void
+] => {
+  const [state, stateChange] = useState<ISettings>(settingsStore.state)
   useEffect(() => {
-    radio.message({
-      name: 'wga:set',
-      payload: settingsStore.state,
-    })
-    return settingsStore.listen(data => {
-      radio.message({
-        name: 'wga:set',
-        payload: data,
-      })
-    })
+    return settingsStore.listen(data => stateChange(data))
   }, [])
-  // handle information from the window
-  useEffect(() => {
-    return radio.listen(({ name, payload }) => {
-      switch (name) {
-        case 'wga:request':
-          radio.message({
-            name: 'wga:set',
-            payload: settingsStore.state,
-          })
-          break
-        case 'wga:set':
-          settingsStore.change(payload)
-          break
-      }
-    })
-  }, [])
+  return useMemo(
+    () => [
+      state,
+      (data: Partial<ISettings>) =>
+        settingsStore.patch(settings => ({ ...settings, ...data })),
+    ],
+    [state]
+  )
 }

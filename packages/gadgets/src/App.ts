@@ -1,15 +1,20 @@
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import { createElement as create, FC } from 'react'
-import { css } from 'emotion'
 import { RouterModalUnauthed } from './routers/RouterModalUnauthed'
+import { useSettingsSetup } from './hooks/useSettingsSetup'
 import { useSettings } from './hooks/useSettings'
+import { RouterModalOnauthed } from './routers/RouterModalOnauthed'
 
 export const App: FC<{}> = () => {
-  useSettings()
+  useSettingsSetup()
+  const [settings, changeSettings] = useSettings()
   return create('div', {
-    children: create(RouterModalUnauthed),
-    className: css({
-      // code...
-    }),
+    children: settings.current
+      ? create(RouterModalOnauthed, {
+          close: () => changeSettings({ open: false }),
+        })
+      : create(RouterModalUnauthed, {
+          close: () => changeSettings({ open: false }),
+        }),
   })
 }

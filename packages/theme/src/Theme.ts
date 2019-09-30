@@ -136,12 +136,12 @@ export const Theme = createContext<ITheme>({
   },
   pointers: {
     background: '#616161',
-    innerBackground: '#656565',
+    innerBackground: '#696969',
     border: 'none',
     innerBorder: 'none',
     color: '#FFFFFF',
     label: '#BBBBBB',
-    description: '#505050',
+    description: '#333333',
   },
   headers: {
     background: '#3B3B3B',

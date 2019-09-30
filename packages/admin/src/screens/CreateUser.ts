@@ -80,6 +80,7 @@ export const CreateUser: FC<ICreateUser> = ({ change }) => {
             create(Inputs.String, {
               ...props,
               value: value.password,
+              password: true,
               placeholder: '**********',
             }),
         }),

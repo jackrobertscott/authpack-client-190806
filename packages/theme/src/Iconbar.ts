@@ -133,7 +133,12 @@ export const Iconbar: IIconbar = {
               submenu &&
                 create('div', {
                   key: 'submenu',
-                  children: submenu.map(item => create(Iconbar.Submenu, item)),
+                  children: submenu.map((item, index) =>
+                    create(Iconbar.Submenu, {
+                      key: `${item.label}${index}`,
+                      ...item,
+                    })
+                  ),
                   className: css({
                     all: 'unset',
                     display: 'flex',
@@ -190,6 +195,7 @@ export const Iconbar: IIconbar = {
           className: `fas far fa-${icon} ${css({
             lineHeight: '1.5em',
             marginRight: '7.5px',
+            color: theme.pointers.label,
           })}`,
         }),
         create('div', {

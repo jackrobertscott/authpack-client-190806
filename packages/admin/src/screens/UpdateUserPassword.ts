@@ -54,6 +54,7 @@ export const UpdateUserPassword: FC<IUpdateUserPassword> = ({ id }) => {
             create(Inputs.String, {
               ...props,
               value: value.password,
+              password: true,
               placeholder: '************',
             }),
         }),

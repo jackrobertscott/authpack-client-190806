@@ -53,6 +53,7 @@ export interface IInputs {
     change?: (value: string) => void
     placeholder?: string
     large?: boolean
+    password?: boolean
   }>
   StringArray: FC<{
     value?: string[]
@@ -338,7 +339,7 @@ export const Inputs: IInputs = {
       }),
     })
   },
-  String: ({ value, change = () => {}, placeholder, large = false }) => {
+  String: ({ value, change = () => {}, placeholder, large = false, password = false }) => {
     const [state, changeState] = useState<string>(value || '')
     useEffect(() => changeState(value || ''), [value])
     useEffect(() => change(state), [state])
@@ -348,6 +349,7 @@ export const Inputs: IInputs = {
         state !== event.target.value && changeState(event.target.value),
       placeholder,
       rows: large ? 6 : undefined,
+      type: password ? 'password' : 'text',
       className: css({
         all: 'unset',
         padding: '15px',

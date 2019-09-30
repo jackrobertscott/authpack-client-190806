@@ -58,7 +58,8 @@ export const UnauthedLogin: FC<IUnauthedLogin> = () => {
           input: props =>
             create(Inputs.String, {
               ...props,
-              placeholder: '**********',
+              password: true,
+              placeholder: '************',
             }),
         }),
         create(Button.Container, {

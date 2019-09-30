@@ -2,11 +2,11 @@ import { createElement as create, FC } from 'react'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
 
-export type IRouterModalAuthed = {
+export type IRouterModalOnauthed = {
   close?: () => void
 }
 
-export const RouterModalAuthed: FC<IRouterModalAuthed> = ({ close }) => {
+export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({ close }) => {
   return create(RouterModal, {
     close,
     children: create(GadgetsIconbar, {
