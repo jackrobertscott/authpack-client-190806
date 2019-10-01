@@ -5,7 +5,7 @@ export type IForgotUserPassword = {}
 
 export const FogotUserPassword: FC<IForgotUserPassword> = () => {
   return create(Gadgets.Container, {
-    label: 'Password',
+    label: 'Forgot Password',
     brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [

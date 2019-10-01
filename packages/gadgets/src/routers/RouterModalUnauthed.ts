@@ -27,7 +27,7 @@ export const RouterModalUnauthed: FC<IRouterModalUnauthed> = ({ close }) => {
         },
         {
           icon: 'question-circle',
-          label: 'Forgotten Password',
+          label: 'Forgot Password',
           children: create(FogotUserPassword),
         },
       ],
