@@ -84,9 +84,9 @@ export const Iconbar: IIconbar = {
         fontSize: '25px',
         transition: '200ms',
         textAlign: 'center',
+        width: '30px',
         lineHeight: '1.5em',
         cursor: 'pointer',
-        width: '100%',
         color: active ? theme.iconbar.colorActive : theme.iconbar.color,
         '&:hover': !active && {
           color: theme.iconbar.colorHover,
@@ -128,6 +128,7 @@ export const Iconbar: IIconbar = {
                   display: 'flex',
                   justifyContent: 'space-between',
                   flexGrow: 1,
+                  padding: '15px',
                 }),
               }),
               submenu &&
@@ -148,10 +149,10 @@ export const Iconbar: IIconbar = {
             ],
             className: css({
               all: 'unset',
-              padding: '15px',
               display: 'flex',
               flexGrow: 1,
               flexDirection: 'column',
+              overflow: 'hidden',
               fontSize: theme.global.fonts,
               borderRadius: theme.global.radius,
               background: theme.pointers.background,
@@ -195,6 +196,8 @@ export const Iconbar: IIconbar = {
           className: `fas far fa-${icon} ${css({
             lineHeight: '1.5em',
             marginRight: '7.5px',
+            textAlign: 'center',
+            width: '20px',
             color: theme.pointers.label,
           })}`,
         }),
@@ -206,7 +209,6 @@ export const Iconbar: IIconbar = {
               children: label,
               className: css({
                 color: theme.pointers.label,
-                marginBottom: '3.75px',
               }),
             }),
             create('div', {
@@ -226,12 +228,9 @@ export const Iconbar: IIconbar = {
       className: css({
         all: 'unset',
         display: 'flex',
-        padding: '7.5px',
-        margin: '-7.5px',
-        marginTop: '25px',
+        padding: '15px',
         cursor: 'pointer',
         transition: '200ms',
-        borderRadius: theme.global.radius,
         borderTop: theme.pointers.innerBorder,
         '&:hover': {
           background: theme.pointers.innerBackground,

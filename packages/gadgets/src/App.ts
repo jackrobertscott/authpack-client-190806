@@ -11,6 +11,7 @@ export const App: FC<{}> = () => {
   return create('div', {
     children: settings.current
       ? create(RouterModalOnauthed, {
+          id: settings.current.user.id,
           close: () => changeSettings({ open: false }),
         })
       : create(RouterModalUnauthed, {

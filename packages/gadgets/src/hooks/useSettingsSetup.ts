@@ -5,7 +5,6 @@ import { radio } from '../utils/radio'
 export const useSettingsSetup = () => {
   // send information to the window
   useEffect(() => {
-    console.log('sending')
     radio.message({
       name: 'wga:set',
       payload: settingsStore.state,

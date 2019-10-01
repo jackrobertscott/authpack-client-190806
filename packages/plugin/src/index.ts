@@ -31,6 +31,7 @@ export class PluginGadgets {
     iframe.style.bottom = '0'
     iframe.style.right = '0'
     iframe.style.left = '0'
+    iframe.style.zIndex = '1000'
     this.iframe = iframe
     document.body.appendChild(iframe)
     if (this.radio) this.radio.destroy()
