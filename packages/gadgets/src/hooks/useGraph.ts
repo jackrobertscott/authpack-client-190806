@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from 'react'
 import { chat } from '../utils/server'
+import { useToaster } from 'wga-theme'
 
 export const createUseGraph = <T>({ query }: { query: string }) => (
   variables?: { [key: string]: any },
@@ -29,6 +30,7 @@ export const useGraph = <T>({
   const [data, dataChange] = useState<T | undefined>()
   const [loading, loadingChange] = useState<boolean>()
   const [error, errorChange] = useState<Error | undefined>()
+  const toaster = useToaster()
   const fetch = (
     variables?: { [key: string]: any },
     operationName?: string
@@ -50,6 +52,11 @@ export const useGraph = <T>({
       .catch((caught: Error) => {
         errorChange(caught)
         loadingChange(false)
+        toaster.add({
+          icon: 'bell',
+          label: 'Error',
+          description: caught.message,
+        })
         throw caught
       })
   }
