@@ -54,33 +54,33 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({
           submenu: [
             {
               icon: 'cog',
-              label: 'Update Workspace',
-              description: 'Your workspace settings',
+              label: 'Update Group',
+              description: 'Your group settings',
             },
             {
               icon: 'sync-alt',
-              label: 'Switch Workspace',
-              description: 'Change to another workspace',
+              label: 'Switch Group',
+              description: 'Change to another group',
             },
             {
               icon: 'plus',
-              label: 'Create New Workspace',
-              description: 'Make a new workspace',
+              label: 'Create New Group',
+              description: 'Make a new group',
             },
             {
               icon: 'user-plus',
               label: 'Add Member',
-              description: 'Add a new workspace member',
+              description: 'Add a new group member',
             },
             {
               icon: 'user-plus',
               label: 'See Members',
-              description: 'List all workspace members',
+              description: 'List all group members',
             },
             {
               icon: 'fire-alt',
               label: 'Danger Zone',
-              description: 'Remove this workspace',
+              description: 'Remove this group',
             },
           ],
         },

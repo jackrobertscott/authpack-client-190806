@@ -14,14 +14,14 @@ export type IPageIconbarScreen = {
 export type IPageIconbar = {
   screens: IPageIconbarScreen[]
   logout?: () => void
-  workspace?: () => void
+  group?: () => void
   devmode?: () => void
 }
 
 export const PageIconbar: FC<IPageIconbar> = ({
   screens,
   logout,
-  workspace,
+  group,
   devmode,
 }) => {
   const preload = screens.find(screen => {
@@ -62,12 +62,12 @@ export const PageIconbar: FC<IPageIconbar> = ({
             }),
           }),
           create(Iconbar.Pointer, {
-            key: 'workspace',
+            key: 'group',
             icon: 'bars',
-            label: 'Workspace',
+            label: 'Group',
             children: create(Iconbar.Icon, {
               name: 'bars',
-              click: workspace,
+              click: group,
             }),
           }),
           create(Iconbar.Pointer, {

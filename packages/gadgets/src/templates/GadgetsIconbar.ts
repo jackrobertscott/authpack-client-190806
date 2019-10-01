@@ -23,6 +23,7 @@ export const GadgetsIconbar: FC<IGadgetsIconbar> = ({ close, screens }) => {
         top: screens.map((screen, i) => {
           return create(Iconbar.Pointer, {
             key: screen.id || String(i),
+            icon: screen.icon,
             label: screen.label,
             submenu: screen.submenu,
             children: create(Iconbar.Icon, {
@@ -36,6 +37,7 @@ export const GadgetsIconbar: FC<IGadgetsIconbar> = ({ close, screens }) => {
           close &&
           create(Iconbar.Pointer, {
             label: 'Close',
+            icon: 'times-circle',
             children: create(Iconbar.Icon, {
               name: 'times-circle',
               click: close,

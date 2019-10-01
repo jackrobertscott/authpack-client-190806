@@ -10,7 +10,7 @@ export type IRouterCentral = {}
 export const RouterCentral: FC<IRouterCentral> = () => {
   return create(PageIconbar, {
     logout: () => console.log('logout'),
-    workspace: () => gadgets.open(),
+    group: () => gadgets.open(),
     devmode: () => console.log('devmode'),
     screens: [
       {

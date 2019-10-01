@@ -20,7 +20,7 @@ yarn add wga-api
 
 ## Setup
 
-An secret key can be found in your [Authenticator workspace](https://windowgadgets.io/).
+An secret key can be found in your [Authenticator group](https://windowgadgets.io/).
 
 ```ts
 import { Authenticator } from 'wga-api'
