@@ -6,6 +6,9 @@ export const useSettingsSetup = () => {
   // send information to the window
   useEffect(() => {
     radio.message({
+      name: 'wga:ready',
+    })
+    radio.message({
       name: 'wga:set',
       payload: settingsStore.state,
     })

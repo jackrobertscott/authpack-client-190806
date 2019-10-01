@@ -7,12 +7,16 @@ export class PluginGadgets {
   private key: string
   private iframeId: string
   private iframe?: HTMLIFrameElement
-  private radio?: Radio<{ name: string; payload: any }>
+  private radio?: Radio<{ name: string; payload?: any }>
   private unlistener?: () => any
+  private ready: boolean
+  private queue: Array<() => void>
   constructor(domainKey: string, random: string) {
     this.key = domainKey
     this.iframeId = `wga-plugin${random ? `-${random}` : ''}`
     this.render()
+    this.ready = false
+    this.queue = []
   }
   /**
    * Get the current state of the gadgets.
@@ -45,10 +49,9 @@ export class PluginGadgets {
       this.radio &&
       this.radio.message({
         name: 'wga:open',
-        payload: undefined,
       })
-    // timeout required
-    setTimeout(sendMessage)
+    if (this.ready) sendMessage()
+    else this.queue.push(sendMessage)
   }
   /**
    * Create an iframe with gadgets.
@@ -86,8 +89,12 @@ export class PluginGadgets {
           case 'wga:set':
             settingsStore.change(payload)
             break
+          case 'wga:ready':
+            this.ready = true
+            this.queue.forEach(cb => cb())
+            break
           default:
-            throw new Error(`Handler not found for ${name}`)
+            console.warn(`Handler not found for ${name}`)
         }
       })
   }

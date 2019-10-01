@@ -20,7 +20,6 @@ export interface IList {
 
 export const List: IList = {
   Container: ({ children }) => {
-    const theme = useContext(Theme)
     return create('div', {
       children,
       className: css({

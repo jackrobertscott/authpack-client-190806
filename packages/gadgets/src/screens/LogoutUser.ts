@@ -16,7 +16,7 @@ export const LogoutUser: FC<ILogoutUser> = () => {
       .then(() => settingsChange({ current: undefined }))
   }
   return create(Gadgets.Container, {
-    label: 'Logout User',
+    label: 'Logout',
     brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [

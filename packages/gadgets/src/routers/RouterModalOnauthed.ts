@@ -11,6 +11,9 @@ import { RemoveGroup } from '../screens/RemoveGroup'
 import { CreateGroup } from '../screens/CreateGroup'
 import { ListProviders } from '../screens/ListProviders'
 import { ListSessions } from '../screens/ListSessions'
+import { ListMemberships } from '../screens/ListMemberships'
+import { SwitchGroup } from '../screens/SwitchGroup'
+import { CreateMembership } from '../screens/CreateMembership'
 
 export type IRouterModalOnauthed = {
   close?: () => void
@@ -85,21 +88,25 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({ close }) => {
                   icon: 'sync-alt',
                   label: 'Switch Group',
                   description: 'Change to another group',
+                  children: create(SwitchGroup),
                 },
                 {
                   icon: 'plus',
                   label: 'Create New Group',
                   description: 'Make a new group',
+                  children: create(CreateGroup),
                 },
                 {
                   icon: 'user-plus',
                   label: 'Add Member',
                   description: 'Add a new group member',
+                  children: create(CreateMembership),
                 },
                 {
                   icon: 'user-plus',
                   label: 'See Members',
                   description: 'List all group members',
+                  children: create(ListMemberships),
                 },
                 {
                   icon: 'fire-alt',
@@ -115,6 +122,7 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({ close }) => {
                   icon: 'sync-alt',
                   label: 'Switch Group',
                   description: 'Change to another group',
+                  children: create(SwitchGroup),
                 },
                 {
                   icon: 'plus',
