@@ -4,13 +4,18 @@ import { createUseGraph } from '../hooks/useGraph'
 
 export type IRemoveProvider = {
   id: string
+  change?: () => void
 }
 
-export const RemoveProvider: FC<IRemoveProvider> = ({ id }) => {
+export const RemoveProvider: FC<IRemoveProvider> = ({ id, change }) => {
   // remove the provider when the form is submitted
   const removeProvider = useRemoveProvider()
   const remove = () => {
-    removeProvider.fetch({ options: { id } })
+    removeProvider
+      .fetch({
+        options: { id },
+      })
+      .then(change)
   }
   return create(Gadgets.Container, {
     label: 'Remove Provider',

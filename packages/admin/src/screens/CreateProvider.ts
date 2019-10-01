@@ -2,6 +2,7 @@ import * as validator from 'yup'
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
 import { createUseGraph } from '../hooks/useGraph'
+import { useStore } from '../hooks/useStore'
 
 export type ICreateProvider = {
   change?: () => void
@@ -10,10 +11,12 @@ export type ICreateProvider = {
 export const CreateProvider: FC<ICreateProvider> = ({ change }) => {
   // initialize the provider form values and apply validators
   const [issue, issueChange] = useState<Error>()
-  const [value, valueChange] = useState({ ...schemaCreateProvider.default() })
+  const [value, valueStore] = useStore('CreateProvider', {
+    ...schemaCreateProvider.default(),
+  })
   const validateAndPatch = (path: string) => (data: any) => {
     const update = { ...value, [path]: data }
-    valueChange(update)
+    valueStore.change(update)
     return schemaCreateProvider.validateAt(path, update)
   }
   useEffect(() => {
@@ -28,7 +31,12 @@ export const CreateProvider: FC<ICreateProvider> = ({ change }) => {
     schemaCreateProvider
       .validate(value)
       .then(data => createProvider.fetch({ options: data }))
-      .then(change)
+      .then(() => {
+        if (change) change()
+        setTimeout(() =>
+          valueStore.change({ ...schemaCreateProvider.default() })
+        )
+      })
   }
   return create(Gadgets.Container, {
     label: 'Create Provider',

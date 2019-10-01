@@ -4,13 +4,18 @@ import { createUseGraph } from '../hooks/useGraph'
 
 export type IRemoveSession = {
   id: string
+  change?: () => void
 }
 
-export const RemoveSession: FC<IRemoveSession> = ({ id }) => {
+export const RemoveSession: FC<IRemoveSession> = ({ id, change }) => {
   // remove the session when the form is submitted
   const removeSession = useRemoveSession()
   const remove = () => {
-    removeSession.fetch({ options: { id } })
+    removeSession
+      .fetch({
+        options: { id },
+      })
+      .then(change)
   }
   return create(Gadgets.Container, {
     label: 'Remove Session',

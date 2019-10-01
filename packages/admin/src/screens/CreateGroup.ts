@@ -2,6 +2,7 @@ import * as validator from 'yup'
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
 import { createUseGraph } from '../hooks/useGraph'
+import { useStore } from '../hooks/useStore'
 
 export type ICreateGroup = {
   change?: () => void
@@ -10,10 +11,12 @@ export type ICreateGroup = {
 export const CreateGroup: FC<ICreateGroup> = ({ change }) => {
   // initialize the group form values and apply validators
   const [issue, issueChange] = useState<Error>()
-  const [value, valueChange] = useState({ ...schemaCreateGroup.default() })
+  const [value, valueStore] = useStore('CreateGroup', {
+    ...schemaCreateGroup.default(),
+  })
   const validateAndPatch = (path: string) => (data: any) => {
     const update = { ...value, [path]: data }
-    valueChange(update)
+    valueStore.change(update)
     return schemaCreateGroup.validateAt(path, update)
   }
   useEffect(() => {
@@ -28,7 +31,10 @@ export const CreateGroup: FC<ICreateGroup> = ({ change }) => {
     schemaCreateGroup
       .validate(value)
       .then(data => createGroup.fetch({ options: data }))
-      .then(change)
+      .then(() => {
+        if (change) change()
+        setTimeout(() => valueStore.change({ ...schemaCreateGroup.default() }))
+      })
   }
   return create(Gadgets.Container, {
     label: 'Create Group',

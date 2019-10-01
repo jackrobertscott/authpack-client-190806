@@ -4,13 +4,18 @@ import { createUseGraph } from '../hooks/useGraph'
 
 export type IRemoveUser = {
   id: string
+  change?: () => void
 }
 
-export const RemoveUser: FC<IRemoveUser> = ({ id }) => {
+export const RemoveUser: FC<IRemoveUser> = ({ id, change }) => {
   // remove the user when the form is submitted
   const removeUser = useRemoveUser()
   const remove = () => {
-    removeUser.fetch({ options: { id } })
+    removeUser
+      .fetch({
+        options: { id },
+      })
+      .then(change)
   }
   return create(Gadgets.Container, {
     label: 'Remove User',

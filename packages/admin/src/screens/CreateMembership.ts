@@ -2,6 +2,7 @@ import * as validator from 'yup'
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
 import { createUseGraph } from '../hooks/useGraph'
+import { useStore } from '../hooks/useStore'
 
 export type ICreateMembership = {
   change?: () => void
@@ -10,10 +11,12 @@ export type ICreateMembership = {
 export const CreateMembership: FC<ICreateMembership> = ({ change }) => {
   // initialize the membership form values and apply validators
   const [issue, issueChange] = useState<Error>()
-  const [value, valueChange] = useState({ ...schemaCreateMembership.default() })
+  const [value, valueStore] = useStore('CreateMembership', {
+    ...schemaCreateMembership.default(),
+  })
   const validateAndPatch = (path: string) => (data: any) => {
     const update = { ...value, [path]: data }
-    valueChange(update)
+    valueStore.change(update)
     return schemaCreateMembership.validateAt(path, update)
   }
   useEffect(() => {
@@ -28,7 +31,12 @@ export const CreateMembership: FC<ICreateMembership> = ({ change }) => {
     schemaCreateMembership
       .validate(value)
       .then(data => createMembership.fetch({ options: data }))
-      .then(change)
+      .then(() => {
+        if (change) change()
+        setTimeout(() =>
+          valueStore.change({ ...schemaCreateMembership.default() })
+        )
+      })
   }
   // update the user options as searched
   const listUsers = useListUsers()

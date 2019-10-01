@@ -34,7 +34,11 @@ export const Button: IButton = {
       children: [
         create(Button.Wrap, {
           key: 'confirm',
-          click: confirm ? (stage ? click : () => stageChange(true)) : click,
+          click: confirm
+            ? stage
+              ? () => (stageChange(false) as any) || click()
+              : () => stageChange(true)
+            : click,
           disable,
           children: [
             create('div', {
@@ -43,7 +47,7 @@ export const Button: IButton = {
             }),
             create(Button.Icon, {
               key: 'icon',
-              name: icon || disable ? 'times-circle' : 'check-circle',
+              name: icon || (disable ? 'times-circle' : 'check-circle'),
             }),
           ],
         }),
@@ -114,7 +118,7 @@ export const Button: IButton = {
   },
   Icon: ({ name }) => {
     return create('div', {
-      className: `far fa-${name} ${css({
+      className: `far fas fa-${name} ${css({
         textAlign: 'center',
         lineHeight: '1.5em',
       })}`,

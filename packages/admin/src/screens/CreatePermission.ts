@@ -2,6 +2,7 @@ import * as validator from 'yup'
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
 import { createUseGraph } from '../hooks/useGraph'
+import { useStore } from '../hooks/useStore'
 
 export type ICreatePermission = {
   change?: () => void
@@ -10,10 +11,12 @@ export type ICreatePermission = {
 export const CreatePermission: FC<ICreatePermission> = ({ change }) => {
   // initialize the permission form values and apply validators
   const [issue, issueChange] = useState<Error>()
-  const [value, valueChange] = useState({ ...schemaCreatePermission.default() })
+  const [value, valueStore] = useStore('CreatePermission', {
+    ...schemaCreatePermission.default(),
+  })
   const validateAndPatch = (path: string) => (data: any) => {
     const update = { ...value, [path]: data }
-    valueChange(update)
+    valueStore.change(update)
     return schemaCreatePermission.validateAt(path, update)
   }
   useEffect(() => {
@@ -28,7 +31,12 @@ export const CreatePermission: FC<ICreatePermission> = ({ change }) => {
     schemaCreatePermission
       .validate(value)
       .then(data => createPermission.fetch({ options: data }))
-      .then(change)
+      .then(() => {
+        if (change) change()
+        setTimeout(() =>
+          valueStore.change({ ...schemaCreatePermission.default() })
+        )
+      })
   }
   return create(Gadgets.Container, {
     label: 'Create Permission',

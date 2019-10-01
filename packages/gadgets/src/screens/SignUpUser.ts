@@ -2,21 +2,19 @@ import * as validator from 'yup'
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
 import { createUseGraph } from '../hooks/useGraph'
-import { useStore } from '../hooks/useStore'
 
-export type ICreateUser = {
+export type ISignUpUser = {
   change?: () => void
 }
 
-export const CreateUser: FC<ICreateUser> = ({ change }) => {
+export const SignUpUser: FC<ISignUpUser> = ({ change }) => {
   // initialize the user form values and apply validators
   const [issue, issueChange] = useState<Error>()
-  const [value, valueStore] = useStore('CreateUser', {
-    ...schemaCreateUser.default(),
-  })
+  const [value, valueChange] = useState({ ...schemaCreateUser.default() })
   const validateAndPatch = (path: string) => (data: any) => {
-    const update = { ...value, [path]: data }
-    valueStore.change(update)
+    const update =
+      typeof data !== 'undefined' ? { ...value, [path]: data } : value
+    valueChange(update)
     return schemaCreateUser.validateAt(path, update)
   }
   useEffect(() => {
@@ -31,13 +29,10 @@ export const CreateUser: FC<ICreateUser> = ({ change }) => {
     schemaCreateUser
       .validate(value)
       .then(data => createUser.fetch({ options: data }))
-      .then(() => {
-        if (change) change()
-        setTimeout(() => valueStore.change({ ...schemaCreateUser.default() }))
-      })
+      .then(change)
   }
   return create(Gadgets.Container, {
-    label: 'Create User',
+    label: 'Sign Up',
     brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [

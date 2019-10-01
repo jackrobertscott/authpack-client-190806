@@ -4,13 +4,18 @@ import { createUseGraph } from '../hooks/useGraph'
 
 export type IRemoveGroup = {
   id: string
+  change?: () => void
 }
 
-export const RemoveGroup: FC<IRemoveGroup> = ({ id }) => {
+export const RemoveGroup: FC<IRemoveGroup> = ({ id, change }) => {
   // remove the group when the form is submitted
   const removeGroup = useRemoveGroup()
   const remove = () => {
-    removeGroup.fetch({ options: { id } })
+    removeGroup
+      .fetch({
+        options: { id },
+      })
+      .then(change)
   }
   return create(Gadgets.Container, {
     label: 'Remove Group',

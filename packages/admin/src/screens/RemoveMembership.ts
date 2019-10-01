@@ -4,13 +4,18 @@ import { createUseGraph } from '../hooks/useGraph'
 
 export type IRemoveMembership = {
   id: string
+  change?: () => void
 }
 
-export const RemoveMembership: FC<IRemoveMembership> = ({ id }) => {
+export const RemoveMembership: FC<IRemoveMembership> = ({ id, change }) => {
   // remove the membership when the form is submitted
   const removeMembership = useRemoveMembership()
   const remove = () => {
-    removeMembership.fetch({ options: { id } })
+    removeMembership
+      .fetch({
+        options: { id },
+      })
+      .then(change)
   }
   return create(Gadgets.Container, {
     label: 'Remove Membership',

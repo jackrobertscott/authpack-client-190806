@@ -4,13 +4,18 @@ import { createUseGraph } from '../hooks/useGraph'
 
 export type IRemovePermission = {
   id: string
+  change?: () => void
 }
 
-export const RemovePermission: FC<IRemovePermission> = ({ id }) => {
+export const RemovePermission: FC<IRemovePermission> = ({ id, change }) => {
   // remove the permission when the form is submitted
   const removePermission = useRemovePermission()
   const remove = () => {
-    removePermission.fetch({ options: { id } })
+    removePermission
+      .fetch({
+        options: { id },
+      })
+      .then(change)
   }
   return create(Gadgets.Container, {
     label: 'Remove Permission',

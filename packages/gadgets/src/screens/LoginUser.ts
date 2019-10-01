@@ -4,14 +4,15 @@ import { Inputs, Button, Gadgets } from 'wga-theme'
 import { createUseGraph } from '../hooks/useGraph'
 import { settingsStore } from '../utils/settings'
 
-export type IUnauthedLogin = {}
+export type ILoginUser = {}
 
-export const UnauthedLogin: FC<IUnauthedLogin> = () => {
+export const LoginUser: FC<ILoginUser> = () => {
   // initialize the user form values and apply validators
   const [value, valueChange] = useState({ ...schemaLogin.default() })
   const [issue, issueChange] = useState<Error>()
   const validateAndPatch = (path: string) => (data: any) => {
-    const update = { ...value, [path]: data }
+    const update =
+      typeof data !== 'undefined' ? { ...value, [path]: data } : value
     valueChange(update)
     return schemaLogin.validateAt(path, update)
   }

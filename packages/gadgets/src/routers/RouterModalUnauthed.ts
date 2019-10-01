@@ -1,9 +1,9 @@
 import { createElement as create, FC } from 'react'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
-import { UnauthedLogin } from '../screens/UnauthedLogin'
-import { UnauthedSignup } from '../screens/UnauthedSignup'
-import { UnauthedPassword } from '../screens/UnauthedPassword'
+import { LoginUser } from '../screens/LoginUser'
+import { SignUpUser } from '../screens/SignUpUser'
+import { FogotUserPassword } from '../screens/ForgotUserPassword'
 
 export type IRouterModalUnauthed = {
   close?: () => void
@@ -18,17 +18,17 @@ export const RouterModalUnauthed: FC<IRouterModalUnauthed> = ({ close }) => {
         {
           icon: 'user-circle',
           label: 'Login',
-          children: create(UnauthedLogin),
+          children: create(LoginUser),
         },
         {
           icon: 'street-view',
           label: 'Sign Up',
-          children: create(UnauthedSignup),
+          children: create(SignUpUser),
         },
         {
           icon: 'question-circle',
           label: 'Forgotten Password',
-          children: create(UnauthedPassword),
+          children: create(FogotUserPassword),
         },
       ],
     }),

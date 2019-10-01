@@ -1,11 +1,11 @@
 import { createElement as create, FC } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
 
-export type IUnauthedSignup = {}
+export type IForgotUserPassword = {}
 
-export const UnauthedSignup: FC<IUnauthedSignup> = () => {
+export const FogotUserPassword: FC<IForgotUserPassword> = () => {
   return create(Gadgets.Container, {
-    label: 'Sign Up',
+    label: 'Password',
     brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
