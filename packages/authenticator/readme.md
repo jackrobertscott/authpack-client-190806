@@ -1,6 +1,6 @@
 # 🏇 Authenticator API
 
-> The fastest way to add auth to your app
+> Authentication that dominates in performance and usability
 
 This repository provides JavaScript helper methods which correspond to the Authenticator API.
 

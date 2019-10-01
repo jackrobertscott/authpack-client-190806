@@ -1,6 +1,6 @@
 # 🏇 Authenticator
 
-> The fastest way to add auth to your app
+> Authentication that dominates in performance and usability
 
 This repository contains example code to help you get started with the Window Gadgets Authenticator.
 

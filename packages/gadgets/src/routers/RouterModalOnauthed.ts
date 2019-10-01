@@ -20,7 +20,6 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({
         {
           icon: 'user-circle',
           label: 'User Settings',
-          children: null,
           submenu: [
             {
               icon: 'user-cog',
@@ -52,7 +51,6 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({
         {
           icon: 'users',
           label: 'Group Settings',
-          children: null,
           submenu: [
             {
               icon: 'cog',

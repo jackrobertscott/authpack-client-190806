@@ -11,7 +11,7 @@ export const App: FC<{}> = () => {
     gadgets.render()
   }, [])
   return create('div', {
-    children: state && state.user && create(RouterCentral),
+    children: state && state.user ? create(RouterCentral) : null,
     className: css({
       // code...
     }),

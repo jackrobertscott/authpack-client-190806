@@ -5,8 +5,8 @@ export type IGadgetsIconbarScreen = {
   id?: string
   icon: string
   label: string
-  children: ReactNode
-  submenu?: IIconbarSubmenu[]
+  children?: ReactNode
+  submenu?: { children?: ReactNode } & IIconbarSubmenu[]
 }
 
 export type IGadgetsIconbar = {
@@ -27,7 +27,7 @@ export const GadgetsIconbar: FC<IGadgetsIconbar> = ({ close, screens }) => {
             submenu: screen.submenu,
             children: create(Iconbar.Icon, {
               name: screen.icon,
-              click: () => changeActive(screen),
+              click: () => screen.children && changeActive(screen),
               active: screen === active,
             }),
           })
@@ -43,7 +43,7 @@ export const GadgetsIconbar: FC<IGadgetsIconbar> = ({ close, screens }) => {
           }),
       }),
       active &&
-        create((() => active.children) as FC, {
+        create((() => active.children || null) as FC, {
           key: 'children',
         }),
     ],
