@@ -12,47 +12,7 @@ export class PluginGadgets {
   constructor(domainKey: string, random: string) {
     this.key = domainKey
     this.iframeId = `wga-plugin${random ? `-${random}` : ''}`
-  }
-  /**
-   * Create an iframe with gadgets.
-   */
-  public render() {
-    const iframe = document.createElement('iframe')
-    iframe.src = document.location.hostname.includes('localhost')
-      ? 'http://localhost:3100/'
-      : 'https://plugin.wga.windowgadgets.io/'
-    iframe.id = this.iframeId
-    iframe.width = '100%'
-    iframe.height = '100%'
-    iframe.style.border = 'none'
-    iframe.style.boxShadow = 'none'
-    iframe.style.position = 'fixed'
-    iframe.style.top = '0'
-    iframe.style.bottom = '0'
-    iframe.style.right = '0'
-    iframe.style.left = '0'
-    iframe.style.zIndex = '1000'
-    iframe.style.opacity = '0'
-    iframe.style.pointerEvents = 'none'
-    this.iframe = iframe
-    document.body.appendChild(iframe)
-    if (this.radio) this.radio.destroy()
-    this.radio = new Radio({
-      id: 'wga',
-      node: iframe.contentWindow,
-    })
-    if (this.unlistener) this.unlistener()
-    this.unlistener =
-      this.radio &&
-      this.radio.listen(({ name, payload }) => {
-        switch (name) {
-          case 'wga:set':
-            settingsStore.change(payload)
-            break
-          default:
-            throw new Error(`Handler not found for ${name}`)
-        }
-      })
+    this.render()
   }
   /**
    * Get the current state of the gadgets.
@@ -81,10 +41,53 @@ export class PluginGadgets {
    * Open the gadgets.
    */
   public open() {
-    if (this.radio)
+    const sendMessage = () =>
+      this.radio &&
       this.radio.message({
         name: 'wga:open',
         payload: undefined,
+      })
+    // timeout required
+    setTimeout(sendMessage)
+  }
+  /**
+   * Create an iframe with gadgets.
+   */
+  private render() {
+    this.iframe = document.createElement('iframe')
+    this.iframe.src = document.location.hostname.includes('localhost')
+      ? 'http://localhost:3100/'
+      : 'https://plugin.wga.windowgadgets.io/'
+    this.iframe.id = this.iframeId
+    this.iframe.width = '100%'
+    this.iframe.height = '100%'
+    this.iframe.style.border = 'none'
+    this.iframe.style.boxShadow = 'none'
+    this.iframe.style.position = 'fixed'
+    this.iframe.style.top = '0'
+    this.iframe.style.bottom = '0'
+    this.iframe.style.right = '0'
+    this.iframe.style.left = '0'
+    this.iframe.style.zIndex = '1000'
+    this.iframe.style.opacity = '0'
+    this.iframe.style.pointerEvents = 'none'
+    document.body.appendChild(this.iframe)
+    if (this.radio) this.radio.destroy()
+    this.radio = new Radio({
+      id: 'wga',
+      node: this.iframe.contentWindow,
+    })
+    if (this.unlistener) this.unlistener()
+    this.unlistener =
+      this.radio &&
+      this.radio.listen(({ name, payload }) => {
+        switch (name) {
+          case 'wga:set':
+            settingsStore.change(payload)
+            break
+          default:
+            throw new Error(`Handler not found for ${name}`)
+        }
       })
   }
 }

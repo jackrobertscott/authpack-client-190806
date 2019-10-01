@@ -156,7 +156,7 @@ const RouterComponent = () => {
    * Show a button which will open the login screen when clicked.
    */
   return (
-    <button click={() => gadgets.render()}>
+    <button click={() => gadgets.open()}>
       Login Or Sign Up
     </button>
   );

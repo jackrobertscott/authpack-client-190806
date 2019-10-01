@@ -6,7 +6,7 @@ export type IGadgetsIconbarScreen = {
   icon: string
   label: string
   children?: ReactNode
-  submenu?: { children?: ReactNode } & IIconbarSubmenu[]
+  submenu?: Array<{ children?: ReactNode } & IIconbarSubmenu>
 }
 
 export type IGadgetsIconbar = {
@@ -15,7 +15,11 @@ export type IGadgetsIconbar = {
 }
 
 export const GadgetsIconbar: FC<IGadgetsIconbar> = ({ close, screens }) => {
-  const [active, changeActive] = useState<IGadgetsIconbarScreen>(screens[0])
+  const starting =
+    screens[0].submenu && screens[0].submenu.length
+      ? screens[0].submenu[0]
+      : screens[0]
+  const [active, changeActive] = useState<{ children?: ReactNode }>(starting)
   return create(Layout.Container, {
     children: [
       create(Iconbar.Container, {
@@ -25,7 +29,12 @@ export const GadgetsIconbar: FC<IGadgetsIconbar> = ({ close, screens }) => {
             key: screen.id || String(i),
             icon: screen.icon,
             label: screen.label,
-            submenu: screen.submenu,
+            submenu: screen.submenu
+              ? screen.submenu.map(subscreen => ({
+                  ...subscreen,
+                  click: () => changeActive(subscreen),
+                }))
+              : [],
             children: create(Iconbar.Icon, {
               name: screen.icon,
               click: () => screen.children && changeActive(screen),

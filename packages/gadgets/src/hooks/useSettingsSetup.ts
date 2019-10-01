@@ -19,6 +19,7 @@ export const useSettingsSetup = () => {
   // handle information from the window
   useEffect(() => {
     return radio.listen(({ name, payload }) => {
+      console.log('radio', name)
       switch (name) {
         case 'wga:request':
           radio.message({
