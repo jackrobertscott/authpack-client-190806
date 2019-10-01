@@ -5,6 +5,12 @@ import { LogoutUser } from '../screens/LogoutUser'
 import { useSettings } from '../hooks/useSettings'
 import { UpdateUser } from '../screens/UpdateUser'
 import { UpdateGroup } from '../screens/UpdateGroup'
+import { UpdateUserPassword } from '../screens/UpdateUserPassword'
+import { RemoveUser } from '../screens/RemoveUser'
+import { RemoveGroup } from '../screens/RemoveGroup'
+import { CreateGroup } from '../screens/CreateGroup'
+import { ListProviders } from '../screens/ListProviders'
+import { ListSessions } from '../screens/ListSessions'
 
 export type IRouterModalOnauthed = {
   close?: () => void
@@ -36,21 +42,29 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({ close }) => {
               icon: 'key',
               label: 'Change Password',
               description: 'Update your login credentials',
+              children: create(UpdateUserPassword, {
+                id: settings.current.user.id,
+              }),
             },
             {
               icon: 'handshake',
               label: '3rd Party Apps',
               description: 'Connect to other apps',
+              children: create(ListProviders),
             },
             {
               icon: 'history',
               label: 'Login History',
               description: 'See when you last logged in',
+              children: create(ListSessions),
             },
             {
               icon: 'fire-alt',
               label: 'Danger Zone',
               description: 'Delete your account',
+              children: create(RemoveUser, {
+                id: settings.current.user.id,
+              }),
             },
           ],
         },
@@ -91,6 +105,9 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({ close }) => {
                   icon: 'fire-alt',
                   label: 'Danger Zone',
                   description: 'Remove this group',
+                  children: create(RemoveGroup, {
+                    id: settings.current.user.id,
+                  }),
                 },
               ]
             : [
@@ -103,6 +120,7 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({ close }) => {
                   icon: 'plus',
                   label: 'Create New Group',
                   description: 'Make a new group',
+                  children: create(CreateGroup),
                 },
               ],
         },

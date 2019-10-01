@@ -8,7 +8,7 @@ import { CreateGroup } from '../screens/CreateGroup'
 import { ListMembershipsOfGroup } from '../screens/ListMembershipsOfGroup'
 
 export type IRouterManagerGroups = {
-  id: string
+  id?: string
   close?: () => void
   change?: () => void
 }
@@ -20,6 +20,7 @@ export const RouterManagerGroups: FC<IRouterManagerGroups> = ({
 }) => {
   return create(RouterModal, {
     close,
+    visible: typeof id === 'string',
     children: create(GadgetsIconbar, {
       close,
       screens: id

@@ -132,6 +132,13 @@ export const Inputs: IInputs = {
     const theme = useContext(Theme)
     const [enable, changeEnable] = useState<boolean>(false)
     const [error, changeError] = useState<Error | undefined>()
+    const mounted = useRef(false)
+    useEffect(() => {
+      mounted.current = true
+      return () => {
+        mounted.current = false
+      }
+    }, [])
     return create('div', {
       children: [
         label &&
@@ -166,8 +173,8 @@ export const Inputs: IInputs = {
               change: data => {
                 if (change)
                   change(data)
-                    .then(() => changeError(undefined))
-                    .catch(changeError)
+                    .then(() => mounted.current && changeError(undefined))
+                    .catch(e => mounted.current && changeError(e))
               },
               enable: value => changeEnable(value),
             }),
@@ -339,7 +346,13 @@ export const Inputs: IInputs = {
       }),
     })
   },
-  String: ({ value, change = () => {}, placeholder, large = false, password = false }) => {
+  String: ({
+    value,
+    change = () => {},
+    placeholder,
+    large = false,
+    password = false,
+  }) => {
     const [state, changeState] = useState<string>(value || '')
     useEffect(() => changeState(value || ''), [value])
     useEffect(() => change(state), [state])

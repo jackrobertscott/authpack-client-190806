@@ -7,7 +7,7 @@ import { UpdateProvider } from '../screens/UpdateProvider'
 import { RemoveProvider } from '../screens/RemoveProvider'
 
 export type IRouterManagerProviders = {
-  id: string
+  id?: string
   close?: () => void
   change?: () => void
 }
@@ -19,6 +19,7 @@ export const RouterManagerProviders: FC<IRouterManagerProviders> = ({
 }) => {
   return create(RouterModal, {
     close,
+    visible: typeof id === 'string',
     children: create(GadgetsIconbar, {
       close,
       screens: id

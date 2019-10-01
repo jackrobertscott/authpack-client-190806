@@ -6,11 +6,12 @@ export interface IModal {
   Container: FC<{
     children: ReactNode
     click?: () => void
+    visible?: boolean
   }>
 }
 
 export const Modal: IModal = {
-  Container: ({ children, click }) => {
+  Container: ({ children, click, visible = true }) => {
     const theme = useContext(Theme)
     return create('div', {
       onClick: (event: any) =>
@@ -42,6 +43,9 @@ export const Modal: IModal = {
         top: 0,
         bottom: 0,
         zIndex: 100,
+        transition: '200ms',
+        pointerEvents: visible ? 'all' : 'none',
+        opacity: visible ? 1 : 0,
         [`@media (max-width: ${theme.modals.width}), (max-height: ${theme.modals.height})`]: {
           alignItems: 'stretch',
           '& > *': {

@@ -35,13 +35,12 @@ export const ListSessions: FC<ListSessions> = () => {
       click: () => currentChange(''),
     },
     noscroll: [
-      typeof current === 'string' &&
-        create(RouterManagerSessions, {
-          key: 'modal',
-          id: current,
-          close: () => currentChange(undefined),
-          change: listSessionsFetch,
-        }),
+      create(RouterManagerSessions, {
+        key: 'modal',
+        id: current,
+        close: () => currentChange(undefined),
+        change: listSessionsFetch,
+      }),
       create(Searchbar, {
         key: 'searchbar',
         amount: listSessions.data && listSessions.data.sessions.length,

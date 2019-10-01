@@ -1,4 +1,10 @@
-import { createElement as create, FC, ReactNode, useState } from 'react'
+import {
+  createElement as create,
+  FC,
+  ReactNode,
+  useState,
+  useEffect,
+} from 'react'
 import { Layout, Iconbar, IIconbarSubmenu } from 'wga-theme'
 
 export type IGadgetsIconbarScreen = {
@@ -20,6 +26,8 @@ export const GadgetsIconbar: FC<IGadgetsIconbar> = ({ close, screens }) => {
       ? screens[0].submenu[0]
       : screens[0]
   const [active, changeActive] = useState<{ children?: ReactNode }>(starting)
+  // eslint-disable-next-line
+  useEffect(() => changeActive(starting), [screens])
   return create(Layout.Container, {
     children: [
       create(Iconbar.Container, {

@@ -8,7 +8,7 @@ import { RemoveUser } from '../screens/RemoveUser'
 import { UpdateUserPassword } from '../screens/UpdateUserPassword'
 
 export type IRouterManagerUsers = {
-  id: string
+  id?: string
   close?: () => void
   change?: () => void
 }
@@ -20,6 +20,7 @@ export const RouterManagerUsers: FC<IRouterManagerUsers> = ({
 }) => {
   return create(RouterModal, {
     close,
+    visible: typeof id === 'string',
     children: create(GadgetsIconbar, {
       close,
       screens: id

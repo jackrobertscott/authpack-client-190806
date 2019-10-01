@@ -35,13 +35,12 @@ export const ListUsers: FC<IListUsers> = () => {
       click: () => currentChange(''),
     },
     noscroll: [
-      typeof current === 'string' &&
-        create(RouterManagerUsers, {
-          key: 'modal',
-          id: current,
-          close: () => currentChange(undefined),
-          change: listUsersFetch,
-        }),
+      create(RouterManagerUsers, {
+        key: 'modal',
+        id: current,
+        close: () => currentChange(undefined),
+        change: listUsersFetch,
+      }),
       create(Searchbar, {
         key: 'searchbar',
         amount: listUsers.data && listUsers.data.users.length,

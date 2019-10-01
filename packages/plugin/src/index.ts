@@ -69,6 +69,7 @@ export class PluginGadgets {
     this.iframe.style.right = '0'
     this.iframe.style.left = '0'
     this.iframe.style.zIndex = '1000'
+    this.iframe.style.transition = '200ms'
     this.iframe.style.opacity = '0'
     this.iframe.style.pointerEvents = 'none'
     document.body.appendChild(this.iframe)

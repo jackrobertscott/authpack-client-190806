@@ -20,10 +20,14 @@ export const CreatePermission: FC<ICreatePermission> = ({ change }) => {
     return schemaCreatePermission.validateAt(path, update)
   }
   useEffect(() => {
+    let mounted = true
     schemaCreatePermission
       .validate(value)
-      .then(() => issueChange(undefined))
-      .catch(issueChange)
+      .then(() => mounted && issueChange(undefined))
+      .catch(error => mounted && issueChange(error))
+    return () => {
+      mounted = false
+    }
   }, [value])
   // create the permission when the form is submitted
   const createPermission = useCreatePermission()

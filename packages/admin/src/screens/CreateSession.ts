@@ -20,10 +20,14 @@ export const CreateSession: FC<ICreateSession> = ({ change }) => {
     return schemaCreateSession.validateAt(path, update)
   }
   useEffect(() => {
+    let mounted = true
     schemaCreateSession
       .validate(value)
-      .then(() => issueChange(undefined))
-      .catch(issueChange)
+      .then(() => mounted && issueChange(undefined))
+      .catch(error => mounted && issueChange(error))
+    return () => {
+      mounted = false
+    }
   }, [value])
   // create the session when the form is submitted
   const createSession = useCreateSession()

@@ -17,10 +17,14 @@ export const UpdatePermission: FC<IUpdatePermission> = ({ id }) => {
     return schemaUpdatePermission.validateAt(path, update)
   }
   useEffect(() => {
+    let mounted = true
     schemaUpdatePermission
       .validate(value)
-      .then(() => issueChange(undefined))
-      .catch(issueChange)
+      .then(() => mounted && issueChange(undefined))
+      .catch(error => mounted && issueChange(error))
+    return () => {
+      mounted = false
+    }
   }, [value])
   // load the permission and set as default form values
   const retrievePermission = useRetrievePermission({

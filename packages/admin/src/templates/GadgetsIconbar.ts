@@ -1,4 +1,10 @@
-import { createElement as create, FC, ReactNode, useState } from 'react'
+import {
+  createElement as create,
+  FC,
+  ReactNode,
+  useState,
+  useEffect,
+} from 'react'
 import { Layout, Iconbar, IIconbarSubmenu } from 'wga-theme'
 
 export type IGadgetsIconbarScreen = {
@@ -6,7 +12,7 @@ export type IGadgetsIconbarScreen = {
   icon: string
   label: string
   children: ReactNode
-  submenu?: IIconbarSubmenu[]
+  submenu?: Array<{ children?: ReactNode } & IIconbarSubmenu>
 }
 
 export type IGadgetsIconbar = {
@@ -15,7 +21,16 @@ export type IGadgetsIconbar = {
 }
 
 export const GadgetsIconbar: FC<IGadgetsIconbar> = ({ close, screens }) => {
-  const [active, changeActive] = useState<IGadgetsIconbarScreen>(screens[0])
+  const starting =
+    screens[0].submenu && screens[0].submenu.length
+      ? screens[0].submenu[0]
+      : screens[0]
+  const [active, changeActive] = useState<{
+    label: string
+    children?: ReactNode
+  }>(starting)
+  // eslint-disable-next-line
+  useEffect(() => changeActive(starting), [screens])
   return create(Layout.Container, {
     children: [
       create(Iconbar.Container, {
@@ -28,7 +43,7 @@ export const GadgetsIconbar: FC<IGadgetsIconbar> = ({ close, screens }) => {
             children: create(Iconbar.Icon, {
               name: screen.icon,
               click: () => changeActive(screen),
-              active: screen === active,
+              active: screen.label === active.label,
             }),
           })
         }),
@@ -42,10 +57,9 @@ export const GadgetsIconbar: FC<IGadgetsIconbar> = ({ close, screens }) => {
             }),
           }),
       }),
-      active &&
-        create((() => active.children) as FC, {
-          key: 'children',
-        }),
+      create((() => active.children || null) as FC, {
+        key: 'children',
+      }),
     ],
   })
 }

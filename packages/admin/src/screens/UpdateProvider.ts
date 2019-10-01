@@ -17,10 +17,14 @@ export const UpdateProvider: FC<IUpdateProvider> = ({ id }) => {
     return schemaUpdateProvider.validateAt(path, update)
   }
   useEffect(() => {
+    let mounted = true
     schemaUpdateProvider
       .validate(value)
-      .then(() => issueChange(undefined))
-      .catch(issueChange)
+      .then(() => mounted && issueChange(undefined))
+      .catch(error => mounted && issueChange(error))
+    return () => {
+      mounted = false
+    }
   }, [value])
   // load the provider and set as default form values
   const retrieveProvider = useRetrieveProvider({

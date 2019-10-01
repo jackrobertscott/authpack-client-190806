@@ -1,6 +1,6 @@
-import { useState, useMemo, useEffect } from 'react'
-import { chat } from '../utils/server'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import { useToaster } from 'wga-theme'
+import { chat } from '../utils/server'
 
 export const createUseGraph = <T>({ query }: { query: string }) => (
   variables?: { [key: string]: any },
@@ -27,6 +27,13 @@ export const useGraph = <T>({
     operationName?: string
   ) => Promise<T>
 } => {
+  const mounted = useRef(false)
+  useEffect(() => {
+    mounted.current = true
+    return () => {
+      mounted.current = false
+    }
+  }, [])
   const [data, dataChange] = useState<T | undefined>()
   const [loading, loadingChange] = useState<boolean>()
   const [error, errorChange] = useState<Error | undefined>()
@@ -44,19 +51,23 @@ export const useGraph = <T>({
     })
       .then((done: any) => {
         if (done && done.error) throw done
-        dataChange(done)
-        errorChange(undefined)
-        loadingChange(false)
+        if (mounted.current) {
+          dataChange(done)
+          errorChange(undefined)
+          loadingChange(false)
+        }
         return done as T
       })
       .catch((caught: Error) => {
-        errorChange(caught)
-        loadingChange(false)
-        toaster.add({
-          icon: 'bell',
-          label: 'Error',
-          description: caught.message,
-        })
+        if (mounted.current) {
+          errorChange(caught)
+          loadingChange(false)
+          toaster.add({
+            icon: 'bell',
+            label: 'Error',
+            description: caught.message,
+          })
+        }
         throw caught
       })
   }

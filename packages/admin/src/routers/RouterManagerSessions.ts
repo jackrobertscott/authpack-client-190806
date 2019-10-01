@@ -7,7 +7,7 @@ import { UpdateSession } from '../screens/UpdateSession'
 import { RemoveSession } from '../screens/RemoveSession'
 
 export type IRouterManagerSessions = {
-  id: string
+  id?: string
   close?: () => void
   change?: () => void
 }
@@ -19,6 +19,7 @@ export const RouterManagerSessions: FC<IRouterManagerSessions> = ({
 }) => {
   return create(RouterModal, {
     close,
+    visible: typeof id === 'string',
     children: create(GadgetsIconbar, {
       close,
       screens: id

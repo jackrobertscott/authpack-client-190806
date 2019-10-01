@@ -7,7 +7,7 @@ import { RemoveMembership } from '../screens/RemoveMembership'
 import { CreateMembership } from '../screens/CreateMembership'
 
 export type IRouterManagerMemberships = {
-  id: string
+  id?: string
   close?: () => void
   change?: () => void
 }
@@ -19,6 +19,7 @@ export const RouterManagerMemberships: FC<IRouterManagerMemberships> = ({
 }) => {
   return create(RouterModal, {
     close,
+    visible: typeof id === 'string',
     children: create(GadgetsIconbar, {
       close,
       screens: id

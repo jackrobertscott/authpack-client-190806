@@ -17,10 +17,14 @@ export const UpdateGroup: FC<IUpdateGroup> = ({ id }) => {
     return schemaUpdateGroup.validateAt(path, update)
   }
   useEffect(() => {
+    let mounted = true
     schemaUpdateGroup
       .validate(value)
-      .then(() => issueChange(undefined))
-      .catch(issueChange)
+      .then(() => mounted && issueChange(undefined))
+      .catch(error => mounted && issueChange(error))
+    return () => {
+      mounted = false
+    }
   }, [value])
   // load the group and set as default form values
   const retrieveGroup = useRetrieveGroup({

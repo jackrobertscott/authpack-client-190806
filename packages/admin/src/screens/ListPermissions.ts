@@ -35,13 +35,12 @@ export const ListPermissions: FC<ListPermissions> = () => {
       click: () => currentChange(''),
     },
     noscroll: [
-      typeof current === 'string' &&
-        create(RouterManagerPermissions, {
-          key: 'modal',
-          id: current,
-          close: () => currentChange(undefined),
-          change: listPermissionsFetch,
-        }),
+      create(RouterManagerPermissions, {
+        key: 'modal',
+        id: current,
+        close: () => currentChange(undefined),
+        change: listPermissionsFetch,
+      }),
       create(Searchbar, {
         key: 'searchbar',
         amount: listPermissions.data && listPermissions.data.permissions.length,

@@ -17,10 +17,14 @@ export const UpdateMembership: FC<IUpdateMembership> = ({ id }) => {
   //   return schemaUpdateMembership.validateAt(path, update)
   // }
   useEffect(() => {
+    let mounted = true
     schemaUpdateMembership
       .validate(value)
-      .then(() => issueChange(undefined))
-      .catch(issueChange)
+      .then(() => mounted && issueChange(undefined))
+      .catch(error => mounted && issueChange(error))
+    return () => {
+      mounted = false
+    }
   }, [value])
   // load the membership and set as default form values
   const retrieveMembership = useRetrieveMembership({

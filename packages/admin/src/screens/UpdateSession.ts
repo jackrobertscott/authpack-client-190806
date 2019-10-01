@@ -17,10 +17,14 @@ export const UpdateSession: FC<IUpdateSession> = ({ id }) => {
   //   return schemaUpdateSession.validateAt(path, update)
   // }
   useEffect(() => {
+    let mounted = true
     schemaUpdateSession
       .validate(value)
-      .then(() => issueChange(undefined))
-      .catch(issueChange)
+      .then(() => mounted && issueChange(undefined))
+      .catch(error => mounted && issueChange(error))
+    return () => {
+      mounted = false
+    }
   }, [value])
   // load the session and set as default form values
   const retrieveSession = useRetrieveSession({

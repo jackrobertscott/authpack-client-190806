@@ -20,10 +20,14 @@ export const CreateProvider: FC<ICreateProvider> = ({ change }) => {
     return schemaCreateProvider.validateAt(path, update)
   }
   useEffect(() => {
+    let mounted = true
     schemaCreateProvider
       .validate(value)
-      .then(() => issueChange(undefined))
-      .catch(issueChange)
+      .then(() => mounted && issueChange(undefined))
+      .catch(error => mounted && issueChange(error))
+    return () => {
+      mounted = false
+    }
   }, [value])
   // create the provider when the form is submitted
   const createProvider = useCreateProvider()

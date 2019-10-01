@@ -17,10 +17,14 @@ export const LoginUser: FC<ILoginUser> = () => {
     return schemaLogin.validateAt(path, update)
   }
   useEffect(() => {
+    let mounted = true
     schemaLogin
       .validate(value)
-      .then(() => issueChange(undefined))
-      .catch(issueChange)
+      .then(() => mounted && issueChange(undefined))
+      .catch(error => mounted && issueChange(error))
+    return () => {
+      mounted = false
+    }
   }, [value])
   // login the user when the form is submitted
   const login = useLogin()

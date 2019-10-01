@@ -20,10 +20,14 @@ export const CreateMembership: FC<ICreateMembership> = ({ change }) => {
     return schemaCreateMembership.validateAt(path, update)
   }
   useEffect(() => {
+    let mounted = true
     schemaCreateMembership
       .validate(value)
-      .then(() => issueChange(undefined))
-      .catch(issueChange)
+      .then(() => mounted && issueChange(undefined))
+      .catch(error => mounted && issueChange(error))
+    return () => {
+      mounted = false
+    }
   }, [value])
   // create the membership when the form is submitted
   const createMembership = useCreateMembership()

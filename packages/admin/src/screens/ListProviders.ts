@@ -35,13 +35,12 @@ export const ListProviders: FC<ListProviders> = () => {
       click: () => currentChange(''),
     },
     noscroll: [
-      typeof current === 'string' &&
-        create(RouterManagerProviders, {
-          key: 'modal',
-          id: current,
-          close: () => currentChange(undefined),
-          change: listProvidersFetch,
-        }),
+      create(RouterManagerProviders, {
+        key: 'modal',
+        id: current,
+        close: () => currentChange(undefined),
+        change: listProvidersFetch,
+      }),
       create(Searchbar, {
         key: 'searchbar',
         amount: listProviders.data && listProviders.data.providers.length,

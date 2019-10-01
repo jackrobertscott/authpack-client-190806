@@ -35,13 +35,12 @@ export const ListGroups: FC<ListGroups> = () => {
       click: () => currentChange(''),
     },
     noscroll: [
-      typeof current === 'string' &&
-        create(RouterManagerGroups, {
-          key: 'modal',
-          id: current,
-          close: () => currentChange(undefined),
-          change: listGroupsFetch,
-        }),
+      create(RouterManagerGroups, {
+        key: 'modal',
+        id: current,
+        close: () => currentChange(undefined),
+        change: listGroupsFetch,
+      }),
       create(Searchbar, {
         key: 'searchbar',
         amount: listGroups.data && listGroups.data.groups.length,

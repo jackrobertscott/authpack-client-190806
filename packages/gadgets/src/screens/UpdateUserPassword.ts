@@ -3,11 +3,11 @@ import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
 import { createUseGraph } from '../hooks/useGraph'
 
-export type IUpdateUser = {
+export type IUpdateUserPassword = {
   id: string
 }
 
-export const UpdateUser: FC<IUpdateUser> = ({ id }) => {
+export const UpdateUserPassword: FC<IUpdateUserPassword> = ({ id }) => {
   // initialize the user form values and apply validators
   const [issue, issueChange] = useState<Error>()
   const [value, valueChange] = useState({ ...schemaUpdateUser.default() })
@@ -33,9 +33,7 @@ export const UpdateUser: FC<IUpdateUser> = ({ id }) => {
   useEffect(() => {
     if (retrieveUser.data)
       valueChange({
-        name: retrieveUser.data.user.name,
-        username: retrieveUser.data.user.username,
-        email: retrieveUser.data.user.email,
+        password: '',
       })
   }, [retrieveUser.data])
   // update the user when the form is submitted
@@ -47,49 +45,26 @@ export const UpdateUser: FC<IUpdateUser> = ({ id }) => {
     })
   }
   return create(Gadgets.Container, {
-    label: 'Update User',
+    label: 'Change Password',
     brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
         create(Inputs.Control, {
-          key: 'name',
-          label: 'Name',
-          description: 'Please use their full name',
-          change: validateAndPatch('name'),
+          key: 'password',
+          label: 'Password',
+          description: "This will replace the user's current password",
+          change: validateAndPatch('password'),
           input: props =>
             create(Inputs.String, {
               ...props,
-              value: value.name,
-              placeholder: 'Fred Blogs',
-            }),
-        }),
-        create(Inputs.Control, {
-          key: 'username',
-          label: 'Username',
-          description: 'Please use a valid username',
-          change: validateAndPatch('username'),
-          input: props =>
-            create(Inputs.String, {
-              ...props,
-              value: value.username,
-              placeholder: 'fredblogs',
-            }),
-        }),
-        create(Inputs.Control, {
-          key: 'email',
-          label: 'Email',
-          description: 'Please use a valid email address',
-          change: validateAndPatch('email'),
-          input: props =>
-            create(Inputs.String, {
-              ...props,
-              value: value.email,
-              placeholder: 'fred.blogs@example.com',
+              value: value.password,
+              password: true,
+              placeholder: '************',
             }),
         }),
         create(Button.Container, {
           key: 'submit',
-          label: 'Update',
+          label: 'Change Password',
           click: submit,
           disable: !!issue,
         }),
@@ -101,18 +76,12 @@ export const UpdateUser: FC<IUpdateUser> = ({ id }) => {
 const useRetrieveUser = createUseGraph<{
   user: {
     id: string
-    name: string
-    username: string
-    email: string
   }
 }>({
   query: `
     query RetrieveUser($options: RetrieveUserOptions!) {
       user: RetrieveUser(options: $options) {
         id
-        name
-        username
-        email
       }
     }
   `,
@@ -133,10 +102,5 @@ const useUpdateUser = createUseGraph<{
 })
 
 const schemaUpdateUser = validator.object().shape({
-  name: validator.string(),
-  username: validator.string(),
-  email: validator
-    .string()
-    .email('Please make sure you have used a valid email address')
-    .required('Please provide your name'),
+  password: validator.string().required(),
 })

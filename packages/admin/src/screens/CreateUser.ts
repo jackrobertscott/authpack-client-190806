@@ -20,10 +20,14 @@ export const CreateUser: FC<ICreateUser> = ({ change }) => {
     return schemaCreateUser.validateAt(path, update)
   }
   useEffect(() => {
+    let mounted = true
     schemaCreateUser
       .validate(value)
-      .then(() => issueChange(undefined))
-      .catch(issueChange)
+      .then(() => mounted && issueChange(undefined))
+      .catch(error => mounted && issueChange(error))
+    return () => {
+      mounted = false
+    }
   }, [value])
   // create the user when the form is submitted
   const createUser = useCreateUser()
