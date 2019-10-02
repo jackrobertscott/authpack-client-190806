@@ -105,8 +105,8 @@ export const CreateProvider: FC<ICreateProvider> = ({ change }) => {
         }),
         create(Inputs.Control, {
           key: 'redirect',
-          label: 'Client Secret',
-          description: 'Please provide the client secret provided by OAuth',
+          label: 'Redirect Url',
+          description: 'Please provide the url where your gadgets are shown',
           change: validateAndPatch('redirect'),
           input: props =>
             create(Inputs.String, {

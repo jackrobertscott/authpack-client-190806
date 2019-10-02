@@ -63,22 +63,22 @@ export const ListProviders: FC<ListProviders> = () => {
               click: () => currentChange(provider.id),
               children: [
                 create(List.Cell, {
-                  key: 'Name',
-                  label: 'Name',
-                  icon: 'book',
-                  value: provider.name,
-                }),
-                create(List.Cell, {
-                  key: 'Tag',
-                  label: 'Tag',
-                  icon: 'tags',
-                  value: provider.tag,
+                  key: 'Preset',
+                  label: 'Preset',
+                  icon: 'handshake',
+                  value: provider.preset,
                 }),
                 create(List.Cell, {
                   key: 'Scopes',
                   label: 'Scopes',
                   icon: 'bars',
                   value: provider.scopes.join(', '),
+                }),
+                create(List.Cell, {
+                  key: 'Redirect Url',
+                  label: 'Redirect Url',
+                  icon: 'share-alt',
+                  value: provider.redirect,
                 }),
                 create(List.Cell, {
                   key: 'Updated',
@@ -100,8 +100,8 @@ const useListProviders = createUseGraph<{
   providers: Array<{
     id: string
     updated: string
-    name: string
-    tag: string
+    preset: string
+    redirect: string
     scopes: string[]
   }>
 }>({
@@ -111,8 +111,8 @@ const useListProviders = createUseGraph<{
       providers: ListProviders(options: $list) {
         id
         updated
-        name
-        tag
+        preset
+        redirect
         scopes
       }
     }

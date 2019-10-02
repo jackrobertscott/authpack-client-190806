@@ -25,16 +25,16 @@ export const RetrieveProvider: FC<IRetrieveProvider> = ({ id }) => {
           value: retrieveProviderGraph.data.provider.id,
         }),
         create(Overview.Container, {
-          key: 'Name',
-          label: 'Name',
-          icon: 'book',
-          value: retrieveProviderGraph.data.provider.name,
+          key: 'Preset',
+          label: 'Preset',
+          icon: 'handshake',
+          value: retrieveProviderGraph.data.provider.preset,
         }),
         create(Overview.Container, {
-          key: 'Tag',
-          label: 'Tag',
-          icon: 'tags',
-          value: retrieveProviderGraph.data.provider.tag,
+          key: 'Redirect Url',
+          label: 'Redirect Url',
+          icon: 'share-alt',
+          value: retrieveProviderGraph.data.provider.redirect,
         }),
         create(Overview.Container, {
           key: 'Created',
@@ -64,8 +64,8 @@ const useRetrieveProvider = createUseGraph<{
     id: string
     created: string
     updated: string
-    name: string
-    tag: string
+    preset: string
+    redirect: string
   }
 }>({
   query: `
@@ -74,8 +74,8 @@ const useRetrieveProvider = createUseGraph<{
         id
         updated
         created
-        name
-        tag
+        preset
+        redirect
       }
     }
   `,
