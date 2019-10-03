@@ -16,7 +16,7 @@ export const RetrieveSession: FC<IRetrieveSession> = ({ id }) => {
   return create(Gadgets.Container, {
     label: 'Overview Session',
     brand: 'Authenticator',
-    children: create(Gadgets.Spacer, {
+    children: create(Overview.Spacer, {
       children: retrieveSessionGraph.data && [
         create(Overview.Container, {
           key: 'Id',

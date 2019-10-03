@@ -4,8 +4,15 @@ import { gadgets } from '../utils/wga'
 
 export const useGadgets = () => {
   const [state, stateChange] = useState<IPluginGadgets>()
+  const [loading, loadingChange] = useState<boolean>(false)
   useEffect(() => {
-    return gadgets.listen(data => stateChange(data))
+    return gadgets.listen(data => {
+      if (!loading) loadingChange(true)
+      stateChange(data)
+    })
   }, [])
-  return state
+  return {
+    state,
+    loading,
+  }
 }

@@ -15,7 +15,7 @@ export const ListMembershipsOfGroup: FC<IListMembershipsOfGroup> = ({ id }) => {
   return create(Gadgets.Container, {
     label: 'Memberships of Group',
     brand: 'Authenticator',
-    children: create(Gadgets.Spacer, {
+    children: create(Overview.Spacer, {
       children:
         retrieveMembership.data &&
         retrieveMembership.data.group.memberships.map(membership => {

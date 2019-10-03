@@ -34,6 +34,7 @@ export const GadgetsIconbar: FC<IGadgetsIconbar> = ({ close, screens }) => {
   }
   useEffect(() => {
     if (!screens.find(compareActive)) changeActive(starting)
+    // eslint-disable-next-line
   }, [screens])
   return create(Layout.Container, {
     children: [

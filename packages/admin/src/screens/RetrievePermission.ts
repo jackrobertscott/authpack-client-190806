@@ -16,7 +16,7 @@ export const RetrievePermission: FC<IRetrievePermission> = ({ id }) => {
   return create(Gadgets.Container, {
     label: 'Overview Permission',
     brand: 'Authenticator',
-    children: create(Gadgets.Spacer, {
+    children: create(Overview.Spacer, {
       children: retrievePermissionGraph.data && [
         create(Overview.Container, {
           key: 'Id',

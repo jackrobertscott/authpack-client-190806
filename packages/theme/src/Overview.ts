@@ -10,6 +10,9 @@ export interface IOverviewOption {
 }
 
 export interface IOverview {
+  Spacer: FC<{
+    children: ReactNode
+  }>
   Container: FC<{
     icon: string
     label: string
@@ -24,6 +27,24 @@ export interface IOverview {
 }
 
 export const Overview: IOverview = {
+  Spacer: ({ children }) => {
+    return create('div', {
+      children,
+      className: css({
+        all: 'unset',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        flexGrow: 1,
+        '& > *, & > div': {
+          marginBottom: '1px',
+          '&:last-child': {
+            marginBottom: 0,
+          },
+        },
+      }),
+    })
+  },
   Container: ({ icon, label, value, click, options }) => {
     const theme = useContext(Theme)
     return create('div', {
@@ -88,12 +109,11 @@ export const Overview: IOverview = {
       className: css({
         all: 'unset',
         display: 'flex',
-        padding: '15px',
+        padding: '15px 25px',
         transition: '200ms',
         cursor: click && 'pointer',
         color: theme.lists.color,
         background: theme.lists.background,
-        borderRadius: theme.global.radius,
         '&:hover:not(:active)': {
           background: click && theme.lists.backgroundHover,
         },

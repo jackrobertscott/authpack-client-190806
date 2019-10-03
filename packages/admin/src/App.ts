@@ -6,10 +6,12 @@ import { useGadgets } from './hooks/useGadgets'
 import { gadgets } from './utils/wga'
 
 export const App: FC<{}> = () => {
-  const state = useGadgets()
+  const { state, loading } = useGadgets()
   useEffect(() => {
-    gadgets.open()
-  }, [])
+    if (loading && !state) {
+      gadgets.open()
+    }
+  }, [state])
   return create('div', {
     children: state && state.user ? create(RouterCentral) : null,
     className: css({

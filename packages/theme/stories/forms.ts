@@ -47,7 +47,7 @@ const stories = storiesOf('Forms', module).addDecorator(data => {
 })
 
 stories.add('List', () => {
-  return create(Gadgets.Spacer, {
+  return create(Overview.Spacer, {
     children: ['One', 'Two', 'Three'].map(item =>
       create(Overview.Container, {
         key: item,
