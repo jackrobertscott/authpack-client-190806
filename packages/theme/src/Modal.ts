@@ -27,7 +27,7 @@ export const Modal: IModal = {
           borderRadius: theme.global.radius,
           width: theme.modals.width,
           height: theme.modals.height,
-          background: theme.modals.background,
+          background: theme.modals.inside,
           boxShadow: theme.modals.shadow,
           border: theme.modals.border,
         }),
@@ -46,6 +46,7 @@ export const Modal: IModal = {
         transition: '200ms',
         pointerEvents: visible ? 'all' : 'none',
         opacity: visible ? 1 : 0,
+        background: theme.modals.background,
         [`@media (max-width: ${theme.modals.width}), (max-height: ${theme.modals.height})`]: {
           alignItems: 'stretch',
           '& > *': {

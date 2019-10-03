@@ -61,6 +61,7 @@ export interface ITheme {
   }
   modals: {
     background: string
+    inside: string
     border: string
     shadow: string
     height: string
@@ -152,9 +153,10 @@ export const Theme = createContext<ITheme>({
     buttonHover: '#CCCCCC',
   },
   modals: {
-    background: '#333333',
+    background: 'hsla(0, 0%, 0%, 0.75)',
+    inside: '#333333',
     border: 'none',
-    shadow: '0 0 0 10000px hsla(0, 0%, 0%, 0.75)',
+    shadow: '0 0 35px -10px hsla(0, 0%, 0%, 0.75)',
     height: '760px',
     width: '545px',
   },
