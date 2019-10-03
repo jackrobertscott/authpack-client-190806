@@ -9,9 +9,12 @@ import { RouterManagerSessions } from '../routers/RouterManagerSessions'
 export type ListSessions = {}
 
 export const ListSessions: FC<ListSessions> = () => {
+  // prepare the modal state
+  const [modal, changeModal] = useState<{ open: boolean; id?: string }>({
+    open: false,
+  })
   // load the sessions and update results on search and pagination
   const [search, searchChange] = useState<string>('')
-  const [current, currentChange] = useState<string | undefined>()
   const listSessions = useListSessions()
   const { limit, skip, next, previous, hasNext, hasPrevious } = usePagination({
     count: listSessions.data && listSessions.data.count,
@@ -32,14 +35,14 @@ export const ListSessions: FC<ListSessions> = () => {
     button: {
       icon: 'plus',
       label: 'Create Session',
-      click: () => currentChange(''),
+      click: () => changeModal({ open: true, id: undefined }),
     },
     noscroll: [
       create(RouterManagerSessions, {
         key: 'modal',
-        id: current,
-        close: () => currentChange(undefined),
+        close: () => changeModal({ open: false, id: undefined }),
         change: listSessionsFetch,
+        ...modal,
       }),
       create(Searchbar, {
         key: 'searchbar',
@@ -60,7 +63,7 @@ export const ListSessions: FC<ListSessions> = () => {
           listSessions.data.sessions.map(session =>
             create(List.Row, {
               key: session.id,
-              click: () => currentChange(session.id),
+              click: () => changeModal({ open: true, id: session.id }),
               children: [
                 create(List.Cell, {
                   key: 'Email',

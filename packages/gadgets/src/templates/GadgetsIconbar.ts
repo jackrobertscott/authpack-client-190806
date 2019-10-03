@@ -25,9 +25,19 @@ export const GadgetsIconbar: FC<IGadgetsIconbar> = ({ close, screens }) => {
     screens[0].submenu && screens[0].submenu.length
       ? screens[0].submenu[0]
       : screens[0]
-  const [active, changeActive] = useState<{ children?: ReactNode }>(starting)
-  // eslint-disable-next-line
-  useEffect(() => changeActive(starting), [screens])
+  const [active, changeActive] = useState<{
+    label: string
+    children?: ReactNode
+  }>(starting)
+  const compareActive = (screen: IGadgetsIconbarScreen) => {
+    const sub =
+      screen.submenu &&
+      !!screen.submenu.find(submenu => submenu.label === active.label)
+    return screen.label === active.label || sub
+  }
+  useEffect(() => {
+    if (!screens.find(compareActive)) changeActive(starting)
+  }, [screens])
   return create(Layout.Container, {
     children: [
       create(Iconbar.Container, {
@@ -46,7 +56,7 @@ export const GadgetsIconbar: FC<IGadgetsIconbar> = ({ close, screens }) => {
             children: create(Iconbar.Icon, {
               name: screen.icon,
               click: () => screen.children && changeActive(screen),
-              active: screen === active,
+              active: compareActive(screen),
             }),
           })
         }),
@@ -61,10 +71,9 @@ export const GadgetsIconbar: FC<IGadgetsIconbar> = ({ close, screens }) => {
             }),
           }),
       }),
-      active &&
-        create((() => active.children || null) as FC, {
-          key: 'children',
-        }),
+      create((() => active.children || null) as FC, {
+        key: 'children',
+      }),
     ],
   })
 }

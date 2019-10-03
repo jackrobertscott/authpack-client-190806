@@ -7,7 +7,7 @@ This repository contains example code to help you get started with the Window Ga
 ## Table of Contents
 
 - [Gadgets](#gadgets)
-- [Api](#api)
+- [API](#api)
 
 ## Gadgets
 
@@ -53,9 +53,9 @@ if (gadgets.access(['admin', 'editor'])) {
 
 [See gadgets documents here.](https://github.com/jackrobertscott/authenticator/blob/master/docs/gadgets/gadgets.md)
 
-## Api
+## API
 
-The Authenticator Api let's you build a custom login system.
+The Authenticator API let's you build a custom login system.
 
 Install.
 
@@ -124,7 +124,7 @@ const session = await authenticator.sessions.retrieve({
 console.log(session.user.email)
 ```
 
-Api models.
+API models.
 
 - [Users](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/users.md)
 - [Groups](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/groups.md)

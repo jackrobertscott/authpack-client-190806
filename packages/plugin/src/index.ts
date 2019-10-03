@@ -31,13 +31,7 @@ export class PluginGadgets {
     return settingsStore.listen(({ open = false, current }) => {
       callback(current)
       if (this.iframe) {
-        if (open) {
-          this.iframe.style.opacity = '1'
-          this.iframe.style.pointerEvents = 'all'
-        } else {
-          this.iframe.style.opacity = '0'
-          this.iframe.style.pointerEvents = 'none'
-        }
+        this.iframe.style.pointerEvents = open ? 'all' : 'none'
       }
     })
   }
@@ -73,7 +67,6 @@ export class PluginGadgets {
     this.iframe.style.left = '0'
     this.iframe.style.zIndex = '1000'
     this.iframe.style.transition = '200ms'
-    this.iframe.style.opacity = '0'
     this.iframe.style.pointerEvents = 'none'
     document.body.appendChild(this.iframe)
     if (this.radio) this.radio.destroy()

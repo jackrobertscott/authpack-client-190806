@@ -126,6 +126,14 @@ export const Queries: FC<Queries> = () => {
           boxShadow: 'none',
           color: '#FFFFFF',
         },
+        '.historyPaneWrap': {
+          width: '30% !important',
+          maxWidth: '400px',
+        },
+        '.docExplorerWrap': {
+          width: '40% !important',
+          maxWidth: '600px',
+        },
         '.history-title, .doc-explorer-title': {
           textAlign: 'left',
         },

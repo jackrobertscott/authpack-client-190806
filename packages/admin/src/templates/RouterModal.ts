@@ -21,15 +21,16 @@ export const RouterModal: FC<IRouterModal> = ({
   visible = true,
 }) => {
   // dumb hack to prevent flicker in modal transitions
-  const [show, changeShow] = useState(children)
+  const [screen, changeScreen] = useState(children)
   useEffect(() => {
-    if (!visible) setTimeout(() => changeShow(children), 200)
-    else changeShow(children)
-  }, [visible])
+    if (!visible) setTimeout(() => changeScreen(children), 200)
+    else changeScreen(children)
+    // eslint-disable-next-line
+  }, [visible, children])
   const portal = usePortal({ id: 'portals' })
   const modal = create(Modal.Container, {
     click: close,
-    children: show,
+    children: screen,
     visible,
   })
   return portal.element ? createPortal(modal, portal.element) : null

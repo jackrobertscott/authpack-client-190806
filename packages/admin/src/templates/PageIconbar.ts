@@ -1,6 +1,8 @@
 import { createElement as create, FC, ReactNode, useState } from 'react'
 import { Iconbar, Layout, IIconbarSubmenu } from 'wga-theme'
 import { css } from 'emotion'
+import { gadgets } from '../utils/wga'
+import { RouterPayment } from '../routers/RouterPayment'
 
 export type IPageIconbarScreen = {
   id?: string
@@ -13,27 +15,20 @@ export type IPageIconbarScreen = {
 
 export type IPageIconbar = {
   screens: IPageIconbarScreen[]
-  logout?: () => void
-  group?: () => void
-  devmode?: () => void
 }
 
-export const PageIconbar: FC<IPageIconbar> = ({
-  screens,
-  logout,
-  group,
-  devmode,
-}) => {
-  const preload = screens.find(screen => {
-    return document.location.pathname.startsWith(screen.path)
-  })
-  const [active, changeActive] = useState<IPageIconbarScreen>(
-    preload || screens[0]
-  )
+export const PageIconbar: FC<IPageIconbar> = ({ screens }) => {
+  const preload =
+    screens.find(screen => {
+      return document.location.pathname.startsWith(screen.path)
+    }) || screens[0]
+  const [active, changeActive] = useState<{ children?: ReactNode }>(preload)
   const changeRouter = (screen: IPageIconbarScreen) => {
     changeActive(screen)
     window.history.pushState(null, screen.label, screen.path)
   }
+  // prepare the devmode modal
+  const [devmode, changeDevmode] = useState<boolean>(false)
   return create(Layout.Container, {
     children: [
       create(Iconbar.Container, {
@@ -58,40 +53,35 @@ export const PageIconbar: FC<IPageIconbar> = ({
             label: 'Dev Mode',
             children: create(Iconbar.Icon, {
               name: 'code',
-              click: devmode,
+              click: () => changeDevmode(true),
             }),
           }),
           create(Iconbar.Pointer, {
             key: 'group',
-            icon: 'bars',
-            label: 'Group',
+            icon: 'user-circle',
+            label: 'Account',
             children: create(Iconbar.Icon, {
-              name: 'bars',
-              click: group,
-            }),
-          }),
-          create(Iconbar.Pointer, {
-            key: 'logout',
-            icon: 'power-off',
-            label: 'Logout',
-            children: create(Iconbar.Icon, {
-              name: 'power-off',
-              click: logout,
+              name: 'user-circle',
+              click: () => gadgets.open(),
             }),
           }),
         ],
       }),
-      active &&
-        create('div', {
-          key: 'children',
-          children: active.children,
-          className: css({
-            all: 'unset',
-            display: 'flex',
-            position: 'relative',
-            flexGrow: 1,
-          }),
+      create('div', {
+        key: 'children',
+        children: active.children,
+        className: css({
+          all: 'unset',
+          display: 'flex',
+          position: 'relative',
+          flexGrow: 1,
         }),
+      }),
+      create(RouterPayment, {
+        key: 'devmode',
+        close: () => changeDevmode(false),
+        visible: devmode,
+      }),
     ],
   })
 }

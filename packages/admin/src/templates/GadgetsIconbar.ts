@@ -29,8 +29,12 @@ export const GadgetsIconbar: FC<IGadgetsIconbar> = ({ close, screens }) => {
     label: string
     children?: ReactNode
   }>(starting)
-  // eslint-disable-next-line
-  useEffect(() => changeActive(starting), [screens])
+  const compareActive = (screen: IGadgetsIconbarScreen) => {
+    return screen.label === active.label
+  }
+  useEffect(() => {
+    if (!screens.find(compareActive)) changeActive(starting)
+  }, [screens])
   return create(Layout.Container, {
     children: [
       create(Iconbar.Container, {
@@ -43,7 +47,7 @@ export const GadgetsIconbar: FC<IGadgetsIconbar> = ({ close, screens }) => {
             children: create(Iconbar.Icon, {
               name: screen.icon,
               click: () => changeActive(screen),
-              active: screen.label === active.label,
+              active: compareActive(screen),
             }),
           })
         }),
