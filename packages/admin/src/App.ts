@@ -11,7 +11,7 @@ export const App: FC<{}> = () => {
     if (loading && !state) {
       gadgets.open()
     }
-  }, [state])
+  }, [state, loading])
   return create('div', {
     children: state && state.user ? create(RouterCentral) : null,
     className: css({

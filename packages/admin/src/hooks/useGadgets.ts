@@ -10,6 +10,7 @@ export const useGadgets = () => {
       if (!loading) loadingChange(true)
       stateChange(data)
     })
+    // eslint-disable-next-line
   }, [])
   return {
     state,
