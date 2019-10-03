@@ -4,19 +4,27 @@ import { settingsStore, ISettings } from './utils/settings'
 export type IPluginGadgets = ISettings['current']
 
 export class PluginGadgets {
-  private key: string
   private iframeId: string
   private iframe?: HTMLIFrameElement
   private radio?: Radio<{ name: string; payload?: any }>
   private unlistener?: () => any
   private ready: boolean
   private queue: Array<() => void>
-  constructor(domainKey: string, random: string) {
-    this.key = domainKey
-    this.iframeId = `wga-plugin${random ? `-${random}` : ''}`
+  constructor(options: { suffix?: string; key: string }) {
+    this.iframeId = `wga-plugin${options.suffix ? `-${options.suffix}` : ''}`
     this.render()
     this.ready = false
-    this.queue = []
+    this.queue = [
+      () =>
+        this.radio &&
+        this.radio.message({
+          name: 'wga:domain',
+          payload: {
+            key: options.key,
+            url: document.location.origin,
+          },
+        }),
+    ]
   }
   /**
    * Get the current state of the gadgets.

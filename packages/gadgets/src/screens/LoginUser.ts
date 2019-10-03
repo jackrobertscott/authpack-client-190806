@@ -3,17 +3,19 @@ import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
 import { createUseGraph } from '../hooks/useGraph'
 import { settingsStore } from '../utils/settings'
+import { useStore } from '../hooks/useStore'
 
 export type ILoginUser = {}
 
 export const LoginUser: FC<ILoginUser> = () => {
   // initialize the user form values and apply validators
-  const [value, valueChange] = useState({ ...schemaLogin.default() })
   const [issue, issueChange] = useState<Error>()
+  const [value, valueStore] = useStore('LoginUser', {
+    ...schemaLogin.default(),
+  })
   const validateAndPatch = (path: string) => (data: any) => {
-    const update =
-      typeof data !== 'undefined' ? { ...value, [path]: data } : value
-    valueChange(update)
+    const update = { ...value, [path]: data }
+    valueStore.change(update)
     return schemaLogin.validateAt(path, update)
   }
   useEffect(() => {
@@ -26,16 +28,21 @@ export const LoginUser: FC<ILoginUser> = () => {
       mounted = false
     }
   }, [value])
+  // clean password when reload page
+  useEffect(() => {
+    valueStore.patch(store => ({ ...store, password: '' }))
+  }, [valueStore])
   // login the user when the form is submitted
   const login = useLogin()
   const submit = () => {
     schemaLogin
       .validate(value)
-      .then(data => login.fetch({ options: data }, 'Login'))
+      .then(data => login.fetch({ options: data }))
       .then(data => {
+        valueStore.patch(store => ({ ...store, password: '' }))
         settingsStore.patch(settings => ({
           ...settings,
-          current: data.status,
+          current: data.current,
         }))
       })
   }
@@ -52,6 +59,7 @@ export const LoginUser: FC<ILoginUser> = () => {
           input: props =>
             create(Inputs.String, {
               ...props,
+              value: value.email,
               placeholder: 'fred.blogs@example.com',
             }),
         }),
@@ -64,6 +72,7 @@ export const LoginUser: FC<ILoginUser> = () => {
             create(Inputs.String, {
               ...props,
               password: true,
+              value: value.password,
               placeholder: '************',
             }),
         }),
@@ -87,29 +96,31 @@ const schemaLogin = validator.object().shape({
 })
 
 const useLogin = createUseGraph<{
-  status: {
+  current: {
+    token: string
+    session: {
+      id: string
+      token: string
+    }
     user: {
       id: string
       name: string
       email: string
     }
-    session: {
-      id: string
-      token: string
-    }
   }
 }>({
   query: `
     mutation Login($options: LoginUserOptions!) {
-      status: LoginUser(options: $options) {
+      current: LoginUser(options: $options) {
+        token
+        session {
+          id
+          token
+        }
         user {
           id
           name
           email
-        }
-        session {
-          id
-          token
         }
       }
     }

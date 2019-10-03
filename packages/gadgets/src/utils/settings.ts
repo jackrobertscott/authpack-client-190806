@@ -1,20 +1,25 @@
 import { Store } from 'events-and-things'
 
 export type ISettings = {
+  domain?: {
+    key: string
+    url: string
+  }
   open: boolean
   current:
     | undefined
     | {
+        token: string
+        session: {
+          id: string
+          token: string
+        }
         user: {
           id: string
           email: string
           username?: string
           avatar?: string
           name?: string
-        }
-        session: {
-          id: string
-          token: string
         }
         group?: {
           id: string

@@ -10,7 +10,6 @@ import { RemoveUser } from '../screens/RemoveUser'
 import { RemoveGroup } from '../screens/RemoveGroup'
 import { CreateGroup } from '../screens/CreateGroup'
 import { ListProviders } from '../screens/ListProviders'
-import { ListSessions } from '../screens/ListSessions'
 import { ListMemberships } from '../screens/ListMemberships'
 import { SwitchGroup } from '../screens/SwitchGroup'
 import { CreateMembership } from '../screens/CreateMembership'
@@ -54,12 +53,6 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({ close }) => {
                   label: '3rd Party Apps',
                   description: 'Connect to other apps',
                   children: create(ListProviders),
-                },
-                {
-                  icon: 'history',
-                  label: 'Login History',
-                  description: 'See when you last logged in',
-                  children: create(ListSessions),
                 },
                 {
                   icon: 'fire-alt',
@@ -119,16 +112,16 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({ close }) => {
                   ]
                 : [
                     {
-                      icon: 'sync-alt',
-                      label: 'Switch Group',
-                      description: 'Change to another group',
-                      children: create(SwitchGroup),
-                    },
-                    {
                       icon: 'plus',
                       label: 'Create New Group',
                       description: 'Make a new group',
                       children: create(CreateGroup),
+                    },
+                    {
+                      icon: 'sync-alt',
+                      label: 'Switch Group',
+                      description: 'Change to another group',
+                      children: create(SwitchGroup),
                     },
                   ],
             },

@@ -21,9 +21,7 @@ const handler: RequestHandler = async req => {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: [req.headers.authorization, config.wga.secret]
-        .filter(String)
-        .join(','),
+      Authorization: req.headers.authorization || '',
     },
     body: JSON.stringify({
       query: body.query,

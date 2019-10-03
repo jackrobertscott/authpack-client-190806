@@ -3,7 +3,7 @@ import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
 import { LoginUser } from '../screens/LoginUser'
 import { SignUpUser } from '../screens/SignUpUser'
-import { FogotUserPassword } from '../screens/ForgotUserPassword'
+import { ForgotUserPassword } from '../screens/ForgotUserPassword'
 import { useSettings } from '../hooks/useSettings'
 
 export type IRouterModalUnauthed = {
@@ -31,7 +31,7 @@ export const RouterModalUnauthed: FC<IRouterModalUnauthed> = ({ close }) => {
         {
           icon: 'question-circle',
           label: 'Forgot Password',
-          children: create(FogotUserPassword),
+          children: create(ForgotUserPassword),
         },
       ],
     }),

@@ -35,6 +35,9 @@ export const useSettingsSetup = () => {
         case 'wga:open':
           settingsStore.patch(data => ({ ...data, open: true }))
           break
+        case 'wga:domain':
+          settingsStore.patch(data => ({ ...data, domain: payload }))
+          break
       }
     })
   }, [])

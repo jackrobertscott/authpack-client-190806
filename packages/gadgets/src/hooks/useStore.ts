@@ -5,7 +5,7 @@ export const useStore = <T extends { [key: string]: any }>(
   key?: string,
   initial: T = {} as any
 ): [T, Store<T>] => {
-  const current = useRef(new Store(initial, key))
+  const current = useRef(new Store(initial, `wga.${key}`))
   const [state, stateChange] = useState<T>(current.current.state)
   useEffect(() => {
     return current.current.listen(data => stateChange(data))

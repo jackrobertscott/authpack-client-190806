@@ -2,7 +2,7 @@ import { createElement as create, FC } from 'react'
 import { css } from 'emotion'
 import GraphiQL from 'graphiql'
 import 'graphiql/graphiql.css'
-import { chat } from '../utils/server'
+import { chat } from '../utils/chat'
 
 export type Queries = {}
 

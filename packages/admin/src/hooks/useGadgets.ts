@@ -6,7 +6,7 @@ export const useGadgets = () => {
   const [state, stateChange] = useState<IPluginGadgets>()
   const [loading, loadingChange] = useState<boolean>(false)
   useEffect(() => {
-    return gadgets.listen(data => {
+    return gadgets.listen((data: IPluginGadgets) => {
       if (!loading) loadingChange(true)
       stateChange(data)
     })

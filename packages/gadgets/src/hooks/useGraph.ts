@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { useToaster } from 'wga-theme'
-import { chat } from '../utils/server'
+import { chat } from '../utils/chat'
 
 export const createUseGraph = <T>({ query }: { query: string }) => (
   variables?: { [key: string]: any },
