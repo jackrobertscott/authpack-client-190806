@@ -83,18 +83,6 @@ export const CreateWorkspace: FC<ICreateWorkspace> = ({ change }) => {
               placeholder: 'We do awesome things',
             }),
         }),
-        create(Inputs.Control, {
-          key: 'domains',
-          label: 'Domains',
-          description: 'The whitelisted domains of your app',
-          change: validateAndPatch('domains'),
-          input: props =>
-            create(Inputs.StringArray, {
-              ...props,
-              value: value.domains,
-              placeholder: 'E.g. https://www.yourapp.com',
-            }),
-        }),
         create(Button.Container, {
           key: 'submit',
           label: 'Create',
@@ -124,10 +112,4 @@ const schemaCreateWorkspace = validator.object().shape({
   name: validator.string().required('Please provide a workspace name'),
   tag: validator.string().required('Please provide a unique workspace tag'),
   description: validator.string(),
-  domains: validator.array().of(
-    validator
-      .string()
-      .url('Please make sure you use valid urls such as "https://example.com"')
-      .required()
-  ),
 })
