@@ -2,31 +2,31 @@ import { createElement as create, FC } from 'react'
 import { Button, Gadgets, Poster } from 'wga-theme'
 import { createUseGraph } from '../hooks/useGraph'
 
-export type IRemoveGroup = {
+export type IRemoveWorkspace = {
   id: string
   change?: () => void
 }
 
-export const RemoveGroup: FC<IRemoveGroup> = ({ id, change }) => {
-  // remove the group when the form is submitted
-  const removeGroup = useRemoveGroup()
+export const RemoveWorkspace: FC<IRemoveWorkspace> = ({ id, change }) => {
+  // remove the workspace when the form is submitted
+  const removeWorkspace = useRemoveWorkspace()
   const remove = () => {
-    removeGroup
+    removeWorkspace
       .fetch({
         options: { id },
       })
       .then(change)
   }
   return create(Gadgets.Container, {
-    label: 'Remove Group',
+    label: 'Remove Workspace',
     brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
         create(Poster.Container, {
           key: 'poster',
           icon: 'radiation',
-          label: 'Delete Group',
-          description: 'Permanently remove this group',
+          label: 'Delete Workspace',
+          description: 'Permanently remove this workspace',
         }),
         create(Button.Container, {
           key: 'remove',
@@ -39,14 +39,14 @@ export const RemoveGroup: FC<IRemoveGroup> = ({ id, change }) => {
   })
 }
 
-const useRemoveGroup = createUseGraph<{
-  group: {
+const useRemoveWorkspace = createUseGraph<{
+  workspace: {
     id: string
   }
 }>({
   query: `
-    mutation RemoveGroup($options: RemoveGroupOptions!) {
-      group: RemoveGroup(options: $options) {
+    mutation RemoveWorkspace($options: RemoveWorkspaceOptions!) {
+      workspace: RemoveWorkspace(options: $options) {
         id
       }
     }

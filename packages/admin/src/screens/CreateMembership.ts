@@ -49,9 +49,9 @@ export const CreateMembership: FC<ICreateMembership> = ({ change }) => {
       options: { limit: 5, search },
     })
   // update the user options as searched
-  const listGroups = useListGroups()
-  const listGroupsFetch = (search: string = '') =>
-    listGroups.fetch({
+  const listWorkspaces = useListWorkspaces()
+  const listWorkspacesFetch = (search: string = '') =>
+    listWorkspaces.fetch({
       options: { limit: 5, search },
     })
   return create(Gadgets.Container, {
@@ -79,21 +79,21 @@ export const CreateMembership: FC<ICreateMembership> = ({ change }) => {
             }),
         }),
         create(Inputs.Control, {
-          key: 'group',
-          label: 'Group',
-          description: "Please provide the groups's id",
-          change: validateAndPatch('group'),
+          key: 'workspace',
+          label: 'Workspace',
+          description: "Please provide the workspaces's id",
+          change: validateAndPatch('workspace'),
           input: props =>
             create(Inputs.Select, {
               ...props,
-              value: value.group,
-              search: listGroupsFetch,
+              value: value.workspace,
+              search: listWorkspacesFetch,
               options:
-                listGroups.data &&
-                listGroups.data.groups.map(group => ({
-                  value: group.id,
-                  label: group.name,
-                  description: group.id,
+                listWorkspaces.data &&
+                listWorkspaces.data.workspaces.map(workspace => ({
+                  value: workspace.id,
+                  label: workspace.name,
+                  description: workspace.id,
                 })),
             }),
         }),
@@ -142,16 +142,16 @@ const useListUsers = createUseGraph<{
   `,
 })
 
-const useListGroups = createUseGraph<{
-  groups: Array<{
+const useListWorkspaces = createUseGraph<{
+  workspaces: Array<{
     id: string
     name: string
     description?: string
   }>
 }>({
   query: `
-    query ListGroups($options: ListGroupsOptions!) {
-      groups: ListGroups(options: $options) {
+    query ListWorkspaces($options: ListWorkspacesOptions!) {
+      workspaces: ListWorkspaces(options: $options) {
         id
         name
         description
@@ -162,5 +162,5 @@ const useListGroups = createUseGraph<{
 
 const schemaCreateMembership = validator.object().shape({
   user: validator.string().required('Please provide a valid user id'),
-  group: validator.string().required('Please provide a valid user id'),
+  workspace: validator.string().required('Please provide a valid user id'),
 })

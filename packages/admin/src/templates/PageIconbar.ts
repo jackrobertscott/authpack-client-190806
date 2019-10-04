@@ -57,7 +57,7 @@ export const PageIconbar: FC<IPageIconbar> = ({ screens }) => {
             }),
           }),
           create(Iconbar.Pointer, {
-            key: 'group',
+            key: 'workspace',
             icon: 'user-circle',
             label: 'Account',
             children: create(Iconbar.Icon, {

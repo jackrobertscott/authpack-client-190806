@@ -51,7 +51,7 @@ Properties.
 
 ## Create a provider
 
-Used to add a user as a new member of a group.
+Used to add a user as a new member of a workspace.
 
 ```ts
 authenticator.providers.create({
@@ -252,7 +252,7 @@ query ListProviders($options: ListProvidersOptions!) {
 
 ## Count providers
 
-Used to count a group of providers.
+Used to count a workspace of providers.
 
 ```ts
 authenticator.providers.count({
@@ -324,7 +324,7 @@ query AnalyticsOfProviders($options: AnalyticsOfProvidersOptions!) {
 ## Resources
 
 - [Users](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/users.md)
-- [Groups](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/groups.md)
+- [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/workspaces.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/permissions.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/providers.md)

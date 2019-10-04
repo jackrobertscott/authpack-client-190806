@@ -1,23 +1,23 @@
-# Groups API
+# Workspaces API
 
 > Authenticator 🏇 the fastest way to add auth to your apps
 
 ## Overview
 
-The `group` model is used to group multiple users together.
+The `workspace` model is used to workspace multiple users together.
 
 - [Setup](#Model)
-- [Group model](#Model)
+- [Workspace model](#Model)
 
 Methods.
 
-- [Create a group](#Create-a-group)
-- [Update a group](#Update-a-group)
-- [Remove a group](#Remove-a-group)
-- [Retrieve a group](#Retrieve-a-group)
-- [List groups](#List-groups)
-- [Count groups](#Count-groups)
-- [Analytics of groups](#Analytics-of-groups)
+- [Create a workspace](#Create-a-workspace)
+- [Update a workspace](#Update-a-workspace)
+- [Remove a workspace](#Remove-a-workspace)
+- [Retrieve a workspace](#Retrieve-a-workspace)
+- [List workspaces](#List-workspaces)
+- [Count workspaces](#Count-workspaces)
+- [Analytics of workspaces](#Analytics-of-workspaces)
 
 Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 
@@ -34,7 +34,7 @@ const authenticator = new Authenticator({
 });
 ```
 
-## Group model
+## Workspace model
 
 Properties.
 
@@ -42,106 +42,106 @@ Properties.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
 - meta `object?`: developer assigned attributes.
-- name `string`: group name.
+- name `string`: workspace name.
 - tag `string`: unique code used in urls.
-- description `string?`: description of the group.
+- description `string?`: description of the workspace.
 - domains `string[]`: whitelisted domains for using the authenticator API.
 
-## Create a group
+## Create a workspace
 
-Used to sign up a group on your app.
+Used to sign up a workspace on your app.
 
 ```ts
-authenticator.groups.create({
+authenticator.workspaces.create({
     meta: {/* attributes */},
-    name: 'Awesome Group',
-    tag: 'awesome-group',
+    name: 'Awesome Workspace',
+    tag: 'awesome-workspace',
     description: 'Team made of awesome people',
     domains: ['app.example.com'],
   })
-  .then(group => console.log(`Created: ${group.name} at ${group.created}`))
+  .then(workspace => console.log(`Created: ${workspace.name} at ${workspace.created}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
 Options.
 
 - meta `object?`: developer assigned attributes.
-- name `string`: group name.
+- name `string`: workspace name.
 - tag `string`: unique code.
-- description `string?`: description of the group.
+- description `string?`: description of the workspace.
 - domains `string[]`: whitelisted domains for using the authenticator API.
 
 Returns.
 
-- [group](#Model) `Promise<object, Error>`: the created group.
+- [workspace](#Model) `Promise<object, Error>`: the created workspace.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-mutation CreateGroup($options: CreateGroupOptions!) {
-  group: CreateGroup(options: $options) {
+mutation CreateWorkspace($options: CreateWorkspaceOptions!) {
+  workspace: CreateWorkspace(options: $options) {
     id
     name
-    # ... group properties
+    # ... workspace properties
   }
 }
 ```
 
-## Update a group
+## Update a workspace
 
-Used to patch a group's details.
+Used to patch a workspace's details.
 
 ```ts
-authenticator.groups.update({
-    id: group.id,
+authenticator.workspaces.update({
+    id: workspace.id,
     meta: {/* attributes */},
-    name: 'Awesome Group',
-    tag: 'awesome-group',
+    name: 'Awesome Workspace',
+    tag: 'awesome-workspace',
     description: 'Team made of awesome people x2',
     domains: ['app.example.com'],
   })
-  .then(group => console.log(`Updated: ${group.name} at ${group.updated}`))
+  .then(workspace => console.log(`Updated: ${workspace.name} at ${workspace.updated}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
 Options.
 
-- id `string`: id of the group to update.
+- id `string`: id of the workspace to update.
 - meta `object?`: developer assigned attributes.
-- name `string?`: group name.
+- name `string?`: workspace name.
 - tag `string?`: unique code.
-- description `string?`: description of the group.
+- description `string?`: description of the workspace.
 - domains `string[]?`: whitelisted domains for using the authenticator API.
 
 Returns.
 
-- [group](#Model) `Promise<object, Error>`: the updated group.
+- [workspace](#Model) `Promise<object, Error>`: the updated workspace.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-mutation UpdateGroup($options: UpdateGroupOptions!) {
-  group: UpdateGroup(options: $options) {
+mutation UpdateWorkspace($options: UpdateWorkspaceOptions!) {
+  workspace: UpdateWorkspace(options: $options) {
     id
     name
-    # ... group properties
+    # ... workspace properties
   }
 }
 ```
 
-## Remove a group
+## Remove a workspace
 
-Used to permanently remove a group.
+Used to permanently remove a workspace.
 
 ```ts
-authenticator.groups.remove({
-    id: membership.groupId,
+authenticator.workspaces.remove({
+    id: membership.workspaceId,
   })
-  .then(group => console.log(`Removed: ${group.name}`))
+  .then(workspace => console.log(`Removed: ${workspace.name}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -152,31 +152,31 @@ Options.
 
 Returns.
 
-- [group](#Model) `Promise<object, Error>` the removed group.
+- [workspace](#Model) `Promise<object, Error>` the removed workspace.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-mutation RemoveGroup($options: RemoveGroupOptions!) {
-  group: RemoveGroup(options: $options) {
+mutation RemoveWorkspace($options: RemoveWorkspaceOptions!) {
+  workspace: RemoveWorkspace(options: $options) {
     id
     name
-    # ... group properties
+    # ... workspace properties
   }
 }
 ```
 
-## Retrieve a group
+## Retrieve a workspace
 
-Used to get a single group.
+Used to get a single workspace.
 
 ```ts
-authenticator.groups.retrieve({
-    id: membership.groupId,
+authenticator.workspaces.retrieve({
+    id: membership.workspaceId,
   })
-  .then(group => console.log(`Retrieved: ${group.name}`))
+  .then(workspace => console.log(`Retrieved: ${workspace.name}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -187,69 +187,69 @@ Options.
 
 Returns.
 
-- [group](#Model) `Promise<object, Error>` the group requested.
+- [workspace](#Model) `Promise<object, Error>` the workspace requested.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query RetrieveGroup($options: RetrieveGroupOptions!) {
-  group: RetrieveGroup(options: $options) {
+query RetrieveWorkspace($options: RetrieveWorkspaceOptions!) {
+  workspace: RetrieveWorkspace(options: $options) {
     id
     name
-    # ... group properties
+    # ... workspace properties
   }
 }
 ```
 
-## List groups
+## List workspaces
 
-Used to get a list of groups.
+Used to get a list of workspaces.
 
 ```ts
-authenticator.groups.list({
+authenticator.workspaces.list({
     search: 'Awesome',
     limit: 10,
     skip: 5,
     page: 0,
   })
-  .then(groups => console.table(groups))
+  .then(workspaces => console.table(workspaces))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
 Options.
 
 - search `string?`: compared against name, code, and domains.
-- limit `number?`: maximum number of groups returned.
-- skip `number?`: skip this number of groups.
+- limit `number?`: maximum number of workspaces returned.
+- skip `number?`: skip this number of workspaces.
 
 **Note:** `skip` and `page` are summed when used together.
 
 Returns.
 
-- [groups](#Model) `Promise<object[], Error>`: a list of groups.
+- [workspaces](#Model) `Promise<object[], Error>`: a list of workspaces.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query ListGroups($options: ListGroupsOptions!) {
-  groups: ListGroups(options: $options) {
+query ListWorkspaces($options: ListWorkspacesOptions!) {
+  workspaces: ListWorkspaces(options: $options) {
     id
     name
-    # ... group properties
+    # ... workspace properties
   }
 }
 ```
 
-## Count groups
+## Count workspaces
 
-Used to count a group of groups.
+Used to count a workspace of workspaces.
 
 ```ts
-authenticator.groups.count({
+authenticator.workspaces.count({
     search: 'Awesome',
   })
   .then(count => console.log(`Counted: ${count}`))
@@ -262,24 +262,24 @@ Options.
   
 Returns.
 
-- count `Promise<number, Error>`: the number of groups counted.
+- count `Promise<number, Error>`: the number of workspaces counted.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query CountGroups($options: CountGroupsOptions!) {
-  count: CountGroups(options: $options)
+query CountWorkspaces($options: CountWorkspacesOptions!) {
+  count: CountWorkspaces(options: $options)
 }
 ```
 
-## Analytics of groups
+## Analytics of workspaces
 
-Used to get statistics of groups over time.
+Used to get statistics of workspaces over time.
 
 ```ts
-authenticator.groups.analytics({
+authenticator.workspaces.analytics({
     date: Date.now(),
     months: 6,
   })
@@ -294,20 +294,20 @@ Options.
   
 Returns.
 
-- analytics `Promise<object, Error>`: statistics related to groups within time period.
+- analytics `Promise<object, Error>`: statistics related to workspaces within time period.
   - labels `string[]`: date values within given period.
   - data `number[]`: values matching the labels.
-  - created `number`: number of groups created.
-  - updated `number`: number of groups updated.
-  - active `number`: number of groups with 1 session or more.
+  - created `number`: number of workspaces created.
+  - updated `number`: number of workspaces updated.
+  - active `number`: number of workspaces with 1 session or more.
 
 GraphQL version.
 
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query AnalyticsOfGroups($options: AnalyticsOfGroupsOptions!) {
-  analytics: AnalyticsOfGroups(options: $options) {
+query AnalyticsOfWorkspaces($options: AnalyticsOfWorkspacesOptions!) {
+  analytics: AnalyticsOfWorkspaces(options: $options) {
     labels
     data
     # ... analytics properties
@@ -318,7 +318,7 @@ query AnalyticsOfGroups($options: AnalyticsOfGroupsOptions!) {
 ## Resources
 
 - [Users](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/users.md)
-- [Groups](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/groups.md)
+- [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/workspaces.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/permissions.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/providers.md)

@@ -41,7 +41,7 @@ Properties.
 - id `string`: unique identifier.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
-- group `string`: the related group.
+- workspace `string`: the related workspace.
 - user `string`: the related user.
 - meta `object?`: developer assigned attributes.
 - expiry `Date`: the expiry time of the token.
@@ -54,7 +54,7 @@ Used to sign up a session on your app.
 
 ```ts
 authenticator.sessions.create({
-    group: group.id,
+    workspace: workspace.id,
     user: user.id,
     meta: {/* attributes */},
     expiry: new Date(),
@@ -66,7 +66,7 @@ authenticator.sessions.create({
 
 Options.
 
-- group `string`: the group's id.
+- workspace `string`: the workspace's id.
 - user `string`: the user's id.
 - meta `object?`: developer assigned attributes.
 - expiry `Date`: the expiry time of the token.
@@ -235,7 +235,7 @@ query ListSessions($options: ListSessionsOptions!) {
 
 ## Count sessions
 
-Used to count a group of sessions.
+Used to count a workspace of sessions.
 
 ```ts
 authenticator.sessions.count()
@@ -305,7 +305,7 @@ query AnalyticsOfSessions($options: AnalyticsOfSessionsOptions!) {
 ## Resources
 
 - [Users](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/users.md)
-- [Groups](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/groups.md)
+- [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/workspaces.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/permissions.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/providers.md)

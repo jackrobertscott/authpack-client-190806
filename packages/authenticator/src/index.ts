@@ -1,5 +1,5 @@
 import { IGraphUsers, createUsers } from './endpoints/users'
-import { IGraphGroups, createGroups } from './endpoints/groups'
+import { IGraphWorkspaces, createWorkspaces } from './endpoints/workspaces'
 import { IGraphMemberships, createMemberships } from './endpoints/memberships'
 import { IGraphPermissions, createPermissions } from './endpoints/permissions'
 import { IGraphProviders, createProviders } from './endpoints/providers'
@@ -11,7 +11,7 @@ export type IAuthenticator = {
 
 export class Authenticator {
   public users: IGraphUsers
-  public groups: IGraphGroups
+  public workspaces: IGraphWorkspaces
   public memberships: IGraphMemberships
   public permissions: IGraphPermissions
   public providers: IGraphProviders
@@ -21,7 +21,7 @@ export class Authenticator {
   constructor({ key }: IAuthenticator) {
     this.key = key
     this.users = createUsers(this.key)
-    this.groups = createGroups(this.key)
+    this.workspaces = createWorkspaces(this.key)
     this.memberships = createMemberships(this.key)
     this.permissions = createPermissions(this.key)
     this.providers = createProviders(this.key)

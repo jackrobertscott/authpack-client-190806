@@ -4,7 +4,7 @@
 
 ## Overview
 
-The authenticator gadgets provide the quickest solution to user & group management.
+The authenticator gadgets provide the quickest solution to user & workspace management.
 
 - [Setup](#Setup)
 - [Gadgets state](#Gadgets-state)
@@ -31,13 +31,13 @@ Properties.
 
 ## Gadgets state
 
-The gadgets store an internal state which contains your user, session, and group details.
+The gadgets store an internal state which contains your user, session, and workspace details.
 
 - [user]() `object?`: the current authenticated user.
-- [group]() `object?`: the current group selected by the user.
+- [workspace]() `object?`: the current workspace selected by the user.
 - [session]() `object?`: the current user's authentication session containing access token.
-- [permissions]() `object[]?`: the permission's assigned to the current user with this group.
-- [membership]() `object?`: the membership relation between the user and group.
+- [permissions]() `object[]?`: the permission's assigned to the current user with this workspace.
+- [membership]() `object?`: the membership relation between the user and workspace.
 
 ## Listen to state changes
 
@@ -59,7 +59,7 @@ Returns.
 
 ## Render the gadgets
 
-Used to authenticate and manage a user and their groups.
+Used to authenticate and manage a user and their workspaces.
 
 ```ts
 gadgets.render({

@@ -4,47 +4,47 @@ import { format } from 'date-fns'
 import { Searchbar } from '../templates/Searchbar'
 import { createUseGraph } from '../hooks/useGraph'
 import { usePagination } from '../hooks/usePagination'
-import { RouterManagerGroups } from '../routers/RouterManagerGroups'
+import { RouterManagerWorkspaces } from '../routers/RouterManagerWorkspaces'
 
-export type ListGroups = {}
+export type ListWorkspaces = {}
 
-export const ListGroups: FC<ListGroups> = () => {
-  // load the groups and update results on search and pagination
+export const ListWorkspaces: FC<ListWorkspaces> = () => {
+  // load the workspaces and update results on search and pagination
   const [search, searchChange] = useState<string>('')
   const [current, currentChange] = useState<string | undefined>()
-  const listGroups = useListGroups()
+  const listWorkspaces = useListWorkspaces()
   const { limit, skip, next, previous, hasNext, hasPrevious } = usePagination({
-    count: listGroups.data && listGroups.data.count,
+    count: listWorkspaces.data && listWorkspaces.data.count,
   })
-  const listGroupsFetch = () => {
-    listGroups.fetch({
+  const listWorkspacesFetch = () => {
+    listWorkspaces.fetch({
       count: { search },
       list: { search, limit, skip },
     })
   }
   useEffect(() => {
-    listGroupsFetch()
+    listWorkspacesFetch()
     // eslint-disable-next-line
   }, [search, limit, skip])
   return create(Page.Container, {
-    title: 'All Groups',
-    description: 'See all the groups who have signed up to your app',
+    title: 'All Workspaces',
+    description: 'See all the workspaces who have signed up to your app',
     button: {
       icon: 'plus',
-      label: 'Create Group',
+      label: 'Create Workspace',
       click: () => currentChange(''),
     },
     noscroll: [
-      create(RouterManagerGroups, {
+      create(RouterManagerWorkspaces, {
         key: 'modal',
         id: current,
         close: () => currentChange(undefined),
-        change: listGroupsFetch,
+        change: listWorkspacesFetch,
       }),
       create(Searchbar, {
         key: 'searchbar',
-        amount: listGroups.data && listGroups.data.groups.length,
-        total: listGroups.data && listGroups.data.count,
+        amount: listWorkspaces.data && listWorkspaces.data.workspaces.length,
+        total: listWorkspaces.data && listWorkspaces.data.count,
         previous: hasPrevious() ? () => previous() : undefined,
         next: hasNext() ? () => next() : undefined,
         change: phrase => {
@@ -56,35 +56,35 @@ export const ListGroups: FC<ListGroups> = () => {
       create(List.Container, {
         key: 'list',
         children:
-          listGroups.data &&
-          listGroups.data.groups.map(group =>
+          listWorkspaces.data &&
+          listWorkspaces.data.workspaces.map(workspace =>
             create(List.Row, {
-              key: group.id,
-              click: () => currentChange(group.id),
+              key: workspace.id,
+              click: () => currentChange(workspace.id),
               children: [
                 create(List.Cell, {
                   key: 'Name',
                   label: 'Name',
                   icon: 'project-diagram',
-                  value: group.name,
+                  value: workspace.name,
                 }),
                 create(List.Cell, {
                   key: 'Tag',
                   label: 'Tag',
                   icon: 'tags',
-                  value: group.tag,
+                  value: workspace.tag,
                 }),
                 create(List.Cell, {
                   key: 'Description',
                   label: 'Description',
                   icon: 'pen-alt',
-                  value: group.description,
+                  value: workspace.description,
                 }),
                 create(List.Cell, {
                   key: 'Updated',
                   label: 'Updated',
                   icon: 'clock',
-                  value: format(new Date(group.updated), 'dd LLL yyyy'),
+                  value: format(new Date(workspace.updated), 'dd LLL yyyy'),
                   end: true,
                 }),
               ],
@@ -95,9 +95,9 @@ export const ListGroups: FC<ListGroups> = () => {
   })
 }
 
-const useListGroups = createUseGraph<{
+const useListWorkspaces = createUseGraph<{
   count: number
-  groups: Array<{
+  workspaces: Array<{
     id: string
     updated: string
     name: string
@@ -106,9 +106,9 @@ const useListGroups = createUseGraph<{
   }>
 }>({
   query: `
-    query ListGroups($count: CountGroupsOptions, $list: ListGroupsOptions) {
-      count: CountGroups(options: $count)
-      groups: ListGroups(options: $list) {
+    query ListWorkspaces($count: CountWorkspacesOptions, $list: ListWorkspacesOptions) {
+      count: CountWorkspaces(options: $count)
+      workspaces: ListWorkspaces(options: $list) {
         id
         updated
         name

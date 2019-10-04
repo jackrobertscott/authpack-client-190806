@@ -4,7 +4,7 @@
 
 ## Overview
 
-The `membership` model is used to associates an user with a group.
+The `membership` model is used to associates an user with a workspace.
 
 - [Setup](#Model)
 - [Membership model](#Model)
@@ -41,7 +41,7 @@ Properties.
 - id `string`: unique identifier.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
-- group `object`: the related group.
+- workspace `object`: the related workspace.
 - user `object`: the related user.
 - permissions `object[]`: the permissions assigned to member.
 - meta `object?`: developer assigned attributes.
@@ -49,11 +49,11 @@ Properties.
 
 ## Create a membership
 
-Used to add a user as a new member of a group.
+Used to add a user as a new member of a workspace.
 
 ```ts
 authenticator.memberships.create({
-    group: group.id,
+    workspace: workspace.id,
     user: user.id,
     permissions: [permissionEditor.id, permissionCommentor.id],
     meta: {/* attributes */},
@@ -65,7 +65,7 @@ authenticator.memberships.create({
 
 Options.
 
-- group: `string`: id of a group.
+- workspace: `string`: id of a workspace.
 - user: `string`: id of a user.
 - permissions `string[]?`: ids of permissions assigned to member.
 - meta `object?`: developer assigned attributes.
@@ -232,7 +232,7 @@ query ListMemberships($options: ListMembershipsOptions!) {
 
 ## Count memberships
 
-Used to count a group of memberships.
+Used to count a workspace of memberships.
 
 ```ts
 authenticator.memberships.count()
@@ -302,7 +302,7 @@ query AnalyticsOfMemberships($options: AnalyticsOfMembershipsOptions!) {
 ## Resources
 
 - [Users](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/users.md)
-- [Groups](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/groups.md)
+- [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/workspaces.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/permissions.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/providers.md)

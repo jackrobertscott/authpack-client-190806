@@ -69,10 +69,10 @@ export const ListMemberships: FC<ListMemberships> = () => {
                   value: membership.user.name || membership.user.email,
                 }),
                 create(List.Cell, {
-                  key: 'Group',
-                  label: 'Group',
+                  key: 'Workspace',
+                  label: 'Workspace',
                   icon: 'project-diagram',
-                  value: membership.group.name,
+                  value: membership.workspace.name,
                 }),
                 create(List.Cell, {
                   key: 'Permissions',
@@ -104,7 +104,7 @@ const useListMemberships = createUseGraph<{
       email: string
       name?: string
     }
-    group: {
+    workspace: {
       name: string
     }
     permissions: Array<{
@@ -122,7 +122,7 @@ const useListMemberships = createUseGraph<{
           email
           name
         }
-        group {
+        workspace {
           name
         }
         permissions {

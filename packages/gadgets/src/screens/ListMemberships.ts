@@ -5,7 +5,7 @@ export type IListMemberships = {}
 
 export const ListMemberships: FC<IListMemberships> = () => {
   return create(Gadgets.Container, {
-    label: 'Group Members',
+    label: 'Workspace Members',
     brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: null,

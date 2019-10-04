@@ -1,7 +1,7 @@
 import { createElement as create, FC } from 'react'
 import { PageIconbar } from '../templates/PageIconbar'
 import { RouterSidebarUsers } from './RouterSidebarUsers'
-import { RouterSidebarGroups } from './RouterSidebarGroups'
+import { RouterSidebarWorkspaces } from './RouterSidebarWorkspaces'
 import { Queries } from '../screens/Queries'
 
 export type IRouterCentral = {}
@@ -17,9 +17,9 @@ export const RouterCentral: FC<IRouterCentral> = () => {
       },
       {
         icon: 'project-diagram',
-        label: 'Groups',
-        children: create(RouterSidebarGroups),
-        path: '/groups',
+        label: 'Workspaces',
+        children: create(RouterSidebarWorkspaces),
+        path: '/workspaces',
       },
       {
         icon: 'sitemap',

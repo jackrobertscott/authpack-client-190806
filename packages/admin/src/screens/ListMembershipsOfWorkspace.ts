@@ -2,23 +2,25 @@ import { createElement as create, FC } from 'react'
 import { Gadgets, Overview } from 'wga-theme'
 import { createUseGraph } from '../hooks/useGraph'
 
-export type IListMembershipsOfGroup = {
+export type IListMembershipsOfWorkspace = {
   id: string
   change?: () => void
 }
 
-export const ListMembershipsOfGroup: FC<IListMembershipsOfGroup> = ({ id }) => {
+export const ListMembershipsOfWorkspace: FC<IListMembershipsOfWorkspace> = ({
+  id,
+}) => {
   // load the membership to show on page
   const retrieveMembership = useRetrieveMembership({
     options: { id },
   })
   return create(Gadgets.Container, {
-    label: 'Memberships of Group',
+    label: 'Memberships of Workspace',
     brand: 'Authenticator',
     children: create(Overview.Spacer, {
       children:
         retrieveMembership.data &&
-        retrieveMembership.data.group.memberships.map(membership => {
+        retrieveMembership.data.workspace.memberships.map(membership => {
           return create(Overview.Container, {
             key: 'Id',
             label: 'Id',
@@ -31,7 +33,7 @@ export const ListMembershipsOfGroup: FC<IListMembershipsOfGroup> = ({ id }) => {
 }
 
 const useRetrieveMembership = createUseGraph<{
-  group: {
+  workspace: {
     id: string
     memberships: Array<{
       id: string
@@ -41,8 +43,8 @@ const useRetrieveMembership = createUseGraph<{
   }
 }>({
   query: `
-    query ListMembershipsOfGroup($options: RetrieveGroupOptions!) {
-      group: RetrieveGroup(options: $options) {
+    query ListMembershipsOfWorkspace($options: RetrieveWorkspaceOptions!) {
+      workspace: RetrieveWorkspace(options: $options) {
         id
         memberships {
           id

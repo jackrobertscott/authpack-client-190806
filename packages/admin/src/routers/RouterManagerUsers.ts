@@ -48,7 +48,7 @@ export const RouterManagerUsers: FC<IRouterManagerUsers> = ({
             },
             {
               icon: 'project-diagram',
-              label: 'Groups of User',
+              label: 'Workspaces of User',
               children: null,
             },
             {

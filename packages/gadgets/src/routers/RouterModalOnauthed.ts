@@ -4,14 +4,14 @@ import { RouterModal } from '../templates/RouterModal'
 import { LogoutUser } from '../screens/LogoutUser'
 import { useSettings } from '../hooks/useSettings'
 import { UpdateUser } from '../screens/UpdateUser'
-import { UpdateGroup } from '../screens/UpdateGroup'
+import { UpdateWorkspace } from '../screens/UpdateWorkspace'
 import { UpdateUserPassword } from '../screens/UpdateUserPassword'
 import { RemoveUser } from '../screens/RemoveUser'
-import { RemoveGroup } from '../screens/RemoveGroup'
-import { CreateGroup } from '../screens/CreateGroup'
+import { RemoveWorkspace } from '../screens/RemoveWorkspace'
+import { CreateWorkspace } from '../screens/CreateWorkspace'
 import { ListProviders } from '../screens/ListProviders'
 import { ListMemberships } from '../screens/ListMemberships'
-import { SwitchGroup } from '../screens/SwitchGroup'
+import { SwitchWorkspace } from '../screens/SwitchWorkspace'
 import { CreateMembership } from '../screens/CreateMembership'
 
 export type IRouterModalOnauthed = {
@@ -66,46 +66,46 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({ close }) => {
             },
             {
               icon: 'users',
-              label: 'Group Settings',
-              submenu: settings.session.group
+              label: 'Workspace Settings',
+              submenu: settings.session.workspace
                 ? [
                     {
                       icon: 'cog',
-                      label: 'Update Group',
-                      description: 'Your group settings',
-                      children: create(UpdateGroup, {
-                        id: settings.session.group.id,
+                      label: 'Update Workspace',
+                      description: 'Your workspace settings',
+                      children: create(UpdateWorkspace, {
+                        id: settings.session.workspace.id,
                       }),
                     },
                     {
                       icon: 'sync-alt',
-                      label: 'Switch Group',
-                      description: 'Change to another group',
-                      children: create(SwitchGroup),
+                      label: 'Switch Workspace',
+                      description: 'Change to another workspace',
+                      children: create(SwitchWorkspace),
                     },
                     {
                       icon: 'plus',
-                      label: 'Create New Group',
-                      description: 'Make a new group',
-                      children: create(CreateGroup),
+                      label: 'Create New Workspace',
+                      description: 'Make a new workspace',
+                      children: create(CreateWorkspace),
                     },
                     {
                       icon: 'user-plus',
                       label: 'Add Member',
-                      description: 'Add a new group member',
+                      description: 'Add a new workspace member',
                       children: create(CreateMembership),
                     },
                     {
                       icon: 'user-plus',
                       label: 'See Members',
-                      description: 'List all group members',
+                      description: 'List all workspace members',
                       children: create(ListMemberships),
                     },
                     {
                       icon: 'fire-alt',
                       label: 'Danger Zone',
-                      description: 'Remove this group',
-                      children: create(RemoveGroup, {
+                      description: 'Remove this workspace',
+                      children: create(RemoveWorkspace, {
                         id: settings.session.user.id,
                       }),
                     },
@@ -113,15 +113,15 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({ close }) => {
                 : [
                     {
                       icon: 'plus',
-                      label: 'Create New Group',
-                      description: 'Make a new group',
-                      children: create(CreateGroup),
+                      label: 'Create New Workspace',
+                      description: 'Make a new workspace',
+                      children: create(CreateWorkspace),
                     },
                     {
                       icon: 'sync-alt',
-                      label: 'Switch Group',
-                      description: 'Change to another group',
-                      children: create(SwitchGroup),
+                      label: 'Switch Workspace',
+                      description: 'Change to another workspace',
+                      children: create(SwitchWorkspace),
                     },
                   ],
             },

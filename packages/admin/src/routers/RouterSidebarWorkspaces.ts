@@ -1,38 +1,38 @@
 import { createElement as create, FC } from 'react'
 import { PageSidebar } from '../templates/PageSidebar'
-import { ListGroups } from '../screens/ListGroups'
+import { ListWorkspaces } from '../screens/ListWorkspaces'
 import { ListPermissions } from '../screens/ListPermissions'
 import { ListMemberships } from '../screens/ListMemberships'
 
-export type IRouterSidebarGroups = {}
+export type IRouterSidebarWorkspaces = {}
 
-export const RouterSidebarGroups: FC<IRouterSidebarGroups> = () => {
+export const RouterSidebarWorkspaces: FC<IRouterSidebarWorkspaces> = () => {
   return create(PageSidebar, {
-    title: 'Groups',
+    title: 'Workspaces',
     screens: [
       {
         icon: 'user-friends',
-        label: 'See all groups',
-        children: create(ListGroups),
-        path: '/groups',
+        label: 'See all workspaces',
+        children: create(ListWorkspaces),
+        path: '/workspaces',
       },
       {
         icon: 'user-plus',
         label: 'See all memberships',
         children: create(ListMemberships),
-        path: '/groups/memberships',
+        path: '/workspaces/memberships',
       },
       {
         icon: 'bookmark',
         label: 'See all permissions',
         children: create(ListPermissions),
-        path: '/groups/permissions',
+        path: '/workspaces/permissions',
       },
       {
         icon: 'code',
         label: 'See install guide',
         children: null,
-        path: '/groups/install',
+        path: '/workspaces/install',
       },
     ],
   })

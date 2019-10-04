@@ -1,19 +1,19 @@
 import { createElement as create, FC } from 'react'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
-import { RetrieveGroup } from '../screens/RetrieveGroup'
-import { UpdateGroup } from '../screens/UpdateGroup'
-import { RemoveGroup } from '../screens/RemoveGroup'
-import { CreateGroup } from '../screens/CreateGroup'
-import { ListMembershipsOfGroup } from '../screens/ListMembershipsOfGroup'
+import { RetrieveWorkspace } from '../screens/RetrieveWorkspace'
+import { UpdateWorkspace } from '../screens/UpdateWorkspace'
+import { RemoveWorkspace } from '../screens/RemoveWorkspace'
+import { CreateWorkspace } from '../screens/CreateWorkspace'
+import { ListMembershipsOfWorkspace } from '../screens/ListMembershipsOfWorkspace'
 
-export type IRouterManagerGroups = {
+export type IRouterManagerWorkspaces = {
   id?: string
   close?: () => void
   change?: () => void
 }
 
-export const RouterManagerGroups: FC<IRouterManagerGroups> = ({
+export const RouterManagerWorkspaces: FC<IRouterManagerWorkspaces> = ({
   id,
   close,
   change,
@@ -28,21 +28,21 @@ export const RouterManagerGroups: FC<IRouterManagerGroups> = ({
             {
               icon: 'project-diagram',
               label: 'Overview',
-              children: create(RetrieveGroup, {
+              children: create(RetrieveWorkspace, {
                 id,
               }),
             },
             {
               icon: 'cog',
               label: 'Update',
-              children: create(UpdateGroup, {
+              children: create(UpdateWorkspace, {
                 id,
               }),
             },
             {
               icon: 'users',
-              label: 'Members of Group',
-              children: create(ListMembershipsOfGroup, {
+              label: 'Members of Workspace',
+              children: create(ListMembershipsOfWorkspace, {
                 id,
               }),
             },
@@ -54,7 +54,7 @@ export const RouterManagerGroups: FC<IRouterManagerGroups> = ({
             {
               icon: 'fire-alt',
               label: 'Danger Zone',
-              children: create(RemoveGroup, {
+              children: create(RemoveWorkspace, {
                 id,
               }),
             },
@@ -63,7 +63,7 @@ export const RouterManagerGroups: FC<IRouterManagerGroups> = ({
             {
               icon: 'plus',
               label: 'Create',
-              children: create(CreateGroup, {
+              children: create(CreateWorkspace, {
                 change: () => {
                   if (close) close()
                   if (change) change()

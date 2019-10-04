@@ -15,7 +15,7 @@ export const RouterSidebarReports: FC<IRouterSidebarReports> = () => {
       },
       {
         icon: 'users',
-        label: 'See group metrics',
+        label: 'See workspace metrics',
         children: null,
         path: '/',
       },

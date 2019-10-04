@@ -254,7 +254,7 @@ query ListUsers($options: ListUsersOptions!) {
 
 ## Count users
 
-Used to count a group of users.
+Used to count a workspace of users.
 
 ```ts
 authenticator.users.count({
@@ -326,7 +326,7 @@ query AnalyticsOfUsers($options: AnalyticsOfUsersOptions!) {
 ## Resources
 
 - [Users](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/users.md)
-- [Groups](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/groups.md)
+- [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/workspaces.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/permissions.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/providers.md)

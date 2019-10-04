@@ -2,7 +2,7 @@ import { createElement as create } from 'react'
 import { storiesOf } from '@storybook/react'
 import { RouterCentral } from '../src/routers/RouterCentral'
 import { RouterManagerUsers } from '../src/routers/RouterManagerUsers'
-import { RouterManagerGroups } from '../src/routers/RouterManagerGroups'
+import { RouterManagerWorkspaces } from '../src/routers/RouterManagerWorkspaces'
 import { RouterManagerMemberships } from '../src/routers/RouterManagerMemberships'
 import { RouterManagerPermissions } from '../src/routers/RouterManagerPermissions'
 import { RouterManagerSessions } from '../src/routers/RouterManagerSessions'
@@ -21,8 +21,8 @@ storiesGadgetsRouters.add('Users Manager', () => {
   return create(RouterManagerUsers)
 })
 
-storiesGadgetsRouters.add('Groups Manager', () => {
-  return create(RouterManagerGroups)
+storiesGadgetsRouters.add('Workspaces Manager', () => {
+  return create(RouterManagerWorkspaces)
 })
 
 storiesGadgetsRouters.add('Memberships Manager', () => {

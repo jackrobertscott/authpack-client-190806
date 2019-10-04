@@ -18,7 +18,7 @@ export type ISettings = {
           avatar?: string
           name?: string
         }
-        group?: {
+        workspace?: {
           id: string
           name: string
           tag: string

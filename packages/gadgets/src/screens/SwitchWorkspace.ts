@@ -1,11 +1,11 @@
 import { createElement as create, FC } from 'react'
 import { Gadgets } from 'wga-theme'
 
-export type ISwitchGroup = {}
+export type ISwitchWorkspace = {}
 
-export const SwitchGroup: FC<ISwitchGroup> = () => {
+export const SwitchWorkspace: FC<ISwitchWorkspace> = () => {
   return create(Gadgets.Container, {
-    label: 'Switch Group',
+    label: 'Switch Workspace',
     brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: null,
