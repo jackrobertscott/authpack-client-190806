@@ -19,7 +19,6 @@ export const RouterManagerSessions: FC<IRouterManagerSessions> = ({
   close,
   change,
 }) => {
-  console.log(id)
   return create(RouterModal, {
     close,
     visible: open,

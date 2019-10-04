@@ -70,12 +70,10 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({ close }) => {
               submenu: settings.session.workspace
                 ? [
                     {
-                      icon: 'cog',
-                      label: 'Update Workspace',
-                      description: 'Your workspace settings',
-                      children: create(UpdateWorkspace, {
-                        id: settings.session.workspace.id,
-                      }),
+                      icon: 'plus',
+                      label: 'Create Workspace',
+                      description: 'Make a new workspace',
+                      children: create(CreateWorkspace),
                     },
                     {
                       icon: 'sync-alt',
@@ -84,10 +82,12 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({ close }) => {
                       children: create(SwitchWorkspace),
                     },
                     {
-                      icon: 'plus',
-                      label: 'Create New Workspace',
-                      description: 'Make a new workspace',
-                      children: create(CreateWorkspace),
+                      icon: 'cog',
+                      label: 'Update Workspace',
+                      description: 'Your workspace settings',
+                      children: create(UpdateWorkspace, {
+                        id: settings.session.workspace.id,
+                      }),
                     },
                     {
                       icon: 'user-plus',

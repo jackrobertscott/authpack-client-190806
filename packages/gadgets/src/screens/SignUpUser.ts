@@ -119,9 +119,23 @@ const useSignUpUser = createUseGraph<{
     token: string
     user: {
       id: string
-      name: string
       email: string
+      username?: string
+      avatar?: string
+      name?: string
     }
+    workspace?: {
+      id: string
+      name: string
+      tag: string
+      description?: string
+    }
+    permissions?: Array<{
+      id: string
+      name: string
+      tag: string
+      description?: string
+    }>
   }
 }>({
   query: `
@@ -131,8 +145,22 @@ const useSignUpUser = createUseGraph<{
         token
         user {
           id
-          name
           email
+          username
+          avatar
+          name
+        }
+        workspace {
+          id
+          name
+          tag
+          description
+        }
+        permissions {
+          id
+          name
+          tag
+          description
         }
       }
     }
