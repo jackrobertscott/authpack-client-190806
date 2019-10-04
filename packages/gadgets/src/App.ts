@@ -10,7 +10,7 @@ export const App: FC<{}> = () => {
   const [settings, changeSettings] = useSettings()
   const close = useRef(() => changeSettings({ open: false }))
   return create('div', {
-    children: settings.current
+    children: settings.session
       ? create(RouterModalOnauthed, { close: close.current })
       : create(RouterModalUnauthed, { close: close.current }),
   })

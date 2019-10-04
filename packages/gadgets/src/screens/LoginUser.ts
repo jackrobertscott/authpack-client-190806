@@ -42,7 +42,7 @@ export const LoginUser: FC<ILoginUser> = () => {
         valueStore.patch(store => ({ ...store, password: '' }))
         settingsStore.patch(settings => ({
           ...settings,
-          current: data.current,
+          session: data.session,
         }))
       })
   }
@@ -96,12 +96,9 @@ const schemaLogin = validator.object().shape({
 })
 
 const useLogin = createUseGraph<{
-  current: {
+  session: {
+    id: string
     token: string
-    session: {
-      id: string
-      token: string
-    }
     user: {
       id: string
       name: string
@@ -111,12 +108,9 @@ const useLogin = createUseGraph<{
 }>({
   query: `
     mutation Login($options: LoginUserOptions!) {
-      current: LoginUser(options: $options) {
+      session: LoginUser(options: $options) {
+        id
         token
-        session {
-          id
-          token
-        }
         user {
           id
           name

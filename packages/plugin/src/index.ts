@@ -1,7 +1,7 @@
 import { Radio } from 'iframe-radio'
 import { settingsStore, ISettings } from './utils/settings'
 
-export type IPluginGadgets = ISettings['current']
+export type IPluginGadgets = ISettings['session']
 
 export class PluginGadgets {
   private iframeId: string
@@ -30,14 +30,14 @@ export class PluginGadgets {
    * Get the current state of the gadgets.
    */
   public get state(): IPluginGadgets {
-    return settingsStore.state.current
+    return settingsStore.state.session
   }
   /**
    * Listen to changes to the internal state.
    */
-  public listen(callback: (current: ISettings['current']) => void) {
-    return settingsStore.listen(({ open = false, current }) => {
-      callback(current)
+  public listen(callback: (current: ISettings['session']) => void) {
+    return settingsStore.listen(({ open = false, session }) => {
+      callback(session)
       if (this.iframe) {
         this.iframe.style.pointerEvents = open ? 'all' : 'none'
       }

@@ -13,7 +13,7 @@ export const LogoutUser: FC<ILogoutUser> = () => {
     logoutUser
       .fetch()
       .catch(() => Promise.resolve())
-      .then(() => settingsChange({ current: undefined }))
+      .then(() => settingsChange({ session: undefined }))
   }
   return create(Gadgets.Container, {
     label: 'Logout',

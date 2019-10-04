@@ -6,14 +6,11 @@ export type ISettings = {
     url: string
   }
   open: boolean
-  current:
+  session:
     | undefined
     | {
+        id: string
         token: string
-        session: {
-          id: string
-          token: string
-        }
         user: {
           id: string
           email: string
@@ -37,7 +34,7 @@ export type ISettings = {
 
 export const defaultSettings: ISettings = {
   open: false,
-  current: undefined,
+  session: undefined,
 }
 
 export const settingsStore = new Store<ISettings>(defaultSettings)

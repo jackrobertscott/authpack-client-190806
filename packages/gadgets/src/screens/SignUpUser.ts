@@ -44,7 +44,7 @@ export const SignUpUser: FC<ISignUpUser> = ({ change }) => {
         valueStore.patch(store => ({ ...store, password: '' }))
         settingsStore.patch(settings => ({
           ...settings,
-          current: data.current,
+          session: data.session,
         }))
       })
   }
@@ -114,12 +114,9 @@ export const SignUpUser: FC<ISignUpUser> = ({ change }) => {
 }
 
 const useSignUpUser = createUseGraph<{
-  current: {
+  session: {
+    id: string
     token: string
-    session: {
-      id: string
-      token: string
-    }
     user: {
       id: string
       name: string
@@ -129,12 +126,9 @@ const useSignUpUser = createUseGraph<{
 }>({
   query: `
     mutation SignUpUser($options: SignUpUserOptions!) {
-      current: SignUpUser(options: $options) {
+      session: SignUpUser(options: $options) {
+        id
         token
-        session {
-          id
-          token
-        }
         user {
           id
           name

@@ -20,7 +20,7 @@ export type IRouterModalOnauthed = {
 
 export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({ close }) => {
   const [settings] = useSettings()
-  return !settings.current
+  return !settings.session
     ? null
     : create(RouterModal, {
         close,
@@ -37,7 +37,7 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({ close }) => {
                   label: 'Update User',
                   description: 'Update your account details',
                   children: create(UpdateUser, {
-                    id: settings.current.user.id,
+                    id: settings.session.user.id,
                   }),
                 },
                 {
@@ -45,7 +45,7 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({ close }) => {
                   label: 'Change Password',
                   description: 'Update your login credentials',
                   children: create(UpdateUserPassword, {
-                    id: settings.current.user.id,
+                    id: settings.session.user.id,
                   }),
                 },
                 {
@@ -59,7 +59,7 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({ close }) => {
                   label: 'Danger Zone',
                   description: 'Delete your account',
                   children: create(RemoveUser, {
-                    id: settings.current.user.id,
+                    id: settings.session.user.id,
                   }),
                 },
               ],
@@ -67,14 +67,14 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({ close }) => {
             {
               icon: 'users',
               label: 'Group Settings',
-              submenu: settings.current.group
+              submenu: settings.session.group
                 ? [
                     {
                       icon: 'cog',
                       label: 'Update Group',
                       description: 'Your group settings',
                       children: create(UpdateGroup, {
-                        id: settings.current.group.id,
+                        id: settings.session.group.id,
                       }),
                     },
                     {
@@ -106,7 +106,7 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({ close }) => {
                       label: 'Danger Zone',
                       description: 'Remove this group',
                       children: create(RemoveGroup, {
-                        id: settings.current.user.id,
+                        id: settings.session.user.id,
                       }),
                     },
                   ]
