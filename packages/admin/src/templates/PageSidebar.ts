@@ -1,5 +1,6 @@
 import { createElement as create, FC, ReactNode, useState } from 'react'
 import { Layout, Sidebar } from 'wga-theme'
+import { gadgets } from '../utils/wga'
 
 export type IPageSidebarScreen = {
   id?: string
@@ -31,6 +32,9 @@ export const PageSidebar: FC<IPageSidebar> = ({ title, screens }) => {
       create(Sidebar.Container, {
         key: 'iconbar',
         title,
+        bottom: gadgets.state
+          ? `${gadgets.state.user.name}\n${gadgets.state.user.email}`
+          : '',
         options: screens.map((screen, i) => ({
           key: screen.id || String(i),
           icon: screen.icon,

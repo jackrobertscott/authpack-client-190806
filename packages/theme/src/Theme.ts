@@ -139,7 +139,7 @@ export const Theme = createContext<ITheme>({
     background: '#616161',
     innerBackground: '#696969',
     border: 'none',
-    innerBorder: '1px solid #656565',
+    innerBorder: '1px solid #575757',
     color: '#FFFFFF',
     label: '#DBDBDB',
     description: '#A0A0A0',

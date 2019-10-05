@@ -4,11 +4,11 @@ import { gadgets } from '../utils/wga'
 
 export const useGadgets = () => {
   const [state, stateChange] = useState<IPluginGadgets>()
-  const [loading, loadingChange] = useState<boolean>(false)
+  const [loading, loadingChange] = useState<boolean>(true)
   useEffect(() => {
     return gadgets.listen((data: IPluginGadgets) => {
-      if (!loading) loadingChange(true)
       stateChange(data)
+      if (loading) loadingChange(false)
     })
     // eslint-disable-next-line
   }, [])

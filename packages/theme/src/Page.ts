@@ -109,7 +109,30 @@ export const Page: IPage = {
           }),
         create('div', {
           key: 'scroll',
-          children: scroll,
+          children: [
+            scroll,
+            create('a', {
+              key: 'brand',
+              href: 'https://windowgadgets.io',
+              target: '_blank',
+              children: `Authenticator BETA\nWindow Gadgets`,
+              className: css({
+                all: 'unset',
+                padding: '25px',
+                textAlign: 'right',
+                whiteSpace: 'pre',
+                cursor: 'pointer',
+                transition: '200ms',
+                filter: 'contrast(70%)',
+                marginTop: 'auto',
+                marginLeft: 'auto',
+                color: theme.gadgets.background,
+                '&:hover': {
+                  filter: 'contrast(30%)',
+                },
+              }),
+            }),
+          ],
           className: css({
             all: 'unset',
             display: 'flex',
@@ -117,7 +140,6 @@ export const Page: IPage = {
             overflow: 'auto',
             flexGrow: 1,
             background: theme.gadgets.background,
-            backgroundSize: 'cover',
             '&::-webkit-scrollbar': {
               width: '20px',
               display: 'initial',

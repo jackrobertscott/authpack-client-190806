@@ -8,12 +8,13 @@ import { gadgets } from './utils/wga'
 export const App: FC<{}> = () => {
   const { state, loading } = useGadgets()
   useEffect(() => {
-    if (loading && !state) {
+    if (!loading && !state) {
       gadgets.open()
     }
   }, [state, loading])
   return create('div', {
-    children: state && state.user ? create(RouterCentral) : null,
+    children:
+      state && state.user && state.workspace ? create(RouterCentral) : null,
     className: css({
       // code...
     }),

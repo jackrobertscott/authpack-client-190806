@@ -5,6 +5,7 @@ import { Theme } from './Theme'
 export interface ISidebar {
   Container: FC<{
     title: ReactNode
+    bottom: string
     options: Array<{
       id?: string
       icon: string
@@ -16,7 +17,7 @@ export interface ISidebar {
 }
 
 export const Sidebar: ISidebar = {
-  Container: ({ title, options }) => {
+  Container: ({ title, options, bottom }) => {
     const theme = useContext(Theme)
     return create('div', {
       children: [
@@ -79,7 +80,7 @@ export const Sidebar: ISidebar = {
           key: 'brand',
           href: 'https://windowgadgets.io',
           target: '_blank',
-          children: `Authenticator\nWindow Gadgets`,
+          children: bottom,
           className: css({
             all: 'unset',
             whiteSpace: 'pre',

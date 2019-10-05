@@ -61,7 +61,7 @@ export const Gadgets: IGadgets = {
               key: 'brand',
               href: 'https://windowgadgets.io',
               target: '_blank',
-              children: `Authenticator Window Gadgets`,
+              children: `Authenticator`,
               className: css({
                 all: 'unset',
                 padding: '25px',
