@@ -1,7 +1,7 @@
 import { createElement as create, FC } from 'react'
 import { GadgetsIconbar } from '../templates/GadgetsIconbar'
 import { RouterModal } from '../templates/RouterModal'
-import { Activation } from '../screens/Activation'
+import { CreateSubscription } from '../screens/CreateSubscription'
 import { RemoveSubscription } from '../screens/RemoveSubscription'
 import { UpdateSubscription } from '../screens/UpdateSubscription'
 
@@ -19,8 +19,8 @@ export const RouterPayment: FC<IRouterPayment> = ({ visible, close }) => {
       screens: [
         {
           icon: 'cog',
-          label: 'Switch Modes',
-          children: create(Activation),
+          label: 'Activate',
+          children: create(CreateSubscription),
         },
         {
           icon: 'wallet',

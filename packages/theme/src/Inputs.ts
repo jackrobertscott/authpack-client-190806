@@ -784,7 +784,7 @@ export const Inputs: IInputs = {
           elementsCard.current.removeEventListener('change', updateErrors)
       }
     }, [inputReference.current, elementsCard.current])
-    return create('input', {
+    return create('div', {
       ref: inputReference,
       className: css({
         all: 'unset',
@@ -792,6 +792,9 @@ export const Inputs: IInputs = {
         cursor: 'pointer',
         display: 'flex',
         flexGrow: 1,
+        '& > *': {
+          flexGrow: 1,
+        },
       }),
     })
   },

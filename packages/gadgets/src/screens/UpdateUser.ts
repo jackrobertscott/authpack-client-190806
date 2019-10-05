@@ -2,6 +2,7 @@ import * as validator from 'yup'
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { Inputs, Button, Gadgets } from 'wga-theme'
 import { createUseGraph } from '../hooks/useGraph'
+import { settingsStore } from '../utils/settings'
 
 export type IUpdateUser = {
   id: string
@@ -41,10 +42,24 @@ export const UpdateUser: FC<IUpdateUser> = ({ id }) => {
   // update the user when the form is submitted
   const updateUser = useUpdateUser()
   const submit = () => {
-    schemaUpdateUser.validate(value).then(data => {
-      const options = { ...data, id }
-      updateUser.fetch({ options }, 'UpdateUser')
-    })
+    schemaUpdateUser
+      .validate(value)
+      .then(data => {
+        const options = { ...data, id }
+        return updateUser.fetch({ options }, 'UpdateUser')
+      })
+      .then((data) =>
+        settingsStore.patch(settings => ({
+          ...settings,
+          session: settings.session ? {
+            ...settings.session,
+            user: {
+              ...settings.session.user,
+              ...data.user,
+            }
+          } : undefined,
+        }))
+      )
   }
   return create(Gadgets.Container, {
     label: 'Update User',
@@ -121,12 +136,18 @@ const useRetrieveUser = createUseGraph<{
 const useUpdateUser = createUseGraph<{
   user: {
     id: string
+    name: string
+    username: string
+    email: string
   }
 }>({
   query: `
     mutation UpdateUser($options: UpdateUserOptions!) {
       user: UpdateUser(options: $options) {
         id
+        name
+        username
+        email
       }
     }
   `,
