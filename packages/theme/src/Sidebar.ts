@@ -76,22 +76,16 @@ export const Sidebar: ISidebar = {
             },
           }),
         }),
-        create('a', {
-          key: 'brand',
-          href: 'https://windowgadgets.io',
-          target: '_blank',
+        create('div', {
+          key: 'extra',
           children: bottom,
           className: css({
             all: 'unset',
             whiteSpace: 'pre',
-            cursor: 'pointer',
             transition: '200ms',
             filter: 'contrast(70%)',
             marginTop: 'auto',
             color: theme.gadgets.background,
-            '&:hover': {
-              filter: 'contrast(30%)',
-            },
           }),
         }),
       ],

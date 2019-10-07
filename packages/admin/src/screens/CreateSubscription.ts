@@ -62,7 +62,7 @@ export const CreateSubscription: FC<ICreateSubscription> = ({ change }) => {
         }),
         create(Inputs.Control, {
           key: 'name',
-          label: 'Name',
+          label: 'Card Name',
           description: 'Please provide the name on your card',
           change: validateAndPatch('name'),
           input: props =>
@@ -74,7 +74,7 @@ export const CreateSubscription: FC<ICreateSubscription> = ({ change }) => {
         }),
         create(Inputs.Control, {
           key: 'card',
-          label: 'Card',
+          label: 'Card Number',
           description: 'Please provide the name on your card',
           input: props =>
             create(Inputs.StripeCard, {

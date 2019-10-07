@@ -28,6 +28,7 @@ export interface IOverview {
 
 export const Overview: IOverview = {
   Spacer: ({ children }) => {
+    const theme = useContext(Theme)
     return create('div', {
       children,
       className: css({
@@ -36,10 +37,11 @@ export const Overview: IOverview = {
         flexDirection: 'column',
         justifyContent: 'flex-start',
         flexGrow: 1,
+        margin: '25px',
         '& > *, & > div': {
-          marginBottom: '1px',
+          borderBottom: theme.lists.border,
           '&:last-child': {
-            marginBottom: 0,
+            borderBottom: 'none',
           },
         },
       }),
@@ -109,13 +111,21 @@ export const Overview: IOverview = {
       className: css({
         all: 'unset',
         display: 'flex',
-        padding: '15px 25px',
+        padding: '15px',
         transition: '200ms',
         cursor: click && 'pointer',
         color: theme.lists.color,
         background: theme.lists.background,
         '&:hover:not(:active)': {
           background: click && theme.lists.backgroundHover,
+        },
+        '&:first-child': {
+          borderTopLeftRadius: theme.global.radius,
+          borderTopRightRadius: theme.global.radius,
+        },
+        '&:last-child': {
+          borderBottomLeftRadius: theme.global.radius,
+          borderBottomRightRadius: theme.global.radius,
         },
       }),
     })
