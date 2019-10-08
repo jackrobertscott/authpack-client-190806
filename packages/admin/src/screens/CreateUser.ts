@@ -46,30 +46,6 @@ export const CreateUser: FC<ICreateUser> = ({ change }) => {
     children: create(Gadgets.Spacer, {
       children: [
         create(Inputs.Control, {
-          key: 'name',
-          label: 'Name',
-          description: 'Please use their full name',
-          change: validateAndPatch('name'),
-          input: props =>
-            create(Inputs.String, {
-              ...props,
-              value: value.name,
-              placeholder: 'Fred Blogs',
-            }),
-        }),
-        create(Inputs.Control, {
-          key: 'username',
-          label: 'Username',
-          description: 'Please use a valid username',
-          change: validateAndPatch('username'),
-          input: props =>
-            create(Inputs.String, {
-              ...props,
-              value: value.username,
-              placeholder: 'fredblogs',
-            }),
-        }),
-        create(Inputs.Control, {
           key: 'email',
           label: 'Email',
           description: 'Please use a valid email address',
@@ -92,6 +68,30 @@ export const CreateUser: FC<ICreateUser> = ({ change }) => {
               value: value.password,
               password: true,
               placeholder: '**********',
+            }),
+        }),
+        create(Inputs.Control, {
+          key: 'username',
+          label: 'Username',
+          description: 'Please use a valid username',
+          change: validateAndPatch('username'),
+          input: props =>
+            create(Inputs.String, {
+              ...props,
+              value: value.username,
+              placeholder: 'fredblogs',
+            }),
+        }),
+        create(Inputs.Control, {
+          key: 'name',
+          label: 'Name',
+          description: 'Please use their full name',
+          change: validateAndPatch('name'),
+          input: props =>
+            create(Inputs.String, {
+              ...props,
+              value: value.name,
+              placeholder: 'Fred Blogs',
             }),
         }),
         create(Button.Container, {
@@ -120,11 +120,11 @@ const useCreateUser = createUseGraph<{
 })
 
 const schemaCreateUser = validator.object().shape({
-  name: validator.string(),
-  username: validator.string(),
   email: validator
     .string()
     .email('Please make sure you have used a valid email address')
     .required('Please provide your name'),
   password: validator.string().required('Please provide your email'),
+  username: validator.string(),
+  name: validator.string(),
 })

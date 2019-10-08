@@ -3,19 +3,14 @@ import { Gadgets, Poster, Button } from 'wga-theme'
 import { createUseGraph } from '../hooks/useGraph'
 
 export type IRemoveSubscription = {
-  id: string
   change?: () => void
 }
 
-export const RemoveSubscription: FC<IRemoveSubscription> = ({ id, change }) => {
+export const RemoveSubscription: FC<IRemoveSubscription> = ({ change }) => {
   // remove the session when the form is submitted
   const removeSubscription = useRemoveSubscription()
   const remove = () => {
-    removeSubscription
-      .fetch({
-        options: { id },
-      })
-      .then(change)
+    removeSubscription.fetch().then(change)
   }
   return create(Gadgets.Container, {
     label: 'Remove Subscription',
@@ -42,14 +37,12 @@ export const RemoveSubscription: FC<IRemoveSubscription> = ({ id, change }) => {
 const useRemoveSubscription = createUseGraph<{
   workspace: {
     id: string
-    subscribed: boolean
   }
 }>({
   query: `
-    mutation RemoveSubscription($options: RemoveSubscriptionOptions!) {
-      workspace: RemoveSubscription(options: $options) {
+    mutation RemoveSubscription {
+      workspace: RemoveSubscription {
         id
-        subscribed
       }
     }
   `,

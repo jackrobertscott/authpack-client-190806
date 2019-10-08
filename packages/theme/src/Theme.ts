@@ -110,7 +110,7 @@ export const Theme = createContext<ITheme>({
   },
   sidebar: {
     background: '#353535',
-    border: '1px solid #505050',
+    border: '1px solid #313131',
     title: '#999999',
     color: '#777777',
     colorHover: '#999999',

@@ -64,12 +64,13 @@ export const Gadgets: IGadgets = {
               children: `Authenticator`,
               className: css({
                 all: 'unset',
-                padding: '25px',
                 textAlign: 'right',
                 whiteSpace: 'pre',
                 cursor: 'pointer',
+                display: 'flex',
                 transition: '200ms',
                 filter: 'contrast(70%)',
+                margin: '25px',
                 marginLeft: 'auto',
                 color: theme.gadgets.background,
                 '&:hover': {

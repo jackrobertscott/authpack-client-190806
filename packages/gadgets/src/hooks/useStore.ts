@@ -2,10 +2,12 @@ import { useState, useEffect, useMemo, useRef } from 'react'
 import { Store } from 'events-and-things'
 
 export const useStore = <T extends { [key: string]: any }>(
-  key?: string,
+  store: string | Store<T>,
   initial: T = {} as any
 ): [T, Store<T>] => {
-  const current = useRef(new Store(initial, `wga.${key}`))
+  const current = useRef(
+    typeof store === 'string' ? new Store<T>(initial, store) : store
+  )
   const [state, stateChange] = useState<T>(current.current.state)
   useEffect(() => {
     return current.current.listen(data => stateChange(data))

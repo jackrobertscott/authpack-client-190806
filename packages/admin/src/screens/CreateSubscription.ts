@@ -39,15 +39,10 @@ export const CreateSubscription: FC<ICreateSubscription> = ({ change }) => {
       .then(data => stripe.createToken(card, { name: data.name }))
       .then((data: { token: any; error?: Error }) => {
         if (data.error) throw data.error
-        return data
+        return { ...value, token: data.token.id }
       })
       .then(data => createSubscription.fetch({ options: data }))
-      .then(() => {
-        if (change) change()
-        setTimeout(() =>
-          valueStore.change({ ...schemaCreateSubscription.default() })
-        )
-      })
+      .then(() => change && change())
   }
   return create(Gadgets.Container, {
     label: 'Activate Gadgets',
@@ -81,6 +76,19 @@ export const CreateSubscription: FC<ICreateSubscription> = ({ change }) => {
               ...props,
               stripe,
               change: data => cardChange(data),
+              issue: data => console.warn(data),
+            }),
+        }),
+        create(Inputs.Control, {
+          key: 'email',
+          label: 'Billing Email',
+          description: 'This email will receive billing emails',
+          change: validateAndPatch('email'),
+          input: props =>
+            create(Inputs.String, {
+              ...props,
+              value: value.email,
+              placeholder: 'fred.blogs@example.com',
             }),
         }),
         create(Button.Container, {
@@ -110,4 +118,8 @@ const useCreateSubscription = createUseGraph<{
 
 const schemaCreateSubscription = validator.object().shape({
   name: validator.string().required('Please provide the name on your card'),
+  email: validator
+    .string()
+    .email('Please provide a valid email address')
+    .required('Please provide a valid email address'),
 })

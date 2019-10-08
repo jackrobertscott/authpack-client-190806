@@ -82,6 +82,7 @@ export interface IInputs {
   StripeCard: FC<{
     stripe: any
     change?: (card?: any) => void
+    issue?: (card?: any) => void
   }>
   Files: FC<{
     change?: (files?: FileList) => void
@@ -753,7 +754,7 @@ export const Inputs: IInputs = {
       }),
     })
   },
-  StripeCard: ({ stripe, change }) => {
+  StripeCard: ({ stripe, change, issue }) => {
     const createCard = () =>
       stripe
         .elements({
@@ -774,10 +775,8 @@ export const Inputs: IInputs = {
     useEffect(() => {
       if (elementsCard.current && change) change(elementsCard.current)
       if (inputReference.current && elementsCard.current) {
-        const updateErrors = (event: any) => {
-          if (event.error) console.error(new Error(event.error.message))
-          else console.log('no error') // todo...
-        }
+        const updateErrors = (event: any) =>
+          event.error && issue && issue(event.error)
         elementsCard.current.mount(inputReference.current)
         elementsCard.current.addEventListener('change', updateErrors)
         return () =>

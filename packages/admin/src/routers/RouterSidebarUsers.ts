@@ -18,7 +18,7 @@ export const RouterSidebarUsers: FC<IRouterSidebarUsers> = () => {
       },
       {
         icon: 'history',
-        label: 'See all user sessions',
+        label: 'See all sessions',
         children: create(ListSessions),
         path: '/users/sessions',
       },
