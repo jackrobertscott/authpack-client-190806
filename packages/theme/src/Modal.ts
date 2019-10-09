@@ -42,7 +42,7 @@ export const Modal: IModal = {
         right: 0,
         top: 0,
         bottom: 0,
-        zIndex: 100,
+        zIndex: 1000,
         transition: '200ms',
         pointerEvents: visible ? 'all' : 'none',
         opacity: visible ? 1 : 0,

@@ -27,7 +27,7 @@ export const useCurrentSession = createUseGraph<{
   }
 }>({
   query: `
-    mutation CurrentSession {
+    query CurrentSession {
       session: CurrentSession {
         id
         token

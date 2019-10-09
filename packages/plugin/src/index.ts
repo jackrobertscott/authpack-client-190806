@@ -1,18 +1,19 @@
 import { Radio } from 'iframe-radio'
 import { settingsStore, ISettings } from './utils/settings'
-import { throttle } from './utils/throttle'
+import { halter } from './utils/throttle'
 
 export type IPluginGadgets = ISettings['session']
 
 export class PluginGadgets {
+  public update: () => void
   private iframeId: string
   private iframe?: HTMLIFrameElement
   private radio?: Radio<{ name: string; payload?: any }>
   private unlistener?: () => any
   private ready: boolean
   private queue: Array<() => void>
-  private update: () => void
   constructor(options: { suffix?: string; key: string }) {
+    this.update = halter(300, () => this.send('wga:update'))
     this.iframeId = `wga-plugin${options.suffix ? `-${options.suffix}` : ''}`
     this.render()
     this.ready = false
@@ -21,8 +22,6 @@ export class PluginGadgets {
       key: options.key,
       url: document.location.origin,
     })
-    this.update = throttle(500, () => this.send('wga:update'))
-    this.update()
   }
   /**
    * Get the current state of the gadgets.
@@ -46,7 +45,6 @@ export class PluginGadgets {
    */
   public open() {
     this.send('wga:open')
-    this.update()
   }
   /**
    * Open the gadgets.
@@ -92,6 +90,7 @@ export class PluginGadgets {
     this.unlistener =
       this.radio &&
       this.radio.listen(({ name, payload }) => {
+        console.log(`Plugin received: ${name} - ${Date.now() % 86400000}`)
         switch (name) {
           case 'wga:set':
             settingsStore.change(payload)

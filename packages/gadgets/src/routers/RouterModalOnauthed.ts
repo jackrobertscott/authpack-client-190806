@@ -53,6 +53,7 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({ close }) => {
                   label: '3rd Party Apps',
                   description: 'Connect to other apps',
                   children: create(ListProviders),
+                  skip: true,
                 },
                 {
                   icon: 'fire-alt',
@@ -94,12 +95,14 @@ export const RouterModalOnauthed: FC<IRouterModalOnauthed> = ({ close }) => {
                       label: 'Add Member',
                       description: 'Add a new workspace member',
                       children: create(CreateMembership),
+                      skip: true,
                     },
                     {
                       icon: 'user-plus',
                       label: 'See Members',
                       description: 'List all workspace members',
                       children: create(ListMemberships),
+                      skip: true,
                     },
                     {
                       icon: 'fire-alt',

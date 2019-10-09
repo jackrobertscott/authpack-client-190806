@@ -14,17 +14,19 @@ export const useSettingsSetup = () => {
       name: 'wga:set',
       payload: settingsStore.state,
     })
+    if (settingsStore.state.session) currentSession.fetch()
     return settingsStore.listen(data => {
       radio.message({
         name: 'wga:set',
         payload: data,
       })
     })
+    // eslint-disable-next-line
   }, [])
   // handle information from the window
   useEffect(() => {
     return radio.listen(({ name, payload }) => {
-      console.log(name)
+      console.log(`Gadget received: ${name} - ${Date.now() % 86400000}`)
       switch (name) {
         case 'wga:request':
           radio.message({

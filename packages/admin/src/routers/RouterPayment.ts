@@ -4,7 +4,8 @@ import { RouterModal } from '../templates/RouterModal'
 import { CreateSubscription } from '../screens/CreateSubscription'
 import { RemoveSubscription } from '../screens/RemoveSubscription'
 import { UpdateSubscription } from '../screens/UpdateSubscription'
-import { useGadgets } from '../hooks/useGadgets'
+import { useGadgetsState } from '../hooks/useGadgets'
+import { gadgets } from '../utils/wga'
 
 export type IRouterPayment = {
   visible: boolean
@@ -12,24 +13,19 @@ export type IRouterPayment = {
 }
 
 export const RouterPayment: FC<IRouterPayment> = ({ visible, close }) => {
-  const gadgets = useGadgets()
+  const { state } = useGadgetsState()
+  const closeAndUpdate = () => {
+    if (close) close()
+    gadgets.update()
+  }
   return create(RouterModal, {
-    close,
+    close: closeAndUpdate,
     visible,
     children: create(GadgetsIconbar, {
       close,
       screens:
-        gadgets.state &&
-        gadgets.state.workspace &&
-        gadgets.state.workspace.active
+        state && state.workspace && state.workspace.active
           ? [
-              {
-                icon: 'cog',
-                label: 'Activate',
-                children: create(CreateSubscription),
-              },
-            ]
-          : [
               {
                 icon: 'wallet',
                 label: 'Update',
@@ -38,7 +34,18 @@ export const RouterPayment: FC<IRouterPayment> = ({ visible, close }) => {
               {
                 icon: 'fire-alt',
                 label: 'Danger Zone',
-                children: create(RemoveSubscription),
+                children: create(RemoveSubscription, {
+                  change: closeAndUpdate,
+                }),
+              },
+            ]
+          : [
+              {
+                icon: 'cog',
+                label: 'Activate',
+                children: create(CreateSubscription, {
+                  change: closeAndUpdate,
+                }),
               },
             ],
     }),

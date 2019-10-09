@@ -1,4 +1,11 @@
-import { createElement as create, FC, useContext, ReactNode } from 'react'
+import OutsideClickHandler from 'react-outside-click-handler'
+import {
+  createElement as create,
+  FC,
+  useContext,
+  ReactNode,
+  useState,
+} from 'react'
 import { css } from 'emotion'
 import { Theme } from './Theme'
 
@@ -95,85 +102,88 @@ export const Iconbar: IIconbar = {
     })
   },
   Pointer: ({ icon = 'check-circle', label, submenu, children }) => {
+    const [active, activeChange] = useState(false)
     const theme = useContext(Theme)
     return create('div', {
+      onClick: () => activeChange(!active),
       children: [
         create((() => children) as FC, {
           key: 'children',
         }),
-        create('div', {
-          key: 'pointer',
+        create(OutsideClickHandler, {
+          key: 'popup',
+          onOutsideClick: () => active && activeChange(false),
           children: create('div', {
-            children: [
-              create('div', {
-                key: 'title',
-                children: [
-                  create('div', {
-                    key: 'label',
-                    children: label,
-                    className: css({
-                      all: 'unset',
-                      flexGrow: 1,
-                    }),
-                  }),
-                  create('div', {
-                    key: 'icon',
-                    className: `fas far fa-${icon} ${css({
-                      lineHeight: '1.5em',
-                    })}`,
-                  }),
-                ],
-                className: css({
-                  all: 'unset',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  flexGrow: 1,
-                  padding: '15px',
-                }),
-              }),
-              submenu &&
+            children: create('div', {
+              children: [
                 create('div', {
-                  key: 'submenu',
-                  children: submenu.map((item, index) =>
-                    create(Iconbar.Submenu, {
-                      key: `${item.label}${index}`,
-                      ...item,
-                    })
-                  ),
+                  key: 'title',
+                  children: [
+                    create('div', {
+                      key: 'label',
+                      children: label,
+                      className: css({
+                        all: 'unset',
+                        flexGrow: 1,
+                      }),
+                    }),
+                    create('div', {
+                      key: 'icon',
+                      className: `fas far fa-${icon} ${css({
+                        lineHeight: '1.5em',
+                      })}`,
+                    }),
+                  ],
                   className: css({
                     all: 'unset',
                     display: 'flex',
-                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    flexGrow: 1,
+                    padding: '15px',
                   }),
                 }),
-            ],
-            className: css({
-              all: 'unset',
-              display: 'flex',
-              flexGrow: 1,
-              flexDirection: 'column',
-              overflow: 'hidden',
-              fontSize: theme.global.fonts,
-              borderRadius: theme.global.radius,
-              background: theme.pointers.background,
-              border: theme.pointers.border,
-              color: theme.pointers.color,
-              boxShadow: '0 1px 25px -5px rgba(0, 0, 0, 0.35)',
+                active &&
+                  submenu &&
+                  create('div', {
+                    key: 'submenu',
+                    children: submenu.map((item, index) =>
+                      create(Iconbar.Submenu, {
+                        key: `${item.label}${index}`,
+                        ...item,
+                      })
+                    ),
+                    className: css({
+                      all: 'unset',
+                      display: 'flex',
+                      flexDirection: 'column',
+                    }),
+                  }),
+              ],
+              className: css({
+                all: 'unset',
+                display: 'flex',
+                flexGrow: 1,
+                flexDirection: 'column',
+                overflow: 'hidden',
+                fontSize: theme.global.fonts,
+                borderRadius: theme.global.radius,
+                background: theme.pointers.background,
+                border: theme.pointers.border,
+                color: theme.pointers.color,
+                boxShadow: '0 1px 25px -5px rgba(0, 0, 0, 0.35)',
+              }),
             }),
+            className: `toggle-pointer ${css({
+              all: 'unset',
+              minWidth: '290px',
+              position: 'absolute',
+              zIndex: active ? 500 : 100,
+              left: '100%',
+              top: '-7.5px',
+              paddingLeft: '7.5px',
+              display: active ? 'flex' : 'none',
+            })}`,
           }),
-          className: `toggle-pointer ${css({
-            all: 'unset',
-            minWidth: '290px',
-            position: 'absolute',
-            zIndex: 100,
-            left: '100%',
-            top: '-7.5px',
-            paddingLeft: '7.5px',
-            display: 'none',
-            '&:hover': {
-              display: 'flex',
-            },
-          })}`,
         }),
       ],
       className: css({

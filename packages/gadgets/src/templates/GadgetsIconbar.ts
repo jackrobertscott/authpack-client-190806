@@ -12,7 +12,7 @@ export type IGadgetsIconbarScreen = {
   icon: string
   label: string
   children?: ReactNode
-  submenu?: Array<{ children?: ReactNode } & IIconbarSubmenu>
+  submenu?: Array<{ children?: ReactNode; skip?: boolean } & IIconbarSubmenu>
 }
 
 export type IGadgetsIconbar = {
@@ -49,10 +49,12 @@ export const GadgetsIconbar: FC<IGadgetsIconbar> = ({ close, screens }) => {
             icon: screen.icon,
             label: screen.label,
             submenu: screen.submenu
-              ? screen.submenu.map(subscreen => ({
-                  ...subscreen,
-                  click: () => changeActive(subscreen),
-                }))
+              ? screen.submenu
+                  .filter(({ skip }) => !skip)
+                  .map(subscreen => ({
+                    ...subscreen,
+                    click: () => changeActive(subscreen),
+                  }))
               : [],
             children: create(Iconbar.Icon, {
               name: screen.icon,

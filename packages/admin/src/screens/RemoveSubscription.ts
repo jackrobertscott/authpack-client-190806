@@ -25,8 +25,9 @@ export const RemoveSubscription: FC<IRemoveSubscription> = ({ change }) => {
         }),
         create(Button.Container, {
           key: 'remove',
-          label: 'Delete',
+          label: removeSubscription.loading ? 'Loading...' : 'Delete',
           click: remove,
+          disable: removeSubscription.loading,
           confirm: true,
         }),
       ],

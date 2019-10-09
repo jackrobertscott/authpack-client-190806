@@ -8,6 +8,7 @@ import {
   ReactNode,
   ChangeEvent,
   useRef,
+  useMemo,
 } from 'react'
 import { css } from 'emotion'
 import { Theme } from './Theme'
@@ -134,6 +135,18 @@ export const Inputs: IInputs = {
     const [enable, changeEnable] = useState<boolean>(false)
     const [error, changeError] = useState<Error | undefined>()
     const mounted = useRef(false)
+    const createdElement = useMemo(() => {
+      return input({
+        key: 'input',
+        change: data => {
+          if (change)
+            change(data)
+              .then(() => mounted.current && changeError(undefined))
+              .catch(e => mounted.current && changeError(e))
+        },
+        enable: value => changeEnable(value),
+      })
+    }, [change])
     useEffect(() => {
       mounted.current = true
       return () => {
@@ -169,16 +182,7 @@ export const Inputs: IInputs = {
           key: 'container',
           enable,
           children: [
-            input({
-              key: 'input',
-              change: data => {
-                if (change)
-                  change(data)
-                    .then(() => mounted.current && changeError(undefined))
-                    .catch(e => mounted.current && changeError(e))
-              },
-              enable: value => changeEnable(value),
-            }),
+            createdElement,
             error &&
               create(Inputs.Pointer, {
                 key: 'icon',
@@ -755,8 +759,10 @@ export const Inputs: IInputs = {
     })
   },
   StripeCard: ({ stripe, change, issue }) => {
-    const createCard = () =>
-      stripe
+    const inputReference = useRef()
+    const elementsCard = useRef<any>()
+    useEffect(() => {
+      elementsCard.current = stripe
         .elements({
           fonts: [{ cssSrc: 'https://fonts.googleapis.com/css?family=Rubik' }],
         })
@@ -770,16 +776,18 @@ export const Inputs: IInputs = {
             },
           },
         })
-    const inputReference = useRef()
-    const elementsCard = useRef(createCard())
+    }, [])
     useEffect(() => {
       if (elementsCard.current && change) change(elementsCard.current)
       if (inputReference.current && elementsCard.current) {
         const updateErrors = (event: any) =>
           event.error && issue && issue(event.error)
-        elementsCard.current.mount(inputReference.current)
-        elementsCard.current.addEventListener('change', updateErrors)
+        if (elementsCard.current) {
+          elementsCard.current.mount(inputReference.current)
+          elementsCard.current.addEventListener('change', updateErrors)
+        }
         return () =>
+          elementsCard.current &&
           elementsCard.current.removeEventListener('change', updateErrors)
       }
     }, [inputReference.current, elementsCard.current])

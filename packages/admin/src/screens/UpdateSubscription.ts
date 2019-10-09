@@ -52,8 +52,8 @@ export const UpdateSubscription: FC<IUpdateSubscription> = ({ change }) => {
         create(Poster.Container, {
           key: 'poster',
           icon: 'wallet',
-          label: 'Update Your Card',
-          description: 'Set a new card for your payments',
+          label: 'Payment Settings',
+          description: 'Set a new card and email for billing',
         }),
         create(Inputs.Control, {
           key: 'name',

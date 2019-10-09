@@ -6,12 +6,13 @@ import { useStore } from '../hooks/useStore'
 import { stripe } from '../utils/stripe'
 
 export type ICreateSubscription = {
-  change?: () => void
+  change?: (data: any) => void
 }
 
 export const CreateSubscription: FC<ICreateSubscription> = ({ change }) => {
   // initialize the provider form values and apply validators
   const [card, cardChange] = useState()
+  const [loading, loadingChange] = useState(false)
   const [issue, issueChange] = useState<Error>()
   const [value, valueStore] = useStore('CreateSubscription', {
     ...schemaCreateSubscription.default(),
@@ -34,6 +35,7 @@ export const CreateSubscription: FC<ICreateSubscription> = ({ change }) => {
   // create the provider when the form is submitted
   const createSubscription = useCreateSubscription()
   const submit = () => {
+    loadingChange(true)
     schemaCreateSubscription
       .validate(value)
       .then(data => stripe.createToken(card, { name: data.name }))
@@ -42,7 +44,8 @@ export const CreateSubscription: FC<ICreateSubscription> = ({ change }) => {
         return { ...value, token: data.token.id }
       })
       .then(data => createSubscription.fetch({ options: data }))
-      .then(() => change && change())
+      .then(change)
+      .then(() => loadingChange(false))
   }
   return create(Gadgets.Container, {
     label: 'Activate Gadgets',
@@ -93,9 +96,9 @@ export const CreateSubscription: FC<ICreateSubscription> = ({ change }) => {
         }),
         create(Button.Container, {
           key: 'submit',
-          label: 'Create',
+          label: loading ? 'Loading...' : 'Submit',
           click: submit,
-          disable: !!issue,
+          disable: loading || !!issue,
         }),
       ],
     }),
