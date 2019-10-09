@@ -48,16 +48,18 @@ export const UpdateUser: FC<IUpdateUser> = ({ id }) => {
         const options = { ...data, id }
         return updateUser.fetch({ options }, 'UpdateUser')
       })
-      .then((data) =>
+      .then(data =>
         settingsStore.patch(settings => ({
           ...settings,
-          session: settings.session ? {
-            ...settings.session,
-            user: {
-              ...settings.session.user,
-              ...data.user,
-            }
-          } : undefined,
+          session: settings.session
+            ? {
+                ...settings.session,
+                user: {
+                  ...settings.session.user,
+                  ...data.user,
+                },
+              }
+            : undefined,
         }))
       )
   }
@@ -121,6 +123,7 @@ const useRetrieveUser = createUseGraph<{
     email: string
   }
 }>({
+  name: 'RetrieveUser',
   query: `
     query RetrieveUser($options: RetrieveUserOptions!) {
       user: RetrieveUser(options: $options) {
@@ -141,6 +144,7 @@ const useUpdateUser = createUseGraph<{
     email: string
   }
 }>({
+  name: 'UpdateUser',
   query: `
     mutation UpdateUser($options: UpdateUserOptions!) {
       user: UpdateUser(options: $options) {

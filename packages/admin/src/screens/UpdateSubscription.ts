@@ -45,7 +45,7 @@ export const UpdateSubscription: FC<IUpdateSubscription> = ({ change }) => {
       .then(() => change && change())
   }
   return create(Gadgets.Container, {
-    label: 'Activate Gadgets',
+    label: 'Update Subscription',
     brand: 'Authenticator',
     children: create(Gadgets.Spacer, {
       children: [
@@ -107,6 +107,7 @@ const useUpdateSubscription = createUseGraph<{
     id: string
   }
 }>({
+  name: 'UpdateSubscription',
   query: `
     mutation UpdateSubscription($options: UpdateSubscriptionOptions!) {
       workspace: UpdateSubscription(options: $options) {

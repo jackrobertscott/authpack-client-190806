@@ -44,6 +44,7 @@ const useRemoveUser = createUseGraph<{
     id: string
   }
 }>({
+  name: 'RemoveUser',
   query: `
     mutation RemoveUser($options: RemoveUserOptions!) {
       user: RemoveUser(options: $options) {

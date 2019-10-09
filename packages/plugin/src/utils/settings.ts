@@ -23,6 +23,7 @@ export type ISettings = {
           name: string
           tag: string
           description?: string
+          active: boolean
         }
         permissions?: Array<{
           id: string

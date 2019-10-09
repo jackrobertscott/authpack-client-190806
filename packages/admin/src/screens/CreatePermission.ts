@@ -99,6 +99,7 @@ const useCreatePermission = createUseGraph<{
     id: string
   }
 }>({
+  name: 'CreatePermission',
   query: `
     mutation CreatePermission($options: CreatePermissionOptions!) {
       permission: CreatePermission(options: $options) {

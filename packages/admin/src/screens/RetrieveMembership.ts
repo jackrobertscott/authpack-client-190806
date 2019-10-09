@@ -54,6 +54,7 @@ const useRetrieveMembership = createUseGraph<{
     updated: string
   }
 }>({
+  name: 'RetrieveMembership',
   query: `
     query RetrieveMembership($options: RetrieveMembershipOptions!) {
       membership: RetrieveMembership(options: $options) {

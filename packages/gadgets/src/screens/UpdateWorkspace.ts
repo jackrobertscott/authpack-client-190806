@@ -120,6 +120,7 @@ const useRetrieveWorkspace = createUseGraph<{
     domains: string[]
   }
 }>({
+  name: 'RetrieveWorkspace',
   query: `
     query RetrieveWorkspace($options: RetrieveWorkspaceOptions!) {
       workspace: RetrieveWorkspace(options: $options) {
@@ -138,6 +139,7 @@ const useUpdateWorkspace = createUseGraph<{
     id: string
   }
 }>({
+  name: 'UpdateWorkspace',
   query: `
     mutation UpdateWorkspace($options: UpdateWorkspaceOptions!) {
       workspace: UpdateWorkspace(options: $options) {

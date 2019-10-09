@@ -41,6 +41,7 @@ const useLogoutUser = createUseGraph<{
     id: string
   }
 }>({
+  name: 'LogoutUser',
   query: `
     mutation LogoutUser {
       user: LogoutUser {

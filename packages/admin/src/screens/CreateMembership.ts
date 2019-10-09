@@ -130,6 +130,7 @@ const useListUsers = createUseGraph<{
     username?: string
   }>
 }>({
+  name: 'ListUsers',
   query: `
     query ListUsers($options: ListUsersOptions!) {
       users: ListUsers(options: $options) {
@@ -149,6 +150,7 @@ const useListWorkspaces = createUseGraph<{
     description?: string
   }>
 }>({
+  name: 'ListWorkspaces',
   query: `
     query ListWorkspaces($options: ListWorkspacesOptions!) {
       workspaces: ListWorkspaces(options: $options) {

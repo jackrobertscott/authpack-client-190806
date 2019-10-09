@@ -68,6 +68,7 @@ const useRetrieveProvider = createUseGraph<{
     redirect: string
   }
 }>({
+  name: 'RetrieveProvider',
   query: `
     query RetrieveProvider($options: RetrieveProviderOptions!) {
       provider: RetrieveProvider(options: $options) {

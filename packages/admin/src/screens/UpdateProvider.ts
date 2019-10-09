@@ -126,6 +126,7 @@ const useRetrieveProvider = createUseGraph<{
     scopes: string[]
   }
 }>({
+  name: 'RetrieveProvider',
   query: `
     query RetrieveProvider($options: RetrieveProviderOptions!) {
       provider: RetrieveProvider(options: $options) {
@@ -143,6 +144,7 @@ const useUpdateProvider = createUseGraph<{
     id: string
   }
 }>({
+  name: 'UpdateProvider',
   query: `
     mutation UpdateProvider($options: UpdateProviderOptions!) {
       provider: UpdateProvider(options: $options) {

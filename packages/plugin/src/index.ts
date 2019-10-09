@@ -1,5 +1,6 @@
 import { Radio } from 'iframe-radio'
 import { settingsStore, ISettings } from './utils/settings'
+import { throttle } from './utils/throttle'
 
 export type IPluginGadgets = ISettings['session']
 
@@ -10,21 +11,18 @@ export class PluginGadgets {
   private unlistener?: () => any
   private ready: boolean
   private queue: Array<() => void>
+  private update: () => void
   constructor(options: { suffix?: string; key: string }) {
     this.iframeId = `wga-plugin${options.suffix ? `-${options.suffix}` : ''}`
     this.render()
     this.ready = false
-    this.queue = [
-      () =>
-        this.radio &&
-        this.radio.message({
-          name: 'wga:domain',
-          payload: {
-            key: options.key,
-            url: document.location.origin,
-          },
-        }),
-    ]
+    this.queue = []
+    this.send('wga:domain', {
+      key: options.key,
+      url: document.location.origin,
+    })
+    this.update = throttle(500, () => this.send('wga:update'))
+    this.update()
   }
   /**
    * Get the current state of the gadgets.
@@ -47,13 +45,21 @@ export class PluginGadgets {
    * Open the gadgets.
    */
   public open() {
-    const sendMessage = () =>
+    this.send('wga:open')
+    this.update()
+  }
+  /**
+   * Open the gadgets.
+   */
+  private send(name: string, payload?: any) {
+    const message = () =>
       this.radio &&
       this.radio.message({
-        name: 'wga:open',
+        name,
+        payload,
       })
-    if (this.ready) sendMessage()
-    else this.queue.push(sendMessage)
+    if (this.ready) message()
+    else this.queue.push(message)
   }
   /**
    * Create an iframe with gadgets.

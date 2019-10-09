@@ -2,11 +2,14 @@ import { useState, useMemo, useEffect, useRef } from 'react'
 import { useToaster } from 'wga-theme'
 import { chat } from '../utils/chat'
 
-export const createUseGraph = <T>({ query }: { query: string }) => (
-  variables?: { [key: string]: any },
-  operationName?: string
-) => {
-  const data = useGraph<T>({ query })
+export const createUseGraph = <T>({
+  name,
+  query,
+}: {
+  name?: string
+  query: string
+}) => (variables?: { [key: string]: any }, operationName?: string) => {
+  const data = useGraph<T>({ query, name })
   useEffect(() => {
     if (variables) data.fetch(variables, operationName)
     // eslint-disable-next-line
@@ -16,8 +19,10 @@ export const createUseGraph = <T>({ query }: { query: string }) => (
 
 export const useGraph = <T>({
   query,
+  name,
 }: {
   query: string
+  name?: string
 }): {
   data: T | undefined
   loading?: boolean
@@ -47,7 +52,7 @@ export const useGraph = <T>({
     return chat({
       query,
       variables,
-      operationName,
+      operationName: operationName || name,
     })
       .then((done: any) => {
         if (done && done.error) throw done

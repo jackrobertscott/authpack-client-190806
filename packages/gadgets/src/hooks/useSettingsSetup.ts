@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 import { settingsStore } from '../utils/settings'
 import { radio } from '../utils/radio'
+import { useCurrentSession } from '../hooks/useCurrentSession'
 
 export const useSettingsSetup = () => {
+  const currentSession = useCurrentSession()
   // send information to the window
   useEffect(() => {
     radio.message({
@@ -22,6 +24,7 @@ export const useSettingsSetup = () => {
   // handle information from the window
   useEffect(() => {
     return radio.listen(({ name, payload }) => {
+      console.log(name)
       switch (name) {
         case 'wga:request':
           radio.message({
@@ -38,7 +41,15 @@ export const useSettingsSetup = () => {
         case 'wga:domain':
           settingsStore.patch(data => ({ ...data, domain: payload }))
           break
+        case 'wga:update':
+          if (currentSession.data && currentSession.data.session)
+            currentSession.fetch().then(({ session }) => {
+              return settingsStore.patch(data => ({ ...data, session }))
+            })
+          break
+        default:
+          console.warn(`Unhandled settings radio event ${name}`)
       }
     })
-  }, [])
+  }, [currentSession])
 }

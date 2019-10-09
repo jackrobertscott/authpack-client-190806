@@ -111,6 +111,7 @@ const useCreateWorkspace = createUseGraph<{
     id: string
   }
 }>({
+  name: 'CreateWorkspace',
   query: `
     mutation CreateWorkspace($options: CreateWorkspaceOptions!) {
       workspace: CreateWorkspace(options: $options) {

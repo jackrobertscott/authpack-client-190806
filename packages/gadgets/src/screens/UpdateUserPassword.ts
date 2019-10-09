@@ -78,6 +78,7 @@ const useRetrieveUser = createUseGraph<{
     id: string
   }
 }>({
+  name: 'RetrieveUser',
   query: `
     query RetrieveUser($options: RetrieveUserOptions!) {
       user: RetrieveUser(options: $options) {
@@ -92,6 +93,7 @@ const useUpdateUser = createUseGraph<{
     id: string
   }
 }>({
+  name: 'UpdateUser',
   query: `
     mutation UpdateUser($options: UpdateUserOptions!) {
       user: UpdateUser(options: $options) {

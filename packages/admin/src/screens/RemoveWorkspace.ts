@@ -44,6 +44,7 @@ const useRemoveWorkspace = createUseGraph<{
     id: string
   }
 }>({
+  name: 'RemoveWorkspace',
   query: `
     mutation RemoveWorkspace($options: RemoveWorkspaceOptions!) {
       workspace: RemoveWorkspace(options: $options) {

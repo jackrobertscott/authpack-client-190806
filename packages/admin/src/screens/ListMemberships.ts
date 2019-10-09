@@ -112,6 +112,7 @@ const useListMemberships = createUseGraph<{
     }>
   }>
 }>({
+  name: 'ListMemberships',
   query: `
     query ListMemberships($count: CountMembershipsOptions, $list: ListMembershipsOptions) {
       count: CountMemberships(options: $count)

@@ -75,6 +75,7 @@ const useRetrievePermission = createUseGraph<{
     description: string
   }
 }>({
+  name: 'RetrievePermission',
   query: `
     query RetrievePermission($options: RetrievePermissionOptions!) {
       permission: RetrievePermission(options: $options) {

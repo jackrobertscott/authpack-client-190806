@@ -105,6 +105,7 @@ const useListWorkspaces = createUseGraph<{
     description: string
   }>
 }>({
+  name: 'ListWorkspaces',
   query: `
     query ListWorkspaces($count: CountWorkspacesOptions, $list: ListWorkspacesOptions) {
       count: CountWorkspaces(options: $count)

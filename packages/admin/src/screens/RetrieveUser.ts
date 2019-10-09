@@ -75,6 +75,7 @@ const useRetrieveUser = createUseGraph<{
     email: string
   }
 }>({
+  name: 'RetrieveUser',
   query: `
     query RetrieveUser($options: RetrieveUserOptions!) {
       user: RetrieveUser(options: $options) {

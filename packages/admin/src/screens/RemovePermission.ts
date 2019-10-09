@@ -44,6 +44,7 @@ const useRemovePermission = createUseGraph<{
     id: string
   }
 }>({
+  name: 'RemovePermission',
   query: `
     mutation RemovePermission($options: RemovePermissionOptions!) {
       permission: RemovePermission(options: $options) {

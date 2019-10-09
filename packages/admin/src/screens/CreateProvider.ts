@@ -143,6 +143,7 @@ const useCreateProvider = createUseGraph<{
     id: string
   }
 }>({
+  name: 'CreateProvider',
   query: `
     mutation CreateProvider($options: CreateProviderOptions!) {
       provider: CreateProvider(options: $options) {

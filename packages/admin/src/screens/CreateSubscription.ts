@@ -107,6 +107,7 @@ const useCreateSubscription = createUseGraph<{
     id: string
   }
 }>({
+  name: 'CreateSubscription',
   query: `
     mutation CreateSubscription($options: CreateSubscriptionOptions!) {
       workspace: CreateSubscription(options: $options) {

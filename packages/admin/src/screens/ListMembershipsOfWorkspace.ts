@@ -42,6 +42,7 @@ const useRetrieveMembership = createUseGraph<{
     }>
   }
 }>({
+  name: 'ListMembershipsOfWorkspace',
   query: `
     query ListMembershipsOfWorkspace($options: RetrieveWorkspaceOptions!) {
       workspace: RetrieveWorkspace(options: $options) {

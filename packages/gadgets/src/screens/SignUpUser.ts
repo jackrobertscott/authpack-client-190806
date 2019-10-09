@@ -129,6 +129,7 @@ const useSignUpUser = createUseGraph<{
       name: string
       tag: string
       description?: string
+      active: boolean
     }
     permissions?: Array<{
       id: string
@@ -138,6 +139,7 @@ const useSignUpUser = createUseGraph<{
     }>
   }
 }>({
+  name: 'SignUpUser',
   query: `
     mutation SignUpUser($options: SignUpUserOptions!) {
       session: SignUpUser(options: $options) {
@@ -155,6 +157,7 @@ const useSignUpUser = createUseGraph<{
           name
           tag
           description
+          active
         }
         permissions {
           id

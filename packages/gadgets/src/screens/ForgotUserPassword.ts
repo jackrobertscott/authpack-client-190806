@@ -75,8 +75,9 @@ const schemaForgot = validator.object().shape({
 const useForgot = createUseGraph<{
   done: boolean
 }>({
+  name: 'ForgotUserPassword',
   query: `
-    mutation Forgot($options: ForgotUserPasswordOptions!) {
+    mutation ForgotUserPassword($options: ForgotUserPasswordOptions!) {
       done: ForgotUserPassword(options: $options)
     }
   `,

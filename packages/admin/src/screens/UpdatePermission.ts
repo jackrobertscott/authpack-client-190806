@@ -106,6 +106,7 @@ const useRetrievePermission = createUseGraph<{
     description: string
   }
 }>({
+  name: 'RetrievePermission',
   query: `
     query RetrievePermission($options: RetrievePermissionOptions!) {
       permission: RetrievePermission(options: $options) {
@@ -123,6 +124,7 @@ const useUpdatePermission = createUseGraph<{
     id: string
   }
 }>({
+  name: 'UpdatePermission',
   query: `
     mutation UpdatePermission($options: UpdatePermissionOptions!) {
       permission: UpdatePermission(options: $options) {

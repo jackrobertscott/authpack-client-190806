@@ -39,6 +39,7 @@ const useRemoveSubscription = createUseGraph<{
     id: string
   }
 }>({
+  name: 'RemoveSubscription',
   query: `
     mutation RemoveSubscription {
       workspace: RemoveSubscription {

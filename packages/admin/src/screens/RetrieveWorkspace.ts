@@ -75,6 +75,7 @@ const useRetrieveWorkspace = createUseGraph<{
     description: string
   }
 }>({
+  name: 'RetrieveWorkspace',
   query: `
     query RetrieveWorkspace($options: RetrieveWorkspaceOptions!) {
       workspace: RetrieveWorkspace(options: $options) {

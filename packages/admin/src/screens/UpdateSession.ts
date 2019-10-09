@@ -68,6 +68,7 @@ const useRetrieveSession = createUseGraph<{
     description: string
   }
 }>({
+  name: 'RetrieveSession',
   query: `
     query RetrieveSession($options: RetrieveSessionOptions!) {
       session: RetrieveSession(options: $options) {
@@ -82,6 +83,7 @@ const useUpdateSession = createUseGraph<{
     id: string
   }
 }>({
+  name: 'UpdateSession',
   query: `
     mutation UpdateSession($options: UpdateSessionOptions!) {
       session: UpdateSession(options: $options) {
