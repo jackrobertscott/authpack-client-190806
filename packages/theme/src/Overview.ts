@@ -37,7 +37,6 @@ export const Overview: IOverview = {
         flexDirection: 'column',
         justifyContent: 'flex-start',
         flexGrow: 1,
-        margin: '25px',
         '& > *, & > div': {
           borderBottom: theme.lists.border,
           '&:last-child': {

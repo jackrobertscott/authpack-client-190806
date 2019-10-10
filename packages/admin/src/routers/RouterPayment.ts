@@ -4,6 +4,7 @@ import { RouterModal } from '../templates/RouterModal'
 import { CreateSubscription } from '../screens/CreateSubscription'
 import { RemoveSubscription } from '../screens/RemoveSubscription'
 import { UpdateSubscription } from '../screens/UpdateSubscription'
+import { UpdateOwner } from '../screens/UpdateOwner'
 import { useGadgetsState } from '../hooks/useGadgets'
 import { gadgets } from '../utils/wga'
 
@@ -21,33 +22,49 @@ export const RouterPayment: FC<IRouterPayment> = ({ visible, close }) => {
   return create(RouterModal, {
     close: closeAndUpdate,
     visible,
-    children: create(GadgetsIconbar, {
-      close,
-      screens:
-        state && state.workspace && state.workspace.active
-          ? [
-              {
-                icon: 'wallet',
-                label: 'Update',
-                children: create(UpdateSubscription),
-              },
-              {
-                icon: 'fire-alt',
-                label: 'Danger Zone',
-                children: create(RemoveSubscription, {
-                  change: closeAndUpdate,
-                }),
-              },
-            ]
-          : [
-              {
-                icon: 'cog',
-                label: 'Activate',
-                children: create(CreateSubscription, {
-                  change: closeAndUpdate,
-                }),
-              },
-            ],
-    }),
+    children:
+      state && state.workspace && state.workspace.id
+        ? create(GadgetsIconbar, {
+            close,
+            screens: state.workspace.active
+              ? [
+                  {
+                    icon: 'cog',
+                    label: 'Settings',
+                    children: create(UpdateOwner, {
+                      id: state.workspace.id,
+                    }),
+                  },
+                  {
+                    icon: 'wallet',
+                    label: 'Payment',
+                    children: create(UpdateSubscription),
+                  },
+                  {
+                    icon: 'fire-alt',
+                    label: 'Danger Zone',
+                    children: create(RemoveSubscription, {
+                      change: closeAndUpdate,
+                    }),
+                  },
+                ]
+              : [
+                  {
+                    icon: 'bolt',
+                    label: 'Activate',
+                    children: create(CreateSubscription, {
+                      change: closeAndUpdate,
+                    }),
+                  },
+                  {
+                    icon: 'cog',
+                    label: 'Settings',
+                    children: create(UpdateOwner, {
+                      id: state.workspace.id,
+                    }),
+                  },
+                ],
+          })
+        : null,
   })
 }

@@ -16,45 +16,47 @@ export const RetrieveProvider: FC<IRetrieveProvider> = ({ id }) => {
   return create(Gadgets.Container, {
     label: 'Overview Provider',
     brand: 'Authenticator',
-    children: create(Overview.Spacer, {
-      children: retrieveProviderGraph.data && [
-        create(Overview.Container, {
-          key: 'Id',
-          label: 'Id',
-          icon: 'fingerprint',
-          value: retrieveProviderGraph.data.provider.id,
-        }),
-        create(Overview.Container, {
-          key: 'Preset',
-          label: 'Preset',
-          icon: 'handshake',
-          value: retrieveProviderGraph.data.provider.preset,
-        }),
-        create(Overview.Container, {
-          key: 'Redirect Url',
-          label: 'Redirect Url',
-          icon: 'share-alt',
-          value: retrieveProviderGraph.data.provider.redirect,
-        }),
-        create(Overview.Container, {
-          key: 'Created',
-          label: 'Created',
-          icon: 'clock',
-          value: format(
-            new Date(retrieveProviderGraph.data.provider.created),
-            "dd LLL yyyy 'at' hh:mm aaaa"
-          ),
-        }),
-        create(Overview.Container, {
-          key: 'Updated',
-          label: 'Updated',
-          icon: 'clock',
-          value: format(
-            new Date(retrieveProviderGraph.data.provider.updated),
-            "dd LLL yyyy 'at' hh:mm aaaa"
-          ),
-        }),
-      ],
+    children: create(Gadgets.Spacer, {
+      children: create(Overview.Spacer, {
+        children: retrieveProviderGraph.data && [
+          create(Overview.Container, {
+            key: 'Id',
+            label: 'Id',
+            icon: 'fingerprint',
+            value: retrieveProviderGraph.data.provider.id,
+          }),
+          create(Overview.Container, {
+            key: 'Preset',
+            label: 'Preset',
+            icon: 'handshake',
+            value: retrieveProviderGraph.data.provider.preset,
+          }),
+          create(Overview.Container, {
+            key: 'Redirect Url',
+            label: 'Redirect Url',
+            icon: 'share-alt',
+            value: retrieveProviderGraph.data.provider.redirect,
+          }),
+          create(Overview.Container, {
+            key: 'Created',
+            label: 'Created',
+            icon: 'clock',
+            value: format(
+              new Date(retrieveProviderGraph.data.provider.created),
+              "dd LLL yyyy 'at' hh:mm aaaa"
+            ),
+          }),
+          create(Overview.Container, {
+            key: 'Updated',
+            label: 'Updated',
+            icon: 'clock',
+            value: format(
+              new Date(retrieveProviderGraph.data.provider.updated),
+              "dd LLL yyyy 'at' hh:mm aaaa"
+            ),
+          }),
+        ],
+      }),
     }),
   })
 }

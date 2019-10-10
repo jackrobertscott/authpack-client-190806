@@ -50,7 +50,7 @@ export const PageIconbar: FC<IPageIconbar> = ({ screens }) => {
           create(Iconbar.Pointer, {
             key: 'devmode',
             icon: 'code',
-            label: 'Dev Mode',
+            label: 'Gadgets',
             children: create(Iconbar.Icon, {
               name: 'code',
               click: () => changeDevmode(true),

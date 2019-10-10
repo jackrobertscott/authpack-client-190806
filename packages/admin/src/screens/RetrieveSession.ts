@@ -16,33 +16,35 @@ export const RetrieveSession: FC<IRetrieveSession> = ({ id }) => {
   return create(Gadgets.Container, {
     label: 'Overview Session',
     brand: 'Authenticator',
-    children: create(Overview.Spacer, {
-      children: retrieveSessionGraph.data && [
-        create(Overview.Container, {
-          key: 'Id',
-          label: 'Id',
-          icon: 'fingerprint',
-          value: retrieveSessionGraph.data.session.id,
-        }),
-        create(Overview.Container, {
-          key: 'Created',
-          label: 'Created',
-          icon: 'clock',
-          value: format(
-            new Date(retrieveSessionGraph.data.session.created),
-            "dd LLL yyyy 'at' hh:mm aaaa"
-          ),
-        }),
-        create(Overview.Container, {
-          key: 'Updated',
-          label: 'Updated',
-          icon: 'clock',
-          value: format(
-            new Date(retrieveSessionGraph.data.session.updated),
-            "dd LLL yyyy 'at' hh:mm aaaa"
-          ),
-        }),
-      ],
+    children: create(Gadgets.Spacer, {
+      children: create(Overview.Spacer, {
+        children: retrieveSessionGraph.data && [
+          create(Overview.Container, {
+            key: 'Id',
+            label: 'Id',
+            icon: 'fingerprint',
+            value: retrieveSessionGraph.data.session.id,
+          }),
+          create(Overview.Container, {
+            key: 'Created',
+            label: 'Created',
+            icon: 'clock',
+            value: format(
+              new Date(retrieveSessionGraph.data.session.created),
+              "dd LLL yyyy 'at' hh:mm aaaa"
+            ),
+          }),
+          create(Overview.Container, {
+            key: 'Updated',
+            label: 'Updated',
+            icon: 'clock',
+            value: format(
+              new Date(retrieveSessionGraph.data.session.updated),
+              "dd LLL yyyy 'at' hh:mm aaaa"
+            ),
+          }),
+        ],
+      }),
     }),
   })
 }

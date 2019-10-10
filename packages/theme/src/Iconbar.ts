@@ -105,7 +105,7 @@ export const Iconbar: IIconbar = {
     const [active, activeChange] = useState(false)
     const theme = useContext(Theme)
     return create('div', {
-      onClick: () => activeChange(!active),
+      onClick: () => submenu && submenu.length && activeChange(!active),
       children: [
         create((() => children) as FC, {
           key: 'children',
