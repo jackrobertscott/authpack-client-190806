@@ -17,17 +17,19 @@ export const ListMembershipsOfWorkspace: FC<IListMembershipsOfWorkspace> = ({
   return create(Gadgets.Container, {
     label: 'Memberships of Workspace',
     brand: 'Authenticator',
-    children: create(Overview.Spacer, {
-      children:
-        retrieveMembership.data &&
-        retrieveMembership.data.workspace.memberships.map(membership => {
-          return create(Overview.Container, {
-            key: 'Id',
-            label: 'Id',
-            icon: 'fingerprint',
-            value: membership.id,
-          })
-        }),
+    children: create(Gadgets.Spacer, {
+      children: create(Overview.Spacer, {
+        children:
+          retrieveMembership.data &&
+          retrieveMembership.data.workspace.memberships.map(membership => {
+            return create(Overview.Container, {
+              key: 'Id',
+              label: 'Id',
+              icon: 'fingerprint',
+              value: membership.id,
+            })
+          }),
+      }),
     }),
   })
 }
