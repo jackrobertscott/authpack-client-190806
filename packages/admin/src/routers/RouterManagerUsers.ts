@@ -50,16 +50,19 @@ export const RouterManagerUsers: FC<IRouterManagerUsers> = ({
               icon: 'project-diagram',
               label: 'Workspaces of User',
               children: null,
+              skip: true,
             },
             {
               icon: 'history',
               label: 'Sessions of User',
               children: null,
+              skip: true,
             },
             {
               icon: 'handshake',
               label: '3rd Party Apps',
               children: null,
+              skip: true,
             },
             {
               icon: 'fire-alt',

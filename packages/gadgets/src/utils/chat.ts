@@ -1,7 +1,11 @@
 import { settingsStore } from './settings'
 
-export const chat = (data: { [key: string]: any }) =>
-  fetch('http://localhost:4000', {
+export interface IData {
+  [key: string]: any
+}
+
+export const chat = (data: IData) => {
+  return fetch('http://localhost:4000', {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
@@ -14,4 +18,10 @@ export const chat = (data: { [key: string]: any }) =>
         .join(','),
     },
     body: JSON.stringify(data),
-  }).then(response => response.json())
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.warn(error)
+      throw error
+    })
+}

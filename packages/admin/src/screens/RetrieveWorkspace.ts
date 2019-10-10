@@ -16,51 +16,53 @@ export const RetrieveWorkspace: FC<IRetrieveWorkspace> = ({ id }) => {
   return create(Gadgets.Container, {
     label: 'Overview Workspace',
     brand: 'Authenticator',
-    children: create(Overview.Spacer, {
-      children: retrieveWorkspaceGraph.data && [
-        create(Overview.Container, {
-          key: 'Id',
-          label: 'Id',
-          icon: 'fingerprint',
-          value: retrieveWorkspaceGraph.data.workspace.id,
-        }),
-        create(Overview.Container, {
-          key: 'Name',
-          label: 'Name',
-          icon: 'project-diagram',
-          value: retrieveWorkspaceGraph.data.workspace.name,
-        }),
-        create(Overview.Container, {
-          key: 'Tag',
-          label: 'Tag',
-          icon: 'tags',
-          value: retrieveWorkspaceGraph.data.workspace.tag,
-        }),
-        create(Overview.Container, {
-          key: 'Description',
-          label: 'Description',
-          icon: 'marker',
-          value: retrieveWorkspaceGraph.data.workspace.description,
-        }),
-        create(Overview.Container, {
-          key: 'Created',
-          label: 'Created',
-          icon: 'clock',
-          value: format(
-            new Date(retrieveWorkspaceGraph.data.workspace.created),
-            "dd LLL yyyy 'at' hh:mm aaaa"
-          ),
-        }),
-        create(Overview.Container, {
-          key: 'Updated',
-          label: 'Updated',
-          icon: 'clock',
-          value: format(
-            new Date(retrieveWorkspaceGraph.data.workspace.updated),
-            "dd LLL yyyy 'at' hh:mm aaaa"
-          ),
-        }),
-      ],
+    children: create(Gadgets.Spacer, {
+      children: create(Overview.Spacer, {
+        children: retrieveWorkspaceGraph.data && [
+          create(Overview.Container, {
+            key: 'Id',
+            label: 'Id',
+            icon: 'fingerprint',
+            value: retrieveWorkspaceGraph.data.workspace.id,
+          }),
+          create(Overview.Container, {
+            key: 'Name',
+            label: 'Name',
+            icon: 'project-diagram',
+            value: retrieveWorkspaceGraph.data.workspace.name,
+          }),
+          create(Overview.Container, {
+            key: 'Tag',
+            label: 'Tag',
+            icon: 'tags',
+            value: retrieveWorkspaceGraph.data.workspace.tag,
+          }),
+          create(Overview.Container, {
+            key: 'Description',
+            label: 'Description',
+            icon: 'marker',
+            value: retrieveWorkspaceGraph.data.workspace.description,
+          }),
+          create(Overview.Container, {
+            key: 'Created',
+            label: 'Created',
+            icon: 'clock',
+            value: format(
+              new Date(retrieveWorkspaceGraph.data.workspace.created),
+              "dd LLL yyyy 'at' hh:mm aaaa"
+            ),
+          }),
+          create(Overview.Container, {
+            key: 'Updated',
+            label: 'Updated',
+            icon: 'clock',
+            value: format(
+              new Date(retrieveWorkspaceGraph.data.workspace.updated),
+              "dd LLL yyyy 'at' hh:mm aaaa"
+            ),
+          }),
+        ],
+      }),
     }),
   })
 }

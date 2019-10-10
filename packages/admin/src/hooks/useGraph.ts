@@ -63,13 +63,13 @@ export const useGraph = <T>({
         }
         return done as T
       })
-      .catch((caught: Error) => {
+      .catch((caught: Error & { code: number }) => {
         if (mounted.current) {
           errorChange(caught)
           loadingChange(false)
           toaster.add({
             icon: 'bell',
-            label: 'Error',
+            label: `Error ${(caught && caught.code) || ''}`,
             description: caught.message,
           })
         }

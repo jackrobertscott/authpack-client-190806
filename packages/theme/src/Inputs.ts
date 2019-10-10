@@ -146,7 +146,7 @@ export const Inputs: IInputs = {
         },
         enable: value => changeEnable(value),
       })
-    }, [])
+    }, [change])
     useEffect(() => {
       mounted.current = true
       return () => {

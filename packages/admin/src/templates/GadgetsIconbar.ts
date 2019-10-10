@@ -12,6 +12,7 @@ export type IGadgetsIconbarScreen = {
   icon: string
   label: string
   children: ReactNode
+  skip?: boolean
   submenu?: Array<{ children?: ReactNode } & IIconbarSubmenu>
 }
 
@@ -40,18 +41,20 @@ export const GadgetsIconbar: FC<IGadgetsIconbar> = ({ close, screens }) => {
     children: [
       create(Iconbar.Container, {
         key: 'iconbar',
-        top: screens.map((screen, i) => {
-          return create(Iconbar.Pointer, {
-            key: screen.id || String(i),
-            label: screen.label,
-            submenu: screen.submenu,
-            children: create(Iconbar.Icon, {
-              name: screen.icon,
-              click: () => changeActive(screen),
-              active: compareActive(screen),
-            }),
-          })
-        }),
+        top: screens
+          .filter(({ skip }) => !skip)
+          .map((screen, i) => {
+            return create(Iconbar.Pointer, {
+              key: screen.id || String(i),
+              label: screen.label,
+              submenu: screen.submenu,
+              children: create(Iconbar.Icon, {
+                name: screen.icon,
+                click: () => changeActive(screen),
+                active: compareActive(screen),
+              }),
+            })
+          }),
         bottom:
           close &&
           create(Iconbar.Pointer, {

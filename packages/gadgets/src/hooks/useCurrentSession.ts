@@ -26,6 +26,7 @@ export const useCurrentSession = createUseGraph<{
     }>
   }
 }>({
+  name: 'CurrentSession',
   query: `
     query CurrentSession {
       session: CurrentSession {

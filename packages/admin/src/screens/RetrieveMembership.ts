@@ -16,33 +16,35 @@ export const RetrieveMembership: FC<IRetrieveMembership> = ({ id }) => {
   return create(Gadgets.Container, {
     label: 'Overview Membership',
     brand: 'Authenticator',
-    children: create(Overview.Spacer, {
-      children: retrieveMembershipGraph.data && [
-        create(Overview.Container, {
-          key: 'Id',
-          label: 'Id',
-          icon: 'fingerprint',
-          value: retrieveMembershipGraph.data.membership.id,
-        }),
-        create(Overview.Container, {
-          key: 'Created',
-          label: 'Created',
-          icon: 'clock',
-          value: format(
-            new Date(retrieveMembershipGraph.data.membership.created),
-            "dd LLL yyyy 'at' hh:mm aaaa"
-          ),
-        }),
-        create(Overview.Container, {
-          key: 'Updated',
-          label: 'Updated',
-          icon: 'clock',
-          value: format(
-            new Date(retrieveMembershipGraph.data.membership.updated),
-            "dd LLL yyyy 'at' hh:mm aaaa"
-          ),
-        }),
-      ],
+    children: create(Gadgets.Spacer, {
+      children: create(Overview.Spacer, {
+        children: retrieveMembershipGraph.data && [
+          create(Overview.Container, {
+            key: 'Id',
+            label: 'Id',
+            icon: 'fingerprint',
+            value: retrieveMembershipGraph.data.membership.id,
+          }),
+          create(Overview.Container, {
+            key: 'Created',
+            label: 'Created',
+            icon: 'clock',
+            value: format(
+              new Date(retrieveMembershipGraph.data.membership.created),
+              "dd LLL yyyy 'at' hh:mm aaaa"
+            ),
+          }),
+          create(Overview.Container, {
+            key: 'Updated',
+            label: 'Updated',
+            icon: 'clock',
+            value: format(
+              new Date(retrieveMembershipGraph.data.membership.updated),
+              "dd LLL yyyy 'at' hh:mm aaaa"
+            ),
+          }),
+        ],
+      }),
     }),
   })
 }

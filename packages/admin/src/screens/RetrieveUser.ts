@@ -16,51 +16,53 @@ export const RetrieveUser: FC<IRetrieveUser> = ({ id }) => {
   return create(Gadgets.Container, {
     label: 'Overview User',
     brand: 'Authenticator',
-    children: create(Overview.Spacer, {
-      children: retrieveUserGraph.data && [
-        create(Overview.Container, {
-          key: 'Id',
-          label: 'Id',
-          icon: 'fingerprint',
-          value: retrieveUserGraph.data.user.id,
-        }),
-        create(Overview.Container, {
-          key: 'Email',
-          label: 'Email',
-          icon: 'inbox',
-          value: retrieveUserGraph.data.user.email,
-        }),
-        create(Overview.Container, {
-          key: 'Username',
-          label: 'Username',
-          icon: 'tags',
-          value: retrieveUserGraph.data.user.username,
-        }),
-        create(Overview.Container, {
-          key: 'Name',
-          label: 'Name',
-          icon: 'user',
-          value: retrieveUserGraph.data.user.name,
-        }),
-        create(Overview.Container, {
-          key: 'Created',
-          label: 'Created',
-          icon: 'clock',
-          value: format(
-            new Date(retrieveUserGraph.data.user.created),
-            "dd LLL yyyy 'at' hh:mm aaaa"
-          ),
-        }),
-        create(Overview.Container, {
-          key: 'Updated',
-          label: 'Updated',
-          icon: 'clock',
-          value: format(
-            new Date(retrieveUserGraph.data.user.updated),
-            "dd LLL yyyy 'at' hh:mm aaaa"
-          ),
-        }),
-      ],
+    children: create(Gadgets.Spacer, {
+      children: create(Overview.Spacer, {
+        children: retrieveUserGraph.data && [
+          create(Overview.Container, {
+            key: 'Id',
+            label: 'Id',
+            icon: 'fingerprint',
+            value: retrieveUserGraph.data.user.id,
+          }),
+          create(Overview.Container, {
+            key: 'Email',
+            label: 'Email',
+            icon: 'inbox',
+            value: retrieveUserGraph.data.user.email,
+          }),
+          create(Overview.Container, {
+            key: 'Username',
+            label: 'Username',
+            icon: 'tags',
+            value: retrieveUserGraph.data.user.username,
+          }),
+          create(Overview.Container, {
+            key: 'Name',
+            label: 'Name',
+            icon: 'user',
+            value: retrieveUserGraph.data.user.name,
+          }),
+          create(Overview.Container, {
+            key: 'Created',
+            label: 'Created',
+            icon: 'clock',
+            value: format(
+              new Date(retrieveUserGraph.data.user.created),
+              "dd LLL yyyy 'at' hh:mm aaaa"
+            ),
+          }),
+          create(Overview.Container, {
+            key: 'Updated',
+            label: 'Updated',
+            icon: 'clock',
+            value: format(
+              new Date(retrieveUserGraph.data.user.updated),
+              "dd LLL yyyy 'at' hh:mm aaaa"
+            ),
+          }),
+        ],
+      }),
     }),
   })
 }

@@ -16,51 +16,53 @@ export const RetrievePermission: FC<IRetrievePermission> = ({ id }) => {
   return create(Gadgets.Container, {
     label: 'Overview Permission',
     brand: 'Authenticator',
-    children: create(Overview.Spacer, {
-      children: retrievePermissionGraph.data && [
-        create(Overview.Container, {
-          key: 'Id',
-          label: 'Id',
-          icon: 'fingerprint',
-          value: retrievePermissionGraph.data.permission.id,
-        }),
-        create(Overview.Container, {
-          key: 'Name',
-          label: 'Name',
-          icon: 'book',
-          value: retrievePermissionGraph.data.permission.name,
-        }),
-        create(Overview.Container, {
-          key: 'Tag',
-          label: 'Tag',
-          icon: 'tags',
-          value: retrievePermissionGraph.data.permission.tag,
-        }),
-        create(Overview.Container, {
-          key: 'Description',
-          label: 'Description',
-          icon: 'marker',
-          value: retrievePermissionGraph.data.permission.description,
-        }),
-        create(Overview.Container, {
-          key: 'Created',
-          label: 'Created',
-          icon: 'clock',
-          value: format(
-            new Date(retrievePermissionGraph.data.permission.created),
-            "dd LLL yyyy 'at' hh:mm aaaa"
-          ),
-        }),
-        create(Overview.Container, {
-          key: 'Updated',
-          label: 'Updated',
-          icon: 'clock',
-          value: format(
-            new Date(retrievePermissionGraph.data.permission.updated),
-            "dd LLL yyyy 'at' hh:mm aaaa"
-          ),
-        }),
-      ],
+    children: create(Gadgets.Spacer, {
+      children: create(Overview.Spacer, {
+        children: retrievePermissionGraph.data && [
+          create(Overview.Container, {
+            key: 'Id',
+            label: 'Id',
+            icon: 'fingerprint',
+            value: retrievePermissionGraph.data.permission.id,
+          }),
+          create(Overview.Container, {
+            key: 'Name',
+            label: 'Name',
+            icon: 'book',
+            value: retrievePermissionGraph.data.permission.name,
+          }),
+          create(Overview.Container, {
+            key: 'Tag',
+            label: 'Tag',
+            icon: 'tags',
+            value: retrievePermissionGraph.data.permission.tag,
+          }),
+          create(Overview.Container, {
+            key: 'Description',
+            label: 'Description',
+            icon: 'marker',
+            value: retrievePermissionGraph.data.permission.description,
+          }),
+          create(Overview.Container, {
+            key: 'Created',
+            label: 'Created',
+            icon: 'clock',
+            value: format(
+              new Date(retrievePermissionGraph.data.permission.created),
+              "dd LLL yyyy 'at' hh:mm aaaa"
+            ),
+          }),
+          create(Overview.Container, {
+            key: 'Updated',
+            label: 'Updated',
+            icon: 'clock',
+            value: format(
+              new Date(retrievePermissionGraph.data.permission.updated),
+              "dd LLL yyyy 'at' hh:mm aaaa"
+            ),
+          }),
+        ],
+      }),
     }),
   })
 }
