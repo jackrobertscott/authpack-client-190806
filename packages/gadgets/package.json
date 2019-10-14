@@ -12,11 +12,11 @@
     "@fortawesome/fontawesome-free": "^5.11.2",
     "@types/yup": "^0.26.24",
     "emotion": "^10.0.17",
-    "events-and-things": "^0.4.1",
+    "events-and-things": "^0.6.1",
     "iframe-radio": "^0.7.7",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-scripts": "3.1.1",
+    "react-scripts": "^3.2.0",
     "wga-theme": "^0.1.1",
     "yup": "^0.27.0"
   },

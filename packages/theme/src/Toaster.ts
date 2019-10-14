@@ -111,7 +111,7 @@ export const ToasterStore = new Store<IToasterStore>({
 })
 
 export const useToaster = () => {
-  const [toaster, changeToaster] = useState<IToasterStore>(ToasterStore.state())
+  const [toaster, changeToaster] = useState<IToasterStore>(ToasterStore.state)
   useEffect(() => ToasterStore.listen(data => changeToaster(data)))
   const add = (next: IToasterCurrent, timer: number = 5000) => {
     const id = Math.random()
@@ -120,7 +120,7 @@ export const useToaster = () => {
     ToasterStore.change({
       ...toaster,
       current: [
-        ...ToasterStore.state().current,
+        ...ToasterStore.state.current,
         { ...next, id, close: () => remove(id) },
       ],
     })
@@ -129,7 +129,7 @@ export const useToaster = () => {
   const remove = (id: string) => {
     ToasterStore.change({
       ...toaster,
-      current: ToasterStore.state().current.filter(i => i.id !== id),
+      current: ToasterStore.state.current.filter(i => i.id !== id),
     })
   }
   return useMemo(
