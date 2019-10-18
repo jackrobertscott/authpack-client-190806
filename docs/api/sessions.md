@@ -6,8 +6,8 @@
 
 The `session` model is created when a user authenticates and requires an access token.
 
-- [Setup](#Model)
-- [Session model](#Model)
+- [Setup](#Setup)
+- [Session model](#Session-model)
 
 Methods.
 
@@ -17,7 +17,6 @@ Methods.
 - [Retrieve a session](#Retrieve-a-session)
 - [List sessions](#List-sessions)
 - [Count sessions](#Count-sessions)
-- [Analytics of sessions](#Analytics-of-sessions)
 
 Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 
@@ -26,12 +25,12 @@ Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 Never store your private keys in your codebase - use environment variables.
 
 ```ts
-import { Authenticator } from 'wga-api';
+import { AuthenticatorAPI } from 'wga-api'
 
-const authenticator = new Authenticator({
+const wga = new AuthenticatorAPI({
   secret: process.env.AUTHENTICATOR_SECRET
   devmode: false,
-});
+})
 ```
 
 ## Session model
@@ -41,7 +40,7 @@ Properties.
 - id `string`: unique identifier.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
-- workspace `string`: the related workspace.
+- team `string`: the related team.
 - user `string`: the related user.
 - meta `object?`: developer assigned attributes.
 - expiry `Date`: the expiry time of the token.
@@ -53,8 +52,8 @@ Properties.
 Used to sign up a session on your app.
 
 ```ts
-authenticator.sessions.create({
-    workspace: workspace.id,
+wga.sessions.create({
+    team: team.id,
     user: user.id,
     meta: {/* attributes */},
     expiry: new Date(),
@@ -66,7 +65,7 @@ authenticator.sessions.create({
 
 Options.
 
-- workspace `string`: the workspace's id.
+- team `string`: the team's id.
 - user `string`: the user's id.
 - meta `object?`: developer assigned attributes.
 - expiry `Date`: the expiry time of the token.
@@ -74,7 +73,7 @@ Options.
 
 Returns.
 
-- [session](#Model) `Promise<object, Error>`: the created session.
+- [session](#Session-model) `Promise<object, Error>`: the created session.
 
 GraphQL version.
 
@@ -94,7 +93,7 @@ mutation CreateSession($options: CreateSessionOptions!) {
 Used to patch a session's details.
 
 ```ts
-authenticator.sessions.update({
+wga.sessions.update({
     id: session.id,
     meta: {/* attributes */},
     deactivated: false,
@@ -111,7 +110,7 @@ Options.
 
 Returns.
 
-- [session](#Model) `Promise<object, Error>`: the updated session.
+- [session](#Session-model) `Promise<object, Error>`: the updated session.
 
 GraphQL version.
 
@@ -131,7 +130,7 @@ mutation UpdateSession($options: UpdateSessionOptions!) {
 Used to permanently remove a session.
 
 ```ts
-authenticator.sessions.remove({
+wga.sessions.remove({
     id: membership.sessionId,
   })
   .then(session => console.log(`Removed: ${session.id}`))
@@ -144,7 +143,7 @@ Options.
 
 Returns.
 
-- [session](#Model) `Promise<object, Error>` the removed session.
+- [session](#Session-model) `Promise<object, Error>` the removed session.
 
 GraphQL version.
 
@@ -164,7 +163,7 @@ mutation RemoveSession($options: RemoveSessionOptions!) {
 Used to get a single session.
 
 ```ts
-authenticator.sessions.retrieve({
+wga.sessions.retrieve({
     id: session.id,
   })
   .then(session => console.log(`Retrieved: ${session.id}`))
@@ -178,7 +177,7 @@ Options.
 
 Returns.
 
-- [session](#Model) `Promise<object, Error>` the session requested.
+- [session](#Session-model) `Promise<object, Error>` the session requested.
 
 GraphQL version.
 
@@ -198,7 +197,7 @@ query RetrieveSession($options: RetrieveSessionOptions!) {
 Used to get a list of sessions.
 
 ```ts
-authenticator.sessions.list({
+wga.sessions.list({
     limit: 10,
     skip: 5,
     page: 0,
@@ -218,7 +217,7 @@ Options.
 
 Returns.
 
-- [sessions](#Model) `Promise<object[], Error>`: a list of sessions.
+- [sessions](#Session-model) `Promise<object[], Error>`: a list of sessions.
 
 GraphQL version.
 
@@ -235,10 +234,10 @@ query ListSessions($options: ListSessionsOptions!) {
 
 ## Count sessions
 
-Used to count a workspace of sessions.
+Used to count a team of sessions.
 
 ```ts
-authenticator.sessions.count()
+wga.sessions.count()
   .then(count => console.log(`Counted: ${count}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
@@ -261,51 +260,10 @@ query CountSessions($options: CountSessionsOptions!) {
 }
 ```
 
-## Analytics of sessions
-
-Used to get statistics of sessions over time.
-
-```ts
-authenticator.sessions.analytics({
-    date: Date.now(),
-    months: 6,
-  })
-  .then(analytics => console.table(analytics))
-  .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
-```
-
-Options.
-
-- ending `string?`: the final day in the period i.e. `2019-12-24`.
-- months `number?`: number of months to analyse.
-  
-Returns.
-
-- analytics `Promise<object, Error>`: statistics related to sessions within time period.
-  - labels `string[]`: date values within given period.
-  - data `number[]`: values matching the labels.
-  - created `number`: number of sessions created.
-  - updated `number`: number of sessions updated.
-  - active `number`: number of sessions with 1 session or more.
-
-GraphQL version.
-
-`POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
-
-```graphql
-query AnalyticsOfSessions($options: AnalyticsOfSessionsOptions!) {
-  analytics: AnalyticsOfSessions(options: $options) {
-    labels
-    data
-    # ... analytics properties
-  }
-}
-```
-
 ## Resources
 
 - [Users](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/users.md)
-- [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/workspaces.md)
+- [Teams](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/teams.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/permissions.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/providers.md)

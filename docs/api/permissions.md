@@ -6,8 +6,8 @@
 
 The `permission` model allows developers to assign access levels to an user.
 
-- [Setup](#Model)
-- [Permission model](#Model)
+- [Setup](#Setup)
+- [Permission model](#Permission-model)
 
 Methods.
 
@@ -17,7 +17,6 @@ Methods.
 - [Retrieve a permission](#Retrieve-a-permission)
 - [List permissions](#List-permissions)
 - [Count permissions](#Count-permissions)
-- [Analytics of permissions](#Analytics-of-permissions)
 
 Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 
@@ -26,12 +25,12 @@ Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 Never store your private keys in your codebase - use environment variables.
 
 ```ts
-import { Authenticator } from 'wga-api';
+import { AuthenticatorAPI } from 'wga-api'
 
-const authenticator = new Authenticator({
+const wga = new AuthenticatorAPI({
   secret: process.env.AUTHENTICATOR_SECRET
   devmode: false,
-});
+})
 ```
 
 ## Permission model
@@ -51,7 +50,7 @@ Properties.
 Used to sign up a permission on your app.
 
 ```ts
-authenticator.permissions.create({
+wga.permissions.create({
     meta: {/* attributes */},
     name: 'Editor',
     tag: 'editor',
@@ -70,7 +69,7 @@ Options.
 
 Returns.
 
-- [permission](#Model) `Promise<object, Error>`: the created permission.
+- [permission](#Permission-model) `Promise<object, Error>`: the created permission.
 
 GraphQL version.
 
@@ -91,7 +90,7 @@ mutation CreatePermission($options: CreatePermissionOptions!) {
 Used to patch a permission's details.
 
 ```ts
-authenticator.permissions.update({
+wga.permissions.update({
     meta: {/* attributes */},
     name: 'Editor',
     tag: 'editor',
@@ -111,7 +110,7 @@ Options.
 
 Returns.
 
-- [permission](#Model) `Promise<object, Error>`: the updated permission.
+- [permission](#Permission-model) `Promise<object, Error>`: the updated permission.
 
 GraphQL version.
 
@@ -132,7 +131,7 @@ mutation UpdatePermission($options: UpdatePermissionOptions!) {
 Used to permanently remove a permission.
 
 ```ts
-authenticator.permissions.remove({
+wga.permissions.remove({
     id: membership.permissionId,
   })
   .then(permission => console.log(`Removed: ${permission.name}`))
@@ -146,7 +145,7 @@ Options.
 
 Returns.
 
-- [permission](#Model) `Promise<object, Error>` the removed permission.
+- [permission](#Permission-model) `Promise<object, Error>` the removed permission.
 
 GraphQL version.
 
@@ -167,7 +166,7 @@ mutation RemovePermission($options: RemovePermissionOptions!) {
 Used to get a single permission.
 
 ```ts
-authenticator.permissions.retrieve({
+wga.permissions.retrieve({
     id: membership.permissionId,
   })
   .then(permission => console.log(`Retrieved: ${permission.name}`))
@@ -181,7 +180,7 @@ Options.
 
 Returns.
 
-- [permission](#Model) `Promise<object, Error>` the permission requested.
+- [permission](#Permission-model) `Promise<object, Error>` the permission requested.
 
 GraphQL version.
 
@@ -202,7 +201,7 @@ query RetrievePermission($options: RetrievePermissionOptions!) {
 Used to get a list of permissions.
 
 ```ts
-authenticator.permissions.list({
+wga.permissions.list({
     search: 'Editor',
     limit: 10,
     skip: 5,
@@ -222,7 +221,7 @@ Options.
 
 Returns.
 
-- [permissions](#Model) `Promise<object[], Error>`: a list of permissions.
+- [permissions](#Permission-model) `Promise<object[], Error>`: a list of permissions.
 
 GraphQL version.
 
@@ -240,10 +239,10 @@ query ListPermissions($options: ListPermissionsOptions!) {
 
 ## Count permissions
 
-Used to count a workspace of permissions.
+Used to count a team of permissions.
 
 ```ts
-authenticator.permissions.count({
+wga.permissions.count({
     search: 'Editor',
   })
   .then(count => console.log(`Counted: ${count}`))
@@ -268,51 +267,10 @@ query CountPermissions($options: CountPermissionsOptions!) {
 }
 ```
 
-## Analytics of permissions
-
-Used to get statistics of permissions over time.
-
-```ts
-authenticator.permissions.analytics({
-    date: Date.now(),
-    months: 6,
-  })
-  .then(analytics => console.table(analytics))
-  .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
-```
-
-Options.
-
-- ending `string?`: the final day in the period i.e. `2019-12-24`.
-- months `number?`: number of months to analyse.
-  
-Returns.
-
-- analytics `Promise<object, Error>`: statistics related to permissions within time period.
-  - labels `string[]`: date values within given period.
-  - data `number[]`: values matching the labels.
-  - created `number`: number of permissions created.
-  - updated `number`: number of permissions updated.
-  - active `number`: number of permissions with 1 session or more.
-
-GraphQL version.
-
-`POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
-
-```graphql
-query AnalyticsOfPermissions($options: AnalyticsOfPermissionsOptions!) {
-  analytics: AnalyticsOfPermissions(options: $options) {
-    labels
-    data
-    # ... analytics properties
-  }
-}
-```
-
 ## Resources
 
 - [Users](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/users.md)
-- [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/workspaces.md)
+- [Teams](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/teams.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/permissions.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/providers.md)
