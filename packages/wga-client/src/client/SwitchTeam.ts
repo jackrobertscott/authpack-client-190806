@@ -3,7 +3,7 @@ import { generate } from '../utils/generate'
 export const SwitchTeam = generate<
   {
     value: {
-      // todo...
+      id: string
     }
   },
   {
@@ -17,7 +17,7 @@ export const SwitchTeam = generate<
 >({
   name: 'SwitchTeam',
   query: `
-    mutation SwitchTeam($value: SwitchTeamValue) {
+    mutation SwitchTeam($value: SwitchTeamValue!) {
       team: SwitchTeam(value: $value) {
         id
         created

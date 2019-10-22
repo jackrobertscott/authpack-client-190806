@@ -3,7 +3,10 @@ import { generate } from '../utils/generate'
 export const CreateTeam = generate<
   {
     value: {
-      // todo...
+      name: string
+      tag: string
+      description?: string
+      meta?: { [key: string]: any }
     }
   },
   {
@@ -12,17 +15,23 @@ export const CreateTeam = generate<
       created: string
       updated: string
       meta: { [key: string]: any }
+      name: string
+      tag: string
+      description?: string
     }
   }
 >({
   name: 'CreateTeam',
   query: `
-    mutation CreateTeam($value: CreateTeamValue) {
+    mutation CreateTeam($value: CreateTeamValue!) {
       team: CreateTeam(value: $value) {
         id
         created
         updated
         meta
+        name
+        tag
+        description
       }
     }
   `,

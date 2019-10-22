@@ -3,7 +3,10 @@ import { generate } from '../utils/generate'
 export const UpdateUser = generate<
   {
     value: {
-      // todo...
+      email?: string
+      username?: string
+      name?: string
+      meta?: { [key: string]: any }
     }
   },
   {
@@ -17,7 +20,7 @@ export const UpdateUser = generate<
 >({
   name: 'UpdateUser',
   query: `
-    mutation UpdateUser($value: UpdateUserValue) {
+    mutation UpdateUser($value: UpdateUserValue!) {
       user: UpdateUser(value: $value) {
         id
         created

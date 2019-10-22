@@ -2,8 +2,8 @@ import { generate } from '../utils/generate'
 
 export const RemoveUser = generate<
   {
-    filter: {
-      // todo...
+    value: {
+      password: string
     }
   },
   {
@@ -17,8 +17,8 @@ export const RemoveUser = generate<
 >({
   name: 'RemoveUser',
   query: `
-    mutation RemoveUser($filter: RemoveUserValue) {
-      user: RemoveUser(filter: $filter) {
+    mutation RemoveUser($value: RemoveUserValue!) {
+      user: RemoveUser(value: $value) {
         id
         created
         updated

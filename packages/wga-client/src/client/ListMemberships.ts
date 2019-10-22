@@ -2,8 +2,11 @@ import { generate } from '../utils/generate'
 
 export const ListMemberships = generate<
   {
-    options: {
-      // todo...
+    options?: {
+      limit?: number
+      skip?: number
+      sort?: string
+      reverse?: boolean
     }
   },
   {

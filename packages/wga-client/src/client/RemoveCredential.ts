@@ -3,7 +3,9 @@ import { generate } from '../utils/generate'
 export const RemoveCredential = generate<
   {
     filter: {
-      // todo...
+      id?: string
+      user?: string
+      provider?: string
     }
   },
   {
@@ -19,7 +21,7 @@ export const RemoveCredential = generate<
 >({
   name: 'RemoveCredential',
   query: `
-    mutation RemoveCredential($filter: RemoveCredentialValue) {
+    mutation RemoveCredential($filter: FilterCredentials!) {
       credential: RemoveCredential(filter: $filter) {
         id
         created

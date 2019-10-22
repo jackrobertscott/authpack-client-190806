@@ -2,8 +2,13 @@ import { generate } from '../utils/generate'
 
 export const RefreshCredential = generate<
   {
+    filter: {
+      id?: string
+      user?: string
+      provider?: string
+    }
     value: {
-      // todo...
+      code: string
     }
   },
   {
@@ -19,8 +24,8 @@ export const RefreshCredential = generate<
 >({
   name: 'RefreshCredential',
   query: `
-    mutation RefreshCredential($value: RefreshCredentialValue) {
-      credential: RefreshCredential(value: $value) {
+    mutation RefreshCredential($filter: FilterCredentials!, $value: RefreshCredentialValue!) {
+      credential: RefreshCredential(filter: $filter, value: $value) {
         id
         created
         updated

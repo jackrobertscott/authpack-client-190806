@@ -1,11 +1,7 @@
 import { generate } from '../utils/generate'
 
 export const LogoutUser = generate<
-  {
-    value: {
-      // todo...
-    }
-  },
+  {},
   {
     session: {
       id: string
@@ -17,8 +13,8 @@ export const LogoutUser = generate<
 >({
   name: 'LogoutUser',
   query: `
-    mutation LogoutUser($value: LogoutUserValue) {
-      session: LogoutUser(value: $value) {
+    mutation LogoutUser {
+      session: LogoutUser {
         id
         created
         updated

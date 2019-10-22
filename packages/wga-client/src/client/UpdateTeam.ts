@@ -2,8 +2,16 @@ import { generate } from '../utils/generate'
 
 export const UpdateTeam = generate<
   {
+    filter: {
+      id?: string
+      name?: string
+      tag?: string
+    }
     value: {
-      // todo...
+      name?: string
+      tag?: string
+      description?: string
+      meta?: { [key: string]: any }
     }
   },
   {
@@ -17,8 +25,8 @@ export const UpdateTeam = generate<
 >({
   name: 'UpdateTeam',
   query: `
-    mutation UpdateTeam($value: UpdateTeamValue) {
-      team: UpdateTeam(value: $value) {
+    mutation UpdateTeam($filter: FilterTeams!, $value: UpdateTeamValue!) {
+      team: UpdateTeam($filter: filter, value: $value) {
         id
         created
         updated

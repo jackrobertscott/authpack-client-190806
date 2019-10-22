@@ -1,11 +1,7 @@
 import { generate } from '../utils/generate'
 
 export const RetrieveSession = generate<
-  {
-    value: {
-      // todo...
-    }
-  },
+  {},
   {
     session: {
       id: string
@@ -17,8 +13,8 @@ export const RetrieveSession = generate<
 >({
   name: 'RetrieveSession',
   query: `
-    query RetrieveSession($value: RetrieveSessionValue) {
-      session: RetrieveSession(value: $value) {
+    query RetrieveSession {
+      session: RetrieveSession {
         id
         created
         updated

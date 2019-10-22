@@ -2,8 +2,11 @@ import { generate } from '../utils/generate'
 
 export const ListTeams = generate<
   {
-    options: {
-      // todo...
+    options?: {
+      limit?: number
+      skip?: number
+      sort?: string
+      reverse?: boolean
     }
   },
   {

@@ -21,7 +21,7 @@ export const CreateCredential = generate<
 >({
   name: 'CreateCredential',
   query: `
-    mutation CreateCredential($value: CreateCredentialValue) {
+    mutation CreateCredential($value: CreateCredentialValue!) {
       credential: CreateCredential(value: $value) {
         id
         created

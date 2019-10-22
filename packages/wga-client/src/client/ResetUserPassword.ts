@@ -3,7 +3,8 @@ import { generate } from '../utils/generate'
 export const ResetUserPassword = generate<
   {
     value: {
-      // todo...
+      code: string
+      password: string
     }
   },
   {
@@ -17,7 +18,7 @@ export const ResetUserPassword = generate<
 >({
   name: 'ResetUserPassword',
   query: `
-    mutation ResetUserPassword($value: ResetUserPasswordValue) {
+    mutation ResetUserPassword($value: ResetUserPasswordValue!) {
       user: ResetUserPassword(value: $value) {
         id
         created
