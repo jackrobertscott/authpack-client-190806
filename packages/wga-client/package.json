@@ -1,8 +1,8 @@
 {
-  "name": "wga-api",
+  "name": "wga-client",
   "private": false,
   "version": "0.1.5",
-  "description": "Service for the Window Gadgets Authenticator API.",
+  "description": "Service for the Window Gadgets Authenticator.",
   "license": "MIT",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
