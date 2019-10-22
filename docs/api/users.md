@@ -6,8 +6,8 @@
 
 The `user` model is used to identify a single person who has signed up to your app.
 
-- [Setup](#Model)
-- [User model](#Model)
+- [Setup](#Setup)
+- [User model](#User-model)
 
 Methods.
 
@@ -17,7 +17,6 @@ Methods.
 - [Retrieve a user](#Retrieve-a-user)
 - [List users](#List-users)
 - [Count users](#Count-users)
-- [Analytics of users](#Analytics-of-users)
 
 Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 
@@ -26,12 +25,12 @@ Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 Never store your private keys in your codebase - use environment variables.
 
 ```ts
-import { Authenticator } from 'wga-api';
+import { AuthenticatorAPI } from 'wga-api'
 
-const authenticator = new Authenticator({
+const wga = new AuthenticatorAPI({
   secret: process.env.AUTHENTICATOR_SECRET
   devmode: false,
-});
+})
 ```
 
 ## User model
@@ -53,7 +52,7 @@ Properties.
 Used to sign up a user on your app.
 
 ```ts
-authenticator.users.create({
+wga.users.create({
     meta: {/* attributes */},
     email: 'fredBlogs@example.com',
     username: 'freddy123',
@@ -76,7 +75,7 @@ Options.
 
 Returns.
 
-- [user](#Model) `Promise<object, Error>`: the created user.
+- [user](#User-model) `Promise<object, Error>`: the created user.
 
 GraphQL version.
 
@@ -97,7 +96,7 @@ mutation CreateUser($options: CreateUserOptions!) {
 Used to patch a user's details.
 
 ```ts
-authenticator.users.update({
+wga.users.update({
     id: user.id,
     meta: {/* attributes */},
     email: 'fredBlogs@example.com',
@@ -122,7 +121,7 @@ Options.
 
 Returns.
 
-- [user](#Model) `Promise<object, Error>`: the updated user.
+- [user](#User-model) `Promise<object, Error>`: the updated user.
 
 GraphQL version.
 
@@ -143,7 +142,7 @@ mutation UpdateUser($options: UpdateUserOptions!) {
 Used to permanently remove a user.
 
 ```ts
-authenticator.users.remove({
+wga.users.remove({
     id: membership.userId,
   })
   .then(user => console.log(`Removed: ${user.name}`))
@@ -158,7 +157,7 @@ Options.
 
 Returns.
 
-- [user](#Model) `Promise<object, Error>` the removed user.
+- [user](#User-model) `Promise<object, Error>` the removed user.
 
 GraphQL version.
 
@@ -179,7 +178,7 @@ mutation RemoveUser($options: RemoveUserOptions!) {
 Used to get a single user.
 
 ```ts
-authenticator.users.retrieve({
+wga.users.retrieve({
     id: membership.userId,
   })
   .then(user => console.log(`Retrieved: ${user.name}`))
@@ -194,7 +193,7 @@ Options.
 
 Returns.
 
-- [user](#Model) `Promise<object, Error>` the user requested.
+- [user](#User-model) `Promise<object, Error>` the user requested.
 
 GraphQL version.
 
@@ -215,7 +214,7 @@ query RetrieveUser($options: RetrieveUserOptions!) {
 Used to get a list of users.
 
 ```ts
-authenticator.users.list({
+wga.users.list({
     search: 'Fred',
     limit: 10,
     skip: 5,
@@ -236,7 +235,7 @@ Options.
 
 Returns.
 
-- [users](#Model) `Promise<object[], Error>`: a list of users.
+- [users](#User-model) `Promise<object[], Error>`: a list of users.
 
 GraphQL version.
 
@@ -254,10 +253,10 @@ query ListUsers($options: ListUsersOptions!) {
 
 ## Count users
 
-Used to count a workspace of users.
+Used to count a team of users.
 
 ```ts
-authenticator.users.count({
+wga.users.count({
     search: 'Fred',
   })
   .then(count => console.log(`Counted: ${count}`))
@@ -282,51 +281,10 @@ query CountUsers($options: CountUsersOptions!) {
 }
 ```
 
-## Analytics of users
-
-Used to get statistics of users over time.
-
-```ts
-authenticator.users.analytics({
-    ending: Date.now(),
-    months: 6,
-  })
-  .then(analytics => console.table(analytics))
-  .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
-```
-
-Options.
-
-- ending `string?`: the final day in the period i.e. `2019-12-24`.
-- months `number?`: number of months to analyse.
-  
-Returns.
-
-- analytics `Promise<object, Error>`: statistics related to users within time period.
-  - labels `string[]`: date values within given period.
-  - data `number[]`: values matching the labels.
-  - created `number`: number of users created.
-  - updated `number`: number of users updated.
-  - active `number`: number of users with 1 session or more.
-
-GraphQL version.
-
-`POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
-
-```graphql
-query AnalyticsOfUsers($options: AnalyticsOfUsersOptions!) {
-  analytics: AnalyticsOfUsers(options: $options) {
-    labels
-    data
-    # ... analytics properties
-  }
-}
-```
-
 ## Resources
 
 - [Users](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/users.md)
-- [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/workspaces.md)
+- [Teams](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/teams.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/permissions.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/providers.md)

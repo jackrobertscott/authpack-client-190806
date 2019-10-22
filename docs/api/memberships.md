@@ -4,10 +4,10 @@
 
 ## Overview
 
-The `membership` model is used to associates an user with a workspace.
+The `membership` model is used to associate a user with a team.
 
-- [Setup](#Model)
-- [Membership model](#Model)
+- [Setup](#Setup)
+- [Membership model](#Membership-model)
 
 Methods.
 
@@ -17,7 +17,6 @@ Methods.
 - [Retrieve a membership](#Retrieve-a-membership)
 - [List memberships](#List-memberships)
 - [Count memberships](#Count-memberships)
-- [Analytics of memberships](#Analytics-of-memberships)
 
 Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 
@@ -26,12 +25,12 @@ Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 Never store your private keys in your codebase - use environment variables.
 
 ```ts
-import { Authenticator } from 'wga-api';
+import { AuthenticatorAPI } from 'wga-api'
 
-const authenticator = new Authenticator({
+const wga = new AuthenticatorAPI({
   secret: process.env.AUTHENTICATOR_SECRET
   devmode: false,
-});
+})
 ```
 
 ## Membership model
@@ -41,7 +40,7 @@ Properties.
 - id `string`: unique identifier.
 - created `Date`: time of creation.
 - updated `Date`: time of last update.
-- workspace `object`: the related workspace.
+- team `object`: the related team.
 - user `object`: the related user.
 - permissions `object[]`: the permissions assigned to member.
 - meta `object?`: developer assigned attributes.
@@ -49,11 +48,11 @@ Properties.
 
 ## Create a membership
 
-Used to add a user as a new member of a workspace.
+Used to add a user as a new member of a team.
 
 ```ts
-authenticator.memberships.create({
-    workspace: workspace.id,
+wga.memberships.create({
+    team: team.id,
     user: user.id,
     permissions: [permissionEditor.id, permissionCommentor.id],
     meta: {/* attributes */},
@@ -65,7 +64,7 @@ authenticator.memberships.create({
 
 Options.
 
-- workspace: `string`: id of a workspace.
+- team: `string`: id of a team.
 - user: `string`: id of a user.
 - permissions `string[]?`: ids of permissions assigned to member.
 - meta `object?`: developer assigned attributes.
@@ -73,7 +72,7 @@ Options.
 
 Returns.
 
-- [membership](#Model) `Promise<object, Error>`: the created membership.
+- [membership](#Membership-model) `Promise<object, Error>`: the created membership.
 
 GraphQL version.
 
@@ -93,7 +92,7 @@ mutation CreateMembership($options: CreateMembershipOptions!) {
 Used to patch a membership's details.
 
 ```ts
-authenticator.memberships.update({
+wga.memberships.update({
     id: membership.id,
     permissions: [permissionEditor.id, permissionCommentor.id],
     meta: {/* attributes */},
@@ -110,7 +109,7 @@ Options.
 
 Returns.
 
-- [membership](#Model) `Promise<object, Error>`: the updated membership.
+- [membership](#Membership-model) `Promise<object, Error>`: the updated membership.
 
 GraphQL version.
 
@@ -130,7 +129,7 @@ mutation UpdateMembership($options: UpdateMembershipOptions!) {
 Used to permanently remove a membership.
 
 ```ts
-authenticator.memberships.remove({
+wga.memberships.remove({
     id: membership.id,
   })
   .then(membership => console.log(`Removed: ${membership.id}`))
@@ -143,7 +142,7 @@ Options.
 
 Returns.
 
-- [membership](#Model) `Promise<object, Error>` the removed membership.
+- [membership](#Membership-model) `Promise<object, Error>` the removed membership.
 
 GraphQL version.
 
@@ -163,7 +162,7 @@ mutation RemoveMembership($options: RemoveMembershipOptions!) {
 Used to get a single membership.
 
 ```ts
-authenticator.memberships.retrieve({
+wga.memberships.retrieve({
     id: membership.id,
   })
   .then(membership => console.log(`Retrieved: ${membership.id}`))
@@ -176,7 +175,7 @@ Options.
 
 Returns.
 
-- [membership](#Model) `Promise<object, Error>` the membership requested.
+- [membership](#Membership-model) `Promise<object, Error>` the membership requested.
 
 GraphQL version.
 
@@ -196,7 +195,7 @@ query RetrieveMembership($options: RetrieveMembershipOptions!) {
 Used to get a list of memberships.
 
 ```ts
-authenticator.memberships.list({
+wga.memberships.list({
     limit: 10,
     skip: 5,
     page: 0,
@@ -215,7 +214,7 @@ Options.
 
 Returns.
 
-- [memberships](#Model) `Promise<object[], Error>`: a list of memberships.
+- [memberships](#Membership-model) `Promise<object[], Error>`: a list of memberships.
 
 GraphQL version.
 
@@ -232,10 +231,10 @@ query ListMemberships($options: ListMembershipsOptions!) {
 
 ## Count memberships
 
-Used to count a workspace of memberships.
+Used to count a team of memberships.
 
 ```ts
-authenticator.memberships.count()
+wga.memberships.count()
   .then(count => console.log(`Counted: ${count}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
@@ -258,51 +257,10 @@ query CountMemberships($options: CountMembershipsOptions!) {
 }
 ```
 
-## Analytics of memberships
-
-Used to get statistics of memberships over time.
-
-```ts
-authenticator.memberships.analytics({
-    date: Date.now(),
-    months: 6,
-  })
-  .then(analytics => console.table(analytics))
-  .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
-```
-
-Options.
-
-- ending `string?`: the final day in the period i.e. `2019-12-24`.
-- months `number?`: number of months to analyse.
-  
-Returns.
-
-- analytics `Promise<object, Error>`: statistics related to memberships within time period.
-  - labels `string[]`: date values within given period.
-  - data `number[]`: values matching the labels.
-  - created `number`: number of memberships created.
-  - updated `number`: number of memberships updated.
-  - active `number`: number of memberships with 1 session or more.
-
-GraphQL version.
-
-`POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
-
-```graphql
-query AnalyticsOfMemberships($options: AnalyticsOfMembershipsOptions!) {
-  analytics: AnalyticsOfMemberships(options: $options) {
-    labels
-    data
-    # ... analytics properties
-  }
-}
-```
-
 ## Resources
 
 - [Users](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/users.md)
-- [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/workspaces.md)
+- [Teams](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/teams.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/permissions.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/providers.md)

@@ -6,8 +6,8 @@
 
 The `provider` model stores 3rd party app details.
 
-- [Setup](#Model)
-- [Provider model](#Model)
+- [Setup](#Setup)
+- [Provider model](#Provider-model)
 
 Methods.
 
@@ -17,7 +17,6 @@ Methods.
 - [Retrieve a provider](#Retrieve-a-provider)
 - [List providers](#List-providers)
 - [Count providers](#Count-providers)
-- [Analytics of providers](#Analytics-of-providers)
 
 Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 
@@ -26,12 +25,12 @@ Powered by the Authenticator: *[go to app.](https://wga.windowgadgets.io)*
 Never store your private keys in your codebase - use environment variables.
 
 ```ts
-import { Authenticator } from 'wga-api';
+import { AuthenticatorAPI } from 'wga-api'
 
-const authenticator = new Authenticator({
+const wga = new AuthenticatorAPI({
   secret: process.env.AUTHENTICATOR_SECRET
   devmode: false,
-});
+})
 ```
 
 ## Provider model
@@ -51,10 +50,10 @@ Properties.
 
 ## Create a provider
 
-Used to add a user as a new member of a workspace.
+Used to add a user as a new member of a team.
 
 ```ts
-authenticator.providers.create({
+wga.providers.create({
     meta: {/* attributes */},
     name: 'Facebook',
     tag: 'facebook',
@@ -79,7 +78,7 @@ Options.
 
 Returns.
 
-- [provider](#Model) `Promise<object, Error>`: the created provider.
+- [provider](#Provider-model) `Promise<object, Error>`: the created provider.
 
 GraphQL version.
 
@@ -99,7 +98,7 @@ mutation CreateProvider($options: CreateProviderOptions!) {
 Used to patch a provider's details.
 
 ```ts
-authenticator.providers.update({
+wga.providers.update({
     id: provider.id,
     meta: {/* attributes */},
     name: 'Facebook',
@@ -126,7 +125,7 @@ Options.
 
 Returns.
 
-- [provider](#Model) `Promise<object, Error>`: the updated provider.
+- [provider](#Provider-model) `Promise<object, Error>`: the updated provider.
 
 GraphQL version.
 
@@ -146,7 +145,7 @@ mutation UpdateProvider($options: UpdateProviderOptions!) {
 Used to permanently remove a provider.
 
 ```ts
-authenticator.providers.remove({
+wga.providers.remove({
     id: provider.providerId,
   })
   .then(provider => console.log(`Removed: ${provider.id}`))
@@ -160,7 +159,7 @@ Options.
 
 Returns.
 
-- [provider](#Model) `Promise<object, Error>` the removed provider.
+- [provider](#Provider-model) `Promise<object, Error>` the removed provider.
 
 GraphQL version.
 
@@ -180,7 +179,7 @@ mutation RemoveProvider($options: RemoveProviderOptions!) {
 Used to get a single provider.
 
 ```ts
-authenticator.providers.retrieve({
+wga.providers.retrieve({
     id: provider.providerId,
   })
   .then(provider => console.log(`Retrieved: ${provider.id}`))
@@ -194,7 +193,7 @@ Options.
 
 Returns.
 
-- [provider](#Model) `Promise<object, Error>` the provider requested.
+- [provider](#Provider-model) `Promise<object, Error>` the provider requested.
 
 GraphQL version.
 
@@ -214,7 +213,7 @@ query RetrieveProvider($options: RetrieveProviderOptions!) {
 Used to get a list of providers.
 
 ```ts
-authenticator.providers.list({
+wga.providers.list({
     search: 'Google',
     limit: 10,
     skip: 5,
@@ -235,7 +234,7 @@ Options.
 
 Returns.
 
-- [providers](#Model) `Promise<object[], Error>`: a list of providers.
+- [providers](#Provider-model) `Promise<object[], Error>`: a list of providers.
 
 GraphQL version.
 
@@ -252,10 +251,10 @@ query ListProviders($options: ListProvidersOptions!) {
 
 ## Count providers
 
-Used to count a workspace of providers.
+Used to count a team of providers.
 
 ```ts
-authenticator.providers.count({
+wga.providers.count({
     search: 'Google',
   })
   .then(count => console.log(`Counted: ${count}`))
@@ -280,51 +279,10 @@ query CountProviders($options: CountProvidersOptions!) {
 }
 ```
 
-## Analytics of providers
-
-Used to get statistics of providers over time.
-
-```ts
-authenticator.providers.analytics({
-    date: Date.now(),
-    months: 6,
-  })
-  .then(analytics => console.table(analytics))
-  .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
-```
-
-Options.
-
-- ending `string?`: the final day in the period i.e. `2019-12-24`.
-- months `number?`: number of months to analyse.
-  
-Returns.
-
-- analytics `Promise<object, Error>`: statistics related to providers within time period.
-  - labels `string[]`: date values within given period.
-  - data `number[]`: values matching the labels.
-  - created `number`: number of providers created.
-  - updated `number`: number of providers updated.
-  - active `number`: number of providers with 1 session or more.
-
-GraphQL version.
-
-`POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
-
-```graphql
-query AnalyticsOfProviders($options: AnalyticsOfProvidersOptions!) {
-  analytics: AnalyticsOfProviders(options: $options) {
-    labels
-    data
-    # ... analytics properties
-  }
-}
-```
-
 ## Resources
 
 - [Users](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/users.md)
-- [Workspaces](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/workspaces.md)
+- [Teams](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/teams.md)
 - [Memberships](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/memberships.md)
 - [Permissions](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/permissions.md)
 - [Providers](https://github.com/jackrobertscott/authenticator/blob/master/docs/api/providers.md)
