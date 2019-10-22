@@ -9,6 +9,9 @@ export const UpdateUser = generate<
   {
     user: {
       id: string
+      created: string
+      updated: string
+      meta: { [key: string]: any }
     }
   }
 >({
@@ -17,6 +20,9 @@ export const UpdateUser = generate<
     mutation UpdateUser($value: UpdateUserValue) {
       user: UpdateUser(value: $value) {
         id
+        created
+        updated
+        meta
       }
     }
   `,

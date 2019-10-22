@@ -9,6 +9,9 @@ export const ListProviders = generate<
   {
     providers: Array<{
       id: string
+      created: string
+      updated: string
+      meta: { [key: string]: any }
     }>
   }
 >({
@@ -17,6 +20,9 @@ export const ListProviders = generate<
     query ListProviders($options: OptionsList) {
       providers: ListProviders(options: $options) {
         id
+        created
+        updated
+        meta
       }
     }
   `,

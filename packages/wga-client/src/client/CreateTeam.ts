@@ -9,6 +9,9 @@ export const CreateTeam = generate<
   {
     team: {
       id: string
+      created: string
+      updated: string
+      meta: { [key: string]: any }
     }
   }
 >({
@@ -17,6 +20,9 @@ export const CreateTeam = generate<
     mutation CreateTeam($value: CreateTeamValue) {
       team: CreateTeam(value: $value) {
         id
+        created
+        updated
+        meta
       }
     }
   `,

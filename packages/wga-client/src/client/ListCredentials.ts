@@ -9,6 +9,11 @@ export const ListCredentials = generate<
   {
     credentials: Array<{
       id: string
+      created: string
+      updated: string
+      meta: { [key: string]: any }
+      token: string
+      identifier: string
     }>
   }
 >({
@@ -17,6 +22,11 @@ export const ListCredentials = generate<
     query ListCredentials($options: OptionsList) {
       credentials: ListCredentials(options: $options) {
         id
+        created
+        updated
+        meta
+        token
+        identifier
       }
     }
   `,

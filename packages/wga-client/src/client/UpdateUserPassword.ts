@@ -9,6 +9,9 @@ export const UpdateUserPassword = generate<
   {
     user: {
       id: string
+      created: string
+      updated: string
+      meta: { [key: string]: any }
     }
   }
 >({
@@ -17,6 +20,9 @@ export const UpdateUserPassword = generate<
     mutation UpdateUserPassword($value: UpdateUserPasswordValue) {
       user: UpdateUserPassword(value: $value) {
         id
+        created
+        updated
+        meta
       }
     }
   `,

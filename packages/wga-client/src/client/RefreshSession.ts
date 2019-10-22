@@ -9,6 +9,9 @@ export const RefreshSession = generate<
   {
     session: {
       id: string
+      created: string
+      updated: string
+      meta: { [key: string]: any }
     }
   }
 >({
@@ -17,6 +20,9 @@ export const RefreshSession = generate<
     mutation RefreshSession($value: RefreshSessionValue) {
       session: RefreshSession(value: $value) {
         id
+        created
+        updated
+        meta
       }
     }
   `,

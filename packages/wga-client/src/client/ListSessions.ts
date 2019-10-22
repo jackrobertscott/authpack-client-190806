@@ -9,6 +9,9 @@ export const ListSessions = generate<
   {
     sessions: Array<{
       id: string
+      created: string
+      updated: string
+      meta: { [key: string]: any }
     }>
   }
 >({
@@ -17,6 +20,9 @@ export const ListSessions = generate<
     query ListSessions($options: OptionsList) {
       sessions: ListSessions(options: $options) {
         id
+        created
+        updated
+        meta
       }
     }
   `,

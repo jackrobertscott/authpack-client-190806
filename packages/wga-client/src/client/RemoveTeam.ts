@@ -9,6 +9,9 @@ export const RemoveTeam = generate<
   {
     team: {
       id: string
+      created: string
+      updated: string
+      meta: { [key: string]: any }
     }
   }
 >({
@@ -17,6 +20,9 @@ export const RemoveTeam = generate<
     mutation RemoveTeam($filter: RemoveTeamValue) {
       team: RemoveTeam(filter: $filter) {
         id
+        created
+        updated
+        meta
       }
     }
   `,

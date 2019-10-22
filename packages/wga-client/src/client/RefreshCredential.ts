@@ -9,6 +9,11 @@ export const RefreshCredential = generate<
   {
     credential: {
       id: string
+      created: string
+      updated: string
+      meta: { [key: string]: any }
+      token: string
+      identifier: string
     }
   }
 >({
@@ -17,6 +22,11 @@ export const RefreshCredential = generate<
     mutation RefreshCredential($value: RefreshCredentialValue) {
       credential: RefreshCredential(value: $value) {
         id
+        created
+        updated
+        meta
+        token
+        identifier
       }
     }
   `,

@@ -9,6 +9,9 @@ export const RetrieveApp = generate<
   {
     app: {
       id: string
+      created: string
+      updated: string
+      meta: { [key: string]: any }
     }
   }
 >({
@@ -17,6 +20,9 @@ export const RetrieveApp = generate<
     query RetrieveApp($value: RetrieveAppValue) {
       app: RetrieveApp(value: $value) {
         id
+        created
+        updated
+        meta
       }
     }
   `,

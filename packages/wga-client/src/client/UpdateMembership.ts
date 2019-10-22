@@ -9,6 +9,9 @@ export const UpdateMembership = generate<
   {
     membership: {
       id: string
+      created: string
+      updated: string
+      meta: { [key: string]: any }
     }
   }
 >({
@@ -17,6 +20,9 @@ export const UpdateMembership = generate<
     mutation UpdateMembership($value: UpdateMembershipValue) {
       membership: UpdateMembership(value: $value) {
         id
+        created
+        updated
+        meta
       }
     }
   `,

@@ -9,6 +9,9 @@ export const ListMemberships = generate<
   {
     memberships: Array<{
       id: string
+      created: string
+      updated: string
+      meta: { [key: string]: any }
     }>
   }
 >({
@@ -17,6 +20,9 @@ export const ListMemberships = generate<
     query ListMemberships($options: OptionsList) {
       memberships: ListMemberships(options: $options) {
         id
+        created
+        updated
+        meta
       }
     }
   `,

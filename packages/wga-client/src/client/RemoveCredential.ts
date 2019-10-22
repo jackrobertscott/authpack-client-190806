@@ -9,6 +9,11 @@ export const RemoveCredential = generate<
   {
     credential: {
       id: string
+      created: string
+      updated: string
+      meta: { [key: string]: any }
+      token: string
+      identifier: string
     }
   }
 >({
@@ -17,6 +22,11 @@ export const RemoveCredential = generate<
     mutation RemoveCredential($filter: RemoveCredentialValue) {
       credential: RemoveCredential(filter: $filter) {
         id
+        created
+        updated
+        meta
+        token
+        identifier
       }
     }
   `,

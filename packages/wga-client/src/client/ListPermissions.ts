@@ -9,6 +9,9 @@ export const ListPermissions = generate<
   {
     permissions: Array<{
       id: string
+      created: string
+      updated: string
+      meta: { [key: string]: any }
     }>
   }
 >({
@@ -17,6 +20,9 @@ export const ListPermissions = generate<
     query ListPermissions($options: OptionsList) {
       permissions: ListPermissions(options: $options) {
         id
+        created
+        updated
+        meta
       }
     }
   `,

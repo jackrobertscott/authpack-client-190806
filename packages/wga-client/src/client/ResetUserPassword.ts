@@ -9,6 +9,9 @@ export const ResetUserPassword = generate<
   {
     user: {
       id: string
+      created: string
+      updated: string
+      meta: { [key: string]: any }
     }
   }
 >({
@@ -17,6 +20,9 @@ export const ResetUserPassword = generate<
     mutation ResetUserPassword($value: ResetUserPasswordValue) {
       user: ResetUserPassword(value: $value) {
         id
+        created
+        updated
+        meta
       }
     }
   `,

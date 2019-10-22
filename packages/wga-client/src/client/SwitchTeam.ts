@@ -9,6 +9,9 @@ export const SwitchTeam = generate<
   {
     team: {
       id: string
+      created: string
+      updated: string
+      meta: { [key: string]: any }
     }
   }
 >({
@@ -17,6 +20,9 @@ export const SwitchTeam = generate<
     mutation SwitchTeam($value: SwitchTeamValue) {
       team: SwitchTeam(value: $value) {
         id
+        created
+        updated
+        meta
       }
     }
   `,

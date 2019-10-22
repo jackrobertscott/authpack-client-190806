@@ -9,6 +9,9 @@ export const ListTeams = generate<
   {
     teams: Array<{
       id: string
+      created: string
+      updated: string
+      meta: { [key: string]: any }
     }>
   }
 >({
@@ -17,6 +20,9 @@ export const ListTeams = generate<
     query ListTeams($options: OptionsList) {
       teams: ListTeams(options: $options) {
         id
+        created
+        updated
+        meta
       }
     }
   `,
