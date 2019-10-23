@@ -2,9 +2,7 @@ import { generate } from '../utils/generate'
 
 export const APIUpdateSession = generate<
   {
-    filter: {
-      id?: string
-    }
+    id: string
     value: {
       meta?: { [key: string]: any }
     }
@@ -20,8 +18,8 @@ export const APIUpdateSession = generate<
 >({
   name: 'APIUpdateSession',
   query: `
-    query APIUpdateSession($filter: FilterSessions!, $value: APIUpdateSessionValue!) {
-      session: APIUpdateSession(filter: $filter, value: $value) {
+    query APIUpdateSession($id: String!, $value: APIUpdateSessionValue!) {
+      session: APIUpdateSession(id: $id, value: $value) {
         id
         created
         updated

@@ -2,9 +2,7 @@ import { generate } from '../utils/generate'
 
 export const APIRemoveSession = generate<
   {
-    filter: {
-      id?: string
-    }
+    id: string
   },
   {
     session: {
@@ -17,8 +15,8 @@ export const APIRemoveSession = generate<
 >({
   name: 'APIRemoveSession',
   query: `
-    query APIRemoveSession($filter: FilterSessions!) {
-      session: APIRemoveSession(filter: $filter) {
+    query APIRemoveSession($id: String!) {
+      session: APIRemoveSession(id: $id) {
         id
         created
         updated

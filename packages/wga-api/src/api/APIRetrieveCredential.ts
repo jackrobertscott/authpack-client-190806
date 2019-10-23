@@ -2,9 +2,7 @@ import { generate } from '../utils/generate'
 
 export const APIRetrieveCredential = generate<
   {
-    filter?: {
-      id?: string
-    }
+    id: string
   },
   {
     credential: {
@@ -17,8 +15,8 @@ export const APIRetrieveCredential = generate<
 >({
   name: 'APIRetrieveCredential',
   query: `
-    query APIRetrieveCredential($filter: FilterCredentials) {
-      credential: APIRetrieveCredential(filter: $filter) {
+    query APIRetrieveCredential($id: String!) {
+      credential: APIRetrieveCredential(id: $id) {
         id
         created
         updated

@@ -2,9 +2,7 @@ import { generate } from '../utils/generate'
 
 export const APIRemoveUser = generate<
   {
-    filter: {
-      id?: string
-    }
+    id: string
   },
   {
     user: {
@@ -17,8 +15,8 @@ export const APIRemoveUser = generate<
 >({
   name: 'APIRemoveUser',
   query: `
-    query APIRemoveUser($filter: FilterUsers!) {
-      user: APIRemoveUser(filter: $filter) {
+    query APIRemoveUser($id: String!) {
+      user: APIRemoveUser(id: $id) {
         id
         created
         updated

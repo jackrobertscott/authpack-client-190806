@@ -20,7 +20,7 @@ export const ListMemberships = generate<
 >({
   name: 'ListMemberships',
   query: `
-    query ListMemberships($options: OptionsList) {
+    query ListMemberships($options: FilterOptions) {
       memberships: ListMemberships(options: $options) {
         id
         created

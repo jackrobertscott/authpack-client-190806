@@ -2,9 +2,7 @@ import { generate } from '../utils/generate'
 
 export const APIUpdateCredential = generate<
   {
-    filter: {
-      id?: string
-    }
+    id: string
     value: {
       meta?: { [key: string]: any }
     }
@@ -20,8 +18,8 @@ export const APIUpdateCredential = generate<
 >({
   name: 'APIUpdateCredential',
   query: `
-    query APIUpdateCredential($filter: FilterCredentials!, $value: APIUpdateCredentialValue!) {
-      credential: APIUpdateCredential(filter: $filter, value: $value) {
+    query APIUpdateCredential($id: String!, $value: APIUpdateCredentialValue!) {
+      credential: APIUpdateCredential(id: $id, value: $value) {
         id
         created
         updated

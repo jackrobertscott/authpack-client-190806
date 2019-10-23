@@ -23,7 +23,7 @@ export const APIListMemberships = generate<
 >({
   name: 'APIListMemberships',
   query: `
-    query APIListMemberships($filter: FilterMemberships, $options: OptionsList) {
+    query APIListMemberships($filter: FilterMemberships, $options: FilterOptions) {
       memberships: APIListMemberships(filter: $filter, options: $options) {
         id
         created

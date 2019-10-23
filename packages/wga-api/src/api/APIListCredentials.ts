@@ -23,7 +23,7 @@ export const APIListCredentials = generate<
 >({
   name: 'APIListCredentials',
   query: `
-    query APIListCredentials($filter: FilterCredentials, $options: OptionsList) {
+    query APIListCredentials($filter: FilterCredentials, $options: FilterOptions) {
       credentials: APIListCredentials(filter: $filter, options: $options) {
         id
         created

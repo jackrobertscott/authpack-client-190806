@@ -23,7 +23,7 @@ export const APIListPermissions = generate<
 >({
   name: 'APIListPermissions',
   query: `
-    query APIListPermissions($filter: FilterPermissions, $options: OptionsList) {
+    query APIListPermissions($filter: FilterPermissions, $options: FilterOptions) {
       permissions: APIListPermissions(filter: $filter, options: $options) {
         id
         created

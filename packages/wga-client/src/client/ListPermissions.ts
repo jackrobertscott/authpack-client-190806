@@ -20,7 +20,7 @@ export const ListPermissions = generate<
 >({
   name: 'ListPermissions',
   query: `
-    query ListPermissions($options: OptionsList) {
+    query ListPermissions($options: FilterOptions) {
       permissions: ListPermissions(options: $options) {
         id
         created

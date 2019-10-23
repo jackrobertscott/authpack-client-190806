@@ -2,11 +2,7 @@ import { generate } from '../utils/generate'
 
 export const UpdateMembership = generate<
   {
-    filter: {
-      id?: string
-      user?: string
-      team?: string
-    }
+    id: string
     value: {
       permissions?: string[]
       meta?: { [key: string]: any }
@@ -23,8 +19,8 @@ export const UpdateMembership = generate<
 >({
   name: 'UpdateMembership',
   query: `
-    mutation UpdateMembership($filter: FilterMemberships!, $value: UpdateMembershipValue!) {
-      membership: UpdateMembership(filter: $filter, value: $value) {
+    mutation UpdateMembership($id: String!, $value: UpdateMembershipValue!) {
+      membership: UpdateMembership(id: $id, value: $value) {
         id
         created
         updated

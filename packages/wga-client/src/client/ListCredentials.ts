@@ -22,7 +22,7 @@ export const ListCredentials = generate<
 >({
   name: 'ListCredentials',
   query: `
-    query ListCredentials($options: OptionsList) {
+    query ListCredentials($options: FilterOptions) {
       credentials: ListCredentials(options: $options) {
         id
         created

@@ -2,9 +2,7 @@ import { generate } from '../utils/generate'
 
 export const APIRetrieveProvider = generate<
   {
-    filter?: {
-      id?: string
-    }
+    id: string
   },
   {
     provider: {
@@ -17,8 +15,8 @@ export const APIRetrieveProvider = generate<
 >({
   name: 'APIRetrieveProvider',
   query: `
-    query APIRetrieveProvider($filter: FilterProviders) {
-      provider: APIRetrieveProvider(filter: $filter) {
+    query APIRetrieveProvider($id: String!) {
+      provider: APIRetrieveProvider(id: $id) {
         id
         created
         updated

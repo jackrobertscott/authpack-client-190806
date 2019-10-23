@@ -20,7 +20,7 @@ export const ListSessions = generate<
 >({
   name: 'ListSessions',
   query: `
-    query ListSessions($options: OptionsList) {
+    query ListSessions($options: FilterOptions) {
       sessions: ListSessions(options: $options) {
         id
         created

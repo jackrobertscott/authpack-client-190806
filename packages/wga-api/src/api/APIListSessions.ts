@@ -23,7 +23,7 @@ export const APIListSessions = generate<
 >({
   name: 'APIListSessions',
   query: `
-    query APIListSessions($filter: FilterSessions, $options: OptionsList) {
+    query APIListSessions($filter: FilterSessions, $options: FilterOptions) {
       sessions: APIListSessions(filter: $filter, options: $options) {
         id
         created

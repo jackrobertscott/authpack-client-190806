@@ -2,9 +2,7 @@ import { generate } from '../utils/generate'
 
 export const APIUpdatePermission = generate<
   {
-    filter: {
-      id?: string
-    }
+    id: string
     value: {
       meta?: { [key: string]: any }
     }
@@ -20,8 +18,8 @@ export const APIUpdatePermission = generate<
 >({
   name: 'APIUpdatePermission',
   query: `
-    query APIUpdatePermission($filter: FilterPermissions!, $value: APIUpdatePermissionValue!) {
-      permission: APIUpdatePermission(filter: $filter, value: $value) {
+    query APIUpdatePermission($id: String!, $value: APIUpdatePermissionValue!) {
+      permission: APIUpdatePermission(id: $id, value: $value) {
         id
         created
         updated

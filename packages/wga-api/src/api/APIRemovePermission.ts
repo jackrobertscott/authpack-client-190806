@@ -2,9 +2,7 @@ import { generate } from '../utils/generate'
 
 export const APIRemovePermission = generate<
   {
-    filter: {
-      id?: string
-    }
+    id: string
   },
   {
     permission: {
@@ -17,8 +15,8 @@ export const APIRemovePermission = generate<
 >({
   name: 'APIRemovePermission',
   query: `
-    query APIRemovePermission($filter: FilterPermissions!) {
-      permission: APIRemovePermission(filter: $filter) {
+    query APIRemovePermission($id: String!) {
+      permission: APIRemovePermission(id: $id) {
         id
         created
         updated
