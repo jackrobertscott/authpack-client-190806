@@ -1,28 +1,25 @@
 import { generate } from '../utils/generate'
+import { IMeta } from '../utils/types'
+import { ITeam, TeamFields } from '../models/Team'
 
 export const APICreateTeam = generate<
   {
     value: {
-      meta?: { [key: string]: any }
+      meta?: IMeta
+      name: string
+      tag: string
+      description?: string
     }
   },
   {
-    team: {
-      id: string
-      created: string
-      updated: string
-      meta: { [key: string]: any }
-    }
+    team: ITeam
   }
 >({
   name: 'APICreateTeam',
   query: `
     mutation APICreateTeam($value: APICreateTeamValue!) {
       team: APICreateTeam(value: $value) {
-        id
-        created
-        updated
-        meta
+        ${TeamFields}
       }
     }
   `,

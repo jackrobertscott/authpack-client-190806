@@ -1,5 +1,6 @@
 import { generate } from '../utils/generate'
 import { IMeta } from '../utils/types'
+import { IPermission, PermissionFields } from '../models/Permission'
 
 export const APICreatePermission = generate<
   {
@@ -11,28 +12,14 @@ export const APICreatePermission = generate<
     }
   },
   {
-    permission: {
-      id: string
-      created: string
-      updated: string
-      meta: IMeta
-      name: string
-      tag: string
-      description?: string
-    }
+    permission: IPermission
   }
 >({
   name: 'APICreatePermission',
   query: `
     mutation APICreatePermission($value: APICreatePermissionValue!) {
       permission: APICreatePermission(value: $value) {
-        id
-        created
-        updated
-        meta
-        name
-        tag
-        description
+        ${PermissionFields}
       }
     }
   `,

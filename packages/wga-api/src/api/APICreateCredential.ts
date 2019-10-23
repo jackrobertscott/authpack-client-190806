@@ -1,5 +1,6 @@
 import { generate } from '../utils/generate'
 import { IMeta } from '../utils/types'
+import { ICredential, CredentialFields } from '../models/Credential'
 
 export const APICreateCredential = generate<
   {
@@ -12,30 +13,14 @@ export const APICreateCredential = generate<
     }
   },
   {
-    credential: {
-      id: string
-      created: string
-      updated: string
-      meta: IMeta
-      user: string
-      provider: string
-      token: string
-      email?: string
-    }
+    credential: ICredential
   }
 >({
   name: 'APICreateCredential',
   query: `
     mutation APICreateCredential($value: APICreateCredentialValue!) {
       credential: APICreateCredential(value: $value) {
-        id
-        created
-        updated
-        meta
-        user
-        provider
-        token
-        email
+        ${CredentialFields}
       }
     }
   `,

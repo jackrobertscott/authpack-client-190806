@@ -1,28 +1,26 @@
 import { generate } from '../utils/generate'
+import { IMeta } from '../utils/types'
+import { UserFields, IUser } from '../models/User'
 
 export const APICreateUser = generate<
   {
     value: {
-      meta?: { [key: string]: any }
+      meta?: IMeta
+      email: string
+      password: string
+      username?: string
+      name?: string
     }
   },
   {
-    user: {
-      id: string
-      created: string
-      updated: string
-      meta: { [key: string]: any }
-    }
+    user: IUser
   }
 >({
   name: 'APICreateUser',
   query: `
     mutation APICreateUser($value: APICreateUserValue!) {
       user: APICreateUser(value: $value) {
-        id
-        created
-        updated
-        meta
+        ${UserFields}
       }
     }
   `,

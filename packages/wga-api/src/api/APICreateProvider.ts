@@ -1,5 +1,6 @@
 import { generate } from '../utils/generate'
 import { IMeta } from '../utils/types'
+import { IProvider, ProviderFields } from '../models/Provider'
 
 export const APICreateProvider = generate<
   {
@@ -12,30 +13,14 @@ export const APICreateProvider = generate<
     }
   },
   {
-    provider: {
-      id: string
-      created: string
-      updated: string
-      meta: IMeta
-      preset: string
-      client: string
-      secret: string
-      scopes: string[]
-    }
+    provider: IProvider
   }
 >({
   name: 'APICreateProvider',
   query: `
     mutation APICreateProvider($value: APICreateProviderValue!) {
       provider: APICreateProvider(value: $value) {
-        id
-        created
-        updated
-        meta
-        preset
-        client
-        secret
-        scopes
+        ${ProviderFields}
       }
     }
   `,
