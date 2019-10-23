@@ -1,9 +1,10 @@
 import { generate } from '../utils/generate'
+import { IMeta } from '../utils/types'
 
 export const APICreateSession = generate<
   {
     value: {
-      meta?: { [key: string]: any }
+      meta?: IMeta
     }
   },
   {
@@ -11,13 +12,13 @@ export const APICreateSession = generate<
       id: string
       created: string
       updated: string
-      meta: { [key: string]: any }
+      meta: IMeta
     }
   }
 >({
   name: 'APICreateSession',
   query: `
-    query APICreateSession($value: APICreateSessionValue!) {
+    mutation APICreateSession($value: APICreateSessionValue!) {
       session: APICreateSession(value: $value) {
         id
         created

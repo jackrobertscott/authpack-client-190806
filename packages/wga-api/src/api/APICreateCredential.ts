@@ -26,7 +26,7 @@ export const APICreateCredential = generate<
 >({
   name: 'APICreateCredential',
   query: `
-    query APICreateCredential($value: APICreateCredentialValue!) {
+    mutation APICreateCredential($value: APICreateCredentialValue!) {
       credential: APICreateCredential(value: $value) {
         id
         created

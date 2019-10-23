@@ -15,7 +15,7 @@ export const APIRemovePermission = generate<
 >({
   name: 'APIRemovePermission',
   query: `
-    query APIRemovePermission($id: String!) {
+    mutation APIRemovePermission($id: String!) {
       permission: APIRemovePermission(id: $id) {
         id
         created

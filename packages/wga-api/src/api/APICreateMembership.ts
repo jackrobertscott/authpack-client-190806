@@ -5,9 +5,10 @@ export const APICreateMembership = generate<
   {
     value: {
       meta?: IMeta
-      team: string
       user: string
+      team: string
       permissions?: string[]
+      admin?: boolean
     }
   },
   {
@@ -16,23 +17,25 @@ export const APICreateMembership = generate<
       created: string
       updated: string
       meta: IMeta
-      team: string
       user: string
+      team: string
       permissions: string[]
+      admin: boolean
     }
   }
 >({
   name: 'APICreateMembership',
   query: `
-    query APICreateMembership($value: APICreateMembershipValue!) {
+    mutation APICreateMembership($value: APICreateMembershipValue!) {
       membership: APICreateMembership(value: $value) {
         id
         created
         updated
         meta
-        team
         user
+        team
         permissions
+        admin
       }
     }
   `,

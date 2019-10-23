@@ -18,7 +18,7 @@ export const APIUpdatePermission = generate<
 >({
   name: 'APIUpdatePermission',
   query: `
-    query APIUpdatePermission($id: String!, $value: APIUpdatePermissionValue!) {
+    mutation APIUpdatePermission($id: String!, $value: APIUpdatePermissionValue!) {
       permission: APIUpdatePermission(id: $id, value: $value) {
         id
         created

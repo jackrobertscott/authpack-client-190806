@@ -18,7 +18,7 @@ export const APIUpdateUser = generate<
 >({
   name: 'APIUpdateUser',
   query: `
-    query APIUpdateUser($id: String!, $value: APIUpdateUserValue!) {
+    mutation APIUpdateUser($id: String!, $value: APIUpdateUserValue!) {
       user: APIUpdateUser(id: $id, value: $value) {
         id
         created

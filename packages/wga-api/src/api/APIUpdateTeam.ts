@@ -18,7 +18,7 @@ export const APIUpdateTeam = generate<
 >({
   name: 'APIUpdateTeam',
   query: `
-    query APIUpdateTeam($id: String!, $value: APIUpdateTeamValue!) {
+    mutation APIUpdateTeam($id: String!, $value: APIUpdateTeamValue!) {
       team: APIUpdateTeam(id: $id, value: $value) {
         id
         created

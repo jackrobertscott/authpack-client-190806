@@ -15,7 +15,7 @@ export const APIRemoveUser = generate<
 >({
   name: 'APIRemoveUser',
   query: `
-    query APIRemoveUser($id: String!) {
+    mutation APIRemoveUser($id: String!) {
       user: APIRemoveUser(id: $id) {
         id
         created

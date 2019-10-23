@@ -15,7 +15,7 @@ export const APIRemoveProvider = generate<
 >({
   name: 'APIRemoveProvider',
   query: `
-    query APIRemoveProvider($id: String!) {
+    mutation APIRemoveProvider($id: String!) {
       provider: APIRemoveProvider(id: $id) {
         id
         created

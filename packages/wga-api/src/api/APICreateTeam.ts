@@ -17,7 +17,7 @@ export const APICreateTeam = generate<
 >({
   name: 'APICreateTeam',
   query: `
-    query APICreateTeam($value: APICreateTeamValue!) {
+    mutation APICreateTeam($value: APICreateTeamValue!) {
       team: APICreateTeam(value: $value) {
         id
         created

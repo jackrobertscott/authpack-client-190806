@@ -24,12 +24,15 @@ export const APICreatePermission = generate<
 >({
   name: 'APICreatePermission',
   query: `
-    query APICreatePermission($value: APICreatePermissionValue!) {
+    mutation APICreatePermission($value: APICreatePermissionValue!) {
       permission: APICreatePermission(value: $value) {
         id
         created
         updated
         meta
+        name
+        tag
+        description
       }
     }
   `,
