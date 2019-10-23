@@ -4,6 +4,8 @@ export const APICountCredentials = generate<
   {
     filter?: {
       id?: string
+      user?: string
+      provider?: string
     }
   },
   {

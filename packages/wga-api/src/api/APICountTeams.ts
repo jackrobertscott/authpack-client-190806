@@ -4,6 +4,9 @@ export const APICountTeams = generate<
   {
     filter?: {
       id?: string
+      name?: string
+      tag?: string
+      description?: string
     }
   },
   {

@@ -4,6 +4,8 @@ export const APIListMemberships = generate<
   {
     filter?: {
       id?: string
+      user?: string
+      team?: string
     }
     options?: {
       limit?: number

@@ -4,6 +4,9 @@ export const APICountUsers = generate<
   {
     filter?: {
       id?: string
+      email?: string
+      username?: string
+      name?: string
     }
   },
   {

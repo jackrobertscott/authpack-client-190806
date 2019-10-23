@@ -4,6 +4,8 @@ export const APIListCredentials = generate<
   {
     filter?: {
       id?: string
+      user?: string
+      provider?: string
     }
     options?: {
       limit?: number

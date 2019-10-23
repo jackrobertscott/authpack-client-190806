@@ -4,6 +4,9 @@ export const APICountPermissions = generate<
   {
     filter?: {
       id?: string
+      name?: string
+      tag?: string
+      description?: string
     }
   },
   {

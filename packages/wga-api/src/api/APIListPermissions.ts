@@ -4,6 +4,9 @@ export const APIListPermissions = generate<
   {
     filter?: {
       id?: string
+      name?: string
+      tag?: string
+      description?: string
     }
     options?: {
       limit?: number

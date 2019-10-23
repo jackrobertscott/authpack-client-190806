@@ -4,6 +4,9 @@ export const APICountSessions = generate<
   {
     filter?: {
       id?: string
+      user?: string
+      team?: string
+      deactivated?: boolean
     }
   },
   {

@@ -4,6 +4,7 @@ export const APIListProviders = generate<
   {
     filter?: {
       id?: string
+      preset?: string
     }
     options?: {
       limit?: number

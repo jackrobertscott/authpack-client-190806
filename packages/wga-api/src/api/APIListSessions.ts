@@ -4,6 +4,9 @@ export const APIListSessions = generate<
   {
     filter?: {
       id?: string
+      user?: string
+      team?: string
+      deactivated?: boolean
     }
     options?: {
       limit?: number

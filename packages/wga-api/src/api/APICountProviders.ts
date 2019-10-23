@@ -4,6 +4,7 @@ export const APICountProviders = generate<
   {
     filter?: {
       id?: string
+      preset?: string
     }
   },
   {
