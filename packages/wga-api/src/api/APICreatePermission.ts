@@ -1,9 +1,13 @@
 import { generate } from '../utils/generate'
+import { IMeta } from '../utils/types'
 
 export const APICreatePermission = generate<
   {
     value: {
-      meta?: { [key: string]: any }
+      meta?: IMeta
+      name: string
+      tag: string
+      description?: string
     }
   },
   {
@@ -11,7 +15,10 @@ export const APICreatePermission = generate<
       id: string
       created: string
       updated: string
-      meta: { [key: string]: any }
+      meta: IMeta
+      name: string
+      tag: string
+      description?: string
     }
   }
 >({

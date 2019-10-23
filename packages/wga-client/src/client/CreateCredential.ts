@@ -15,7 +15,7 @@ export const CreateCredential = generate<
       updated: string
       meta: { [key: string]: any }
       token: string
-      identifier: string
+      email?: string
     }
   }
 >({
@@ -28,7 +28,7 @@ export const CreateCredential = generate<
         updated
         meta
         token
-        identifier
+        email
       }
     }
   `,

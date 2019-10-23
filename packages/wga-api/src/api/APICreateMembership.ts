@@ -1,9 +1,13 @@
 import { generate } from '../utils/generate'
+import { IMeta } from '../utils/types'
 
 export const APICreateMembership = generate<
   {
     value: {
-      meta?: { [key: string]: any }
+      meta?: IMeta
+      team: string
+      user: string
+      permissions?: string[]
     }
   },
   {
@@ -11,7 +15,10 @@ export const APICreateMembership = generate<
       id: string
       created: string
       updated: string
-      meta: { [key: string]: any }
+      meta: IMeta
+      team: string
+      user: string
+      permissions: string[]
     }
   }
 >({
@@ -23,6 +30,9 @@ export const APICreateMembership = generate<
         created
         updated
         meta
+        team
+        user
+        permissions
       }
     }
   `,

@@ -11,7 +11,7 @@ export const RemoveCredential = generate<
       updated: string
       meta: { [key: string]: any }
       token: string
-      identifier: string
+      email?: string
     }
   }
 >({
@@ -24,7 +24,7 @@ export const RemoveCredential = generate<
         updated
         meta
         token
-        identifier
+        email
       }
     }
   `,

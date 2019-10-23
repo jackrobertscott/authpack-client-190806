@@ -1,13 +1,14 @@
 import { generate } from '../utils/generate'
+import { IMeta } from '../utils/types'
 
 export const APICreateCredential = generate<
   {
     value: {
+      meta?: IMeta
       user: string
       provider: string
       token: string
-      identifier: string
-      meta?: { [key: string]: any }
+      email?: string
     }
   },
   {
@@ -15,7 +16,11 @@ export const APICreateCredential = generate<
       id: string
       created: string
       updated: string
-      meta: { [key: string]: any }
+      meta: IMeta
+      user: string
+      provider: string
+      token: string
+      email?: string
     }
   }
 >({
@@ -27,6 +32,10 @@ export const APICreateCredential = generate<
         created
         updated
         meta
+        user
+        provider
+        token
+        email
       }
     }
   `,

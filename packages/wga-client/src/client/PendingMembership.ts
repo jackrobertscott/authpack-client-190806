@@ -1,6 +1,6 @@
 import { generate } from '../utils/generate'
 
-export const RefreshCredential = generate<
+export const PendingMembership = generate<
   {
     id: string
     value: {
@@ -8,26 +8,22 @@ export const RefreshCredential = generate<
     }
   },
   {
-    credential: {
+    user: {
       id: string
       created: string
       updated: string
       meta: { [key: string]: any }
-      token: string
-      email?: string
     }
   }
 >({
-  name: 'RefreshCredential',
+  name: 'PendingMembership',
   query: `
-    mutation RefreshCredential($id: String!, $value: RefreshCredentialValue!) {
-      credential: RefreshCredential(id: $id, value: $value) {
+    mutation PendingMembership($id: String!, $value: PendingMembershipValue!) {
+      user: PendingMembership(id: $id, value: $value) {
         id
         created
         updated
         meta
-        token
-        email
       }
     }
   `,

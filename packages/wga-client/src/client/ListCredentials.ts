@@ -16,7 +16,7 @@ export const ListCredentials = generate<
       updated: string
       meta: { [key: string]: any }
       token: string
-      identifier: string
+      email?: string
     }>
   }
 >({
@@ -29,7 +29,7 @@ export const ListCredentials = generate<
         updated
         meta
         token
-        identifier
+        email
       }
     }
   `,
