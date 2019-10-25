@@ -1,4 +1,4 @@
-import { IMeta } from '../utils/types'
+import { IMeta } from './Meta'
 
 export interface ISession {
   id: string
@@ -9,13 +9,3 @@ export interface ISession {
   team?: string
   deactivated: boolean
 }
-
-export const SessionFields = `
-  id
-  created
-  updated
-  meta
-  user
-  team
-  deactivated
-`.trim()

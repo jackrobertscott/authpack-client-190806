@@ -1,4 +1,4 @@
-import { IMeta } from '../utils/types'
+import { IMeta } from './Meta'
 
 export interface ITeam {
   id: string
@@ -9,13 +9,3 @@ export interface ITeam {
   tag: string
   description?: string
 }
-
-export const TeamFields = `
-  id
-  created
-  updated
-  meta
-  name
-  tag
-  description
-`.trim()

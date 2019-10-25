@@ -1,4 +1,4 @@
-import { IMeta } from '../utils/types'
+import { IMeta } from './Meta'
 
 export interface IProvider {
   id: string
@@ -10,14 +10,3 @@ export interface IProvider {
   secret: string
   scopes: string[]
 }
-
-export const ProviderFields = `
-  id
-  created
-  updated
-  meta
-  preset
-  client
-  secret
-  scopes
-`.trim()

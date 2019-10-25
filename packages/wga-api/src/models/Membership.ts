@@ -1,4 +1,4 @@
-import { IMeta } from '../utils/types'
+import { IMeta } from './Meta'
 
 export interface IMembership {
   id: string
@@ -10,14 +10,3 @@ export interface IMembership {
   permissions: string[]
   admin: boolean
 }
-
-export const MembershipFields = `
-  id
-  created
-  updated
-  meta
-  user
-  team
-  permissions
-  admin
-`.trim()

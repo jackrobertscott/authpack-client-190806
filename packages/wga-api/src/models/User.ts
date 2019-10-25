@@ -1,4 +1,4 @@
-import { IMeta } from '../utils/types'
+import { IMeta } from './Meta'
 
 export interface IUser {
   id: string
@@ -10,14 +10,3 @@ export interface IUser {
   username?: string
   name?: string
 }
-
-export const UserFields = `
-  id
-  created
-  updated
-  meta
-  email
-  password
-  username
-  name
-`.trim()

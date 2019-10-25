@@ -1,4 +1,4 @@
-import { IMeta } from '../utils/types'
+import { IMeta } from './Meta'
 
 export interface ICredential {
   id: string
@@ -10,14 +10,3 @@ export interface ICredential {
   token: string
   email?: string
 }
-
-export const CredentialFields = `
-  id
-  created
-  updated
-  meta
-  user
-  provider
-  token
-  email
-`.trim()

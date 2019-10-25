@@ -1,4 +1,4 @@
-import { IMeta } from '../utils/types'
+import { IMeta } from './Meta'
 
 export interface IPermission {
   id: string
@@ -9,13 +9,3 @@ export interface IPermission {
   tag: string
   description?: string
 }
-
-export const PermissionFields = `
-  id
-  created
-  updated
-  meta
-  name
-  tag
-  description
-`.trim()
