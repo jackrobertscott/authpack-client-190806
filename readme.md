@@ -1,6 +1,6 @@
 # 🏇 Authenticator
 
-> Authentication that dominates in performance and usability
+> User and team management for your app
 
 This repository contains example code to help you get started with the Window Gadgets Authenticator.
 

@@ -1,6 +1,6 @@
 # 🏇 Authenticator API
 
-> Authentication that dominates in performance and usability
+> User and team management for your app
 
 This repository provides JavaScript helper methods which correspond to the Authenticator API.
 

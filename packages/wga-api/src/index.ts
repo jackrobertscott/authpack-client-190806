@@ -1,4 +1,4 @@
-import { generator } from './utils/generator'
+import { generator, IGraphql } from './utils/generator'
 
 export type IAuthenticatorAPI = {
   secret?: string
@@ -19,14 +19,14 @@ export class AuthenticatorAPI {
       bearer,
     }
   }
-  public generate<Variables, Result>({
+  public create<T extends IGraphql>({
     name,
     graphql,
   }: {
     name: string
     graphql: string
   }) {
-    return generator<Variables, Result>({
+    return generator<T>({
       url: 'http://localhost:4000',
       authorization: this.genkeys(),
       name,
