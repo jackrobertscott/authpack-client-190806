@@ -1,5 +1,4 @@
 import { Dispatcher } from 'events-and-things'
-import { sender } from './sender'
 
 export interface IGraphql {
   variables?: { [key: string]: any }
@@ -7,26 +6,14 @@ export interface IGraphql {
 }
 
 export const generator = <T extends IGraphql>({
-  url,
-  authorization,
-  name,
-  query,
+  handler,
 }: {
-  url: string
-  authorization: string
-  name: string
-  query: string
+  handler: (variables: T['variables']) => Promise<T['data']>
 }) => {
   const dispatcher = new Dispatcher<T['data']>()
   return {
     async run(variables: T['variables']) {
-      const data = await sender<T['variables']>({
-        url,
-        query,
-        operationName: name,
-        variables,
-        authorization,
-      })
+      const data = await handler(variables)
       dispatcher.dispatch(data)
       return data
     },
