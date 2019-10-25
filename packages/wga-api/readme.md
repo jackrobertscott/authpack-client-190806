@@ -2,7 +2,7 @@
 
 > User and team management for your app
 
-This repository provides JavaScript helper methods which may be used to access the Authenticator API.
+Helper methods which may be used to access the Authenticator API using GraphQL.
 
 ## Features
 
