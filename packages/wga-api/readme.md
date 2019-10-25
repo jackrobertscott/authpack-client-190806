@@ -33,7 +33,7 @@ Start by importing the `AuthenticatorAPI` class.
 import { AuthenticatorAPI } from 'wga-api'
 ```
 
-Use your app's security key to create a new instance of the class. A secret security key can be found in your [Authenticator](https://authenticator.windowgadgets.io/) app settings.
+A secret security key can be found in your [Authenticator](https://authenticator.windowgadgets.io/) app settings.
 
 ```ts
 const wga = new AuthenticatorAPI({
@@ -41,11 +41,11 @@ const wga = new AuthenticatorAPI({
 })
 ```
 
-**Note:** never store your secret key directly in your code as it can be a security vulnerability. Use a package such as [dotenv](https://www.npmjs.com/package/dotenv) to store your application secrets as environment variables.
+**Note:** use a package such as [dotenv](https://www.npmjs.com/package/dotenv) to securely store your secret variables.
 
 ## Usage
 
-The `wga-api` library was designed to be flexible. Use the `.create()` method to create a new graphql dispatcher.
+Use the `.create()` method to create a new graphql dispatcher.
 
 ```ts
 const retrieveUser = wga.create<{
@@ -81,7 +81,7 @@ const retrieveUser = wga.create<{
 })
 ```
 
-Use the `.run(variables)` method to send the graphql query.
+Then use the `.run(variables)` method to send the graphql query.
 
 ```ts
 retrieveUser.run({ id: '1234567890' })
@@ -93,7 +93,7 @@ retrieveUser.run({ id: '1234567890' })
   })
 ```
 
-You can also listen to all incoming events from this dispatcher by using the `.listen(data)` method.
+Listen to all incoming dispatcher events with the `.listen(data)` method.
 
 ```ts
 const unlisten = retrieveUser.listen(data => {
@@ -101,7 +101,7 @@ const unlisten = retrieveUser.listen(data => {
 })
 ```
 
-This can be helpful when building using a library such as React hooks.
+Below is an example of how the library can be used with React hooks.
 
 ```tsx
 const ShowUser = props => {
