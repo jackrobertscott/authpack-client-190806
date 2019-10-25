@@ -1,7 +1,7 @@
 {
   "name": "wga-api",
   "private": false,
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Service for the Window Gadgets Authenticator API.",
   "license": "MIT",
   "main": "lib/index.js",
