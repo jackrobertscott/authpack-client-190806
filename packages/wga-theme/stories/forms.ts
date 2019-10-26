@@ -10,7 +10,7 @@ import {
   Button,
   useToaster,
   Toaster,
-} from '../src/index'
+} from '../src/old/index'
 
 console.clear()
 

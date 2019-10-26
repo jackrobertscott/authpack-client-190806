@@ -1,7 +1,7 @@
 import { createElement as create } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
-import { Button, Inputs, Search, List } from '../src/index'
+import { Button, Inputs, Search, List } from '../src/old/index'
 
 console.clear()
 
