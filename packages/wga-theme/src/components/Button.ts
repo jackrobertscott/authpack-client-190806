@@ -43,8 +43,12 @@ export const Button: FC<{
       },
     })}`,
     children: [
-      label,
+      create('div', {
+        key: 'label',
+        children: label,
+      }),
       create(Icon, {
+        key: 'icon',
         icon: icon ? icon : disabled ? 'times-circle' : 'check-circle',
         solid,
       }),

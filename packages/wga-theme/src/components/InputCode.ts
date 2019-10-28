@@ -15,22 +15,18 @@ export const InputCode: FC<{
   const editor = useRef<undefined | monaco.editor.IStandaloneCodeEditor>()
   useEffect(() => {
     if (element.current) {
-      try {
-        editor.current = monaco.editor.create(element.current, {
-          value,
-          language,
-          theme: 'pretty',
-          fontSize: theme.global.fonts,
-          minimap: {
-            enabled: false,
-          },
-        })
-        editor.current.onDidChangeModelContent(() => {
-          if (editor.current && change) change(editor.current.getValue())
-        })
-      } catch (error) {
-        console.warn(error)
-      }
+      editor.current = monaco.editor.create(element.current, {
+        value,
+        language,
+        theme: 'pretty',
+        fontSize: theme.global.fonts,
+        minimap: {
+          enabled: false,
+        },
+      })
+      editor.current.onDidChangeModelContent(() => {
+        if (editor.current && change) change(editor.current.getValue())
+      })
     }
     return () => editor.current && editor.current.dispose()
   }, [])
@@ -41,7 +37,7 @@ export const InputCode: FC<{
   }, [value])
   return create('div', {
     className: css({
-      padding: '20px 0',
+      padding: '15px 0',
       background: '#272822',
       borderRadius: theme.global.radius,
     }),
