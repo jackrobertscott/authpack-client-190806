@@ -2,10 +2,11 @@
  * Components
  */
 export * from './components/Button'
-export * from './components/Code'
 export * from './components/Gadgets'
+export * from './components/Icon'
 export * from './components/IconBar'
-export * from './components/Inputs'
+export * from './components/Input'
+export * from './components/InputCode'
 export * from './components/Layout'
 export * from './components/List'
 export * from './components/Modal'

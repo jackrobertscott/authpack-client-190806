@@ -6,8 +6,8 @@ interface IKeys {
 
 export interface ITheme extends IKeys {
   global: {
-    radius: string
-    fonts: string
+    radius: number
+    fonts: number
   }
   buttons: {
     label: string
@@ -19,12 +19,20 @@ export interface ITheme extends IKeys {
     backgroundHover: string
     border: string
   }
+  inputs: {
+    label: string
+    helper: string
+    background: string
+    backgroundHover: string
+    backgroundFocused: string
+    border: string
+  }
 }
 
 export const Theme = createContext<ITheme>({
   global: {
-    fonts: '15px',
-    radius: '3px',
+    fonts: 15,
+    radius: 3,
   },
   buttons: {
     label: '#FFFFFF',
@@ -35,6 +43,14 @@ export const Theme = createContext<ITheme>({
     backgroundDisabled: '#222222',
     backgroundHover: '#777777',
     border: 'none',
+  },
+  inputs: {
+    label: '',
+    helper: '',
+    background: '',
+    backgroundHover: '',
+    backgroundFocused: '',
+    border: '',
   },
 })
 

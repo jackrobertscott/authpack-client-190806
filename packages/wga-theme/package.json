@@ -32,6 +32,7 @@
     "@types/yup": "^0.26.23",
     "emotion": "^10.0.17",
     "events-and-things": "^0.6.1",
+    "monaco-editor": "^0.18.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-outside-click-handler": "^1.2.4",
