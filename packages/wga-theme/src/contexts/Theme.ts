@@ -27,6 +27,15 @@ export interface ITheme extends IKeys {
     backgroundFocused: string
     border: string
   }
+  gadgets: {
+    title: string
+    subtitle: string
+    branding: string
+    header: string
+    border: string
+    background: string
+    scrollbar: string
+  }
 }
 
 export const Theme = createContext<ITheme>({
@@ -45,12 +54,21 @@ export const Theme = createContext<ITheme>({
     border: 'none',
   },
   inputs: {
-    label: '',
-    helper: '',
-    background: '',
-    backgroundHover: '',
-    backgroundFocused: '',
-    border: '',
+    label: '#FFFFFF',
+    helper: '#D5D5D5',
+    background: '#323232',
+    backgroundHover: '#292929',
+    backgroundFocused: '#5C5C5C',
+    border: 'none',
+  },
+  gadgets: {
+    title: '#CCCCCC',
+    subtitle: '#777777',
+    branding: '#777777',
+    header: '#3B3B3B',
+    border: 'none',
+    background: '#414141',
+    scrollbar: '#505050',
   },
 })
 
