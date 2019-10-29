@@ -30,7 +30,7 @@ export const IconBar: FC<{
       justifyContent: 'flex-start',
       alignItems: 'center',
       flexShrink: 0,
-      background: theme.iconBars.background,
+      background: theme.iconBar.background,
     }),
     children: create(IconSpacer, {
       children: icons.map((data, index) => {
@@ -86,14 +86,14 @@ const IconPointer: FC<{
     children: create('div', {
       onClick: click,
       className: css({
-        color: focused ? theme.iconBars.iconFocused : theme.iconBars.icon,
-        background: theme.iconBars.iconBackground,
+        color: focused ? theme.iconBar.iconFocused : theme.iconBar.icon,
+        background: theme.iconBar.iconBackground,
         borderRadius: theme.global.radius,
         transition: '200ms',
         cursor: 'pointer',
         '&:hover': {
-          color: theme.iconBars.iconHover,
-          background: theme.iconBars.iconBackgroundHover,
+          color: theme.iconBar.iconHover,
+          background: theme.iconBar.iconBackgroundHover,
         },
       }),
       children: create(Icon, {

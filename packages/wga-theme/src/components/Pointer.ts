@@ -29,11 +29,11 @@ export const Pointer: FC<{
         overflow: 'hidden',
         fontSize: theme.global.fonts,
         borderRadius: theme.global.radius,
-        boxShadow: theme.pointers.shadow,
-        background: theme.pointers.background,
-        border: theme.pointers.border,
-        color: theme.pointers.label,
-        width: theme.pointers.width,
+        boxShadow: theme.pointer.shadow,
+        background: theme.pointer.background,
+        border: theme.pointer.border,
+        color: theme.pointer.label,
+        width: theme.pointer.width,
       }),
       children: [
         create(Header, {
@@ -108,11 +108,11 @@ const Menu: FC<{
           cursor: 'pointer',
           padding: 15,
           flexGrow: 1,
-          color: theme.pointers.label,
-          borderTop: theme.pointers.lining,
-          background: theme.pointers.background,
+          color: theme.pointer.label,
+          borderTop: theme.pointer.lining,
+          background: theme.pointer.background,
           '&:hover': {
-            background: theme.pointers.backgroundHover,
+            background: theme.pointer.backgroundHover,
           },
         }),
         children: [
@@ -140,7 +140,7 @@ const Menu: FC<{
                   children: helper,
                   className: css({
                     marginTop: 5,
-                    color: theme.pointers.helper,
+                    color: theme.pointer.helper,
                   }),
                 }),
             ],

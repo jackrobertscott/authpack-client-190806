@@ -9,7 +9,7 @@ export interface ITheme extends IKeys {
     radius: number
     fonts: number
   }
-  buttons: {
+  button: {
     label: string
     labelHover: string
     labelDisabled: string
@@ -19,7 +19,7 @@ export interface ITheme extends IKeys {
     backgroundHover: string
     border: string
   }
-  inputs: {
+  input: {
     label: string
     helper: string
     background: string
@@ -36,7 +36,7 @@ export interface ITheme extends IKeys {
     background: string
     scrollbar: string
   }
-  sideBars: {
+  sideBar: {
     background: string
     border: string
     title: string
@@ -45,7 +45,7 @@ export interface ITheme extends IKeys {
     optionsHover: string
     optionsFocused: string
   }
-  iconBars: {
+  iconBar: {
     icon: string
     iconHover: string
     iconFocused: string
@@ -53,7 +53,7 @@ export interface ITheme extends IKeys {
     iconBackgroundHover: string
     background: string
   }
-  pointers: {
+  pointer: {
     width: number
     label: string
     helper: string
@@ -63,7 +63,7 @@ export interface ITheme extends IKeys {
     border: string
     lining: string
   }
-  modals: {
+  modal: {
     width: number
     height: number
     background: string
@@ -78,7 +78,7 @@ export const Theme = createContext<ITheme>({
     fonts: 15,
     radius: 3,
   },
-  buttons: {
+  button: {
     label: '#FFFFFF',
     labelHover: '#FFFFFF',
     labelDisabled: '#444444',
@@ -88,7 +88,7 @@ export const Theme = createContext<ITheme>({
     backgroundHover: '#777777',
     border: 'none',
   },
-  inputs: {
+  input: {
     label: '#FFFFFF',
     helper: '#D5D5D5',
     background: '#323232',
@@ -105,7 +105,7 @@ export const Theme = createContext<ITheme>({
     background: '#414141',
     scrollbar: '#505050',
   },
-  sideBars: {
+  sideBar: {
     background: '#353535',
     border: 'none',
     title: '#999999',
@@ -114,7 +114,7 @@ export const Theme = createContext<ITheme>({
     optionsHover: '#999999',
     optionsFocused: '#B8B8B8',
   },
-  iconBars: {
+  iconBar: {
     icon: '#777777',
     iconHover: '#999999',
     iconFocused: '#C4C4C4',
@@ -122,7 +122,7 @@ export const Theme = createContext<ITheme>({
     iconBackgroundHover: '#191919',
     background: '#2C2C2C',
   },
-  pointers: {
+  pointer: {
     width: 280,
     label: '#FFFFFF',
     helper: '#CCCCCC',
@@ -132,7 +132,7 @@ export const Theme = createContext<ITheme>({
     border: 'none',
     lining: 'none',
   },
-  modals: {
+  modal: {
     width: 500,
     height: 700,
     background: '#111111',

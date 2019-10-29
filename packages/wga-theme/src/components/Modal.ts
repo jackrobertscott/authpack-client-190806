@@ -34,7 +34,7 @@ export const Modal: FC<{
         transition: '200ms',
         pointerEvents: visible ? 'all' : 'none',
         opacity: visible ? 1 : 0,
-        background: theme.modals.cover,
+        background: theme.modal.cover,
       }),
       children: create('div', {
         children,
@@ -43,15 +43,15 @@ export const Modal: FC<{
           display: 'flex',
           overflow: 'hidden',
           position: 'relative',
-          width: theme.modals.width,
-          height: theme.modals.height,
-          background: theme.modals.background,
-          boxShadow: theme.modals.shadow,
-          border: theme.modals.border,
+          width: theme.modal.width,
+          height: theme.modal.height,
+          background: theme.modal.background,
+          boxShadow: theme.modal.shadow,
+          border: theme.modal.border,
           fontSize: theme.global.fonts,
           borderRadius: theme.global.radius,
-          [`@media (max-width: ${theme.modals.width + 30}), (max-height: ${theme
-            .modals.height + 30})`]: {
+          [`@media (max-width: ${theme.modal.width + 30}), (max-height: ${theme
+            .modal.height + 30})`]: {
             width: '100%',
             height: '100%',
             flexGrow: 1,

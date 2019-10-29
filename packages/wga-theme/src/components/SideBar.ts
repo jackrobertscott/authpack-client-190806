@@ -24,8 +24,8 @@ export const SideBar: FC<{
       width: '20%',
       maxWidth: '220px',
       padding: '31px 25px',
-      background: theme.sideBars.background,
-      borderRight: theme.sideBars.border,
+      background: theme.sideBar.background,
+      borderRight: theme.sideBar.border,
     }),
     children: [
       create(Title, {
@@ -52,7 +52,7 @@ const Title: FC<{
     className: css({
       fontSize: 25,
       marginBottom: 75,
-      color: theme.sideBars.title,
+      color: theme.sideBar.title,
     }),
     children: title,
   })
@@ -68,7 +68,7 @@ const Footer: FC<{
       transition: '200ms',
       filter: 'contrast(70%)',
       marginTop: 'auto',
-      color: theme.sideBars.footer,
+      color: theme.sideBar.footer,
     }),
     children: footer,
   })
@@ -95,11 +95,9 @@ const Options: FC<{
           display: 'flex',
           cursor: 'pointer',
           transition: '200ms',
-          color: focused
-            ? theme.sideBars.optionsFocused
-            : theme.sideBars.options,
+          color: focused ? theme.sideBar.optionsFocused : theme.sideBar.options,
           '&:hover': !focused && {
-            color: theme.sideBars.optionsHover,
+            color: theme.sideBar.optionsHover,
           },
         }),
         children: [

@@ -10,9 +10,9 @@ export const Button: FC<{
   solid?: boolean
   minor?: boolean
   disabled?: boolean
-  style?: ITheme['buttons']
+  style?: ITheme['button']
 }> = ({ label, click, icon, solid, minor, disabled, style }) => {
-  const theme = useTheme({ buttons: style })
+  const theme = useTheme({ button: style })
   return create('div', {
     onClick: disabled ? () => {} : click,
     className: `${disabled ? 'disabled' : ''} ${css({
@@ -25,20 +25,20 @@ export const Button: FC<{
       flexGrow: 1,
       transition: '200ms',
       fontSize: theme.global.fonts,
-      border: theme.buttons.border,
+      border: theme.button.border,
       borderRadius: theme.global.radius,
       background: disabled
-        ? theme.buttons.backgroundDisabled
+        ? theme.button.backgroundDisabled
         : minor
-        ? theme.buttons.backgroundMinor
-        : theme.buttons.background,
-      color: disabled ? theme.buttons.labelDisabled : theme.buttons.label,
+        ? theme.button.backgroundMinor
+        : theme.button.background,
+      color: disabled ? theme.button.labelDisabled : theme.button.label,
       '&:hover:not(.disabled)': {
-        background: theme.buttons.backgroundHover,
+        background: theme.button.backgroundHover,
         boxShadow: '0 1px 7.5px rgba(0, 0, 0, 0.05)',
       },
       '&:active:not(.disabled)': {
-        background: theme.buttons.background,
+        background: theme.button.background,
         boxShadow: 'none',
       },
     })}`,
