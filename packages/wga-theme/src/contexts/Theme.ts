@@ -45,6 +45,7 @@ export interface ITheme extends IKeys {
     background: string
   }
   pointers: {
+    width: number
     label: string
     helper: string
     background: string
@@ -52,6 +53,14 @@ export interface ITheme extends IKeys {
     shadow: string
     border: string
     lining: string
+  }
+  modals: {
+    width: number
+    height: number
+    background: string
+    shadow: string
+    border: string
+    cover: string
   }
 }
 
@@ -96,6 +105,7 @@ export const Theme = createContext<ITheme>({
     background: '#2C2C2C',
   },
   pointers: {
+    width: 240,
     label: '#FFFFFF',
     helper: '#CCCCCC',
     background: '#777777',
@@ -103,6 +113,14 @@ export const Theme = createContext<ITheme>({
     shadow: '0 1px 25px -5px rgba(0, 0, 0, 0.35)',
     border: 'none',
     lining: 'none',
+  },
+  modals: {
+    width: 500,
+    height: 700,
+    background: '',
+    shadow: '',
+    border: '',
+    cover: '',
   },
 })
 

@@ -1,7 +1,14 @@
 import { createElement as create, useState, FC } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
-import { Button, InputCode } from '../src/index'
+import {
+  Button,
+  InputCode,
+  Modal,
+  Gadgets,
+  IconBar,
+  Layout,
+} from '../src/index'
 
 console.clear()
 
@@ -50,7 +57,6 @@ const examples = {
 const code = JSON.stringify(examples, null, 2)
 const EditorHandler = () => {
   const [value, valueChange] = useState<string>(code)
-  console.log(value)
   return create(InputCode, {
     value,
     language: 'json',
@@ -59,4 +65,34 @@ const EditorHandler = () => {
 }
 stories.add('Editor', () => {
   return create(EditorHandler)
+})
+
+stories.add('Modal', () => {
+  return create(Modal, {
+    children: create(Layout, {
+      children: [
+        create(IconBar, {
+          key: 'iconBar',
+          icons: [
+            {
+              icon: 'home',
+              solid: true,
+              label: 'Home',
+            },
+            {
+              icon: 'cog',
+              solid: true,
+              label: 'Settings',
+            },
+          ],
+        }),
+        create(Gadgets, {
+          key: 'gadgets',
+          title: 'Hello',
+          subtitle: 'Window Gadgets',
+          children: 'Hello world!',
+        }),
+      ],
+    }),
+  })
 })

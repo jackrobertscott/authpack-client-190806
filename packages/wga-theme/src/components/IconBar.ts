@@ -1,6 +1,6 @@
 import { createElement as create, FC, ReactNode } from 'react'
-import { useTheme } from '../contexts/Theme'
 import { css } from 'emotion'
+import { useTheme } from '../contexts/Theme'
 import { Icon } from './Icon'
 import { Pointer } from './Pointer'
 
@@ -30,20 +30,23 @@ export const IconBar: FC<{
       justifyContent: 'space-between',
       alignItems: 'center',
       flexShrink: 0,
-      background: theme.iconbar.background,
+      background: theme.iconBars.background,
     }),
     children: [
-      icons.map(data => {
-        return create(IconPointer, data)
+      icons.map((data, index) => {
+        return create(IconPointer, {
+          key: `icon-${index}`,
+          ...data,
+        })
       }),
       create(IconPointer, {
-        icon: 'time-circe',
+        icon: 'times-circle',
         label: 'Close',
         click: close,
       }),
-    ].map(children => {
+    ].map((children, index) => {
       return create(IconSpacer, {
-        key: 'close',
+        key: `icon-${index}`,
         children,
       })
     }),
@@ -72,6 +75,8 @@ const IconPointer: FC<{
         color: focused ? theme.iconBars.iconFocused : theme.iconBars.icon,
         background: theme.iconBars.iconBackground,
         borderRadius: theme.global.radius,
+        transition: '200ms',
+        cursor: 'pointer',
         '&:hover': {
           color: theme.iconBars.iconHover,
           background: theme.iconBars.iconBackgroundHover,
@@ -80,7 +85,7 @@ const IconPointer: FC<{
       children: create(Icon, {
         icon,
         size: 25,
-        padding: 5,
+        padding: 10,
         solid,
       }),
     }),
@@ -103,7 +108,7 @@ const IconSpacer: FC<{
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      padding: 20,
+      padding: 15,
       '& > *, & > div': {
         marginBottom: 15,
         '&:last-child': {
@@ -123,23 +128,27 @@ const TogglePointer: FC<{
       all: 'unset',
       display: 'flex',
       position: 'relative',
+      '&:hover > .toggle': {
+        display: 'flex',
+      },
     }),
     children: [
       create((() => children) as FC, {
         key: 'children',
       }),
       create('div', {
+        key: 'pointer',
         children: pointer,
         className: css({
           all: 'unset',
-          display: 'flex',
+          display: 'none',
           minWidth: '290px',
           position: 'absolute',
           zIndex: 100,
           left: '100%',
-          top: '-7.5px',
+          top: '-2.5px',
           paddingLeft: '7.5px',
-        }),
+        }).concat(' toggle'),
       }),
     ],
   })

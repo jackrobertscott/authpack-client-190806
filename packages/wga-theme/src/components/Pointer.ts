@@ -27,11 +27,12 @@ export const Pointer: FC<{
       }),
       children: [
         create(Header, {
+          key: 'header',
           icon,
           solid,
           label,
         }),
-        options.length &&
+        !!options.length &&
           create(Menu, {
             key: 'menu',
             options,
@@ -63,6 +64,7 @@ const Header: FC<{
       border: theme.pointers.border,
       color: theme.pointers.label,
       boxShadow: theme.pointers.shadow,
+      width: theme.pointers.width,
     }),
     children: [
       create('div', {
@@ -96,6 +98,7 @@ const Menu: FC<{
     }),
     children: options.map(({ label, helper, icon, solid, click }) => {
       return create('div', {
+        key: label,
         onClick: click,
         className: css({
           all: 'unset',
