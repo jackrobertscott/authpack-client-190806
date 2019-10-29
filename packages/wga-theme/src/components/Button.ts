@@ -21,7 +21,7 @@ export const Button: FC<{
       cursor: disabled ? 'default' : 'pointer',
       justifyContent: 'space-between',
       alignItems: 'center',
-      padding: '15px',
+      padding: 15,
       flexGrow: 1,
       transition: '200ms',
       fontSize: theme.global.fonts,

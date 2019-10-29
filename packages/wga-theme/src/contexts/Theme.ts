@@ -36,6 +36,23 @@ export interface ITheme extends IKeys {
     background: string
     scrollbar: string
   }
+  iconBars: {
+    icon: string
+    iconHover: string
+    iconFocused: string
+    iconBackground: string
+    iconBackgroundHover: string
+    background: string
+  }
+  pointers: {
+    label: string
+    helper: string
+    background: string
+    backgroundHover: string
+    shadow: string
+    border: string
+    lining: string
+  }
 }
 
 export const Theme = createContext<ITheme>({
@@ -70,17 +87,29 @@ export const Theme = createContext<ITheme>({
     background: '#414141',
     scrollbar: '#505050',
   },
+  iconBars: {
+    icon: '#777777',
+    iconHover: '#999999',
+    iconFocused: '#C4C4C4',
+    iconBackground: 'transparent',
+    iconBackgroundHover: '#191919',
+    background: '#2C2C2C',
+  },
+  pointers: {
+    label: '#FFFFFF',
+    helper: '#CCCCCC',
+    background: '#777777',
+    backgroundHover: '#888888',
+    shadow: '0 1px 25px -5px rgba(0, 0, 0, 0.35)',
+    border: 'none',
+    lining: 'none',
+  },
 })
 
 export const useTheme = (overrides: Partial<ITheme> = {}): ITheme => {
   const theme = useContext(Theme)
-  return Object.keys(theme).reduce(
-    (all, key) => {
-      all[key] = !overrides[key]
-        ? { ...theme[key], ...overrides[key] }
-        : theme[key]
-      return all
-    },
-    {} as any
-  )
+  return Object.keys(theme).reduce((all, key) => {
+    if (overrides[key]) all[key] = { ...theme[key], ...overrides[key] }
+    return all
+  }, theme)
 }
