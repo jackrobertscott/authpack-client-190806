@@ -105,22 +105,22 @@ export const Theme = createContext<ITheme>({
     background: '#2C2C2C',
   },
   pointers: {
-    width: 240,
+    width: 280,
     label: '#FFFFFF',
     helper: '#CCCCCC',
     background: '#777777',
     backgroundHover: '#888888',
-    shadow: '0 1px 25px -5px rgba(0, 0, 0, 0.35)',
+    shadow: '0 0 25px -5px rgba(0, 0, 0, 0.35)',
     border: 'none',
     lining: 'none',
   },
   modals: {
     width: 500,
     height: 700,
-    background: '',
-    shadow: '',
-    border: '',
-    cover: '',
+    background: '#111111',
+    shadow: '0 0 25px -5px rgba(0, 0, 0, 0.35)',
+    border: 'none',
+    cover: 'rgba(0, 0, 0, 0.45)',
   },
 })
 

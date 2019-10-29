@@ -83,6 +83,14 @@ stories.add('Modal', () => {
               icon: 'cog',
               solid: true,
               label: 'Settings',
+              options: [
+                {
+                  label: 'User',
+                  helper: 'Update your personal settings',
+                  icon: 'user',
+                  solid: true,
+                },
+              ],
             },
           ],
         }),

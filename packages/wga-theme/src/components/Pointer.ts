@@ -11,12 +11,13 @@ export const Pointer: FC<{
   close?: () => void
   options?: Array<{
     label: string
-    helper: string
+    helper?: string
     icon: string
     solid?: boolean
     click?: () => void
   }>
 }> = ({ icon, solid, label, close, options = [] }) => {
+  const theme = useTheme()
   return create(OutsideClickHandler, {
     onOutsideClick: () => close && close(),
     children: create('div', {
@@ -24,6 +25,15 @@ export const Pointer: FC<{
         all: 'unset',
         display: 'flex',
         flexDirection: 'column',
+        transition: '200ms',
+        overflow: 'hidden',
+        fontSize: theme.global.fonts,
+        borderRadius: theme.global.radius,
+        boxShadow: theme.pointers.shadow,
+        background: theme.pointers.background,
+        border: theme.pointers.border,
+        color: theme.pointers.label,
+        width: theme.pointers.width,
       }),
       children: [
         create(Header, {
@@ -47,7 +57,6 @@ const Header: FC<{
   solid?: boolean
   label: string
 }> = ({ icon, solid, label }) => {
-  const theme = useTheme()
   return create('div', {
     key: 'header',
     className: css({
@@ -57,14 +66,6 @@ const Header: FC<{
       alignItems: 'center',
       padding: 15,
       flexGrow: 1,
-      transition: '200ms',
-      fontSize: theme.global.fonts,
-      borderRadius: theme.global.radius,
-      background: theme.pointers.background,
-      border: theme.pointers.border,
-      color: theme.pointers.label,
-      boxShadow: theme.pointers.shadow,
-      width: theme.pointers.width,
     }),
     children: [
       create('div', {
@@ -83,7 +84,7 @@ const Header: FC<{
 const Menu: FC<{
   options: Array<{
     label: string
-    helper: string
+    helper?: string
     icon: string
     solid?: boolean
     click?: () => void
@@ -126,6 +127,7 @@ const Menu: FC<{
               display: 'flex',
               flexDirection: 'column',
               flexGrow: 1,
+              marginLeft: 10,
             }),
             children: [
               create('div', {
@@ -137,6 +139,7 @@ const Menu: FC<{
                   key: 'helper',
                   children: helper,
                   className: css({
+                    marginTop: 5,
                     color: theme.pointers.helper,
                   }),
                 }),

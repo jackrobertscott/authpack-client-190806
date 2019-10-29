@@ -13,7 +13,7 @@ export const IconBar: FC<{
     click?: () => void
     options?: Array<{
       label: string
-      helper: string
+      helper?: string
       icon: string
       solid?: boolean
       click?: () => void
@@ -61,7 +61,7 @@ const IconPointer: FC<{
   click?: () => void
   options?: Array<{
     label: string
-    helper: string
+    helper?: string
     icon: string
     solid?: boolean
     click?: () => void
@@ -110,7 +110,7 @@ const IconSpacer: FC<{
       alignItems: 'center',
       padding: 15,
       '& > *, & > div': {
-        marginBottom: 15,
+        marginBottom: 5,
         '&:last-child': {
           marginBottom: 0,
         },
@@ -146,7 +146,7 @@ const TogglePointer: FC<{
           position: 'absolute',
           zIndex: 100,
           left: '100%',
-          top: '-2.5px',
+          top: 0,
           paddingLeft: '7.5px',
         }).concat(' toggle'),
       }),
