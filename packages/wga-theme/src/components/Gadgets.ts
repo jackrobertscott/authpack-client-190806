@@ -73,9 +73,9 @@ const Header: FC<{
 }
 
 const Branding: FC<{
-  text: string
   url: string
-}> = ({ text, url }) => {
+  text: string
+}> = ({ url, text }) => {
   const theme = useTheme()
   return create('a', {
     href: url,
@@ -88,12 +88,11 @@ const Branding: FC<{
       cursor: 'pointer',
       display: 'flex',
       transition: '200ms',
-      filter: 'contrast(70%)',
       margin: '25px',
       marginLeft: 'auto',
       color: theme.gadgets.branding,
       '&:hover': {
-        filter: 'contrast(30%)',
+        color: theme.gadgets.brandingHover,
       },
     }),
   })

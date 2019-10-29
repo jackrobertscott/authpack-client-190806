@@ -31,10 +31,25 @@ export interface ITheme extends IKeys {
     title: string
     subtitle: string
     branding: string
+    brandingHover: string
     header: string
     border: string
     background: string
     scrollbar: string
+  }
+  page: {
+    title: string
+    subtitle: string
+    branding: string
+    brandingHover: string
+    header: string
+    border: string
+    background: string
+    scrollbar: string
+    corner: string
+    cornerHover: string
+    cornerBackground: string
+    cornerBackgroundHover: string
   }
   sideBar: {
     background: string
@@ -100,10 +115,25 @@ export const Theme = createContext<ITheme>({
     title: '#CCCCCC',
     subtitle: '#777777',
     branding: '#777777',
+    brandingHover: '#EEEEEE',
     header: '#3B3B3B',
     border: 'none',
     background: '#414141',
     scrollbar: '#505050',
+  },
+  page: {
+    title: '#CCCCCC',
+    subtitle: '#777777',
+    branding: '#595959',
+    brandingHover: '#999999',
+    header: '#3B3B3B',
+    border: 'none',
+    background: '#414141',
+    scrollbar: '#505050',
+    corner: '#777777',
+    cornerHover: '#999999',
+    cornerBackground: '#454545',
+    cornerBackgroundHover: '#515151',
   },
   sideBar: {
     background: '#353535',

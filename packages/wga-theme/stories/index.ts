@@ -9,6 +9,7 @@ import {
   IconBar,
   Layout,
   SideBar,
+  Page,
 } from '../src/index'
 
 console.clear()
@@ -109,7 +110,7 @@ stories.add('Modal', () => {
           key: 'gadgets',
           title: 'Hello',
           subtitle: 'Window Gadgets',
-          children: 'Hello world!',
+          children: null,
         }),
       ],
     }),
@@ -141,6 +142,17 @@ stories.add('Page', () => {
             solid: true,
           },
         ],
+      }),
+      create(Page, {
+        title: 'Users',
+        subtitle: 'People who have registered on your app',
+        children: null,
+        corner: {
+          icon: 'plus',
+          label: 'Create User',
+          solid: true,
+          click: () => console.log('corner'),
+        },
       }),
     ],
   })

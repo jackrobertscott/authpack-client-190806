@@ -52,6 +52,7 @@ const Title: FC<{
     className: css({
       fontSize: 25,
       marginBottom: 75,
+      lineHeight: '1em',
       color: theme.sideBar.title,
     }),
     children: title,
