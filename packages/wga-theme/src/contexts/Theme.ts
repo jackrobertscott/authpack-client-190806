@@ -36,6 +36,15 @@ export interface ITheme extends IKeys {
     background: string
     scrollbar: string
   }
+  sideBars: {
+    background: string
+    border: string
+    title: string
+    footer: string
+    options: string
+    optionsHover: string
+    optionsFocused: string
+  }
   iconBars: {
     icon: string
     iconHover: string
@@ -95,6 +104,15 @@ export const Theme = createContext<ITheme>({
     border: 'none',
     background: '#414141',
     scrollbar: '#505050',
+  },
+  sideBars: {
+    background: '#353535',
+    border: 'none',
+    title: '#999999',
+    footer: '#414141',
+    options: '#777777',
+    optionsHover: '#999999',
+    optionsFocused: '#B8B8B8',
   },
   iconBars: {
     icon: '#777777',

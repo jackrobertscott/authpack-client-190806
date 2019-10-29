@@ -8,6 +8,7 @@ import {
   Gadgets,
   IconBar,
   Layout,
+  SideBar,
 } from '../src/index'
 
 console.clear()
@@ -16,9 +17,12 @@ const stories = storiesOf('Components', module).addDecorator(data => {
   return create('div', {
     children: data(),
     className: css({
-      padding: '50px',
-      '& > *, & > div': {
-        marginBottom: '20px',
+      padding: 50,
+      '& > div': {
+        marginBottom: 20,
+        '&:last-child': {
+          marginBottom: 0,
+        },
       },
     }),
   })
@@ -67,33 +71,40 @@ stories.add('Editor', () => {
   return create(EditorHandler)
 })
 
+const exampleIconBar = create(IconBar, {
+  key: 'iconBar',
+  icons: [
+    {
+      icon: 'home',
+      solid: true,
+      label: 'Home',
+    },
+    {
+      icon: 'cog',
+      solid: true,
+      label: 'Settings',
+      options: [
+        {
+          label: 'User',
+          helper: 'Update your personal settings',
+          icon: 'user',
+          solid: true,
+        },
+      ],
+    },
+    {
+      icon: 'times-circle',
+      label: 'Close',
+      seperated: true,
+      click: close,
+    },
+  ],
+})
 stories.add('Modal', () => {
   return create(Modal, {
     children: create(Layout, {
       children: [
-        create(IconBar, {
-          key: 'iconBar',
-          icons: [
-            {
-              icon: 'home',
-              solid: true,
-              label: 'Home',
-            },
-            {
-              icon: 'cog',
-              solid: true,
-              label: 'Settings',
-              options: [
-                {
-                  label: 'User',
-                  helper: 'Update your personal settings',
-                  icon: 'user',
-                  solid: true,
-                },
-              ],
-            },
-          ],
-        }),
+        exampleIconBar,
         create(Gadgets, {
           key: 'gadgets',
           title: 'Hello',
@@ -102,5 +113,35 @@ stories.add('Modal', () => {
         }),
       ],
     }),
+  })
+})
+
+stories.add('Page', () => {
+  return create(Layout, {
+    children: [
+      exampleIconBar,
+      create(SideBar, {
+        key: 'sideBar',
+        title: 'Home',
+        footer: 'jack@example.com',
+        options: [
+          {
+            label: 'Users',
+            icon: 'user',
+            solid: true,
+          },
+          {
+            label: 'Sessions',
+            icon: 'history',
+            solid: true,
+          },
+          {
+            label: 'Teams',
+            icon: 'users',
+            solid: true,
+          },
+        ],
+      }),
+    ],
   })
 })

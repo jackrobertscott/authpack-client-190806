@@ -10,6 +10,7 @@ export const IconBar: FC<{
     label: string
     solid?: boolean
     focused?: boolean
+    seperated?: boolean
     click?: () => void
     options?: Array<{
       label: string
@@ -19,81 +20,25 @@ export const IconBar: FC<{
       click?: () => void
     }>
   }>
-  close?: () => void
-}> = ({ icons, close }) => {
+}> = ({ icons }) => {
   const theme = useTheme()
   return create('div', {
     className: css({
       all: 'unset',
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'space-between',
+      justifyContent: 'flex-start',
       alignItems: 'center',
       flexShrink: 0,
       background: theme.iconBars.background,
     }),
-    children: [
-      icons.map((data, index) => {
+    children: create(IconSpacer, {
+      children: icons.map((data, index) => {
         return create(IconPointer, {
           key: `icon-${index}`,
           ...data,
         })
       }),
-      create(IconPointer, {
-        icon: 'times-circle',
-        label: 'Close',
-        click: close,
-      }),
-    ].map((children, index) => {
-      return create(IconSpacer, {
-        key: `icon-${index}`,
-        children,
-      })
-    }),
-  })
-}
-
-const IconPointer: FC<{
-  icon: string
-  label: string
-  solid?: boolean
-  focused?: boolean
-  click?: () => void
-  options?: Array<{
-    label: string
-    helper?: string
-    icon: string
-    solid?: boolean
-    click?: () => void
-  }>
-}> = ({ icon, label, solid, focused, click, options }) => {
-  const theme = useTheme()
-  return create(TogglePointer, {
-    children: create('div', {
-      onClick: click,
-      className: css({
-        color: focused ? theme.iconBars.iconFocused : theme.iconBars.icon,
-        background: theme.iconBars.iconBackground,
-        borderRadius: theme.global.radius,
-        transition: '200ms',
-        cursor: 'pointer',
-        '&:hover': {
-          color: theme.iconBars.iconHover,
-          background: theme.iconBars.iconBackgroundHover,
-        },
-      }),
-      children: create(Icon, {
-        icon,
-        size: 25,
-        padding: 10,
-        solid,
-      }),
-    }),
-    pointer: create(Pointer, {
-      icon,
-      label,
-      solid,
-      options,
     }),
   })
 }
@@ -109,6 +54,7 @@ const IconSpacer: FC<{
       flexDirection: 'column',
       alignItems: 'center',
       padding: 15,
+      flexGrow: 1,
       '& > *, & > div': {
         marginBottom: 5,
         '&:last-child': {
@@ -119,15 +65,64 @@ const IconSpacer: FC<{
   })
 }
 
+const IconPointer: FC<{
+  icon: string
+  label: string
+  solid?: boolean
+  focused?: boolean
+  seperated?: boolean
+  click?: () => void
+  options?: Array<{
+    label: string
+    helper?: string
+    icon: string
+    solid?: boolean
+    click?: () => void
+  }>
+}> = ({ icon, label, solid, focused, seperated, click, options }) => {
+  const theme = useTheme()
+  return create(TogglePointer, {
+    seperated,
+    children: create('div', {
+      onClick: click,
+      className: css({
+        color: focused ? theme.iconBars.iconFocused : theme.iconBars.icon,
+        background: theme.iconBars.iconBackground,
+        borderRadius: theme.global.radius,
+        transition: '200ms',
+        cursor: 'pointer',
+        '&:hover': {
+          color: theme.iconBars.iconHover,
+          background: theme.iconBars.iconBackgroundHover,
+        },
+      }),
+      children: create(Icon, {
+        icon,
+        size: 22,
+        padding: 13,
+        solid,
+      }),
+    }),
+    pointer: create(Pointer, {
+      icon,
+      label,
+      solid,
+      options,
+    }),
+  })
+}
+
 const TogglePointer: FC<{
   children: ReactNode
   pointer: ReactNode
-}> = ({ children, pointer }) => {
+  seperated?: boolean
+}> = ({ children, pointer, seperated }) => {
   return create('div', {
     className: css({
       all: 'unset',
       display: 'flex',
       position: 'relative',
+      marginTop: seperated ? 'auto' : 0,
       '&:hover > .toggle': {
         display: 'flex',
       },
