@@ -65,7 +65,7 @@ export const ListUsers: FC<IListUsers> = () => {
                 create(List.Cell, {
                   key: 'Email',
                   label: 'Email',
-                  icon: 'inbox',
+                  icon: 'at',
                   value: user.email,
                 }),
                 create(List.Cell, {

@@ -28,7 +28,7 @@ export const RetrieveUser: FC<IRetrieveUser> = ({ id }) => {
           create(Overview.Container, {
             key: 'Email',
             label: 'Email',
-            icon: 'inbox',
+            icon: 'at',
             value: retrieveUserGraph.data.user.email,
           }),
           create(Overview.Container, {

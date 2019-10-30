@@ -74,14 +74,14 @@ stories.add('Snippets', () => {
     children: [
       create(Snippet, {
         key: 'Snippet',
-        icon: 'inbox',
+        icon: 'at',
         label: 'Email',
         value: 'jack@example.com',
         click: () => console.log('Snippet'),
       }),
       create(Snippet, {
         key: 'Snippet2',
-        icon: 'inbox',
+        icon: 'at',
         label: 'Email',
         value: 'jack@example.com',
       }),

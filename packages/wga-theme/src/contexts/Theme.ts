@@ -52,13 +52,20 @@ export interface ITheme extends IKeys {
     cornerBackgroundHover: string
   }
   sideBar: {
-    background: string
-    border: string
     title: string
     footer: string
     options: string
     optionsHover: string
     optionsFocused: string
+    background: string
+    border: string
+  }
+  searchBar: {
+    label: string
+    labelHover: string
+    labelDisabled: string
+    background: string
+    border: string
   }
   iconBar: {
     icon: string
@@ -67,6 +74,7 @@ export interface ITheme extends IKeys {
     iconBackground: string
     iconBackgroundHover: string
     background: string
+    border: string
   }
   pointer: {
     width: number
@@ -153,13 +161,20 @@ export const Theme = createContext<ITheme>({
     cornerBackgroundHover: '#515151',
   },
   sideBar: {
-    background: '#353535',
-    border: 'none',
     title: '#999999',
     footer: '#414141',
     options: '#777777',
     optionsHover: '#999999',
     optionsFocused: '#B8B8B8',
+    background: '#353535',
+    border: 'none',
+  },
+  searchBar: {
+    label: '#777777',
+    labelHover: '#999999',
+    labelDisabled: '#555555',
+    background: '#2C2C2C',
+    border: 'none',
   },
   iconBar: {
     icon: '#777777',
@@ -168,6 +183,7 @@ export const Theme = createContext<ITheme>({
     iconBackground: 'transparent',
     iconBackgroundHover: '#191919',
     background: '#2C2C2C',
+    border: 'none',
   },
   pointer: {
     width: 280,

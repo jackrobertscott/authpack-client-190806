@@ -65,6 +65,7 @@ const Header: FC<{
           display: 'table-cell',
           padding: 25,
           color: theme.table.label,
+          transition: '200ms',
           '&:hover': click && {
             cursor: 'pointer',
             background: theme.table.headerHover,
@@ -119,6 +120,7 @@ const Row: FC<{
       all: 'unset',
       display: 'table-row',
       background: theme.table.background,
+      transition: '200ms',
       '&:hover': click && {
         cursor: 'pointer',
         background: theme.table.backgroundHover,

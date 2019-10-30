@@ -68,7 +68,7 @@ export const ListSessions: FC<ListSessions> = () => {
                 create(List.Cell, {
                   key: 'Email',
                   label: 'Email',
-                  icon: 'inbox',
+                  icon: 'at',
                   value: session.user && session.user.email,
                 }),
                 create(List.Cell, {
