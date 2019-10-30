@@ -1,6 +1,14 @@
 import { createElement as create } from 'react'
 import { storiesOf } from '@storybook/react'
-import { Button, IconBar, Layout, Page, SideBar, Divider } from '../src/index'
+import {
+  Button,
+  IconBar,
+  Layout,
+  Page,
+  SideBar,
+  Divider,
+  Table,
+} from '../src/index'
 
 console.clear()
 
@@ -12,12 +20,12 @@ const stories = storiesOf('Page', module).addDecorator(data => {
         icons: [
           {
             icon: 'home',
-            solid: true,
             label: 'Home',
           },
           {
             seperated: true,
             icon: 'times-circle',
+            solid: false,
             label: 'Close',
             click: close,
           },
@@ -31,17 +39,14 @@ const stories = storiesOf('Page', module).addDecorator(data => {
           {
             label: 'Users',
             icon: 'user',
-            solid: true,
           },
           {
             label: 'Sessions',
             icon: 'history',
-            solid: true,
           },
           {
             label: 'Teams',
             icon: 'users',
-            solid: true,
           },
         ],
       }),
@@ -53,7 +58,6 @@ const stories = storiesOf('Page', module).addDecorator(data => {
         corner: {
           icon: 'plus',
           label: 'Create User',
-          solid: true,
           click: () => console.log('Corner'),
         },
       }),
@@ -74,7 +78,6 @@ stories.add('Buttons', () => {
         label: 'Minor',
         click: () => console.log('Minor'),
         icon: 'bolt',
-        solid: true,
         minor: true,
       }),
       create(Button, {
@@ -84,5 +87,28 @@ stories.add('Buttons', () => {
         disabled: true,
       }),
     ],
+  })
+})
+
+stories.add('Table', () => {
+  return create(Table, {
+    header: [
+      { label: 'Id', icon: 'chevron-down', click: () => console.log('Id') },
+      { label: 'Name' },
+      { label: 'Email' },
+    ],
+    rows: [
+      { id: 1, name: 'Jack Scott', email: 'jack@example.com' },
+      { id: 2, name: 'Fred Blogs', email: 'fred@example.com' },
+      { id: 3, name: 'Sophie Pots', email: 'sophie@example.com' },
+    ].map(({ id, name, email }) => ({
+      id: String(id),
+      click: () => console.log(id),
+      cells: [
+        { icon: 'hashtag', value: id },
+        { icon: 'user', value: name },
+        { icon: 'inbox', value: email },
+      ],
+    })),
   })
 })

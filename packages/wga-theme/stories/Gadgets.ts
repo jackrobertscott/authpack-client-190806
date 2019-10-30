@@ -22,12 +22,12 @@ const stories = storiesOf('Gadgets', module).addDecorator(data => {
           icons: [
             {
               icon: 'home',
-              solid: true,
               label: 'Home',
             },
             {
               seperated: true,
               icon: 'times-circle',
+              solid: false,
               label: 'Close',
               click: close,
             },
@@ -57,7 +57,6 @@ stories.add('Buttons', () => {
         label: 'Minor',
         click: () => console.log('Minor'),
         icon: 'bolt',
-        solid: true,
         minor: true,
       }),
       create(Button, {
@@ -76,7 +75,6 @@ stories.add('Snippets', () => {
       create(Snippet, {
         key: 'Snippet',
         icon: 'inbox',
-        solid: true,
         label: 'Email',
         value: 'jack@example.com',
         click: () => console.log('Snippet'),
@@ -84,7 +82,6 @@ stories.add('Snippets', () => {
       create(Snippet, {
         key: 'Snippet2',
         icon: 'inbox',
-        solid: true,
         label: 'Email',
         value: 'jack@example.com',
       }),

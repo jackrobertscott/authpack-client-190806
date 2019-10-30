@@ -58,17 +58,18 @@ export const Snippet: FC<{
             }),
         ],
       }),
-      create('div', {
-        className: css({
-          marginLeft: '15px',
-          color: theme.snippet.arrow,
+      click &&
+        create('div', {
+          className: css({
+            marginLeft: '15px',
+            color: theme.snippet.arrow,
+          }),
+          children: create(Icon, {
+            key: 'icon',
+            icon: 'chevron-right',
+            solid,
+          }),
         }),
-        children: create(Icon, {
-          key: 'icon',
-          icon: 'chevron-right',
-          solid,
-        }),
-      }),
     ],
   })
 }

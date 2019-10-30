@@ -94,9 +94,11 @@ export interface ITheme extends IKeys {
     backgroundHover: string
     border: string
   }
-  list: {
+  table: {
     label: string
     value: string
+    header: string
+    headerHover: string
     background: string
     backgroundHover: string
     border: string
@@ -193,11 +195,13 @@ export const Theme = createContext<ITheme>({
     backgroundHover: '#595959',
     border: '1px solid #454545',
   },
-  list: {
-    label: '#FFFFFF',
-    value: '#CCCCCC',
-    background: '#777777',
-    backgroundHover: '#888888',
+  table: {
+    label: '#CCCCCC',
+    value: '#FFFFFF',
+    header: '#4A4A4A',
+    headerHover: '#585858',
+    background: '#4F4F4F',
+    backgroundHover: '#585858',
     border: '1px solid #454545',
   },
 })

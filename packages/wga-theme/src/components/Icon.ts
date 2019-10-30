@@ -8,7 +8,7 @@ export const Icon: FC<{
   padding?: number
   solid?: boolean
   color?: string
-}> = ({ icon, size, padding = 0, solid, color }) => {
+}> = ({ icon, size, padding = 0, solid = true, color }) => {
   const theme = useTheme()
   return create('div', {
     className: css({

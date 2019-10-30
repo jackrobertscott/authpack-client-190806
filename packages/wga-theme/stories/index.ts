@@ -36,7 +36,6 @@ stories.add('Buttons', () => {
       label: 'Minor',
       click: () => console.log('Minor'),
       icon: 'bolt',
-      solid: true,
       minor: true,
     }),
     create(Button, {
@@ -75,19 +74,16 @@ stories.add('IconBar', () => {
         icons: [
           {
             icon: 'home',
-            solid: true,
             label: 'Home',
           },
           {
             icon: 'cog',
-            solid: true,
             label: 'Settings',
             options: [
               {
                 label: 'User',
                 helper: 'Update your personal settings',
                 icon: 'user',
-                solid: true,
               },
             ],
           },
@@ -117,7 +113,6 @@ stories.add('Page', () => {
     corner: {
       icon: 'plus',
       label: 'Create User',
-      solid: true,
       click: () => console.log('corner'),
     },
   })
