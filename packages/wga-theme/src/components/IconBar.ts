@@ -55,11 +55,8 @@ const IconSpacer: FC<{
       alignItems: 'center',
       padding: 15,
       flexGrow: 1,
-      '& > *, & > div': {
+      '& > div:not(:last-child)': {
         marginBottom: 5,
-        '&:last-child': {
-          marginBottom: 0,
-        },
       },
     }),
   })

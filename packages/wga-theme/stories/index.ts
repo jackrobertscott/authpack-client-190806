@@ -1,16 +1,8 @@
-import { createElement as create, useState, FC } from 'react'
+import '@fortawesome/fontawesome-free/css/all.min.css'
+import { createElement as create, useState } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
-import {
-  Button,
-  InputCode,
-  Modal,
-  Gadgets,
-  IconBar,
-  Layout,
-  SideBar,
-  Page,
-} from '../src/index'
+import { Button, InputCode, Modal, IconBar, Page, Layout } from '../src/index'
 
 console.clear()
 
@@ -18,9 +10,12 @@ const stories = storiesOf('Components', module).addDecorator(data => {
   return create('div', {
     children: data(),
     className: css({
+      display: 'flex',
+      flexDirection: 'column',
+      flexGrow: 1,
       padding: 50,
       '& > div': {
-        marginBottom: 20,
+        marginBottom: 25,
         '&:last-child': {
           marginBottom: 0,
         },
@@ -53,107 +48,77 @@ stories.add('Buttons', () => {
   ]
 })
 
-const examples = {
-  email: 'fred@example.com',
-  username: 'Fred',
-  age: 32,
-  fruits: ['banana', 'apple', 'blue berry'],
-}
-const code = JSON.stringify(examples, null, 2)
-const EditorHandler = () => {
-  const [value, valueChange] = useState<string>(code)
-  return create(InputCode, {
-    value,
-    language: 'json',
-    change: valueChange,
-  })
-}
 stories.add('Editor', () => {
+  const examples = {
+    email: 'fred@example.com',
+    username: 'Fred',
+    age: 32,
+    fruits: ['banana', 'apple', 'blue berry'],
+  }
+  const code = JSON.stringify(examples, null, 2)
+  const EditorHandler = () => {
+    const [value, valueChange] = useState<string>(code)
+    return create(InputCode, {
+      value,
+      language: 'json',
+      change: valueChange,
+    })
+  }
   return create(EditorHandler)
 })
 
-const exampleIconBar = create(IconBar, {
-  key: 'iconBar',
-  icons: [
-    {
-      icon: 'home',
-      solid: true,
-      label: 'Home',
-    },
-    {
-      icon: 'cog',
-      solid: true,
-      label: 'Settings',
-      options: [
-        {
-          label: 'User',
-          helper: 'Update your personal settings',
-          icon: 'user',
-          solid: true,
-        },
-      ],
-    },
-    {
-      icon: 'times-circle',
-      label: 'Close',
-      seperated: true,
-      click: close,
-    },
-  ],
+stories.add('IconBar', () => {
+  return create(Layout, {
+    children: [
+      create(IconBar, {
+        key: 'iconBar',
+        icons: [
+          {
+            icon: 'home',
+            solid: true,
+            label: 'Home',
+          },
+          {
+            icon: 'cog',
+            solid: true,
+            label: 'Settings',
+            options: [
+              {
+                label: 'User',
+                helper: 'Update your personal settings',
+                icon: 'user',
+                solid: true,
+              },
+            ],
+          },
+          {
+            icon: 'times-circle',
+            label: 'Close',
+            seperated: true,
+            click: close,
+          },
+        ],
+      }),
+    ],
+  })
 })
+
 stories.add('Modal', () => {
   return create(Modal, {
-    children: create(Layout, {
-      children: [
-        exampleIconBar,
-        create(Gadgets, {
-          key: 'gadgets',
-          title: 'Hello',
-          subtitle: 'Window Gadgets',
-          children: null,
-        }),
-      ],
-    }),
+    children: null,
   })
 })
 
 stories.add('Page', () => {
-  return create(Layout, {
-    children: [
-      exampleIconBar,
-      create(SideBar, {
-        key: 'sideBar',
-        title: 'Home',
-        footer: 'jack@example.com',
-        options: [
-          {
-            label: 'Users',
-            icon: 'user',
-            solid: true,
-          },
-          {
-            label: 'Sessions',
-            icon: 'history',
-            solid: true,
-          },
-          {
-            label: 'Teams',
-            icon: 'users',
-            solid: true,
-          },
-        ],
-      }),
-      create(Page, {
-        title: 'Users',
-        subtitle: 'People who have registered on your app',
-        children: null,
-        corner: {
-          icon: 'plus',
-          label: 'Create User',
-          solid: true,
-          click: () => console.log('corner'),
-        },
-      }),
-    ],
+  return create(Page, {
+    title: 'Users',
+    subtitle: 'People who have registered on your app',
+    children: null,
+    corner: {
+      icon: 'plus',
+      label: 'Create User',
+      solid: true,
+      click: () => console.log('corner'),
+    },
   })
 })

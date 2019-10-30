@@ -15,6 +15,10 @@ export const Modal: FC<{
   close?: () => void
 }> = ({ children, visible = true, close }) => {
   const theme = useTheme()
+  const breaks = {
+    width: theme.modal.width + 50,
+    height: theme.modal.height + 50,
+  }
   return create(Portal, {
     id: 'modals',
     children: create('div', {
@@ -50,8 +54,7 @@ export const Modal: FC<{
           border: theme.modal.border,
           fontSize: theme.global.fonts,
           borderRadius: theme.global.radius,
-          [`@media (max-width: ${theme.modal.width + 30}), (max-height: ${theme
-            .modal.height + 30})`]: {
+          [`@media (max-width: ${breaks.width}px), (max-height: ${breaks.height}px)`]: {
             width: '100%',
             height: '100%',
             flexGrow: 1,

@@ -23,7 +23,7 @@ export const SideBar: FC<{
       alignItems: 'stretch',
       width: '20%',
       maxWidth: '220px',
-      padding: '31px 25px',
+      padding: 25,
       background: theme.sideBar.background,
       borderRight: theme.sideBar.border,
     }),
@@ -49,13 +49,13 @@ const Title: FC<{
 }> = ({ title }) => {
   const theme = useTheme()
   return create('div', {
+    children: title,
     className: css({
       fontSize: 25,
       marginBottom: 75,
       lineHeight: '1em',
       color: theme.sideBar.title,
     }),
-    children: title,
   })
 }
 
@@ -64,6 +64,7 @@ const Footer: FC<{
 }> = ({ footer }) => {
   const theme = useTheme()
   return create('div', {
+    children: footer,
     className: css({
       whiteSpace: 'pre',
       transition: '200ms',
@@ -71,7 +72,6 @@ const Footer: FC<{
       marginTop: 'auto',
       color: theme.sideBar.footer,
     }),
-    children: footer,
   })
 }
 
@@ -87,6 +87,11 @@ const Options: FC<{
   const theme = useTheme()
   return create('div', {
     key: 'options',
+    className: css({
+      all: 'unset',
+      display: 'flex',
+      flexDirection: 'column',
+    }),
     children: options.map(({ label, icon, solid, click, focused }, index) => {
       return create('div', {
         key: `option-${index}`,
@@ -99,6 +104,9 @@ const Options: FC<{
           color: focused ? theme.sideBar.optionsFocused : theme.sideBar.options,
           '&:hover': !focused && {
             color: theme.sideBar.optionsHover,
+          },
+          '&:not(:last-child)': {
+            marginBottom: 15,
           },
         }),
         children: [
@@ -116,17 +124,6 @@ const Options: FC<{
           }),
         ],
       })
-    }),
-    className: css({
-      all: 'unset',
-      display: 'flex',
-      flexDirection: 'column',
-      '& > *, & > div': {
-        marginBottom: 15,
-        '&:last-child': {
-          marginBottom: 0,
-        },
-      },
     }),
   })
 }

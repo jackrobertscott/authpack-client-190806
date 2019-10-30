@@ -2,6 +2,7 @@
  * Components
  */
 export * from './components/Button'
+export * from './components/Divider'
 export * from './components/Gadgets'
 export * from './components/Icon'
 export * from './components/IconBar'
@@ -10,11 +11,11 @@ export * from './components/InputCode'
 export * from './components/Layout'
 export * from './components/List'
 export * from './components/Modal'
-export * from './components/Overview'
 export * from './components/Page'
 export * from './components/Poster'
 export * from './components/SearchBar'
 export * from './components/SideBar'
+export * from './components/Snippet'
 export * from './components/Toaster'
 /**
  * Contexts

@@ -1,7 +1,7 @@
 import { createElement as create, FC, ReactNode } from 'react'
 import { css } from 'emotion'
 
-export const Layout: FC<{
+export const Divider: FC<{
   children: ReactNode
 }> = ({ children }) => {
   return create('div', {
@@ -9,10 +9,12 @@ export const Layout: FC<{
     className: css({
       all: 'unset',
       display: 'flex',
-      justifyContent: 'stretch',
-      alignItems: 'stretch',
-      overflow: 'hidden',
+      flexDirection: 'column',
       flexGrow: 1,
+      padding: 25,
+      '& > div:not(:last-child)': {
+        marginBottom: 15,
+      },
     }),
   })
 }

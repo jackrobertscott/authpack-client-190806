@@ -9,7 +9,7 @@ export const InputCode: FC<{
   change?: (value: string) => void
   language?: 'css' | 'html' | 'json' | 'typescript'
   height?: number
-}> = ({ value = '', change, language, height = 500 }) => {
+}> = ({ value = '', change, language, height = 300 }) => {
   const theme = useTheme()
   const element = useRef<undefined | HTMLElement>()
   const editor = useRef<undefined | monaco.editor.IStandaloneCodeEditor>()
@@ -19,7 +19,7 @@ export const InputCode: FC<{
         value,
         language,
         theme: 'pretty',
-        fontSize: theme.global.fonts,
+        fontSize: theme.global.fonts - 2,
         minimap: {
           enabled: false,
         },

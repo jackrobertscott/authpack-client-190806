@@ -86,6 +86,21 @@ export interface ITheme extends IKeys {
     border: string
     cover: string
   }
+  snippet: {
+    label: string
+    value: string
+    arrow: string
+    background: string
+    backgroundHover: string
+    border: string
+  }
+  list: {
+    label: string
+    value: string
+    background: string
+    backgroundHover: string
+    border: string
+  }
 }
 
 export const Theme = createContext<ITheme>({
@@ -163,12 +178,27 @@ export const Theme = createContext<ITheme>({
     lining: 'none',
   },
   modal: {
-    width: 500,
-    height: 700,
+    width: 560,
+    height: 600,
     background: '#111111',
     shadow: '0 0 25px -5px rgba(0, 0, 0, 0.35)',
     border: 'none',
     cover: 'rgba(0, 0, 0, 0.45)',
+  },
+  snippet: {
+    label: '#FFFFFF',
+    value: '#CCCCCC',
+    arrow: '#888888',
+    background: '#494949',
+    backgroundHover: '#595959',
+    border: '1px solid #454545',
+  },
+  list: {
+    label: '#FFFFFF',
+    value: '#CCCCCC',
+    background: '#777777',
+    backgroundHover: '#888888',
+    border: '1px solid #454545',
   },
 })
 

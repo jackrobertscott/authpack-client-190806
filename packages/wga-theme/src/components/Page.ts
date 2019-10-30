@@ -19,9 +19,9 @@ export const Page: FC<{
     className: css({
       all: 'unset',
       display: 'flex',
-      position: 'relative',
       flexDirection: 'column',
       justifyContent: 'stretch',
+      position: 'relative',
       flexGrow: 1,
       background: theme.page.background,
     }),
