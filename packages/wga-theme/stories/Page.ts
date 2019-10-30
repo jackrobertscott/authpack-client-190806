@@ -91,24 +91,29 @@ stories.add('Buttons', () => {
 })
 
 stories.add('Table', () => {
+  const items = [
+    { name: 'Jack Scott', email: 'jack@example.com' },
+    { name: 'Fred Blogs', email: 'fred@example.com' },
+    { name: 'Sophie Pots', email: 'sophie@example.com' },
+  ]
   return create(Table, {
     header: [
       { label: 'Id', icon: 'chevron-down', click: () => console.log('Id') },
       { label: 'Name' },
       { label: 'Email' },
     ],
-    rows: [
-      { id: 1, name: 'Jack Scott', email: 'jack@example.com' },
-      { id: 2, name: 'Fred Blogs', email: 'fred@example.com' },
-      { id: 3, name: 'Sophie Pots', email: 'sophie@example.com' },
-    ].map(({ id, name, email }) => ({
-      id: String(id),
-      click: () => console.log(id),
-      cells: [
-        { icon: 'hashtag', value: id },
-        { icon: 'user', value: name },
-        { icon: 'inbox', value: email },
-      ],
-    })),
+    rows: items
+      .concat(items)
+      .concat(items)
+      .concat(items)
+      .map(({ name, email }, index) => ({
+        id: String(index),
+        click: () => console.log(index),
+        cells: [
+          { icon: 'hashtag', value: index },
+          { icon: 'user', value: name },
+          { icon: 'inbox', value: email },
+        ],
+      })),
   })
 })

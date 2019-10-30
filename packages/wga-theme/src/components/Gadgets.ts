@@ -107,6 +107,7 @@ const Scroller: FC<{
     className: css({
       all: 'unset',
       display: 'flex',
+      position: 'relative',
       flexDirection: 'column',
       overflow: 'auto',
       flexGrow: 1,

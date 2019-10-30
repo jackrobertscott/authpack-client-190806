@@ -22,10 +22,16 @@ export const Page: FC<{
       flexDirection: 'column',
       justifyContent: 'stretch',
       position: 'relative',
+      maxHeight: '100vh',
       flexGrow: 1,
       background: theme.page.background,
     }),
     children: [
+      create(Branding, {
+        key: 'branding',
+        url: 'https://windowgadgets.io',
+        text: `Made by Window Gadgets`,
+      }),
       create(Header, {
         key: 'header',
         title,
@@ -35,11 +41,6 @@ export const Page: FC<{
       create(Scroller, {
         key: 'scroller',
         children,
-      }),
-      create(Branding, {
-        key: 'branding',
-        url: 'https://windowgadgets.io',
-        text: `Made by Window Gadgets`,
       }),
     ],
   })
@@ -184,6 +185,7 @@ const Scroller: FC<{
     className: css({
       all: 'unset',
       display: 'flex',
+      position: 'relative',
       flexDirection: 'column',
       overflow: 'auto',
       flexGrow: 1,
