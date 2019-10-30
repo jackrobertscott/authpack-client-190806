@@ -20,23 +20,35 @@ export const Table: FC<{
     }>
   }>
 }> = ({ header, rows }) => {
-  const theme = useTheme()
   return create('table', {
     className: css({
       all: 'unset',
       display: 'table',
     }),
     children: [
-      create(Header, {
+      create('thead', {
         key: 'header',
-        header,
+        className: css({
+          all: 'unset',
+          display: 'table-header-group',
+        }),
+        children: create(Header, {
+          header,
+        }),
       }),
-      rows.map(({ id, click, cells }) => {
-        return create(Row, {
-          key: id,
-          click,
-          cells,
-        })
+      create('tbody', {
+        key: 'body',
+        className: css({
+          all: 'unset',
+          display: 'table-row-group',
+        }),
+        children: rows.map(({ id, click, cells }) => {
+          return create(Row, {
+            key: id,
+            click,
+            cells,
+          })
+        }),
       }),
     ],
   })
@@ -57,8 +69,9 @@ const Header: FC<{
       display: 'table-row',
       background: theme.table.header,
     }),
-    children: header.map(({ label, icon, solid, click }) => {
+    children: header.map(({ label, icon, solid, click }, index) => {
       return create('th', {
+        key: `header-${index}`,
         onClick: click,
         className: css({
           all: 'unset',

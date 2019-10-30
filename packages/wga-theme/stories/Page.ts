@@ -121,6 +121,7 @@ stories.add('Table', () => {
       key: 'searching',
     }),
     create(Table, {
+      key: 'table',
       header: [
         { label: 'Id', icon: 'chevron-down', click: () => console.log('Id') },
         { label: 'Name' },

@@ -12,6 +12,7 @@ export const SearchBar: FC<{
     solid?: boolean
     label: string
     click?: () => void
+    disabled?: boolean
   }>
 }> = ({ value, change, placeholder, options = [] }) => {
   const theme = useTheme()
@@ -21,6 +22,7 @@ export const SearchBar: FC<{
       display: 'flex',
       width: '100%',
       background: theme.searchBar.background,
+      borderBottom: theme.searchBar.border,
     }),
     children: [
       create(Searcher, {
@@ -57,8 +59,10 @@ const Searcher: FC<{
       fontSize: 15,
       flexGrow: 1,
       color: theme.searchBar.label,
+      background: theme.searchBar.background,
       '&:hover, &:focus-within': {
         color: theme.searchBar.labelHover,
+        background: theme.searchBar.backgroundHover,
       },
     }),
     children: [
@@ -91,7 +95,7 @@ const Option: FC<{
 }> = ({ icon, solid, label, click, disabled }) => {
   const theme = useTheme()
   return create('div', {
-    onClick: click,
+    onClick: disabled ? undefined : click,
     className: css({
       all: 'unset',
       display: 'flex',
@@ -99,11 +103,17 @@ const Option: FC<{
       transition: '200ms',
       padding: 25,
       cursor: click && !disabled ? 'pointer' : 'default',
-      color: theme.searchBar.label,
+      color: disabled ? theme.searchBar.labelDisabled : theme.searchBar.label,
+      background: disabled
+        ? theme.searchBar.backgroundDisabled
+        : theme.searchBar.background,
       '&:hover': click && {
         color: disabled
           ? theme.searchBar.labelDisabled
           : theme.searchBar.labelHover,
+        background: disabled
+          ? theme.searchBar.backgroundDisabled
+          : theme.searchBar.backgroundHover,
       },
     }),
     children: [

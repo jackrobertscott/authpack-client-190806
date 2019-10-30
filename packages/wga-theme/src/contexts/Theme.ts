@@ -65,6 +65,8 @@ export interface ITheme extends IKeys {
     labelHover: string
     labelDisabled: string
     background: string
+    backgroundHover: string
+    backgroundDisabled: string
     border: string
   }
   iconBar: {
@@ -171,10 +173,12 @@ export const Theme = createContext<ITheme>({
   },
   searchBar: {
     label: '#777777',
-    labelHover: '#999999',
+    labelHover: '#FFFFFF',
     labelDisabled: '#555555',
-    background: '#2C2C2C',
-    border: 'none',
+    background: '#4F4F4F',
+    backgroundHover: '#585858',
+    backgroundDisabled: '#333333',
+    border: '1px solid #454545',
   },
   iconBar: {
     icon: '#777777',
