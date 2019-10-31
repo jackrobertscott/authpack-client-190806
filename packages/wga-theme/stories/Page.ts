@@ -9,7 +9,9 @@ import {
   Divider,
   Table,
   SearchBar,
+  Toaster,
 } from '../src/index'
+import { useToaster } from '../src/hooks/useToaster'
 
 console.clear()
 
@@ -93,6 +95,7 @@ stories.add('Buttons', () => {
 
 stories.add('Table', () => {
   const Searching = () => {
+    const toaster = useToaster()
     const [value, valueChange] = useState<string>('')
     return create(SearchBar, {
       value,
@@ -100,14 +103,18 @@ stories.add('Table', () => {
       devmode: true,
       options: [
         {
+          icon: 'angle-double-left',
+          label: 'Previous',
+          click: () =>
+            toaster.add({
+              label: 'Error',
+              helper: 'No previous items available',
+            }),
+        },
+        {
           icon: 'angle-double-right',
           label: 'Next',
           click: () => console.log('Next'),
-        },
-        {
-          icon: 'angle-double-left',
-          label: 'Previous',
-          click: () => console.log('Previous'),
         },
       ],
     })
@@ -118,6 +125,9 @@ stories.add('Table', () => {
     { name: 'Sophie Pots', email: 'sophie@example.com' },
   ]
   return [
+    create(Toaster, {
+      key: 'toaster',
+    }),
     create(Searching, {
       key: 'searching',
     }),

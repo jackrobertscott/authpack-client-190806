@@ -93,8 +93,6 @@ export interface ITheme extends IKeys {
     border: string
   }
   modal: {
-    width: number
-    height: number
     background: string
     shadow: string
     border: string
@@ -115,6 +113,14 @@ export interface ITheme extends IKeys {
     headerHover: string
     background: string
     backgroundHover: string
+    border: string
+  }
+  toaster: {
+    label: string
+    helper: string
+    background: string
+    backgroundHover: string
+    shadow: string
     border: string
   }
 }
@@ -208,8 +214,6 @@ export const Theme = createContext<ITheme>({
     border: 'none',
   },
   modal: {
-    width: 890,
-    height: 550,
     background: '#111111',
     shadow: '0 0 25px -5px rgba(0, 0, 0, 0.35)',
     border: 'none',
@@ -231,6 +235,14 @@ export const Theme = createContext<ITheme>({
     background: '#4F4F4F',
     backgroundHover: '#585858',
     border: '1px solid #454545',
+  },
+  toaster: {
+    label: '#EEEEEE',
+    helper: '#999999',
+    background: '#2C2C2C',
+    backgroundHover: '#333333',
+    shadow: '0 0 55px -5px rgba(0, 0, 0, 0.35)',
+    border: 'none',
   },
 })
 

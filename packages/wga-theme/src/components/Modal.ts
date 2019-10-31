@@ -13,12 +13,10 @@ export const Modal: FC<{
   children: ReactNode
   visible?: boolean
   close?: () => void
-}> = ({ children, visible = true, close }) => {
+  width?: number
+  height?: number
+}> = ({ children, visible = true, close, width = 890, height = 550 }) => {
   const theme = useTheme()
-  const breaks = {
-    width: theme.modal.width + 50,
-    height: theme.modal.height + 50,
-  }
   return create(Portal, {
     id: 'modals',
     children: create('div', {
@@ -47,14 +45,15 @@ export const Modal: FC<{
           display: 'flex',
           overflow: 'hidden',
           position: 'relative',
-          width: theme.modal.width,
-          height: theme.modal.height,
+          width,
+          height,
           background: theme.modal.background,
           boxShadow: theme.modal.shadow,
           border: theme.modal.border,
           fontSize: theme.global.fonts,
           borderRadius: theme.global.radius,
-          [`@media (max-width: ${breaks.width}px), (max-height: ${breaks.height}px)`]: {
+          [`@media (max-width: ${width + 50}px), (max-height: ${height +
+            50}px)`]: {
             width: '100%',
             height: '100%',
             flexGrow: 1,
