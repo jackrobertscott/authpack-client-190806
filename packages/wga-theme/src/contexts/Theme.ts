@@ -115,6 +115,14 @@ export interface ITheme extends IKeys {
     backgroundHover: string
     border: string
   }
+  empty: {
+    label: string
+    helper: string
+    background: string
+    shadow: string
+    border: string
+    cover: string
+  }
   toaster: {
     label: string
     helper: string
@@ -246,6 +254,15 @@ export const Theme = createContext<ITheme>({
     background: '#4F4F4F',
     backgroundHover: '#585858',
     border: '1px solid #454545',
+  },
+  empty: {
+    label: '#FFFFFF',
+    helper: '#CCCCCC',
+    background: '#4A4A4A',
+    shadow: '0 0 55px -5px rgba(0, 0, 0, 0.1)',
+    border: 'none',
+    cover:
+      'linear-gradient(to top, hsla(0, 0%, 22%, 1),hsla(0, 0%, 24%, 1) 50%, hsla(0, 0%, 26%, 0.7))',
   },
   toaster: {
     label: '#EEEEEE',

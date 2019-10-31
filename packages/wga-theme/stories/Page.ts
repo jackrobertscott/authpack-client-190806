@@ -10,6 +10,7 @@ import {
   Table,
   SearchBar,
   Toaster,
+  Empty,
 } from '../src/index'
 import { useToaster } from '../src/hooks/useToaster'
 
@@ -155,6 +156,54 @@ stories.add('Table', () => {
               { icon: 'at', value: email },
             ],
           })),
+      }),
+    ],
+  })
+})
+
+stories.add('Empty Table', () => {
+  const items = [
+    { name: 'Jack Scott', email: 'jack@example.com' },
+    { name: 'Fred Blogs', email: 'fred@example.com' },
+    { name: 'Sophie Pots', email: 'sophie@example.com' },
+  ]
+  return create(Page, {
+    key: 'page',
+    title: 'Users',
+    subtitle: 'People who have registered on your app',
+    corner: {
+      icon: 'plus',
+      label: 'Create User',
+      click: () => console.log('Corner'),
+    },
+    noscroll: create(Toaster),
+    children: [
+      create(Empty, {
+        icon: 'users',
+        label: 'Users',
+        helper: 'Create a user manually or by using the Authenticator API',
+        children: create(Button, {
+          key: 'Regular',
+          label: 'See API',
+          click: () => console.log('Regular'),
+        }),
+      }),
+      create(Table, {
+        key: 'table',
+        header: [
+          { label: 'Id', icon: 'chevron-down', click: () => console.log('Id') },
+          { label: 'Name' },
+          { label: 'Email' },
+        ],
+        rows: items.concat(items).map(({ name, email }, index) => ({
+          id: String(index),
+          click: () => console.log(index),
+          cells: [
+            { icon: 'hashtag', value: index },
+            { icon: 'user-circle', value: name },
+            { icon: 'at', value: email },
+          ],
+        })),
       }),
     ],
   })

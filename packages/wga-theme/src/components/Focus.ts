@@ -39,8 +39,8 @@ export const Focus: FC<{
         alignItems: 'center',
         textAlign: 'center',
         width: 300,
-        maxWidth: '100%',
         padding: 25,
+        maxWidth: '100%',
       }),
       children: [
         create(Icon, {
@@ -54,6 +54,8 @@ export const Focus: FC<{
           children: label,
           className: css({
             color: theme.focus.label,
+            fontSize: 25,
+            lineHeight: '1em',
             marginTop: 15,
           }),
         }),
@@ -70,7 +72,7 @@ export const Focus: FC<{
           key: 'children',
           children,
           className: css({
-            marginTop: 15,
+            marginTop: 20,
             width: '100%',
           }),
         }),

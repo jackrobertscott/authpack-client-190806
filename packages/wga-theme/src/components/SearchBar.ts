@@ -133,6 +133,7 @@ const Option: FC<{
         children: label,
         className: css({
           marginLeft: 15,
+          whiteSpace: 'nowrap',
         }),
       }),
     ],
