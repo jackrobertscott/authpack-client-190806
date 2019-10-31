@@ -3,6 +3,7 @@ import { css } from 'emotion'
 import { useTheme } from '../contexts/Theme'
 import { Icon } from './Icon'
 import { Pointer } from './Pointer'
+import { Menu } from './Menu'
 
 export const IconBar: FC<{
   icons: Array<{
@@ -76,7 +77,7 @@ const IconPointer: FC<{
     solid?: boolean
     click?: () => void
   }>
-}> = ({ icon, label, solid, focused, seperated, click, options }) => {
+}> = ({ icon, label, solid, focused, seperated, click, options = [] }) => {
   const theme = useTheme()
   return create(TogglePointer, {
     seperated,
@@ -104,7 +105,12 @@ const IconPointer: FC<{
       icon,
       label,
       solid,
-      options,
+      children:
+        !!options.length &&
+        create(Menu, {
+          key: 'menu',
+          options,
+        }),
     }),
   })
 }

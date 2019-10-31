@@ -119,11 +119,11 @@ const Corner: FC<{
       padding: '25px',
       cursor: 'pointer',
       transition: '200ms',
-      color: theme.page.corner,
-      background: theme.page.cornerBackground,
+      color: theme.page.label,
+      background: theme.page.header,
       '&:hover': {
-        color: theme.page.cornerHover,
-        background: theme.page.cornerBackgroundHover,
+        color: theme.page.labelHover,
+        background: theme.page.headerHover,
       },
     }),
     children: [

@@ -97,6 +97,7 @@ stories.add('Table', () => {
     return create(SearchBar, {
       value,
       change: valueChange,
+      devmode: true,
       options: [
         {
           icon: 'angle-double-right',

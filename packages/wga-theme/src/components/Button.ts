@@ -18,7 +18,7 @@ export const Button: FC<{
     className: `${disabled ? 'disabled' : ''} ${css({
       all: 'unset',
       display: 'flex',
-      cursor: disabled ? 'default' : 'pointer',
+      cursor: disabled ? undefined : 'pointer',
       justifyContent: 'space-between',
       alignItems: 'center',
       padding: 15,

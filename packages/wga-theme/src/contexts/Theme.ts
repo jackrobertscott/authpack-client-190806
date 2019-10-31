@@ -42,14 +42,13 @@ export interface ITheme extends IKeys {
     subtitle: string
     branding: string
     brandingHover: string
+    label: string
+    labelHover: string
     header: string
+    headerHover: string
     border: string
     background: string
     scrollbar: string
-    corner: string
-    cornerHover: string
-    cornerBackground: string
-    cornerBackgroundHover: string
   }
   sideBar: {
     title: string
@@ -83,10 +82,15 @@ export interface ITheme extends IKeys {
     label: string
     helper: string
     background: string
-    backgroundHover: string
     shadow: string
     border: string
-    lining: string
+  }
+  menu: {
+    label: string
+    helper: string
+    background: string
+    backgroundHover: string
+    border: string
   }
   modal: {
     width: number
@@ -153,14 +157,13 @@ export const Theme = createContext<ITheme>({
     subtitle: '#777777',
     branding: '#595959',
     brandingHover: '#999999',
+    label: '#777777',
+    labelHover: '#EEEEEE',
     header: '#3B3B3B',
+    headerHover: '#454545',
     border: 'none',
     background: '#414141',
     scrollbar: '#505050',
-    corner: '#777777',
-    cornerHover: '#999999',
-    cornerBackground: '#454545',
-    cornerBackgroundHover: '#515151',
   },
   sideBar: {
     title: '#999999',
@@ -194,14 +197,19 @@ export const Theme = createContext<ITheme>({
     label: '#FFFFFF',
     helper: '#CCCCCC',
     background: '#777777',
-    backgroundHover: '#888888',
     shadow: '0 0 25px -5px rgba(0, 0, 0, 0.35)',
     border: 'none',
-    lining: 'none',
+  },
+  menu: {
+    label: '#FFFFFF',
+    helper: '#CCCCCC',
+    background: '#777777',
+    backgroundHover: '#888888',
+    border: 'none',
   },
   modal: {
-    width: 560,
-    height: 600,
+    width: 890,
+    height: 550,
     background: '#111111',
     shadow: '0 0 25px -5px rgba(0, 0, 0, 0.35)',
     border: 'none',

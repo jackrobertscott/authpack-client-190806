@@ -60,6 +60,7 @@ export const Snippet: FC<{
       }),
       click &&
         create('div', {
+          key: 'arrow',
           className: css({
             marginLeft: '15px',
             color: theme.snippet.arrow,

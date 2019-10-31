@@ -14,6 +14,17 @@ export const InputCode: FC<{
   const element = useRef<undefined | HTMLElement>()
   const editor = useRef<undefined | monaco.editor.IStandaloneCodeEditor>()
   useEffect(() => {
+    const resize = () => {
+      if (editor.current) {
+        editor.current.layout({ height: 0, width: 0 })
+        editor.current.layout()
+      }
+    }
+    window.addEventListener('resize', resize)
+    setTimeout(() => resize) // push to next tick
+    return () => window.removeEventListener('resize', resize)
+  })
+  useEffect(() => {
     if (element.current) {
       editor.current = monaco.editor.create(element.current, {
         value,

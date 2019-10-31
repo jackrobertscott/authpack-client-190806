@@ -2,11 +2,13 @@ import { createElement as create, FC } from 'react'
 import { useTheme } from '../contexts/Theme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
+import { Pointer } from './Pointer'
 
 export const SearchBar: FC<{
   value?: string
   change?: (value: string) => void
   placeholder?: string
+  devmode?: boolean
   options?: Array<{
     icon: string
     solid?: boolean
@@ -14,7 +16,7 @@ export const SearchBar: FC<{
     click?: () => void
     disabled?: boolean
   }>
-}> = ({ value, change, placeholder, options = [] }) => {
+}> = ({ value, change, placeholder, devmode, options = [] }) => {
   const theme = useTheme()
   return create('div', {
     className: css({
@@ -25,6 +27,10 @@ export const SearchBar: FC<{
       borderBottom: theme.searchBar.border,
     }),
     children: [
+      devmode &&
+        create(Devmode, {
+          key: 'devmode',
+        }),
       create(Searcher, {
         key: 'searcher',
         value,
@@ -102,7 +108,7 @@ const Option: FC<{
       alignItems: 'center',
       transition: '200ms',
       padding: 25,
-      cursor: click && !disabled ? 'pointer' : 'default',
+      cursor: disabled || !click ? undefined : 'pointer',
       color: disabled ? theme.searchBar.labelDisabled : theme.searchBar.label,
       background: disabled
         ? theme.searchBar.backgroundDisabled
@@ -127,6 +133,50 @@ const Option: FC<{
         children: label,
         className: css({
           marginLeft: 15,
+        }),
+      }),
+    ],
+  })
+}
+
+const Devmode: FC = () => {
+  return create('div', {
+    className: css({
+      all: 'unset',
+      display: 'flex',
+      position: 'relative',
+      cursor: 'pointer',
+      '&:hover > .devmode': {
+        pointerEvents: 'all',
+        opacity: 1,
+      },
+    }),
+    children: [
+      create(Option, {
+        key: 'option',
+        icon: 'bolt',
+        label: 'Dev Mode',
+        click: () => {},
+      }),
+      create('div', {
+        key: 'pointer',
+        className: css({
+          all: 'unset',
+          display: 'flex',
+          position: 'absolute',
+          transition: '200ms',
+          cursor: 'default',
+          pointerEvents: 'none',
+          opacity: 0,
+          left: 10,
+          bottom: 10,
+          transform: 'translateY(100%)',
+        }).concat(' devmode'),
+        children: create(Pointer, {
+          icon: 'bolt',
+          label: 'Enabled',
+          helper:
+            'You are currently viewing development data. Changes to this data will not effect your monthly pricing. This mode is allowed a maximum of 250 users.',
         }),
       }),
     ],
