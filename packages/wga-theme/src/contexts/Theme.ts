@@ -129,6 +129,11 @@ export interface ITheme extends IKeys {
     background: string
     border: string
   }
+  focus: {
+    label: string
+    helper: string
+    background: string
+  }
 }
 
 export const Theme = createContext<ITheme>({
@@ -255,6 +260,11 @@ export const Theme = createContext<ITheme>({
     helper: '#CCCCCC',
     background: '#595959',
     border: 'none',
+  },
+  focus: {
+    label: '#FFFFFF',
+    helper: '#CCCCCC',
+    background: '#494949',
   },
 })
 

@@ -1,24 +1,19 @@
-import {
-  createElement as create,
-  FC,
-  ReactNode,
-  useEffect,
-  useState,
-} from 'react'
-import { createPortal } from 'react-dom'
+import { createElement as create, FC, ReactNode } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../contexts/Theme'
+import { Portal } from './Portal'
 
 export const Modal: FC<{
+  id?: string
   children: ReactNode
   visible?: boolean
   close?: () => void
   width?: number
   height?: number
-}> = ({ children, visible = true, close, width = 890, height = 550 }) => {
+}> = ({ id, children, visible = true, close, width = 890, height = 550 }) => {
   const theme = useTheme()
   return create(Portal, {
-    id: 'modals',
+    id,
     children: create('div', {
       onClick: (event: any) =>
         event.target === event.currentTarget && close && close(),
@@ -63,20 +58,4 @@ export const Modal: FC<{
       }),
     }),
   })
-}
-
-const Portal: FC<{
-  id: string
-  children: ReactNode
-}> = ({ id, children }) => {
-  const [element, elementChange] = useState(document.getElementById(id))
-  useEffect(() => {
-    if (!element) {
-      const createdElement = document.createElement('div')
-      createdElement.id = id
-      document.body.appendChild(createdElement)
-      elementChange(createdElement)
-    }
-  }, [])
-  return element ? createPortal(children, element) : null
 }

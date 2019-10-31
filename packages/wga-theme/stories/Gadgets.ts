@@ -10,6 +10,7 @@ import {
   Divider,
   Snippet,
   Poster,
+  Focus,
 } from '../src/index'
 
 console.clear()
@@ -108,15 +109,42 @@ stories.add('Editor', () => {
     fruits: ['banana', 'apple', 'blue berry'],
   }
   const code = JSON.stringify(examples, null, 2)
-  const EditorHandler = () => {
-    const [value, valueChange] = useState<string>(code)
-    return create(InputCode, {
-      value,
-      language: 'json',
-      change: valueChange,
-    })
-  }
   return create(Divider, {
-    children: create(EditorHandler),
+    children: create(() => {
+      const [value, valueChange] = useState<string>(code)
+      return create(InputCode, {
+        value,
+        language: 'json',
+        change: valueChange,
+      })
+    }),
+  })
+})
+
+stories.add('Focus', () => {
+  return create(() => {
+    const [on, toggle] = useState<boolean>(false)
+    return create('div', {
+      children: [
+        create(Divider, {
+          key: 'Regular',
+          children: create(Button, {
+            label: 'Turn On',
+            click: () => toggle(true),
+          }),
+        }),
+        create(Focus, {
+          key: 'Focus',
+          icon: 'at',
+          label: 'Email',
+          helper: 'Please add your email',
+          visible: on,
+          children: create(Button, {
+            label: 'Turn Off',
+            click: () => toggle(false),
+          }),
+        }),
+      ],
+    })
   })
 })

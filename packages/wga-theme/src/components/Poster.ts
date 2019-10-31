@@ -40,7 +40,7 @@ export const Poster: FC<{
           children: label,
           className: css({
             color: theme.poster.label,
-            marginTop: 25,
+            marginTop: 15,
           }),
         }),
         helper &&

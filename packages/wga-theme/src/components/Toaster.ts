@@ -15,7 +15,7 @@ export const Toaster: FC<{
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'flex-end',
-      position: 'fixed',
+      position: 'absolute',
       right: 0,
       bottom: 0,
       zIndex: 100,

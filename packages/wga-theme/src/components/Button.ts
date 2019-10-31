@@ -45,6 +45,9 @@ export const Button: FC<{
       create('div', {
         key: 'label',
         children: label,
+        className: css({
+          marginRight: 15,
+        }),
       }),
       create(Icon, {
         key: 'icon',
