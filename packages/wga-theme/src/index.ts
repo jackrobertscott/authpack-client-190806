@@ -2,6 +2,7 @@
  * Components
  */
 export * from './components/Button'
+export * from './components/Control'
 export * from './components/Divider'
 export * from './components/Empty'
 export * from './components/Focus'

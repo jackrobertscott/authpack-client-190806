@@ -68,14 +68,15 @@ export const Focus: FC<{
               marginTop: 5,
             }),
           }),
-        create('div', {
-          key: 'children',
-          children,
-          className: css({
-            marginTop: 20,
-            width: '100%',
+        children &&
+          create('div', {
+            key: 'children',
+            children,
+            className: css({
+              marginTop: 20,
+              width: '100%',
+            }),
           }),
-        }),
       ],
     }),
   })

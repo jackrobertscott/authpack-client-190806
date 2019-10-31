@@ -34,7 +34,7 @@ export const Button: FC<{
       color: disabled ? theme.button.labelDisabled : theme.button.label,
       '&:hover:not(.disabled)': {
         background: theme.button.backgroundHover,
-        boxShadow: '0 1px 7.5px rgba(0, 0, 0, 0.05)',
+        boxShadow: theme.button.shadow,
       },
       '&:active:not(.disabled)': {
         background: theme.button.background,

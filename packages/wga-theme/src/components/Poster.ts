@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as create, FC, ReactNode } from 'react'
 import { useTheme } from '../contexts/Theme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
@@ -8,7 +8,8 @@ export const Poster: FC<{
   solid?: boolean
   label: string
   helper?: string
-}> = ({ icon, solid, label, helper }) => {
+  children?: ReactNode
+}> = ({ icon, solid, label, helper, children }) => {
   const theme = useTheme()
   return create('div', {
     className: css({
@@ -40,6 +41,8 @@ export const Poster: FC<{
           children: label,
           className: css({
             color: theme.poster.label,
+            fontSize: 25,
+            lineHeight: '1em',
             marginTop: 15,
           }),
         }),
@@ -50,6 +53,15 @@ export const Poster: FC<{
             className: css({
               color: theme.poster.helper,
               marginTop: 5,
+            }),
+          }),
+        children &&
+          create('div', {
+            key: 'children',
+            children,
+            className: css({
+              marginTop: 20,
+              width: '100%',
             }),
           }),
       ],

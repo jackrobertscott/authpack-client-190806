@@ -55,6 +55,10 @@ const Searcher: FC<{
 }> = ({ value = '', change, placeholder = 'Search...' }) => {
   const theme = useTheme()
   return create('div', {
+    onClick: () => {
+      const input: HTMLInputElement | null = document.querySelector('.search')
+      if (input) input.focus()
+    },
     className: css({
       all: 'unset',
       display: 'flex',
@@ -86,7 +90,7 @@ const Searcher: FC<{
           all: 'unset',
           marginLeft: 15,
           flexGrow: 1,
-        }),
+        }).concat(' search'),
       }),
     ],
   })

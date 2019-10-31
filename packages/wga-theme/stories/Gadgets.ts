@@ -1,3 +1,4 @@
+import * as yup from 'yup'
 import { createElement as create, useState } from 'react'
 import { storiesOf } from '@storybook/react'
 import {
@@ -11,7 +12,10 @@ import {
   Snippet,
   Poster,
   Focus,
+  Control,
+  InputString,
 } from '../src/index'
+import { useSchema } from '../src/hooks/useSchema'
 
 console.clear()
 
@@ -79,6 +83,41 @@ stories.add('Buttons', () => {
       ],
     }),
   ]
+})
+
+stories.add('Form', () => {
+  return create(() => {
+    const schema = useSchema({
+      change: console.log,
+      schema: yup.object().shape({
+        name: yup
+          .string()
+          .default('')
+          .required('This is a required field')
+          .min(5, 'Must be at least 5 characters long'),
+      }),
+    })
+    return create(Divider, {
+      children: [
+        create(Control, {
+          key: 'name',
+          label: 'Name',
+          helper: 'Please use your full name',
+          error: schema.error('name'),
+          children: create(InputString, {
+            value: schema.value('name'),
+            change: schema.change('name'),
+            placeholder: 'E.g. Fred Blogs',
+          }),
+        }),
+        create(Button, {
+          key: 'Regular',
+          label: 'Regular',
+          click: () => console.log('Regular'),
+        }),
+      ],
+    })
+  })
 })
 
 stories.add('Snippets', () => {

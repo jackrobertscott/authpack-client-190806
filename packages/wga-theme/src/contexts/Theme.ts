@@ -17,14 +17,19 @@ export interface ITheme extends IKeys {
     backgroundMinor: string
     backgroundDisabled: string
     backgroundHover: string
+    shadow: string
     border: string
   }
   input: {
     label: string
     helper: string
+    placeholder: string
+    value: string
+    valueHover: string
     background: string
     backgroundHover: string
-    backgroundFocused: string
+    backgroundDisabled: string
+    shadow: string
     border: string
   }
   gadgets: {
@@ -157,14 +162,19 @@ export const Theme = createContext<ITheme>({
     backgroundMinor: '#4E4E4E',
     backgroundDisabled: '#222222',
     backgroundHover: '#777777',
+    shadow: '0 1px 10px -3px rgba(0, 0, 0, 0.15)',
     border: 'none',
   },
   input: {
     label: '#FFFFFF',
-    helper: '#D5D5D5',
+    helper: '#B1B1B1',
+    placeholder: '#555555',
+    value: '#999999',
+    valueHover: '#FFFFFF',
     background: '#323232',
     backgroundHover: '#292929',
-    backgroundFocused: '#5C5C5C',
+    backgroundDisabled: '#2C2C2C',
+    shadow: '0 1px 10px -3px rgba(0, 0, 0, 0.15)',
     border: 'none',
   },
   gadgets: {
