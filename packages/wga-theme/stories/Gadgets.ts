@@ -14,6 +14,7 @@ import {
   Focus,
   Control,
   InputString,
+  InputNumber,
 } from '../src/index'
 import { useSchema } from '../src/hooks/useSchema'
 
@@ -95,6 +96,7 @@ stories.add('Form', () => {
           .default('')
           .required('This is a required field')
           .min(5, 'Must be at least 5 characters long'),
+        age: yup.string().required('This is a required field'),
       }),
     })
     return create(Divider, {
@@ -108,6 +110,18 @@ stories.add('Form', () => {
             value: schema.value('name'),
             change: schema.change('name'),
             placeholder: 'E.g. Fred Blogs',
+          }),
+        }),
+        create(Control, {
+          key: 'age',
+          label: 'Age',
+          helper: 'Please present your age',
+          error: schema.error('age'),
+          children: create(InputNumber, {
+            value: schema.value('age'),
+            change: schema.change('age'),
+            placeholder: 'E.g. 33',
+            integer: true,
           }),
         }),
         create(Button, {
