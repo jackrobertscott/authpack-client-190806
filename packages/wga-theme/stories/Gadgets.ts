@@ -15,6 +15,7 @@ import {
   Control,
   InputString,
   InputNumber,
+  InputBoolean,
 } from '../src/index'
 import { useSchema } from '../src/hooks/useSchema'
 
@@ -97,6 +98,7 @@ stories.add('Form', () => {
           .required('This is a required field')
           .min(5, 'Must be at least 5 characters long'),
         age: yup.string().required('This is a required field'),
+        dogs: yup.boolean().required('This is a required field'),
       }),
     })
     return create(Divider, {
@@ -122,6 +124,16 @@ stories.add('Form', () => {
             change: schema.change('age'),
             placeholder: 'E.g. 33',
             integer: true,
+          }),
+        }),
+        create(Control, {
+          key: 'dogs',
+          label: 'Dogs vs Cats',
+          helper: 'Do you prefer dogs over cats',
+          error: schema.error('dogs'),
+          children: create(InputBoolean, {
+            value: schema.value('dogs'),
+            change: schema.change('dogs'),
           }),
         }),
         create(Button, {

@@ -31,6 +31,8 @@ export interface ITheme extends IKeys {
     backgroundDisabled: string
     shadow: string
     border: string
+    on: string
+    off: string
   }
   gadgets: {
     title: string
@@ -176,6 +178,8 @@ export const Theme = createContext<ITheme>({
     backgroundDisabled: '#2C2C2C',
     shadow: '0 1px 10px -3px rgba(0, 0, 0, 0.15)',
     border: 'none',
+    on: '#3c933a',
+    off: '#515151',
   },
   gadgets: {
     title: '#CCCCCC',
