@@ -15,11 +15,11 @@ export const Toaster: FC<{
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'flex-end',
-      position: 'absolute',
+      position: 'fixed',
       right: 0,
       bottom: 0,
       zIndex: 100,
-      padding: 25,
+      padding: '25px 40px',
     }),
     children: toaster.current.map(
       ({ id, icon, solid, label, helper, close }) => {
@@ -36,6 +36,7 @@ export const Toaster: FC<{
             width,
             boxShadow: theme.toaster.shadow,
             background: theme.toaster.background,
+            border: theme.toaster.border,
             color: theme.toaster.label,
           }),
           children: [

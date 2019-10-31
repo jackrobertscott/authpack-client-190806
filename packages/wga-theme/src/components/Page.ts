@@ -6,6 +6,7 @@ import { Icon } from './Icon'
 export const Page: FC<{
   title: string
   subtitle: string
+  noscroll?: ReactNode
   children: ReactNode
   corner?: {
     icon: string
@@ -13,7 +14,7 @@ export const Page: FC<{
     label: string
     click: () => void
   }
-}> = ({ title, subtitle, children, corner }) => {
+}> = ({ title, subtitle, noscroll, children, corner }) => {
   const theme = useTheme()
   return create('div', {
     className: css({
@@ -38,6 +39,10 @@ export const Page: FC<{
         subtitle,
         corner,
       }),
+      noscroll &&
+        create((() => noscroll) as FC, {
+          key: 'noscroll',
+        }),
       create(Scroller, {
         key: 'scroller',
         children,

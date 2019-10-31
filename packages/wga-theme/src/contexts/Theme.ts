@@ -123,6 +123,12 @@ export interface ITheme extends IKeys {
     shadow: string
     border: string
   }
+  poster: {
+    label: string
+    helper: string
+    background: string
+    border: string
+  }
 }
 
 export const Theme = createContext<ITheme>({
@@ -135,7 +141,7 @@ export const Theme = createContext<ITheme>({
     labelHover: '#FFFFFF',
     labelDisabled: '#444444',
     background: '#595959',
-    backgroundMinor: '#494949',
+    backgroundMinor: '#4E4E4E',
     backgroundDisabled: '#222222',
     backgroundHover: '#777777',
     border: 'none',
@@ -242,6 +248,12 @@ export const Theme = createContext<ITheme>({
     background: '#2C2C2C',
     backgroundHover: '#333333',
     shadow: '0 0 55px -5px rgba(0, 0, 0, 0.35)',
+    border: 'none',
+  },
+  poster: {
+    label: '#FFFFFF',
+    helper: '#CCCCCC',
+    background: '#595959',
     border: 'none',
   },
 })

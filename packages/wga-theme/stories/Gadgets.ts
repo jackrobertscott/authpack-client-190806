@@ -9,6 +9,7 @@ import {
   Layout,
   Divider,
   Snippet,
+  Poster,
 } from '../src/index'
 
 console.clear()
@@ -45,28 +46,38 @@ const stories = storiesOf('Gadgets', module).addDecorator(data => {
 })
 
 stories.add('Buttons', () => {
-  return create(Divider, {
-    children: [
-      create(Button, {
-        key: 'Regular',
-        label: 'Regular',
-        click: () => console.log('Regular'),
-      }),
-      create(Button, {
-        key: 'Minor',
-        label: 'Minor',
-        click: () => console.log('Minor'),
-        icon: 'bolt',
-        minor: true,
-      }),
-      create(Button, {
-        key: 'Disabled',
-        label: 'Disabled',
-        click: () => console.log('Disabled'),
-        disabled: true,
-      }),
-    ],
-  })
+  return [
+    create(Poster, {
+      key: 'Poster',
+      icon: 'magic',
+      label: 'Buttons',
+      helper:
+        'Lots of pretty buttons and this is a really long sentence to see what it looks like',
+    }),
+    create(Divider, {
+      key: 'Divider',
+      children: [
+        create(Button, {
+          key: 'Regular',
+          label: 'Regular',
+          click: () => console.log('Regular'),
+        }),
+        create(Button, {
+          key: 'Minor',
+          label: 'Minor',
+          click: () => console.log('Minor'),
+          icon: 'bolt',
+          minor: true,
+        }),
+        create(Button, {
+          key: 'Disabled',
+          label: 'Disabled',
+          click: () => console.log('Disabled'),
+          disabled: true,
+        }),
+      ],
+    }),
+  ]
 })
 
 stories.add('Snippets', () => {

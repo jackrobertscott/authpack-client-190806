@@ -54,10 +54,10 @@ const IconSpacer: FC<{
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      padding: 15,
+      padding: 20,
       flexGrow: 1,
       '& > div:not(:last-child)': {
-        marginBottom: 5,
+        marginBottom: 15,
       },
     }),
   })
@@ -97,7 +97,7 @@ const IconPointer: FC<{
       children: create(Icon, {
         icon,
         size: 22,
-        padding: 13,
+        padding: 8,
         solid,
       }),
     }),
@@ -127,7 +127,7 @@ const TogglePointer: FC<{
       position: 'relative',
       marginTop: seperated ? 'auto' : 0,
       '&:hover > .toggle': {
-        display: 'flex',
+        opacity: 1,
       },
     }),
     children: [
@@ -139,13 +139,16 @@ const TogglePointer: FC<{
         children: pointer,
         className: css({
           all: 'unset',
-          display: 'none',
+          display: 'flex',
           minWidth: '290px',
           position: 'absolute',
+          transition: '200ms',
+          pointerEvents: 'none',
+          opacity: 0,
           zIndex: 100,
           left: '100%',
-          top: 0,
-          paddingLeft: '7.5px',
+          top: -5,
+          paddingLeft: 7.5,
         }).concat(' toggle'),
       }),
     ],
