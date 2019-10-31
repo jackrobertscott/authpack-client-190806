@@ -113,6 +113,7 @@ stories.add('Form', () => {
         create(Button, {
           key: 'Regular',
           label: 'Regular',
+          disabled: !schema.valid,
           click: () => console.log('Regular'),
         }),
       ],

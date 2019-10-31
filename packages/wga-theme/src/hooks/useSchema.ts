@@ -29,6 +29,7 @@ export const useSchema = ({
     }
   }, [])
   const factory = () => ({
+    valid: mounted.current && !Object.values(error).filter(Boolean).length,
     state: value,
     value(key: string) {
       return value[key]
