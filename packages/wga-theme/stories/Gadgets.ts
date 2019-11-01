@@ -18,6 +18,7 @@ import {
   InputBoolean,
   InputSelect,
   InputStringArray,
+  InputSelectMany,
 } from '../src/index'
 import { useSchema } from '../src/hooks/useSchema'
 
@@ -102,6 +103,7 @@ stories.add('Form', () => {
         age: yup.string().required('This is a required field'),
         dogs: yup.boolean().required('This is a required field'),
         food: yup.string().required('Tell me your fav food!'),
+        extras: yup.array().of(yup.string()),
         emails: yup
           .array()
           .of(yup.string().email('Please verify your emails are valid')),
@@ -162,6 +164,31 @@ stories.add('Form', () => {
             change: schema.change('food'),
             filter: changeFoodFilter,
             options: foods.filter(food => food.label.includes(foodFilter)),
+          }),
+        }),
+        create(Control, {
+          key: 'extras',
+          label: 'Extras',
+          error: schema.error('extras'),
+          children: create(InputSelectMany, {
+            value: schema.value('extras'),
+            change: schema.change('extras'),
+            options: [
+              {
+                value: 'Coffee',
+                label: 'Coffee',
+                helper: 'Tastes nice.',
+              },
+              {
+                value: 'Tea',
+                label: 'Tea',
+                helper: 'Smooth to drink.',
+              },
+              {
+                value: 'Orange Juice',
+                label: 'Orange Juice',
+              },
+            ],
           }),
         }),
         create(Control, {

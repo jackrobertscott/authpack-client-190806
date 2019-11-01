@@ -1,6 +1,5 @@
 import { createElement as create, FC, useState } from 'react'
 import { css } from 'emotion'
-import { useTheme } from '../contexts/Theme'
 import { InputContainer, InputPopover, InputOption } from './Input'
 
 export const InputStringArray: FC<{
@@ -8,7 +7,6 @@ export const InputStringArray: FC<{
   change?: (value: string[]) => void
   placeholder?: string
 }> = ({ value = [], change, placeholder }) => {
-  const theme = useTheme()
   const [open, openChange] = useState<boolean>(false)
   const [current, currentChange] = useState<string>('')
   const add = () => {
@@ -16,6 +14,9 @@ export const InputStringArray: FC<{
       change([...value, current])
       currentChange('')
     }
+  }
+  const remove = (option: string) => {
+    if (change) change(value.filter(i => i !== option))
   }
   return create(InputContainer, {
     children: create('div', {
@@ -68,8 +69,7 @@ export const InputStringArray: FC<{
                   key: option,
                   icon: 'times',
                   label: option,
-                  click: () =>
-                    change && change(value.filter(i => i !== option)),
+                  click: () => remove(option),
                 })
               }),
             ],
