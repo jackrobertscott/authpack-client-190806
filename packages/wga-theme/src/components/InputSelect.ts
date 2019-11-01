@@ -1,15 +1,6 @@
-import OutsideClickHandler from 'react-outside-click-handler'
-import {
-  createElement as create,
-  FC,
-  useState,
-  useEffect,
-  ReactNode,
-} from 'react'
+import { createElement as create, FC, useState, useEffect } from 'react'
 import { css } from 'emotion'
-import { useTheme } from '../contexts/Theme'
-import { Input } from './Input'
-import { Icon } from './Icon'
+import { InputContainer, InputPopover, InputOption } from './Input'
 
 export const InputSelect: FC<{
   value?: string
@@ -27,7 +18,7 @@ export const InputSelect: FC<{
   useEffect(() => {
     if (change && current && current.value !== value) change(current.value)
   }, [value])
-  return create(Input, {
+  return create(InputContainer, {
     children: create('div', {
       onClick: () => openChange(true),
       className: css({
@@ -46,24 +37,26 @@ export const InputSelect: FC<{
           }),
         }),
         open &&
-          create(Popover, {
+          create(InputPopover, {
             key: 'popover',
             close: () => openChange(false),
             children: [
               filter &&
                 create(Search, {
+                  key: 'search',
                   filter,
                   placeholder: 'Search...',
                 }),
               value &&
-                create(Option, {
+                create(InputOption, {
                   key: 'clear',
                   icon: 'times',
-                  label: 'Clear...',
+                  label: 'Clear',
                   click: () => change && change(undefined),
+                  reverse: true,
                 }),
               options.map(option => {
-                return create(Option, {
+                return create(InputOption, {
                   key: option.value,
                   icon:
                     current && current.value === option.value
@@ -83,46 +76,17 @@ export const InputSelect: FC<{
   })
 }
 
-const Popover: FC<{
-  close: () => void
-  children: ReactNode
-}> = ({ close, children }) => {
-  const theme = useTheme()
-  return create(OutsideClickHandler, {
-    onOutsideClick: close,
-    children: create('div', {
-      children,
-      className: css({
-        all: 'unset',
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'absolute',
-        flexGrow: 1,
-        left: 0,
-        right: 0,
-        top: 0,
-        zIndex: 100,
-        marginBottom: 25,
-        overflow: 'hidden',
-        borderRadius: theme.global.radius,
-        background: theme.input.background,
-        boxShadow: theme.input.shadow,
-        border: theme.input.border,
-      }),
-    }),
-  })
-}
-
 const Search: FC<{
   filter: (value: string) => void
   placeholder?: string
-}> = ({ filter, placeholder = '...' }) => {
+}> = ({ filter, placeholder }) => {
   const [phrase, phraseChange] = useState<string>('')
   useEffect(() => filter(phrase), [phrase])
   return create('input', {
     value: phrase,
     placeholder,
     onChange: event => phraseChange(event.target.value),
+    autofocus: true,
     className: css({
       all: 'unset',
       display: 'flex',
@@ -130,63 +94,5 @@ const Search: FC<{
       flexGrow: 1,
       padding: 15,
     }),
-  })
-}
-
-const Option: FC<{
-  icon: string
-  solid?: boolean
-  label: string
-  helper?: string
-  click: (value: string) => void
-}> = ({ icon, solid, label, helper, click }) => {
-  const theme = useTheme()
-  return create('div', {
-    onClick: click,
-    className: css({
-      all: 'unset',
-      display: 'flex',
-      transition: '200ms',
-      cursor: 'pointer',
-      padding: 15,
-      flexGrow: 1,
-      color: theme.input.label,
-      borderTop: theme.input.border,
-      background: theme.input.background,
-      '&:hover': {
-        background: theme.input.backgroundHover,
-      },
-    }),
-    children: [
-      create('div', {
-        key: 'text',
-        className: css({
-          display: 'flex',
-          flexDirection: 'column',
-          flexGrow: 1,
-          marginRight: 10,
-        }),
-        children: [
-          create('div', {
-            key: 'label',
-            children: label,
-          }),
-          helper &&
-            create('div', {
-              key: 'helper',
-              children: helper,
-              className: css({
-                marginTop: 5,
-                color: theme.input.helper,
-              }),
-            }),
-        ],
-      }),
-      create(Icon, {
-        key: 'icon',
-        icon,
-        solid,
-      }),
-    ],
   })
 }

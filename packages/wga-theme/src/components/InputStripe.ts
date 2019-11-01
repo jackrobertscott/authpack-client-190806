@@ -1,7 +1,7 @@
 import { createElement as create, FC, useRef, useEffect } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../contexts/Theme'
-import { Input } from './Input'
+import { InputContainer } from './Input'
 
 export const InputStripe: FC<{
   change?: (cardStripe: any) => void
@@ -32,7 +32,7 @@ export const InputStripe: FC<{
       return () => cardStripe.removeEventListener('change', handleError)
     }
   }, [stripe])
-  return create(Input, {
+  return create(InputContainer, {
     children: create('div', {
       ref: input,
       className: css({

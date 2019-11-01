@@ -1,6 +1,6 @@
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { css } from 'emotion'
-import { Input } from './Input'
+import { InputContainer } from './Input'
 
 export const InputNumber: FC<{
   value?: number
@@ -20,7 +20,7 @@ export const InputNumber: FC<{
     if (change && data) change(data)
     else if (change && !current.trim().length) change(undefined)
   }, [current])
-  return create(Input, {
+  return create(InputContainer, {
     disabled,
     children: create('input', {
       value: current,

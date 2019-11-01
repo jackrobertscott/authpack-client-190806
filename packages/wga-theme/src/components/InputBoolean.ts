@@ -1,6 +1,6 @@
 import { createElement as create, FC } from 'react'
 import { css } from 'emotion'
-import { Input } from './Input'
+import { InputContainer } from './Input'
 import { Icon } from './Icon'
 import { useTheme } from '../contexts/Theme'
 
@@ -18,7 +18,7 @@ export const InputBoolean: FC<{
       flexGrow: 1,
       maxWidth: 100,
     }),
-    children: create(Input, {
+    children: create(InputContainer, {
       disabled,
       children: create('div', {
         className: css({

@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as create, FC, useRef } from 'react'
 import { useTheme } from '../contexts/Theme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
@@ -54,9 +54,12 @@ const Searcher: FC<{
   placeholder?: string
 }> = ({ value = '', change, placeholder = 'Search...' }) => {
   const theme = useTheme()
+  const element = useRef()
   return create('div', {
+    ref: element,
     onClick: () => {
-      const input: HTMLInputElement | null = document.querySelector('.search')
+      const input: any =
+        element.current && (element.current as any).querySelector('input')
       if (input) input.focus()
     },
     className: css({
@@ -90,7 +93,7 @@ const Searcher: FC<{
           all: 'unset',
           marginLeft: 15,
           flexGrow: 1,
-        }).concat(' search'),
+        }),
       }),
     ],
   })

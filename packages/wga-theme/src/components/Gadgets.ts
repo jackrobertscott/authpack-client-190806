@@ -17,30 +17,27 @@ export const Gadgets: FC<{
       position: 'relative',
       background: theme.gadgets.background,
     }),
-    children: [
-      create(Header, {
-        key: 'header',
-        title,
-        subtitle,
-      }),
-      create(Scroller, {
-        key: 'scroller',
-        children: [
-          create('div', {
-            key: 'children',
-            children,
-            className: css({
-              flexGrow: 1,
-            }),
+    children: create(Scroller, {
+      children: [
+        create(Header, {
+          key: 'header',
+          title,
+          subtitle,
+        }),
+        create('div', {
+          key: 'children',
+          children,
+          className: css({
+            flexGrow: 1,
           }),
-          create(Branding, {
-            key: 'branding',
-            text: 'Authenticator',
-            url: 'https://authenticator.windowgadgets.io',
-          }),
-        ],
-      }),
-    ],
+        }),
+        create(Branding, {
+          key: 'branding',
+          text: 'Authenticator',
+          url: 'https://authenticator.windowgadgets.io',
+        }),
+      ],
+    }),
   })
 }
 
@@ -53,7 +50,7 @@ const Header: FC<{
     className: css({
       all: 'unset',
       display: 'flex',
-      padding: '25px',
+      padding: '30px 25px 25px',
       justifyContent: 'space-between',
       alignItems: 'flex-start',
       background: theme.gadgets.header,
@@ -90,7 +87,7 @@ const Branding: FC<{
       all: 'unset',
       display: 'flex',
       justifyContent: 'flex-end',
-      padding: 25,
+      padding: '25px 25px 30px',
     }),
     children: create('a', {
       href: url,

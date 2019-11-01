@@ -84,7 +84,7 @@ const Alert: FC<{
           all: 'unset',
           display: 'flex',
           position: 'absolute',
-          zIndex: 50,
+          zIndex: 150,
           top: -15,
           right: -10,
           transform: 'translateX(100%)',
