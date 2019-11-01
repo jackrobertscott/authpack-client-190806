@@ -184,7 +184,7 @@ export const Theme = createContext<ITheme>({
   gadgets: {
     title: '#CCCCCC',
     subtitle: '#777777',
-    branding: '#777777',
+    branding: '#535353',
     brandingHover: '#EEEEEE',
     header: '#3B3B3B',
     border: 'none',

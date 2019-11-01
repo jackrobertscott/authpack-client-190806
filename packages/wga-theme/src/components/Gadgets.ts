@@ -25,12 +25,20 @@ export const Gadgets: FC<{
       }),
       create(Scroller, {
         key: 'scroller',
-        children,
-      }),
-      create(Branding, {
-        key: 'branding',
-        text: 'Authenticator',
-        url: 'https://authenticator.windowgadgets.io',
+        children: [
+          create('div', {
+            key: 'children',
+            children,
+            className: css({
+              flexGrow: 1,
+            }),
+          }),
+          create(Branding, {
+            key: 'branding',
+            text: 'Authenticator',
+            url: 'https://authenticator.windowgadgets.io',
+          }),
+        ],
       }),
     ],
   })
@@ -77,23 +85,28 @@ const Branding: FC<{
   text: string
 }> = ({ url, text }) => {
   const theme = useTheme()
-  return create('a', {
-    href: url,
-    target: '_blank',
-    children: text,
+  return create('div', {
     className: css({
       all: 'unset',
-      textAlign: 'right',
-      whiteSpace: 'pre',
-      cursor: 'pointer',
       display: 'flex',
-      transition: '200ms',
-      margin: '25px',
-      marginLeft: 'auto',
-      color: theme.gadgets.branding,
-      '&:hover': {
-        color: theme.gadgets.brandingHover,
-      },
+      justifyContent: 'flex-end',
+      padding: 25,
+    }),
+    children: create('a', {
+      href: url,
+      target: '_blank',
+      children: text,
+      className: css({
+        all: 'unset',
+        textAlign: 'right',
+        whiteSpace: 'pre',
+        cursor: 'pointer',
+        transition: '200ms',
+        color: theme.gadgets.branding,
+        '&:hover': {
+          color: theme.gadgets.brandingHover,
+        },
+      }),
     }),
   })
 }

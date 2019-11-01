@@ -16,6 +16,7 @@ import {
   InputString,
   InputNumber,
   InputBoolean,
+  InputSelect,
 } from '../src/index'
 import { useSchema } from '../src/hooks/useSchema'
 
@@ -99,8 +100,20 @@ stories.add('Form', () => {
           .min(5, 'Must be at least 5 characters long'),
         age: yup.string().required('This is a required field'),
         dogs: yup.boolean().required('This is a required field'),
+        food: yup.string().required('Tell me your fav food!'),
       }),
     })
+    const [foodFilter, changeFoodFilter] = useState<string>('')
+    const foods = [
+      { value: 'Banana', label: 'Banana' },
+      { value: 'Apple', label: 'Apple' },
+      {
+        value: 'Icecream',
+        label: 'Icecream',
+        helper: 'This is bad for you',
+      },
+      { value: 'Mango', label: 'Mango' },
+    ]
     return create(Divider, {
       children: [
         create(Control, {
@@ -134,6 +147,17 @@ stories.add('Form', () => {
           children: create(InputBoolean, {
             value: schema.value('dogs'),
             change: schema.change('dogs'),
+          }),
+        }),
+        create(Control, {
+          key: 'select',
+          label: 'Favourite Food',
+          error: schema.error('food'),
+          children: create(InputSelect, {
+            value: schema.value('food'),
+            change: schema.change('food'),
+            filter: changeFoodFilter,
+            options: foods.filter(food => food.label.includes(foodFilter)),
           }),
         }),
         create(Button, {
