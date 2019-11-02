@@ -164,7 +164,6 @@ const Devmode: FC = () => {
         key: 'option',
         icon: 'bolt',
         label: 'Dev Mode',
-        click: () => {},
       }),
       create('div', {
         key: 'pointer',

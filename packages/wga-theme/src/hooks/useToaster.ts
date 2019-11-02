@@ -7,7 +7,6 @@ export interface IToaster {
   label: string
   helper: string
 }
-
 export interface IToasterStore {
   current: Array<
     IToaster & {
@@ -43,12 +42,10 @@ export const useToaster = () => {
       current: ToasterStore.state.current.filter(i => i.id !== id),
     })
   }
-  return useMemo(
-    () => ({
-      ...toaster,
-      add,
-      remove,
-    }),
-    [toaster]
-  )
+  const factory = () => ({
+    ...toaster,
+    add,
+    remove,
+  })
+  return useMemo(factory, [toaster])
 }
