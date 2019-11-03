@@ -22,8 +22,7 @@ export const SideBar: FC<{
       flexDirection: 'column',
       alignItems: 'stretch',
       width: '20%',
-      maxWidth: '220px',
-      padding: 25,
+      maxWidth: '280px',
       background: theme.sideBar.background,
       borderRight: theme.sideBar.border,
     }),
@@ -51,9 +50,10 @@ const Title: FC<{
   return create('div', {
     children: title,
     className: css({
-      fontSize: 25,
-      marginBottom: 75,
       lineHeight: '1em',
+      fontSize: 25,
+      padding: 25,
+      marginBottom: 75,
       color: theme.sideBar.title,
     }),
   })
@@ -70,6 +70,7 @@ const Footer: FC<{
       transition: '200ms',
       filter: 'contrast(70%)',
       marginTop: 'auto',
+      padding: 25,
       color: theme.sideBar.footer,
     }),
   })
@@ -101,12 +102,11 @@ const Options: FC<{
           display: 'flex',
           cursor: 'pointer',
           transition: '200ms',
+          padding: '15px 25px',
           color: focused ? theme.sideBar.optionsFocused : theme.sideBar.options,
-          '&:hover': !focused && {
+          '&:hover': {
             color: theme.sideBar.optionsHover,
-          },
-          '&:not(:last-child)': {
-            marginBottom: 15,
+            background: theme.sideBar.backgroundHover,
           },
         }),
         children: [

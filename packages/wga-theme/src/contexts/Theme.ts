@@ -64,6 +64,7 @@ export interface ITheme extends IKeys {
     optionsHover: string
     optionsFocused: string
     background: string
+    backgroundHover: string
     border: string
   }
   searchBar: {
@@ -205,12 +206,13 @@ export const Theme = createContext<ITheme>({
     scrollbar: '#505050',
   },
   sideBar: {
-    title: '#999999',
+    title: '#AAAAAA',
     footer: '#414141',
     options: '#777777',
-    optionsHover: '#999999',
+    optionsHover: '#EEEEEE',
     optionsFocused: '#B8B8B8',
     background: '#353535',
+    backgroundHover: '#3E3E3E',
     border: 'none',
   },
   searchBar: {

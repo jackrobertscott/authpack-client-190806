@@ -1,3 +1,4 @@
+import * as queryString from 'query-string'
 import * as pathToRegexp from 'path-to-regexp'
 import { useMemo, ReactNode, useState, useEffect } from 'react'
 
@@ -33,6 +34,7 @@ export const useRouter = ({
     current: list.length ? list[0] : undefined,
     change,
     assert,
+    params: queryString.parse(location.search),
   })
   return useMemo(factory, [location])
 }
