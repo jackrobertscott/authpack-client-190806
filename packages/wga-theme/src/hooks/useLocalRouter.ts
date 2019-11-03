@@ -6,30 +6,30 @@ export const useLocalRouter = ({
   nomatch,
   options,
 }: {
-  local: string
+  local?: string
   nomatch?: string
   options: Array<{
     key: string
     children: ReactNode
   }>
 }) => {
-  const store = useStore<undefined | { key: string; children: ReactNode }>({
+  const store = useStore<undefined | string>({
     key: local,
-    initial: options[0],
+    initial: options[0] && options[0].key,
   })
+  const [current] = options.filter(i => store.state && store.state === i.key)
   useEffect(() => {
-    const list = options.filter(i => store.state && store.state.key === i.key)
-    if (store.change && list[0] !== store.state) {
-      if (list.length) store.change(list[0])
-      else if (nomatch) change(nomatch)
+    if ((store.state && !current) || (current && current.key !== store.state)) {
+      if (store.change) store.change(current ? current.key : nomatch)
     }
   }, [store.state, options.map(option => option.key).join()])
   const change = (key: string) => {
-    const list = options.filter(i => i.key === key)
-    if (store.change) store.change(list.length ? list[0] : undefined)
+    const matching = options.filter(i => i.key === key)
+    if (store.change)
+      store.change(matching.length ? matching[0].key : undefined)
   }
   const factory = () => ({
-    current: store.state,
+    current,
     change,
   })
   return useMemo(factory, [store.state])

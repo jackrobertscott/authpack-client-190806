@@ -3,7 +3,7 @@ import * as pathToRegexp from 'path-to-regexp'
 import { useMemo, ReactNode, useState, useEffect } from 'react'
 
 export const useRouter = (
-  cb: (
+  createArgs: (
     location: Location
   ) => {
     nomatch?: string
@@ -15,16 +15,15 @@ export const useRouter = (
   }
 ) => {
   const [location, locationChange] = useState<Location>(document.location)
-  const { nomatch, options } = cb(location)
+  const { nomatch, options } = createArgs(location)
   useEffect(() => {
     const listener = () => locationChange(document.location)
     window.addEventListener('popstate', listener)
     return () => window.removeEventListener('popstate', listener)
   }, [])
-  const list = options
+  const [current] = options
     .sort((a, b) => (a.exact ? (b.exact ? 0 : 1) : -1))
     .filter(option => assert(option.path, option.exact))
-  const current = list.length ? list[0] : undefined
   useEffect(() => {
     if (!current && nomatch) change(nomatch)
   }, [location, options.map(option => option.path).join()])
