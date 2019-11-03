@@ -20,6 +20,7 @@ export const InputStringArray: FC<{
   }
   return create(InputContainer, {
     children: create('div', {
+      unfocus: true,
       onClick: () => openChange(true),
       className: css({
         all: 'unset',

@@ -71,6 +71,7 @@ stories.add('Buttons', () => {
     title: 'Buttons',
     subtitle: 'These are some pretty buttons',
     children: create(Layout, {
+      column: true,
       padding: true,
       divide: true,
       children: [

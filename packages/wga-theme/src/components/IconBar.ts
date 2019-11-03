@@ -32,6 +32,7 @@ export const IconBar: FC<{
       alignItems: 'center',
       flexShrink: 0,
       background: theme.iconBar.background,
+      borderRight: theme.iconBar.border,
     }),
     children: create(IconSpacer, {
       children: icons.map((data, index) => {

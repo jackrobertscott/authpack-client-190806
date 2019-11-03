@@ -128,6 +128,7 @@ stories.add('Form', () => {
       { value: 'Mango', label: 'Mango' },
     ]
     return create(Layout, {
+      column: true,
       padding: true,
       divide: true,
       children: [
@@ -271,6 +272,7 @@ stories.add('Focus', () => {
       children: [
         create(Layout, {
           key: 'Regular',
+          column: true,
           padding: true,
           divide: true,
           children: create(Button, {

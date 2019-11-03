@@ -13,7 +13,8 @@ import { Icon } from './Icon'
 export const InputContainer: FC<{
   children: ReactNode
   disabled?: boolean
-}> = ({ children, disabled }) => {
+  unfocus?: boolean
+}> = ({ children, disabled, unfocus = false }) => {
   const theme = useTheme()
   return create('div', {
     children,
@@ -34,7 +35,12 @@ export const InputContainer: FC<{
       'input::placeholder': {
         color: theme.input.placeholder,
       },
-      '&:hover, &:focus-within': !disabled && {
+      '&:focus-within': !unfocus && {
+        background: theme.input.backgroundHover,
+        boxShadow: theme.input.shadow,
+        color: theme.input.valueHover,
+      },
+      [`&:hover${unfocus ? ':not(:focus-within)' : ''}`]: !disabled && {
         background: theme.input.backgroundHover,
         boxShadow: theme.input.shadow,
         color: theme.input.valueHover,

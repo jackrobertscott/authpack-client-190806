@@ -19,6 +19,7 @@ export const InputSelect: FC<{
     if (change && current && current.value !== value) change(current.value)
   }, [value])
   return create(InputContainer, {
+    unfocus: true,
     children: create('div', {
       onClick: () => openChange(true),
       className: css({
