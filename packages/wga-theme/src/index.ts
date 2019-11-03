@@ -50,3 +50,8 @@ export * from './hooks/useToaster'
  */
 export * from './themes/IronMaiden'
 export * from './themes/BlueHarvester'
+/**
+ * Utils
+ */
+export * from './utils/monaco'
+export * from './utils/pretty'
