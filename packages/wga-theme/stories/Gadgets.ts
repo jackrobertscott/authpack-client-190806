@@ -8,7 +8,6 @@ import {
   Gadgets,
   IconBar,
   Layout,
-  Divider,
   Snippet,
   Poster,
   Focus,
@@ -69,8 +68,11 @@ stories.add('Buttons', () => {
       helper:
         'Lots of pretty buttons and this is a really long sentence to see what it looks like',
     }),
-    create(Divider, {
-      key: 'Divider',
+    create(Layout, {
+      key: 'Layout',
+      column: true,
+      padding: true,
+      divide: true,
       children: [
         create(Button, {
           key: 'Regular',
@@ -125,7 +127,9 @@ stories.add('Form', () => {
       },
       { value: 'Mango', label: 'Mango' },
     ]
-    return create(Divider, {
+    return create(Layout, {
+      padding: true,
+      divide: true,
       children: [
         create(Control, {
           key: 'name',
@@ -245,7 +249,10 @@ stories.add('Editor', () => {
     fruits: ['banana', 'apple', 'blue berry'],
   }
   const code = JSON.stringify(examples, null, 2)
-  return create(Divider, {
+  return create(Layout, {
+    column: true,
+    padding: true,
+    divide: true,
     children: create(() => {
       const [value, valueChange] = useState<string>(code)
       return create(InputCode, {
@@ -262,8 +269,10 @@ stories.add('Focus', () => {
     const [on, toggle] = useState<boolean>(false)
     return create('div', {
       children: [
-        create(Divider, {
+        create(Layout, {
           key: 'Regular',
+          padding: true,
+          divide: true,
           children: create(Button, {
             label: 'Turn On',
             click: () => toggle(true),

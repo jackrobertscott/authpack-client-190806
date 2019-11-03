@@ -20,6 +20,7 @@ export const Table: FC<{
     }>
   }>
 }> = ({ header, rows }) => {
+  const theme = useTheme()
   return create('table', {
     className: css({
       all: 'unset',
@@ -78,6 +79,7 @@ const Header: FC<{
           display: 'table-cell',
           padding: 25,
           color: theme.table.label,
+          borderBottom: theme.table.border,
           transition: '200ms',
           '&:hover': click && {
             cursor: 'pointer',
@@ -161,7 +163,7 @@ const Cell: FC<{
       padding: 25,
       color: theme.table.value,
       borderRight: theme.table.border,
-      borderTop: theme.table.border,
+      borderBottom: theme.table.border,
     }),
     children: create('div', {
       className: css({

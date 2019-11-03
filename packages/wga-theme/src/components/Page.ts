@@ -1,4 +1,4 @@
-import { createElement as create, FC, ReactNode } from 'react'
+import { createElement as create, FC, ReactNode, Children } from 'react'
 import { useTheme } from '../contexts/Theme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
@@ -28,24 +28,26 @@ export const Page: FC<{
       background: theme.page.background,
     }),
     children: [
-      create(Branding, {
-        key: 'branding',
-        url: 'https://windowgadgets.io',
-        text: `Made by Window Gadgets`,
-      }),
-      create(Header, {
-        key: 'header',
-        title,
-        subtitle,
-        corner,
-      }),
       noscroll &&
         create((() => noscroll) as FC, {
           key: 'noscroll',
         }),
       create(Scroller, {
         key: 'scroller',
-        children,
+        children: [
+          create(Branding, {
+            key: 'branding',
+            url: 'https://windowgadgets.io',
+            text: `Made by Window Gadgets`,
+          }),
+          create(Header, {
+            key: 'header',
+            title,
+            subtitle,
+            corner,
+          }),
+          ...Children.toArray(children),
+        ],
       }),
     ],
   })
@@ -68,6 +70,7 @@ const Header: FC<{
       display: 'flex',
       justifyContent: 'space-between',
       background: theme.page.header,
+      borderBottom: theme.page.border,
     }),
     children: [
       create('div', {

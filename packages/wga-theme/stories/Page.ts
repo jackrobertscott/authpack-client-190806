@@ -6,7 +6,6 @@ import {
   Layout,
   Page,
   SideBar,
-  Divider,
   Table,
   SearchBar,
   Toaster,
@@ -71,7 +70,9 @@ stories.add('Buttons', () => {
     key: 'page',
     title: 'Buttons',
     subtitle: 'These are some pretty buttons',
-    children: create(Divider, {
+    children: create(Layout, {
+      padding: true,
+      divide: true,
       children: [
         create(Button, {
           key: 'Regular',
@@ -136,11 +137,15 @@ stories.add('Table', () => {
       label: 'Create User',
       click: () => console.log('Corner'),
     },
-    noscroll: create(Toaster),
-    children: [
+    noscroll: [
+      create(Toaster, {
+        key: 'toaster',
+      }),
       create(Searching, {
         key: 'searching',
       }),
+    ],
+    children: [
       create(Table, {
         key: 'table',
         header: [

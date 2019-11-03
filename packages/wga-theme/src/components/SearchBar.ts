@@ -23,6 +23,8 @@ export const SearchBar: FC<{
       all: 'unset',
       display: 'flex',
       width: '100%',
+      position: 'relative',
+      zIndex: 100,
       background: theme.searchBar.background,
       borderBottom: theme.searchBar.border,
     }),
