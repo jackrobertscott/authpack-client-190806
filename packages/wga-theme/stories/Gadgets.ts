@@ -19,38 +19,43 @@ import {
   InputSelect,
   InputStringArray,
   InputSelectMany,
+  Theme,
 } from '../src/index'
 import { useSchema } from '../src/hooks/useSchema'
+import { BlueHarvester } from '../src/themes/BlueHarvester'
 
 console.clear()
 
 const stories = storiesOf('Gadgets', module).addDecorator(data => {
-  return create(Modal, {
-    children: create(Layout, {
-      children: [
-        create(IconBar, {
-          key: 'iconBar',
-          icons: [
-            {
-              icon: 'home',
-              label: 'Home',
-            },
-            {
-              seperated: true,
-              icon: 'times-circle',
-              solid: false,
-              label: 'Close',
-              click: close,
-            },
-          ],
-        }),
-        create(Gadgets, {
-          key: 'gadgets',
-          title: 'Hello',
-          subtitle: 'Window Gadgets',
-          children: data(),
-        }),
-      ],
+  return create(Theme.Provider, {
+    value: BlueHarvester,
+    children: create(Modal, {
+      children: create(Layout, {
+        children: [
+          create(IconBar, {
+            key: 'iconBar',
+            icons: [
+              {
+                icon: 'home',
+                label: 'Home',
+              },
+              {
+                seperated: true,
+                icon: 'times-circle',
+                solid: false,
+                label: 'Close',
+                click: close,
+              },
+            ],
+          }),
+          create(Gadgets, {
+            key: 'gadgets',
+            title: 'Hello',
+            subtitle: 'Window Gadgets',
+            children: data(),
+          }),
+        ],
+      }),
     }),
   })
 })

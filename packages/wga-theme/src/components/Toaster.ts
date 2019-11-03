@@ -19,7 +19,7 @@ export const Toaster: FC<{
       right: 0,
       bottom: 0,
       zIndex: 100,
-      padding: '25px 40px',
+      padding: 25,
     }),
     children: toaster.current.map(
       ({ id, icon, solid, label, helper, close }) => {

@@ -31,6 +31,9 @@ export const InputContainer: FC<{
         : theme.input.background,
       border: theme.input.border,
       color: theme.input.value,
+      'input::placeholder': {
+        color: theme.input.placeholder,
+      },
       '&:hover, &:focus-within': !disabled && {
         background: theme.input.backgroundHover,
         boxShadow: theme.input.shadow,

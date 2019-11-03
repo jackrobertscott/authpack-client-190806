@@ -68,7 +68,6 @@ const Footer: FC<{
     className: css({
       whiteSpace: 'pre',
       transition: '200ms',
-      filter: 'contrast(70%)',
       marginTop: 'auto',
       padding: 25,
       color: theme.sideBar.footer,

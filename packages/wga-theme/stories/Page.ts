@@ -11,53 +11,58 @@ import {
   SearchBar,
   Toaster,
   Empty,
+  Theme,
 } from '../src/index'
 import { useToaster } from '../src/hooks/useToaster'
+import { BlueHarvester } from '../src/themes/BlueHarvester'
 
 console.clear()
 
 const stories = storiesOf('Page', module).addDecorator(data => {
-  return create(Layout, {
-    children: [
-      create(IconBar, {
-        key: 'iconBar',
-        icons: [
-          {
-            icon: 'home',
-            label: 'Home',
-          },
-          {
-            seperated: true,
-            icon: 'times-circle',
-            solid: false,
-            label: 'Close',
-            click: close,
-          },
-        ],
-      }),
-      create(SideBar, {
-        key: 'sideBar',
-        title: 'Home',
-        footer: 'jack@example.com',
-        options: [
-          {
-            label: 'Users',
-            icon: 'user',
-          },
-          {
-            label: 'Sessions',
-            icon: 'history',
-          },
-          {
-            label: 'Teams',
-            icon: 'users',
-          },
-        ],
-      }),
-      create((() => data()) as FC, {
-        key: 'data',
-      }),
-    ],
+  return create(Theme.Provider, {
+    value: BlueHarvester,
+    children: create(Layout, {
+      children: [
+        create(IconBar, {
+          key: 'iconBar',
+          icons: [
+            {
+              icon: 'home',
+              label: 'Home',
+            },
+            {
+              seperated: true,
+              icon: 'times-circle',
+              solid: false,
+              label: 'Close',
+              click: close,
+            },
+          ],
+        }),
+        create(SideBar, {
+          key: 'sideBar',
+          title: 'Home',
+          footer: 'jack@example.com',
+          options: [
+            {
+              label: 'Users',
+              icon: 'user',
+            },
+            {
+              label: 'Sessions',
+              icon: 'history',
+            },
+            {
+              label: 'Teams',
+              icon: 'users',
+            },
+          ],
+        }),
+        create((() => data()) as FC, {
+          key: 'data',
+        }),
+      ],
+    }),
   })
 })
 

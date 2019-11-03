@@ -22,13 +22,13 @@ export const Pointer: FC<{
         flexDirection: 'column',
         transition: '200ms',
         overflow: 'hidden',
+        width: 280,
         fontSize: theme.global.fonts,
         borderRadius: theme.global.radius,
         boxShadow: theme.pointer.shadow,
         background: theme.pointer.background,
         border: theme.pointer.border,
         color: theme.pointer.label,
-        width: theme.pointer.width,
       }),
       children: [
         create(Header, {

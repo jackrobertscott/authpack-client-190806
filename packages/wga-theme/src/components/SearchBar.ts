@@ -77,6 +77,9 @@ const Searcher: FC<{
         color: theme.searchBar.labelHover,
         background: theme.searchBar.backgroundHover,
       },
+      'input::placeholder': {
+        color: theme.searchBar.placeholder,
+      },
     }),
     children: [
       create(Icon, {

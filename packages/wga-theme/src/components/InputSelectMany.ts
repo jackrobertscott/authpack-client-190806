@@ -64,7 +64,6 @@ const Option: FC<{
       flexGrow: 1,
       '&:hover, &:focus-within': {
         background: theme.input.backgroundHover,
-        boxShadow: theme.input.shadow,
         color: theme.input.valueHover,
       },
       '&:not(:last-child)': {
@@ -88,7 +87,7 @@ const Option: FC<{
         }),
         children: create(Icon, {
           icon: state ? 'check' : 'times',
-          size: 11,
+          size: 10,
         }),
       }),
       create('div', {
@@ -111,7 +110,7 @@ const Option: FC<{
               children: helper,
               className: css({
                 marginTop: 5,
-                color: theme.menu.helper,
+                color: theme.input.helper,
               }),
             }),
         ],
