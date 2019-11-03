@@ -122,9 +122,11 @@ const Scroller: FC<{
       overflow: 'auto',
       flexGrow: 1,
       '&::-webkit-scrollbar': {
-        width: '20px',
+        width: '25px',
+        cursor: 'pointer',
         display: 'initial',
         backgroundColor: 'hsla(0, 0, 0, 0)',
+        borderLeft: theme.page.border,
       },
       '&::-webkit-scrollbar-track': {
         backgroundColor: 'hsla(0, 0, 0, 0)',
@@ -132,9 +134,8 @@ const Scroller: FC<{
       '&::-webkit-scrollbar-thumb': {
         cursor: 'pointer',
         transition: '200ms',
-        borderRadius: '100px',
-        boxShadow: `inset 0 0 0 5px ${theme.gadgets.background}`,
-        background: theme.gadgets.scrollbar,
+        borderLeft: theme.page.border,
+        background: theme.page.scrollbar,
       },
     }),
   })

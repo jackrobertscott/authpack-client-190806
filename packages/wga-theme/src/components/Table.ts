@@ -20,7 +20,6 @@ export const Table: FC<{
     }>
   }>
 }> = ({ header, rows }) => {
-  const theme = useTheme()
   return create('table', {
     className: css({
       all: 'unset',
@@ -162,8 +161,10 @@ const Cell: FC<{
       display: 'table-cell',
       padding: 25,
       color: theme.table.value,
-      borderRight: theme.table.border,
       borderBottom: theme.table.border,
+      '&:not(:last-child)': {
+        borderRight: theme.table.border,
+      },
     }),
     children: create('div', {
       className: css({

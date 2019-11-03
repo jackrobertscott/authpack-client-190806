@@ -35,11 +35,6 @@ export const Page: FC<{
       create(Scroller, {
         key: 'scroller',
         children: [
-          create(Branding, {
-            key: 'branding',
-            url: 'https://windowgadgets.io',
-            text: `Made by Window Gadgets`,
-          }),
           create(Header, {
             key: 'header',
             title,
@@ -47,6 +42,11 @@ export const Page: FC<{
             corner,
           }),
           ...Children.toArray(children),
+          create(Branding, {
+            key: 'branding',
+            url: 'https://windowgadgets.io',
+            text: `Made by Window Gadgets`,
+          }),
         ],
       }),
     ],
@@ -79,7 +79,7 @@ const Header: FC<{
           all: 'unset',
           display: 'flex',
           flexDirection: 'column',
-          padding: '25px',
+          padding: 25,
         }),
         children: [
           create('div', {
@@ -160,10 +160,9 @@ const Branding: FC<{
   return create('div', {
     className: css({
       all: 'unset',
-      padding: '25px',
-      position: 'absolute',
-      bottom: 0,
-      right: 0,
+      display: 'flex',
+      justifyContent: 'flex-end',
+      padding: 25,
     }),
     children: create('a', {
       href: url,
@@ -198,9 +197,11 @@ const Scroller: FC<{
       overflow: 'auto',
       flexGrow: 1,
       '&::-webkit-scrollbar': {
-        width: '20px',
+        width: '25px',
+        cursor: 'pointer',
         display: 'initial',
         backgroundColor: 'hsla(0, 0, 0, 0)',
+        borderLeft: theme.page.border,
       },
       '&::-webkit-scrollbar-track': {
         backgroundColor: 'hsla(0, 0, 0, 0)',
@@ -208,8 +209,7 @@ const Scroller: FC<{
       '&::-webkit-scrollbar-thumb': {
         cursor: 'pointer',
         transition: '200ms',
-        borderRadius: '100px',
-        boxShadow: `inset 0 0 0 5px ${theme.page.background}`,
+        borderLeft: theme.page.border,
         background: theme.page.scrollbar,
       },
     }),

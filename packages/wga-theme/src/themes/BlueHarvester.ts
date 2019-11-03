@@ -46,7 +46,7 @@ export const BlueHarvester: ITheme = {
     header: color(0.25),
     border: `1px solid ${color(0.225)}`,
     background: color(0.25),
-    scrollbar: color(0.35),
+    scrollbar: color(0.3),
   },
   page: {
     title: color(0.95),
@@ -59,7 +59,7 @@ export const BlueHarvester: ITheme = {
     headerHover: color(0.35),
     border: `1px solid ${color(0.225)}`,
     background: color(0.25),
-    scrollbar: color(0.35),
+    scrollbar: color(0.3),
   },
   sideBar: {
     title: color(0.85),
@@ -116,7 +116,7 @@ export const BlueHarvester: ITheme = {
     arrow: color(0.7),
     background: color(0.3),
     backgroundHover: color(0.35),
-    border: `1px solid ${color(0.225)}`,
+    border: `1px solid ${color(0.25)}`,
   },
   table: {
     label: color(0.75),
@@ -143,7 +143,7 @@ export const BlueHarvester: ITheme = {
     helper: color(0.75),
     background: color(0.35),
     backgroundHover: color(0.4),
-    shadow: `0 0 13px -3px ${color(0.15, 0.15)}`,
+    shadow: `0 0 13px -3px ${color(0.15, 0.55)}`,
     border: `1px solid ${color(0.2)}`,
   },
   poster: {
