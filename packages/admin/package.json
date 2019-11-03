@@ -27,7 +27,7 @@
     "react-scripts": "^3.2.0",
     "typescript": "3.6.2",
     "wga-plugin": "^0.1.0",
-    "wga-theme": "^0.1.1",
+    "wga-theme": "^0.2.1",
     "yup": "^0.27.0"
   },
   "devDependencies": {

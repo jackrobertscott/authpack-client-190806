@@ -79,7 +79,7 @@ export const BlueHarvester: ITheme = {
     background: color(0.25),
     backgroundHover: color(0.35),
     backgroundDisabled: color(0.2),
-    border: `none`,
+    border: `1px solid ${color(0.225)}`,
   },
   iconBar: {
     icon: color(0.75),
