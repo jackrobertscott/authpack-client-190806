@@ -2,21 +2,32 @@ import * as queryString from 'query-string'
 import * as pathToRegexp from 'path-to-regexp'
 import { useMemo, ReactNode, useState, useEffect } from 'react'
 
-export const useRouter = ({
-  options,
-}: {
-  options: Array<{
-    path: string
-    children: ReactNode
-    exact?: boolean
-  }>
-}) => {
+export const useRouter = (
+  cb: (
+    location: Location
+  ) => {
+    nomatch?: string
+    options: Array<{
+      path: string
+      children: ReactNode
+      exact?: boolean
+    }>
+  }
+) => {
   const [location, locationChange] = useState<Location>(document.location)
+  const { nomatch, options } = cb(location)
   useEffect(() => {
     const listener = () => locationChange(document.location)
     window.addEventListener('popstate', listener)
     return () => window.removeEventListener('popstate', listener)
   }, [])
+  const list = options
+    .sort((a, b) => (a.exact ? (b.exact ? 0 : 1) : -1))
+    .filter(option => assert(option.path, option.exact))
+  const current = list.length ? list[0] : undefined
+  useEffect(() => {
+    if (!current && nomatch) change(nomatch)
+  }, [location])
   const change = (path: string) => {
     location.pathname = path
   }
@@ -27,14 +38,12 @@ export const useRouter = ({
     })
     return !!regexp.exec(location.pathname)
   }
-  const list = options
-    .sort((a, b) => (a.exact ? (b.exact ? 0 : 1) : -1))
-    .filter(option => assert(option.path, option.exact))
   const factory = () => ({
-    current: list.length ? list[0] : undefined,
+    current,
     change,
     assert,
     params: queryString.parse(location.search),
+    location,
   })
   return useMemo(factory, [location])
 }

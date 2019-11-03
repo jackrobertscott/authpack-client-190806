@@ -1,11 +1,13 @@
 import { useMemo, ReactNode, useEffect } from 'react'
 import { useStore } from './useStore'
 
-export const useLocalRouter = <T>({
+export const useLocalRouter = ({
   local,
+  nomatch,
   options,
 }: {
   local: string
+  nomatch?: string
   options: Array<{
     key: string
     children: ReactNode
@@ -17,8 +19,11 @@ export const useLocalRouter = <T>({
   })
   useEffect(() => {
     const list = options.filter(i => store.state && store.state.key === i.key)
-    if (store.change) store.change(list.length ? list[0] : undefined)
-  }, [options])
+    if (store.change && list[0] !== store.state) {
+      if (list.length) store.change(list[0])
+      else if (nomatch) change(nomatch)
+    }
+  }, [store.state])
   const change = (key: string) => {
     const list = options.filter(i => i.key === key)
     if (store.change) store.change(list.length ? list[0] : undefined)
@@ -27,5 +32,5 @@ export const useLocalRouter = <T>({
     current: store.state,
     change,
   })
-  return useMemo(factory, [options])
+  return useMemo(factory, [store.state])
 }

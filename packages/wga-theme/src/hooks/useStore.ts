@@ -7,16 +7,21 @@ export const useStore = <T>({
   initial,
 }: {
   key?: string
-  store?: Store<T>
-  initial: T
+  store?: Store<T | undefined>
+  initial?: T
 }) => {
-  const [persistor, persistorChange] = useState<Store<T> | undefined>()
-  const [value, valueChange] = useState<T>(initial)
+  const [persistor, persistorChange] = useState<
+    Store<T | undefined> | undefined
+  >()
+  const [value, valueChange] = useState<T | undefined>(
+    store ? store.state : initial
+  )
   useEffect(() => {
-    persistorChange(store || new Store<T>(initial, key))
+    persistorChange(store || new Store<T | undefined>(initial, key))
   }, [store])
   useEffect(() => {
-    if (persistor) return persistor.listen((data: T) => valueChange(data))
+    if (persistor)
+      return persistor.listen((data: T | undefined) => valueChange(data))
   }, [persistor])
   const factory = () => ({
     state: persistor ? persistor.state : undefined,

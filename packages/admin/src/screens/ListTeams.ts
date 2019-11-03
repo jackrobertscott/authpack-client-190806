@@ -1,9 +1,9 @@
 import { createElement as create, FC } from 'react'
 import { Page } from 'wga-theme'
 
-export const ListPermissions: FC = () => {
+export const ListTeams: FC = () => {
   return create(Page, {
-    title: 'Permissions',
+    title: 'Teams',
     subtitle: '',
     children: null,
   })

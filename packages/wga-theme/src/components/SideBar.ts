@@ -5,7 +5,7 @@ import { Icon } from './Icon'
 
 export const SideBar: FC<{
   title: string
-  footer: string
+  footer?: string
   options: Array<{
     label: string
     icon: string
@@ -35,10 +35,11 @@ export const SideBar: FC<{
         key: 'options',
         options,
       }),
-      create(Footer, {
-        key: 'footer',
-        footer,
-      }),
+      footer &&
+        create(Footer, {
+          key: 'footer',
+          footer,
+        }),
     ],
   })
 }

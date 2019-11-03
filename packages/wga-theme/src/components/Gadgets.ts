@@ -4,7 +4,7 @@ import { useTheme } from '../contexts/Theme'
 
 export const Gadgets: FC<{
   title: string
-  subtitle: string
+  subtitle?: string
   children: ReactNode
 }> = ({ title, subtitle, children }) => {
   const theme = useTheme()
@@ -43,7 +43,7 @@ export const Gadgets: FC<{
 
 const Header: FC<{
   title: string
-  subtitle: string
+  subtitle?: string
 }> = ({ title, subtitle }) => {
   const theme = useTheme()
   return create('div', {
@@ -65,14 +65,15 @@ const Header: FC<{
           color: theme.gadgets.title,
         }),
       }),
-      create('div', {
-        key: 'subtitle',
-        children: subtitle,
-        className: css({
-          all: 'unset',
-          color: theme.gadgets.subtitle,
+      subtitle &&
+        create('div', {
+          key: 'subtitle',
+          children: subtitle,
+          className: css({
+            all: 'unset',
+            color: theme.gadgets.subtitle,
+          }),
         }),
-      }),
     ],
   })
 }
