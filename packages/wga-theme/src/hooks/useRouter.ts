@@ -27,7 +27,7 @@ export const useRouter = (
   const current = list.length ? list[0] : undefined
   useEffect(() => {
     if (!current && nomatch) change(nomatch)
-  }, [location])
+  }, [location, options.map(option => option.path).join()])
   const change = (path: string) => {
     location.pathname = path
   }
