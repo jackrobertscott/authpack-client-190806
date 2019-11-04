@@ -41,7 +41,13 @@ export const Page: FC<{
             subtitle,
             corner,
           }),
-          ...Children.toArray(children),
+          create('div', {
+            key: 'children',
+            children,
+            className: css({
+              flexGrow: 1,
+            }),
+          }),
           create(Branding, {
             key: 'branding',
             url: 'https://windowgadgets.io',

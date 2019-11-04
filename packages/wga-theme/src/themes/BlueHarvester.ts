@@ -92,8 +92,8 @@ export const BlueHarvester: ITheme = {
   },
   pointer: {
     label: color(1),
-    helper: color(0.8),
-    background: color(0.6),
+    helper: color(0.85),
+    background: color(0.45),
     shadow: `0 0 13px -3px ${color(0.15, 0.15)}`,
     border: `none`,
   },

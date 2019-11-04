@@ -24,7 +24,6 @@ export const createUseGraph = <T>({
         variables,
         operationName,
       })
-    // eslint-disable-next-line
   }, [])
   return data
 }

@@ -1,38 +1,42 @@
-import { createElement as create, FC, Fragment, useEffect } from 'react'
+import { createElement as create, FC, Fragment } from 'react'
 import { useRouter, SideBar } from 'wga-theme'
 import { useApp } from '../hooks/useApp'
 import { ListPermissions } from '../screens/ListPermissions'
 import { ListProviders } from '../screens/ListProviders'
 
-export const RouterSideBarHome: FC = () => {
+export const RouterSideBarSettings: FC = () => {
   const app = useApp()
-  const router = useRouter(({ pathname }) => ({
-    nomatch: `${pathname}/providers`,
+  const router = useRouter({
+    base: '/settings',
+    nomatch: '/providers',
     options: [
-      { path: `${pathname}/providers`, children: ListProviders },
-      { path: `${pathname}/permissions`, children: ListPermissions },
+      { path: '/providers', children: create(ListProviders) },
+      { path: '/permissions', children: create(ListPermissions) },
     ],
-  }))
+  })
   return create(Fragment, {
     children: [
       create(SideBar, {
+        key: 'sideBar',
         title: 'Settings',
         footer: app.state && app.state.appname,
         options: [
           {
             icon: 'handshake',
             label: 'Providers',
-            click: () => router.change(`${router.location.pathname}/providers`),
+            click: () => router.change('/providers'),
           },
           {
             icon: 'user-shield',
             label: 'Permissions',
-            click: () =>
-              router.change(`${router.location.pathname}/permissions`),
+            click: () => router.change('/permissions'),
           },
         ],
       }),
-      router.current && router.current.children,
+      router.current &&
+        create((() => router.current.children) as FC, {
+          key: 'children',
+        }),
     ],
   })
 }

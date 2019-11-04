@@ -45,6 +45,5 @@ export const usePaginator = ({ count }: { count?: number }) => {
     next,
     previous,
   })
-  // eslint-disable-next-line
   return useMemo(factory, [paginator])
 }

@@ -54,7 +54,7 @@ const Title: FC<{
       lineHeight: '1em',
       fontSize: 25,
       padding: 25,
-      marginBottom: 75,
+      marginBottom: 48,
       color: theme.sideBar.title,
     }),
   })
