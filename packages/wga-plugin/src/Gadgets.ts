@@ -2,9 +2,7 @@ import { Radio } from 'iframe-radio'
 import { settings, ISettings } from './utils/settings'
 import { halter } from './utils/throttle'
 
-export type IPluginGadgets = ISettings['session']
-
-export class PluginGadgets {
+export class Gadgets {
   public update: () => void
   private iframeId: string
   private iframe?: HTMLIFrameElement
@@ -12,21 +10,21 @@ export class PluginGadgets {
   private unlistener?: () => any
   private ready: boolean
   private queue: Array<() => void>
-  constructor(options: { suffix?: string; key: string }) {
-    this.update = halter(300, () => this.send('wga:update'))
-    this.iframeId = `wga-plugin${options.suffix ? `-${options.suffix}` : ''}`
+  constructor({ suffix, domain }: { suffix?: string; domain: string }) {
+    this.update = halter(300, () => this.send('wga:gadgets:update'))
+    this.iframeId = `wga-plugin${suffix ? `-${suffix}` : ''}`
     this.render()
     this.ready = false
     this.queue = []
-    this.send('wga:domain', {
-      key: options.key,
+    this.send('wga:gadgets:domain', {
+      key: domain,
       url: document.location.origin,
     })
   }
   /**
    * Get the current state of the gadgets.
    */
-  public get state(): IPluginGadgets {
+  public get state() {
     return settings.state.session
   }
   /**
@@ -44,7 +42,7 @@ export class PluginGadgets {
    * Open the gadgets.
    */
   public open() {
-    this.send('wga:open')
+    this.send('wga:gadgets:open')
   }
   /**
    * Open the gadgets.
@@ -92,10 +90,10 @@ export class PluginGadgets {
       this.radio.listen(({ name, payload }) => {
         console.log(`Plugin received: ${name} - ${Date.now() % 86400000}`)
         switch (name) {
-          case 'wga:set':
+          case 'wga:plugin:set':
             settings.change(payload)
             break
-          case 'wga:ready':
+          case 'wga:plugin:ready':
             this.ready = true
             this.queue.forEach(cb => cb())
             break
