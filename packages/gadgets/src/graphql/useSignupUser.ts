@@ -1,6 +1,6 @@
-import { generate } from '../utils/graphql'
+import { createUseServer } from '../hooks/useServer'
 
-export const SignupUser = generate<
+export const useSignupUser = createUseServer<
   {
     value: {
       email: string
@@ -16,6 +16,7 @@ export const SignupUser = generate<
       created: string
       updated: string
       meta: { [key: string]: any }
+      token: string
     }
   }
 >({
@@ -27,6 +28,7 @@ export const SignupUser = generate<
         created
         updated
         meta
+        token
       }
     }
   `,

@@ -1,6 +1,6 @@
-import { generate } from '../utils/graphql'
+import { createUseServer } from '../hooks/useServer'
 
-export const RemoveMembership = generate<
+export const useRemoveMembership = createUseServer<
   {
     id: string
   },

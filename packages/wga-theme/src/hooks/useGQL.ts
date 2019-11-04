@@ -2,7 +2,16 @@ import axios from 'axios'
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { useToaster } from './useToaster'
 
-export const useGQL = <T>({
+export const createUseGQL = <V, T>(options: {
+  url: string
+  query: string
+  name?: string
+  authorization?: string
+}) => () => {
+  return useGQL<V, T>(options)
+}
+
+export const useGQL = <V, T>({
   url,
   query,
   name,
@@ -24,7 +33,7 @@ export const useGQL = <T>({
   const [data, dataChange] = useState<T | undefined>()
   const [loading, loadingChange] = useState<boolean>()
   const [error, errorChange] = useState<Error | undefined>()
-  const fetch = (variables: { [key: string]: any } = {}) => {
+  const fetch = (variables?: V) => {
     loadingChange(true)
     errorChange(undefined)
     return axios({

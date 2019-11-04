@@ -1,6 +1,6 @@
-import { generate } from '../utils/graphql'
+import { createUseServer } from '../hooks/useServer'
 
-export const UpdateUser = generate<
+export const useUpdateUser = createUseServer<
   {
     value: {
       email?: string

@@ -1,12 +1,13 @@
 import { createElement as create, FC } from 'react'
 import { useLocalRouter, Layout, IconBar } from 'wga-theme'
+import { LoginUser } from '../screens/LoginUser'
 
 export const RouterModalUnauthed: FC<{
   close: () => void
 }> = ({ close }) => {
   const router = useLocalRouter({
     nomatch: '/login',
-    options: [{ key: '/login', children: null }],
+    options: [{ key: '/login', children: create(LoginUser) }],
   })
   return create(Layout, {
     children: [

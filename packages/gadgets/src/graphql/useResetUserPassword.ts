@@ -1,8 +1,9 @@
-import { generate } from '../utils/graphql'
+import { createUseServer } from '../hooks/useServer'
 
-export const RemoveUser = generate<
+export const useResetUserPassword = createUseServer<
   {
     value: {
+      code: string
       password: string
     }
   },
@@ -15,10 +16,10 @@ export const RemoveUser = generate<
     }
   }
 >({
-  name: 'RemoveUser',
+  name: 'ResetUserPassword',
   query: `
-    mutation RemoveUser($value: RemoveUserValue!) {
-      user: RemoveUser(value: $value) {
+    mutation ResetUserPassword($value: ResetUserPasswordValue!) {
+      user: ResetUserPassword(value: $value) {
         id
         created
         updated

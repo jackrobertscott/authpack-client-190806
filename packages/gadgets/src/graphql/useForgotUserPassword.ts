@@ -1,6 +1,6 @@
-import { generate } from '../utils/graphql'
+import { createUseServer } from '../hooks/useServer'
 
-export const ForgotUserPassword = generate<
+export const useForgotUserPassword = createUseServer<
   {
     value: {
       email: string

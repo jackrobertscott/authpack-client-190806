@@ -1,6 +1,6 @@
-import { generate } from '../utils/graphql'
+import { createUseServer } from '../hooks/useServer'
 
-export const ListMemberships = generate<
+export const useListTeams = createUseServer<
   {
     options?: {
       limit?: number
@@ -10,7 +10,7 @@ export const ListMemberships = generate<
     }
   },
   {
-    memberships: Array<{
+    teams: Array<{
       id: string
       created: string
       updated: string
@@ -18,10 +18,10 @@ export const ListMemberships = generate<
     }>
   }
 >({
-  name: 'ListMemberships',
+  name: 'ListTeams',
   query: `
-    query ListMemberships($options: FilterOptions) {
-      memberships: ListMemberships(options: $options) {
+    query ListTeams($options: FilterOptions) {
+      teams: ListTeams(options: $options) {
         id
         created
         updated

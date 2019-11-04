@@ -1,9 +1,10 @@
-import { generate } from '../utils/graphql'
+import { createUseServer } from '../hooks/useServer'
 
-export const UpdateMembership = generate<
+export const useCreateMembership = createUseServer<
   {
-    id: string
     value: {
+      user?: string
+      email?: string
       permissions?: string[]
       meta?: { [key: string]: any }
     }
@@ -17,10 +18,10 @@ export const UpdateMembership = generate<
     }
   }
 >({
-  name: 'UpdateMembership',
+  name: 'CreateMembership',
   query: `
-    mutation UpdateMembership($id: String!, $value: UpdateMembershipValue!) {
-      membership: UpdateMembership(id: $id, value: $value) {
+    mutation CreateMembership($value: CreateMembershipValue!) {
+      membership: CreateMembership(value: $value) {
         id
         created
         updated

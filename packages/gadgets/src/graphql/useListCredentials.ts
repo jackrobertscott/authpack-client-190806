@@ -1,6 +1,6 @@
-import { generate } from '../utils/graphql'
+import { createUseServer } from '../hooks/useServer'
 
-export const ListCredentials = generate<
+export const useListCredentials = createUseServer<
   {
     options?: {
       limit?: number

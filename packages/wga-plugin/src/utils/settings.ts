@@ -31,8 +31,9 @@ export type ISettings = {
   session: undefined | ISession
   appname: string
   api: string
-  domain?: { key: string; url: string }
-  theme?: { [key: string]: string | number | boolean | undefined }
+  domain?: string
+  bearer?: string
+  theme?: { [key: string]: any }
 }
 
 export const defaultSettings: ISettings = {

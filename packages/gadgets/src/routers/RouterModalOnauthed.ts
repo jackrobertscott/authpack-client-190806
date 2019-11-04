@@ -1,5 +1,5 @@
 import { createElement as create, FC } from 'react'
-import { useLocalRouter, Modal, Layout, IconBar } from 'wga-theme'
+import { useLocalRouter, Layout, IconBar } from 'wga-theme'
 
 export const RouterModalOnauthed: FC<{
   close: () => void

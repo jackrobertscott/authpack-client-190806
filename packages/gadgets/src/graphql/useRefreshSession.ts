@@ -1,6 +1,6 @@
-import { generate } from '../utils/graphql'
+import { createUseServer } from '../hooks/useServer'
 
-export const RetrieveSession = generate<
+export const useRefreshSession = createUseServer<
   {},
   {
     session: {
@@ -8,17 +8,19 @@ export const RetrieveSession = generate<
       created: string
       updated: string
       meta: { [key: string]: any }
+      token: string
     }
   }
 >({
-  name: 'RetrieveSession',
+  name: 'RefreshSession',
   query: `
-    query RetrieveSession {
-      session: RetrieveSession {
+    mutation RefreshSession {
+      session: RefreshSession {
         id
         created
         updated
         meta
+        token
       }
     }
   `,

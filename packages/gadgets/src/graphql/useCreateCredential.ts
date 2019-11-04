@@ -1,6 +1,6 @@
-import { generate } from '../utils/graphql'
+import { createUseServer } from '../hooks/useServer'
 
-export const CreateCredential = generate<
+export const useCreateCredential = createUseServer<
   {
     value: {
       provider: string

@@ -31,12 +31,13 @@ export type ISettings = {
   devmode: boolean
   session: undefined | ISession
   appname: string
-  domain?: { key: string; url: string }
+  domain?: string
+  bearer?: string
   theme: ITheme
 }
 
 export const defaultSettings: ISettings = {
-  open: false,
+  open: true,
   devmode: false,
   session: undefined,
   appname: 'Window Gadgets',

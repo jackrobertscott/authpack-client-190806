@@ -1,6 +1,6 @@
-import { generate } from '../utils/graphql'
+import { createUseServer } from '../hooks/useServer'
 
-export const UpdateUserPassword = generate<
+export const useUpdateUserPassword = createUseServer<
   {
     value: {
       passwordCurrent: string

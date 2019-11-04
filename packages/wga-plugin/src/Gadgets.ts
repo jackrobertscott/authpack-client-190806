@@ -16,10 +16,7 @@ export class Gadgets {
     this.render()
     this.ready = false
     this.queue = []
-    this.send('wga:gadgets:domain', {
-      key: domain,
-      url: document.location.origin,
-    })
+    this.send('wga:gadgets:domain', domain)
   }
   /**
    * Get the current state of the gadgets.

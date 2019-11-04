@@ -3,32 +3,35 @@ import { useConfig } from './useConfig'
 
 export const useCurrentSession = () => {
   const config = useConfig()
-  return useGQL<{
-    session: {
-      id: string
-      token: string
-      user: {
+  return useGQL<
+    {},
+    {
+      session: {
         id: string
-        email: string
-        username?: string
-        avatar?: string
-        name?: string
+        token: string
+        user: {
+          id: string
+          email: string
+          username?: string
+          avatar?: string
+          name?: string
+        }
+        workspace?: {
+          id: string
+          name: string
+          tag: string
+          description?: string
+          active: boolean
+        }
+        permissions?: Array<{
+          id: string
+          name: string
+          tag: string
+          description?: string
+        }>
       }
-      workspace?: {
-        id: string
-        name: string
-        tag: string
-        description?: string
-        active: boolean
-      }
-      permissions?: Array<{
-        id: string
-        name: string
-        tag: string
-        description?: string
-      }>
     }
-  }>({
+  >({
     url: config.state.api,
     name: 'CurrentSession',
     query: `

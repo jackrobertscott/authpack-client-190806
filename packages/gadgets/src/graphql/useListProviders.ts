@@ -1,6 +1,6 @@
-import { generate } from '../utils/graphql'
+import { createUseServer } from '../hooks/useServer'
 
-export const ListProviders = generate<
+export const useListProviders = createUseServer<
   {
     options?: {
       limit?: number

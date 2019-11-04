@@ -24,6 +24,7 @@ export const useSetup = () => {
   }, [])
   useEffect(() => {
     return radio.listen(({ name, payload }) => {
+      if (!name || !name.startsWith('wga:gadgets')) return
       console.log(`Gadget received: ${name} - ${Date.now() % 86400000}`)
       switch (name) {
         case 'wga:gadgets:request':
@@ -51,5 +52,6 @@ export const useSetup = () => {
           console.warn(`Unhandled settings radio event ${name}`)
       }
     })
+    // eslint-disable-next-line
   }, [])
 }
