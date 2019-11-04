@@ -1,3 +1,4 @@
+import '@fortawesome/fontawesome-free/css/all.min.css'
 import { createElement as create } from 'react'
 import { render } from 'react-dom'
 import { App } from './App'

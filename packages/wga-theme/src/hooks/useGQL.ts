@@ -24,13 +24,7 @@ export const useGQL = <T>({
   const [data, dataChange] = useState<T | undefined>()
   const [loading, loadingChange] = useState<boolean>()
   const [error, errorChange] = useState<Error | undefined>()
-  const fetch = ({
-    variables,
-    operationName,
-  }: {
-    variables?: { [key: string]: any }
-    operationName?: string
-  }) => {
+  const fetch = (variables: { [key: string]: any } = {}) => {
     loadingChange(true)
     errorChange(undefined)
     return axios({
@@ -43,7 +37,7 @@ export const useGQL = <T>({
       data: {
         query,
         variables,
-        operationName: operationName || name,
+        operationName: name,
       },
     })
       .then((done: any) => {

@@ -1,5 +1,5 @@
 import { Radio } from 'iframe-radio'
-import { settingsStore, ISettings } from './utils/settings'
+import { settings, ISettings } from './utils/settings'
 import { halter } from './utils/throttle'
 
 export type IPluginGadgets = ISettings['session']
@@ -27,13 +27,13 @@ export class PluginGadgets {
    * Get the current state of the gadgets.
    */
   public get state(): IPluginGadgets {
-    return settingsStore.state.session
+    return settings.state.session
   }
   /**
    * Listen to changes to the internal state.
    */
   public listen(callback: (current: ISettings['session']) => void) {
-    return settingsStore.listen(({ open = false, session }) => {
+    return settings.listen(({ open = false, session }) => {
       callback(session)
       if (this.iframe) {
         this.iframe.style.pointerEvents = open ? 'all' : 'none'
@@ -93,7 +93,7 @@ export class PluginGadgets {
         console.log(`Plugin received: ${name} - ${Date.now() % 86400000}`)
         switch (name) {
           case 'wga:set':
-            settingsStore.change(payload)
+            settings.change(payload)
             break
           case 'wga:ready':
             this.ready = true

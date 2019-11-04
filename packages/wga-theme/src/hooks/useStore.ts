@@ -22,7 +22,7 @@ export const useStore = <T>({
   const factory = () => ({
     store,
     state: store.state,
-    change: (data: T) => store.change(data),
+    change: store.change,
   })
   return useMemo(factory, [value])
 }

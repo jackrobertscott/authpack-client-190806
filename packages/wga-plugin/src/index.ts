@@ -1,13 +1,16 @@
-import { Schema } from './Schema'
-
-export type IAuthenticatorAPI = {
-  secret?: string
-  domain?: string
-  bearer?: string
-}
+import { Schema } from '../old/Schema'
 
 export class AuthenticatorAPI extends Schema {
-  constructor({ secret, domain, bearer }: IAuthenticatorAPI = {}) {
-    super({ keys: () => `${secret},${domain},${bearer}` })
+  constructor({
+    secret,
+    domain,
+    bearer,
+  }: {
+    secret?: string
+    domain?: string
+    bearer?: string
+  } = {}) {
+    const keys = () => [secret, domain, bearer].filter(String).join(',')
+    super({ keys })
   }
 }
