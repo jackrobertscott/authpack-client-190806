@@ -45,6 +45,8 @@ export const Page: FC<{
             key: 'children',
             children,
             className: css({
+              display: 'flex',
+              flexDirection: 'column',
               flexGrow: 1,
             }),
           }),

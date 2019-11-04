@@ -1,11 +1,20 @@
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import { createElement as create, FC } from 'react'
-import { Theme, BlueHarvester } from 'wga-theme'
+import { Theme, Toaster } from 'wga-theme'
 import { RouterCentral } from './routers/RouterCentral'
+import { useConfig } from './hooks/useConfig'
 
 export const App: FC<{}> = () => {
+  const config = useConfig()
   return create(Theme.Provider, {
-    value: BlueHarvester,
-    children: create(RouterCentral),
+    value: config.state.theme,
+    children: [
+      create(RouterCentral, {
+        key: 'router',
+      }),
+      create(Toaster, {
+        key: 'toaster',
+      }),
+    ],
   })
 }

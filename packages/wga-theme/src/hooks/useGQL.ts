@@ -2,40 +2,16 @@ import axios from 'axios'
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { useToaster } from './useToaster'
 
-export const createUseGraph = <T>({
+export const useGQL = <T>({
   url,
   query,
   name,
+  authorization,
 }: {
   url: string
   query: string
   name?: string
-}) => ({
-  variables,
-  operationName,
-}: {
-  variables?: { [key: string]: any }
-  operationName?: string
-}) => {
-  const data = useGraph<T>({ url, query, name })
-  useEffect(() => {
-    if (variables)
-      data.fetch({
-        variables,
-        operationName,
-      })
-  }, [])
-  return data
-}
-
-export const useGraph = <T>({
-  url,
-  query,
-  name,
-}: {
-  url: string
-  query: string
-  name?: string
+  authorization?: string
 }) => {
   const mounted = useRef(false)
   useEffect(() => {
@@ -44,10 +20,10 @@ export const useGraph = <T>({
       mounted.current = false
     }
   }, [])
+  const toaster = useToaster()
   const [data, dataChange] = useState<T | undefined>()
   const [loading, loadingChange] = useState<boolean>()
   const [error, errorChange] = useState<Error | undefined>()
-  const toaster = useToaster()
   const fetch = ({
     variables,
     operationName,
@@ -60,6 +36,10 @@ export const useGraph = <T>({
     return axios({
       url,
       method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: authorization || '',
+      },
       data: {
         query,
         variables,
@@ -88,7 +68,6 @@ export const useGraph = <T>({
         throw caught
       })
   }
-  // eslint-disable-next-line
   const factory = () => ({
     data,
     loading,

@@ -1,11 +1,11 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useRouter, SideBar } from 'wga-theme'
-import { useApp } from '../hooks/useApp'
+import { useConfig } from '../hooks/useConfig'
 import { ListPermissions } from '../screens/ListPermissions'
 import { ListProviders } from '../screens/ListProviders'
 
 export const RouterSideBarSettings: FC = () => {
-  const app = useApp()
+  const config = useConfig()
   const router = useRouter({
     base: '/settings',
     nomatch: '/providers',
@@ -19,7 +19,7 @@ export const RouterSideBarSettings: FC = () => {
       create(SideBar, {
         key: 'sideBar',
         title: 'Settings',
-        footer: app.state && app.state.appname,
+        footer: config.state.appname,
         options: [
           {
             icon: 'handshake',

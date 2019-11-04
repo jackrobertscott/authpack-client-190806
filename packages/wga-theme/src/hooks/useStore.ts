@@ -3,30 +3,26 @@ import { Store } from 'events-and-things'
 
 export const useStore = <T>({
   key,
-  store,
   initial,
+  ...options
 }: {
   key?: string
-  store?: Store<T | undefined>
+  store?: Store<T>
   initial?: T
 }) => {
-  const [persistor, persistorChange] = useState<
-    Store<T | undefined> | undefined
-  >()
-  const [value, valueChange] = useState<T | undefined>(
-    store ? store.state : initial
-  )
+  const getStore = () => options.store || new Store<T>(initial as T, key)
+  const [store, storeChange] = useState<Store<T>>(getStore())
+  const [value, valueChange] = useState<T>(store ? store.state : (initial as T))
   useEffect(() => {
-    persistorChange(store || new Store<T | undefined>(initial, key))
+    if (options.store) storeChange(options.store)
+  }, [options.store])
+  useEffect(() => {
+    if (store) return store.listen((data: T) => valueChange(data))
   }, [store])
-  useEffect(() => {
-    if (persistor)
-      return persistor.listen((data: T | undefined) => valueChange(data))
-  }, [persistor])
   const factory = () => ({
-    state: persistor ? persistor.state : undefined,
-    change: persistor ? (data: T) => persistor.change(data) : undefined,
-    store: persistor,
+    store,
+    state: store.state,
+    change: (data: T) => store.change(data),
   })
   return useMemo(factory, [value])
 }

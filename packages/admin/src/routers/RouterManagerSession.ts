@@ -1,12 +1,12 @@
-import { createElement as create, FC, useState, useEffect } from 'react'
+import { createElement as create, FC } from 'react'
 import { useLocalRouter, Modal, Layout, IconBar } from 'wga-theme'
 
 export const RouterManagerSession: FC<{
   id?: string
+  change?: (id?: string) => void
+  visible?: boolean
   close: () => void
-}> = ({ close, ...options }) => {
-  const [id, idChange] = useState<string | undefined>(options.id)
-  useEffect(() => idChange(id), [id])
+}> = ({ id, change, close, visible }) => {
   const router = useLocalRouter({
     nomatch: id ? '/update' : '/create',
     options: id
@@ -14,6 +14,7 @@ export const RouterManagerSession: FC<{
       : [{ key: '/create', children: null }],
   })
   return create(Modal, {
+    visible,
     children: create(Layout, {
       children: [
         create(IconBar, {
@@ -48,7 +49,10 @@ export const RouterManagerSession: FC<{
                 },
               ],
         }),
-        router.current && router.current.children,
+        router.current &&
+          create((() => router.current.children) as FC, {
+            key: 'children',
+          }),
       ],
     }),
   })

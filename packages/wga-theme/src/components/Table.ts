@@ -14,7 +14,7 @@ export const Table: FC<{
     id: string
     click?: () => void
     cells: Array<{
-      value: string | number
+      value?: string | number
       icon?: string
       solid?: boolean
     }>
@@ -24,6 +24,7 @@ export const Table: FC<{
     className: css({
       all: 'unset',
       display: 'table',
+      flexGrow: 1,
     }),
     children: [
       create('thead', {
@@ -122,7 +123,7 @@ const Header: FC<{
 const Row: FC<{
   click?: () => void
   cells: Array<{
-    value: string | number
+    value?: string | number
     icon?: string
     solid?: boolean
   }>
@@ -150,7 +151,7 @@ const Row: FC<{
 }
 
 const Cell: FC<{
-  value: string | number
+  value?: string | number
   icon?: string
   solid?: boolean
 }> = ({ value, icon, solid }) => {

@@ -28,6 +28,8 @@ export const Gadgets: FC<{
           key: 'children',
           children,
           className: css({
+            display: 'flex',
+            flexDirection: 'column',
             flexGrow: 1,
           }),
         }),

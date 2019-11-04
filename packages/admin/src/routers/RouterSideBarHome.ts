@@ -1,12 +1,12 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useRouter, SideBar } from 'wga-theme'
-import { useApp } from '../hooks/useApp'
+import { useConfig } from '../hooks/useConfig'
 import { ListUsers } from '../screens/ListUsers'
 import { ListTeams } from '../screens/ListTeams'
 import { ListSessions } from '../screens/ListSessions'
 
 export const RouterSideBarHome: FC = () => {
-  const app = useApp()
+  const config = useConfig()
   const router = useRouter({
     base: '/home',
     nomatch: '/users',
@@ -21,7 +21,7 @@ export const RouterSideBarHome: FC = () => {
       create(SideBar, {
         key: 'sideBar',
         title: 'Home',
-        footer: app.state && app.state.appname,
+        footer: config.state.appname,
         options: [
           {
             icon: 'user-circle',

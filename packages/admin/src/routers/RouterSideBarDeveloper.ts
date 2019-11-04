@@ -1,9 +1,9 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useRouter, SideBar } from 'wga-theme'
-import { useApp } from '../hooks/useApp'
+import { useConfig } from '../hooks/useConfig'
 
 export const RouterSideBarDeveloper: FC = () => {
-  const app = useApp()
+  const config = useConfig()
   const router = useRouter({
     base: '/developer',
     nomatch: '/explorer',
@@ -14,7 +14,7 @@ export const RouterSideBarDeveloper: FC = () => {
       create(SideBar, {
         key: 'sideBar',
         title: 'Developer',
-        footer: app.state && app.state.appname,
+        footer: config.state.appname,
         options: [
           {
             icon: 'globe-americas',
