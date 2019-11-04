@@ -57,7 +57,7 @@ export const Page: FC<{
           create(Branding, {
             key: 'branding',
             url: 'https://windowgadgets.io',
-            text: `Made by Window Gadgets`,
+            text: `Window Gadgets`,
           }),
         ],
       }),

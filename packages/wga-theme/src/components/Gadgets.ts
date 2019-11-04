@@ -35,7 +35,7 @@ export const Gadgets: FC<{
         }),
         create(Branding, {
           key: 'branding',
-          text: 'Authenticator',
+          text: 'Window Gadgets',
           url: 'https://authenticator.windowgadgets.io',
         }),
       ],
