@@ -19,10 +19,5 @@ export const useStore = <T>({
   useEffect(() => {
     if (store) return store.listen((data: T) => valueChange(data))
   }, [store])
-  const factory = () => ({
-    store,
-    state: store.state,
-    change: store.change,
-  })
-  return useMemo(factory, [value])
+  return useMemo(() => store, [value])
 }

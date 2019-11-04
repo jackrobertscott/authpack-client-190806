@@ -1,5 +1,5 @@
-import { PluginGadgets } from 'wga-plugin'
+import { Gadgets } from 'wga-plugin'
 
-export const gadgets = new PluginGadgets({
-  key: 'wga-domain-key-319fa5a39b16209aa0eb4aa5a',
+export const wga = new Gadgets({
+  domain: 'wga-domain-key-79aeda5fd1178c9486d6925cc',
 })

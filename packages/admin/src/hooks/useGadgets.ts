@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
-import { IPluginGadgets } from 'wga-plugin'
-import { gadgets } from '../utils/wga'
+import { wga } from '../utils/wga'
 
-export const useGadgetsState = () => {
-  const [state, stateChange] = useState<IPluginGadgets>()
+export const useGadgets = () => {
+  const [state, stateChange] = useState()
   const [loading, loadingChange] = useState<boolean>(true)
   useEffect(() => {
-    return gadgets.listen((data: IPluginGadgets) => {
+    return wga.listen(data => {
       stateChange(data)
       if (loading) loadingChange(false)
     })
