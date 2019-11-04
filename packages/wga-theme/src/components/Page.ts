@@ -6,15 +6,15 @@ import { Icon } from './Icon'
 export const Page: FC<{
   title: string
   subtitle: string
-  noscroll?: ReactNode
   children: ReactNode
+  noscroll?: ReactNode
   corner?: {
     icon: string
     solid?: boolean
     label: string
     click: () => void
   }
-}> = ({ title, subtitle, noscroll, children, corner }) => {
+}> = ({ title, subtitle, noscroll = null, children, corner }) => {
   const theme = useTheme()
   return create('div', {
     className: css({
@@ -28,10 +28,14 @@ export const Page: FC<{
       background: theme.page.background,
     }),
     children: [
-      noscroll &&
-        create((() => noscroll) as FC, {
-          key: 'noscroll',
+      create('div', {
+        key: 'noscroll',
+        children: noscroll,
+        className: css({
+          display: 'flex',
+          flexDirection: 'column',
         }),
+      }),
       create(Scroller, {
         key: 'scroller',
         children: [

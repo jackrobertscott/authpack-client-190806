@@ -6,5 +6,6 @@ export const ListTeams: FC = () => {
     title: 'Teams',
     subtitle: '',
     children: null,
+    noscroll: null,
   })
 }

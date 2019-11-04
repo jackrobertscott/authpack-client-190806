@@ -6,5 +6,6 @@ export const ListProviders: FC = () => {
     title: 'Providers',
     subtitle: '',
     children: null,
+    noscroll: null,
   })
 }

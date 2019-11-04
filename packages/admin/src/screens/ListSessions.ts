@@ -6,5 +6,6 @@ export const ListSessions: FC = () => {
     title: 'Sessions',
     subtitle: '',
     children: null,
+    noscroll: null,
   })
 }

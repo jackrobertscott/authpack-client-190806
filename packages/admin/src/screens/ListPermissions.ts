@@ -6,5 +6,6 @@ export const ListPermissions: FC = () => {
     title: 'Permissions',
     subtitle: '',
     children: null,
+    noscroll: null,
   })
 }
