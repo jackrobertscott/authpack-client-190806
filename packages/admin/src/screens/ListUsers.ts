@@ -2,34 +2,11 @@ import { createElement as create, FC, useState, useEffect } from 'react'
 import { Page, SearchBar, usePaginator, Table } from 'wga-theme'
 import { useConfig } from '../hooks/useConfig'
 import { RouterManagerUser } from '../routers/RouterManagerUser'
-import { useServer } from '../hooks/useServer'
+import { createUseServer } from '../hooks/useServer'
 
 export const ListUsers: FC = () => {
   const config = useConfig()
-  const gql = useServer<{
-    count: number
-    users: Array<{
-      id: string
-      updated: string
-      email: string
-      username?: string
-      name?: string
-    }>
-  }>({
-    name: 'APIListUsers',
-    query: `
-      query APIListUsers($filter: FilterUsers, $options: FilterOptions) {
-        count: APICountUsers(filter: $filter)
-        users: APIListUsers(filter: $filter, options: $options) {
-          id
-          updated
-          email
-          username
-          name
-        }
-      }
-    `,
-  })
+  const gql = useAPIListUsers()
   const paginator = usePaginator({
     count: gql.data && gql.data.count,
   })
@@ -39,12 +16,10 @@ export const ListUsers: FC = () => {
   const [sort, sortChange] = useState<string | undefined>()
   useEffect(() => {
     gql.fetch({
-      variables: {
-        options: {
-          limit: paginator.limit,
-          skip: paginator.skip,
-          sort,
-        },
+      options: {
+        limit: paginator.limit,
+        skip: paginator.skip,
+        sort,
       },
     })
     // eslint-disable-next-line
@@ -117,3 +92,39 @@ export const ListUsers: FC = () => {
     }),
   })
 }
+
+export const useAPIListUsers = createUseServer<
+  {
+    filter?: {}
+    options?: {
+      limit?: number
+      skip?: number
+      sort?: string
+      reverse?: boolean
+    }
+  },
+  {
+    count: number
+    users: Array<{
+      id: string
+      updated: string
+      email: string
+      username?: string
+      name?: string
+    }>
+  }
+>({
+  name: 'APIListUsers',
+  query: `
+  query APIListUsers($filter: FilterUsers, $options: FilterOptions) {
+    count: APICountUsers(filter: $filter)
+    users: APIListUsers(filter: $filter, options: $options) {
+      id
+      updated
+      email
+      username
+      name
+    }
+  }
+`,
+})

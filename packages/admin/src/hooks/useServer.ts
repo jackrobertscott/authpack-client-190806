@@ -16,11 +16,13 @@ export const useServer = <V, T>({
   query: string
 }) => {
   const config = useConfig()
+  const domainkey =
+    config.state.devmode && config.state.domain
+      ? `dev:${config.state.domain}`
+      : config.state.domain
   return useGQL<V, T>({
     url: config.state.api,
-    authorization: [config.state.domain, config.state.bearer]
-      .filter(String)
-      .join(','),
+    authorization: [domainkey, config.state.bearer].filter(String).join(','),
     name,
     query,
   })
