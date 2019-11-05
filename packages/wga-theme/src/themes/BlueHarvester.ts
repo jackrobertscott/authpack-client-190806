@@ -98,11 +98,11 @@ export const BlueHarvester: ITheme = {
     border: `none`,
   },
   menu: {
-    label: color(0.9),
-    helper: color(0.75),
-    background: color(0.5),
-    backgroundHover: color(0.6),
-    border: `none`,
+    label: color(1),
+    helper: color(0.85),
+    background: color(0.45),
+    backgroundHover: color(0.55),
+    border: `1px solid ${color(0.425)}`,
   },
   modal: {
     background: color(0.15),

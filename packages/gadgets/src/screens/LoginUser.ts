@@ -23,9 +23,9 @@ export const LoginUser: FC = () => {
         .required('Please provide your email'),
       password: yup.string().required('Please provide your password'),
     }),
-    submit: data => {
-      schema.validate(data).then(value => {
-        return login.fetch({ value })
+    submit: value => {
+      login.fetch({ value }).then(() => {
+        schema.change('password')('')
       })
     },
   })

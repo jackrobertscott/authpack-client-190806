@@ -1,4 +1,4 @@
-import { createElement as create, FC, ReactNode } from 'react'
+import { createElement as create, FC, ReactNode, useState } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../contexts/Theme'
 import { Icon } from './Icon'
@@ -80,64 +80,59 @@ const IconPointer: FC<{
   }>
 }> = ({ icon, label, solid, focused, seperated, click, options = [] }) => {
   const theme = useTheme()
-  return create(TogglePointer, {
-    seperated,
-    children: create('div', {
-      onClick: click,
-      className: css({
-        color: focused ? theme.iconBar.iconFocused : theme.iconBar.icon,
-        background: theme.iconBar.iconBackground,
-        borderRadius: theme.global.radius,
-        transition: '200ms',
-        cursor: 'pointer',
-        '&:hover': {
-          color: theme.iconBar.iconHover,
-          background: theme.iconBar.iconBackgroundHover,
-        },
-      }),
-      children: create(Icon, {
-        icon,
-        size: 22,
-        padding: 8,
-        solid,
-      }),
-    }),
-    pointer: create(Pointer, {
-      icon,
-      label,
-      solid,
-      children:
-        !!options.length &&
-        create(Menu, {
-          key: 'menu',
-          options,
-        }),
-    }),
-  })
-}
-
-const TogglePointer: FC<{
-  children: ReactNode
-  pointer: ReactNode
-  seperated?: boolean
-}> = ({ children, pointer, seperated }) => {
+  const [open, openChange] = useState<boolean>(false)
   return create('div', {
+    onClick: () => options.length && openChange(!open),
     className: css({
       all: 'unset',
       display: 'flex',
       position: 'relative',
       marginTop: seperated ? 'auto' : 0,
-      '&:hover > .toggle': {
+      '&:hover .toggle': {
         opacity: 1,
+      },
+      '& .toggle': open && {
+        opacity: 1,
+        pointerEvents: 'all',
       },
     }),
     children: [
-      create((() => children) as FC, {
-        key: 'children',
+      create('div', {
+        key: 'icon',
+        onClick: click,
+        className: css({
+          color: focused ? theme.iconBar.iconFocused : theme.iconBar.icon,
+          background: theme.iconBar.iconBackground,
+          borderRadius: theme.global.radius,
+          transition: '200ms',
+          cursor: 'pointer',
+          '&:hover': {
+            color: theme.iconBar.iconHover,
+            background: theme.iconBar.iconBackgroundHover,
+          },
+        }),
+        children: create(Icon, {
+          icon,
+          size: 22,
+          padding: 8,
+          solid,
+        }),
       }),
       create('div', {
         key: 'pointer',
-        children: pointer,
+        children: create(Pointer, {
+          icon,
+          label,
+          solid,
+          close: () => options.length && openChange(false),
+          children:
+            open &&
+            !!options.length &&
+            create(Menu, {
+              key: 'menu',
+              options,
+            }),
+        }),
         className: css({
           all: 'unset',
           display: 'flex',

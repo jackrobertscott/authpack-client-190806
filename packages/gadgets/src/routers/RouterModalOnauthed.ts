@@ -15,8 +15,14 @@ export const RouterModalOnauthed: FC<{
         icons: [
           {
             icon: 'user',
-            label: 'Update',
-            click: () => router.change('/update'),
+            label: 'User',
+            options: [
+              {
+                label: 'Update',
+                icon: 'lock',
+                click: () => router.change('/update'),
+              },
+            ],
           },
           {
             icon: 'times-circle',

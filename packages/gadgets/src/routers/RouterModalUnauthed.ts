@@ -15,9 +15,14 @@ export const RouterModalUnauthed: FC<{
         key: 'iconBar',
         icons: [
           {
-            icon: 'user',
+            icon: 'unlock',
             label: 'Login',
             click: () => router.change('/login'),
+          },
+          {
+            icon: 'plus',
+            label: 'Sign Up',
+            click: () => router.change('/signup'),
           },
           {
             icon: 'times-circle',
