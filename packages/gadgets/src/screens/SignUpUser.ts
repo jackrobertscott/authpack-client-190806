@@ -9,12 +9,12 @@ import {
   Button,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
-import { useSignupUser } from '../graphql/useSignupUser'
 import { transformParamCase } from '../utils/yup'
 import { SettingsStore } from '../utils/settings'
+import { createUseServer } from '../hooks/useServer'
 
 export const SignupUser: FC = () => {
-  const gql = useSignupUser()
+  const gqlSignupUser = useSignupUser()
   const settings = useSettings()
   const schema = useSchema({
     local: 'wga.SignupUser',
@@ -32,7 +32,7 @@ export const SignupUser: FC = () => {
       password: yup.string().required('Please provide your password'),
     }),
     submit: value => {
-      gql.fetch({ value }).then(({ session }) => {
+      gqlSignupUser.fetch({ value }).then(({ session }) => {
         schema.change('password')('')
         SettingsStore.change((old: any) => ({
           ...old,
@@ -117,3 +117,20 @@ export const SignupUser: FC = () => {
     }),
   })
 }
+
+const useSignupUser = createUseServer<{
+  session: {
+    id: string
+    token: string
+  }
+}>({
+  name: 'SignupUser',
+  query: `
+    mutation SignupUser($value: SignupUserValue!) {
+      session: SignupUser(value: $value) {
+        id
+        token
+      }
+    }
+  `,
+})

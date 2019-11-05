@@ -1,32 +1,17 @@
 import { createElement as create, FC, useState, useEffect } from 'react'
-import { Page, SearchBar, usePaginator, Table } from 'wga-theme'
-import { useConfig } from '../hooks/useConfig'
+import { Page, Table } from 'wga-theme'
 import { RouterManagerUser } from '../routers/RouterManagerUser'
-import { useAPIListUsers } from '../graphql/useAPIListUsers'
+import { TemplateSearchBar } from '../templates/TemplateSearchBar'
+import { createUseServer } from '../hooks/useServer'
 
 export const ListUsers: FC = () => {
-  const config = useConfig()
-  const gql = useAPIListUsers()
-  const paginator = usePaginator({
-    count: gql.data && gql.data.count,
-  })
+  const apiListUsers = useAPIListUsers()
   const [build, buildChange] = useState<boolean>(false)
-  const [search, searchChange] = useState<string>('')
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
-  const [sort, sortChange] = useState<string | undefined>()
+  const [options, optionsChange] = useState<{ [key: string]: any }>({})
   useEffect(() => {
-    gql.fetch({
-      filter: {
-        email: search,
-      },
-      options: {
-        limit: paginator.limit,
-        skip: paginator.skip,
-        sort,
-      },
-    })
-    // eslint-disable-next-line
-  }, [paginator.limit, paginator.skip, sort])
+    apiListUsers.fetch({ options })
+  }, [options])
   return create(Page, {
     title: 'Users',
     subtitle: 'See all users of your app',
@@ -38,7 +23,23 @@ export const ListUsers: FC = () => {
         buildChange(true)
       },
     },
+    noscroll: create(TemplateSearchBar, {
+      count: apiListUsers.data && apiListUsers.data.count,
+      change: (search, limit, skip) => {
+        optionsChange({
+          limit,
+          skip,
+        })
+      },
+    }),
     children: [
+      create(RouterManagerUser, {
+        key: 'router',
+        id: idcurrent,
+        change: idcurrentChange,
+        close: () => buildChange(false),
+        visible: build,
+      }),
       create(Table, {
         key: 'table',
         header: [
@@ -47,11 +48,11 @@ export const ListUsers: FC = () => {
           { key: 'email', label: 'Email' },
         ].map(({ key, label }) => ({
           label,
-          icon: sort === key ? 'chevron-down' : 'equals',
-          click: () => sortChange(key),
+          icon: options.sort === key ? 'chevron-down' : 'equals',
+          click: () => optionsChange(data => ({ ...data, sort: key })),
         })),
-        rows: gql.data
-          ? gql.data.users.map(data => ({
+        rows: apiListUsers.data
+          ? apiListUsers.data.users.map(data => ({
               id: data.id,
               click: () => {
                 idcurrentChange(data.id)
@@ -66,32 +67,31 @@ export const ListUsers: FC = () => {
             }))
           : [],
       }),
-      create(RouterManagerUser, {
-        key: 'router',
-        id: idcurrent,
-        change: idcurrentChange,
-        close: () => buildChange(false),
-        visible: build,
-      }),
     ],
-    noscroll: create(SearchBar, {
-      value: search,
-      change: searchChange,
-      devmode: config.state.devmode,
-      options: [
-        {
-          icon: 'angle-double-left',
-          label: 'Previous',
-          click: paginator.previous,
-          disabled: !paginator.hasPrevious,
-        },
-        {
-          icon: 'angle-double-right',
-          label: 'Next',
-          click: paginator.next,
-          disabled: !paginator.hasNext,
-        },
-      ],
-    }),
   })
 }
+
+const useAPIListUsers = createUseServer<{
+  count: number
+  users: Array<{
+    id: string
+    updated: string
+    email: string
+    username?: string
+    name?: string
+  }>
+}>({
+  name: 'APIListUsers',
+  query: `
+    query APIListUsers($filter: FilterUsers, $options: FilterOptions) {
+      count: APICountUsers(filter: $filter)
+      users: APIListUsers(filter: $filter, options: $options) {
+        id
+        updated
+        email
+        username
+        name
+      }
+    }
+`,
+})

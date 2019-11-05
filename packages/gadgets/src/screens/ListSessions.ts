@@ -3,24 +3,24 @@ import { Gadgets } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 
-export const CreateTeam: FC = () => {
+export const ListSessions: FC = () => {
   const settings = useSettings()
   return create(Gadgets, {
-    title: 'Create Team',
+    title: 'Sessions',
     subtitle: settings.state.appname,
     children: null,
   })
 }
 
-const useCreateTeam = createUseServer<{
-  team: {
+const useListSessions = createUseServer<{
+  sessions: Array<{
     id: string
-  }
+  }>
 }>({
-  name: 'CreateTeam',
+  name: 'ListSessions',
   query: `
-    mutation CreateTeam($value: CreateTeamValue!) {
-      team: CreateTeam(value: $value) {
+    query ListSessions($options: FilterOptions) {
+      sessions: ListSessions(options: $options) {
         id
       }
     }

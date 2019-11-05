@@ -3,24 +3,24 @@ import { Gadgets } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 
-export const CreateTeam: FC = () => {
+export const RemoveTeam: FC = () => {
   const settings = useSettings()
   return create(Gadgets, {
-    title: 'Create Team',
+    title: 'Danger Zone',
     subtitle: settings.state.appname,
     children: null,
   })
 }
 
-const useCreateTeam = createUseServer<{
-  team: {
+const useRemoveMembership = createUseServer<{
+  membership: {
     id: string
   }
 }>({
-  name: 'CreateTeam',
+  name: 'RemoveMembership',
   query: `
-    mutation CreateTeam($value: CreateTeamValue!) {
-      team: CreateTeam(value: $value) {
+    mutation RemoveMembership($id: String!) {
+      membership: RemoveMembership(id: $id) {
         id
       }
     }

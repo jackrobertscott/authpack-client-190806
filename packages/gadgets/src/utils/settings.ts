@@ -42,4 +42,5 @@ export const defaultSettings: ISettings = {
   subscribed: false,
 }
 
-export const SettingsStore = new Store<ISettings>(defaultSettings)
+const storekey = `wga.${document.location.host}.settings`
+export const SettingsStore = new Store<ISettings>(defaultSettings, storekey)

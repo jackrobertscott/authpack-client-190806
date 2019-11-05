@@ -9,11 +9,11 @@ import {
   Button,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
-import { useLoginUser } from '../graphql/useLoginUser'
 import { SettingsStore } from '../utils/settings'
+import { createUseServer } from '../hooks/useServer'
 
 export const LoginUser: FC = () => {
-  const gql = useLoginUser()
+  const gqlLoginUser = useLoginUser()
   const settings = useSettings()
   const schema = useSchema({
     local: 'wga.LoginUser',
@@ -25,7 +25,7 @@ export const LoginUser: FC = () => {
       password: yup.string().required('Please provide your password'),
     }),
     submit: value => {
-      gql.fetch({ value }).then(({ session }) => {
+      gqlLoginUser.fetch({ value }).then(({ session }) => {
         schema.change('password')('')
         SettingsStore.change((old: any) => ({
           ...old,
@@ -74,3 +74,35 @@ export const LoginUser: FC = () => {
     }),
   })
 }
+
+const useLoginUser = createUseServer<{
+  session: {
+    id: string
+    token: string
+  }
+}>({
+  name: 'LoginUser',
+  query: `
+    mutation LoginUser($value: LoginUserValue!) {
+      session: LoginUser(value: $value) {
+        id
+        token
+      }
+    }
+  `,
+})
+
+const useListProviders = createUseServer<{
+  providers: Array<{
+    id: string
+  }>
+}>({
+  name: 'ListProviders',
+  query: `
+    query ListProviders {
+      providers: ListProviders {
+        id
+      }
+    }
+  `,
+})

@@ -1,6 +1,7 @@
 import { createElement as create, FC } from 'react'
 import { Gadgets } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
+import { createUseServer } from '../hooks/useServer'
 
 export const RemoveUser: FC = () => {
   const settings = useSettings()
@@ -10,3 +11,18 @@ export const RemoveUser: FC = () => {
     children: null,
   })
 }
+
+const useRemoveUser = createUseServer<{
+  user: {
+    id: string
+  }
+}>({
+  name: 'RemoveUser',
+  query: `
+    mutation RemoveUser($value: RemoveUserValue!) {
+      user: RemoveUser(value: $value) {
+        id
+      }
+    }
+  `,
+})

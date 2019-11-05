@@ -9,10 +9,10 @@ import {
   Button,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
-import { useForgotUserPassword } from '../graphql/useForgotUserPassword'
+import { createUseServer } from '../hooks/useServer'
 
 export const ForgotUserPassword: FC = () => {
-  const gql = useForgotUserPassword()
+  const gqlForgotUserPassword = useForgotUserPassword()
   const settings = useSettings()
   const schema = useSchema({
     local: 'wga.ForgotUserPassword',
@@ -23,7 +23,7 @@ export const ForgotUserPassword: FC = () => {
         .required('Please provide your email'),
     }),
     submit: value => {
-      gql.fetch({ value })
+      gqlForgotUserPassword.fetch({ value })
     },
   })
   return create(Gadgets, {
@@ -55,3 +55,14 @@ export const ForgotUserPassword: FC = () => {
     }),
   })
 }
+
+const useForgotUserPassword = createUseServer<{
+  email: string
+}>({
+  name: 'ForgotUserPassword',
+  query: `
+    mutation ForgotUserPassword($value: ForgotUserPasswordValue!) {
+      email: ForgotUserPassword(value: $value)
+    }
+  `,
+})

@@ -3,41 +3,39 @@ import { Gadgets } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 
-export const SwitchTeam: FC = () => {
+export const UpdateMembership: FC = () => {
   const settings = useSettings()
   return create(Gadgets, {
-    title: 'Switch Team',
+    title: 'Members',
     subtitle: settings.state.appname,
     children: null,
   })
 }
 
-const useListTeams = createUseServer<{
-  teams: Array<{
+const useListPermissions = createUseServer<{
+  permissions: Array<{
     id: string
-    name: string
   }>
 }>({
-  name: 'ListTeams',
+  name: 'ListPermissions',
   query: `
-    query ListTeams {
-      teams: ListTeams {
+    query ListPermissions {
+      permissions: ListPermissions {
         id
-        name
       }
     }
   `,
 })
 
-const useSwitchTeam = createUseServer<{
-  session: {
+const useUpdateMembership = createUseServer<{
+  membership: {
     id: string
   }
 }>({
-  name: 'SwitchTeam',
+  name: 'UpdateMembership',
   query: `
-    mutation SwitchTeam($value: SwitchTeamValue!) {
-      session: SwitchTeam(value: $value) {
+    mutation UpdateMembership($id: String!, $value: UpdateMembershipValue!) {
+      membership: UpdateMembership(id: $id, value: $value) {
         id
       }
     }
