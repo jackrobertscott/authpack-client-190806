@@ -11,6 +11,7 @@ import { UpdateTeam } from '../screens/UpdateTeam'
 import { CreateMembership } from '../screens/CreateMembership'
 import { ListMemberships } from '../screens/ListMemberships'
 import { RemoveTeam } from '../screens/RemoveTeam'
+import { LogoutUser } from '../screens/LogoutUser'
 
 export const RouterModalOnauthed: FC<{
   close: () => void
@@ -24,6 +25,7 @@ export const RouterModalOnauthed: FC<{
       { key: '/user/password', children: create(UpdateUserPassword) },
       { key: '/user/apps', children: create(ListProviders) },
       { key: '/user/danger', children: create(RemoveUser) },
+      { key: '/logout', children: create(LogoutUser) },
       { key: '/team/create', children: create(CreateTeam) },
       { key: '/team/switch', children: create(SwitchTeam) },
     ].concat(
@@ -119,6 +121,11 @@ export const RouterModalOnauthed: FC<{
                   ]
                 : []
             ),
+          },
+          {
+            icon: 'power-off',
+            label: 'Logout',
+            click: () => router.change('/logout'),
           },
           {
             icon: 'times-circle',

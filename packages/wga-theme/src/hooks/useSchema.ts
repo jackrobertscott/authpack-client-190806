@@ -17,9 +17,9 @@ export const useSchema = ({
   submit,
 }: {
   local?: string
-  schema: yup.ObjectSchema
+  schema: yup.ObjectSchema<any>
   change?: (value: IValue) => void
-  submit?: (value: IValue) => void
+  submit?: (value: any) => void
 }) => {
   const store = useStore<IValue>({
     key: local,
