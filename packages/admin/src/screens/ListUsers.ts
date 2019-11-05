@@ -23,7 +23,7 @@ export const ListUsers: FC = () => {
       },
     })
     // eslint-disable-next-line
-  }, [paginator, sort])
+  }, [paginator.limit, paginator.skip, sort])
   return create(Page, {
     title: 'Users',
     subtitle: 'See all users of your app',

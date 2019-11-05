@@ -3,8 +3,11 @@ import { Layout, IconBar, useRouter } from 'wga-theme'
 import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterSideBarSettings } from './RouterSideBarSettings'
 import { RouterSideBarDeveloper } from './RouterSideBarDeveloper'
+import { useConfig } from '../hooks/useConfig'
+import { wga } from '../utils/wga'
 
 export const RouterCentral: FC = () => {
+  const config = useConfig()
   const router = useRouter({
     nomatch: '/home',
     options: [
@@ -37,6 +40,16 @@ export const RouterCentral: FC = () => {
             seperated: true,
             icon: 'bolt',
             label: 'Dev Mode',
+            click: () =>
+              config.change((old: any) => ({
+                ...old,
+                devmode: !config.state.devmode,
+              })),
+          },
+          {
+            icon: 'user-circle',
+            label: 'Personal Settings',
+            click: () => wga.open(),
           },
         ],
       }),
