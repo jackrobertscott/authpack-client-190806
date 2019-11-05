@@ -56,17 +56,16 @@ export const useSchema = ({
   useEffect(() => {
     validChange(!Object.values(error).filter(Boolean).length)
   }, [error])
-  const update = (key: string) => (next: any) => {
-    store.change({ ...store.state, [key]: next })
+  const update = (key: string) => (data: any) => {
+    store.change({ ...store.state, [key]: data })
     schema
       .validateAt(key, store.state)
       .then(() => {
         if (mounted.current && error[key])
-          setTimeout(() => errorChange({ ...error, [key]: undefined }))
+          errorChange({ ...error, [key]: undefined })
       })
       .catch(e => {
-        if (mounted.current)
-          setTimeout(() => errorChange({ ...error, [key]: e }))
+        if (mounted.current) errorChange({ ...error, [key]: e })
       })
   }
   const factory = () => ({

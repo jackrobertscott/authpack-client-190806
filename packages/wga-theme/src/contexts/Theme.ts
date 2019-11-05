@@ -44,6 +44,7 @@ export interface ITheme extends IKeys {
     border: string
     background: string
     scrollbar: string
+    scrollbarHover: string
   }
   page: {
     title: string
@@ -57,6 +58,7 @@ export interface ITheme extends IKeys {
     border: string
     background: string
     scrollbar: string
+    scrollbarHover: string
   }
   sideBar: {
     title: string

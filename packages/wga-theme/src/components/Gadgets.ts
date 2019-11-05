@@ -129,7 +129,7 @@ const Scroller: FC<{
         cursor: 'pointer',
         display: 'initial',
         backgroundColor: 'hsla(0, 0, 0, 0)',
-        borderLeft: theme.page.border,
+        borderLeft: theme.gadgets.border,
       },
       '&::-webkit-scrollbar-track': {
         backgroundColor: 'hsla(0, 0, 0, 0)',
@@ -137,8 +137,11 @@ const Scroller: FC<{
       '&::-webkit-scrollbar-thumb': {
         cursor: 'pointer',
         transition: '200ms',
-        borderLeft: theme.page.border,
-        background: theme.page.scrollbar,
+        borderLeft: theme.gadgets.border,
+        background: theme.gadgets.scrollbar,
+      },
+      '&::-webkit-scrollbar-thumb:hover': {
+        background: theme.gadgets.scrollbarHover,
       },
     }),
   })

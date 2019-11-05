@@ -224,6 +224,9 @@ const Scroller: FC<{
         borderLeft: theme.page.border,
         background: theme.page.scrollbar,
       },
+      '&::-webkit-scrollbar-thumb:hover': {
+        background: theme.page.scrollbarHover,
+      },
     }),
   })
 }

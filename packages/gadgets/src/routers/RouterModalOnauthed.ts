@@ -5,6 +5,7 @@ export const RouterModalOnauthed: FC<{
   close: () => void
 }> = ({ close }) => {
   const router = useLocalRouter({
+    local: 'wga.RouterModalOnauthed',
     nomatch: '/update',
     options: [{ key: '/update', children: null }],
   })

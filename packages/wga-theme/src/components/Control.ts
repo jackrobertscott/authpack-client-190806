@@ -16,6 +16,7 @@ export const Control: FC<{
       all: 'unset',
       display: 'flex',
       flexDirection: 'column',
+      width: '100%',
       color: theme.input.label,
     }),
     children: [

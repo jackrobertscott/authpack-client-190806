@@ -45,6 +45,7 @@ export const SignupUser: FC = () => {
       divide: true,
       children: [
         create(Layout, {
+          key: 'name',
           divide: true,
           children: [
             create(Control, {
