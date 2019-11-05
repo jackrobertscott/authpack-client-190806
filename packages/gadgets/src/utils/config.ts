@@ -1,4 +1,5 @@
 import { Store } from 'events-and-things'
+import { ITheme, BlueHarvester } from 'wga-theme'
 
 export interface IConfigStore {
   environment: string
@@ -7,6 +8,7 @@ export interface IConfigStore {
   sentryDSN?: string
   api: string
   debug: boolean
+  theme: ITheme
 }
 
 const defaults: IConfigStore = {
@@ -16,6 +18,7 @@ const defaults: IConfigStore = {
   sentryDSN: process.env.REACT_APP_SENTRY_DSN as string,
   api: 'http://localhost:4000',
   debug: true,
+  theme: BlueHarvester,
 }
 
-export const ConfigStore = new Store<IConfigStore>(defaults, 'wga.config')
+export const ConfigStore = new Store<IConfigStore>(defaults)

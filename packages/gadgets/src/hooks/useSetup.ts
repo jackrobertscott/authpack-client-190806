@@ -1,10 +1,12 @@
 import { useEffect } from 'react'
 import { SettingsStore } from '../utils/settings'
 import { radio } from '../utils/radio'
-import { useCurrentSession } from './useCurrentSession'
+import { useRefreshSession } from '../graphql/useRefreshSession'
+import { useRetrieveApp } from '../graphql/useRetrieveApp'
 
 export const useSetup = () => {
-  const currentSession = useCurrentSession()
+  const gqlApp = useRetrieveApp()
+  const gqlSession = useRefreshSession()
   useEffect(() => {
     radio.message({
       name: 'wga:plugin:ready',
@@ -13,12 +15,22 @@ export const useSetup = () => {
       name: 'wga:plugin:set',
       payload: SettingsStore.state,
     })
-    if (SettingsStore.state.session) currentSession.fetch()
+    if (SettingsStore.state.session) gqlSession.fetch()
     return SettingsStore.listen(data => {
       radio.message({
         name: 'wga:plugin:set',
         payload: data,
       })
+    })
+    // eslint-disable-next-line
+  }, [])
+  useEffect(() => {
+    gqlApp.fetch().then(({ app }) => {
+      SettingsStore.change((old: any) => ({
+        ...old,
+        appname: app.name || old.app.name,
+        subscribed: app.subscribed || false,
+      }))
     })
     // eslint-disable-next-line
   }, [])
@@ -43,8 +55,8 @@ export const useSetup = () => {
           SettingsStore.change(data => ({ ...data, domain: payload }))
           break
         case 'wga:gadgets:update':
-          if (currentSession.data && currentSession.data.session)
-            currentSession.fetch().then(({ session }: any) => {
+          if (gqlSession.data && gqlSession.data.session)
+            gqlSession.fetch().then(({ session }: any) => {
               return SettingsStore.change(data => ({
                 ...data,
                 session,

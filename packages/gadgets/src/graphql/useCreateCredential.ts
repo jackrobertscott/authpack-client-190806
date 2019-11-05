@@ -5,7 +5,7 @@ export const useCreateCredential = createUseServer<
     value:
       | object
       | {
-          provider: string
+          provider_id: string
           code: string
           meta?: { [key: string]: any }
         }
@@ -16,7 +16,7 @@ export const useCreateCredential = createUseServer<
       created: string
       updated: string
       meta: { [key: string]: any }
-      token: string
+      access_token: string
       email?: string
     }
   }
@@ -29,7 +29,7 @@ export const useCreateCredential = createUseServer<
         created
         updated
         meta
-        token
+        access_token
         email
       }
     }

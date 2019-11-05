@@ -4,6 +4,7 @@ import { useTheme } from '../contexts/Theme'
 import { Icon } from './Icon'
 import { Pointer } from './Pointer'
 import { Menu } from './Menu'
+import { ClickOutside } from './ClickOutside'
 
 export const IconBar: FC<{
   icons: Array<{
@@ -120,19 +121,6 @@ const IconPointer: FC<{
       }),
       create('div', {
         key: 'pointer',
-        children: create(Pointer, {
-          icon,
-          label,
-          solid,
-          close: () => options.length && openChange(false),
-          children:
-            open &&
-            !!options.length &&
-            create(Menu, {
-              key: 'menu',
-              options,
-            }),
-        }),
         className: css({
           all: 'unset',
           display: 'flex',
@@ -146,6 +134,21 @@ const IconPointer: FC<{
           top: -5,
           paddingLeft: 7.5,
         }).concat(' toggle'),
+        children: create(ClickOutside, {
+          click: () => open && openChange(false),
+          children: create(Pointer, {
+            icon,
+            label,
+            solid,
+            children:
+              open &&
+              !!options.length &&
+              create(Menu, {
+                key: 'menu',
+                options,
+              }),
+          }),
+        }),
       }),
     ],
   })

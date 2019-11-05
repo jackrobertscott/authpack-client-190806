@@ -1,4 +1,3 @@
-import OutsideClickHandler from 'react-outside-click-handler'
 import {
   createElement as create,
   FC,
@@ -9,6 +8,7 @@ import {
 import { useTheme } from '../contexts/Theme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
+import { ClickOutside } from './ClickOutside'
 
 export const InputContainer: FC<{
   children: ReactNode
@@ -60,8 +60,8 @@ export const InputPopover: FC<{
       element.current && (element.current as any).querySelector('input')
     if (input) input.focus()
   }, [])
-  return create(OutsideClickHandler, {
-    onOutsideClick: close,
+  return create(ClickOutside, {
+    click: close,
     children: create('div', {
       children,
       ref: element,

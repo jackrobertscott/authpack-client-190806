@@ -6,7 +6,7 @@ export const useUpdateMembership = createUseServer<
     value:
       | object
       | {
-          permissions?: string[]
+          permission_ids?: string[]
           meta?: { [key: string]: any }
         }
   },

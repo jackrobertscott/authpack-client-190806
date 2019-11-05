@@ -30,6 +30,12 @@ export const useSchema = ({
   const [error, errorChange] = useState<IError>({})
   const [valid, validChange] = useState<boolean>(true)
   useEffect(() => {
+    mounted.current = true
+    return () => {
+      mounted.current = false
+    }
+  }, [])
+  useEffect(() => {
     const tasks = Object.keys(store.state).map(key => {
       return schema
         .validateAt(key, store.state)
@@ -44,17 +50,12 @@ export const useSchema = ({
           return all
         }, {})
       })
-      .then(errorChange)
-    if (change) return store.listen(data => change(data))
+      .then(e => mounted.current && errorChange(e))
+    if (change) return store.listen(data => mounted.current && change(data))
   }, [])
   useEffect(() => {
-    mounted.current = true
-    return () => {
-      mounted.current = false
-    }
-  }, [])
-  useEffect(() => {
-    validChange(!Object.values(error).filter(Boolean).length)
+    if (mounted.current)
+      validChange(!Object.values(error).filter(Boolean).length)
   }, [error])
   const update = (key: string) => (data: any) => {
     store.change({ ...store.state, [key]: data })
@@ -64,9 +65,7 @@ export const useSchema = ({
         if (mounted.current && error[key])
           errorChange({ ...error, [key]: undefined })
       })
-      .catch(e => {
-        if (mounted.current) errorChange({ ...error, [key]: e })
-      })
+      .catch(e => mounted.current && errorChange({ ...error, [key]: e }))
   }
   const factory = () => ({
     valid,

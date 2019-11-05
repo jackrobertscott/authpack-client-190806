@@ -10,7 +10,7 @@ export const useRemoveCredential = createUseServer<
       created: string
       updated: string
       meta: { [key: string]: any }
-      token: string
+      access_token: string
       email?: string
     }
   }
@@ -23,7 +23,7 @@ export const useRemoveCredential = createUseServer<
         created
         updated
         meta
-        token
+        access_token
         email
       }
     }

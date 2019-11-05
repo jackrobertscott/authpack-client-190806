@@ -5,7 +5,7 @@ import { useSettings } from '../hooks/useSettings'
 export const UpdateUserPassword: FC = () => {
   const settings = useSettings()
   return create(Gadgets, {
-    title: 'Update Password',
+    title: 'Change Password',
     subtitle: settings.state.appname,
     children: null,
   })

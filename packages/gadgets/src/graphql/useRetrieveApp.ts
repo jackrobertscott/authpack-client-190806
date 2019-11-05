@@ -7,8 +7,8 @@ export const useRetrieveApp = createUseServer<
       id: string
       created: string
       updated: string
-      meta: { [key: string]: any }
-      name?: string
+      name: string
+      subscribed: boolean
     }
   }
 >({
@@ -19,8 +19,8 @@ export const useRetrieveApp = createUseServer<
         id
         created
         updated
-        meta
         name
+        subscribed
       }
     }
   `,

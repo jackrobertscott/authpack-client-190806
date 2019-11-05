@@ -4,13 +4,15 @@ import { useSettings } from './hooks/useSettings'
 import { RouterModalUnauthed } from './routers/RouterModalUnauthed'
 import { RouterModalOnauthed } from './routers/RouterModalOnauthed'
 import { Theme, Toaster, Modal } from 'wga-theme'
+import { useConfig } from './hooks/useConfig'
 
 export const App: FC = () => {
   useSetup()
+  const config = useConfig()
   const settings = useSettings()
   const close = useRef(() => settings.change(old => ({ ...old, open: false })))
   return create(Theme.Provider, {
-    value: settings.state.theme,
+    value: config.state.theme,
     children: create(Modal, {
       visible: settings.state.open,
       children: [

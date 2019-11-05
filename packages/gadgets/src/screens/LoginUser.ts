@@ -10,6 +10,7 @@ import {
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { useLoginUser } from '../graphql/useLoginUser'
+import { SettingsStore } from '../utils/settings'
 
 export const LoginUser: FC = () => {
   const gql = useLoginUser()
@@ -24,8 +25,13 @@ export const LoginUser: FC = () => {
       password: yup.string().required('Please provide your password'),
     }),
     submit: value => {
-      gql.fetch({ value }).then(() => {
+      gql.fetch({ value }).then(({ session }) => {
         schema.change('password')('')
+        SettingsStore.change((old: any) => ({
+          ...old,
+          session,
+          bearer: `Bearer ${session.token}`,
+        }))
       })
     },
   })

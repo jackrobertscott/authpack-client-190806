@@ -49,13 +49,13 @@ export const useGQL = <V, T>({
         operationName: name,
       },
     })
-      .then((done: any) => {
+      .then(done => {
         if (mounted.current) {
-          dataChange(done)
+          dataChange(done.data)
           errorChange(undefined)
           loadingChange(false)
         }
-        return done as T
+        return done.data as T
       })
       .catch(({ response: { data: caught } }) => {
         if (mounted.current) {

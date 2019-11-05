@@ -17,7 +17,7 @@ export const useListCredentials = createUseServer<
       created: string
       updated: string
       meta: { [key: string]: any }
-      token: string
+      access_token: string
       email?: string
     }>
   }
@@ -30,7 +30,7 @@ export const useListCredentials = createUseServer<
         created
         updated
         meta
-        token
+        access_token
         email
       }
     }

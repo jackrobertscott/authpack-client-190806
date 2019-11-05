@@ -7,7 +7,7 @@ export const useCreateMembership = createUseServer<
       | {
           user?: string
           email?: string
-          permissions?: string[]
+          permission_ids?: string[]
           meta?: { [key: string]: any }
         }
   },

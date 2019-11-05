@@ -11,6 +11,7 @@ import {
 import { useSettings } from '../hooks/useSettings'
 import { useSignupUser } from '../graphql/useSignupUser'
 import { transformParamCase } from '../utils/yup'
+import { SettingsStore } from '../utils/settings'
 
 export const SignupUser: FC = () => {
   const gql = useSignupUser()
@@ -31,8 +32,13 @@ export const SignupUser: FC = () => {
       password: yup.string().required('Please provide your password'),
     }),
     submit: value => {
-      gql.fetch({ value }).then(() => {
+      gql.fetch({ value }).then(({ session }) => {
         schema.change('password')('')
+        SettingsStore.change((old: any) => ({
+          ...old,
+          session,
+          bearer: `Bearer ${session.token}`,
+        }))
       })
     },
   })

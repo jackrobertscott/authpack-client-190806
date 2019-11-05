@@ -1,4 +1,3 @@
-import OutsideClickHandler from 'react-outside-click-handler'
 import { createElement as create, FC, ReactNode } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../contexts/Theme'
@@ -9,41 +8,37 @@ export const Pointer: FC<{
   solid?: boolean
   label: string
   helper?: string
-  close?: () => void
   children?: ReactNode
-}> = ({ icon, solid, label, close, helper, children }) => {
+}> = ({ icon, solid, label, helper, children }) => {
   const theme = useTheme()
-  return create(OutsideClickHandler, {
-    onOutsideClick: () => close && close(),
-    children: create('div', {
-      className: css({
-        all: 'unset',
-        display: 'flex',
-        flexDirection: 'column',
-        transition: '200ms',
-        overflow: 'hidden',
-        width: 280,
-        fontSize: theme.global.fonts,
-        borderRadius: theme.global.radius,
-        boxShadow: theme.pointer.shadow,
-        background: theme.pointer.background,
-        border: theme.pointer.border,
-        color: theme.pointer.label,
-      }),
-      children: [
-        create(Header, {
-          key: 'header',
-          icon,
-          solid,
-          label,
-          helper,
-        }),
-        children &&
-          create((() => children) as FC, {
-            key: 'children',
-          }),
-      ],
+  return create('div', {
+    className: css({
+      all: 'unset',
+      display: 'flex',
+      flexDirection: 'column',
+      transition: '200ms',
+      overflow: 'hidden',
+      width: 280,
+      fontSize: theme.global.fonts,
+      borderRadius: theme.global.radius,
+      border: theme.pointer.border,
+      boxShadow: theme.pointer.shadow,
+      background: theme.pointer.background,
+      color: theme.pointer.label,
     }),
+    children: [
+      create(Header, {
+        key: 'header',
+        icon,
+        solid,
+        label,
+        helper,
+      }),
+      children &&
+        create((() => children) as FC, {
+          key: 'children',
+        }),
+    ],
   })
 }
 

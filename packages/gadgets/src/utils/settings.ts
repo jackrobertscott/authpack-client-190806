@@ -1,5 +1,4 @@
 import { Store } from 'events-and-things'
-import { ITheme, BlueHarvester } from 'wga-theme'
 
 export type ISession = {
   id: string
@@ -11,7 +10,7 @@ export type ISession = {
     avatar?: string
     name?: string
   }
-  workspace?: {
+  team?: {
     id: string
     name: string
     tag: string
@@ -30,19 +29,18 @@ export type ISettings = {
   open: boolean
   devmode: boolean
   session: undefined | ISession
-  appname: string
+  appname?: string
   domain?: string
   bearer?: string
-  theme: ITheme
+  subscribed: boolean
 }
 
 export const defaultSettings: ISettings = {
   open: true,
   devmode: true,
   session: undefined,
-  appname: 'Window Gadgets',
   domain: 'wga-domain-key-79aeda5fd1178c9486d6925cc',
-  theme: BlueHarvester,
+  subscribed: false,
 }
 
 export const SettingsStore = new Store<ISettings>(
