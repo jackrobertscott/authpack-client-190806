@@ -10,12 +10,11 @@ export type ISession = {
     avatar?: string
     name?: string
   }
-  workspace?: {
+  team?: {
     id: string
     name: string
     tag: string
     description?: string
-    active: boolean
   }
   permissions?: Array<{
     id: string
@@ -44,4 +43,7 @@ export const defaultSettings: ISettings = {
   api: 'http://localhost:4000',
 }
 
-export const SettingsStore = new Store<ISettings>(defaultSettings)
+export const SettingsStore = new Store<ISettings>(
+  defaultSettings,
+  'wga.settings'
+)

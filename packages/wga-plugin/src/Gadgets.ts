@@ -16,6 +16,7 @@ export class Gadgets {
     this.render()
     this.ready = false
     this.queue = []
+    this.send('wga:gadgets:set', this.state)
     this.send('wga:gadgets:domain', domain)
   }
   /**

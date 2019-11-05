@@ -3,19 +3,16 @@ import { SettingsStore } from '../utils/settings'
 import { radio } from '../utils/radio'
 import { useRefreshSession } from '../graphql/useRefreshSession'
 import { useRetrieveApp } from '../graphql/useRetrieveApp'
+import { useSettings } from './useSettings'
 
 export const useSetup = () => {
   const gqlApp = useRetrieveApp()
   const gqlSession = useRefreshSession()
+  const settings = useSettings()
   useEffect(() => {
     radio.message({
       name: 'wga:plugin:ready',
     })
-    radio.message({
-      name: 'wga:plugin:set',
-      payload: SettingsStore.state,
-    })
-    if (SettingsStore.state.session) gqlSession.fetch()
     return SettingsStore.listen(data => {
       radio.message({
         name: 'wga:plugin:set',
@@ -25,6 +22,13 @@ export const useSetup = () => {
     // eslint-disable-next-line
   }, [])
   useEffect(() => {
+    gqlSession.fetch().then(({ session }) => {
+      return SettingsStore.change(data => ({
+        ...data,
+        session,
+        bearer: session ? `Bearer ${session.token}` : undefined,
+      }))
+    })
     gqlApp.fetch().then(({ app }) => {
       SettingsStore.change((old: any) => ({
         ...old,
@@ -33,7 +37,7 @@ export const useSetup = () => {
       }))
     })
     // eslint-disable-next-line
-  }, [])
+  }, [settings.state.bearer])
   useEffect(() => {
     return radio.listen(({ name, payload }) => {
       if (!name || !name.startsWith('wga:gadgets')) return

@@ -15,7 +15,6 @@ export type ISession = {
     name: string
     tag: string
     description?: string
-    active: boolean
   }
   permissions?: Array<{
     id: string
@@ -43,7 +42,4 @@ export const defaultSettings: ISettings = {
   subscribed: false,
 }
 
-export const SettingsStore = new Store<ISettings>(
-  defaultSettings,
-  'wga.settings'
-)
+export const SettingsStore = new Store<ISettings>(defaultSettings)
