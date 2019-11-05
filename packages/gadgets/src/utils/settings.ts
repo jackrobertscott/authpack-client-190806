@@ -38,10 +38,14 @@ export type ISettings = {
 
 export const defaultSettings: ISettings = {
   open: true,
-  devmode: false,
+  devmode: true,
   session: undefined,
   appname: 'Window Gadgets',
+  domain: 'wga-domain-key-79aeda5fd1178c9486d6925cc',
   theme: BlueHarvester,
 }
 
-export const settings = new Store<ISettings>(defaultSettings, 'wga.settings')
+export const SettingsStore = new Store<ISettings>(
+  defaultSettings,
+  'wga.settings'
+)

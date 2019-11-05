@@ -8,6 +8,7 @@ export interface IConfigStore {
   sentryDSN?: string
   api: string
   domain: string
+  bearer?: string
   debug: boolean
   devmode: boolean
   appname: string
@@ -27,4 +28,4 @@ const defaults: IConfigStore = {
   theme: BlueHarvester,
 }
 
-export const config = new Store<IConfigStore>(defaults, 'wga.config')
+export const ConfigStore = new Store<IConfigStore>(defaults, 'wga.config')

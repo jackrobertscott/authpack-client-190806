@@ -2,12 +2,14 @@ import { createUseServer } from '../hooks/useServer'
 
 export const useUpdateUser = createUseServer<
   {
-    value: {
-      email?: string
-      username?: string
-      name?: string
-      meta?: { [key: string]: any }
-    }
+    value:
+      | object
+      | {
+          email?: string
+          username?: string
+          name?: string
+          meta?: { [key: string]: any }
+        }
   },
   {
     user: {

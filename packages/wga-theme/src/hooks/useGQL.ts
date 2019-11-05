@@ -50,7 +50,6 @@ export const useGQL = <V, T>({
       },
     })
       .then((done: any) => {
-        if (done && done.error) throw done
         if (mounted.current) {
           dataChange(done)
           errorChange(undefined)
@@ -58,13 +57,16 @@ export const useGQL = <V, T>({
         }
         return done as T
       })
-      .catch((caught: Error & { code: number }) => {
+      .catch(({ response: { data: caught } }) => {
         if (mounted.current) {
           errorChange(caught)
           loadingChange(false)
           toaster.add({
             icon: 'bell',
-            label: `Error ${(caught && caught.code) || ''}`,
+            label:
+              caught && caught.code
+                ? `Error ${caught && caught.code}`
+                : 'Error',
             helper: caught.message,
           })
         }

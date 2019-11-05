@@ -44,4 +44,4 @@ export const defaultSettings: ISettings = {
   api: 'http://localhost:4000',
 }
 
-export const settings = new Store<ISettings>(defaultSettings)
+export const SettingsStore = new Store<ISettings>(defaultSettings)

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Dispatcher } from 'events-and-things'
-import { settings } from './settings'
+import { SettingsStore } from './settings'
 
 export const graphql = <V, T>({
   name,
@@ -13,7 +13,7 @@ export const graphql = <V, T>({
   return {
     async run(variables: V) {
       const { data } = await axios({
-        url: settings.state.api,
+        url: SettingsStore.state.api,
         method: 'post',
         headers: {
           'Content-Type': 'application/json',

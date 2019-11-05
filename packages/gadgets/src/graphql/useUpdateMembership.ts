@@ -3,10 +3,12 @@ import { createUseServer } from '../hooks/useServer'
 export const useUpdateMembership = createUseServer<
   {
     id: string
-    value: {
-      permissions?: string[]
-      meta?: { [key: string]: any }
-    }
+    value:
+      | object
+      | {
+          permissions?: string[]
+          meta?: { [key: string]: any }
+        }
   },
   {
     membership: {

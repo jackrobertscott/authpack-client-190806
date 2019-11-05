@@ -1,14 +1,15 @@
 import { createElement as create, FC } from 'react'
 import { useTheme } from '../contexts/Theme'
 import { css } from 'emotion'
-import { useToaster } from '../hooks/useToaster'
+import { ToasterStore } from '../hooks/useToaster'
 import { Icon } from './Icon'
+import { useStore } from '../hooks/useStore'
 
 export const Toaster: FC<{
   width?: number
 }> = ({ width = 300 }) => {
   const theme = useTheme()
-  const toaster = useToaster()
+  const toaster = useStore({ store: ToasterStore })
   return create('div', {
     className: css({
       all: 'unset',
@@ -21,7 +22,7 @@ export const Toaster: FC<{
       zIndex: 100,
       padding: 25,
     }),
-    children: toaster.current.map(
+    children: toaster.state.current.map(
       ({ id, icon, solid, label, helper, close }) => {
         return create('div', {
           key: id,

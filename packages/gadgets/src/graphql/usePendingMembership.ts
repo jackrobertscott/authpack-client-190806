@@ -3,9 +3,11 @@ import { createUseServer } from '../hooks/useServer'
 export const usePendingMembership = createUseServer<
   {
     id: string
-    value: {
-      code: string
-    }
+    value:
+      | object
+      | {
+          code: string
+        }
   },
   {
     user: {

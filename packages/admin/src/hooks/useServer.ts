@@ -1,7 +1,14 @@
 import { useGQL } from 'wga-theme'
 import { useConfig } from './useConfig'
 
-export const useServer = <T>({
+export const createUseServer = <V, T>(options: {
+  name: string
+  query: string
+}) => () => {
+  return useServer<V, T>(options)
+}
+
+export const useServer = <V, T>({
   name,
   query,
 }: {
@@ -9,9 +16,11 @@ export const useServer = <T>({
   query: string
 }) => {
   const config = useConfig()
-  return useGQL<T>({
+  return useGQL<V, T>({
     url: config.state.api,
-    authorization: config.state.domain,
+    authorization: [config.state.domain, config.state.bearer]
+      .filter(String)
+      .join(','),
     name,
     query,
   })

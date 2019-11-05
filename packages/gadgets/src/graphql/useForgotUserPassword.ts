@@ -2,9 +2,11 @@ import { createUseServer } from '../hooks/useServer'
 
 export const useForgotUserPassword = createUseServer<
   {
-    value: {
-      email: string
-    }
+    value:
+      | object
+      | {
+          email: string
+        }
   },
   {
     email: string

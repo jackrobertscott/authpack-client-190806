@@ -2,9 +2,11 @@ import { createUseServer } from '../hooks/useServer'
 
 export const useSwitchTeam = createUseServer<
   {
-    value: {
-      id: string
-    }
+    value:
+      | object
+      | {
+          id: string
+        }
   },
   {
     team: {

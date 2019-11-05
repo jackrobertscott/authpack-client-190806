@@ -2,10 +2,12 @@ import { createUseServer } from '../hooks/useServer'
 
 export const useLoginUser = createUseServer<
   {
-    value: {
-      email: string
-      password: string
-    }
+    value:
+      | object
+      | {
+          email: string
+          password: string
+        }
   },
   {
     session: {

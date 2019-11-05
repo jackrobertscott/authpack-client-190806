@@ -3,9 +3,11 @@ import { createUseServer } from '../hooks/useServer'
 export const useRefreshCredential = createUseServer<
   {
     id: string
-    value: {
-      code: string
-    }
+    value:
+      | object
+      | {
+          code: string
+        }
   },
   {
     credential: {

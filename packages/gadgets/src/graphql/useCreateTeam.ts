@@ -2,12 +2,14 @@ import { createUseServer } from '../hooks/useServer'
 
 export const useCreateTeam = createUseServer<
   {
-    value: {
-      name: string
-      tag: string
-      description?: string
-      meta?: { [key: string]: any }
-    }
+    value:
+      | object
+      | {
+          name: string
+          tag: string
+          description?: string
+          meta?: { [key: string]: any }
+        }
   },
   {
     team: {

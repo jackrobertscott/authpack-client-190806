@@ -2,10 +2,12 @@ import { createUseServer } from '../hooks/useServer'
 
 export const useUpdateUserPassword = createUseServer<
   {
-    value: {
-      passwordCurrent: string
-      passwordNew: string
-    }
+    value:
+      | object
+      | {
+          passwordCurrent: string
+          passwordNew: string
+        }
   },
   {
     user: {

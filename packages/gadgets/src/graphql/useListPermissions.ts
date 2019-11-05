@@ -2,12 +2,14 @@ import { createUseServer } from '../hooks/useServer'
 
 export const useListPermissions = createUseServer<
   {
-    options?: {
-      limit?: number
-      skip?: number
-      sort?: string
-      reverse?: boolean
-    }
+    options?:
+      | object
+      | {
+          limit?: number
+          skip?: number
+          sort?: string
+          reverse?: boolean
+        }
   },
   {
     permissions: Array<{

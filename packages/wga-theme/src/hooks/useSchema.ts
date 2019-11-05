@@ -1,5 +1,6 @@
 import * as yup from 'yup'
 import { useState, useMemo, useRef, useEffect } from 'react'
+import { useStore } from './useStore'
 
 interface IValue {
   [key: string]: any
@@ -9,46 +10,53 @@ interface IError {
 }
 
 export const useSchema = ({
+  local,
   schema,
   change,
+  submit,
 }: {
+  local?: string
   schema: yup.ObjectSchema
   change?: (value: IValue) => void
+  submit?: (value: IValue) => void
 }) => {
-  const [value, valueChange] = useState<IValue>(schema.default())
-  const [error, errorChange] = useState<IError>({})
   const mounted = useRef(false)
+  const store = useStore<IValue>({ key: local, initial: schema.default() })
+  const [error, errorChange] = useState<IError>({})
+  const [valid, validChange] = useState<boolean>(false)
   useEffect(() => {
-    if (change) change(value)
-  }, [value])
+    if (change) return store.listen(data => change(data))
+  }, [])
   useEffect(() => {
     mounted.current = true
     return () => {
       mounted.current = false
     }
   }, [])
+  useEffect(() => {
+    validChange(!Object.values(error).filter(Boolean).length)
+  }, [error])
   const update = (key: string) => (next: any) => {
-    const data = { ...value, [key]: next }
-    valueChange(data)
+    store.change({ ...store.state, [key]: next })
     schema
-      .validateAt(key, data)
+      .validateAt(key, store.state)
       .then(() => {
-        if (mounted.current && error[key]) {
-          errorChange({ ...error, [key]: undefined })
-        }
+        if (mounted.current && error[key])
+          setTimeout(() => errorChange({ ...error, [key]: undefined }))
       })
       .catch(e => {
-        if (mounted.current) errorChange({ ...error, [key]: e })
+        if (mounted.current)
+          setTimeout(() => errorChange({ ...error, [key]: e }))
       })
   }
   const factory = () => ({
-    valid: mounted.current && !Object.values(error).filter(Boolean).length,
-    state: value,
-    value: (key: string) => value[key],
+    valid,
+    state: store.state,
+    value: (key: string) => store.state[key],
     error: (key: string) => error[key],
-    change: (key: string) => {
-      return update(key)
-    },
+    change: (key: string) => update(key),
+    validate: (data: any) => schema.validate(data),
+    submit: () => submit && submit(store.state),
   })
-  return useMemo(factory, [value, error])
+  return useMemo(factory, [valid, store.state, error])
 }

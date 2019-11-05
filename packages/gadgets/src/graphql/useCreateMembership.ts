@@ -2,12 +2,14 @@ import { createUseServer } from '../hooks/useServer'
 
 export const useCreateMembership = createUseServer<
   {
-    value: {
-      user?: string
-      email?: string
-      permissions?: string[]
-      meta?: { [key: string]: any }
-    }
+    value:
+      | object
+      | {
+          user?: string
+          email?: string
+          permissions?: string[]
+          meta?: { [key: string]: any }
+        }
   },
   {
     membership: {

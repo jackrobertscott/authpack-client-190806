@@ -2,10 +2,12 @@ import { createUseServer } from '../hooks/useServer'
 
 export const useResetUserPassword = createUseServer<
   {
-    value: {
-      code: string
-      password: string
-    }
+    value:
+      | object
+      | {
+          code: string
+          password: string
+        }
   },
   {
     user: {

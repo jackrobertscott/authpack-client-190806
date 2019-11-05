@@ -2,13 +2,15 @@ import { createUseServer } from '../hooks/useServer'
 
 export const useSignupUser = createUseServer<
   {
-    value: {
-      email: string
-      password: string
-      username?: string
-      name?: string
-      meta: { [key: string]: any }
-    }
+    value:
+      | object
+      | {
+          email: string
+          password: string
+          username?: string
+          name?: string
+          meta: { [key: string]: any }
+        }
   },
   {
     session: {

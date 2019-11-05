@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { settings } from '../utils/settings'
+import { SettingsStore } from '../utils/settings'
 import { radio } from '../utils/radio'
 import { useCurrentSession } from './useCurrentSession'
 
@@ -11,10 +11,10 @@ export const useSetup = () => {
     })
     radio.message({
       name: 'wga:plugin:set',
-      payload: settings.state,
+      payload: SettingsStore.state,
     })
-    if (settings.state.session) currentSession.fetch()
-    return settings.listen(data => {
+    if (SettingsStore.state.session) currentSession.fetch()
+    return SettingsStore.listen(data => {
       radio.message({
         name: 'wga:plugin:set',
         payload: data,
@@ -30,22 +30,26 @@ export const useSetup = () => {
         case 'wga:gadgets:request':
           radio.message({
             name: 'wga:plugin:set',
-            payload: settings.state,
+            payload: SettingsStore.state,
           })
           break
         case 'wga:gadgets:set':
-          settings.change(payload)
+          SettingsStore.change(payload)
           break
         case 'wga:gadgets:open':
-          settings.change(data => ({ ...data, open: true }))
+          SettingsStore.change(data => ({ ...data, open: true }))
           break
         case 'wga:gadgets:domain':
-          settings.change(data => ({ ...data, domain: payload }))
+          SettingsStore.change(data => ({ ...data, domain: payload }))
           break
         case 'wga:gadgets:update':
           if (currentSession.data && currentSession.data.session)
             currentSession.fetch().then(({ session }: any) => {
-              return settings.change(data => ({ ...data, session }))
+              return SettingsStore.change(data => ({
+                ...data,
+                session,
+                bearer: session ? `Bearer ${session.token}` : undefined,
+              }))
             })
           break
         default:

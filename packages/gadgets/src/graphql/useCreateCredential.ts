@@ -2,11 +2,13 @@ import { createUseServer } from '../hooks/useServer'
 
 export const useCreateCredential = createUseServer<
   {
-    value: {
-      provider: string
-      code: string
-      meta?: { [key: string]: any }
-    }
+    value:
+      | object
+      | {
+          provider: string
+          code: string
+          meta?: { [key: string]: any }
+        }
   },
   {
     credential: {

@@ -2,12 +2,14 @@ import { createUseServer } from '../hooks/useServer'
 
 export const useListProviders = createUseServer<
   {
-    options?: {
-      limit?: number
-      skip?: number
-      sort?: string
-      reverse?: boolean
-    }
+    options?:
+      | object
+      | {
+          limit?: number
+          skip?: number
+          sort?: string
+          reverse?: boolean
+        }
   },
   {
     providers: Array<{

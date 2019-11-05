@@ -2,9 +2,11 @@ import { createUseServer } from '../hooks/useServer'
 
 export const useRemoveUser = createUseServer<
   {
-    value: {
-      password: string
-    }
+    value:
+      | object
+      | {
+          password: string
+        }
   },
   {
     user: {

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Dispatcher } from 'events-and-things'
-import { config } from './config'
-import { settings } from './settings'
+import { ConfigStore } from './config'
+import { SettingsStore } from './settings'
 import { useRef } from 'react'
 
 export const createGraphqlHook = <V, T>({
@@ -15,11 +15,14 @@ export const createGraphqlHook = <V, T>({
   return {
     async run(variables: V) {
       const { data } = await axios({
-        url: config.state.api,
+        url: ConfigStore.state.api,
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: [settings.state.domain, settings.state.bearer]
+          Authorization: [
+            SettingsStore.state.domain,
+            SettingsStore.state.bearer,
+          ]
             .filter(String)
             .join(','),
         },
