@@ -3,18 +3,13 @@ import { createUseServer } from '../hooks/useServer'
 export const useRefreshCredential = createUseServer<
   {
     id: string
-    value:
-      | object
-      | {
-          code: string
-        }
+    value: {
+      code: string
+    }
   },
   {
     credential: {
       id: string
-      created: string
-      updated: string
-      meta: { [key: string]: any }
       access_token: string
       email?: string
     }
@@ -25,9 +20,6 @@ export const useRefreshCredential = createUseServer<
     mutation RefreshCredential($id: String!, $value: RefreshCredentialValue!) {
       credential: RefreshCredential(id: $id, value: $value) {
         id
-        created
-        updated
-        meta
         access_token
         email
       }

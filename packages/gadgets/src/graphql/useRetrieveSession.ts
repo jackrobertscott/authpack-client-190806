@@ -5,9 +5,26 @@ export const useRetrieveSession = createUseServer<
   {
     session: {
       id: string
-      created: string
-      updated: string
-      meta: { [key: string]: any }
+      token: string
+      user: {
+        id: string
+        email: string
+        username?: string
+        given_name?: string
+        family_name?: string
+      }
+      team?: {
+        id: string
+        name: string
+        tag: string
+        description?: string
+      }
+      permissions?: Array<{
+        id: string
+        name: string
+        tag: string
+        description?: string
+      }>
     }
   }
 >({
@@ -16,9 +33,26 @@ export const useRetrieveSession = createUseServer<
     query RetrieveSession {
       session: RetrieveSession {
         id
-        created
-        updated
-        meta
+        token
+        user {
+          id
+          email
+          username
+          given_name
+          family_name
+        }
+        team {
+          id
+          name
+          tag
+          description
+        }
+        permissions {
+          id
+          name
+          tag
+          description
+        }
       }
     }
   `,

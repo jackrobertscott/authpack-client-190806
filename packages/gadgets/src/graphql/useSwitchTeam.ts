@@ -2,29 +2,21 @@ import { createUseServer } from '../hooks/useServer'
 
 export const useSwitchTeam = createUseServer<
   {
-    value:
-      | object
-      | {
-          id: string
-        }
+    value: {
+      id: string
+    }
   },
   {
-    team: {
+    session: {
       id: string
-      created: string
-      updated: string
-      meta: { [key: string]: any }
     }
   }
 >({
   name: 'SwitchTeam',
   query: `
     mutation SwitchTeam($value: SwitchTeamValue!) {
-      team: SwitchTeam(value: $value) {
+      session: SwitchTeam(value: $value) {
         id
-        created
-        updated
-        meta
       }
     }
   `,

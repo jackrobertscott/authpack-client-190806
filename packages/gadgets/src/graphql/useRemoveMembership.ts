@@ -7,9 +7,6 @@ export const useRemoveMembership = createUseServer<
   {
     membership: {
       id: string
-      created: string
-      updated: string
-      meta: { [key: string]: any }
     }
   }
 >({
@@ -18,9 +15,6 @@ export const useRemoveMembership = createUseServer<
     mutation RemoveMembership($id: String!) {
       membership: RemoveMembership(id: $id) {
         id
-        created
-        updated
-        meta
       }
     }
   `,

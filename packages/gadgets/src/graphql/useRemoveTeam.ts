@@ -7,9 +7,6 @@ export const useRemoveTeam = createUseServer<
   {
     team: {
       id: string
-      created: string
-      updated: string
-      meta: { [key: string]: any }
     }
   }
 >({
@@ -18,9 +15,6 @@ export const useRemoveTeam = createUseServer<
     mutation RemoveTeam($id: String!) {
       team: RemoveTeam(id: $id) {
         id
-        created
-        updated
-        meta
       }
     }
   `,

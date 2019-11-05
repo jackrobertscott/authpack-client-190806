@@ -7,11 +7,6 @@ export const useRemoveCredential = createUseServer<
   {
     credential: {
       id: string
-      created: string
-      updated: string
-      meta: { [key: string]: any }
-      access_token: string
-      email?: string
     }
   }
 >({
@@ -20,11 +15,6 @@ export const useRemoveCredential = createUseServer<
     mutation RemoveCredential($id: String!) {
       credential: RemoveCredential(id: $id) {
         id
-        created
-        updated
-        meta
-        access_token
-        email
       }
     }
   `,

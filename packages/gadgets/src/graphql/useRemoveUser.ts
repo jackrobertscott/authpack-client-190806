@@ -2,18 +2,13 @@ import { createUseServer } from '../hooks/useServer'
 
 export const useRemoveUser = createUseServer<
   {
-    value:
-      | object
-      | {
-          password: string
-        }
+    value: {
+      password: string
+    }
   },
   {
     user: {
       id: string
-      created: string
-      updated: string
-      meta: { [key: string]: any }
     }
   }
 >({
@@ -22,9 +17,6 @@ export const useRemoveUser = createUseServer<
     mutation RemoveUser($value: RemoveUserValue!) {
       user: RemoveUser(value: $value) {
         id
-        created
-        updated
-        meta
       }
     }
   `,

@@ -2,19 +2,14 @@ import { createUseServer } from '../hooks/useServer'
 
 export const useUpdateUserPassword = createUseServer<
   {
-    value:
-      | object
-      | {
-          passwordCurrent: string
-          passwordNew: string
-        }
+    value: {
+      passwordCurrent: string
+      passwordNew: string
+    }
   },
   {
     user: {
       id: string
-      created: string
-      updated: string
-      meta: { [key: string]: any }
     }
   }
 >({
@@ -23,9 +18,6 @@ export const useUpdateUserPassword = createUseServer<
     mutation UpdateUserPassword($value: UpdateUserPasswordValue!) {
       user: UpdateUserPassword(value: $value) {
         id
-        created
-        updated
-        meta
       }
     }
   `,

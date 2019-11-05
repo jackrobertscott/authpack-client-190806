@@ -2,21 +2,16 @@ import { createUseServer } from '../hooks/useServer'
 
 export const useListSessions = createUseServer<
   {
-    options?:
-      | object
-      | {
-          limit?: number
-          skip?: number
-          sort?: string
-          reverse?: boolean
-        }
+    options: {
+      limit?: number
+      skip?: number
+      sort?: string
+      reverse?: boolean
+    }
   },
   {
     sessions: Array<{
       id: string
-      created: string
-      updated: string
-      meta: { [key: string]: any }
     }>
   }
 >({
@@ -25,9 +20,6 @@ export const useListSessions = createUseServer<
     query ListSessions($options: FilterOptions) {
       sessions: ListSessions(options: $options) {
         id
-        created
-        updated
-        meta
       }
     }
   `,
