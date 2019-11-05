@@ -30,9 +30,9 @@ export const SignupUser: FC = () => {
         .required('Please provide your email'),
       password: yup.string().required('Please provide your password'),
     }),
-    submit: data => {
-      schema.validate(data).then(value => {
-        return gql.fetch({ value })
+    submit: value => {
+      gql.fetch({ value }).then(() => {
+        schema.change('password')('')
       })
     },
   })

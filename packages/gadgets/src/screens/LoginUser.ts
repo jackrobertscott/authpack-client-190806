@@ -12,7 +12,7 @@ import { useSettings } from '../hooks/useSettings'
 import { useLoginUser } from '../graphql/useLoginUser'
 
 export const LoginUser: FC = () => {
-  const login = useLoginUser()
+  const gql = useLoginUser()
   const settings = useSettings()
   const schema = useSchema({
     local: 'wga.LoginUser',
@@ -24,7 +24,7 @@ export const LoginUser: FC = () => {
       password: yup.string().required('Please provide your password'),
     }),
     submit: value => {
-      login.fetch({ value }).then(() => {
+      gql.fetch({ value }).then(() => {
         schema.change('password')('')
       })
     },
