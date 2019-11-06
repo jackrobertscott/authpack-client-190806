@@ -2,7 +2,6 @@ import { ITheme } from '../contexts/Theme'
 
 export const IronMaiden: ITheme = {
   global: {
-    fonts: 15,
     radius: 3,
   },
   button: {

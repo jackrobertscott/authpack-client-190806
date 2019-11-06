@@ -8,7 +8,6 @@ interface IKeys {
 export interface ITheme extends IKeys {
   global: {
     radius: number
-    fonts: number
   }
   button: {
     label: string

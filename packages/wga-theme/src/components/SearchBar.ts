@@ -70,7 +70,6 @@ const Searcher: FC<{
       transition: '200ms',
       cursor: 'pointer',
       padding: 25,
-      fontSize: 15,
       flexGrow: 1,
       color: theme.searchBar.label,
       background: theme.searchBar.background,

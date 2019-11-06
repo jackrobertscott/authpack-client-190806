@@ -25,7 +25,6 @@ export const InputContainer: FC<{
       transition: '200ms',
       position: 'relative',
       flexGrow: 1,
-      fontSize: theme.global.fonts,
       borderRadius: theme.global.radius,
       background: disabled
         ? theme.input.backgroundDisabled

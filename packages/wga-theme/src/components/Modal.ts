@@ -45,7 +45,6 @@ export const Modal: FC<{
           background: theme.modal.background,
           boxShadow: theme.modal.shadow,
           border: theme.modal.border,
-          fontSize: theme.global.fonts,
           borderRadius: theme.global.radius,
           [`@media (max-width: ${width + 50}px), (max-height: ${height +
             50}px)`]: {

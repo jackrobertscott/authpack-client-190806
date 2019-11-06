@@ -98,7 +98,7 @@ const Header: FC<{
             key: 'title',
             children: title,
             className: css({
-              fontSize: 25,
+              fontSize: '1.5rem',
               lineHeight: '1em',
               color: theme.page.title,
             }),

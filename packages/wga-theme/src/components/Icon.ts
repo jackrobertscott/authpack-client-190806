@@ -18,9 +18,9 @@ export const Icon: FC<{
       alignContent: 'center',
       color,
       padding,
-      width: size ? size : theme.global.fonts,
-      height: size ? size : theme.global.fonts,
-      fontSize: size ? size : theme.global.fonts,
+      width: size ? size : '1rem',
+      height: size ? size : '1rem',
+      fontSize: size ? size : '1rem',
     }),
     children: create('div', {
       className: `${solid ? 'fas' : 'far'} fa-${icon} ${css({

@@ -30,7 +30,6 @@ export const InputCode: FC<{
         value,
         language,
         theme: 'pretty',
-        fontSize: theme.global.fonts - 2,
         minimap: {
           enabled: false,
         },

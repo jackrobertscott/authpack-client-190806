@@ -53,7 +53,7 @@ export const Empty: FC<{
           children: label,
           className: css({
             color: theme.empty.label,
-            fontSize: 25,
+            fontSize: '1.5rem',
             lineHeight: '1em',
             marginTop: 15,
           }),

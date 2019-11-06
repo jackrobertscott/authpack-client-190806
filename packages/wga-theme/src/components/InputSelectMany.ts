@@ -139,7 +139,6 @@ export const Container: FC<{
       position: 'relative',
       overflow: 'hidden',
       flexGrow: 1,
-      fontSize: theme.global.fonts,
       borderRadius: theme.global.radius,
       background: theme.input.background,
       border: theme.input.border,

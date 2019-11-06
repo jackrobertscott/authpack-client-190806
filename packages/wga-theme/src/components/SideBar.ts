@@ -23,6 +23,7 @@ export const SideBar: FC<{
       alignItems: 'stretch',
       width: '20%',
       maxWidth: '240px',
+      minWidth: '200px',
       background: theme.sideBar.background,
       borderRight: theme.sideBar.border,
     }),
@@ -52,7 +53,7 @@ const Title: FC<{
     children: title,
     className: css({
       lineHeight: '1em',
-      fontSize: 25,
+      fontSize: '1.5rem',
       padding: 25,
       marginBottom: 48,
       color: theme.sideBar.title,
