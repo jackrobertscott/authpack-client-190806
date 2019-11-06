@@ -23,7 +23,7 @@ export const useServer = <T>({
       config.state.devmode && config.state.domain
         ? `dev:${config.state.domain}`
         : config.state.domain,
-      wga.state && wga.state.token && `Bearer${wga.state.token}`,
+      wga.state && wga.state.token && `Bearer ${wga.state.token}`,
     ]
       .filter(Boolean)
       .join(','),

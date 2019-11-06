@@ -28,9 +28,7 @@ export const useLocalRouter = ({
       if (store.change) store.change(current ? current.key : nomatch)
     }
   }, [store.state, options.map(option => option.key).join()])
-  const factory = () => ({
-    current,
-    change,
-  })
-  return useMemo(factory, [store.state])
+  return useMemo(() => {
+    return { current, change }
+  }, [store.state])
 }

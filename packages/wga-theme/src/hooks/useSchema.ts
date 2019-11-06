@@ -67,25 +67,26 @@ export const useSchema = ({
       })
       .catch(e => mounted.current && errorChange({ ...error, [key]: e }))
   }
-  const factory = () => ({
-    valid,
-    state: store.state,
-    value: (key: string) => store.state[key],
-    error: (key: string) => error[key],
-    change: (key: string) => update(key),
-    validate: (data: any) => schema.validate(data),
-    submit: () =>
-      submit &&
-      schema
-        .validate(store.state)
-        .then(data => submit(data))
-        .catch(e => {
-          toaster.add({
-            icon: 'bell',
-            label: 'Error',
-            helper: e.message,
-          })
-        }),
-  })
-  return useMemo(factory, [valid, store.state, error])
+  return useMemo(() => {
+    return {
+      valid,
+      state: store.state,
+      value: (key: string) => store.state[key],
+      error: (key: string) => error[key],
+      change: (key: string) => update(key),
+      validate: (data: any) => schema.validate(data),
+      submit: () =>
+        submit &&
+        schema
+          .validate(store.state)
+          .then(data => submit(data))
+          .catch(e => {
+            toaster.add({
+              icon: 'bell',
+              label: 'Error',
+              helper: e.message,
+            })
+          }),
+    }
+  }, [valid, store.state, error])
 }

@@ -38,7 +38,7 @@ export const RouterCentral: FC = () => {
           },
           {
             seperated: true,
-            icon: 'bolt',
+            icon: 'code',
             label: 'Dev Mode',
             click: () =>
               config.change((old: any) => ({

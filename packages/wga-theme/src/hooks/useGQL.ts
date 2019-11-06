@@ -57,27 +57,35 @@ export const useGQL = <T>({
         }
         return done.data as T
       })
-      .catch(({ response: { data: caught } }) => {
-        if (mounted.current) {
-          errorChange(caught)
+      .catch(({ response }) => {
+        if (mounted.current && response) {
+          errorChange(response.data)
           loadingChange(false)
           toaster.add({
             icon: 'bell',
             label:
-              caught && caught.code
-                ? `Error ${caught && caught.code}`
+              response.data && response.data.code
+                ? `Error ${response.data && response.data.code}`
                 : 'Error',
-            helper: caught.message,
+            helper: response.data.message,
           })
+          return Promise.reject(response.data)
         }
-        throw caught
+        const message = 'Could not connect to server'
+        toaster.add({
+          icon: 'wifi',
+          label: 'Error',
+          helper: message,
+        })
+        return Promise.reject(message)
       })
   }
-  const factory = () => ({
-    data,
-    loading,
-    error,
-    fetch,
-  })
-  return useMemo(factory, [data, loading, error])
+  return useMemo(() => {
+    return {
+      data,
+      loading,
+      error,
+      fetch,
+    }
+  }, [data, loading, error, url, query, name, authorization])
 }

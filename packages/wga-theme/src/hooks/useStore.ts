@@ -19,5 +19,7 @@ export const useStore = <T>({
   useEffect(() => {
     if (store) return store.listen((data: T) => valueChange(data))
   }, [store])
-  return useMemo(() => store, [value])
+  return useMemo(() => {
+    return store
+  }, [value])
 }

@@ -37,12 +37,13 @@ export const useRouter = ({
   useEffect(() => {
     if (!current && nomatch) change(nomatch)
   }, [location, options.map(option => option.path).join()])
-  const factory = () => ({
-    current,
-    change,
-    assert,
-    params: queryString.parse(location.search),
-    location,
-  })
-  return useMemo(factory, [location])
+  return useMemo(() => {
+    return {
+      current,
+      change,
+      assert,
+      params: queryString.parse(location.search),
+      location,
+    }
+  }, [location])
 }

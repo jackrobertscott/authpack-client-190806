@@ -37,7 +37,7 @@
     "micro": "^9.3.4",
     "node-fetch": "^2.6.0",
     "ts-node": "^8.3.0",
-    "typescript": "^3.5.3",
+    "typescript": "^3.7.2",
     "utility-types": "^3.7.0",
     "wga-api": "^0.1.5"
   },

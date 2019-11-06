@@ -39,9 +39,7 @@ export const useToaster = () => {
       current: ToasterStore.state.current.filter(i => i.id !== id),
     })
   }
-  const factory = () => ({
-    add,
-    remove,
-  })
-  return useMemo(factory, [])
+  return useMemo(() => {
+    return { add, remove }
+  }, [])
 }

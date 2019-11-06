@@ -17,6 +17,7 @@ export const useBodyAttacher = ({ id, tag }: { id: string; tag: string }) => {
       if (attached) attached.remove()
     }
   }, [id])
-  const factory = () => ({ element })
-  return useMemo(factory, [element])
+  return useMemo(() => {
+    return { element }
+  }, [element])
 }

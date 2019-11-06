@@ -11,7 +11,13 @@ export const LogoutUser: FC = () => {
     gqlLogoutUser
       .fetch()
       .catch(() => Promise.resolve())
-      .then(() => SettingsStore.reset())
+      .then(() =>
+        SettingsStore.change(data => ({
+          ...data,
+          bearer: undefined,
+          session: undefined,
+        }))
+      )
   return create(Gadgets, {
     title: 'Logout',
     subtitle: settings.state.appname,
@@ -23,6 +29,7 @@ export const LogoutUser: FC = () => {
         helper: 'See you later!',
       }),
       create(Layout, {
+        key: 'logout',
         padding: true,
         column: true,
         children: create(Button, {

@@ -1,6 +1,6 @@
 import { useGQL } from 'wga-theme'
-import { useConfig } from './useConfig'
-import { useSettings } from './useSettings'
+import { ConfigStore } from '../utils/config'
+import { SettingsStore } from '../utils/settings'
 
 export const createUseServer = <T>(options: {
   name: string
@@ -16,15 +16,15 @@ export const useServer = <T>({
   name: string
   query: string
 }) => {
-  const config = useConfig()
-  const settings = useSettings()
+  const config = ConfigStore.state
+  const settings = SettingsStore.state
   const domainkey =
-    settings.state.devmode && settings.state.domain
-      ? `dev:${settings.state.domain}`
-      : settings.state.domain
+    settings.devmode && settings.domain
+      ? `dev:${settings.domain}`
+      : settings.domain
   return useGQL<T>({
-    url: config.state.api,
-    authorization: [domainkey, settings.state.bearer].filter(String).join(','),
+    url: config.api,
+    authorization: [domainkey, settings.bearer].filter(String).join(','),
     name,
     query,
   })

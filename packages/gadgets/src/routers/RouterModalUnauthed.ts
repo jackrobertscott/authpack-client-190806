@@ -1,12 +1,16 @@
-import { createElement as create, FC } from 'react'
+import { createElement as create, FC, useState } from 'react'
 import { useLocalRouter, Layout, IconBar } from 'wga-theme'
 import { LoginUser } from '../screens/LoginUser'
 import { SignupUser } from '../screens/SignupUser'
 import { ForgotUserPassword } from '../screens/ForgotUserPassword'
+import { useSettings } from '../hooks/useSettings'
+import { Devmode } from '../screens/Devmode'
 
 export const RouterModalUnauthed: FC<{
   close: () => void
 }> = ({ close }) => {
+  const [devopen, devopenChange] = useState<boolean>(false)
+  const settings = useSettings()
   const router = useLocalRouter({
     local: 'wga.RouterModalUnauthed',
     nomatch: '/login',
@@ -36,19 +40,37 @@ export const RouterModalUnauthed: FC<{
             label: 'Forgot Password?',
             click: () => router.change('/forgot'),
           },
-          {
-            icon: 'times-circle',
-            label: 'Close',
-            click: close,
-            solid: false,
-            seperated: true,
-          },
-        ],
+        ]
+          .concat(
+            settings.state.devmode
+              ? [
+                  {
+                    icon: 'code',
+                    label: 'Dev Mode Enabled',
+                    click: () => devopenChange(true),
+                    seperated: true,
+                  } as any,
+                ]
+              : []
+          )
+          .concat([
+            {
+              icon: 'times-circle',
+              label: 'Close',
+              click: close,
+              solid: false,
+            } as any,
+          ]),
       }),
-      router.current &&
-        create((() => router.current.children) as FC, {
-          key: 'children',
-        }),
+      devopen
+        ? create(Devmode, {
+            key: 'devmode',
+            close: () => devopenChange(false),
+          })
+        : router.current &&
+          create((() => router.current.children) as FC, {
+            key: 'children',
+          }),
     ],
   })
 }

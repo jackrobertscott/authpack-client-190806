@@ -5,9 +5,31 @@ import { useSettings } from './useSettings'
 import { createUseServer } from './useServer'
 
 export const useSetup = () => {
-  const gqlApp = useRetrieveApp()
-  const gqlSession = useRefreshSession()
+  const gqlRetrieveApp = useRetrieveApp()
+  const gqlRefreshSession = useRefreshSession()
   const settings = useSettings()
+  useEffect(() => {
+    if (settings.state.domain)
+      gqlRetrieveApp.fetch().then(({ app }) => {
+        SettingsStore.change(data => ({
+          ...data,
+          appname: app.name || data.appname,
+          subscribed: app.subscribed || false,
+        }))
+      })
+    // eslint-disable-next-line
+  }, [settings.state.domain])
+  useEffect(() => {
+    if (settings.state.domain && settings.state.bearer)
+      gqlRefreshSession.fetch().then(({ session }) => {
+        return SettingsStore.change(data => ({
+          ...data,
+          session,
+          bearer: session ? `Bearer ${session.token}` : undefined,
+        }))
+      })
+    // eslint-disable-next-line
+  }, [settings.state.domain, settings.state.bearer])
   useEffect(() => {
     radio.message({
       name: 'wga:plugin:ready',
@@ -20,23 +42,6 @@ export const useSetup = () => {
     })
     // eslint-disable-next-line
   }, [])
-  useEffect(() => {
-    gqlSession.fetch().then(({ session }) => {
-      return SettingsStore.change(data => ({
-        ...data,
-        session,
-        bearer: session ? `Bearer ${session.token}` : undefined,
-      }))
-    })
-    gqlApp.fetch().then(({ app }) => {
-      SettingsStore.change(data => ({
-        ...data,
-        appname: app.name || data.appname,
-        subscribed: app.subscribed || false,
-      }))
-    })
-    // eslint-disable-next-line
-  }, [settings.state.bearer])
   useEffect(() => {
     return radio.listen(({ name, payload }) => {
       if (!name || !name.startsWith('wga:gadgets')) return
@@ -59,8 +64,8 @@ export const useSetup = () => {
           }))
           break
         case 'wga:gadgets:update':
-          if (gqlSession.data && gqlSession.data.session)
-            gqlSession.fetch().then(({ session }: any) => {
+          if (gqlRefreshSession.data && gqlRefreshSession.data.session)
+            gqlRefreshSession.fetch().then(({ session }: any) => {
               return SettingsStore.change(data => ({
                 ...data,
                 session,

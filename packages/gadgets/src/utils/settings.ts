@@ -36,10 +36,9 @@ export type ISettings = {
 }
 
 export const defaultSettings: ISettings = {
-  open: true,
+  open: false,
   devmode: true,
   session: undefined,
-  domain: 'wga-domain-key-79aeda5fd1178c9486d6925cc',
   subscribed: false,
 }
 

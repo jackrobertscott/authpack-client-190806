@@ -27,11 +27,11 @@ export class Gadgets {
   /**
    * Listen to changes to the internal state.
    */
-  public listen(callback: (current: ISettings['session']) => void) {
-    return SettingsStore.listen(({ open = false, session }) => {
-      callback(session)
+  public listen(callback: (current: ISettings) => void) {
+    return SettingsStore.listen(settings => {
+      callback(settings)
       if (this.iframe) {
-        this.iframe.style.pointerEvents = open ? 'all' : 'none'
+        this.iframe.style.pointerEvents = settings.open ? 'all' : 'none'
       }
     })
   }

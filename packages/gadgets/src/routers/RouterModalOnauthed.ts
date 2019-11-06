@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as create, FC, useState } from 'react'
 import { useLocalRouter, Layout, IconBar } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { UpdateUser } from '../screens/UpdateUser'
@@ -12,10 +12,12 @@ import { CreateMembership } from '../screens/CreateMembership'
 import { ListMemberships } from '../screens/ListMemberships'
 import { RemoveTeam } from '../screens/RemoveTeam'
 import { LogoutUser } from '../screens/LogoutUser'
+import { Devmode } from '../screens/Devmode'
 
 export const RouterModalOnauthed: FC<{
   close: () => void
 }> = ({ close }) => {
+  const [devopen, devopenChange] = useState<boolean>(false)
   const settings = useSettings()
   const router = useLocalRouter({
     local: 'wga.RouterModalOnauthed',
@@ -39,7 +41,7 @@ export const RouterModalOnauthed: FC<{
         : []
     ),
   })
-  if (!settings.state.session) return null
+  if (!settings.state.session || !settings.state.bearer) return null
   return create(Layout, {
     children: [
       create(IconBar, {
@@ -127,19 +129,37 @@ export const RouterModalOnauthed: FC<{
             label: 'Logout',
             click: () => router.change('/logout'),
           },
-          {
-            icon: 'times-circle',
-            label: 'Close',
-            click: close,
-            solid: false,
-            seperated: true,
-          },
-        ],
+        ]
+          .concat(
+            settings.state.devmode
+              ? [
+                  {
+                    icon: 'code',
+                    label: 'Dev Mode Enabled',
+                    click: () => devopenChange(true),
+                    seperated: true,
+                  } as any,
+                ]
+              : []
+          )
+          .concat([
+            {
+              icon: 'times-circle',
+              label: 'Close',
+              click: close,
+              solid: false,
+            } as any,
+          ]),
       }),
-      router.current &&
-        create((() => router.current.children) as FC, {
-          key: 'children',
-        }),
+      devopen
+        ? create(Devmode, {
+            key: 'devmode',
+            close: () => devopenChange(false),
+          })
+        : router.current &&
+          create((() => router.current.children) as FC, {
+            key: 'children',
+          }),
     ],
   })
 }

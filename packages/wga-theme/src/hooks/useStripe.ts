@@ -9,6 +9,7 @@ export const useStripe = ({ stripe }: { stripe: any }) => {
         return token
       })
   }
-  const factory = () => ({ tokenize })
-  return useMemo(factory, [stripe])
+  return useMemo(() => {
+    return { tokenize }
+  }, [stripe])
 }

@@ -166,7 +166,7 @@ const Devmode: FC = () => {
     children: [
       create(Option, {
         key: 'option',
-        icon: 'bolt',
+        icon: 'code',
         label: 'Dev Mode',
       }),
       create('div', {
@@ -185,7 +185,7 @@ const Devmode: FC = () => {
           transform: 'translateY(-100%)',
         }).concat(' devmode'),
         children: create(Pointer, {
-          icon: 'bolt',
+          icon: 'code',
           label: 'Enabled',
           helper:
             'You are currently viewing development data. Changes to this data will not effect your monthly pricing. This mode is allowed a maximum of 250 users.',

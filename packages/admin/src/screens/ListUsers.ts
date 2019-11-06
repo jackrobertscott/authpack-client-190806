@@ -11,6 +11,7 @@ export const ListUsers: FC = () => {
   const [options, optionsChange] = useState<{ [key: string]: any }>({})
   useEffect(() => {
     apiListUsers.fetch({ options })
+    // eslint-disable-next-line
   }, [options])
   return create(Page, {
     title: 'Users',

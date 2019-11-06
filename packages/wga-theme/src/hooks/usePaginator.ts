@@ -38,12 +38,13 @@ export const usePaginator = ({ count }: { count?: number }) => {
         skip: paginator.limit * (paginator.page - 1),
       })
   }
-  const factory = () => ({
-    ...paginator,
-    hasNext,
-    hasPrevious,
-    next,
-    previous,
-  })
-  return useMemo(factory, [paginator])
+  return useMemo(() => {
+    return {
+      ...paginator,
+      hasNext,
+      hasPrevious,
+      next,
+      previous,
+    }
+  }, [paginator])
 }
