@@ -18,6 +18,8 @@ export const Pointer: FC<{
       flexDirection: 'column',
       transition: '200ms',
       overflow: 'hidden',
+      position: 'relative',
+      zIndex: 200,
       width: 280,
       fontSize: theme.global.fonts,
       borderRadius: theme.global.radius,

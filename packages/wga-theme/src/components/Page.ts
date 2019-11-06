@@ -28,23 +28,15 @@ export const Page: FC<{
       background: theme.page.background,
     }),
     children: [
-      create('div', {
-        key: 'noscroll',
-        children: noscroll,
-        className: css({
-          display: 'flex',
-          flexDirection: 'column',
-        }),
+      create(Header, {
+        key: 'header',
+        title,
+        subtitle,
+        corner,
       }),
       create(Scroller, {
         key: 'scroller',
         children: [
-          create(Header, {
-            key: 'header',
-            title,
-            subtitle,
-            corner,
-          }),
           create('div', {
             key: 'children',
             children,
@@ -60,6 +52,14 @@ export const Page: FC<{
             text: `Window Gadgets`,
           }),
         ],
+      }),
+      create('div', {
+        key: 'noscroll',
+        children: noscroll,
+        className: css({
+          display: 'flex',
+          flexDirection: 'column',
+        }),
       }),
     ],
   })

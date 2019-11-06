@@ -7,7 +7,11 @@ import { createUseServer } from '../hooks/useServer'
 export const LogoutUser: FC = () => {
   const settings = useSettings()
   const gqlLogoutUser = useLogoutUser()
-  const logout = () => gqlLogoutUser.fetch().then(() => SettingsStore.reset())
+  const logout = () =>
+    gqlLogoutUser
+      .fetch()
+      .catch(() => Promise.resolve())
+      .then(() => SettingsStore.reset())
   return create(Gadgets, {
     title: 'Logout',
     subtitle: settings.state.appname,

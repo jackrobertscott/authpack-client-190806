@@ -24,9 +24,8 @@ export const SearchBar: FC<{
       display: 'flex',
       width: '100%',
       position: 'relative',
-      zIndex: 100,
       background: theme.searchBar.background,
-      borderBottom: theme.searchBar.border,
+      borderTop: theme.searchBar.border,
     }),
     children: [
       devmode &&
@@ -181,8 +180,9 @@ const Devmode: FC = () => {
           pointerEvents: 'none',
           opacity: 0,
           left: 10,
-          bottom: 10,
-          transform: 'translateY(100%)',
+          top: 10,
+          zIndex: 200,
+          transform: 'translateY(-100%)',
         }).concat(' devmode'),
         children: create(Pointer, {
           icon: 'bolt',

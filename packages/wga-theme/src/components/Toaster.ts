@@ -19,7 +19,7 @@ export const Toaster: FC<{
       position: 'absolute',
       right: 0,
       bottom: 0,
-      zIndex: 100,
+      zIndex: 250,
       padding: 25,
     }),
     children: toaster.state.current.map(

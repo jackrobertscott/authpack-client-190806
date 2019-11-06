@@ -129,7 +129,7 @@ const IconPointer: FC<{
           transition: '200ms',
           pointerEvents: 'none',
           opacity: 0,
-          zIndex: 100,
+          zIndex: 200,
           left: '100%',
           top: -5,
           paddingLeft: 7.5,

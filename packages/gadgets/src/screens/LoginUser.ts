@@ -27,9 +27,8 @@ export const LoginUser: FC = () => {
     submit: value => {
       gqlLoginUser.fetch({ value }).then(({ session }) => {
         schema.change('password')('')
-        SettingsStore.change((old: any) => ({
+        SettingsStore.change(old => ({
           ...old,
-          session,
           bearer: `Bearer ${session.token}`,
         }))
       })

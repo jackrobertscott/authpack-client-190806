@@ -1,5 +1,5 @@
 import { createElement as create, FC, useState, useEffect } from 'react'
-import { Page, Table } from 'wga-theme'
+import { Page, Table, Empty, Button } from 'wga-theme'
 import { RouterManagerUser } from '../routers/RouterManagerUser'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'
 import { createUseServer } from '../hooks/useServer'
@@ -67,6 +67,18 @@ export const ListUsers: FC = () => {
             }))
           : [],
       }),
+      (!apiListUsers.data || !apiListUsers.data.users.length) &&
+        create(Empty, {
+          key: 'empty',
+          icon: 'users',
+          label: 'Users',
+          helper: 'Create a user manually or by using the Authenticator API',
+          children: create(Button, {
+            key: 'Regular',
+            label: 'See API',
+            click: () => window.open('https://windowgadgets.io'),
+          }),
+        }),
     ],
   })
 }

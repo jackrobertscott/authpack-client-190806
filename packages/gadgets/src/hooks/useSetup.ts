@@ -29,9 +29,9 @@ export const useSetup = () => {
       }))
     })
     gqlApp.fetch().then(({ app }) => {
-      SettingsStore.change((old: any) => ({
-        ...old,
-        appname: app.name || old.app.name,
+      SettingsStore.change(data => ({
+        ...data,
+        appname: app.name || data.appname,
         subscribed: app.subscribed || false,
       }))
     })
@@ -48,14 +48,15 @@ export const useSetup = () => {
             payload: SettingsStore.state,
           })
           break
-        case 'wga:gadgets:set':
-          SettingsStore.change(payload)
-          break
         case 'wga:gadgets:open':
           SettingsStore.change(data => ({ ...data, open: true }))
           break
         case 'wga:gadgets:domain':
-          SettingsStore.change(data => ({ ...data, domain: payload }))
+          SettingsStore.change(data => ({
+            ...data,
+            domain: payload.domain,
+            url: payload.url,
+          }))
           break
         case 'wga:gadgets:update':
           if (gqlSession.data && gqlSession.data.session)

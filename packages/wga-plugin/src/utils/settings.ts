@@ -43,7 +43,4 @@ export const defaultSettings: ISettings = {
   api: 'http://localhost:4000',
 }
 
-export const SettingsStore = new Store<ISettings>(
-  defaultSettings,
-  'wga.settings'
-)
+export const SettingsStore = new Store<ISettings>(defaultSettings)

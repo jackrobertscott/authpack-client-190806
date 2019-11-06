@@ -31,6 +31,7 @@ export type ISettings = {
   appname?: string
   domain?: string
   bearer?: string
+  url?: string
   subscribed: boolean
 }
 

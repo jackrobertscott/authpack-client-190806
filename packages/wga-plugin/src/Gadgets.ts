@@ -1,9 +1,7 @@
 import { Radio } from 'iframe-radio'
 import { SettingsStore, ISettings } from './utils/settings'
-import { halter } from './utils/throttle'
 
 export class Gadgets {
-  public update: () => void
   private iframeId: string
   private iframe?: HTMLIFrameElement
   private radio?: Radio<{ name: string; payload?: any }>
@@ -11,12 +9,14 @@ export class Gadgets {
   private ready: boolean
   private queue: Array<() => void>
   constructor({ suffix, domain }: { suffix?: string; domain: string }) {
-    this.update = halter(300, () => this.send('wga:gadgets:update'))
     this.iframeId = `wga-plugin${suffix ? `-${suffix}` : ''}`
     this.render()
     this.ready = false
     this.queue = []
-    this.send('wga:gadgets:domain', domain)
+    this.send('wga:gadgets:domain', {
+      domain,
+      url: document.location.host,
+    })
   }
   /**
    * Get the current state of the gadgets.
