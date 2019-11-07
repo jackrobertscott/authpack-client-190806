@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useState, useMemo, useEffect, useRef } from 'react'
-import { useToaster } from './useToaster'
+import { ToasterStore } from './useToaster'
 
 export const createUseGQL = <T>(options: {
   url: string
@@ -29,7 +29,6 @@ export const useGQL = <T>({
       mounted.current = false
     }
   }, [])
-  const toaster = useToaster()
   const [data, dataChange] = useState<T | undefined>()
   const [loading, loadingChange] = useState<boolean>()
   const [error, errorChange] = useState<Error | undefined>()
@@ -67,7 +66,7 @@ export const useGQL = <T>({
               errorChange(response.data)
               loadingChange(false)
             }
-            toaster.add({
+            ToasterStore.add({
               icon: 'bell',
               label:
                 response.data && response.data.code
@@ -78,7 +77,7 @@ export const useGQL = <T>({
             return Promise.reject(response.data)
           }
           const message = 'Could not connect to server'
-          toaster.add({
+          ToasterStore.add({
             icon: 'wifi',
             label: 'Error',
             helper: message,
