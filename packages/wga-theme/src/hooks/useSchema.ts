@@ -1,7 +1,7 @@
 import * as yup from 'yup'
 import { useState, useMemo, useRef, useEffect } from 'react'
 import { useStore } from './useStore'
-import { useToaster } from './useToaster'
+import { ToasterStore } from '../utils/toaster'
 import { Store } from 'events-and-things'
 
 export const useSchema = ({
@@ -14,7 +14,6 @@ export const useSchema = ({
   change?: (value: { [key: string]: any }) => void
   submit?: (value: { [key: string]: any }) => void
 }) => {
-  const toaster = useToaster()
   const mounted = useRef(false)
   const [valid, validChange] = useState<boolean>(true)
   const ref = useRef(new Store(schema.default()))
@@ -79,7 +78,7 @@ export const useSchema = ({
           .validate(store)
           .then(data => submit(data))
           .catch(e => {
-            toaster.add({
+            ToasterStore.add({
               icon: 'bell',
               label: 'Error',
               helper: e.message,

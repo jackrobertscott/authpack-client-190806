@@ -1,6 +1,8 @@
 import * as queryString from 'query-string'
 import * as pathToRegexp from 'path-to-regexp'
 import { useMemo, ReactNode, useState, useEffect } from 'react'
+import { Location } from 'history'
+import { history } from '../utils/history'
 
 export const useRouter = ({
   base,
@@ -15,13 +17,8 @@ export const useRouter = ({
     exact?: boolean
   }>
 }) => {
-  const [location, locationChange] = useState<Location>(document.location)
-  useEffect(() => {
-    const listener = () => locationChange(document.location)
-    window.addEventListener('popstate', listener)
-    return () => window.removeEventListener('popstate', listener)
-  }, [])
-  const assert = (path: string, exact: boolean = false) => {
+  const [location, locationChange] = useState<Location>(history.location)
+  const compare = (path: string, exact: boolean = false) => {
     const regexp: RegExp = pathToRegexp(`${base || ''}${path}`, [], {
       ...options,
       end: exact,
@@ -30,10 +27,15 @@ export const useRouter = ({
   }
   const [current] = options
     .sort((a, b) => (a.exact ? (b.exact ? 0 : 1) : -1))
-    .filter(option => assert(option.path, option.exact))
-  const change = (path: string) => {
-    location.pathname = `${base || ''}${path}`
-  }
+    .filter(option => compare(option.path, option.exact))
+  const change = (path: string) => history.push(`${base || ''}${path}`)
+  const forward = () => history.goForward()
+  const backward = () => history.goForward()
+  useEffect(() => {
+    return history.listen((data: Location) => {
+      locationChange(data)
+    })
+  }, [])
   useEffect(() => {
     if (!current && nomatch) change(nomatch)
   }, [location, options.map(option => option.path).join()])
@@ -41,7 +43,9 @@ export const useRouter = ({
     return {
       current,
       change,
-      assert,
+      forward,
+      backward,
+      compare,
       params: queryString.parse(location.search),
       location,
     }

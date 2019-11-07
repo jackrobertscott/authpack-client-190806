@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useState, useMemo, useEffect, useRef } from 'react'
-import { ToasterStore } from './useToaster'
+import { ToasterStore } from '../utils/toaster'
 
 export const createUseGQL = <T>(options: {
   url: string
@@ -23,15 +23,15 @@ export const useGQL = <T>({
   authorization?: string
 }) => {
   const mounted = useRef(false)
+  const [data, dataChange] = useState<T | undefined>()
+  const [loading, loadingChange] = useState<boolean>()
+  const [error, errorChange] = useState<Error | undefined>()
   useEffect(() => {
     mounted.current = true
     return () => {
       mounted.current = false
     }
   }, [])
-  const [data, dataChange] = useState<T | undefined>()
-  const [loading, loadingChange] = useState<boolean>()
-  const [error, errorChange] = useState<Error | undefined>()
   return useMemo(() => {
     return {
       data,

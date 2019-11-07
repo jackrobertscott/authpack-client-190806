@@ -7,12 +7,6 @@ export const usePaginator = ({ count }: { count?: number }) => {
     page: 0,
     skip: 0,
   })
-  useEffect(() => {
-    changePaginator(state => ({
-      ...state,
-      total: count || 0,
-    }))
-  }, [count])
   const hasNext = () => {
     const value =
       paginator.total &&
@@ -38,6 +32,12 @@ export const usePaginator = ({ count }: { count?: number }) => {
         skip: paginator.limit * (paginator.page - 1),
       })
   }
+  useEffect(() => {
+    changePaginator(state => ({
+      ...state,
+      total: count || 0,
+    }))
+  }, [count])
   return useMemo(() => {
     return {
       ...paginator,

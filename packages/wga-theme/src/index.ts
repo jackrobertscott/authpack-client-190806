@@ -53,5 +53,7 @@ export * from './themes/BlueHarvester'
 /**
  * Utils
  */
+export * from './utils/history'
 export * from './utils/monaco'
 export * from './utils/pretty'
+export * from './utils/toaster'
