@@ -83,7 +83,7 @@ const IconPointer: FC<{
   const theme = useTheme()
   const [open, openChange] = useState<boolean>(false)
   return create('div', {
-    onClick: () => options.length && openChange(!open),
+    onClick: () => options.length && !open && openChange(true),
     className: css({
       all: 'unset',
       display: 'flex',
@@ -135,7 +135,8 @@ const IconPointer: FC<{
           paddingLeft: 7.5,
         }).concat(' toggle'),
         children: create(ClickOutside, {
-          click: () => open && openChange(false),
+          disabled: !open,
+          click: () => openChange(false),
           children: create(Pointer, {
             icon,
             label,
