@@ -21,7 +21,6 @@ export const ClickOutside: FC<{
         event.target instanceof HTMLElement &&
         node &&
         node.contains(event.target)
-      console.log(decendant)
       if (!decendant) click()
     }
     document.addEventListener('mouseup', handler, false)
