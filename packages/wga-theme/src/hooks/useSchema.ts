@@ -15,9 +15,10 @@ export const useSchema = ({
   submit?: (value: { [key: string]: any }) => void
 }) => {
   const mounted = useRef(false)
-  const [valid, validChange] = useState<boolean>(true)
   const ref = useRef(new Store(schema.default()))
   const store = useStore<{ [key: string]: any }>({ store: ref.current })
+  const [loaded, loadedChange] = useState<boolean>(false)
+  const [valid, validChange] = useState<boolean>(false)
   const [error, errorChange] = useState<{
     [key: string]: Error | undefined
   }>({})
@@ -44,7 +45,7 @@ export const useSchema = ({
           return all
         }, {})
       })
-      .then(e => mounted.current && errorChange(e))
+      .then(e => mounted.current && loadedChange(true) && errorChange(e))
     if (change)
       return ref.current.listen((data: { [key: string]: any }) => {
         if (mounted.current) change(data)
@@ -52,7 +53,7 @@ export const useSchema = ({
   }, [])
   useEffect(() => {
     if (mounted.current)
-      validChange(!Object.values(error).filter(Boolean).length)
+      validChange(loaded && !Object.values(error).filter(Boolean).length)
   }, [error])
   const update = (key: string) => (data: any) => {
     ref.current.change({ ...store, [key]: data })

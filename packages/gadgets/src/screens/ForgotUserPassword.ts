@@ -47,7 +47,7 @@ export const ForgotUserPassword: FC = () => {
         }),
         create(Button, {
           key: 'submit',
-          label: 'Login',
+          label: 'Send Reset Email',
           disabled: !schema.valid,
           click: schema.submit,
         }),
