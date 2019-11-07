@@ -1,5 +1,6 @@
-import { useMemo, ReactNode, useEffect } from 'react'
+import { useMemo, ReactNode, useEffect, useRef } from 'react'
 import { useStore } from './useStore'
+import { Store } from 'events-and-things'
 
 export const useLocalRouter = ({
   local,
@@ -13,22 +14,22 @@ export const useLocalRouter = ({
     children: ReactNode
   }>
 }) => {
-  const store = useStore<undefined | string>({
-    key: local,
-    initial: options[0] && options[0].key,
-  })
-  const [current] = options.filter(i => store.state && store.state === i.key)
+  const start = options[0] && options[0].key
+  const ref = useRef(new Store<undefined | string>(start, local))
+  const store = useStore<undefined | string>({ store: ref.current })
+  const [current] = options.filter(i => store && store === i.key)
   const change = (key: string) => {
     const matching = options.filter(i => i.key === key)
-    if (store.change)
-      store.change(matching.length ? matching[0].key : undefined)
+    if (ref.current.change)
+      ref.current.change(matching.length ? matching[0].key : undefined)
   }
   useEffect(() => {
-    if ((store.state && !current) || (current && current.key !== store.state)) {
-      if (store.change) store.change(current ? current.key : nomatch)
+    if ((store && !current) || (current && current.key !== store)) {
+      if (ref.current.change)
+        ref.current.change(current ? current.key : nomatch)
     }
-  }, [store.state, options.map(option => option.key).join()])
+  }, [store, options.map(option => option.key).join()])
   return useMemo(() => {
     return { current, change }
-  }, [store.state])
+  }, [store])
 }

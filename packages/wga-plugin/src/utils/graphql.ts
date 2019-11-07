@@ -13,7 +13,7 @@ export const graphql = <V, T>({
   return {
     async run(variables: V) {
       const { data } = await axios({
-        url: SettingsStore.state.api,
+        url: SettingsStore.current.api,
         method: 'post',
         headers: {
           'Content-Type': 'application/json',

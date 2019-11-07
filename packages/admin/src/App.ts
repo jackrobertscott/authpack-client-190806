@@ -9,7 +9,7 @@ export const App: FC = () => {
   const config = useConfig()
   const gadgets = useGadgets()
   return create(Theme.Provider, {
-    value: config.state.theme,
+    value: config.theme,
     children: [
       gadgets.loading || !gadgets.state || !gadgets.state.bearer
         ? create(Unauthenticated, {

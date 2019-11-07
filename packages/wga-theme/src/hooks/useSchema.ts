@@ -2,33 +2,26 @@ import * as yup from 'yup'
 import { useState, useMemo, useRef, useEffect } from 'react'
 import { useStore } from './useStore'
 import { useToaster } from './useToaster'
-
-interface IValue {
-  [key: string]: any
-}
-interface IError {
-  [key: string]: Error | undefined
-}
+import { Store } from 'events-and-things'
 
 export const useSchema = ({
-  local,
   schema,
   change,
   submit,
 }: {
   local?: string
   schema: yup.ObjectSchema<any>
-  change?: (value: IValue) => void
-  submit?: (value: any) => void
+  change?: (value: { [key: string]: any }) => void
+  submit?: (value: { [key: string]: any }) => void
 }) => {
-  const store = useStore<IValue>({
-    key: local,
-    initial: schema.default(),
-  })
   const toaster = useToaster()
   const mounted = useRef(false)
-  const [error, errorChange] = useState<IError>({})
   const [valid, validChange] = useState<boolean>(true)
+  const ref = useRef(new Store(schema.default()))
+  const store = useStore<{ [key: string]: any }>({ store: ref.current })
+  const [error, errorChange] = useState<{
+    [key: string]: Error | undefined
+  }>({})
   useEffect(() => {
     mounted.current = true
     return () => {
@@ -36,11 +29,13 @@ export const useSchema = ({
     }
   }, [])
   useEffect(() => {
-    const tasks = Object.keys(store.state).map(key => {
-      return schema
-        .validateAt(key, store.state)
-        .then(() => [key, undefined])
-        .catch(e => [key, e])
+    const tasks = Object.keys(store).map(async key => {
+      try {
+        await schema.validateAt(key, store)
+        return [key, undefined]
+      } catch (e) {
+        return [key, e]
+      }
     })
     Promise.all(tasks)
       .then(errors => {
@@ -51,16 +46,19 @@ export const useSchema = ({
         }, {})
       })
       .then(e => mounted.current && errorChange(e))
-    if (change) return store.listen(data => mounted.current && change(data))
+    if (change)
+      return ref.current.listen((data: { [key: string]: any }) => {
+        if (mounted.current) change(data)
+      })
   }, [])
   useEffect(() => {
     if (mounted.current)
       validChange(!Object.values(error).filter(Boolean).length)
   }, [error])
   const update = (key: string) => (data: any) => {
-    store.change({ ...store.state, [key]: data })
+    ref.current.change({ ...store, [key]: data })
     schema
-      .validateAt(key, store.state)
+      .validateAt(key, store)
       .then(() => {
         if (mounted.current && error[key])
           errorChange({ ...error, [key]: undefined })
@@ -70,15 +68,15 @@ export const useSchema = ({
   return useMemo(() => {
     return {
       valid,
-      state: store.state,
-      value: (key: string) => store.state[key],
+      state: store,
+      value: (key: string) => store[key],
       error: (key: string) => error[key],
       change: (key: string) => update(key),
       validate: (data: any) => schema.validate(data),
       submit: () =>
         submit &&
         schema
-          .validate(store.state)
+          .validate(store)
           .then(data => submit(data))
           .catch(e => {
             toaster.add({
@@ -88,5 +86,5 @@ export const useSchema = ({
             })
           }),
     }
-  }, [valid, store.state, error])
+  }, [valid, store, error])
 }

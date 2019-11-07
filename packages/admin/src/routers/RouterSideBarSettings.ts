@@ -19,7 +19,7 @@ export const RouterSideBarSettings: FC = () => {
       create(SideBar, {
         key: 'sideBar',
         title: 'Settings',
-        footer: config.state.appname,
+        footer: config.appname,
         options: [
           {
             icon: 'handshake',

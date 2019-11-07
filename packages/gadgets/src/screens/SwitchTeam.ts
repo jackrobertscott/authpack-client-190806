@@ -7,7 +7,7 @@ export const SwitchTeam: FC = () => {
   const settings = useSettings()
   return create(Gadgets, {
     title: 'Switch Team',
-    subtitle: settings.state.appname,
+    subtitle: settings.appname,
     children: null,
   })
 }

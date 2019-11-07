@@ -25,8 +25,7 @@
   },
   "dependencies": {
     "axios": "^0.19.0",
-    "events-and-things": "^0.4.1",
-    "iframe-radio": "^0.7.7"
+    "events-and-things": "^0.7.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.1",

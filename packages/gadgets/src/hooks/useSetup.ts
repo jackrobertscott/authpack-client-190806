@@ -9,7 +9,7 @@ export const useSetup = () => {
   const gqlRefreshSession = useRefreshSession()
   const settings = useSettings()
   useEffect(() => {
-    if (settings.state.domain)
+    if (settings.domain)
       gqlRetrieveApp.fetch().then(({ app }) => {
         SettingsStore.change(data => ({
           ...data,
@@ -18,9 +18,9 @@ export const useSetup = () => {
         }))
       })
     // eslint-disable-next-line
-  }, [settings.state.domain])
+  }, [settings.domain])
   useEffect(() => {
-    if (settings.state.domain && settings.state.bearer)
+    if (settings.domain && settings.bearer)
       gqlRefreshSession.fetch().then(({ session }) => {
         return SettingsStore.change(data => ({
           ...data,
@@ -29,7 +29,7 @@ export const useSetup = () => {
         }))
       })
     // eslint-disable-next-line
-  }, [settings.state.domain, settings.state.bearer])
+  }, [settings.domain, settings.bearer])
   useEffect(() => {
     radio.message({
       name: 'wga:plugin:ready',
@@ -50,7 +50,7 @@ export const useSetup = () => {
         case 'wga:gadgets:request':
           radio.message({
             name: 'wga:plugin:set',
-            payload: SettingsStore.state,
+            payload: SettingsStore.current,
           })
           break
         case 'wga:gadgets:open':

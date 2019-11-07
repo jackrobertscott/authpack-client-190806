@@ -7,7 +7,7 @@ export const UpdateUser: FC = () => {
   const settings = useSettings()
   return create(Gadgets, {
     title: 'Update User',
-    subtitle: settings.state.appname,
+    subtitle: settings.appname,
     children: null,
   })
 }

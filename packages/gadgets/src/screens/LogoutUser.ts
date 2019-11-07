@@ -20,7 +20,7 @@ export const LogoutUser: FC = () => {
       )
   return create(Gadgets, {
     title: 'Logout',
-    subtitle: settings.state.appname,
+    subtitle: settings.appname,
     children: [
       create(Poster, {
         key: 'poster',

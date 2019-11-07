@@ -22,7 +22,7 @@ export const Toaster: FC<{
       zIndex: 250,
       padding: 25,
     }),
-    children: toaster.state.current.map(
+    children: toaster.current.map(
       ({ id, icon, solid, label, helper, close }) => {
         return create('div', {
           key: id,

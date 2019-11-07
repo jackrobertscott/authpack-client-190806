@@ -28,7 +28,7 @@ export const ForgotUserPassword: FC = () => {
   })
   return create(Gadgets, {
     title: 'Forgot Password',
-    subtitle: settings.state.appname,
+    subtitle: settings.appname,
     children: create(Layout, {
       column: true,
       padding: true,

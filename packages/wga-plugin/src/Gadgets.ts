@@ -1,4 +1,4 @@
-import { Radio } from 'iframe-radio'
+import { Radio } from 'events-and-things'
 import { SettingsStore, ISettings } from './utils/settings'
 
 export class Gadgets {
@@ -22,7 +22,7 @@ export class Gadgets {
    * Get the current state of the gadgets.
    */
   public get state() {
-    return SettingsStore.state.session
+    return SettingsStore.current.session
   }
   /**
    * Listen to changes to the internal state.
@@ -58,10 +58,11 @@ export class Gadgets {
    * Create an iframe with gadgets.
    */
   private render() {
+    const src = document.location.hostname.includes('localhost')
+      ? 'http://localhost:3100'
+      : 'https://plugin.wga.windowgadgets.io'
     this.iframe = document.createElement('iframe')
-    this.iframe.src = document.location.hostname.includes('localhost')
-      ? 'http://localhost:3100/'
-      : 'https://plugin.wga.windowgadgets.io/'
+    this.iframe.src = src
     this.iframe.id = this.iframeId
     this.iframe.width = '100%'
     this.iframe.height = '100%'
@@ -77,9 +78,9 @@ export class Gadgets {
     this.iframe.style.pointerEvents = 'none'
     document.body.appendChild(this.iframe)
     if (this.radio) this.radio.destroy()
-    this.radio = new Radio({
-      id: 'wga',
-      node: this.iframe.contentWindow,
+    this.radio = new Radio(this.iframe.contentWindow, {
+      key: 'wga',
+      origin: src,
     })
     if (this.unlistener) this.unlistener()
     this.unlistener =

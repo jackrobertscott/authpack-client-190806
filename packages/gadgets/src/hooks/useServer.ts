@@ -16,8 +16,8 @@ export const useServer = <T>({
   name: string
   query: string
 }) => {
-  const config = ConfigStore.state
-  const settings = SettingsStore.state
+  const config = ConfigStore.current
+  const settings = SettingsStore.current
   const domainkey =
     settings.devmode && settings.domain
       ? `dev:${settings.domain}`

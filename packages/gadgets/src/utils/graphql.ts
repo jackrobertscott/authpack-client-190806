@@ -15,13 +15,13 @@ export const createGraphqlHook = <V, T>({
   return {
     async run(variables: V) {
       const { data } = await axios({
-        url: ConfigStore.state.api,
+        url: ConfigStore.current.api,
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
           Authorization: [
-            SettingsStore.state.domain,
-            SettingsStore.state.bearer,
+            SettingsStore.current.domain,
+            SettingsStore.current.bearer,
           ]
             .filter(String)
             .join(','),

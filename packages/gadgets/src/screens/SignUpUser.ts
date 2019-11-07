@@ -43,7 +43,7 @@ export const SignupUser: FC = () => {
   })
   return create(Gadgets, {
     title: 'Sign Up',
-    subtitle: settings.state.appname,
+    subtitle: settings.appname,
     children: create(Layout, {
       column: true,
       padding: true,

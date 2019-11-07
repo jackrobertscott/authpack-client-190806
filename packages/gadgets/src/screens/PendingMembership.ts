@@ -7,7 +7,7 @@ export const PendingMembership: FC = () => {
   const settings = useSettings()
   return create(Gadgets, {
     title: 'Finalise Pending Membership',
-    subtitle: settings.state.appname,
+    subtitle: settings.appname,
     children: null,
   })
 }

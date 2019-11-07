@@ -3,6 +3,7 @@ import { Layout, IconBar, useRouter } from 'wga-theme'
 import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterSideBarSettings } from './RouterSideBarSettings'
 import { RouterSideBarDeveloper } from './RouterSideBarDeveloper'
+import { ConfigStore } from '../utils/config'
 import { useConfig } from '../hooks/useConfig'
 import { wga } from '../utils/wga'
 
@@ -41,9 +42,9 @@ export const RouterCentral: FC = () => {
             icon: 'code',
             label: 'Dev Mode',
             click: () =>
-              config.change((old: any) => ({
+              ConfigStore.change((old: any) => ({
                 ...old,
-                devmode: !config.state.devmode,
+                devmode: !config.devmode,
               })),
           },
           {

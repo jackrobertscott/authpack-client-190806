@@ -7,7 +7,7 @@ export const ListCredentials: FC = () => {
   const settings = useSettings()
   return create(Gadgets, {
     title: 'Credentials',
-    subtitle: settings.state.appname,
+    subtitle: settings.appname,
     children: null,
   })
 }

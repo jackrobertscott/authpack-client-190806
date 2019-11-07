@@ -13,12 +13,12 @@ export const App: FC = () => {
   const config = useConfig()
   const settings = useSettings()
   return create(Theme.Provider, {
-    value: config.state.theme,
+    value: config.theme,
     children: create(Modal, {
-      visible: settings.state.open,
+      visible: settings.open,
       children: [
-        settings.state.domain
-          ? settings.state.bearer
+        settings.domain
+          ? settings.bearer
             ? create(RouterModalOnauthed, {
                 key: 'onauthed',
                 close: () =>

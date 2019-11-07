@@ -1,25 +1,10 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Store } from 'events-and-things'
 
-export const useStore = <T>({
-  key,
-  initial,
-  ...options
-}: {
-  key?: string
-  store?: Store<T>
-  initial?: T
-}) => {
-  const getStore = () => options.store || new Store<T>(initial as T, key)
-  const [store, storeChange] = useState<Store<T>>(getStore())
-  const [value, valueChange] = useState<T>(store ? store.state : (initial as T))
-  useEffect(() => {
-    if (options.store) storeChange(options.store)
-  }, [options.store])
+export const useStore = <T>({ store }: { store: Store<T> }) => {
+  const [value, valueChange] = useState(store.current)
   useEffect(() => {
     if (store) return store.listen((data: T) => valueChange(data))
   }, [store])
-  return useMemo(() => {
-    return store
-  }, [value])
+  return useMemo(() => value, [value])
 }

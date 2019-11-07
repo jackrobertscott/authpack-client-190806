@@ -42,7 +42,7 @@ export const RouterModalUnauthed: FC<{
           },
         ]
           .concat(
-            settings.state.devmode
+            settings.devmode
               ? [
                   {
                     icon: 'code',

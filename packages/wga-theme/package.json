@@ -33,7 +33,7 @@
     "@types/yup": "^0.26.24",
     "axios": "^0.19.0",
     "emotion": "^10.0.17",
-    "events-and-things": "^0.6.2",
+    "events-and-things": "^0.7.0",
     "monaco-editor": "^0.18.1",
     "monaco-editor-webpack-plugin": "^1.7.0",
     "path-to-regexp": "^3.1.0",

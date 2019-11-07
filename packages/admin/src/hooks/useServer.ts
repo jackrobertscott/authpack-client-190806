@@ -18,11 +18,9 @@ export const useServer = <T>({
 }) => {
   const config = useConfig()
   return useGQL<T>({
-    url: config.state.api,
+    url: config.api,
     authorization: [
-      config.state.devmode && config.state.domain
-        ? `dev:${config.state.domain}`
-        : config.state.domain,
+      config.devmode && config.domain ? `dev:${config.domain}` : config.domain,
       wga.state && wga.state.token && `Bearer ${wga.state.token}`,
     ]
       .filter(Boolean)

@@ -7,7 +7,7 @@ export const ResetUserPassword: FC = () => {
   const settings = useSettings()
   return create(Gadgets, {
     title: 'Reset Password',
-    subtitle: settings.state.appname,
+    subtitle: settings.appname,
     children: null,
   })
 }

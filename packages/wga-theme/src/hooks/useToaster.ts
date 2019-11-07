@@ -18,16 +18,21 @@ export const ToasterStore = new Store<IToasterStore>({
 
 export const useToaster = () => {
   const add = (
-    toast: { icon?: string; solid?: boolean; label: string; helper: string },
+    toast: {
+      icon?: string
+      solid?: boolean
+      label: string
+      helper: string
+    },
     timer: number = 5000
   ) => {
     const id = Math.random()
       .toString(36)
       .substring(6)
     ToasterStore.change({
-      ...ToasterStore.state,
+      ...ToasterStore.current,
       current: [
-        ...ToasterStore.state.current,
+        ...ToasterStore.current.current,
         { ...toast, id, close: () => remove(id) },
       ],
     })
@@ -35,8 +40,8 @@ export const useToaster = () => {
   }
   const remove = (id: string) => {
     ToasterStore.change({
-      ...ToasterStore.state,
-      current: ToasterStore.state.current.filter(i => i.id !== id),
+      ...ToasterStore.current,
+      current: ToasterStore.current.current.filter(i => i.id !== id),
     })
   }
   return useMemo(() => {

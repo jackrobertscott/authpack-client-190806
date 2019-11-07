@@ -7,7 +7,7 @@ export const ListProviders: FC = () => {
   const settings = useSettings()
   return create(Gadgets, {
     title: '3rd Party Logins',
-    subtitle: settings.state.appname,
+    subtitle: settings.appname,
     children: null,
   })
 }
