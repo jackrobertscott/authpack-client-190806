@@ -1,103 +1,109 @@
-import { Radio } from 'events-and-things'
-import { SettingsStore, ISettings } from './utils/settings'
+import { createIFrame } from './utils/iframe'
+import { Radio, KeyStore } from 'events-and-things'
+import { config } from './config'
+import { createGadgetsStore, IGadgets } from './utils/state'
+
+export interface IOptions {
+  domain_key: string
+  iframe_id?: string
+  devmode?: boolean
+  team_required?: boolean
+}
 
 export class Gadgets {
-  private iframeId: string
-  private iframe?: HTMLIFrameElement
-  private radio?: Radio<{ name: string; payload?: any }>
-  private unlistener?: () => any
-  private ready: boolean
-  private queue: Array<() => void>
-  constructor({ suffix, domain }: { suffix?: string; domain: string }) {
-    this.iframeId = `wga-plugin${suffix ? `-${suffix}` : ''}`
-    this.render()
-    this.ready = false
+  private options: IOptions
+  private iframe: HTMLIFrameElement
+  private queue: Array<{ name: string; payload?: any }>
+  private radio: Radio<{ name: string; payload?: any }>
+  private store: KeyStore<IGadgets>
+  constructor(options: IOptions) {
     this.queue = []
-    this.send('wga:gadgets:domain', {
-      domain,
-      url: document.location.host,
+    this.options = options
+    this.store = this.createStore(this.options)
+    this.iframe = this.createIFrame(this.options)
+    this.radio = this.createRadio(this.iframe)
+    this.sendMessage('plugin:current', this.store.current)
+  }
+  /**
+   * Public...
+   */
+  public get current() {
+    return this.store.current
+  }
+  public show() {
+    this.sendMessage('plugin:show')
+  }
+  public hide() {
+    this.sendMessage('plugin:hide')
+  }
+  public exit() {
+    this.sendMessage('plugin:exit')
+  }
+  public listen(callback: (current: IGadgets) => void) {
+    return this.store.listen(callback)
+  }
+  public assert(current: IGadgets, tags: string[]) {
+    const state = Array.isArray(current.permissions)
+      ? current.permissions.filter(({ tag }) => tags.includes(tag))
+      : []
+    return state.length >= tags.length
+  }
+  /**
+   * Private...
+   */
+  private createStore(options: IOptions) {
+    const store = createGadgetsStore()
+    store.update({
+      ready: false,
+      devmode: options.devmode,
+      domain: options.domain_key,
+      team_required: options.team_required,
     })
+    store.listen(data => {
+      if (this.iframe)
+        this.iframe.style.pointerEvents = data.open ? 'all' : 'none'
+    })
+    return store
   }
-  /**
-   * Get the current state of the gadgets.
-   */
-  public get state() {
-    return SettingsStore.current.session
+  private createIFrame(options: IOptions) {
+    const iframe = createIFrame()
+    if (options.iframe_id) iframe.id = options.iframe_id
+    document.body.appendChild(iframe)
+    return iframe
   }
-  /**
-   * Listen to changes to the internal state.
-   */
-  public listen(callback: (current: ISettings) => void) {
-    return SettingsStore.listen(settings => {
-      callback(settings)
-      if (this.iframe) {
-        this.iframe.style.pointerEvents = settings.open ? 'all' : 'none'
+  private createRadio(iframe: HTMLIFrameElement) {
+    const radio = new Radio<{
+      name: string
+      payload?: any
+    }>(iframe.contentWindow, {
+      key: 'wga',
+      origin: config.urls.plugin,
+    })
+    radio.listen(({ name, payload = {} }) => {
+      if (config.debug)
+        console.log(`Plugin received: ${name} @ ${Date.now() % 86400000}`)
+      switch (name) {
+        case 'gadgets:ready':
+          this.store.update({ ready: true })
+          while (this.queue.length) {
+            const message = this.queue.shift()
+            if (message) this.sendMessage(message.name, message.payload)
+          }
+          break
+        case 'gadgets:update':
+          this.store.update({ ...payload })
+          break
+        default:
+          throw new Error(`Failed to process radio message: ${name}`)
       }
     })
+    return radio
   }
-  /**
-   * Open the gadgets.
-   */
-  public open() {
-    this.send('wga:gadgets:open')
-  }
-  /**
-   * Open the gadgets.
-   */
-  private send(name: string, payload?: any) {
-    const message = () =>
-      this.radio &&
-      this.radio.message({
-        name,
-        payload,
-      })
-    if (this.ready) message()
-    else this.queue.push(message)
-  }
-  /**
-   * Create an iframe with gadgets.
-   */
-  private render() {
-    const src = document.location.hostname.includes('localhost')
-      ? 'http://localhost:3100'
-      : 'https://plugin.wga.windowgadgets.io'
-    this.iframe = document.createElement('iframe')
-    this.iframe.src = src
-    this.iframe.id = this.iframeId
-    this.iframe.width = '100%'
-    this.iframe.height = '100%'
-    this.iframe.style.border = 'none'
-    this.iframe.style.boxShadow = 'none'
-    this.iframe.style.position = 'fixed'
-    this.iframe.style.top = '0'
-    this.iframe.style.bottom = '0'
-    this.iframe.style.right = '0'
-    this.iframe.style.left = '0'
-    this.iframe.style.zIndex = '1000'
-    this.iframe.style.transition = '200ms'
-    this.iframe.style.pointerEvents = 'none'
-    document.body.appendChild(this.iframe)
-    if (this.radio) this.radio.destroy()
-    this.radio = new Radio(this.iframe.contentWindow, {
-      key: 'wga',
-      origin: src,
-    })
-    if (this.unlistener) this.unlistener()
-    this.unlistener =
-      this.radio &&
-      this.radio.listen(({ name, payload }) => {
-        console.log(`Plugin received: ${name} - ${Date.now() % 86400000}`)
-        switch (name) {
-          case 'wga:plugin:set':
-            SettingsStore.change(payload)
-            break
-          case 'wga:plugin:ready':
-            this.ready = true
-            this.queue.forEach(cb => cb())
-            break
-          default:
-            console.warn(`Handler not found for ${name}`)
-        }
-      })
+  private sendMessage(name: string, payload?: any) {
+    if (!this.radio)
+      throw new Error('Failed to send message as radio does not exist')
+    const message = { name, payload }
+    if (!this.store.current.ready) this.queue = [...this.queue, message]
+    else this.radio.message(message)
   }
 }

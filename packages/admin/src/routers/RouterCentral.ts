@@ -50,7 +50,7 @@ export const RouterCentral: FC = () => {
           {
             icon: 'user-circle',
             label: 'Personal Settings',
-            click: () => wga.open(),
+            click: () => wga.show(),
           },
         ],
       }),

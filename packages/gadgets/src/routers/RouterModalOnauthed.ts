@@ -31,7 +31,7 @@ export const RouterModalOnauthed: FC<{
       { key: '/team/create', children: create(CreateTeam) },
       { key: '/team/switch', children: create(SwitchTeam) },
     ].concat(
-      settings.session && settings.session.team
+      settings.bearer && settings.team
         ? [
             { key: '/team/update', children: create(UpdateTeam) },
             { key: '/team/members/create', children: create(CreateMembership) },
@@ -41,7 +41,7 @@ export const RouterModalOnauthed: FC<{
         : []
     ),
   })
-  if (!settings.session || !settings.bearer) return null
+  if (!settings.bearer) return null
   return create(Layout, {
     children: [
       create(IconBar, {
@@ -94,7 +94,7 @@ export const RouterModalOnauthed: FC<{
                 click: () => router.change('/team/switch'),
               },
             ].concat(
-              settings.session.team
+              settings.team
                 ? [
                     {
                       icon: 'cog',

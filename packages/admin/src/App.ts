@@ -11,10 +11,10 @@ export const App: FC = () => {
   return create(Theme.Provider, {
     value: config.theme,
     children: [
-      gadgets.loading || !gadgets.state || !gadgets.state.bearer
+      !gadgets || !gadgets.bearer
         ? create(Unauthenticated, {
             key: 'unauthenticated',
-            loading: gadgets.loading,
+            loading: !gadgets,
           })
         : create(RouterCentral, {
             key: 'router',

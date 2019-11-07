@@ -1,6 +1,6 @@
 import { KeyStore } from 'events-and-things'
 
-export type ISettings = {
+export type IGadgets = {
   domain?: string
   bearer?: string
   ready: boolean
@@ -34,7 +34,7 @@ export type ISettings = {
   }>
 }
 
-export const defaults: ISettings = {
+export const defaults: IGadgets = {
   ready: false,
   open: false,
   devmode: false,
@@ -42,4 +42,5 @@ export const defaults: ISettings = {
   team_required: false,
 }
 
-export const SettingsStore = new KeyStore<ISettings>(defaults)
+export const createGadgetsStore = (data: Partial<IGadgets> = {}) =>
+  new KeyStore<IGadgets>({ ...defaults, ...data }, 'wga.plugin.v1')

@@ -21,7 +21,7 @@ export const useServer = <T>({
     url: config.api,
     authorization: [
       config.devmode && config.domain ? `dev:${config.domain}` : config.domain,
-      wga.state && wga.state.token && `Bearer ${wga.state.token}`,
+      wga.current.bearer,
     ]
       .filter(Boolean)
       .join(','),

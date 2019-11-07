@@ -11,13 +11,11 @@ export const LogoutUser: FC = () => {
     gqlLogoutUser
       .fetch()
       .catch(() => Promise.resolve())
-      .then(() =>
-        SettingsStore.change(data => ({
-          ...data,
+      .then(() => {
+        SettingsStore.update({
           bearer: undefined,
-          session: undefined,
-        }))
-      )
+        })
+      })
   return create(Gadgets, {
     title: 'Logout',
     subtitle: settings.appname,

@@ -21,15 +21,16 @@ export const App: FC = () => {
           ? settings.bearer
             ? create(RouterModalOnauthed, {
                 key: 'onauthed',
-                close: () =>
-                  SettingsStore.change(data => ({ ...data, open: false })),
+                close: () => SettingsStore.update({ open: false }),
               })
             : create(RouterModalUnauthed, {
                 key: 'unauthed',
-                close: () =>
-                  SettingsStore.change(data => ({ ...data, open: false })),
+                close: () => SettingsStore.update({ open: false }),
               })
-          : create(NoKey),
+          : create(NoKey, {
+              key: 'nokey',
+              loading: !settings.ready,
+            }),
         create(Toaster, {
           key: 'toaster',
         }),

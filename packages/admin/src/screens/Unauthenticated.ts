@@ -20,7 +20,7 @@ export const Unauthenticated: FC<{
             key: 'login',
             icon: 'bolt',
             label: 'Get Started',
-            click: () => wga.open(),
+            click: () => wga.show(),
           }),
         ],
       })

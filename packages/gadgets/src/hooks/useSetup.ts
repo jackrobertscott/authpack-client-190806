@@ -3,78 +3,83 @@ import { SettingsStore } from '../utils/settings'
 import { radio } from '../utils/radio'
 import { useSettings } from './useSettings'
 import { createUseServer } from './useServer'
+import { useConfig } from './useConfig'
 
 export const useSetup = () => {
+  const config = useConfig()
+  const settings = useSettings()
   const gqlRetrieveApp = useRetrieveApp()
   const gqlRefreshSession = useRefreshSession()
-  const settings = useSettings()
   useEffect(() => {
-    if (settings.domain)
+    if (settings.domain) {
       gqlRetrieveApp.fetch().then(({ app }) => {
-        SettingsStore.change(data => ({
-          ...data,
-          appname: app.name || data.appname,
-          subscribed: app.subscribed || false,
-        }))
+        SettingsStore.update({
+          ready: true,
+          appname: app.name || settings.appname,
+          subscribed: !!app.subscribed,
+        })
       })
+    }
     // eslint-disable-next-line
   }, [settings.domain])
   useEffect(() => {
-    if (settings.domain && settings.bearer)
-      gqlRefreshSession.fetch().then(({ session }) => {
-        return SettingsStore.change(data => ({
-          ...data,
-          session,
-          bearer: session ? `Bearer ${session.token}` : undefined,
-        }))
-      })
+    if (settings.domain) {
+      if (settings.bearer) {
+        gqlRefreshSession.fetch().then(({ session }) => {
+          if (session) {
+            const { user, team, permissions, ...data } = session
+            SettingsStore.update({
+              bearer: `Bearer ${session.token}`,
+              session: data,
+              user,
+              team,
+              permissions,
+            })
+          }
+        })
+      } else {
+        SettingsStore.update({
+          bearer: undefined,
+          session: undefined,
+          user: undefined,
+          team: undefined,
+          permissions: undefined,
+        })
+      }
+    }
     // eslint-disable-next-line
   }, [settings.domain, settings.bearer])
   useEffect(() => {
     radio.message({
-      name: 'wga:plugin:ready',
+      name: 'gadgets:ready',
     })
     return SettingsStore.listen(data => {
       radio.message({
-        name: 'wga:plugin:set',
+        name: 'gadgets:update',
         payload: data,
       })
     })
     // eslint-disable-next-line
   }, [])
   useEffect(() => {
-    return radio.listen(({ name, payload }) => {
-      if (!name || !name.startsWith('wga:gadgets')) return
-      console.log(`Gadget received: ${name} - ${Date.now() % 86400000}`)
+    return radio.listen(({ name, payload = {} }) => {
+      if (config.debug)
+        console.log(`Gadget received: ${name} @ ${Date.now() % 86400000}`)
       switch (name) {
-        case 'wga:gadgets:request':
-          radio.message({
-            name: 'wga:plugin:set',
-            payload: SettingsStore.current,
-          })
+        case 'plugin:current':
+          SettingsStore.update({ ...payload })
           break
-        case 'wga:gadgets:open':
-          SettingsStore.change(data => ({ ...data, open: true }))
+        case 'plugin:show':
+          SettingsStore.update({ open: true })
           break
-        case 'wga:gadgets:domain':
-          SettingsStore.change(data => ({
-            ...data,
-            domain: payload.domain,
-            url: payload.url,
-          }))
+        case 'plugin:hide':
+          SettingsStore.update({ open: false })
           break
-        case 'wga:gadgets:update':
-          if (gqlRefreshSession.data && gqlRefreshSession.data.session)
-            gqlRefreshSession.fetch().then(({ session }: any) => {
-              return SettingsStore.change(data => ({
-                ...data,
-                session,
-                bearer: session ? `Bearer ${session.token}` : undefined,
-              }))
-            })
+        case 'plugin:exit':
+          SettingsStore.update({ bearer: undefined })
           break
         default:
-          console.warn(`Unhandled settings radio event ${name}`)
+          throw new Error(`Failed to process radio message: ${name}`)
       }
     })
     // eslint-disable-next-line
@@ -84,8 +89,6 @@ export const useSetup = () => {
 const useRetrieveApp = createUseServer<{
   app: {
     id: string
-    created: string
-    updated: string
     name: string
     subscribed: boolean
   }
@@ -95,8 +98,6 @@ const useRetrieveApp = createUseServer<{
     query RetrieveApp {
       app: RetrieveApp {
         id
-        created
-        updated
         name
         subscribed
       }
