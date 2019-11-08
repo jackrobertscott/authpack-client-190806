@@ -10,7 +10,7 @@ export const Modal: FC<{
   close?: () => void
   width?: number
   height?: number
-}> = ({ id, children, visible = true, close, width = 890, height = 550 }) => {
+}> = ({ id, children, visible = true, close, width = 810, height = 560 }) => {
   const theme = useTheme()
   return create(Portal, {
     id,
