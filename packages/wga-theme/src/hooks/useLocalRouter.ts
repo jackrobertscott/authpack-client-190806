@@ -3,11 +3,9 @@ import { useStore } from './useStore'
 import { Store } from 'events-and-things'
 
 export const useLocalRouter = ({
-  local,
   nomatch,
   options,
 }: {
-  local?: string
   nomatch?: string
   options: Array<{
     key: string
@@ -15,7 +13,7 @@ export const useLocalRouter = ({
   }>
 }) => {
   const start = options[0] && options[0].key
-  const ref = useRef(new Store<undefined | string>(start, local))
+  const ref = useRef(new Store<undefined | string>(start))
   const store = useStore<undefined | string>({ store: ref.current })
   const [current] = options.filter(i => store && store === i.key)
   const change = (key: string) => {

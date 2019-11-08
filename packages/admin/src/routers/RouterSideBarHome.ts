@@ -1,12 +1,12 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useRouter, SideBar } from 'wga-theme'
-import { useConfig } from '../hooks/useConfig'
+import { useGlobal } from '../hooks/useGlobal'
 import { ListUsers } from '../screens/ListUsers'
 import { ListTeams } from '../screens/ListTeams'
 import { ListSessions } from '../screens/ListSessions'
 
 export const RouterSideBarHome: FC = () => {
-  const config = useConfig()
+  const config = useGlobal()
   const router = useRouter({
     base: '/home',
     nomatch: '/users',

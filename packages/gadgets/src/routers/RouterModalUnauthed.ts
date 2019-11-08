@@ -12,7 +12,6 @@ export const RouterModalUnauthed: FC<{
   const [devopen, devopenChange] = useState<boolean>(false)
   const settings = useSettings()
   const router = useLocalRouter({
-    local: 'wga.RouterModalUnauthed',
     nomatch: '/login',
     options: [
       { key: '/login', children: create(LoginUser) },

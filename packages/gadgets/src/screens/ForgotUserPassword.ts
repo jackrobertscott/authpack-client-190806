@@ -15,7 +15,6 @@ export const ForgotUserPassword: FC = () => {
   const gqlForgotUserPassword = useForgotUserPassword()
   const settings = useSettings()
   const schema = useSchema({
-    local: 'wga.ForgotUserPassword',
     schema: yup.object().shape({
       email: yup
         .string()

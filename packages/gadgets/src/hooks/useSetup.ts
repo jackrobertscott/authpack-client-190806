@@ -3,10 +3,9 @@ import { SettingsStore } from '../utils/settings'
 import { radio } from '../utils/radio'
 import { useSettings } from './useSettings'
 import { createUseServer } from './useServer'
-import { useConfig } from './useConfig'
+import { config } from '../config'
 
 export const useSetup = () => {
-  const config = useConfig()
   const settings = useSettings()
   const gqlRetrieveApp = useRetrieveApp()
   const gqlRefreshSession = useRefreshSession()
@@ -63,6 +62,7 @@ export const useSetup = () => {
   }, [])
   useEffect(() => {
     return radio.listen(({ name, payload = {} }) => {
+      if (!name.startsWith('plugin:')) return
       if (config.debug)
         console.log(`Gadget received: ${name} @ ${Date.now() % 86400000}`)
       switch (name) {

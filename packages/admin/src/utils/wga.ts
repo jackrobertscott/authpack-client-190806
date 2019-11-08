@@ -1,6 +1,7 @@
 import { Gadgets } from 'wga-plugin'
+import { config } from '../config'
 
 export const wga = new Gadgets({
-  domain_key: 'wga-domain-key-79aeda5fd1178c9486d6925cc',
+  domain_key: config.domain,
   devmode: true,
 })

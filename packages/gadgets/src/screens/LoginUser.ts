@@ -16,7 +16,6 @@ export const LoginUser: FC = () => {
   const gqlLoginUser = useLoginUser()
   const settings = useSettings()
   const schema = useSchema({
-    local: 'wga.LoginUser',
     schema: yup.object().shape({
       email: yup
         .string()

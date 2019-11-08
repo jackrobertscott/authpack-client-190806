@@ -9,7 +9,6 @@ export const useSchema = ({
   change,
   submit,
 }: {
-  local?: string
   schema: yup.ObjectSchema<any>
   change?: (value: { [key: string]: any }) => void
   submit?: (value: { [key: string]: any }) => void

@@ -1,8 +1,6 @@
-import { SettingsStore } from '../utils/settings'
-import { useStore } from 'wga-theme'
+import { useContext } from 'react'
+import { Settings } from '../contexts/Settings'
 
 export const useSettings = () => {
-  return useStore({
-    store: SettingsStore,
-  })
+  return useContext(Settings)
 }

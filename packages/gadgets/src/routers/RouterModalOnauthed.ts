@@ -20,7 +20,6 @@ export const RouterModalOnauthed: FC<{
   const [devopen, devopenChange] = useState<boolean>(false)
   const settings = useSettings()
   const router = useLocalRouter({
-    local: 'wga.RouterModalOnauthed',
     nomatch: '/user/update',
     options: [
       { key: '/user/update', children: create(UpdateUser) },

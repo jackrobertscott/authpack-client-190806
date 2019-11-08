@@ -1,6 +1,7 @@
 import { useGQL } from 'wga-theme'
-import { useConfig } from './useConfig'
+import { useGlobal } from './useGlobal'
 import { wga } from '../utils/wga'
+import { config } from '../config'
 
 export const createUseServer = <T>(options: {
   name: string
@@ -16,11 +17,11 @@ export const useServer = <T>({
   name: string
   query: string
 }) => {
-  const config = useConfig()
+  const global = useGlobal()
   return useGQL<T>({
     url: config.api,
     authorization: [
-      config.devmode && config.domain ? `dev:${config.domain}` : config.domain,
+      global.devmode && config.domain ? `dev:${config.domain}` : config.domain,
       wga.current.bearer,
     ]
       .filter(Boolean)

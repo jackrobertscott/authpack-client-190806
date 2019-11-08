@@ -1,3 +1,3 @@
-import { ConfigStore } from './config'
+import { config } from '../config'
 
-export const stripe = (window as any).Stripe(ConfigStore.current.stripeKey)
+export const stripe = (window as any).Stripe(config.stripeKey)

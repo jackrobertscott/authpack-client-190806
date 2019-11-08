@@ -80,6 +80,7 @@ export class Gadgets {
       origin: config.urls.plugin,
     })
     radio.listen(({ name, payload = {} }) => {
+      if (!name.startsWith('gadgets:')) return
       if (config.debug)
         console.log(`Plugin received: ${name} @ ${Date.now() % 86400000}`)
       switch (name) {

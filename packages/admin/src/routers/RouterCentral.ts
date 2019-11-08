@@ -3,12 +3,12 @@ import { Layout, IconBar, useRouter } from 'wga-theme'
 import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterSideBarSettings } from './RouterSideBarSettings'
 import { RouterSideBarDeveloper } from './RouterSideBarDeveloper'
-import { ConfigStore } from '../utils/config'
-import { useConfig } from '../hooks/useConfig'
+import { GlobalStore } from '../utils/global'
+import { useGlobal } from '../hooks/useGlobal'
 import { wga } from '../utils/wga'
 
 export const RouterCentral: FC = () => {
-  const config = useConfig()
+  const global = useGlobal()
   const router = useRouter({
     nomatch: '/home',
     options: [
@@ -42,9 +42,9 @@ export const RouterCentral: FC = () => {
             icon: 'code',
             label: 'Dev Mode',
             click: () =>
-              ConfigStore.change((old: any) => ({
+              GlobalStore.change((old: any) => ({
                 ...old,
-                devmode: !config.devmode,
+                devmode: !global.devmode,
               })),
           },
           {

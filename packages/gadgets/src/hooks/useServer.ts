@@ -1,6 +1,6 @@
 import { useGQL } from 'wga-theme'
 import { useSettings } from './useSettings'
-import { useConfig } from './useConfig'
+import { config } from '../config'
 
 export const createUseServer = <T>(options: {
   name: string
@@ -16,7 +16,6 @@ export const useServer = <T>({
   name: string
   query: string
 }) => {
-  const config = useConfig()
   const settings = useSettings()
   const domainkey =
     settings.devmode && settings.domain

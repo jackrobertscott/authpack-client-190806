@@ -1,9 +1,9 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useRouter, SideBar } from 'wga-theme'
-import { useConfig } from '../hooks/useConfig'
+import { useGlobal } from '../hooks/useGlobal'
 
 export const RouterSideBarDeveloper: FC = () => {
-  const config = useConfig()
+  const config = useGlobal()
   const router = useRouter({
     base: '/developer',
     nomatch: '/explorer',

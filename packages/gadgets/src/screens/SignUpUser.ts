@@ -17,7 +17,6 @@ export const SignupUser: FC = () => {
   const gqlSignupUser = useSignupUser()
   const settings = useSettings()
   const schema = useSchema({
-    local: 'wga.SignupUser',
     schema: yup.object().shape({
       given_name: yup.string().required('Please provide your given name'),
       family_name: yup.string().required('Please provide your family name'),

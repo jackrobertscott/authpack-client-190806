@@ -1,11 +1,11 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useRouter, SideBar } from 'wga-theme'
-import { useConfig } from '../hooks/useConfig'
+import { useGlobal } from '../hooks/useGlobal'
 import { ListPermissions } from '../screens/ListPermissions'
 import { ListProviders } from '../screens/ListProviders'
 
 export const RouterSideBarSettings: FC = () => {
-  const config = useConfig()
+  const config = useGlobal()
   const router = useRouter({
     base: '/settings',
     nomatch: '/providers',

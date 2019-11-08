@@ -9,6 +9,7 @@ export type ISettings = {
   appname?: string
   subscribed: boolean
   team_required: boolean
+  theme?: string
   session?: {
     id: string
     token: string
@@ -40,6 +41,7 @@ export const defaults: ISettings = {
   devmode: false,
   subscribed: false,
   team_required: false,
+  theme: 'blue_harvester',
 }
 
 export const SettingsStore = new KeyStore<ISettings>(defaults)
