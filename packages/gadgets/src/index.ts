@@ -1,4 +1,5 @@
 import '@fortawesome/fontawesome-free/css/all.min.css'
+import * as Sentry from '@sentry/browser'
 import * as serviceWorker from './serviceWorker'
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { render } from 'react-dom'
@@ -7,6 +8,12 @@ import { SettingsStore } from './utils/settings'
 import { Settings } from './contexts/Settings'
 import { App } from './App'
 import { ErrorBoundary } from './screens/ErrorBoundary'
+import { config } from './config'
+
+Sentry.init({
+  dsn: config.sentryDSN,
+  environment: config.environment,
+})
 
 export const Root: FC = () => {
   const [settings, settingsChange] = useState(SettingsStore.current)
