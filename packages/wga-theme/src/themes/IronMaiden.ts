@@ -37,8 +37,6 @@ export const IronMaiden: ITheme = {
     header: '#414141',
     border: 'none',
     background: '#414141',
-    scrollbar: '#505050',
-    scrollbarHover: '#999999',
   },
   page: {
     title: '#CCCCCC',
@@ -51,8 +49,10 @@ export const IronMaiden: ITheme = {
     headerHover: '#454545',
     border: 'none',
     background: '#414141',
-    scrollbar: '#505050',
-    scrollbarHover: '#999999',
+  },
+  scroller: {
+    background: '#505050',
+    backgroundHover: '#999999',
   },
   sideBar: {
     title: '#AAAAAA',

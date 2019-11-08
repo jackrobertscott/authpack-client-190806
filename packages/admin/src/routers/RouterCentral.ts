@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as create, FC, Fragment } from 'react'
 import { Layout, IconBar, useRouter } from 'wga-theme'
 import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterSideBarSettings } from './RouterSideBarSettings'
@@ -33,7 +33,7 @@ export const RouterCentral: FC = () => {
             click: () => router.change('/settings'),
           },
           {
-            icon: 'code',
+            icon: 'search',
             label: 'Developer',
             click: () => router.change('/developer'),
           },
@@ -55,8 +55,9 @@ export const RouterCentral: FC = () => {
         ],
       }),
       router.current &&
-        create((() => router.current.children) as FC, {
+        create(Fragment, {
           key: 'children',
+          children: router.current.children,
         }),
     ],
   })

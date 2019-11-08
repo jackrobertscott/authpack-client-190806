@@ -129,7 +129,7 @@ const IconPointer: FC<{
           transition: '200ms',
           pointerEvents: 'none',
           opacity: 0,
-          zIndex: 200,
+          zIndex: 300,
           left: '100%',
           top: -5,
           paddingLeft: 7.5,
@@ -146,7 +146,13 @@ const IconPointer: FC<{
               !!options.length &&
               create(Menu, {
                 key: 'menu',
-                options,
+                options: options.map(option => ({
+                  ...option,
+                  click: () => {
+                    openChange(false)
+                    if (option.click) option.click()
+                  },
+                })),
               }),
           }),
         }),

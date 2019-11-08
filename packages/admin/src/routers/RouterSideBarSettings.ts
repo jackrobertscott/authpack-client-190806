@@ -34,8 +34,9 @@ export const RouterSideBarSettings: FC = () => {
         ],
       }),
       router.current &&
-        create((() => router.current.children) as FC, {
+        create(Fragment, {
           key: 'children',
+          children: router.current.children,
         }),
     ],
   })

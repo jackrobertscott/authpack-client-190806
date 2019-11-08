@@ -14,8 +14,8 @@ import { SettingsStore } from '../utils/settings'
 import { createUseServer } from '../hooks/useServer'
 
 export const SignupUser: FC = () => {
-  const gqlSignupUser = useSignupUser()
   const settings = useSettings()
+  const gqlSignupUser = useSignupUser()
   const schema = useSchema({
     schema: yup.object().shape({
       given_name: yup.string().required('Please provide your given name'),

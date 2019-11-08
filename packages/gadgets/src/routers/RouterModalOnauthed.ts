@@ -1,4 +1,4 @@
-import { createElement as create, FC, useState } from 'react'
+import { createElement as create, FC, useState, Fragment } from 'react'
 import { useLocalRouter, Layout, IconBar } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { UpdateUser } from '../screens/UpdateUser'
@@ -20,7 +20,10 @@ export const RouterModalOnauthed: FC<{
   const [devopen, devopenChange] = useState<boolean>(false)
   const settings = useSettings()
   const router = useLocalRouter({
-    nomatch: '/user/update',
+    nomatch:
+      settings.team_required && !settings.team
+        ? '/team/create'
+        : '/user/update',
     options: [
       { key: '/user/update', children: create(UpdateUser) },
       { key: '/user/password', children: create(UpdateUserPassword) },
@@ -109,7 +112,7 @@ export const RouterModalOnauthed: FC<{
                     click: () => router.change('/team/members/create'),
                   },
                   {
-                    icon: 'user-plus',
+                    icon: 'user-friends',
                     label: 'See Members',
                     helper: 'List all team members',
                     click: () => router.change('/team/members'),
@@ -156,8 +159,9 @@ export const RouterModalOnauthed: FC<{
             close: () => devopenChange(false),
           })
         : router.current &&
-          create((() => router.current.children) as FC, {
+          create(Fragment, {
             key: 'children',
+            children: router.current.children,
           }),
     ],
   })

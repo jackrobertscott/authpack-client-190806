@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as create, FC, Fragment } from 'react'
 import { useLocalRouter, Modal, Layout, IconBar } from 'wga-theme'
 
 export const RouterManagerPermission: FC<{
@@ -50,8 +50,9 @@ export const RouterManagerPermission: FC<{
               ],
         }),
         router.current &&
-          create((() => router.current.children) as FC, {
+          create(Fragment, {
             key: 'children',
+            children: router.current.children,
           }),
       ],
     }),

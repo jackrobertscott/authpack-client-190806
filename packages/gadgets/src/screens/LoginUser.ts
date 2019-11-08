@@ -13,8 +13,8 @@ import { SettingsStore } from '../utils/settings'
 import { createUseServer } from '../hooks/useServer'
 
 export const LoginUser: FC = () => {
-  const gqlLoginUser = useLoginUser()
   const settings = useSettings()
+  const gqlLoginUser = useLoginUser()
   const schema = useSchema({
     schema: yup.object().shape({
       email: yup

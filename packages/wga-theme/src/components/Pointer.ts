@@ -1,4 +1,4 @@
-import { createElement as create, FC, ReactNode } from 'react'
+import { createElement as create, FC, ReactNode, Fragment } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../contexts/Theme'
 import { Icon } from './Icon'
@@ -20,7 +20,7 @@ export const Pointer: FC<{
       overflow: 'hidden',
       position: 'relative',
       zIndex: 200,
-      width: 280,
+      width: 300,
       borderRadius: theme.global.radius,
       border: theme.pointer.border,
       boxShadow: theme.pointer.shadow,
@@ -36,8 +36,9 @@ export const Pointer: FC<{
         helper,
       }),
       children &&
-        create((() => children) as FC, {
+        create(Fragment, {
           key: 'children',
+          children,
         }),
     ],
   })

@@ -1,4 +1,4 @@
-import { createElement as create, useState, FC } from 'react'
+import { createElement as create, useState, Fragment } from 'react'
 import { storiesOf } from '@storybook/react'
 import {
   Button,
@@ -11,8 +11,8 @@ import {
   Toaster,
   Empty,
   Theme,
+  ToasterStore,
 } from '../src/index'
-import { useToaster } from '../src/hooks/useToaster'
 import { BlueHarvester } from '../src/themes/BlueHarvester'
 
 console.clear()
@@ -57,8 +57,9 @@ const stories = storiesOf('Page', module).addDecorator(data => {
             },
           ],
         }),
-        create((() => data()) as FC, {
+        create(Fragment, {
           key: 'data',
+          children: data(),
         }),
       ],
     }),
@@ -100,7 +101,6 @@ stories.add('Buttons', () => {
 
 stories.add('Table', () => {
   const Searching = () => {
-    const toaster = useToaster()
     const [value, valueChange] = useState<string>('')
     return create(SearchBar, {
       value,
@@ -111,7 +111,7 @@ stories.add('Table', () => {
           icon: 'angle-double-left',
           label: 'Previous',
           click: () =>
-            toaster.add({
+            ToasterStore.add({
               label: 'Error',
               helper: 'No previous items available',
             }),

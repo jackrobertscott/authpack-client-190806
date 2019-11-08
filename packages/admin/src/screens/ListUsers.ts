@@ -5,14 +5,14 @@ import { TemplateSearchBar } from '../templates/TemplateSearchBar'
 import { createUseServer } from '../hooks/useServer'
 
 export const ListUsers: FC = () => {
-  const apiListUsers = useAPIListUsers()
+  const apiListUsers = useListUsers()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [options, optionsChange] = useState<{ [key: string]: any }>({})
   useEffect(() => {
     apiListUsers.fetch({ options })
     // eslint-disable-next-line
-  }, [options])
+  }, [])
   return create(Page, {
     title: 'Users',
     subtitle: 'See all users of your app',
@@ -84,7 +84,7 @@ export const ListUsers: FC = () => {
   })
 }
 
-const useAPIListUsers = createUseServer<{
+const useListUsers = createUseServer<{
   count: number
   users: Array<{
     id: string
@@ -94,11 +94,11 @@ const useAPIListUsers = createUseServer<{
     name?: string
   }>
 }>({
-  name: 'APIListUsers',
+  name: 'apiListUsers',
   query: `
-    query APIListUsers($filter: FilterUsers, $options: FilterOptions) {
-      count: APICountUsers(filter: $filter)
-      users: APIListUsers(filter: $filter, options: $options) {
+    query apiListUsers($filter: FilterUsers, $options: FilterOptions) {
+      count: apiCountUsers(filter: $filter)
+      users: apiListUsers(filter: $filter, options: $options) {
         id
         updated
         email

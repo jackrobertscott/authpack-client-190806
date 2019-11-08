@@ -12,7 +12,8 @@ export const useLocalRouter = ({
     children: ReactNode
   }>
 }) => {
-  const start = options[0] && options[0].key
+  const index = options.findIndex(({ key }) => key === nomatch)
+  const start = index !== -1 ? options[index].key : options[0] && options[0].key
   const ref = useRef(new Store<undefined | string>(start))
   const store = useStore<undefined | string>({ store: ref.current })
   const [current] = options.filter(i => store && store === i.key)

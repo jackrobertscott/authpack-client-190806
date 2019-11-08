@@ -1,7 +1,8 @@
-import { createElement as create, FC, ReactNode, Children } from 'react'
+import { createElement as create, FC, ReactNode } from 'react'
 import { useTheme } from '../contexts/Theme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
+import { Scroller } from './Scroller'
 
 export const Page: FC<{
   title: string
@@ -36,6 +37,7 @@ export const Page: FC<{
       }),
       create(Scroller, {
         key: 'scroller',
+        border: theme.page.border,
         children: [
           create('div', {
             key: 'children',
@@ -191,42 +193,6 @@ const Branding: FC<{
           color: theme.page.brandingHover,
         },
       }),
-    }),
-  })
-}
-
-const Scroller: FC<{
-  children: ReactNode
-}> = ({ children }) => {
-  const theme = useTheme()
-  return create('div', {
-    children,
-    className: css({
-      all: 'unset',
-      display: 'flex',
-      position: 'relative',
-      flexDirection: 'column',
-      overflow: 'auto',
-      flexGrow: 1,
-      '&::-webkit-scrollbar': {
-        width: '25px',
-        cursor: 'pointer',
-        display: 'initial',
-        backgroundColor: 'hsla(0, 0, 0, 0)',
-        borderLeft: theme.page.border,
-      },
-      '&::-webkit-scrollbar-track': {
-        backgroundColor: 'hsla(0, 0, 0, 0)',
-      },
-      '&::-webkit-scrollbar-thumb': {
-        cursor: 'pointer',
-        transition: '200ms',
-        borderLeft: theme.page.border,
-        background: theme.page.scrollbar,
-      },
-      '&::-webkit-scrollbar-thumb:hover': {
-        background: theme.page.scrollbarHover,
-      },
     }),
   })
 }

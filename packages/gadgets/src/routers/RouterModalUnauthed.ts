@@ -1,4 +1,4 @@
-import { createElement as create, FC, useState } from 'react'
+import { createElement as create, FC, useState, Fragment } from 'react'
 import { useLocalRouter, Layout, IconBar } from 'wga-theme'
 import { LoginUser } from '../screens/LoginUser'
 import { SignupUser } from '../screens/SignupUser'
@@ -67,8 +67,9 @@ export const RouterModalUnauthed: FC<{
             close: () => devopenChange(false),
           })
         : router.current &&
-          create((() => router.current.children) as FC, {
+          create(Fragment, {
             key: 'children',
+            children: router.current.children,
           }),
     ],
   })
