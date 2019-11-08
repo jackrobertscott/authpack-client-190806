@@ -1,15 +1,8 @@
-# 🏇 Authenticator API
+# 🏇 Depreciated: Authenticator API
 
 > User and team management for your app
 
 Helper methods which may be used to access the Authenticator API using GraphQL.
-
-## Features
-
-- 🔥  Works in [Node](https://nodejs.org/en/) and on the browser.
-- ⚡️  Simple integration with [React](https://reactjs.org), [Vue](https://vuejs.org/), and other browser libraries.
-- 👾  Write, send, and handle [GraphQL](https://graphql.org/) queries.
-- 🏋️‍  Supports [TypeScript](https://www.typescriptlang.org/) and [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript).
 
 ## Install
 
@@ -43,83 +36,6 @@ const wga = new AuthenticatorAPI({
 
 **Note:** use a package such as [dotenv](https://www.npmjs.com/package/dotenv) to securely store your secret variables.
 
-## Usage
-
-Use the `.create()` method to create a new graphql dispatcher.
-
-```ts
-const retrieveUser = wga.create<{
-  variables: {
-    id: string,
-  }
-  data: {
-    user: {
-      id: string
-      created: string
-      updated: string
-      name: string
-      email: string
-      username: string
-      meta: { [key: string]: any }
-    }
-  }
-}>({
-  name: 'RetrieveUser',
-  graphql: `
-    query RetrieveUser($id: String) {
-      user: RetrieveUser($id: string) {
-        id
-        created
-        updated
-        name
-        email
-        username
-        meta
-      }
-    }
-  `
-})
-```
-
-Then use the `.run(variables)` method to send the graphql query.
-
-```ts
-retrieveUser.run({ id: '1234567890' })
-  .then(data => {
-    console.log(`User created at ${data.user.created}`)
-  })
-  .catch(error => {
-    console.log(`An error occurred: ${error.message}`)
-  })
-```
-
-Listen to all incoming dispatcher events with the `.listen(data)` method.
-
-```ts
-const unlisten = retrieveUser.listen(data => {
-  console.log(`User created at ${data.user.created}`)
-})
-```
-
-Below is an example of how the library can be used with React hooks.
-
-```tsx
-const ShowUser = props => {
-  const [user, setUser] = useState()
-  useEffect(() => {
-    return retrieveUser.listen(data => {
-      setUser(data.user)
-    })
-  }, [])
-  return (
-    <div>
-      <button onClick={() => retrieveUser.run({ id: props.id })}>
-        Load User
-      </button>
-      <pre><code>{JSON.stringify(user, null, 2)}</code></pre>
-    <div>
-  )
-}
-```
+## Credits
 
 Created with ❤️ by [Window Gadgets](https://authenticator.windowgadgets.io/).
