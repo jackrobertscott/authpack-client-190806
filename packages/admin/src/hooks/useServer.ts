@@ -1,6 +1,6 @@
 import { useGQL } from 'wga-theme'
 import { useGlobal } from './useGlobal'
-import { wga } from '../utils/wga'
+import { wga } from '../utils/gadgets'
 import { config } from '../config'
 
 export const createUseServer = <T>(options: {

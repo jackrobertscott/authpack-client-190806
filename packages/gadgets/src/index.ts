@@ -6,15 +6,18 @@ import { Theme, BlueHarvester, IronMaiden } from 'wga-theme'
 import { SettingsStore } from './utils/settings'
 import { Settings } from './contexts/Settings'
 import { App } from './App'
+import { ErrorBoundary } from './screens/ErrorBoundary'
 
 export const Root: FC = () => {
   const [settings, settingsChange] = useState(SettingsStore.current)
   useEffect(() => SettingsStore.listen(settingsChange), [])
-  return create(Settings.Provider, {
-    value: settings,
-    children: create(Theme.Provider, {
-      value: settings.theme === 'blue_harvester' ? BlueHarvester : IronMaiden,
-      children: create(App),
+  return create(ErrorBoundary, {
+    children: create(Settings.Provider, {
+      value: settings,
+      children: create(Theme.Provider, {
+        value: settings.theme === 'blue_harvester' ? BlueHarvester : IronMaiden,
+        children: create(App),
+      }),
     }),
   })
 }

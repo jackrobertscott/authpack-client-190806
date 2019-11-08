@@ -5,7 +5,7 @@ import { RouterSideBarSettings } from './RouterSideBarSettings'
 import { RouterSideBarDeveloper } from './RouterSideBarDeveloper'
 import { GlobalStore } from '../utils/global'
 import { useGlobal } from '../hooks/useGlobal'
-import { wga } from '../utils/wga'
+import { wga } from '../utils/gadgets'
 
 export const RouterCentral: FC = () => {
   const global = useGlobal()

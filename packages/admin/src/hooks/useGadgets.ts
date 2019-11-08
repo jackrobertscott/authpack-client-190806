@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { wga } from '../utils/wga'
+import { wga } from '../utils/gadgets'
 
 export const useGadgets = () => {
   const [state, stateChange] = useState()

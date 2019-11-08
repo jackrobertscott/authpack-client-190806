@@ -8,13 +8,13 @@ export const App: FC = () => {
   const gadgets = useGadgets()
   return create(Fragment, {
     children: [
-      !gadgets || !gadgets.bearer
-        ? create(Unauthenticated, {
+      gadgets && gadgets.bearer && gadgets.user && gadgets.team
+        ? create(RouterCentral, {
+            key: 'router',
+          })
+        : create(Unauthenticated, {
             key: 'unauthenticated',
             loading: !gadgets,
-          })
-        : create(RouterCentral, {
-            key: 'router',
           }),
       create(Toaster, {
         key: 'toaster',

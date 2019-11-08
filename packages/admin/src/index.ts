@@ -6,15 +6,18 @@ import { BlueHarvester, Theme, IronMaiden } from 'wga-theme'
 import { App } from './App'
 import { GlobalStore } from './utils/global'
 import { Global } from './contexts/Global'
+import { ErrorBoundary } from './screens/ErrorBoundary'
 
 export const Root: FC = () => {
   const [global, globalChange] = useState(GlobalStore.current)
   useEffect(() => GlobalStore.listen(globalChange), [])
-  return create(Global.Provider, {
-    value: global,
-    children: create(Theme.Provider, {
-      value: global.theme === 'blue_harvester' ? BlueHarvester : IronMaiden,
-      children: create(App),
+  return create(ErrorBoundary, {
+    children: create(Global.Provider, {
+      value: global,
+      children: create(Theme.Provider, {
+        value: global.theme === 'blue_harvester' ? BlueHarvester : IronMaiden,
+        children: create(App),
+      }),
     }),
   })
 }
