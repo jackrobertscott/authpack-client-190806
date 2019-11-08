@@ -31,7 +31,7 @@ export const SignupUser: FC = () => {
       password: yup.string().required('Please provide your password'),
     }),
     submit: value => {
-      gqlSignupUser.fetch({ value }).then(({ session }) => {
+      gqlSignupUser.fetch(value).then(({ session }) => {
         schema.change('password')('')
         SettingsStore.update({
           bearer: `Bearer ${session.token}`,
@@ -121,10 +121,10 @@ const useSignupUser = createUseServer<{
     token: string
   }
 }>({
-  name: 'SignupUser',
+  name: 'wgaSignupUser',
   query: `
-    mutation SignupUser($value: SignupUserValue!) {
-      session: SignupUser(value: $value) {
+    mutation wgaSignupUser($email: String!, $password: String!, $username: String, $given_name: String, $family_name: String) {
+      session: wgaSignupUser(email: $email, password: $password, username: $username, given_name: $given_name, family_name: $family_name) {
         id
         token
       }

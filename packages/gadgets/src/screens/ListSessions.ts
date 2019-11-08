@@ -17,10 +17,10 @@ const useListSessions = createUseServer<{
     id: string
   }>
 }>({
-  name: 'ListSessions',
+  name: 'wgaListSessions',
   query: `
-    query ListSessions($options: FilterOptions) {
-      sessions: ListSessions(options: $options) {
+    query wgaListSessions($options: FilterOptions) {
+      sessions: wgaListSessions(options: $options) {
         id
       }
     }

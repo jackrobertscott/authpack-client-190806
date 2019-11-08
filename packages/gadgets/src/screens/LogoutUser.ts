@@ -45,10 +45,10 @@ const useLogoutUser = createUseServer<{
     id: string
   }
 }>({
-  name: 'LogoutUser',
+  name: 'wgaLogoutUser',
   query: `
-    mutation LogoutUser {
-      session: LogoutUser {
+    mutation wgaLogoutUser {
+      session: wgaLogoutUser {
         id
       }
     }

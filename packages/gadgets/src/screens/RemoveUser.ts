@@ -17,10 +17,10 @@ const useRemoveUser = createUseServer<{
     id: string
   }
 }>({
-  name: 'RemoveUser',
+  name: 'wgaRemoveUser',
   query: `
-    mutation RemoveUser($value: RemoveUserValue!) {
-      user: RemoveUser(value: $value) {
+    mutation wgaRemoveUser($password: String!) {
+      user: wgaRemoveUser(password: $password) {
         id
       }
     }

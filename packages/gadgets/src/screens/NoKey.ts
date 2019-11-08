@@ -3,20 +3,21 @@ import { Focus, Button } from 'wga-theme'
 
 export const NoKey: FC<{
   loading: boolean
-}> = ({ loading }) =>
-  loading
-    ? create(Focus, {
-        icon: 'sync-alt',
-        label: 'Loading',
-        helper: 'Preparing code and performing security checks',
-      })
-    : create(Focus, {
-        icon: 'user-lock',
-        label: 'Authenticator',
-        helper: "Please provide your app's domain key",
-        children: create(Button, {
-          icon: 'question',
-          label: 'Learn More',
-          click: () => window.open('https://authenticator.windowgadgets.io'),
-        }),
-      })
+}> = ({ loading }) => {
+  if (loading)
+    return create(Focus, {
+      icon: 'sync-alt',
+      label: 'Loading',
+      helper: 'Preparing code and performing security checks',
+    })
+  return create(Focus, {
+    icon: 'user-lock',
+    label: 'Authenticator',
+    helper: "Please provide your app's domain key",
+    children: create(Button, {
+      icon: 'question',
+      label: 'Learn More',
+      click: () => window.open('https://authenticator.windowgadgets.io'),
+    }),
+  })
+}

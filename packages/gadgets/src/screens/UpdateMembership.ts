@@ -17,9 +17,9 @@ const useListPermissions = createUseServer<{
     id: string
   }>
 }>({
-  name: 'ListPermissions',
+  name: 'wgaListPermissions',
   query: `
-    query ListPermissions {
+    query wgaListPermissions {
       permissions: ListPermissions {
         id
       }
@@ -32,10 +32,10 @@ const useUpdateMembership = createUseServer<{
     id: string
   }
 }>({
-  name: 'UpdateMembership',
+  name: 'wgaUpdateMembership',
   query: `
-    mutation UpdateMembership($id: String!, $value: UpdateMembershipValue!) {
-      membership: UpdateMembership(id: $id, value: $value) {
+    mutation wgaUpdateMembership($id: String!, $permission_ids: [String!]) {
+      membership: wgaUpdateMembership(id: $id, permission_ids: $permission_ids) {
         id
       }
     }

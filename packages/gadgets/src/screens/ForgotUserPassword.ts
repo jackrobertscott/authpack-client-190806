@@ -7,6 +7,7 @@ import {
   Control,
   InputString,
   Button,
+  Focus,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
@@ -22,7 +23,7 @@ export const ForgotUserPassword: FC = () => {
         .required('Please provide your email'),
     }),
     submit: value => {
-      gqlForgotUserPassword.fetch({ value })
+      gqlForgotUserPassword.fetch(value)
     },
   })
   return create(Gadgets, {
@@ -50,6 +51,13 @@ export const ForgotUserPassword: FC = () => {
           disabled: !schema.valid,
           click: schema.submit,
         }),
+        gqlForgotUserPassword.data &&
+          create(Focus, {
+            key: 'focus',
+            icon: 'paper-plane',
+            label: 'Sent',
+            helper: 'A reset email has been sent',
+          }),
       ],
     }),
   })
@@ -58,10 +66,10 @@ export const ForgotUserPassword: FC = () => {
 const useForgotUserPassword = createUseServer<{
   email: string
 }>({
-  name: 'ForgotUserPassword',
+  name: 'wgaForgotUserPassword',
   query: `
-    mutation ForgotUserPassword($value: ForgotUserPasswordValue!) {
-      email: ForgotUserPassword(value: $value)
+    mutation wgaForgotUserPassword($email: String!) {
+      email: wgaForgotUserPassword(email: $email)
     }
   `,
 })

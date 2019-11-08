@@ -19,10 +19,10 @@ const useCreateCredential = createUseServer<{
     email?: string
   }
 }>({
-  name: 'CreateCredential',
+  name: 'wgaCreateCredential',
   query: `
-    mutation CreateCredential($value: CreateCredentialValue!) {
-      credential: CreateCredential(value: $value) {
+    mutation wgaCreateCredential($provider_id: String!, $code: String!) {
+      credential: wgaCreateCredential(provider_id: $provider_id, code: $code) {
         id
         access_token
         email
@@ -36,10 +36,10 @@ const useListProviders = createUseServer<{
     id: string
   }>
 }>({
-  name: 'ListProviders',
+  name: 'wgaListProviders',
   query: `
-    query ListProviders {
-      providers: ListProviders {
+    query wgaListProviders {
+      providers: wgaListProviders {
         id
       }
     }

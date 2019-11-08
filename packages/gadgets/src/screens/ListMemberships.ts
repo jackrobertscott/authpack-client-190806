@@ -17,10 +17,10 @@ const useListMemberships = createUseServer<{
     id: string
   }>
 }>({
-  name: 'ListMemberships',
+  name: 'wgaListMemberships',
   query: `
-    query ListMemberships {
-      memberships: ListMemberships {
+    query wgaListMemberships {
+      memberships: wgaListMemberships {
         id
       }
     }

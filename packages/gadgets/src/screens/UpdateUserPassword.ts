@@ -17,10 +17,10 @@ const useUpdateUserPassword = createUseServer<{
     id: string
   }
 }>({
-  name: 'UpdateUserPassword',
+  name: 'wgaUpdateUserPassword',
   query: `
-    mutation UpdateUserPassword($value: UpdateUserPasswordValue!) {
-      user: UpdateUserPassword(value: $value) {
+    mutation wgaUpdateUserPassword($passwordCurrent: String!, $passwordNew: String!) {
+      user: wgaUpdateUserPassword(passwordCurrent: $passwordCurrent, passwordNew: $passwordNew) {
         id
       }
     }
