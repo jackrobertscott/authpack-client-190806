@@ -12,7 +12,7 @@ export const Devmode: FC<{
     children: create(Focus, {
       icon: 'code',
       label: 'Dev Mode',
-      helper: 'Limited to 250 user accounts',
+      helper: 'Maximum of 250 user accounts',
       children: create(Button, {
         icon: 'times',
         label: 'Okay',

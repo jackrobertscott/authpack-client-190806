@@ -6,15 +6,17 @@ export const Layout: FC<{
   column?: boolean
   padding?: boolean
   divide?: boolean
-}> = ({ children, column, padding, divide }) => {
+  center?: boolean
+}> = ({ children, column, padding, divide, center }) => {
   return create('div', {
     children,
     className: css({
       all: 'unset',
       display: 'flex',
       flexDirection: column ? 'column' : 'row',
-      justifyContent: 'stretch',
-      alignItems: 'stretch',
+      justifyContent: center && !column ? 'center' : 'stretch',
+      alignItems: center && column ? 'center' : 'stretch',
+      position: 'relative',
       overflow: 'hidden',
       flexGrow: 1,
       padding: padding ? 25 : 0,

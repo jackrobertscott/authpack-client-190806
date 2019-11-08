@@ -1,13 +1,14 @@
-import { createElement as create, FC, Fragment } from 'react'
+import { createElement as create, FC, Fragment, useState } from 'react'
 import { Layout, IconBar, useRouter } from 'wga-theme'
 import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterSideBarSettings } from './RouterSideBarSettings'
 import { RouterSideBarDeveloper } from './RouterSideBarDeveloper'
-import { GlobalStore } from '../utils/global'
 import { useGlobal } from '../hooks/useGlobal'
 import { wga } from '../utils/gadgets'
+import { Devmode } from '../screens/Devmode'
 
 export const RouterCentral: FC = () => {
+  const [open, openChange] = useState<boolean>(false)
   const global = useGlobal()
   const router = useRouter({
     nomatch: '/home',
@@ -39,13 +40,9 @@ export const RouterCentral: FC = () => {
           },
           {
             seperated: true,
-            icon: 'code',
-            label: 'Dev Mode',
-            click: () =>
-              GlobalStore.change((old: any) => ({
-                ...old,
-                devmode: !global.devmode,
-              })),
+            icon: global.devmode ? 'code' : 'bolt',
+            label: global.devmode ? 'Dev Mode' : 'Live Mode',
+            click: () => openChange(!open),
           },
           {
             icon: 'user-circle',
@@ -54,11 +51,16 @@ export const RouterCentral: FC = () => {
           },
         ],
       }),
-      router.current &&
-        create(Fragment, {
-          key: 'children',
-          children: router.current.children,
-        }),
+      open
+        ? create(Devmode, {
+            key: 'devmode',
+            close: () => openChange(false),
+          })
+        : router.current &&
+          create(Fragment, {
+            key: 'children',
+            children: router.current.children,
+          }),
     ],
   })
 }

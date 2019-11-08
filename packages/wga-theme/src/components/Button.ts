@@ -22,6 +22,7 @@ export const Button: FC<{
       justifyContent: 'space-between',
       alignItems: 'center',
       padding: 15,
+      minWidth: 100,
       transition: '200ms',
       border: theme.button.border,
       borderRadius: theme.global.radius,

@@ -45,7 +45,7 @@ export const RouterModalUnauthed: FC<{
               ? [
                   {
                     icon: 'code',
-                    label: 'Dev Mode Enabled',
+                    label: 'Dev Mode',
                     click: () => devopenChange(true),
                     seperated: true,
                   } as any,

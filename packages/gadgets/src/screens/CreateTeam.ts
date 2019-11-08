@@ -16,7 +16,8 @@ import { SettingsStore } from '../utils/settings'
 export const CreateTeam: FC = () => {
   const settings = useSettings()
   const gqlCreateTeam = useCreateTeam()
-  const [open, openChange] = useState<boolean>(settings.team_required)
+  const start = settings.team_required && !settings.team
+  const [open, openChange] = useState<boolean>(start)
   const schema = useSchema({
     schema: yup.object().shape({
       name: yup.string().required('Please provide a team name'),

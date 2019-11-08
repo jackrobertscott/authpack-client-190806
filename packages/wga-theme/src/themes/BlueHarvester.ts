@@ -29,8 +29,8 @@ export const BlueHarvester: ITheme = {
     placeholder: color(0.55),
     value: color(0.75),
     valueHover: color(0.95),
-    background: color(0.3),
-    backgroundHover: color(0.35),
+    background: color(0.325),
+    backgroundHover: color(0.375),
     backgroundDisabled: color(0.15),
     shadow: `0 0 13px -3px ${color(0, 0.25)}`,
     border: `none`,
@@ -156,6 +156,6 @@ export const BlueHarvester: ITheme = {
   focus: {
     label: color(0.85),
     helper: color(0.65),
-    background: color(0.3),
+    background: color(0.275),
   },
 }

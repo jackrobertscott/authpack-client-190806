@@ -16,6 +16,7 @@ export const InputBoolean: FC<{
       display: 'flex',
       cursor: 'pointer',
       flexGrow: 1,
+      width: 100,
       maxWidth: 100,
     }),
     children: create(InputContainer, {

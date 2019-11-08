@@ -187,7 +187,7 @@ const Devmode: FC = () => {
           icon: 'code',
           label: 'Enabled',
           helper:
-            'You are currently viewing development data. Changes to this data will not effect your monthly pricing. This mode is allowed a maximum of 250 users.',
+            'You are currently viewing development data. Changes to this data will not effect your monthly pricing. This mode is allowed a maximum of 250 user accounts.',
         }),
       }),
     ],
