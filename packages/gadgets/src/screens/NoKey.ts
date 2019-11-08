@@ -8,7 +8,7 @@ export const NoKey: FC<{
     return create(Focus, {
       icon: 'sync-alt',
       label: 'Loading',
-      helper: 'Preparing code and performing security checks',
+      helper: 'Performing security checks',
     })
   return create(Focus, {
     icon: 'user-lock',

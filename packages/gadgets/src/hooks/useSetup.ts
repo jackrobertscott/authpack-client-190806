@@ -93,10 +93,10 @@ const useRetrieveApp = createUseServer<{
     subscribed: boolean
   }
 }>({
-  name: 'RetrieveApp',
+  name: 'wgaRetrieveApp',
   query: `
-    query RetrieveApp {
-      app: RetrieveApp {
+    query wgaRetrieveApp {
+      app: wgaRetrieveApp {
         id
         name
         subscribed
@@ -130,10 +130,10 @@ const useRefreshSession = createUseServer<{
     }>
   }
 }>({
-  name: 'RefreshSession',
+  name: 'wgaRefreshSession',
   query: `
-    mutation RefreshSession {
-      session: RefreshSession {
+    mutation wgaRefreshSession {
+      session: wgaRefreshSession {
         id
         token
         user {

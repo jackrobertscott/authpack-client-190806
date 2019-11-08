@@ -79,49 +79,49 @@ export const RouterModalOnauthed: FC<{
           {
             icon: 'users',
             label: 'Team',
-            options: [
-              {
-                icon: 'plus',
-                label: 'Create New Team',
-                helper: 'Make a new team',
-                click: () => router.change('/team/create'),
-              },
-            ].concat(
-              settings.team
-                ? [
-                    {
-                      icon: 'sync-alt',
-                      label: 'Switch Team',
-                      helper: 'Change to another team',
-                      click: () => router.change('/team/switch'),
-                    },
-                    {
-                      icon: 'cog',
-                      label: 'Update Team',
-                      helper: 'Your team settings',
-                      click: () => router.change('/team/update'),
-                    },
-                    {
-                      icon: 'user-plus',
-                      label: 'Add Member',
-                      helper: 'Add a new team member',
-                      click: () => router.change('/team/members/create'),
-                    },
-                    {
-                      icon: 'user-plus',
-                      label: 'See Members',
-                      helper: 'List all team members',
-                      click: () => router.change('/team/members'),
-                    },
-                    {
-                      icon: 'fire-alt',
-                      label: 'Danger Zone',
-                      helper: 'Remove this team',
-                      click: () => router.change('/team/danger'),
-                    },
-                  ]
-                : []
-            ),
+            click: settings.team
+              ? undefined
+              : () => router.change('/team/create'),
+            options: settings.team
+              ? [
+                  {
+                    icon: 'plus',
+                    label: 'Create Team',
+                    helper: 'Make a new team',
+                    click: () => router.change('/team/create'),
+                  },
+                  {
+                    icon: 'sync-alt',
+                    label: 'Switch Team',
+                    helper: 'Change to another team',
+                    click: () => router.change('/team/switch'),
+                  },
+                  {
+                    icon: 'cog',
+                    label: 'Update Team',
+                    helper: 'Your team settings',
+                    click: () => router.change('/team/update'),
+                  },
+                  {
+                    icon: 'user-plus',
+                    label: 'Add Member',
+                    helper: 'Add a new team member',
+                    click: () => router.change('/team/members/create'),
+                  },
+                  {
+                    icon: 'user-plus',
+                    label: 'See Members',
+                    helper: 'List all team members',
+                    click: () => router.change('/team/members'),
+                  },
+                  {
+                    icon: 'fire-alt',
+                    label: 'Danger Zone',
+                    helper: 'Remove this team',
+                    click: () => router.change('/team/danger'),
+                  },
+                ]
+              : [],
           },
           {
             icon: 'power-off',
