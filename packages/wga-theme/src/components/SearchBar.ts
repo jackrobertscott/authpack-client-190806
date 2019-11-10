@@ -1,4 +1,4 @@
-import { createElement as create, FC, useRef } from 'react'
+import { createElement as create, FC, useRef, ReactNode, Fragment } from 'react'
 import { useTheme } from '../contexts/Theme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
@@ -8,15 +8,18 @@ export const SearchBar: FC<{
   value?: string
   change?: (value: string) => void
   placeholder?: string
-  devmode?: boolean
   options?: Array<{
     icon: string
     solid?: boolean
     label: string
     click?: () => void
     disabled?: boolean
+    pointer?: {
+      label: string
+      helper: string
+    }
   }>
-}> = ({ value, change, placeholder, devmode, options = [] }) => {
+}> = ({ value, change, placeholder, options = [] }) => {
   const theme = useTheme()
   return create('div', {
     className: css({
@@ -28,10 +31,6 @@ export const SearchBar: FC<{
       borderTop: theme.searchBar.border,
     }),
     children: [
-      devmode &&
-        create(Devmode, {
-          key: 'devmode',
-        }),
       create(Searcher, {
         key: 'searcher',
         value,
@@ -108,9 +107,13 @@ const Option: FC<{
   label: string
   click?: () => void
   disabled?: boolean
-}> = ({ icon, solid, label, click, disabled }) => {
+  pointer?: {
+    label: string
+    helper: string
+  }
+}> = ({ icon, solid, label, click, disabled, pointer }) => {
   const theme = useTheme()
-  return create('div', {
+  const children = create('div', {
     onClick: disabled ? undefined : click,
     className: css({
       all: 'unset',
@@ -148,25 +151,37 @@ const Option: FC<{
       }),
     ],
   })
+  return !pointer
+    ? children
+    : create(OptionPointer, {
+        icon,
+        children,
+        ...pointer,
+      })
 }
 
-const Devmode: FC = () => {
+const OptionPointer: FC<{
+  icon: string
+  solid?: boolean
+  label: string
+  helper: string
+  children: ReactNode
+}> = ({ icon, solid, label, helper, children }) => {
   return create('div', {
     className: css({
       all: 'unset',
       display: 'flex',
       position: 'relative',
       cursor: 'pointer',
-      '&:hover > .devmode': {
+      '&:hover > .pointer': {
         pointerEvents: 'all',
         opacity: 1,
       },
     }),
     children: [
-      create(Option, {
-        key: 'option',
-        icon: 'code',
-        label: 'Dev Mode',
+      create(Fragment, {
+        key: 'children',
+        children,
       }),
       create('div', {
         key: 'pointer',
@@ -178,16 +193,16 @@ const Devmode: FC = () => {
           cursor: 'default',
           pointerEvents: 'none',
           opacity: 0,
-          left: 10,
+          right: 10,
           top: 10,
           zIndex: 200,
           transform: 'translateY(-100%)',
-        }).concat(' devmode'),
+        }).concat(' pointer'),
         children: create(Pointer, {
-          icon: 'code',
-          label: 'Enabled',
-          helper:
-            'You are currently viewing development data. Changes to this data will not effect your monthly pricing. This mode is allowed a maximum of 250 user accounts.',
+          icon,
+          solid,
+          label,
+          helper,
         }),
       }),
     ],

@@ -16,7 +16,6 @@ export const TemplateSearchBar: FC<{
   return create(SearchBar, {
     value: search,
     change: searchChange,
-    devmode: config.devmode,
     options: [
       {
         icon: 'angle-double-left',

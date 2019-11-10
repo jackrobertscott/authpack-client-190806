@@ -29,7 +29,6 @@ import { AuthenticatorAPI } from 'wga-api'
 
 const wga = new AuthenticatorAPI({
   secret: process.env.AUTHENTICATOR_SECRET
-  devmode: false,
 })
 ```
 

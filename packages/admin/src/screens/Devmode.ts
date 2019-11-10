@@ -1,7 +1,6 @@
 import { createElement as create, FC } from 'react'
 import { Focus, Button, InputBoolean, Layout } from 'wga-theme'
 import { useGlobal } from '../hooks/useGlobal'
-import { GlobalStore } from '../utils/global'
 
 export const Devmode: FC<{
   close: () => void
@@ -18,8 +17,7 @@ export const Devmode: FC<{
         children: [
           create(InputBoolean, {
             key: 'toggle',
-            value: global.devmode,
-            change: value => GlobalStore.update({ devmode: value }),
+            value: false,
           }),
           create(Button, {
             icon: 'angle-right',

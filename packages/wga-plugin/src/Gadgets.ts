@@ -6,7 +6,6 @@ import { createGadgetsStore, IGadgets } from './utils/state'
 export interface IOptions {
   domain_key: string
   iframe_id?: string
-  devmode?: boolean
   team_required?: boolean
 }
 
@@ -54,7 +53,6 @@ export class Gadgets {
     const store = createGadgetsStore()
     store.update({
       ready: false,
-      devmode: options.devmode,
       domain: options.domain_key,
       team_required: options.team_required,
     })

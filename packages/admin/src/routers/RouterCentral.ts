@@ -40,8 +40,8 @@ export const RouterCentral: FC = () => {
           },
           {
             seperated: true,
-            icon: global.devmode ? 'code' : 'bolt',
-            label: global.devmode ? 'Dev Mode' : 'Live Mode',
+            icon: 'bolt',
+            label: 'Supercharger',
             click: () => openChange(!open),
           },
           {

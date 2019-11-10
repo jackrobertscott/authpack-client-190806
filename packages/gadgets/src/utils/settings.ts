@@ -5,7 +5,6 @@ export type ISettings = {
   bearer?: string
   ready: boolean
   open: boolean
-  devmode: boolean
   appname?: string
   subscribed: boolean
   team_required: boolean
@@ -38,7 +37,6 @@ export type ISettings = {
 export const defaults: ISettings = {
   ready: false,
   open: false,
-  devmode: false,
   subscribed: false,
   team_required: false,
   theme: 'blue_harvester',

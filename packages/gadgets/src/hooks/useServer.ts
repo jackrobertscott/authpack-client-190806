@@ -17,13 +17,9 @@ export const useServer = <T>({
   query: string
 }) => {
   const settings = useSettings()
-  const domainkey =
-    settings.devmode && settings.domain
-      ? `dev:${settings.domain}`
-      : settings.domain
   return useGQL<T>({
     url: config.api,
-    authorization: [domainkey, settings.bearer].filter(Boolean).join(','),
+    authorization: [settings.domain, settings.bearer].filter(Boolean).join(','),
     name,
     query,
   })

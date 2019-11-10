@@ -131,27 +131,14 @@ export const RouterModalOnauthed: FC<{
             label: 'Logout',
             click: () => router.change('/logout'),
           },
-        ]
-          .concat(
-            settings.devmode
-              ? [
-                  {
-                    icon: 'code',
-                    label: 'Dev Mode',
-                    click: () => devopenChange(true),
-                    seperated: true,
-                  } as any,
-                ]
-              : []
-          )
-          .concat([
-            {
-              icon: 'times-circle',
-              label: 'Close',
-              click: close,
-              solid: false,
-            } as any,
-          ]),
+          {
+            icon: 'times-circle',
+            label: 'Close',
+            click: close,
+            solid: false,
+            seperated: true,
+          },
+        ],
       }),
       devopen
         ? create(Devmode, {

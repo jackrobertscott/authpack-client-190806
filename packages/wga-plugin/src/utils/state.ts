@@ -5,7 +5,6 @@ export type IGadgets = {
   bearer?: string
   ready: boolean
   open: boolean
-  devmode: boolean
   appname?: string
   subscribed: boolean
   team_required: boolean
@@ -37,7 +36,6 @@ export type IGadgets = {
 export const defaults: IGadgets = {
   ready: false,
   open: false,
-  devmode: false,
   subscribed: false,
   team_required: false,
 }
