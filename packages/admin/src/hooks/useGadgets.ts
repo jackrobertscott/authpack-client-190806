@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
+import { IGadgets } from 'wga-plugin'
 import { wga } from '../utils/gadgets'
 
 export const useGadgets = () => {
-  const [state, stateChange] = useState()
+  const [state, stateChange] = useState<IGadgets | undefined>()
   useEffect(() => {
     return wga.listen(data => stateChange(data))
     // eslint-disable-next-line

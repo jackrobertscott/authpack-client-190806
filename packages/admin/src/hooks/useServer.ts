@@ -21,7 +21,9 @@ export const useServer = <T>({
   return useGQL<T>({
     url: config.api,
     authorization: [
-      global.devmode && config.domain ? `dev:${config.domain}` : config.domain,
+      global.devmode && config.admin_domain_key
+        ? `dev:${config.admin_domain_key}`
+        : config.admin_domain_key,
       wga.current.bearer,
     ]
       .filter(Boolean)

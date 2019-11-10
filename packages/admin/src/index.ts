@@ -11,7 +11,7 @@ import { ErrorBoundary } from './screens/ErrorBoundary'
 import { config } from './config'
 
 Sentry.init({
-  dsn: config.sentryDSN,
+  dsn: config.sentry_dsn,
   environment: config.environment,
 })
 

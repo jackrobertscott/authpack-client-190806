@@ -12,17 +12,17 @@ export const ListCredentials: FC = () => {
   })
 }
 
-const useRefreshCredential = createUseServer<{
+const useUpdateCredential = createUseServer<{
   credential: {
     id: string
     access_token: string
     email?: string
   }
 }>({
-  name: 'wgaRefreshCredential',
+  name: 'wgaUpdateCredential',
   query: `
-    mutation wgaRefreshCredential($id: String!, $code: String!) {
-      credential: wgaRefreshCredential(id: $id, code: $code) {
+    mutation wgaUpdateCredential($id: String!, $code: String!) {
+      credential: wgaUpdateCredential(id: $id, code: $code) {
         id
         access_token
         email

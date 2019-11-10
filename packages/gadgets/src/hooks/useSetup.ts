@@ -8,7 +8,7 @@ import { config } from '../config'
 export const useSetup = () => {
   const settings = useSettings()
   const gqlRetrieveApp = useRetrieveApp()
-  const gqlRefreshSession = useRefreshSession()
+  const gqlRetrieveSession = useRetrieveSession()
   useEffect(() => {
     if (settings.domain) {
       gqlRetrieveApp.fetch().then(({ app }) => {
@@ -24,7 +24,7 @@ export const useSetup = () => {
   useEffect(() => {
     if (settings.domain) {
       if (settings.bearer) {
-        gqlRefreshSession.fetch().then(({ session }) => {
+        gqlRetrieveSession.fetch().then(({ session }) => {
           if (session) {
             const { user, team, permissions, ...data } = session
             SettingsStore.update({
@@ -105,7 +105,7 @@ const useRetrieveApp = createUseServer<{
   `,
 })
 
-const useRefreshSession = createUseServer<{
+const useRetrieveSession = createUseServer<{
   session: {
     id: string
     token: string
@@ -130,10 +130,10 @@ const useRefreshSession = createUseServer<{
     }>
   }
 }>({
-  name: 'wgaRefreshSession',
+  name: 'wgaRetrieveSession',
   query: `
-    mutation wgaRefreshSession {
-      session: wgaRefreshSession {
+    mutation wgaRetrieveSession {
+      session: wgaRetrieveSession {
         id
         token
         user {
