@@ -17,7 +17,6 @@ const usePendingMembership = createUseServer<{
     id: string
   }
 }>({
-  name: 'wgaPendingMembership',
   query: `
     mutation wgaPendingMembership($id: String!, $code: String!) {
       user: wgaPendingMembership(id: $id, code: $code) {

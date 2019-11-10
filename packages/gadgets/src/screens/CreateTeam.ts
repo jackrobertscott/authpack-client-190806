@@ -85,7 +85,6 @@ const useCreateTeam = createUseServer<{
     token: string
   }
 }>({
-  name: 'wgaCreateTeam',
   query: `
     mutation wgaCreateTeam($name: String!, $tag: String!) {
       session: wgaCreateTeam(name: $name, tag: $tag) {

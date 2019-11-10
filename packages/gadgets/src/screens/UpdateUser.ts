@@ -17,7 +17,6 @@ const useUpdateUser = createUseServer<{
     id: string
   }
 }>({
-  name: 'wgaUpdateUser',
   query: `
     mutation wgaUpdateUser($email: String, $password: String, $username: String, $given_name: String, $family_name: String) {
       user: wgaUpdateUser(email: $email, password: $password, username: $username, given_name: $given_name, family_name: $family_name) {

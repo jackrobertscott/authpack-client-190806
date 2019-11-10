@@ -18,7 +18,6 @@ const useListTeams = createUseServer<{
     name: string
   }>
 }>({
-  name: 'wgaListTeams',
   query: `
     query wgaListTeams {
       teams: ListTeams {
@@ -34,7 +33,6 @@ const useSwitchTeam = createUseServer<{
     id: string
   }
 }>({
-  name: 'wgaSwitchTeam',
   query: `
     mutation wgaSwitchTeam($id: String!) {
       session: wgaSwitchTeam(id: $id) {

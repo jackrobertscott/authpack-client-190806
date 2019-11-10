@@ -17,7 +17,6 @@ const useRemoveTeam = createUseServer<{
     id: string
   }
 }>({
-  name: 'wgaRemoveTeam',
   query: `
     mutation wgaRemoveTeam($id: String!) {
       team: wgaRemoveTeam(id: $id) {

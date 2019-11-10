@@ -17,7 +17,6 @@ const useRemoveUser = createUseServer<{
     id: string
   }
 }>({
-  name: 'wgaRemoveUser',
   query: `
     mutation wgaRemoveUser($password: String!) {
       user: wgaRemoveUser(password: $password) {

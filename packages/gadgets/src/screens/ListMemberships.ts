@@ -17,7 +17,6 @@ const useListMemberships = createUseServer<{
     id: string
   }>
 }>({
-  name: 'wgaListMemberships',
   query: `
     query wgaListMemberships {
       memberships: wgaListMemberships {

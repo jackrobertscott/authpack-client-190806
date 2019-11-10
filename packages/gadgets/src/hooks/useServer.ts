@@ -3,7 +3,7 @@ import { useSettings } from './useSettings'
 import { config } from '../config'
 
 export const createUseServer = <T>(options: {
-  name: string
+  name?: string
   query: string
 }) => () => {
   return useServer<T>(options)
@@ -13,7 +13,7 @@ export const useServer = <T>({
   name,
   query,
 }: {
-  name: string
+  name?: string
   query: string
 }) => {
   const settings = useSettings()

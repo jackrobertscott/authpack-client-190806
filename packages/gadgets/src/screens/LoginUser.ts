@@ -78,7 +78,6 @@ const useLoginUser = createUseServer<{
     token: string
   }
 }>({
-  name: 'wgaLoginUser',
   query: `
     mutation wgaLoginUser($email: String!, $password: String!) {
       session: wgaLoginUser(email: $email, password: $password) {
@@ -94,7 +93,6 @@ const useListProviders = createUseServer<{
     id: string
   }>
 }>({
-  name: 'wgaListProviders',
   query: `
     query wgaListProviders {
       providers: wgaListProviders {

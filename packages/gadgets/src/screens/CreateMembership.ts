@@ -17,7 +17,6 @@ const useCreateMembership = createUseServer<{
     id: string
   }
 }>({
-  name: 'wgaCreateMembership',
   query: `
     mutation wgaCreateMembership {
       membership: wgaCreateMembership {
@@ -32,7 +31,6 @@ const useListPermissions = createUseServer<{
     id: string
   }>
 }>({
-  name: 'wgaListPermissions',
   query: `
     query wgaListPermissions {
       permissions: wgaListPermissions {

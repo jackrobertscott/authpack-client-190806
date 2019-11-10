@@ -121,7 +121,6 @@ const useSignupUser = createUseServer<{
     token: string
   }
 }>({
-  name: 'wgaSignupUser',
   query: `
     mutation wgaSignupUser($email: String!, $password: String!, $username: String, $given_name: String, $family_name: String) {
       session: wgaSignupUser(email: $email, password: $password, username: $username, given_name: $given_name, family_name: $family_name) {

@@ -93,7 +93,6 @@ const useRetrieveApp = createUseServer<{
     subscribed: boolean
   }
 }>({
-  name: 'wgaRetrieveApp',
   query: `
     query wgaRetrieveApp {
       app: wgaRetrieveApp {
@@ -130,9 +129,8 @@ const useRetrieveSession = createUseServer<{
     }>
   }
 }>({
-  name: 'wgaRetrieveSession',
   query: `
-    mutation wgaRetrieveSession {
+    query wgaRetrieveSession {
       session: wgaRetrieveSession {
         id
         token

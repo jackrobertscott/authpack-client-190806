@@ -19,7 +19,6 @@ const useCreateCredential = createUseServer<{
     email?: string
   }
 }>({
-  name: 'wgaCreateCredential',
   query: `
     mutation wgaCreateCredential($provider_id: String!, $code: String!) {
       credential: wgaCreateCredential(provider_id: $provider_id, code: $code) {
@@ -36,7 +35,6 @@ const useListProviders = createUseServer<{
     id: string
   }>
 }>({
-  name: 'wgaListProviders',
   query: `
     query wgaListProviders {
       providers: wgaListProviders {

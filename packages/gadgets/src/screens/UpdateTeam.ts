@@ -17,7 +17,6 @@ const useUpdateTeam = createUseServer<{
     id: string
   }
 }>({
-  name: 'wgaUpdateTeam',
   query: `
     mutation wgaUpdateTeam($id: String!, $name: String, $tag: String, $description: String) {
       team: wgaUpdateTeam(id: $id, name: $name, tag: $tag, description) {

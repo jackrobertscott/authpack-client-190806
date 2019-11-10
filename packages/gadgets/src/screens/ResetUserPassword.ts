@@ -17,7 +17,6 @@ const useResetUserPassword = createUseServer<{
     id: string
   }
 }>({
-  name: 'wgaResetUserPassword',
   query: `
     mutation wgaResetUserPassword($email: String!, $code: String!, $password: String!) {
       user: wgaResetUserPassword(email: $email, code: $code, password: $password) {

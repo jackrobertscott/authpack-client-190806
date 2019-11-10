@@ -66,7 +66,6 @@ export const ForgotUserPassword: FC = () => {
 const useForgotUserPassword = createUseServer<{
   email: string
 }>({
-  name: 'wgaForgotUserPassword',
   query: `
     mutation wgaForgotUserPassword($email: String!) {
       email: wgaForgotUserPassword(email: $email)

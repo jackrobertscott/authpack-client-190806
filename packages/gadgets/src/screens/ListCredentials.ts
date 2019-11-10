@@ -19,7 +19,6 @@ const useUpdateCredential = createUseServer<{
     email?: string
   }
 }>({
-  name: 'wgaUpdateCredential',
   query: `
     mutation wgaUpdateCredential($id: String!, $code: String!) {
       credential: wgaUpdateCredential(id: $id, code: $code) {
@@ -36,7 +35,6 @@ const useRemoveCredential = createUseServer<{
     id: string
   }
 }>({
-  name: 'wgaRemoveCredential',
   query: `
     mutation wgaRemoveCredential($id: String!) {
       credential: wgaRemoveCredential(id: $id) {
@@ -53,7 +51,6 @@ const useListCredentials = createUseServer<{
     email?: string
   }>
 }>({
-  name: 'wgaListCredentials',
   query: `
     query wgaListCredentials {
       credentials: wgaListCredentials {

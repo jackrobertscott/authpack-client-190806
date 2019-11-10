@@ -94,7 +94,6 @@ const useListUsers = createUseServer<{
     name?: string
   }>
 }>({
-  name: 'apiListUsers',
   query: `
     query apiListUsers($filter: FilterUsers, $options: FilterOptions) {
       count: apiCountUsers(filter: $filter)
