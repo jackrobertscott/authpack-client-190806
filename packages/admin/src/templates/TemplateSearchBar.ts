@@ -3,8 +3,9 @@ import { SearchBar, usePaginator } from 'wga-theme'
 
 export const TemplateSearchBar: FC<{
   count?: number
+  showing?: number
   change: (search: string, limit: number, skip: number) => void
-}> = ({ count, change }) => {
+}> = ({ count, showing, change }) => {
   const paginator = usePaginator({ count })
   const [search, searchChange] = useState<string>('')
   useEffect(() => {
@@ -15,6 +16,10 @@ export const TemplateSearchBar: FC<{
     value: search,
     change: searchChange,
     options: [
+      {
+        icon: 'stream',
+        label: `Showing ${showing || '...'} of ${paginator.total || '...'}`,
+      },
       {
         icon: 'angle-double-left',
         label: 'Previous',

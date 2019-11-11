@@ -48,7 +48,7 @@ export const useGQL = <T>({
           variables,
         })
           .then(done => {
-            if (!mounted.current) {
+            if (mounted.current) {
               dataChange(done)
               errorChange(undefined)
               loadingChange(false)

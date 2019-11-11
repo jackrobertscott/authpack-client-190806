@@ -16,13 +16,7 @@ export const LoginUser: FC = () => {
   const settings = useSettings()
   const gqlLoginUser = useLoginUser()
   const schema = useSchema({
-    schema: yup.object().shape({
-      email: yup
-        .string()
-        .email('Please make sure you have used a valid email address')
-        .required('Please provide your email'),
-      password: yup.string().required('Please provide your password'),
-    }),
+    schema: SchemaLoginUser,
     submit: value => {
       gqlLoginUser.fetch(value).then(({ session }) => {
         schema.change('password')('')
@@ -57,7 +51,6 @@ export const LoginUser: FC = () => {
           children: create(InputString, {
             value: schema.value('password'),
             change: schema.change('password'),
-            placeholder: '**********',
             password: true,
           }),
         }),
@@ -71,6 +64,14 @@ export const LoginUser: FC = () => {
     }),
   })
 }
+
+const SchemaLoginUser = yup.object().shape({
+  email: yup
+    .string()
+    .email('Please make sure you have used a valid email address')
+    .required('Please provide your email'),
+  password: yup.string().required('Please provide your password'),
+})
 
 const useLoginUser = createUseServer<{
   session: {

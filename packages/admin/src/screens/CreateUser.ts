@@ -3,32 +3,29 @@ import { createElement as create, FC } from 'react'
 import {
   Gadgets,
   useSchema,
+  Button,
   Layout,
   Control,
   InputString,
-  Button,
 } from 'wga-theme'
-import { useSettings } from '../hooks/useSettings'
-import { SettingsStore } from '../utils/settings'
+import { useGlobal } from '../hooks/useGlobal'
 import { createUseServer } from '../hooks/useServer'
 
-export const SignupUser: FC = () => {
-  const settings = useSettings()
-  const gqlSignupUser = useSignupUser()
+export const CreateUser: FC<{
+  change?: (id: string) => void
+}> = ({ change }) => {
+  const gqlCreateUser = useCreateUser()
   const schema = useSchema({
-    schema: SchemaSignupUser,
+    schema: SchemaCreateUser,
     submit: value => {
-      gqlSignupUser.fetch(value).then(({ session }) => {
-        schema.change('password')('')
-        SettingsStore.update({
-          bearer: `Bearer ${session.token}`,
-        })
-      })
+      if (change)
+        gqlCreateUser.fetch({ value }).then(({ user }) => change(user.id))
     },
   })
+  const global = useGlobal()
   return create(Gadgets, {
-    title: 'Sign Up',
-    subtitle: settings.appname,
+    title: 'Create User',
+    subtitle: global.appname,
     children: create(Layout, {
       column: true,
       padding: true,
@@ -93,7 +90,7 @@ export const SignupUser: FC = () => {
         }),
         create(Button, {
           key: 'submit',
-          label: 'Login',
+          label: 'Create',
           disabled: !schema.valid,
           click: schema.submit,
         }),
@@ -102,7 +99,7 @@ export const SignupUser: FC = () => {
   })
 }
 
-const SchemaSignupUser = yup.object().shape({
+const SchemaCreateUser = yup.object().shape({
   given_name: yup.string().required('Please provide your given name'),
   family_name: yup.string().required('Please provide your family name'),
   username: yup.string().required('Please provide your username'),
@@ -116,17 +113,15 @@ const SchemaSignupUser = yup.object().shape({
     .required('Please provide your password'),
 })
 
-const useSignupUser = createUseServer<{
-  session: {
+const useCreateUser = createUseServer<{
+  user: {
     id: string
-    token: string
   }
 }>({
   query: `
-    mutation wgaSignupUser($email: String!, $password: String!, $username: String, $given_name: String, $family_name: String) {
-      session: wgaSignupUser(email: $email, password: $password, username: $username, given_name: $given_name, family_name: $family_name) {
+    mutation apiCreateUser($value: CreateUserValue!) {
+      user: apiCreateUser(value: $value) {
         id
-        token
       }
     }
   `,

@@ -85,5 +85,5 @@ export const useSchema = ({
             })
           }),
     }
-  }, [valid, store, error])
+  }, [valid, store, error, schema])
 }

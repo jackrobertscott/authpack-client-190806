@@ -126,7 +126,7 @@ const Option: FC<{
       background: disabled
         ? theme.searchBar.backgroundDisabled
         : theme.searchBar.background,
-      '&:hover': {
+      '&:hover': click && {
         color: disabled
           ? theme.searchBar.labelDisabled
           : theme.searchBar.labelHover,

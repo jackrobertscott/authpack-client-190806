@@ -9,18 +9,14 @@ export const createUseServer = <T>(options: {
   return useServer<T>(options)
 }
 
-export const useServer = <T>({
-  operationName,
-  query,
-}: {
+export const useServer = <T>(options: {
   operationName?: string
   query: string
 }) => {
   const settings = useSettings()
   return useGQL<T>({
+    ...options,
     url: config.api,
     authorization: [settings.domain, settings.bearer].filter(Boolean).join(','),
-    operationName,
-    query,
   })
 }

@@ -1,6 +1,7 @@
 import faker from 'faker'
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { Page, Table, Empty, Button } from 'wga-theme'
+import { format } from 'date-fns'
 import { RouterManagerUser } from '../routers/RouterManagerUser'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'
 import { createUseServer } from '../hooks/useServer'
@@ -32,6 +33,7 @@ export const ListUsers: FC = () => {
     },
     noscroll: create(TemplateSearchBar, {
       count: apiListUsers.data && apiListUsers.data.count,
+      showing: apiListUsers.data && apiListUsers.data.users.length,
       change: (search, limit, skip) => {
         optionsChange({
           limit,
@@ -50,9 +52,10 @@ export const ListUsers: FC = () => {
       create(Table, {
         key: 'table',
         header: [
-          { key: 'id', label: 'Id' },
-          { key: 'name', label: 'Name' },
           { key: 'email', label: 'Email' },
+          { key: 'name', label: 'Name' },
+          { key: 'username', label: 'Username' },
+          { key: 'updated', label: 'Updated' },
         ].map(({ key, label }) => ({
           label,
           icon: options.sort === key ? 'chevron-down' : 'equals',
@@ -66,9 +69,12 @@ export const ListUsers: FC = () => {
           },
           cells: [
             { icon: 'at', value: data.email },
-            { icon: 'user', value: data.name },
-            { icon: 'tags', value: data.username },
-            { icon: 'clock', value: data.updated },
+            { icon: 'user', value: data.name || '...' },
+            { icon: 'tags', value: data.username || '...' },
+            {
+              icon: 'clock',
+              value: format(new Date(data.updated), 'dd LLL yyyy'),
+            },
           ],
         })),
       }),

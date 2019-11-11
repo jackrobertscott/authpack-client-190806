@@ -16,12 +16,7 @@ export const ForgotUserPassword: FC = () => {
   const gqlForgotUserPassword = useForgotUserPassword()
   const settings = useSettings()
   const schema = useSchema({
-    schema: yup.object().shape({
-      email: yup
-        .string()
-        .email('Please make sure you have used a valid email address')
-        .required('Please provide your email'),
-    }),
+    schema: SchemaForgotUserPassword,
     submit: value => {
       gqlForgotUserPassword.fetch(value)
     },
@@ -62,6 +57,13 @@ export const ForgotUserPassword: FC = () => {
     }),
   })
 }
+
+const SchemaForgotUserPassword = yup.object().shape({
+  email: yup
+    .string()
+    .email('Please make sure you have used a valid email address')
+    .required('Please provide your email'),
+})
 
 const useForgotUserPassword = createUseServer<{
   email: string

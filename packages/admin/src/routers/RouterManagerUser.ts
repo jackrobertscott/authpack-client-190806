@@ -1,9 +1,10 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useLocalRouter, Modal, Layout, IconBar } from 'wga-theme'
+import { CreateUser } from '../screens/CreateUser'
 
 export const RouterManagerUser: FC<{
   id?: string
-  change?: (id?: string) => void
+  change?: (id: string) => void
   visible?: boolean
   close: () => void
 }> = ({ id, change, close, visible }) => {
@@ -11,7 +12,7 @@ export const RouterManagerUser: FC<{
     nomatch: id ? '/update' : '/create',
     options: id
       ? [{ key: '/update', children: null }]
-      : [{ key: '/create', children: null }],
+      : [{ key: '/create', children: create(CreateUser, { change }) }],
   })
   return create(Modal, {
     visible,
