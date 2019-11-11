@@ -1,12 +1,10 @@
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { SearchBar, usePaginator } from 'wga-theme'
-import { useGlobal } from '../hooks/useGlobal'
 
 export const TemplateSearchBar: FC<{
   count?: number
   change: (search: string, limit: number, skip: number) => void
 }> = ({ count, change }) => {
-  const config = useGlobal()
   const paginator = usePaginator({ count })
   const [search, searchChange] = useState<string>('')
   useEffect(() => {

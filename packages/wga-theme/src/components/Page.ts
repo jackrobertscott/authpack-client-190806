@@ -9,13 +9,14 @@ export const Page: FC<{
   subtitle: string
   children: ReactNode
   noscroll?: ReactNode
+  hidden?: boolean
   corner?: {
     icon: string
     solid?: boolean
     label: string
     click: () => void
   }
-}> = ({ title, subtitle, noscroll = null, children, corner }) => {
+}> = ({ title, subtitle, children, noscroll = null, hidden, corner }) => {
   const theme = useTheme()
   return create('div', {
     className: css({
@@ -38,6 +39,7 @@ export const Page: FC<{
       create(Scroller, {
         key: 'scroller',
         border: theme.page.border,
+        disable: hidden,
         children: [
           create('div', {
             key: 'children',

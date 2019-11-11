@@ -4,9 +4,10 @@ import { useTheme } from '../contexts/Theme'
 
 export const Scroller: FC<{
   children: ReactNode
+  disable?: boolean
   maxheight?: number
   border?: string
-}> = ({ children, maxheight, border }) => {
+}> = ({ children, disable, maxheight, border }) => {
   const theme = useTheme()
   return create('div', {
     children,
@@ -15,7 +16,7 @@ export const Scroller: FC<{
       display: 'flex',
       position: 'relative',
       flexDirection: 'column',
-      overflow: 'auto',
+      overflow: disable ? 'hidden' : 'auto',
       flexGrow: 1,
       maxHeight: maxheight,
       '&::-webkit-scrollbar': {

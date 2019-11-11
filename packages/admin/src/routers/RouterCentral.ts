@@ -32,7 +32,7 @@ export const RouterCentral: FC = () => {
             click: () => router.change('/settings'),
           },
           {
-            icon: 'search',
+            icon: 'code',
             label: 'Developer',
             click: () => router.change('/developer'),
           },

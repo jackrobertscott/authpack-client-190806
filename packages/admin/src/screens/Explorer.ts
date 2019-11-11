@@ -12,16 +12,19 @@ export const Explorer: FC = () => {
   const global = useGlobal()
   return create('div', {
     children: create(GraphiQL, {
-      fetcher: (graphQLParams: any) => {
-        return graphql<any>({
-          ...graphQLParams,
-          url: config.api,
-          authorization: [global.current_domain_key, wga.current.bearer]
-            .filter(Boolean)
-            .join(','),
-        })
-          .then(data => (data.__schema ? { data } : data))
-          .catch(data => Promise.resolve(data))
+      fetcher: async (graphQLParams: any) => {
+        try {
+          const data = await graphql<any>({
+            ...graphQLParams,
+            url: config.api,
+            authorization: [global.current_domain_key, wga.current.bearer]
+              .filter(Boolean)
+              .join(','),
+          })
+          return data.__schema ? { data } : data
+        } catch (error) {
+          return Promise.resolve(error)
+        }
       },
     } as any),
     className: css({

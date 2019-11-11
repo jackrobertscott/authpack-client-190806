@@ -1,3 +1,4 @@
+import faker from 'faker'
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { Page, Table, Empty, Button } from 'wga-theme'
 import { RouterManagerUser } from '../routers/RouterManagerUser'
@@ -13,9 +14,14 @@ export const ListUsers: FC = () => {
     apiListUsers.fetch({ options })
     // eslint-disable-next-line
   }, [])
+  const list =
+    apiListUsers.data && apiListUsers.data.users
+      ? apiListUsers.data.users
+      : FakeUsers
   return create(Page, {
     title: 'Users',
     subtitle: 'See all users of your app',
+    hidden: !apiListUsers.data,
     corner: {
       icon: 'plus',
       label: 'Create User',
@@ -52,23 +58,21 @@ export const ListUsers: FC = () => {
           icon: options.sort === key ? 'chevron-down' : 'equals',
           click: () => optionsChange(data => ({ ...data, sort: key })),
         })),
-        rows: apiListUsers.data
-          ? apiListUsers.data.users.map(data => ({
-              id: data.id,
-              click: () => {
-                idcurrentChange(data.id)
-                buildChange(true)
-              },
-              cells: [
-                { icon: 'at', value: data.email },
-                { icon: 'user', value: data.name },
-                { icon: 'tags', value: data.username },
-                { icon: 'clock', value: data.updated },
-              ],
-            }))
-          : [],
+        rows: list.map(data => ({
+          id: data.id,
+          click: () => {
+            idcurrentChange(data.id)
+            buildChange(true)
+          },
+          cells: [
+            { icon: 'at', value: data.email },
+            { icon: 'user', value: data.name },
+            { icon: 'tags', value: data.username },
+            { icon: 'clock', value: data.updated },
+          ],
+        })),
       }),
-      (!apiListUsers.data || !apiListUsers.data.users.length) &&
+      !apiListUsers.data &&
         create(Empty, {
           key: 'empty',
           icon: 'users',
@@ -107,3 +111,17 @@ const useListUsers = createUseServer<{
     }
 `,
 })
+
+const FakeUsers: Array<{
+  id: string
+  updated: string
+  email: string
+  username?: string
+  name?: string
+}> = Array.from(Array(10).keys()).map(() => ({
+  id: faker.random.uuid(),
+  updated: faker.date.recent(100).toDateString(),
+  email: faker.internet.email(),
+  username: faker.internet.userName(),
+  name: faker.name.findName(),
+}))
