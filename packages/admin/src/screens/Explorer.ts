@@ -1,6 +1,6 @@
 import { createElement as create, FC } from 'react'
 import { css } from 'emotion'
-import { graphql } from 'wga-theme'
+import { graphql, useTheme } from 'wga-theme'
 import GraphiQL from 'graphiql'
 import 'graphiql/graphiql.css'
 import { config } from '../config'
@@ -8,6 +8,7 @@ import { useGlobal } from '../hooks/useGlobal'
 import { wga } from '../utils/gadgets'
 
 export const Explorer: FC = () => {
+  const theme = useTheme()
   const global = useGlobal()
   return create('div', {
     children: create(GraphiQL, {
@@ -28,16 +29,18 @@ export const Explorer: FC = () => {
       '.graphiql-container': {
         fontSize: '15px',
         '.topBarWrap *, .historyPaneWrap *, .docExplorerWrap *': {
-          fontFamily: 'Rubik',
+          fontFamily: 'futura-pt',
           fontSize: '15px',
+          fontWeight: 700,
         },
         '.topBar, .docExplorerShow, .historyShow': {
-          background: '#3B3B3B',
-          borderBottom: '1px solid #505050',
+          background: theme.page.header,
+          borderBottom: theme.page.border,
           borderLeft: 'none',
-          color: '#FFFFFF',
+          color: theme.page.title,
           height: 'auto',
           padding: '15px 25px',
+          transition: '200ms',
         },
         '.doc-explorer-contents': {
           background: 'transparent',
@@ -49,12 +52,13 @@ export const Explorer: FC = () => {
           },
         },
         '.docExplorerShow:hover': {
-          background: '#505050',
+          background: theme.page.headerHover,
         },
         '.docExplorerShow:before': {
-          borderColor: '#FFFFFF',
+          borderColor: theme.page.title,
         },
         '.doc-explorer-back': {
+          background: '#111111',
           color: '#999999',
           '&:before': {
             borderColor: '#999999',
@@ -74,16 +78,16 @@ export const Explorer: FC = () => {
           height: 'auto',
           marginRight: 0,
           svg: {
-            margin: '-6px',
+            margin: '-7px',
           },
         },
         '.execute-button, .toolbar-button': {
-          background: '#555555',
+          background: theme.page.headerHover,
           borderRadius: '3px',
           border: 'none',
           boxShadow: 'none',
-          color: '#FFFFFF',
-          fill: '#FFFFFF',
+          color: theme.page.labelHover,
+          fill: theme.page.labelHover,
           padding: '15px',
           height: 'auto',
           width: 'auto',
@@ -131,20 +135,29 @@ export const Explorer: FC = () => {
           },
         },
         '.historyPaneWrap, .docExplorerWrap, .doc-explorer': {
-          background: '#272727',
+          background: '#111111',
           boxShadow: 'none',
           color: '#FFFFFF',
         },
         '.historyPaneWrap': {
           width: '30% !important',
           maxWidth: '400px',
+          borderRight: theme.page.border,
         },
         '.docExplorerWrap': {
           width: '40% !important',
           maxWidth: '600px',
+          borderLeft: theme.page.border,
+        },
+        '.history-title-bar, .doc-explorer-title-bar': {
+          padding: '25px 15px',
         },
         '.history-title, .doc-explorer-title': {
           textAlign: 'left',
+          padding: 0,
+        },
+        '.docExplorerHide': {
+          padding: '7px',
         },
         '.history-contents': {
           backgroundColor: 'transparent',
@@ -155,31 +168,32 @@ export const Explorer: FC = () => {
             fontSize: '15px',
             padding: '15px',
             '&:hover': {
-              background: '#444444',
+              background: '#222222',
               color: '#FFFFFF',
             },
           },
         },
         '.CodeMirror': {
-          background: '#414141',
+          background: theme.page.background,
           '.CodeMirror-sizer *': {
             fontFamily: 'Inconsolata',
             fontSize: '16px',
-            color: '#FEFEFE',
+            color: theme.page.title,
             letterSpacing: '0.025em',
             caretColor: '#FFFFFF',
           },
         },
         '.CodeMirror-gutters': {
-          borderRight: 'none',
-          backgroundColor: '#4F4F4F',
+          borderRight: theme.page.border,
+          borderLeft: theme.page.border,
+          backgroundColor: 'transparent',
         },
         '.variable-editor': {
           height: 'auto',
         },
         '.variable-editor-title': {
-          background: '#595959',
-          color: '#999999',
+          background: theme.page.headerHover,
+          color: theme.page.title,
           borderBottom: 'none',
           borderTop: 'none',
           padding: '15px',

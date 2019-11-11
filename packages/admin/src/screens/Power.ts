@@ -18,6 +18,7 @@ export const Power: FC<{
             value: false,
           }),
           create(Button, {
+            key: 'button',
             icon: 'angle-right',
             label: 'Done',
             click: close,
