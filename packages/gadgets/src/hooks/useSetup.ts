@@ -7,15 +7,16 @@ import { config } from '../config'
 
 export const useSetup = () => {
   const settings = useSettings()
-  const gqlRetrieveApp = useRetrieveApp()
+  const gqlCurrentApp = useCurrentApp()
   const gqlRetrieveSession = useRetrieveSession()
   useEffect(() => {
     if (settings.domain) {
-      gqlRetrieveApp.fetch().then(({ app }) => {
+      gqlCurrentApp.fetch().then(({ app }) => {
         SettingsStore.update({
           ready: true,
           appname: app.name || settings.appname,
           subscribed: !!app.subscribed,
+          power: !!app.power,
         })
       })
     }
@@ -86,19 +87,21 @@ export const useSetup = () => {
   }, [])
 }
 
-const useRetrieveApp = createUseServer<{
+const useCurrentApp = createUseServer<{
   app: {
     id: string
     name: string
     subscribed: boolean
+    power: boolean
   }
 }>({
   query: `
-    query wgaRetrieveApp {
-      app: wgaRetrieveApp {
+    query wgaCurrentApp {
+      app: wgaCurrentApp {
         id
         name
         subscribed
+        power
       }
     }
   `,

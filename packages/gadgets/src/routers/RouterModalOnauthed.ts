@@ -12,7 +12,7 @@ import { CreateMembership } from '../screens/CreateMembership'
 import { ListMemberships } from '../screens/ListMemberships'
 import { RemoveTeam } from '../screens/RemoveTeam'
 import { LogoutUser } from '../screens/LogoutUser'
-import { Devmode } from '../screens/Devmode'
+import { Power } from '../screens/Power'
 
 export const RouterModalOnauthed: FC<{
   close: () => void
@@ -141,8 +141,8 @@ export const RouterModalOnauthed: FC<{
         ],
       }),
       devopen
-        ? create(Devmode, {
-            key: 'devmode',
+        ? create(Power, {
+            key: 'power',
             close: () => devopenChange(false),
           })
         : router.current &&

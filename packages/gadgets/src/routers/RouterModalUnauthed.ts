@@ -3,14 +3,12 @@ import { useLocalRouter, Layout, IconBar } from 'wga-theme'
 import { LoginUser } from '../screens/LoginUser'
 import { SignupUser } from '../screens/SignupUser'
 import { ForgotUserPassword } from '../screens/ForgotUserPassword'
-import { useSettings } from '../hooks/useSettings'
-import { Devmode } from '../screens/Devmode'
+import { Power } from '../screens/Power'
 
 export const RouterModalUnauthed: FC<{
   close: () => void
 }> = ({ close }) => {
   const [devopen, devopenChange] = useState<boolean>(false)
-  const settings = useSettings()
   const router = useLocalRouter({
     nomatch: '/login',
     options: [
@@ -49,8 +47,8 @@ export const RouterModalUnauthed: FC<{
         ],
       }),
       devopen
-        ? create(Devmode, {
-            key: 'devmode',
+        ? create(Power, {
+            key: 'power',
             close: () => devopenChange(false),
           })
         : router.current &&

@@ -2,17 +2,17 @@ import { createElement as create, FC } from 'react'
 import { Focus, Button, Gadgets } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 
-export const Devmode: FC<{
+export const Power: FC<{
   close: () => void
 }> = ({ close }) => {
   const settings = useSettings()
   return create(Gadgets, {
-    title: 'Create Membership',
+    title: 'Power',
     subtitle: settings.appname,
     children: create(Focus, {
-      icon: 'code',
-      label: 'Dev Mode',
-      helper: 'Maximum of 250 user accounts',
+      icon: 'power-off',
+      label: 'Power',
+      helper: 'Your gadgets are currently off',
       children: create(Button, {
         icon: 'times',
         label: 'Okay',

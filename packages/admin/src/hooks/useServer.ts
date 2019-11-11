@@ -20,7 +20,7 @@ export const useServer = <T>({
   const global = useGlobal()
   return useGQL<T>({
     url: config.api,
-    authorization: [config.admin_domain_key, wga.current.bearer]
+    authorization: [global.current_domain_key, wga.current.bearer]
       .filter(Boolean)
       .join(','),
     name,

@@ -7,6 +7,7 @@ export type ISettings = {
   open: boolean
   appname?: string
   subscribed: boolean
+  power: boolean
   team_required: boolean
   theme?: string
   session?: {
@@ -38,6 +39,7 @@ export const defaults: ISettings = {
   ready: false,
   open: false,
   subscribed: false,
+  power: false,
   team_required: false,
   theme: 'blue_harvester',
 }

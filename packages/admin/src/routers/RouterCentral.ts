@@ -3,13 +3,11 @@ import { Layout, IconBar, useRouter } from 'wga-theme'
 import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterSideBarSettings } from './RouterSideBarSettings'
 import { RouterSideBarDeveloper } from './RouterSideBarDeveloper'
-import { useGlobal } from '../hooks/useGlobal'
 import { wga } from '../utils/gadgets'
-import { Devmode } from '../screens/Devmode'
+import { Power } from '../screens/Power'
 
 export const RouterCentral: FC = () => {
   const [open, openChange] = useState<boolean>(false)
-  const global = useGlobal()
   const router = useRouter({
     nomatch: '/home',
     options: [
@@ -40,8 +38,8 @@ export const RouterCentral: FC = () => {
           },
           {
             seperated: true,
-            icon: 'bolt',
-            label: 'Supercharger',
+            icon: 'power-off',
+            label: 'Power',
             click: () => openChange(!open),
           },
           {
@@ -52,8 +50,8 @@ export const RouterCentral: FC = () => {
         ],
       }),
       open
-        ? create(Devmode, {
-            key: 'devmode',
+        ? create(Power, {
+            key: 'power',
             close: () => openChange(false),
           })
         : router.current &&

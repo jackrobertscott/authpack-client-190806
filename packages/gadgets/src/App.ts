@@ -14,7 +14,7 @@ export const App: FC = () => {
     visible: settings.open,
     children: [
       settings.domain
-        ? settings.bearer
+        ? settings.bearer && settings.user
           ? create(RouterModalOnauthed, {
               key: 'onauthed',
               close: () => SettingsStore.update({ open: false }),

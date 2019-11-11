@@ -2,53 +2,76 @@ import { useEffect } from 'react'
 import { useGadgets } from './useGadgets'
 import { createUseServer } from './useServer'
 import { GlobalStore } from '../utils/global'
+import { useGlobal } from './useGlobal'
 
 export const useSetup = () => {
+  const global = useGlobal()
   const gadgets = useGadgets()
-  const apiRetrieveApp = useRetrieveApp()
+  const gqlRetrieveApp = useRetrieveApp()
+  const gqlCreateApp = useCreateApp()
   useEffect(() => {
     if (gadgets && gadgets.bearer && gadgets.team) {
-      apiRetrieveApp.fetch().then(data => {
-        GlobalStore.update({
-          bearer_domain_key: data.keys.domain,
-          subscribed: data.app.subscribed,
-          appname: data.app.name,
+      gqlRetrieveApp
+        .fetch({ id: global.current_app_id })
+        .then(({ app }) => {
+          if (app) {
+            GlobalStore.update({
+              appname: app.name,
+              subscribed: app.subscribed,
+              power: app.power,
+              current_domain_key: app.keys.domain,
+            })
+          } else if (!gqlCreateApp.loading) {
+            gqlCreateApp.fetch({ name: 'App' }).then(data => {
+              GlobalStore.update({
+                current_app_id: data.app.id,
+              })
+            })
+          }
         })
-      })
+        .catch(() => GlobalStore.reset())
     } else {
       GlobalStore.reset()
     }
     // eslint-disable-next-line
-  }, [
-    // eslint-disable-next-line
-    gadgets && gadgets.bearer,
-    // eslint-disable-next-line
-    gadgets && gadgets.team && gadgets.team.id,
-    // eslint-disable-next-line
-    gadgets && gadgets.user && gadgets.user.id,
-  ])
+  }, [gadgets.bearer, gadgets.user, gadgets.team])
 }
 
 const useRetrieveApp = createUseServer<{
-  app: {
+  app?: {
     id: string
     name: string
     subscribed: boolean
-  }
-  keys: {
-    domain: string
+    power: boolean
+    keys: {
+      domain: string
+    }
   }
 }>({
-  name: '_RetrieveApp_RetrieveAppKeys',
   query: `
-    query _RetrieveApp_RetrieveAppKeys {
-      app: _RetrieveApp {
+    query wgaRetrieveApp($id: String) {
+      app: wgaRetrieveApp(id: $id) {
         id
         name
         subscribed
+        power
+        keys {
+          domain
+        }
       }
-      keys: _RetrieveAppKeys {
-        domain
+    }
+  `,
+})
+
+const useCreateApp = createUseServer<{
+  app: {
+    id: string
+  }
+}>({
+  query: `
+    mutation wgaCreateApp($name: String!) {
+      app: wgaCreateApp(name: $name) {
+        id
       }
     }
   `,

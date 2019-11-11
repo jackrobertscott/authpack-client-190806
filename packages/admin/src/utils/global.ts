@@ -1,15 +1,18 @@
 import { KeyStore } from 'events-and-things'
 
 export interface IGlobalStore {
-  bearer_domain_key?: string
-  subscribed: boolean
+  current_app_id?: string
+  current_domain_key?: string
   appname: string
+  subscribed: boolean
+  power: boolean
   theme: string
 }
 
 const defaults: IGlobalStore = {
-  subscribed: false,
   appname: 'Window Gadgets',
+  subscribed: false,
+  power: false,
   theme: 'blue_harvester',
 }
 
