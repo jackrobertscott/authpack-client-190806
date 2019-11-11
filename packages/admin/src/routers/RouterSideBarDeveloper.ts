@@ -1,13 +1,14 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useRouter, SideBar } from 'wga-theme'
 import { useGlobal } from '../hooks/useGlobal'
+import { Explorer } from '../screens/Explorer'
 
 export const RouterSideBarDeveloper: FC = () => {
   const config = useGlobal()
   const router = useRouter({
     base: '/developer',
     nomatch: '/explorer',
-    options: [{ path: '/explorer', children: null }],
+    options: [{ path: '/explorer', children: create(Explorer) }],
   })
   return create(Fragment, {
     children: [

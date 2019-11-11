@@ -54,6 +54,7 @@ export * from './themes/BlueHarvester'
 /**
  * Utils
  */
+export * from './utils/graphql'
 export * from './utils/history'
 export * from './utils/monaco'
 export * from './utils/pretty'

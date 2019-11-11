@@ -1,11 +1,11 @@
-import axios from 'axios'
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { ToasterStore } from '../utils/toaster'
+import { graphql } from '../utils/graphql'
 
 export const createUseGQL = <T>(options: {
   url: string
   query: string
-  name?: string
+  operationName?: string
   authorization?: string
 }) => () => {
   return useGQL<T>(options)
@@ -14,12 +14,12 @@ export const createUseGQL = <T>(options: {
 export const useGQL = <T>({
   url,
   query,
-  name,
+  operationName,
   authorization,
 }: {
   url: string
   query: string
-  name?: string
+  operationName?: string
   authorization?: string
 }) => {
   const mounted = useRef(false)
@@ -40,50 +40,33 @@ export const useGQL = <T>({
       fetch: async (variables?: any): Promise<T> => {
         loadingChange(true)
         errorChange(undefined)
-        try {
-          const done = await axios({
-            url,
-            method: 'post',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: authorization || '',
-            },
-            data: {
-              query,
-              variables,
-              operationName: name,
-            },
+        return graphql<T>({
+          url,
+          query,
+          operationName,
+          authorization,
+          variables,
+        })
+          .then(done => {
+            if (!mounted.current) {
+              dataChange(done)
+              errorChange(undefined)
+              loadingChange(false)
+            }
+            return done
           })
-          if (!mounted.current) {
-            dataChange(done.data)
-            errorChange(undefined)
-            loadingChange(false)
-          }
-          return done.data
-        } catch ({ response }) {
-          if (response) {
+          .catch(e => {
             if (mounted.current) {
-              errorChange(response.data)
+              errorChange(e)
               loadingChange(false)
             }
             ToasterStore.add({
-              icon: 'bell',
-              label:
-                response.data && response.data.code
-                  ? `Error ${response.data && response.data.code}`
-                  : 'Error',
-              helper: response.data.message,
+              icon: e.icon || 'bell',
+              label: `${e.status || 'Error'} ${e.code}`,
+              helper: e.message,
             })
-            return Promise.reject(response.data)
-          }
-          const message = 'Could not connect to server'
-          ToasterStore.add({
-            icon: 'wifi',
-            label: 'Error',
-            helper: message,
+            return Promise.reject(e)
           })
-          return Promise.reject(message)
-        }
       },
     }
   }, [data, loading, error, url, query, name, authorization])
