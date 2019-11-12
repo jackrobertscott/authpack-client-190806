@@ -3,7 +3,7 @@ import { useLocalRouter, Modal, Layout, IconBar } from 'wga-theme'
 
 export const RouterManagerSession: FC<{
   id?: string
-  change?: (id: string) => void
+  change?: (id?: string) => void
   visible?: boolean
   close: () => void
 }> = ({ id, change, close, visible }) => {

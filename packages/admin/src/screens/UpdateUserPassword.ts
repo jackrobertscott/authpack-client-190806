@@ -14,7 +14,7 @@ import { createUseServer } from '../hooks/useServer'
 
 export const UpdateUserPassword: FC<{
   id: string
-  change?: (id: string) => void
+  change?: (id?: string) => void
 }> = ({ id, change }) => {
   const global = useGlobal()
   const gqlGetUser = useGetUser()

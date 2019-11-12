@@ -12,7 +12,7 @@ import { useGlobal } from '../hooks/useGlobal'
 import { createUseServer } from '../hooks/useServer'
 
 export const CreateUser: FC<{
-  change?: (id: string) => void
+  change?: (id?: string) => void
 }> = ({ change }) => {
   const global = useGlobal()
   const gqlCreateUser = useCreateUser()

@@ -53,7 +53,12 @@ export const ListUsers: FC = () => {
         key: 'router',
         id: idcurrent,
         change: id => {
-          idcurrentChange(id)
+          if (id) {
+            idcurrentChange(id)
+          } else {
+            buildChange(false)
+            setTimeout(() => idcurrentChange(undefined), 200) // animation
+          }
           if (variables) query.current(variables)
         },
         close: () => {

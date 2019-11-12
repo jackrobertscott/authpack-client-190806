@@ -7,7 +7,7 @@ import { UpdateUserPassword } from '../screens/UpdateUserPassword'
 
 export const RouterManagerUser: FC<{
   id?: string
-  change?: (id: string) => void
+  change?: (id?: string) => void
   visible?: boolean
   close: () => void
 }> = ({ id, change, close, visible }) => {

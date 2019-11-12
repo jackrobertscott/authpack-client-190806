@@ -5,7 +5,7 @@ import { createUseServer } from '../hooks/useServer'
 
 export const RemoveUser: FC<{
   id: string
-  change?: (id: string) => void
+  change?: (id?: string) => void
 }> = ({ id, change }) => {
   const global = useGlobal()
   const gqlRemoveUser = useRemoveUser()
@@ -44,9 +44,7 @@ export const RemoveUser: FC<{
               icon: 'check',
               label: 'Confirm',
               click: () =>
-                gqlRemoveUser
-                  .fetch({ id })
-                  .then(({ user }) => change && change(user.id)),
+                gqlRemoveUser.fetch({ id }).then(() => change && change()),
             }),
             create(Button, {
               key: 'cancel',
