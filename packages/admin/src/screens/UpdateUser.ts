@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC } from 'react'
+import { createElement as create, FC, useEffect } from 'react'
 import {
   Gadgets,
   useSchema,
@@ -11,21 +11,27 @@ import {
 import { useGlobal } from '../hooks/useGlobal'
 import { createUseServer } from '../hooks/useServer'
 
-export const CreateUser: FC<{
+export const UpdateUser: FC<{
+  id: string
   change?: (id: string) => void
-}> = ({ change }) => {
+}> = ({ id, change }) => {
   const global = useGlobal()
-  const gqlCreateUser = useCreateUser()
+  const gqlGetUser = useGetUser()
+  const gqlUpdateUser = useUpdateUser()
   const schema = useSchema({
-    schema: SchemaCreateUser,
+    schema: SchemaUpdateUser,
     submit: value => {
-      gqlCreateUser
-        .fetch({ value })
+      gqlUpdateUser
+        .fetch({ id, value })
         .then(({ user }) => change && change(user.id))
     },
   })
+  useEffect(() => {
+    gqlGetUser.fetch({ id }).then(({ user }) => schema.set(user))
+    // eslint-disable-next-line
+  }, [id])
   return create(Gadgets, {
-    title: 'Create User',
+    title: 'Update User',
     subtitle: global.appname,
     children: create(Layout, {
       column: true,
@@ -78,20 +84,9 @@ export const CreateUser: FC<{
             placeholder: 'example@email.com',
           }),
         }),
-        create(Control, {
-          key: 'password',
-          label: 'Password',
-          error: schema.error('password'),
-          children: create(InputString, {
-            value: schema.value('password'),
-            change: schema.change('password'),
-            placeholder: '* * * * * * * *',
-            password: true,
-          }),
-        }),
         create(Button, {
           key: 'submit',
-          label: 'Create',
+          label: 'Update',
           disabled: !schema.valid,
           click: schema.submit,
         }),
@@ -100,28 +95,43 @@ export const CreateUser: FC<{
   })
 }
 
-const SchemaCreateUser = yup.object().shape({
-  given_name: yup.string().required('Please provide your given name'),
-  family_name: yup.string().required('Please provide your family name'),
-  username: yup.string().required('Please provide your username'),
+const SchemaUpdateUser = yup.object().shape({
+  given_name: yup.string(),
+  family_name: yup.string(),
+  username: yup.string(),
   email: yup
     .string()
-    .email('Please make sure you have used a valid email address')
-    .required('Please provide your email'),
-  password: yup
-    .string()
-    .min(6, 'Password must be more than 6 characters')
-    .required('Please provide your password'),
+    .email('Please make sure you have used a valid email address'),
 })
 
-const useCreateUser = createUseServer<{
+const useGetUser = createUseServer<{
+  user: {
+    given_name: string
+    family_name: string
+    username: string
+    email: string
+  }
+}>({
+  query: `
+    query apiGetUser($id: String!) {
+      user: apiGetUser(id: $id) {
+        given_name
+        family_name
+        username
+        email
+      }
+    }
+  `,
+})
+
+const useUpdateUser = createUseServer<{
   user: {
     id: string
   }
 }>({
   query: `
-    mutation apiCreateUser($value: CreateUserValue!) {
-      user: apiCreateUser(value: $value) {
+    mutation apiUpdateUser($id: String!, $value: UpdateUserValue!) {
+      user: apiUpdateUser(id: $id, value: $value) {
         id
       }
     }

@@ -14,7 +14,7 @@ Methods.
 - [Create a team](#Create-a-team)
 - [Update a team](#Update-a-team)
 - [Remove a team](#Remove-a-team)
-- [Retrieve a team](#Retrieve-a-team)
+- [Get a team](#Get-a-team)
 - [List teams](#List-teams)
 - [Count teams](#Count-teams)
 
@@ -161,15 +161,15 @@ mutation RemoveTeam($options: RemoveTeamOptions!) {
 }
 ```
 
-## Retrieve a team
+## Get a team
 
 Used to get a single team.
 
 ```ts
-wga.teams.retrieve({
+wga.teams.get({
     id: membership.teamId,
   })
-  .then(team => console.log(`Retrieved: ${team.name}`))
+  .then(team => console.log(`Getd: ${team.name}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -187,8 +187,8 @@ GraphQL version.
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query RetrieveTeam($options: RetrieveTeamOptions!) {
-  team: RetrieveTeam(options: $options) {
+query GetTeam($options: GetTeamOptions!) {
+  team: GetTeam(options: $options) {
     id
     name
     # ... team properties

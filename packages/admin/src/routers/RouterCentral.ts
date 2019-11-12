@@ -17,6 +17,7 @@ export const RouterCentral: FC = () => {
     ],
   })
   return create(Layout, {
+    grow: true,
     children: [
       create(IconBar, {
         key: 'iconBar',

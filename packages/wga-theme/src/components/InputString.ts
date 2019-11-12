@@ -8,11 +8,11 @@ export const InputString: FC<{
   placeholder?: string
   disabled?: boolean
   password?: boolean
-}> = ({ value = '', change, placeholder, disabled, password }) => {
+}> = ({ value, change, placeholder, disabled, password }) => {
   return create(InputContainer, {
     disabled,
     children: create('input', {
-      value,
+      value: value || '',
       type: password ? 'password' : 'text',
       placeholder,
       onChange: event => change && !disabled && change(event.target.value),

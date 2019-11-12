@@ -14,7 +14,7 @@ Methods.
 - [Create a permission](#Create-a-permission)
 - [Update a permission](#Update-a-permission)
 - [Remove a permission](#Remove-a-permission)
-- [Retrieve a permission](#Retrieve-a-permission)
+- [Get a permission](#Get-a-permission)
 - [List permissions](#List-permissions)
 - [Count permissions](#Count-permissions)
 
@@ -160,15 +160,15 @@ mutation RemovePermission($options: RemovePermissionOptions!) {
 }
 ```
 
-## Retrieve a permission
+## Get a permission
 
 Used to get a single permission.
 
 ```ts
-wga.permissions.retrieve({
+wga.permissions.get({
     id: membership.permissionId,
   })
-  .then(permission => console.log(`Retrieved: ${permission.name}`))
+  .then(permission => console.log(`Getd: ${permission.name}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -186,8 +186,8 @@ GraphQL version.
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query RetrievePermission($options: RetrievePermissionOptions!) {
-  permission: RetrievePermission(options: $options) {
+query GetPermission($options: GetPermissionOptions!) {
+  permission: GetPermission(options: $options) {
     id
     name
     # ... permission properties

@@ -14,7 +14,7 @@ Methods.
 - [Create a provider](#Create-a-provider)
 - [Update a provider](#Update-a-provider)
 - [Remove a provider](#Remove-a-provider)
-- [Retrieve a provider](#Retrieve-a-provider)
+- [Get a provider](#Get-a-provider)
 - [List providers](#List-providers)
 - [Count providers](#Count-providers)
 
@@ -173,15 +173,15 @@ mutation RemoveProvider($options: RemoveProviderOptions!) {
 }
 ```
 
-## Retrieve a provider
+## Get a provider
 
 Used to get a single provider.
 
 ```ts
-wga.providers.retrieve({
+wga.providers.get({
     id: provider.providerId,
   })
-  .then(provider => console.log(`Retrieved: ${provider.id}`))
+  .then(provider => console.log(`Getd: ${provider.id}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -199,8 +199,8 @@ GraphQL version.
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query RetrieveProvider($options: RetrieveProviderOptions!) {
-  provider: RetrieveProvider(options: $options) {
+query GetProvider($options: GetProviderOptions!) {
+  provider: GetProvider(options: $options) {
     id
     # ... provider properties
   }

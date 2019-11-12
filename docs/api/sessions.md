@@ -14,7 +14,7 @@ Methods.
 - [Create a session](#Create-a-session)
 - [Update a session](#Update-a-session)
 - [Remove a session](#Remove-a-session)
-- [Retrieve a session](#Retrieve-a-session)
+- [Get a session](#Get-a-session)
 - [List sessions](#List-sessions)
 - [Count sessions](#Count-sessions)
 
@@ -157,15 +157,15 @@ mutation RemoveSession($options: RemoveSessionOptions!) {
 }
 ```
 
-## Retrieve a session
+## Get a session
 
 Used to get a single session.
 
 ```ts
-wga.sessions.retrieve({
+wga.sessions.get({
     id: session.id,
   })
-  .then(session => console.log(`Retrieved: ${session.id}`))
+  .then(session => console.log(`Getd: ${session.id}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -183,8 +183,8 @@ GraphQL version.
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query RetrieveSession($options: RetrieveSessionOptions!) {
-  session: RetrieveSession(options: $options) {
+query GetSession($options: GetSessionOptions!) {
+  session: GetSession(options: $options) {
     id
     # ... session properties
   }

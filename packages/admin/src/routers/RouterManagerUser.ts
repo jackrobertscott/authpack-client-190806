@@ -1,6 +1,9 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useLocalRouter, Modal, Layout, IconBar } from 'wga-theme'
 import { CreateUser } from '../screens/CreateUser'
+import { UpdateUser } from '../screens/UpdateUser'
+import { RemoveUser } from '../screens/RemoveUser'
+import { UpdateUserPassword } from '../screens/UpdateUserPassword'
 
 export const RouterManagerUser: FC<{
   id?: string
@@ -11,21 +14,39 @@ export const RouterManagerUser: FC<{
   const router = useLocalRouter({
     nomatch: id ? '/update' : '/create',
     options: id
-      ? [{ key: '/update', children: null }]
+      ? [
+          { key: '/update', children: create(UpdateUser, { id, change }) },
+          {
+            key: '/update/password',
+            children: create(UpdateUserPassword, { id, change }),
+          },
+          { key: '/remove', children: create(RemoveUser, { id, change }) },
+        ]
       : [{ key: '/create', children: create(CreateUser, { change }) }],
   })
   return create(Modal, {
     visible,
     children: create(Layout, {
+      grow: true,
       children: [
         create(IconBar, {
           key: 'iconBar',
           icons: id
             ? [
                 {
-                  icon: 'plus',
+                  icon: 'sliders-h',
                   label: 'Update',
                   click: () => router.change('/update'),
+                },
+                {
+                  icon: 'unlock',
+                  label: 'Change Password',
+                  click: () => router.change('/update/password'),
+                },
+                {
+                  icon: 'fire-alt',
+                  label: 'Remove',
+                  click: () => router.change('/remove'),
                 },
                 {
                   icon: 'times-circle',

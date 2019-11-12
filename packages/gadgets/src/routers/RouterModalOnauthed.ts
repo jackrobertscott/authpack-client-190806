@@ -45,6 +45,7 @@ export const RouterModalOnauthed: FC<{
   })
   if (!settings.bearer) return null
   return create(Layout, {
+    grow: true,
     children: [
       create(IconBar, {
         key: 'iconBar',

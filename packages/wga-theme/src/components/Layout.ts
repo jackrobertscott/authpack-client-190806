@@ -7,7 +7,8 @@ export const Layout: FC<{
   padding?: boolean
   divide?: boolean
   center?: boolean
-}> = ({ children, column, padding, divide, center }) => {
+  grow?: boolean
+}> = ({ children, column, padding, divide, center, grow }) => {
   return create('div', {
     children,
     className: css({
@@ -18,7 +19,7 @@ export const Layout: FC<{
       alignItems: center && column ? 'center' : 'stretch',
       position: 'relative',
       overflow: 'hidden',
-      flexGrow: 1,
+      flexGrow: grow ? 1 : 0,
       padding: padding ? 25 : 0,
       '& > div:not(:last-child)': divide && {
         margin: column ? `0 0 15px 0` : `0 15px 0 0`,

@@ -107,9 +107,9 @@ export const BlueHarvester: ITheme = {
   },
   modal: {
     background: color(0.15),
-    shadow: `0 0 13px -3px ${color(0.05, 0.35)}`,
+    shadow: `0 0 18px -3px ${color(0.1, 0.55)}`,
     border: `1px solid ${color(0.125)}`,
-    cover: color(0.15, 0.5),
+    cover: color(0.1, 0.5),
   },
   snippet: {
     label: color(0.7),

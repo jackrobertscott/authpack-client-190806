@@ -18,6 +18,7 @@ export const RouterModalUnauthed: FC<{
     ],
   })
   return create(Layout, {
+    grow: true,
     children: [
       create(IconBar, {
         key: 'iconBar',

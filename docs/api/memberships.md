@@ -14,7 +14,7 @@ Methods.
 - [Create a membership](#Create-a-membership)
 - [Update a membership](#Update-a-membership)
 - [Remove a membership](#Remove-a-membership)
-- [Retrieve a membership](#Retrieve-a-membership)
+- [Get a membership](#Get-a-membership)
 - [List memberships](#List-memberships)
 - [Count memberships](#Count-memberships)
 
@@ -156,15 +156,15 @@ mutation RemoveMembership($options: RemoveMembershipOptions!) {
 }
 ```
 
-## Retrieve a membership
+## Get a membership
 
 Used to get a single membership.
 
 ```ts
-wga.memberships.retrieve({
+wga.memberships.get({
     id: membership.id,
   })
-  .then(membership => console.log(`Retrieved: ${membership.id}`))
+  .then(membership => console.log(`Getd: ${membership.id}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -181,8 +181,8 @@ GraphQL version.
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query RetrieveMembership($options: RetrieveMembershipOptions!) {
-  membership: RetrieveMembership(options: $options) {
+query GetMembership($options: GetMembershipOptions!) {
+  membership: GetMembership(options: $options) {
     id
     # ... membership properties
   }

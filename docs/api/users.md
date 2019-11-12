@@ -14,7 +14,7 @@ Methods.
 - [Create a user](#Create-a-user)
 - [Update a user](#Update-a-user)
 - [Remove a user](#Remove-a-user)
-- [Retrieve a user](#Retrieve-a-user)
+- [Get a user](#Get-a-user)
 - [List users](#List-users)
 - [Count users](#Count-users)
 
@@ -172,15 +172,15 @@ mutation RemoveUser($options: RemoveUserOptions!) {
 }
 ```
 
-## Retrieve a user
+## Get a user
 
 Used to get a single user.
 
 ```ts
-wga.users.retrieve({
+wga.users.get({
     id: membership.userId,
   })
-  .then(user => console.log(`Retrieved: ${user.name}`))
+  .then(user => console.log(`Getd: ${user.name}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
 ```
 
@@ -199,8 +199,8 @@ GraphQL version.
 `POST` `https://wga.api.windowgadgets.io/graphql?access_token=...`
 
 ```graphql
-query RetrieveUser($options: RetrieveUserOptions!) {
-  user: RetrieveUser(options: $options) {
+query GetUser($options: GetUserOptions!) {
+  user: GetUser(options: $options) {
     id
     name
     # ... user properties

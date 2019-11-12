@@ -90,9 +90,9 @@ Create an auth token e.g. logging in or signing up an user.
 
 ```js
 /**
- * Retrieve the user's user.
+ * Get the user's user.
  */
-const user = await authenticator.users.retrieve({
+const user = await authenticator.users.get({
   username: 'freddy',
   password: 'SuperSecret123',
 })
@@ -112,9 +112,9 @@ Extract a user from an auth token e.g. authenticating a server route.
 
 ```js
 /**
- * Retrieve the session with this token.
+ * Get the session with this token.
  */
-const session = await authenticator.sessions.retrieve({
+const session = await authenticator.sessions.get({
   token: req.body.token,
 })
 /**

@@ -1,8 +1,6 @@
 import * as yup from 'yup'
 import { useState, useMemo, useRef, useEffect } from 'react'
-import { useStore } from './useStore'
 import { ToasterStore } from '../utils/toaster'
-import { Store } from 'events-and-things'
 
 export const useSchema = ({
   schema,
@@ -14,10 +12,9 @@ export const useSchema = ({
   submit?: (value: { [key: string]: any }) => void
 }) => {
   const mounted = useRef(false)
-  const ref = useRef(new Store(schema.default()))
-  const store = useStore<{ [key: string]: any }>({ store: ref.current })
-  const [loaded, loadedChange] = useState<boolean>(false)
   const [valid, validChange] = useState<boolean>(false)
+  const [loaded, loadedChange] = useState<boolean>(false)
+  const [state, stateChange] = useState<{ [key: string]: any }>({})
   const [error, errorChange] = useState<{
     [key: string]: Error | undefined
   }>({})
@@ -28,9 +25,9 @@ export const useSchema = ({
     }
   }, [])
   useEffect(() => {
-    const tasks = Object.keys(store).map(async key => {
+    const tasks = Object.keys(state).map(async key => {
       try {
-        await schema.validateAt(key, store)
+        await schema.validateAt(key, state)
         return [key, undefined]
       } catch (e) {
         return [key, e]
@@ -45,19 +42,19 @@ export const useSchema = ({
         }, {})
       })
       .then(e => mounted.current && loadedChange(true) && errorChange(e))
-    if (change)
-      return ref.current.listen((data: { [key: string]: any }) => {
-        if (mounted.current) change(data)
-      })
-  }, [])
+  }, [loaded])
+  useEffect(() => {
+    if (mounted.current && change) change(state)
+  }, [state])
   useEffect(() => {
     if (mounted.current)
       validChange(loaded && !Object.values(error).filter(Boolean).length)
-  }, [error])
+  }, [loaded, error])
   const update = (key: string) => (data: any) => {
-    ref.current.change({ ...store, [key]: data })
+    const value = { ...state, [key]: data }
+    stateChange(value)
     schema
-      .validateAt(key, store)
+      .validateAt(key, value)
       .then(() => {
         if (mounted.current && error[key])
           errorChange({ ...error, [key]: undefined })
@@ -66,16 +63,20 @@ export const useSchema = ({
   }
   return useMemo(() => {
     return {
+      state,
       valid,
-      state: store,
-      value: (key: string) => store[key],
+      value: (key: string) => state[key],
       error: (key: string) => error[key],
       change: (key: string) => update(key),
+      set: (value: { [key: string]: any }) => {
+        stateChange(value)
+        loadedChange(false)
+      },
       validate: (data: any) => schema.validate(data),
       submit: () =>
         submit &&
         schema
-          .validate(store)
+          .validate(state, { stripUnknown: true })
           .then(data => submit(data))
           .catch(e => {
             ToasterStore.add({
@@ -85,5 +86,5 @@ export const useSchema = ({
             })
           }),
     }
-  }, [valid, store, error, schema])
+  }, [valid, state, error, schema])
 }

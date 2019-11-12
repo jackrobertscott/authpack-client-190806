@@ -16,6 +16,7 @@ export const RouterManagerSession: FC<{
   return create(Modal, {
     visible,
     children: create(Layout, {
+      grow: true,
       children: [
         create(IconBar, {
           key: 'iconBar',

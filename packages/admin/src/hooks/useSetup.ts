@@ -7,11 +7,11 @@ import { useGlobal } from './useGlobal'
 export const useSetup = () => {
   const global = useGlobal()
   const gadgets = useGadgets()
-  const gqlRetrieveApp = useRetrieveApp()
+  const gqlGetApp = useGetApp()
   const gqlCreateApp = useCreateApp()
   useEffect(() => {
     if (gadgets && gadgets.bearer && gadgets.team) {
-      gqlRetrieveApp
+      gqlGetApp
         .fetch({ id: global.current_app_id })
         .then(({ app }) => {
           if (app) {
@@ -37,7 +37,7 @@ export const useSetup = () => {
   }, [gadgets.bearer, gadgets.user, gadgets.team])
 }
 
-const useRetrieveApp = createUseServer<{
+const useGetApp = createUseServer<{
   app?: {
     id: string
     name: string
@@ -49,8 +49,8 @@ const useRetrieveApp = createUseServer<{
   }
 }>({
   query: `
-    query wgaRetrieveApp($id: String) {
-      app: wgaRetrieveApp(id: $id) {
+    query wgaGetApp($id: String) {
+      app: wgaGetApp(id: $id) {
         id
         name
         subscribed

@@ -34,8 +34,8 @@ export const ListUsers: FC = () => {
       icon: 'plus',
       label: 'Create User',
       click: () => {
-        idcurrentChange(undefined)
         buildChange(true)
+        setTimeout(() => idcurrentChange(undefined), 200) // animation
       },
     },
     noscroll: create(TemplateSearchBar, {
@@ -44,7 +44,7 @@ export const ListUsers: FC = () => {
       change: (search, limit, skip) => {
         variablesChange({
           regex: search,
-          options: { limit, skip },
+          options: { ...(variables.options || {}), limit, skip },
         })
       },
     }),
@@ -53,7 +53,10 @@ export const ListUsers: FC = () => {
         key: 'router',
         id: idcurrent,
         change: idcurrentChange,
-        close: () => buildChange(false),
+        close: () => {
+          buildChange(false)
+          setTimeout(() => idcurrentChange(undefined), 200) // animation
+        },
         visible: build,
       }),
       create(Table, {
@@ -65,8 +68,17 @@ export const ListUsers: FC = () => {
           { key: 'updated', label: 'Updated' },
         ].map(({ key, label }) => ({
           label,
-          icon: variables.sort === key ? 'chevron-down' : 'equals',
-          click: () => variablesChange(data => ({ ...data, sort: key })),
+          icon:
+            variables.options && variables.options.sort === key
+              ? variables.options.reverse
+                ? 'chevron-down'
+                : 'chevron-up'
+              : 'equals',
+          click: () =>
+            variablesChange(({ options = {}, ...data }) => ({
+              ...data,
+              options: { ...options, sort: key, reverse: !options.reverse },
+            })),
         })),
         rows: list.map(data => ({
           id: data.id,
