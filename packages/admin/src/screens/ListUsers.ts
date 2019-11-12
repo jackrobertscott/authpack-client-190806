@@ -66,7 +66,7 @@ export const ListUsers: FC = () => {
         key: 'table',
         header: [
           { key: 'email', label: 'Email' },
-          { key: 'name', label: 'Name' },
+          { key: 'given_name', label: 'Name' },
           { key: 'username', label: 'Username' },
           { key: 'updated', label: 'Updated' },
         ].map(({ key, label }) => ({
@@ -95,7 +95,7 @@ export const ListUsers: FC = () => {
             { icon: 'tags', value: data.username || '...' },
             {
               icon: 'clock',
-              value: format(new Date(data.updated), 'dd LLL yyyy'),
+              value: format(new Date(data.updated), 'dd LLL yyyy @ h:mm a'),
             },
           ],
         })),
