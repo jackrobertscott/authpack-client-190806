@@ -24,13 +24,13 @@ export const TemplateSearchBar: FC<{
         icon: 'angle-double-left',
         label: 'Previous',
         click: paginator.previous,
-        disabled: !paginator.hasPrevious,
+        disabled: !paginator.hasPrevious(),
       },
       {
         icon: 'angle-double-right',
         label: 'Next',
         click: paginator.next,
-        disabled: !paginator.hasNext,
+        disabled: !paginator.hasNext(),
       },
     ],
   })

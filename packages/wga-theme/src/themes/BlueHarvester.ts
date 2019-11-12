@@ -43,7 +43,7 @@ export const BlueHarvester: ITheme = {
     branding: color(0.55),
     brandingHover: color(0.85),
     header: color(0.25),
-    border: `1px solid ${color(0.225)}`,
+    border: `1px solid ${color(0.2)}`,
     background: color(0.25),
   },
   page: {
@@ -55,7 +55,7 @@ export const BlueHarvester: ITheme = {
     labelHover: color(0.75),
     header: color(0.25),
     headerHover: color(0.35),
-    border: `1px solid ${color(0.225)}`,
+    border: `1px solid ${color(0.2)}`,
     background: color(0.25),
   },
   scroller: {
@@ -79,8 +79,8 @@ export const BlueHarvester: ITheme = {
     placeholder: color(0.65),
     background: color(0.25),
     backgroundHover: color(0.35),
-    backgroundDisabled: color(0.2),
-    border: `1px solid ${color(0.225)}`,
+    backgroundDisabled: color(0.225),
+    border: `1px solid ${color(0.2)}`,
   },
   iconBar: {
     icon: color(0.75),
@@ -123,9 +123,9 @@ export const BlueHarvester: ITheme = {
     label: color(0.75),
     value: color(0.9),
     header: color(0.275),
-    headerHover: color(0.35),
+    headerHover: color(0.325),
     background: color(0.3),
-    backgroundHover: color(0.4),
+    backgroundHover: color(0.35),
     border: `1px solid ${color(0.225)}`,
   },
   empty: {

@@ -1,6 +1,6 @@
 import faker from 'faker'
 import { createElement as create, FC, useState, useEffect } from 'react'
-import { Page, Table, Empty, Button } from 'wga-theme'
+import { Page, Table, Empty, Button, Focus } from 'wga-theme'
 import { format } from 'date-fns'
 import { RouterManagerUser } from '../routers/RouterManagerUser'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'
@@ -9,12 +9,14 @@ import { createUseServer } from '../hooks/useServer'
 export const ListUsers: FC = () => {
   const apiListUsers = useListUsers()
   const [build, buildChange] = useState<boolean>(false)
+  const [ready, readyChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
-  const [options, optionsChange] = useState<{ [key: string]: any }>({})
+  const [variables, variablesChange] = useState<{ [key: string]: any }>({})
   useEffect(() => {
-    apiListUsers.fetch({ options })
+    if (variables)
+      apiListUsers.fetch(variables).then(() => !ready && readyChange(true))
     // eslint-disable-next-line
-  }, [])
+  }, [variables])
   const list =
     apiListUsers.data && apiListUsers.data.users
       ? apiListUsers.data.users
@@ -35,9 +37,9 @@ export const ListUsers: FC = () => {
       count: apiListUsers.data && apiListUsers.data.count,
       showing: apiListUsers.data && apiListUsers.data.users.length,
       change: (search, limit, skip) => {
-        optionsChange({
-          limit,
-          skip,
+        variablesChange({
+          regex: search,
+          options: { limit, skip },
         })
       },
     }),
@@ -58,8 +60,8 @@ export const ListUsers: FC = () => {
           { key: 'updated', label: 'Updated' },
         ].map(({ key, label }) => ({
           label,
-          icon: options.sort === key ? 'chevron-down' : 'equals',
-          click: () => optionsChange(data => ({ ...data, sort: key })),
+          icon: variables.sort === key ? 'chevron-down' : 'equals',
+          click: () => variablesChange(data => ({ ...data, sort: key })),
         })),
         rows: list.map(data => ({
           id: data.id,
@@ -78,18 +80,24 @@ export const ListUsers: FC = () => {
           ],
         })),
       }),
-      !apiListUsers.data &&
-        create(Empty, {
-          key: 'empty',
-          icon: 'users',
-          label: 'Users',
-          helper: 'Create a user manually or by using the Authenticator API',
-          children: create(Button, {
-            key: 'Regular',
-            label: 'See API',
-            click: () => window.open('https://windowgadgets.io'),
+      !ready
+        ? create(Focus, {
+            key: 'loading',
+            icon: 'sync-alt',
+            label: 'Loading',
+          })
+        : !apiListUsers.data &&
+          create(Empty, {
+            key: 'empty',
+            icon: 'users',
+            label: 'Users',
+            helper: 'Create a user manually or by using the Authenticator API',
+            children: create(Button, {
+              key: 'Regular',
+              label: 'See API',
+              click: () => window.open('https://windowgadgets.io'),
+            }),
           }),
-        }),
     ],
   })
 }
@@ -105,9 +113,9 @@ const useListUsers = createUseServer<{
   }>
 }>({
   query: `
-    query apiListUsers($filter: FilterUsers, $options: FilterOptions) {
-      count: apiCountUsers(filter: $filter)
-      users: apiListUsers(filter: $filter, options: $options) {
+    query apiListUsers($regex: String, $options: WhereOptions) {
+      count: apiCountUsers(regex: $regex)
+      users: apiListUsers(regex: $regex, options: $options) {
         id
         updated
         email
