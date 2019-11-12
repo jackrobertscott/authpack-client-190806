@@ -55,6 +55,9 @@ export const dribble = <T>(
   }
 }
 
+/**
+ * Execute only if the timeout time has elapsed since last execution.
+ */
 export const halter = (timeout: number, cb: (...args: any[]) => void) => {
   let available = true
   return (...args: any[]) => {

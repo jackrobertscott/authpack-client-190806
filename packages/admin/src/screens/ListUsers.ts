@@ -1,6 +1,6 @@
 import faker from 'faker'
-import { createElement as create, FC, useState, useEffect } from 'react'
-import { Page, Table, Empty, Button, Focus } from 'wga-theme'
+import { createElement as create, FC, useState, useEffect, useRef } from 'react'
+import { Page, Table, Empty, Button, Focus, drip } from 'wga-theme'
 import { format } from 'date-fns'
 import { RouterManagerUser } from '../routers/RouterManagerUser'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'
@@ -12,11 +12,16 @@ export const ListUsers: FC = () => {
   const [ready, readyChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [variables, variablesChange] = useState<{ [key: string]: any }>({})
+  const query = useRef(drip(500, data => apiListUsers.fetch(data)))
   useEffect(() => {
-    if (variables)
-      apiListUsers.fetch(variables).then(() => !ready && readyChange(true))
+    if (variables) query.current(variables)
     // eslint-disable-next-line
   }, [variables])
+  useEffect(() => {
+    if (apiListUsers.data && apiListUsers.data.users && !ready)
+      readyChange(true)
+    // eslint-disable-next-line
+  }, [apiListUsers.data])
   const list =
     apiListUsers.data && apiListUsers.data.users
       ? apiListUsers.data.users
