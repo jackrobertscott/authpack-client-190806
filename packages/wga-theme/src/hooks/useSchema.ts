@@ -14,7 +14,9 @@ export const useSchema = ({
   const mounted = useRef(false)
   const [valid, validChange] = useState<boolean>(false)
   const [loaded, loadedChange] = useState<boolean>(false)
-  const [state, stateChange] = useState<{ [key: string]: any }>({})
+  const [state, stateChange] = useState<{ [key: string]: any }>(
+    schema.default()
+  )
   const [error, errorChange] = useState<{
     [key: string]: Error | undefined
   }>({})
@@ -41,7 +43,11 @@ export const useSchema = ({
           return all
         }, {})
       })
-      .then(e => mounted.current && loadedChange(true) && errorChange(e))
+      .then(e => {
+        if (!mounted.current) return
+        loadedChange(true)
+        errorChange(e)
+      })
   }, [loaded])
   useEffect(() => {
     if (mounted.current && change) change(state)
@@ -56,10 +62,13 @@ export const useSchema = ({
     schema
       .validateAt(key, value)
       .then(() => {
-        if (mounted.current && error[key])
-          errorChange({ ...error, [key]: undefined })
+        if (!mounted.current) return
+        errorChange({ ...error, [key]: undefined })
       })
-      .catch(e => mounted.current && errorChange({ ...error, [key]: e }))
+      .catch(e => {
+        if (!mounted.current) return
+        errorChange({ ...error, [key]: e })
+      })
   }
   return useMemo(() => {
     return {

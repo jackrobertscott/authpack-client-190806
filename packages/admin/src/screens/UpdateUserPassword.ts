@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as create, FC } from 'react'
 import {
   Gadgets,
   useSchema,
@@ -17,7 +17,6 @@ export const UpdateUserPassword: FC<{
   change?: (id?: string) => void
 }> = ({ id, change }) => {
   const global = useGlobal()
-  const gqlGetUser = useGetUser()
   const gqlUpdateUser = useUpdateUser()
   const schema = useSchema({
     schema: SchemaUpdateUser,
@@ -27,10 +26,6 @@ export const UpdateUserPassword: FC<{
         .then(({ user }) => change && change(user.id))
     },
   })
-  useEffect(() => {
-    gqlGetUser.fetch({ id }).then(({ user }) => schema.set(user))
-    // eslint-disable-next-line
-  }, [id])
   return create(Gadgets, {
     title: 'Change Password',
     subtitle: global.appname,
@@ -39,7 +34,7 @@ export const UpdateUserPassword: FC<{
         key: 'poster',
         icon: 'unlock',
         label: 'Password',
-        helper: "Change this user's password",
+        helper: 'Change password for user',
       }),
       create(Layout, {
         key: 'layout',
@@ -72,21 +67,10 @@ export const UpdateUserPassword: FC<{
 }
 
 const SchemaUpdateUser = yup.object().shape({
-  password: yup.string().min(6, 'Password must be more than 6 characters'),
-})
-
-const useGetUser = createUseServer<{
-  user: {
-    id: string
-  }
-}>({
-  query: `
-    query apiGetUser($id: String!) {
-      user: apiGetUser(id: $id) {
-        id
-      }
-    }
-  `,
+  password: yup
+    .string()
+    .min(6, 'Password must be more than 6 characters')
+    .required('Password is required'),
 })
 
 const useUpdateUser = createUseServer<{

@@ -8,7 +8,7 @@ import { ListSessions } from '../screens/ListSessions'
 export const RouterSideBarHome: FC = () => {
   const config = useGlobal()
   const router = useRouter({
-    base: '/home',
+    base: '/app',
     nomatch: '/users',
     options: [
       { path: '/users', children: create(ListUsers) },

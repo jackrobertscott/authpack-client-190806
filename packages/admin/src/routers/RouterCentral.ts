@@ -9,9 +9,9 @@ import { Power } from '../screens/Power'
 export const RouterCentral: FC = () => {
   const [open, openChange] = useState<boolean>(false)
   const router = useRouter({
-    nomatch: '/home',
+    nomatch: '/app',
     options: [
-      { path: '/home', children: create(RouterSideBarHome) },
+      { path: '/app', children: create(RouterSideBarHome) },
       { path: '/settings', children: create(RouterSideBarSettings) },
       { path: '/developer', children: create(RouterSideBarDeveloper) },
     ],
@@ -25,7 +25,7 @@ export const RouterCentral: FC = () => {
           {
             icon: 'home',
             label: 'Home',
-            click: () => router.change('/home'),
+            click: () => router.change('/app'),
           },
           {
             icon: 'cog',

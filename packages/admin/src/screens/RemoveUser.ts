@@ -1,7 +1,8 @@
-import { createElement as create, FC, useState } from 'react'
-import { Gadgets, Button, Layout, Poster, Focus } from 'wga-theme'
-import { useGlobal } from '../hooks/useGlobal'
+import { createElement as create, FC } from 'react'
+import { Gadgets } from 'wga-theme'
 import { createUseServer } from '../hooks/useServer'
+import { ConfirmRemove } from '../templates/GadgetsRemove'
+import { useGlobal } from '../hooks/useGlobal'
 
 export const RemoveUser: FC<{
   id: string
@@ -9,54 +10,14 @@ export const RemoveUser: FC<{
 }> = ({ id, change }) => {
   const global = useGlobal()
   const gqlRemoveUser = useRemoveUser()
-  const [confirm, confirmChange] = useState<boolean>(false)
   return create(Gadgets, {
-    title: 'Update User',
+    title: 'Remove User',
     subtitle: global.appname,
-    children: [
-      create(Poster, {
-        key: 'poster',
-        icon: 'fire-alt',
-        label: 'Remove',
-        helper: 'Permanently remove this user',
-      }),
-      create(Layout, {
-        key: 'layout',
-        column: true,
-        padding: true,
-        divide: true,
-        children: create(Button, {
-          label: 'Remove',
-          click: () => confirmChange(true),
-        }),
-      }),
-      create(Focus, {
-        key: 'focus',
-        icon: 'exclamation-triangle',
-        label: 'Are you sure?',
-        helper: 'Please confirm the removal of this user',
-        visible: confirm,
-        children: create(Layout, {
-          divide: true,
-          children: [
-            create(Button, {
-              key: 'confirm',
-              icon: 'check',
-              label: 'Confirm',
-              click: () =>
-                gqlRemoveUser.fetch({ id }).then(() => change && change()),
-            }),
-            create(Button, {
-              key: 'cancel',
-              minor: true,
-              icon: 'times',
-              label: 'Cancel',
-              click: () => confirmChange(false),
-            }),
-          ],
-        }),
-      }),
-    ],
+    children: create(ConfirmRemove, {
+      helper: 'Permanently remove this user',
+      alert: 'Please confirm the removal of this user',
+      change: () => gqlRemoveUser.fetch({ id }).then(() => change && change()),
+    }),
   })
 }
 
