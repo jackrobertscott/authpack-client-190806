@@ -69,22 +69,26 @@ export const useSchema = ({
       error: (key: string) => error[key],
       change: (key: string) => update(key),
       set: (value: { [key: string]: any }) => {
-        stateChange(value)
+        const clean = Object.keys(value).reduce((all: any, next) => {
+          if (value[next] !== null) all[next] = value[next]
+          return all
+        }, {})
+        stateChange(clean)
         loadedChange(false)
       },
-      validate: (data: any) => schema.validate(data),
-      submit: () =>
-        submit &&
-        schema
-          .validate(state, { stripUnknown: true })
-          .then(data => submit(data))
-          .catch(e => {
-            ToasterStore.add({
-              icon: 'bell',
-              label: 'Error',
-              helper: e.message,
+      submit: () => {
+        if (submit)
+          schema
+            .validate(state, { stripUnknown: true })
+            .then(data => submit(data))
+            .catch(e => {
+              ToasterStore.add({
+                icon: 'bell',
+                label: 'Error',
+                helper: e.message,
+              })
             })
-          }),
+      },
     }
   }, [valid, state, error, schema])
 }

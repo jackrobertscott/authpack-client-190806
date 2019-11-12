@@ -52,7 +52,10 @@ export const ListUsers: FC = () => {
       create(RouterManagerUser, {
         key: 'router',
         id: idcurrent,
-        change: idcurrentChange,
+        change: id => {
+          idcurrentChange(id)
+          if (variables) query.current(variables)
+        },
         close: () => {
           buildChange(false)
           setTimeout(() => idcurrentChange(undefined), 200) // animation
