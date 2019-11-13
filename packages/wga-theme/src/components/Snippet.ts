@@ -21,6 +21,7 @@ export const Snippet: FC<{
       padding: 25,
       color: theme.snippet.label,
       background: theme.snippet.background,
+      borderBottom: theme.snippet.border,
       '&:hover:not(:active)': click && {
         background: theme.snippet.backgroundHover,
       },

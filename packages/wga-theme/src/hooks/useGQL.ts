@@ -22,6 +22,7 @@ export const useGQL = <T>({
   operationName?: string
   authorization?: string
 }) => {
+  const count = useRef(0)
   const mounted = useRef(false)
   const [data, dataChange] = useState<T | undefined>()
   const [loading, loadingChange] = useState<boolean>()
@@ -38,8 +39,9 @@ export const useGQL = <T>({
       loading,
       error,
       fetch: async (variables?: any): Promise<T> => {
-        loadingChange(true)
+        if (!loading) loadingChange(true)
         errorChange(undefined)
+        count.current = count.current + 1
         return graphql<T>({
           url,
           query,
@@ -48,7 +50,8 @@ export const useGQL = <T>({
           variables,
         })
           .then(done => {
-            if (mounted.current) {
+            count.current = count.current - 1
+            if (mounted.current && count.current === 0) {
               dataChange(done)
               errorChange(undefined)
               loadingChange(false)

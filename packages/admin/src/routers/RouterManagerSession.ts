@@ -3,6 +3,7 @@ import { useLocalRouter, Modal, Layout, IconBar } from 'wga-theme'
 import { CreateSession } from '../screens/CreateSession'
 import { UpdateSession } from '../screens/UpdateSession'
 import { RemoveSession } from '../screens/RemoveSession'
+import { ShowSession } from '../screens/ShowSession'
 
 export const RouterManagerSession: FC<{
   id?: string
@@ -11,9 +12,10 @@ export const RouterManagerSession: FC<{
   close: () => void
 }> = ({ id, change, close, visible }) => {
   const router = useLocalRouter({
-    nomatch: id ? '/update' : '/create',
+    nomatch: id ? '/inspect' : '/create',
     options: id
       ? [
+          { key: '/inspect', children: create(ShowSession, { id }) },
           { key: '/update', children: create(UpdateSession, { id, change }) },
           { key: '/remove', children: create(RemoveSession, { id, change }) },
         ]
@@ -28,6 +30,11 @@ export const RouterManagerSession: FC<{
           key: 'iconBar',
           icons: id
             ? [
+                {
+                  icon: 'glasses',
+                  label: 'Inspect',
+                  click: () => router.change('/inspect'),
+                },
                 {
                   icon: 'sliders-h',
                   label: 'Update',

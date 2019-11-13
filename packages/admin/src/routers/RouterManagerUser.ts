@@ -4,6 +4,7 @@ import { CreateUser } from '../screens/CreateUser'
 import { UpdateUser } from '../screens/UpdateUser'
 import { RemoveUser } from '../screens/RemoveUser'
 import { UpdateUserPassword } from '../screens/UpdateUserPassword'
+import { ShowUser } from '../screens/ShowUser'
 
 export const RouterManagerUser: FC<{
   id?: string
@@ -12,9 +13,10 @@ export const RouterManagerUser: FC<{
   close: () => void
 }> = ({ id, change, close, visible }) => {
   const router = useLocalRouter({
-    nomatch: id ? '/update' : '/create',
+    nomatch: id ? '/inspect' : '/create',
     options: id
       ? [
+          { key: '/inspect', children: create(ShowUser, { id }) },
           { key: '/update', children: create(UpdateUser, { id, change }) },
           {
             key: '/update/password',
@@ -33,6 +35,11 @@ export const RouterManagerUser: FC<{
           key: 'iconBar',
           icons: id
             ? [
+                {
+                  icon: 'glasses',
+                  label: 'Inspect',
+                  click: () => router.change('/inspect'),
+                },
                 {
                   icon: 'sliders-h',
                   label: 'Update',

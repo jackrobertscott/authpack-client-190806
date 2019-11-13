@@ -19,7 +19,7 @@ export const CreateTeam: FC<{
   const global = useGlobal()
   const gqlCreateTeam = useCreateTeam()
   const gqlListUsers = useListUsers()
-  const queryListUsers = useRef(drip(500, gqlListUsers.fetch))
+  const queryListUsers = useRef(drip(1000, gqlListUsers.fetch))
   const schema = useSchema({
     schema: SchemaCreateTeam,
     submit: value => {

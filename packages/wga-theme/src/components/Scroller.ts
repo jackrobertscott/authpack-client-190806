@@ -16,7 +16,8 @@ export const Scroller: FC<{
       display: 'flex',
       position: 'relative',
       flexDirection: 'column',
-      overflow: disable ? 'hidden' : 'auto',
+      overflowY: disable ? 'hidden' : 'auto',
+      overflowX: 'hidden',
       flexGrow: 1,
       maxHeight: maxheight,
       '&::-webkit-scrollbar': {

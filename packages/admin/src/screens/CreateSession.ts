@@ -20,8 +20,8 @@ export const CreateSession: FC<{
   const gqlCreateSession = useCreateSession()
   const gqlListUsers = useListUsers()
   const gqlListTeams = useListTeams()
-  const queryListUsers = useRef(drip(500, gqlListUsers.fetch))
-  const queryListTeams = useRef(drip(500, gqlListTeams.fetch))
+  const queryListUsers = useRef(drip(1000, gqlListUsers.fetch))
+  const queryListTeams = useRef(drip(1000, gqlListTeams.fetch))
   const schema = useSchema({
     schema: SchemaCreateSession,
     submit: value => {

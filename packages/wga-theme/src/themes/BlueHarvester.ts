@@ -115,9 +115,9 @@ export const BlueHarvester: ITheme = {
     label: color(0.7),
     value: color(0.85),
     arrow: color(0.7),
-    background: color(0.3),
-    backgroundHover: color(0.35),
-    border: `1px solid ${color(0.25)}`,
+    background: color(0.275),
+    backgroundHover: color(0.325),
+    border: `1px solid ${color(0.225)}`,
   },
   table: {
     label: color(0.75),

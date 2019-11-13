@@ -12,7 +12,7 @@ export const ListTeams: FC = () => {
   const [ready, readyChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [variables, variablesChange] = useState<{ [key: string]: any }>({})
-  const queryListTeams = useRef(drip(500, apiListTeams.fetch))
+  const queryListTeams = useRef(drip(1000, apiListTeams.fetch))
   useEffect(() => {
     if (variables) queryListTeams.current(variables)
     // eslint-disable-next-line

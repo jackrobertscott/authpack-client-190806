@@ -3,6 +3,7 @@ import { useLocalRouter, Modal, Layout, IconBar } from 'wga-theme'
 import { CreateTeam } from '../screens/CreateTeam'
 import { UpdateTeam } from '../screens/UpdateTeam'
 import { RemoveTeam } from '../screens/RemoveTeam'
+import { ShowTeam } from '../screens/ShowTeam'
 
 export const RouterManagerTeam: FC<{
   id?: string
@@ -11,9 +12,10 @@ export const RouterManagerTeam: FC<{
   close: () => void
 }> = ({ id, change, close, visible }) => {
   const router = useLocalRouter({
-    nomatch: id ? '/update' : '/create',
+    nomatch: id ? '/inspect' : '/create',
     options: id
       ? [
+          { key: '/inspect', children: create(ShowTeam, { id }) },
           { key: '/update', children: create(UpdateTeam, { id, change }) },
           { key: '/remove', children: create(RemoveTeam, { id, change }) },
         ]
@@ -28,6 +30,11 @@ export const RouterManagerTeam: FC<{
           key: 'iconBar',
           icons: id
             ? [
+                {
+                  icon: 'glasses',
+                  label: 'Inspect',
+                  click: () => router.change('/inspect'),
+                },
                 {
                   icon: 'sliders-h',
                   label: 'Update',

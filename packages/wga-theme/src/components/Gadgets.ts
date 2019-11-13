@@ -2,12 +2,14 @@ import { createElement as create, FC, ReactNode } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../contexts/Theme'
 import { Scroller } from './Scroller'
+import { Icon } from './Icon'
 
 export const Gadgets: FC<{
   title: string
   subtitle?: string
   children: ReactNode
-}> = ({ title, subtitle, children }) => {
+  loading?: boolean
+}> = ({ loading, title, subtitle, children }) => {
   const theme = useTheme()
   return create('div', {
     className: css({
@@ -23,6 +25,7 @@ export const Gadgets: FC<{
       children: [
         create(Header, {
           key: 'header',
+          loading,
           title,
           subtitle,
         }),
@@ -48,7 +51,8 @@ export const Gadgets: FC<{
 const Header: FC<{
   title: string
   subtitle?: string
-}> = ({ title, subtitle }) => {
+  loading?: boolean
+}> = ({ loading, title, subtitle }) => {
   const theme = useTheme()
   return create('div', {
     className: css({
@@ -63,11 +67,30 @@ const Header: FC<{
     children: [
       create('div', {
         key: 'title',
-        children: title,
         className: css({
           all: 'unset',
+          display: 'flex',
           color: theme.gadgets.title,
         }),
+        children: [
+          create('div', {
+            key: 'title',
+            children: title,
+            className: css({
+              marginRight: '15px',
+            }),
+          }),
+          create('div', {
+            key: 'icon',
+            className: css({
+              transition: '200ms',
+              opacity: loading ? 1 : 0,
+            }),
+            children: create(Icon, {
+              icon: 'sync-alt',
+            }),
+          }),
+        ],
       }),
       subtitle &&
         create('div', {

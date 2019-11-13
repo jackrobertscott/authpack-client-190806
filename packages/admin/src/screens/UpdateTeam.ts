@@ -1,13 +1,6 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useEffect } from 'react'
-import {
-  Gadgets,
-  useSchema,
-  Button,
-  Layout,
-  Control,
-  InputString,
-} from 'wga-theme'
+import { Gadgets, useSchema, Layout, Control, InputString } from 'wga-theme'
 import { useGlobal } from '../hooks/useGlobal'
 import { createUseServer } from '../hooks/useServer'
 
@@ -20,7 +13,7 @@ export const UpdateTeam: FC<{
   const gqlUpdateTeam = useUpdateTeam()
   const schema = useSchema({
     schema: SchemaUpdateTeam,
-    submit: value => {
+    poller: value => {
       gqlUpdateTeam
         .fetch({ id, value })
         .then(({ team }) => change && change(team.id))
@@ -37,45 +30,41 @@ export const UpdateTeam: FC<{
       column: true,
       padding: true,
       divide: true,
-      children: [
-        create(Control, {
-          key: 'name',
-          label: 'Name',
-          error: schema.error('name'),
-          children: create(InputString, {
-            value: schema.value('name'),
-            change: schema.change('name'),
-            placeholder: 'Awesome People',
-          }),
-        }),
-        create(Control, {
-          key: 'tag',
-          label: 'Tag',
-          helper: 'A unique identifier for the team',
-          error: schema.error('tag'),
-          children: create(InputString, {
-            value: schema.value('tag'),
-            change: schema.change('tag'),
-            placeholder: 'awesome-people',
-          }),
-        }),
-        create(Control, {
-          key: 'description',
-          label: 'Description',
-          error: schema.error('description'),
-          children: create(InputString, {
-            value: schema.value('description'),
-            change: schema.change('description'),
-            placeholder: 'We do...',
-          }),
-        }),
-        create(Button, {
-          key: 'submit',
-          label: 'Update',
-          disabled: !schema.valid,
-          click: schema.submit,
-        }),
-      ],
+      children: !gqlGetTeam.data
+        ? null
+        : [
+            create(Control, {
+              key: 'name',
+              label: 'Name',
+              error: schema.error('name'),
+              children: create(InputString, {
+                value: schema.value('name'),
+                change: schema.change('name'),
+                placeholder: 'Awesome People',
+              }),
+            }),
+            create(Control, {
+              key: 'tag',
+              label: 'Tag',
+              helper: 'A unique identifier for the team',
+              error: schema.error('tag'),
+              children: create(InputString, {
+                value: schema.value('tag'),
+                change: schema.change('tag'),
+                placeholder: 'awesome-people',
+              }),
+            }),
+            create(Control, {
+              key: 'description',
+              label: 'Description',
+              error: schema.error('description'),
+              children: create(InputString, {
+                value: schema.value('description'),
+                change: schema.change('description'),
+                placeholder: 'We do...',
+              }),
+            }),
+          ],
     }),
   })
 }

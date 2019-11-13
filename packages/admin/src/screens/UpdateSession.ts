@@ -1,13 +1,6 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useEffect } from 'react'
-import {
-  Gadgets,
-  useSchema,
-  Button,
-  Layout,
-  Control,
-  InputBoolean,
-} from 'wga-theme'
+import { Gadgets, useSchema, Layout, Control, InputBoolean } from 'wga-theme'
 import { useGlobal } from '../hooks/useGlobal'
 import { createUseServer } from '../hooks/useServer'
 
@@ -20,7 +13,7 @@ export const UpdateSession: FC<{
   const gqlUpdateSession = useUpdateSession()
   const schema = useSchema({
     schema: SchemaUpdateSession,
-    submit: value => {
+    poller: value => {
       gqlUpdateSession
         .fetch({ id, value })
         .then(({ session }) => change && change(session.id))
@@ -37,24 +30,20 @@ export const UpdateSession: FC<{
       column: true,
       padding: true,
       divide: true,
-      children: [
-        create(Control, {
-          key: 'disabled',
-          label: 'Disabled',
-          helper: 'Prevent session from authenticating api requests',
-          error: schema.error('disabled'),
-          children: create(InputBoolean, {
-            value: schema.value('disabled'),
-            change: schema.change('disabled'),
-          }),
-        }),
-        create(Button, {
-          key: 'submit',
-          label: 'Update',
-          disabled: !schema.valid,
-          click: schema.submit,
-        }),
-      ],
+      children: !gqlGetSession.data
+        ? null
+        : [
+            create(Control, {
+              key: 'disabled',
+              label: 'Disabled',
+              helper: 'Prevent session from authenticating api requests',
+              error: schema.error('disabled'),
+              children: create(InputBoolean, {
+                value: schema.value('disabled'),
+                change: schema.change('disabled'),
+              }),
+            }),
+          ],
     }),
   })
 }
