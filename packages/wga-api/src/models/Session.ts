@@ -7,5 +7,5 @@ export interface ISession {
   meta: IMeta
   user: string
   team?: string
-  deactivated: boolean
+  disabled: boolean
 }

@@ -44,7 +44,7 @@ Properties.
 - meta `object?`: developer assigned attributes.
 - expiry `Date`: the expiry time of the token.
 - token `string`: the access token created by the session.
-- deactivated `boolean`: manually deactivated token.
+- disabled `boolean`: manually disabled token.
 
 ## Create a session
 
@@ -56,7 +56,7 @@ wga.sessions.create({
     user: user.id,
     meta: {/* attributes */},
     expiry: new Date(),
-    deactivated: false,
+    disabled: false,
   })
   .then(session => console.log(`Created: ${session.id} at ${session.created}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -68,7 +68,7 @@ Options.
 - user `string`: the user's id.
 - meta `object?`: developer assigned attributes.
 - expiry `Date`: the expiry time of the token.
-- deactivated `boolean`: manually deactivated token.
+- disabled `boolean`: manually disabled token.
 
 Returns.
 
@@ -95,7 +95,7 @@ Used to patch a session's details.
 wga.sessions.update({
     id: session.id,
     meta: {/* attributes */},
-    deactivated: false,
+    disabled: false,
   })
   .then(session => console.log(`Updated: ${session.id} at ${session.updated}`))
   .catch(error => console.warn(`Error: (${error.code}) ${error.message}`))
@@ -105,7 +105,7 @@ Options.
 
 - id `string`: id of the session to update.
 - meta `object?`: developer assigned attributes.
-- deactivated `boolean`: manually deactivated token.
+- disabled `boolean`: manually disabled token.
 
 Returns.
 

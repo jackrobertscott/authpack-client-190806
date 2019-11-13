@@ -6,7 +6,7 @@ import {
   Button,
   Layout,
   Control,
-  InputString,
+  InputBoolean,
 } from 'wga-theme'
 import { useGlobal } from '../hooks/useGlobal'
 import { createUseServer } from '../hooks/useServer'
@@ -39,34 +39,13 @@ export const UpdateSession: FC<{
       divide: true,
       children: [
         create(Control, {
-          key: 'name',
-          label: 'Name',
-          error: schema.error('name'),
-          children: create(InputString, {
-            value: schema.value('name'),
-            change: schema.change('name'),
-            placeholder: 'Awesome People',
-          }),
-        }),
-        create(Control, {
-          key: 'tag',
-          label: 'Tag',
-          helper: 'A unique identifier for the session',
-          error: schema.error('tag'),
-          children: create(InputString, {
-            value: schema.value('tag'),
-            change: schema.change('tag'),
-            placeholder: 'awesome-people',
-          }),
-        }),
-        create(Control, {
-          key: 'description',
-          label: 'Description',
-          error: schema.error('description'),
-          children: create(InputString, {
-            value: schema.value('description'),
-            change: schema.change('description'),
-            placeholder: 'We do...',
+          key: 'disabled',
+          label: 'Disabled',
+          helper: 'Prevent session from authenticating api requests',
+          error: schema.error('disabled'),
+          children: create(InputBoolean, {
+            value: schema.value('disabled'),
+            change: schema.change('disabled'),
           }),
         }),
         create(Button, {
@@ -81,24 +60,20 @@ export const UpdateSession: FC<{
 }
 
 const SchemaUpdateSession = yup.object().shape({
-  name: yup.string().required('Please provide the session name'),
-  tag: yup.string().required('Please provide the session tag'),
-  description: yup.string(),
+  disabled: yup
+    .boolean()
+    .required('Please provide the current disabled status'),
 })
 
 const useGetSession = createUseServer<{
   session: {
-    name: string
-    tag: string
-    description?: string
+    disabled: string
   }
 }>({
   query: `
     query apiGetSession($id: String!) {
       session: apiGetSession(id: $id) {
-        name
-        tag
-        description
+        disabled
       }
     }
   `,

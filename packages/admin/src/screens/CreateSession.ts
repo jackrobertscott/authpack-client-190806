@@ -7,6 +7,7 @@ import {
   Layout,
   Control,
   InputSelect,
+  InputBoolean,
   drip,
 } from 'wga-theme'
 import { useGlobal } from '../hooks/useGlobal'
@@ -23,7 +24,6 @@ export const CreateSession: FC<{
   const queryListTeams = useRef(drip(500, gqlListTeams.fetch))
   const schema = useSchema({
     schema: SchemaCreateSession,
-    change: console.log,
     submit: value => {
       gqlCreateSession
         .fetch({ value })
@@ -92,6 +92,16 @@ export const CreateSession: FC<{
                   })),
             }),
           }),
+        create(Control, {
+          key: 'disabled',
+          label: 'Disabled',
+          helper: 'Prevent session from authenticating api requests',
+          error: schema.error('disabled'),
+          children: create(InputBoolean, {
+            value: schema.value('disabled'),
+            change: schema.change('disabled'),
+          }),
+        }),
         create(Button, {
           key: 'submit',
           label: 'Create',
@@ -106,6 +116,9 @@ export const CreateSession: FC<{
 const SchemaCreateSession = yup.object().shape({
   user_id: yup.string().required('Please provide the session user'),
   team_id: yup.string(),
+  disabled: yup
+    .boolean()
+    .required('Please provide the current disabled status'),
 })
 
 const useCreateSession = createUseServer<{
