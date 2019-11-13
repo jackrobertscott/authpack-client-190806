@@ -12,9 +12,9 @@ export const ListTeams: FC = () => {
   const [ready, readyChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [variables, variablesChange] = useState<{ [key: string]: any }>({})
-  const query = useRef(drip(500, data => apiListTeams.fetch(data)))
+  const queryListTeams = useRef(drip(500, apiListTeams.fetch))
   useEffect(() => {
-    if (variables) query.current(variables)
+    if (variables) queryListTeams.current(variables)
     // eslint-disable-next-line
   }, [variables])
   useEffect(() => {
@@ -53,13 +53,13 @@ export const ListTeams: FC = () => {
         key: 'router',
         id: idcurrent,
         change: id => {
+          if (variables) queryListTeams.current(variables)
           if (id) {
             idcurrentChange(id)
           } else {
             buildChange(false)
             setTimeout(() => idcurrentChange(undefined), 200) // animation
           }
-          if (variables) query.current(variables)
         },
         close: () => {
           buildChange(false)

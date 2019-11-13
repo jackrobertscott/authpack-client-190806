@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as create, FC, useEffect, useRef } from 'react'
 import {
   Gadgets,
   useSchema,
@@ -8,6 +8,7 @@ import {
   Control,
   InputString,
   InputSelect,
+  drip,
 } from 'wga-theme'
 import { useGlobal } from '../hooks/useGlobal'
 import { createUseServer } from '../hooks/useServer'
@@ -18,6 +19,7 @@ export const CreateTeam: FC<{
   const global = useGlobal()
   const gqlCreateTeam = useCreateTeam()
   const gqlListUsers = useListUsers()
+  const queryListUsers = useRef(drip(500, gqlListUsers.fetch))
   const schema = useSchema({
     schema: SchemaCreateTeam,
     submit: value => {
@@ -27,7 +29,7 @@ export const CreateTeam: FC<{
     },
   })
   useEffect(() => {
-    gqlListUsers.fetch()
+    queryListUsers.current()
     // eslint-disable-next-line
   }, [])
   return create(Gadgets, {
@@ -77,7 +79,7 @@ export const CreateTeam: FC<{
             value: schema.value('user_id'),
             change: schema.change('user_id'),
             placeholder: 'Select user...',
-            filter: regex => gqlListUsers.fetch({ regex }),
+            filter: regex => queryListUsers.current({ regex }),
             options: !gqlListUsers.data
               ? []
               : gqlListUsers.data.users.map(user => ({

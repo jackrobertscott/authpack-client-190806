@@ -13,49 +13,20 @@ export const useSchema = ({
 }) => {
   const mounted = useRef(false)
   const [valid, validChange] = useState<boolean>(false)
-  const [loaded, loadedChange] = useState<boolean>(false)
-  const [state, stateChange] = useState<{ [key: string]: any }>(
-    schema.default()
-  )
+  const [ready, readyChange] = useState<boolean>(false)
+  const [state, stateChange] = useState<{ [key: string]: any }>({
+    ...schema.default(),
+  })
   const [error, errorChange] = useState<{
     [key: string]: Error | undefined
   }>({})
-  useEffect(() => {
-    mounted.current = true
-    return () => {
-      mounted.current = false
-    }
-  }, [])
-  useEffect(() => {
-    const tasks = Object.keys(state).map(async key => {
-      try {
-        await schema.validateAt(key, state)
-        return [key, undefined]
-      } catch (e) {
-        return [key, e]
-      }
-    })
-    Promise.all(tasks)
-      .then(errors => {
-        return errors.reduce((all, next) => {
-          const [key, value] = next as [string, any]
-          if (key && value) (all as any)[key as string] = value
-          return all
-        }, {})
-      })
-      .then(e => {
-        if (!mounted.current) return
-        loadedChange(true)
-        errorChange(e)
-      })
-  }, [loaded])
-  useEffect(() => {
-    if (mounted.current && change) change(state)
-  }, [state])
-  useEffect(() => {
-    if (mounted.current)
-      validChange(loaded && !Object.values(error).filter(Boolean).length)
-  }, [loaded, error])
+  const set = (value: { [key: string]: any }) => {
+    const clean = Object.keys(value).reduce((all: any, next) => {
+      if (value[next] !== null) all[next] = value[next]
+      return all
+    }, {})
+    stateChange(clean)
+  }
   const update = (key: string) => (data: any) => {
     const value = { ...state, [key]: data }
     stateChange(value)
@@ -70,21 +41,48 @@ export const useSchema = ({
         errorChange({ ...error, [key]: e })
       })
   }
+  useEffect(() => {
+    mounted.current = true
+    return () => {
+      mounted.current = false
+    }
+  }, [])
+  useEffect(() => {
+    if (mounted.current && change) change(state)
+    const validatedFields = Object.keys(state).map(async key => {
+      try {
+        await schema.validateAt(key, state)
+        return [key, undefined]
+      } catch (e) {
+        return [key, e]
+      }
+    })
+    Promise.all(validatedFields)
+      .then(errors => {
+        return errors.reduce((all, next) => {
+          const [key, value] = next as [string, any]
+          if (key && value) (all as any)[key as string] = value
+          return all
+        }, {})
+      })
+      .then(e => {
+        if (!mounted.current) return
+        errorChange(e)
+        readyChange(true)
+      })
+  }, [state])
+  useEffect(() => {
+    if (mounted.current)
+      validChange(ready && !Object.values(error).filter(Boolean).length)
+  }, [error])
   return useMemo(() => {
     return {
+      set,
       state,
       valid,
       value: (key: string) => state[key],
       error: (key: string) => error[key],
       change: (key: string) => update(key),
-      set: (value: { [key: string]: any }) => {
-        const clean = Object.keys(value).reduce((all: any, next) => {
-          if (value[next] !== null) all[next] = value[next]
-          return all
-        }, {})
-        stateChange(clean)
-        loadedChange(false)
-      },
       submit: () => {
         if (submit)
           schema

@@ -1,13 +1,13 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as create, FC, useEffect, useRef } from 'react'
 import {
   Gadgets,
   useSchema,
   Button,
   Layout,
   Control,
-  InputString,
   InputSelect,
+  drip,
 } from 'wga-theme'
 import { useGlobal } from '../hooks/useGlobal'
 import { createUseServer } from '../hooks/useServer'
@@ -18,8 +18,12 @@ export const CreateSession: FC<{
   const global = useGlobal()
   const gqlCreateSession = useCreateSession()
   const gqlListUsers = useListUsers()
+  const gqlListTeams = useListTeams()
+  const queryListUsers = useRef(drip(500, gqlListUsers.fetch))
+  const queryListTeams = useRef(drip(500, gqlListTeams.fetch))
   const schema = useSchema({
     schema: SchemaCreateSession,
+    change: console.log,
     submit: value => {
       gqlCreateSession
         .fetch({ value })
@@ -27,9 +31,14 @@ export const CreateSession: FC<{
     },
   })
   useEffect(() => {
-    gqlListUsers.fetch()
+    queryListUsers.current()
     // eslint-disable-next-line
   }, [])
+  useEffect(() => {
+    schema.change('team_id')(undefined)
+    if (schema.value('user_id'))
+      queryListTeams.current({ user_id: schema.value('user_id') })
+  }, [schema.value('user_id')])
   return create(Gadgets, {
     title: 'Create Session',
     subtitle: global.appname,
@@ -39,45 +48,14 @@ export const CreateSession: FC<{
       divide: true,
       children: [
         create(Control, {
-          key: 'name',
-          label: 'Name',
-          error: schema.error('name'),
-          children: create(InputString, {
-            value: schema.value('name'),
-            change: schema.change('name'),
-            placeholder: 'Awesome People',
-          }),
-        }),
-        create(Control, {
-          key: 'tag',
-          label: 'Tag',
-          helper: 'A unique identifier for the session',
-          error: schema.error('tag'),
-          children: create(InputString, {
-            value: schema.value('tag'),
-            change: schema.change('tag'),
-            placeholder: 'awesome-people',
-          }),
-        }),
-        create(Control, {
-          key: 'description',
-          label: 'Description',
-          error: schema.error('description'),
-          children: create(InputString, {
-            value: schema.value('description'),
-            change: schema.change('description'),
-            placeholder: 'We do...',
-          }),
-        }),
-        create(Control, {
           key: 'user_id',
-          label: 'Admin User',
+          label: 'User',
           error: schema.error('user_id'),
           children: create(InputSelect, {
             value: schema.value('user_id'),
             change: schema.change('user_id'),
             placeholder: 'Select user...',
-            filter: regex => gqlListUsers.fetch({ regex }),
+            filter: regex => queryListUsers.current({ regex }),
             options: !gqlListUsers.data
               ? []
               : gqlListUsers.data.users.map(user => ({
@@ -90,6 +68,30 @@ export const CreateSession: FC<{
                 })),
           }),
         }),
+        schema.value('user_id') &&
+          create(Control, {
+            key: 'team_id',
+            label: 'Team',
+            helper: 'Optionally select a team to be added to session',
+            error: schema.error('team_id'),
+            children: create(InputSelect, {
+              value: schema.value('team_id'),
+              change: schema.change('team_id'),
+              placeholder: 'Select user...',
+              filter: regex =>
+                queryListTeams.current({
+                  regex,
+                  user_id: schema.value('user_id'),
+                }),
+              options: !gqlListTeams.data
+                ? []
+                : gqlListTeams.data.teams.map(team => ({
+                    value: team.id,
+                    label: `${team.name} (${team.tag})`,
+                    helper: team.description,
+                  })),
+            }),
+          }),
         create(Button, {
           key: 'submit',
           label: 'Create',
@@ -102,10 +104,8 @@ export const CreateSession: FC<{
 }
 
 const SchemaCreateSession = yup.object().shape({
-  name: yup.string().required('Please provide the session name'),
-  tag: yup.string().required('Please provide the session tag'),
-  description: yup.string(),
-  user_id: yup.string().required('Please select an admin user'),
+  user_id: yup.string().required('Please provide the session user'),
+  team_id: yup.string(),
 })
 
 const useCreateSession = createUseServer<{
@@ -137,6 +137,26 @@ const useListUsers = createUseServer<{
         name
         email
         username
+      }
+    }
+  `,
+})
+
+const useListTeams = createUseServer<{
+  teams: Array<{
+    id: string
+    name: string
+    tag: string
+    description: string
+  }>
+}>({
+  query: `
+    query apiListTeams($regex: String, $user_id: String!) {
+      teams: apiListTeams(regex: $regex, where: { user_id: $user_id }, options: { limit: 5 }) {
+        id
+        name
+        tag
+        description
       }
     }
   `,

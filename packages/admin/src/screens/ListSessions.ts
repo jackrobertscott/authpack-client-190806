@@ -12,9 +12,9 @@ export const ListSessions: FC = () => {
   const [ready, readyChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [variables, variablesChange] = useState<{ [key: string]: any }>({})
-  const query = useRef(drip(500, data => apiListSessions.fetch(data)))
+  const queryListSessions = useRef(drip(500, apiListSessions.fetch))
   useEffect(() => {
-    if (variables) query.current(variables)
+    if (variables) queryListSessions.current(variables)
     // eslint-disable-next-line
   }, [variables])
   useEffect(() => {
@@ -41,9 +41,9 @@ export const ListSessions: FC = () => {
     noscroll: create(TemplateSearchBar, {
       count: apiListSessions.data && apiListSessions.data.count,
       showing: apiListSessions.data && apiListSessions.data.sessions.length,
-      change: (search, limit, skip) => {
+      input: false,
+      change: (_, limit, skip) => {
         variablesChange({
-          regex: search,
           options: { ...(variables.options || {}), limit, skip },
         })
       },
@@ -53,13 +53,13 @@ export const ListSessions: FC = () => {
         key: 'router',
         id: idcurrent,
         change: id => {
+          if (variables) queryListSessions.current(variables)
           if (id) {
             idcurrentChange(id)
           } else {
             buildChange(false)
             setTimeout(() => idcurrentChange(undefined), 200) // animation
           }
-          if (variables) query.current(variables)
         },
         close: () => {
           buildChange(false)
@@ -149,9 +149,9 @@ const useListSessions = createUseServer<{
   }>
 }>({
   query: `
-    query apiListSessions($regex: String, $options: WhereOptions) {
-      count: apiCountSessions(regex: $regex)
-      sessions: apiListSessions(regex: $regex, options: $options) {
+    query apiListSessions($options: WhereOptions) {
+      count: apiCountSessions
+      sessions: apiListSessions(options: $options) {
         id
         created
         user {

@@ -25,18 +25,20 @@ export const SearchBar: FC<{
     className: css({
       all: 'unset',
       display: 'flex',
+      justifyContent: 'flex-end',
       width: '100%',
       position: 'relative',
       background: theme.searchBar.background,
       borderTop: theme.searchBar.border,
     }),
     children: [
-      create(Searcher, {
-        key: 'searcher',
-        value,
-        change,
-        placeholder,
-      }),
+      change &&
+        create(Searcher, {
+          key: 'searcher',
+          value,
+          change,
+          placeholder,
+        }),
       !!options.length &&
         options.map((option, index) => {
           return create(Option, {
