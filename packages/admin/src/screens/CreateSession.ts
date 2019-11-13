@@ -12,18 +12,18 @@ import {
 import { useGlobal } from '../hooks/useGlobal'
 import { createUseServer } from '../hooks/useServer'
 
-export const CreateTeam: FC<{
+export const CreateSession: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
   const global = useGlobal()
-  const gqlCreateTeam = useCreateTeam()
+  const gqlCreateSession = useCreateSession()
   const gqlListUsers = useListUsers()
   const schema = useSchema({
-    schema: SchemaCreateTeam,
+    schema: SchemaCreateSession,
     submit: value => {
-      gqlCreateTeam
+      gqlCreateSession
         .fetch({ value })
-        .then(({ team }) => change && change(team.id))
+        .then(({ session }) => change && change(session.id))
     },
   })
   useEffect(() => {
@@ -31,7 +31,7 @@ export const CreateTeam: FC<{
     // eslint-disable-next-line
   }, [])
   return create(Gadgets, {
-    title: 'Create Team',
+    title: 'Create Session',
     subtitle: global.appname,
     children: create(Layout, {
       column: true,
@@ -51,7 +51,7 @@ export const CreateTeam: FC<{
         create(Control, {
           key: 'tag',
           label: 'Tag',
-          helper: 'A unique identifier for the team',
+          helper: 'A unique identifier for the session',
           error: schema.error('tag'),
           children: create(InputString, {
             value: schema.value('tag'),
@@ -101,21 +101,21 @@ export const CreateTeam: FC<{
   })
 }
 
-const SchemaCreateTeam = yup.object().shape({
-  name: yup.string().required('Please provide the team name'),
-  tag: yup.string().required('Please provide the team tag'),
+const SchemaCreateSession = yup.object().shape({
+  name: yup.string().required('Please provide the session name'),
+  tag: yup.string().required('Please provide the session tag'),
   description: yup.string(),
   user_id: yup.string().required('Please select an admin user'),
 })
 
-const useCreateTeam = createUseServer<{
-  team: {
+const useCreateSession = createUseServer<{
+  session: {
     id: string
   }
 }>({
   query: `
-    mutation apiCreateTeam($value: CreateTeamValue!) {
-      team: apiCreateTeam(value: $value) {
+    mutation apiCreateSession($value: CreateSessionValue!) {
+      session: apiCreateSession(value: $value) {
         id
       }
     }

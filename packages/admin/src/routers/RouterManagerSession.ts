@@ -1,5 +1,8 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useLocalRouter, Modal, Layout, IconBar } from 'wga-theme'
+import { CreateSession } from '../screens/CreateSession'
+import { UpdateSession } from '../screens/UpdateSession'
+import { RemoveSession } from '../screens/RemoveSession'
 
 export const RouterManagerSession: FC<{
   id?: string
@@ -10,8 +13,11 @@ export const RouterManagerSession: FC<{
   const router = useLocalRouter({
     nomatch: id ? '/update' : '/create',
     options: id
-      ? [{ key: '/update', children: null }]
-      : [{ key: '/create', children: null }],
+      ? [
+          { key: '/update', children: create(UpdateSession, { id, change }) },
+          { key: '/remove', children: create(RemoveSession, { id, change }) },
+        ]
+      : [{ key: '/create', children: create(CreateSession, { change }) }],
   })
   return create(Modal, {
     visible,
@@ -23,9 +29,14 @@ export const RouterManagerSession: FC<{
           icons: id
             ? [
                 {
-                  icon: 'plus',
+                  icon: 'sliders-h',
                   label: 'Update',
                   click: () => router.change('/update'),
+                },
+                {
+                  icon: 'fire-alt',
+                  label: 'Remove',
+                  click: () => router.change('/remove'),
                 },
                 {
                   icon: 'times-circle',

@@ -1,11 +1,196 @@
-import { createElement as create, FC } from 'react'
-import { Page } from 'wga-theme'
+import faker from 'faker'
+import { createElement as create, FC, useState, useEffect, useRef } from 'react'
+import { Page, Table, Empty, Button, Focus, drip } from 'wga-theme'
+import { format } from 'date-fns'
+import { RouterManagerSession } from '../routers/RouterManagerSession'
+import { TemplateSearchBar } from '../templates/TemplateSearchBar'
+import { createUseServer } from '../hooks/useServer'
 
 export const ListSessions: FC = () => {
+  const apiListSessions = useListSessions()
+  const [build, buildChange] = useState<boolean>(false)
+  const [ready, readyChange] = useState<boolean>(false)
+  const [idcurrent, idcurrentChange] = useState<string | undefined>()
+  const [variables, variablesChange] = useState<{ [key: string]: any }>({})
+  const query = useRef(drip(500, data => apiListSessions.fetch(data)))
+  useEffect(() => {
+    if (variables) query.current(variables)
+    // eslint-disable-next-line
+  }, [variables])
+  useEffect(() => {
+    if (apiListSessions.data && apiListSessions.data.sessions && !ready)
+      readyChange(true)
+    // eslint-disable-next-line
+  }, [apiListSessions.data])
+  const list =
+    apiListSessions.data && apiListSessions.data.sessions
+      ? apiListSessions.data.sessions
+      : FakeSessions
   return create(Page, {
     title: 'Sessions',
-    subtitle: '',
-    children: null,
-    noscroll: null,
+    subtitle: 'See all sessions of your app',
+    hidden: !apiListSessions.data,
+    corner: {
+      icon: 'plus',
+      label: 'Create Session',
+      click: () => {
+        buildChange(true)
+        setTimeout(() => idcurrentChange(undefined), 200) // animation
+      },
+    },
+    noscroll: create(TemplateSearchBar, {
+      count: apiListSessions.data && apiListSessions.data.count,
+      showing: apiListSessions.data && apiListSessions.data.sessions.length,
+      change: (search, limit, skip) => {
+        variablesChange({
+          regex: search,
+          options: { ...(variables.options || {}), limit, skip },
+        })
+      },
+    }),
+    children: [
+      create(RouterManagerSession, {
+        key: 'router',
+        id: idcurrent,
+        change: id => {
+          if (id) {
+            idcurrentChange(id)
+          } else {
+            buildChange(false)
+            setTimeout(() => idcurrentChange(undefined), 200) // animation
+          }
+          if (variables) query.current(variables)
+        },
+        close: () => {
+          buildChange(false)
+          setTimeout(() => idcurrentChange(undefined), 200) // animation
+        },
+        visible: build,
+      }),
+      create(Table, {
+        key: 'table',
+        header: [
+          { key: 'user_id', label: 'User' },
+          { key: 'team_id', label: 'Team' },
+          { key: 'created', label: 'Created' },
+        ].map(({ key, label }) => ({
+          label,
+          icon:
+            variables.options && variables.options.sort === key
+              ? variables.options.reverse
+                ? 'chevron-down'
+                : 'chevron-up'
+              : 'equals',
+          click: () =>
+            variablesChange(({ options = {}, ...data }) => ({
+              ...data,
+              options: { ...options, sort: key, reverse: !options.reverse },
+            })),
+        })),
+        rows: list.map(data => ({
+          id: data.id,
+          click: () => {
+            idcurrentChange(data.id)
+            buildChange(true)
+          },
+          cells: [
+            {
+              icon: 'user',
+              value: data.user.name || data.user.username || data.user.email,
+            },
+            {
+              icon: 'users',
+              value: data.team ? `${data.team.name} (${data.team.tag})` : '...',
+            },
+            {
+              icon: 'clock',
+              value: format(new Date(data.created), 'dd LLL yyyy @ h:mm a'),
+            },
+          ],
+        })),
+      }),
+      !ready
+        ? create(Focus, {
+            key: 'loading',
+            icon: 'sync-alt',
+            label: 'Loading',
+          })
+        : !apiListSessions.data &&
+          create(Empty, {
+            key: 'empty',
+            icon: 'sessions',
+            label: 'Sessions',
+            helper:
+              'Create a session manually or by using the Authenticator API',
+            children: create(Button, {
+              key: 'Regular',
+              label: 'See API',
+              click: () => window.open('https://windowgadgets.io'),
+            }),
+          }),
+    ],
   })
 }
+
+const useListSessions = createUseServer<{
+  count: number
+  sessions: Array<{
+    id: string
+    created: string
+    user: {
+      name: string
+      username: string
+      email: string
+    }
+    team?: {
+      name: string
+      tag: string
+    }
+  }>
+}>({
+  query: `
+    query apiListSessions($regex: String, $options: WhereOptions) {
+      count: apiCountSessions(regex: $regex)
+      sessions: apiListSessions(regex: $regex, options: $options) {
+        id
+        created
+        user {
+          name
+          username
+          email
+        }
+        team {
+          name
+          tag
+        }
+      }
+    }
+  `,
+})
+
+const FakeSessions: Array<{
+  id: string
+  created: string
+  user: {
+    name: string
+    username: string
+    email: string
+  }
+  team?: {
+    name: string
+    tag: string
+  }
+}> = Array.from(Array(10).keys()).map(() => ({
+  id: faker.random.uuid(),
+  created: faker.date.recent(100).toDateString(),
+  user: {
+    email: faker.internet.email(),
+    username: faker.internet.userName(),
+    name: faker.name.findName(),
+  },
+  team: {
+    name: faker.random.words(2),
+    tag: faker.internet.userName(),
+    description: faker.random.words(10),
+  },
+}))

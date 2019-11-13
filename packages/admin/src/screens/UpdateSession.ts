@@ -7,31 +7,31 @@ import {
   Layout,
   Control,
   InputString,
-  InputSelect,
 } from 'wga-theme'
 import { useGlobal } from '../hooks/useGlobal'
 import { createUseServer } from '../hooks/useServer'
 
-export const CreateTeam: FC<{
+export const UpdateSession: FC<{
+  id: string
   change?: (id?: string) => void
-}> = ({ change }) => {
+}> = ({ id, change }) => {
   const global = useGlobal()
-  const gqlCreateTeam = useCreateTeam()
-  const gqlListUsers = useListUsers()
+  const gqlGetSession = useGetSession()
+  const gqlUpdateSession = useUpdateSession()
   const schema = useSchema({
-    schema: SchemaCreateTeam,
+    schema: SchemaUpdateSession,
     submit: value => {
-      gqlCreateTeam
-        .fetch({ value })
-        .then(({ team }) => change && change(team.id))
+      gqlUpdateSession
+        .fetch({ id, value })
+        .then(({ session }) => change && change(session.id))
     },
   })
   useEffect(() => {
-    gqlListUsers.fetch()
+    gqlGetSession.fetch({ id }).then(({ session }) => schema.set(session))
     // eslint-disable-next-line
-  }, [])
+  }, [id])
   return create(Gadgets, {
-    title: 'Create Team',
+    title: 'Update Session',
     subtitle: global.appname,
     children: create(Layout, {
       column: true,
@@ -51,7 +51,7 @@ export const CreateTeam: FC<{
         create(Control, {
           key: 'tag',
           label: 'Tag',
-          helper: 'A unique identifier for the team',
+          helper: 'A unique identifier for the session',
           error: schema.error('tag'),
           children: create(InputString, {
             value: schema.value('tag'),
@@ -69,30 +69,9 @@ export const CreateTeam: FC<{
             placeholder: 'We do...',
           }),
         }),
-        create(Control, {
-          key: 'user_id',
-          label: 'Admin User',
-          error: schema.error('user_id'),
-          children: create(InputSelect, {
-            value: schema.value('user_id'),
-            change: schema.change('user_id'),
-            placeholder: 'Select user...',
-            filter: regex => gqlListUsers.fetch({ regex }),
-            options: !gqlListUsers.data
-              ? []
-              : gqlListUsers.data.users.map(user => ({
-                  value: user.id,
-                  label:
-                    user.name && user.username
-                      ? `${user.name} (${user.username})`
-                      : user.name || user.username,
-                  helper: user.email,
-                })),
-          }),
-        }),
         create(Button, {
           key: 'submit',
-          label: 'Create',
+          label: 'Update',
           disabled: !schema.valid,
           click: schema.submit,
         }),
@@ -101,42 +80,39 @@ export const CreateTeam: FC<{
   })
 }
 
-const SchemaCreateTeam = yup.object().shape({
-  name: yup.string().required('Please provide the team name'),
-  tag: yup.string().required('Please provide the team tag'),
+const SchemaUpdateSession = yup.object().shape({
+  name: yup.string().required('Please provide the session name'),
+  tag: yup.string().required('Please provide the session tag'),
   description: yup.string(),
-  user_id: yup.string().required('Please select an admin user'),
 })
 
-const useCreateTeam = createUseServer<{
-  team: {
-    id: string
+const useGetSession = createUseServer<{
+  session: {
+    name: string
+    tag: string
+    description?: string
   }
 }>({
   query: `
-    mutation apiCreateTeam($value: CreateTeamValue!) {
-      team: apiCreateTeam(value: $value) {
-        id
+    query apiGetSession($id: String!) {
+      session: apiGetSession(id: $id) {
+        name
+        tag
+        description
       }
     }
   `,
 })
 
-const useListUsers = createUseServer<{
-  users: Array<{
+const useUpdateSession = createUseServer<{
+  session: {
     id: string
-    name: string
-    email: string
-    username: string
-  }>
+  }
 }>({
   query: `
-    query apiListUsers($regex: String) {
-      users: apiListUsers(regex: $regex, options: { limit: 5 }) {
+    mutation apiUpdateSession($id: String!, $value: UpdateSessionValue!) {
+      session: apiUpdateSession(id: $id, value: $value) {
         id
-        name
-        email
-        username
       }
     }
   `,

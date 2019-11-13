@@ -51,6 +51,7 @@ export const LoginUser: FC = () => {
           children: create(InputString, {
             value: schema.value('password'),
             change: schema.change('password'),
+            placeholder: '* * * * * * * *',
             password: true,
           }),
         }),
