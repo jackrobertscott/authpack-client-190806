@@ -1,5 +1,8 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useLocalRouter, Modal, Layout, IconBar } from 'wga-theme'
+import { CreateTeam } from '../screens/CreateTeam'
+import { UpdateTeam } from '../screens/UpdateTeam'
+import { RemoveTeam } from '../screens/RemoveTeam'
 
 export const RouterManagerTeam: FC<{
   id?: string
@@ -10,8 +13,11 @@ export const RouterManagerTeam: FC<{
   const router = useLocalRouter({
     nomatch: id ? '/update' : '/create',
     options: id
-      ? [{ key: '/update', children: null }]
-      : [{ key: '/create', children: null }],
+      ? [
+          { key: '/update', children: create(UpdateTeam, { id, change }) },
+          { key: '/remove', children: create(RemoveTeam, { id, change }) },
+        ]
+      : [{ key: '/create', children: create(CreateTeam, { change }) }],
   })
   return create(Modal, {
     visible,
@@ -23,9 +29,14 @@ export const RouterManagerTeam: FC<{
           icons: id
             ? [
                 {
-                  icon: 'plus',
+                  icon: 'sliders-h',
                   label: 'Update',
                   click: () => router.change('/update'),
+                },
+                {
+                  icon: 'fire-alt',
+                  label: 'Remove',
+                  click: () => router.change('/remove'),
                 },
                 {
                   icon: 'times-circle',

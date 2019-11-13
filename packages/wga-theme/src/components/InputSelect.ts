@@ -82,12 +82,14 @@ const Search: FC<{
   placeholder?: string
 }> = ({ filter, placeholder }) => {
   const [phrase, phraseChange] = useState<string>('')
-  useEffect(() => filter(phrase), [phrase])
+  useEffect(() => {
+    filter(phrase)
+  }, [phrase])
   return create('input', {
     value: phrase,
     placeholder,
     onChange: event => phraseChange(event.target.value),
-    autofocus: true,
+    autoFocus: true,
     className: css({
       all: 'unset',
       display: 'flex',

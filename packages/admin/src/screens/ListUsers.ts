@@ -148,7 +148,7 @@ const useListUsers = createUseServer<{
         name
       }
     }
-`,
+  `,
 })
 
 const FakeUsers: Array<{

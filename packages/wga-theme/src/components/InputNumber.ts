@@ -14,7 +14,9 @@ export const InputNumber: FC<{
     const data = integer ? parseInt(target, 10) : parseFloat(target)
     return isNaN(data) ? undefined : data
   }
-  useEffect(() => currentChange(String(value || '')), [value])
+  useEffect(() => {
+    currentChange(String(value || ''))
+  }, [value])
   useEffect(() => {
     const data = parseNumber(current)
     if (change && data) change(data)

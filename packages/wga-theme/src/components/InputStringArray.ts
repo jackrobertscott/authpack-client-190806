@@ -47,7 +47,7 @@ export const InputStringArray: FC<{
                 key: 'input',
                 value: current,
                 placeholder,
-                autofocus: true,
+                autoFocus: true,
                 onChange: event => currentChange(event.target.value),
                 onKeyPress: event => event.key === 'Enter' && add(),
                 className: css({
