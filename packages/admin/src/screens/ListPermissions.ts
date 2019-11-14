@@ -109,7 +109,7 @@ export const ListPermissions: FC = () => {
         : !apiListPermissions.data.count &&
           create(Empty, {
             key: 'empty',
-            icon: 'permissions',
+            icon: 'user-shield',
             label: 'Permissions',
             helper:
               'Create a permission manually or by using the Authenticator API',
@@ -158,5 +158,5 @@ const FakePermissions: Array<{
   updated: faker.date.recent(100).toDateString(),
   name: faker.random.words(2),
   tag: faker.internet.userName(),
-  description: faker.random.words(10),
+  description: faker.random.words(5),
 }))

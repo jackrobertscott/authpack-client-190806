@@ -1,5 +1,9 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useLocalRouter, Modal, Layout, IconBar } from 'wga-theme'
+import { CreatePermission } from '../screens/CreatePermission'
+import { UpdatePermission } from '../screens/UpdatePermission'
+import { RemovePermission } from '../screens/RemovePermission'
+import { ShowPermission } from '../screens/ShowPermission'
 
 export const RouterManagerPermission: FC<{
   id?: string
@@ -8,10 +12,20 @@ export const RouterManagerPermission: FC<{
   close: () => void
 }> = ({ id, change, close, visible }) => {
   const router = useLocalRouter({
-    nomatch: id ? '/update' : '/create',
+    nomatch: id ? '/inspect' : '/create',
     options: id
-      ? [{ key: '/update', children: null }]
-      : [{ key: '/create', children: null }],
+      ? [
+          { key: '/inspect', children: create(ShowPermission, { id }) },
+          {
+            key: '/update',
+            children: create(UpdatePermission, { id, change }),
+          },
+          {
+            key: '/remove',
+            children: create(RemovePermission, { id, change }),
+          },
+        ]
+      : [{ key: '/create', children: create(CreatePermission, { change }) }],
   })
   return create(Modal, {
     visible,
@@ -23,9 +37,19 @@ export const RouterManagerPermission: FC<{
           icons: id
             ? [
                 {
-                  icon: 'plus',
+                  icon: 'glasses',
+                  label: 'Inspect',
+                  click: () => router.change('/inspect'),
+                },
+                {
+                  icon: 'sliders-h',
                   label: 'Update',
                   click: () => router.change('/update'),
+                },
+                {
+                  icon: 'fire-alt',
+                  label: 'Remove',
+                  click: () => router.change('/remove'),
                 },
                 {
                   icon: 'times-circle',

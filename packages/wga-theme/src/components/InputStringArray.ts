@@ -19,8 +19,8 @@ export const InputStringArray: FC<{
     if (change) change(value.filter(i => i !== option))
   }
   return create(InputContainer, {
+    nofocus: true,
     children: create('div', {
-      unfocus: true,
       onClick: () => openChange(true),
       className: css({
         all: 'unset',

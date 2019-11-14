@@ -7,6 +7,8 @@ import {
   Layout,
   Control,
   InputString,
+  InputSelect,
+  InputStringArray,
 } from 'wga-theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
@@ -33,34 +35,64 @@ export const CreateProvider: FC<{
       divide: true,
       children: [
         create(Control, {
-          key: 'name',
-          label: 'Name',
-          error: schema.error('name'),
-          children: create(InputString, {
-            value: schema.value('name'),
-            change: schema.change('name'),
-            placeholder: 'Awesome People',
+          key: 'preset',
+          label: 'Preset',
+          error: schema.error('preset'),
+          children: create(InputSelect, {
+            value: schema.value('preset'),
+            change: schema.change('preset'),
+            options: [
+              { value: 'facebook', label: 'Facebook' },
+              { value: 'google', label: 'Google' },
+              { value: 'github', label: 'GitHub' },
+              { value: 'slack', label: 'Slack' },
+            ],
           }),
         }),
         create(Control, {
-          key: 'tag',
-          label: 'Tag',
-          helper: 'A unique identifier for the provider',
-          error: schema.error('tag'),
+          key: 'client',
+          label: 'Client Id',
+          helper: `The oauth client id provided by ${schema.value('preset') ||
+            'the app'}`,
+          error: schema.error('client'),
           children: create(InputString, {
-            value: schema.value('tag'),
-            change: schema.change('tag'),
-            placeholder: 'awesome-people',
+            value: schema.value('client'),
+            change: schema.change('client'),
+            placeholder: '...',
           }),
         }),
         create(Control, {
-          key: 'description',
-          label: 'Description',
-          error: schema.error('description'),
+          key: 'secret',
+          label: 'Secret',
+          helper: `The oauth secret provided by ${schema.value('preset') ||
+            'the app'}`,
+          error: schema.error('secret'),
           children: create(InputString, {
-            value: schema.value('description'),
-            change: schema.change('description'),
-            placeholder: 'We do...',
+            value: schema.value('secret'),
+            change: schema.change('secret'),
+            placeholder: '...',
+          }),
+        }),
+        create(Control, {
+          key: 'redirect_uri',
+          label: 'Redirect URI',
+          helper: 'The user will be sent to this location after authenticating',
+          error: schema.error('redirect_uri'),
+          children: create(InputString, {
+            value: schema.value('redirect_uri'),
+            change: schema.change('redirect_uri'),
+            placeholder: 'https://v1.windowgadgets.io',
+          }),
+        }),
+        create(Control, {
+          key: 'scopes',
+          label: 'Scopes',
+          helper: 'A set of oauth permission scopes',
+          error: schema.error('scopes'),
+          children: create(InputStringArray, {
+            value: schema.value('scopes'),
+            change: schema.change('scopes'),
+            placeholder: 'user:info',
           }),
         }),
         create(Button, {
@@ -75,9 +107,17 @@ export const CreateProvider: FC<{
 }
 
 const SchemaCreateProvider = yup.object().shape({
-  name: yup.string().required('Please provide the provider name'),
-  tag: yup.string().required('Please provide the provider tag'),
-  description: yup.string(),
+  preset: yup
+    .string()
+    .oneOf(['facebook', 'google', 'github', 'slack'])
+    .required('Please provide a preset'),
+  client: yup.string().required('Please provide the oauth client id'),
+  secret: yup.string().required('Please provide the oauth secret'),
+  redirect_uri: yup.string().required('Please provide your oauth redirect uri'),
+  scopes: yup
+    .array()
+    .of(yup.string().required())
+    .default([]),
 })
 
 const useCreateProvider = createUseServer<{

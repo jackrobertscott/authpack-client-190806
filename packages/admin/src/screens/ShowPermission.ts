@@ -4,18 +4,20 @@ import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
 import { useUniversal } from '../hooks/useUniversal'
 
-export const ShowTeam: FC<{
+export const ShowPermission: FC<{
   id: string
 }> = ({ id }) => {
   const universal = useUniversal()
-  const gqlGetTeam = useGetTeam()
+  const gqlGetPermission = useGetPermission()
   useEffect(() => {
-    gqlGetTeam.fetch({ id })
+    gqlGetPermission.fetch({ id })
     // eslint-disable-next-line
   }, [])
-  const team = gqlGetTeam.data ? gqlGetTeam.data.team : ({} as any)
+  const permission = gqlGetPermission.data
+    ? gqlGetPermission.data.permission
+    : ({} as any)
   return create(Gadgets, {
-    title: 'Inspect Team',
+    title: 'Inspect Permission',
     subtitle: universal.appname,
     children: create(Layout, {
       column: true,
@@ -24,49 +26,49 @@ export const ShowTeam: FC<{
           key: 'id',
           icon: 'fingerprint',
           label: 'Id',
-          value: team.id,
+          value: permission.id,
         }),
         create(Snippet, {
           key: 'name',
           icon: 'users',
           label: 'Name',
-          value: team.name,
+          value: permission.name,
         }),
         create(Snippet, {
           key: 'tag',
           icon: 'tags',
           label: 'Tag',
-          value: team.tag,
+          value: permission.tag,
         }),
         create(Snippet, {
           key: 'description',
           icon: 'book',
           label: 'Description',
-          value: team.tag,
+          value: permission.tag,
         }),
         create(Snippet, {
           key: 'created',
           icon: 'clock',
           label: 'Created',
           value:
-            team.created &&
-            format(new Date(team.created), 'dd LLL yyyy @ h:mm a'),
+            permission.created &&
+            format(new Date(permission.created), 'dd LLL yyyy @ h:mm a'),
         }),
         create(Snippet, {
           key: 'updated',
           icon: 'clock',
           label: 'Updated',
           value:
-            team.updated &&
-            format(new Date(team.updated), 'dd LLL yyyy @ h:mm a'),
+            permission.updated &&
+            format(new Date(permission.updated), 'dd LLL yyyy @ h:mm a'),
         }),
       ],
     }),
   })
 }
 
-const useGetTeam = createUseServer<{
-  team: {
+const useGetPermission = createUseServer<{
+  permission: {
     id: string
     created: string
     updated: string
@@ -76,8 +78,8 @@ const useGetTeam = createUseServer<{
   }
 }>({
   query: `
-    query apiGetTeam($id: String!) {
-      team: apiGetTeam(id: $id) {
+    query apiGetPermission($id: String!) {
+      permission: apiGetPermission(id: $id) {
         id
         created
         updated

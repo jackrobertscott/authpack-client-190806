@@ -13,8 +13,8 @@ import { ClickOutside } from './ClickOutside'
 export const InputContainer: FC<{
   children: ReactNode
   disabled?: boolean
-  unfocus?: boolean
-}> = ({ children, disabled, unfocus = false }) => {
+  nofocus?: boolean
+}> = ({ children, disabled, nofocus = false }) => {
   const theme = useTheme()
   return create('div', {
     children,
@@ -34,12 +34,12 @@ export const InputContainer: FC<{
       'input::placeholder': {
         color: theme.input.placeholder,
       },
-      '&:focus-within': !unfocus && {
+      '&:focus-within': !nofocus && {
         background: theme.input.backgroundHover,
         boxShadow: theme.input.shadow,
         color: theme.input.valueHover,
       },
-      [`&:hover${unfocus ? ':not(:focus-within)' : ''}`]: !disabled && {
+      [`&:hover${nofocus ? ':not(:focus-within)' : ''}`]: !disabled && {
         background: theme.input.backgroundHover,
         boxShadow: theme.input.shadow,
         color: theme.input.valueHover,

@@ -60,7 +60,7 @@ export const CreatePermission: FC<{
           children: create(InputString, {
             value: schema.value('description'),
             change: schema.change('description'),
-            placeholder: 'We do...',
+            placeholder: 'User can...',
           }),
         }),
         create(Button, {
