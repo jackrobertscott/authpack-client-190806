@@ -92,7 +92,7 @@ export const CreateProvider: FC<{
           children: create(InputStringArray, {
             value: schema.value('scopes'),
             change: schema.change('scopes'),
-            placeholder: 'user:info',
+            placeholder: '...',
           }),
         }),
         create(Button, {

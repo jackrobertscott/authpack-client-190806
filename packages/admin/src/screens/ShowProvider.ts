@@ -50,13 +50,7 @@ export const ShowProvider: FC<{
           key: 'scopes',
           icon: 'user-shield',
           label: 'Scopes',
-          value: provider.scopes.join(', '),
-        }),
-        create(Snippet, {
-          key: 'description',
-          icon: 'book',
-          label: 'Description',
-          value: provider.tag,
+          value: provider.scopes && provider.scopes.join(', '),
         }),
         create(Snippet, {
           key: 'created',

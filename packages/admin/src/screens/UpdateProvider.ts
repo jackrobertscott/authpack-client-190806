@@ -101,7 +101,7 @@ export const UpdateProvider: FC<{
               children: create(InputStringArray, {
                 value: schema.value('scopes'),
                 change: schema.change('scopes'),
-                placeholder: 'user:info',
+                placeholder: '...',
               }),
             }),
           ],
@@ -115,7 +115,7 @@ const SchemaUpdateProvider = yup.object().shape({
     .oneOf(['facebook', 'google', 'github', 'slack'])
     .required('Please provide a preset'),
   client: yup.string().required('Please provide the oauth client id'),
-  secret: yup.string().required('Please provide the oauth secret'),
+  secret: yup.string(),
   redirect_uri: yup.string().required('Please provide your oauth redirect uri'),
   scopes: yup
     .array()
@@ -125,17 +125,19 @@ const SchemaUpdateProvider = yup.object().shape({
 
 const useGetProvider = createUseServer<{
   provider: {
-    name: string
-    tag: string
-    description?: string
+    preset: string
+    client: string
+    redirect_uri: string
+    scopes: string[]
   }
 }>({
   query: `
     query apiGetProvider($id: String!) {
       provider: apiGetProvider(id: $id) {
-        name
-        tag
-        description
+        preset
+        client
+        redirect_uri
+        scopes
       }
     }
   `,
