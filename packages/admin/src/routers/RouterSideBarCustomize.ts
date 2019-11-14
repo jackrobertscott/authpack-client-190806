@@ -4,10 +4,10 @@ import { useUniversal } from '../hooks/useUniversal'
 import { ListPermissions } from '../screens/ListPermissions'
 import { ListProviders } from '../screens/ListProviders'
 
-export const RouterSideBarSettings: FC = () => {
+export const RouterSideBarCustomize: FC = () => {
   const config = useUniversal()
   const router = useRouter({
-    base: '/settings',
+    base: '/customize',
     nomatch: '/providers',
     options: [
       { path: '/providers', children: create(ListProviders) },
@@ -18,7 +18,7 @@ export const RouterSideBarSettings: FC = () => {
     children: [
       create(SideBar, {
         key: 'sideBar',
-        title: 'Settings',
+        title: 'Customize',
         footer: config.appname,
         options: [
           {
