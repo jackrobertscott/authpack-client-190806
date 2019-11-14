@@ -26,6 +26,7 @@ export const UpdateTeam: FC<{
   return create(Gadgets, {
     title: 'Update Team',
     subtitle: universal.appname,
+    loading: gqlUpdateTeam.loading,
     children: create(Layout, {
       column: true,
       padding: true,

@@ -22,7 +22,7 @@ export const ListTeams: FC = () => {
       : FakeTeams
   return create(Page, {
     title: 'Teams',
-    subtitle: 'See all teams of your app',
+    subtitle: 'Groups of users',
     hidden: !apiListTeams.data || !apiListTeams.data.count,
     corner: {
       icon: 'plus',

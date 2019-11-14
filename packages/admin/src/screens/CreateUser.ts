@@ -27,6 +27,7 @@ export const CreateUser: FC<{
   return create(Gadgets, {
     title: 'Create User',
     subtitle: universal.appname,
+    loading: gqlCreateUser.loading,
     children: create(Layout, {
       column: true,
       padding: true,

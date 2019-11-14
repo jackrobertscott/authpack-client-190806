@@ -22,6 +22,9 @@ export const InputStripe: FC<{
             fontFamily: 'futura-pt',
             fontWeight: 700,
             color: theme.input.valueHover,
+            '::placeholder': {
+              color: theme.input.placeholder,
+            },
           },
         },
       })
@@ -41,6 +44,9 @@ export const InputStripe: FC<{
         cursor: 'pointer',
         flexGrow: 1,
         padding: 15,
+        '& > div': {
+          width: '100%',
+        },
       }),
     }),
   })

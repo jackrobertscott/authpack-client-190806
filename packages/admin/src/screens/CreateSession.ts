@@ -43,6 +43,7 @@ export const CreateSession: FC<{
   return create(Gadgets, {
     title: 'Create Session',
     subtitle: universal.appname,
+    loading: gqlCreateSession.loading,
     children: create(Layout, {
       column: true,
       padding: true,
@@ -119,7 +120,8 @@ const SchemaCreateSession = yup.object().shape({
   team_id: yup.string(),
   disabled: yup
     .boolean()
-    .required('Please provide the current disabled status'),
+    .required('Please provide the current disabled status')
+    .default(false),
 })
 
 const useCreateSession = createUseServer<{

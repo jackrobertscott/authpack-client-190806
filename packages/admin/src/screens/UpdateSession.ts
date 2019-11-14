@@ -26,6 +26,7 @@ export const UpdateSession: FC<{
   return create(Gadgets, {
     title: 'Update Session',
     subtitle: universal.appname,
+    loading: gqlUpdateSession.loading,
     children: create(Layout, {
       column: true,
       padding: true,

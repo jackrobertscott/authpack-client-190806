@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
-export const useStripe = ({ stripe }: { stripe: any }) => {
-  const tokenize = (cardStripe: any, options: any = {}) => {
+export const useStripe = (stripe: any) => {
+  const tokenize = (cardStripe: any, options: any = {}): Promise<any> => {
     return stripe
       .createToken(cardStripe, options)
       .then(({ error, token }: any = {}) => {

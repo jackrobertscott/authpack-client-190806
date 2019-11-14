@@ -22,7 +22,7 @@ export const ListSessions: FC = () => {
       : FakeSessions
   return create(Page, {
     title: 'Sessions',
-    subtitle: 'See all sessions of your app',
+    subtitle: 'Usage of your app',
     hidden: !apiListSessions.data || !apiListSessions.data.count,
     corner: {
       icon: 'plus',

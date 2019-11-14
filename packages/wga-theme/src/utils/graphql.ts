@@ -32,11 +32,20 @@ export const graphql = async <T>({
     if (error.response) {
       return Promise.reject(error.response.data)
     }
+    if (error.request) {
+      return Promise.reject({
+        code: 503,
+        status: 'Service Unavailable',
+        message: 'Could not connect to server',
+        icon: 'wifi',
+      })
+    }
     return Promise.reject({
       code: 503,
-      status: 'Service Unavailable',
-      message: 'Could not connect to server',
-      icon: 'wifi',
+      status: 'Error',
+      message: 'We were unable to process the request',
+      icon: 'bug',
+      error,
     })
   }
 }

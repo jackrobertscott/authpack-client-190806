@@ -5,9 +5,11 @@ import { RouterSideBarCustomize } from './RouterSideBarCustomize'
 import { RouterSideBarDeveloper } from './RouterSideBarDeveloper'
 import { wga } from '../utils/gadgets'
 import { Power } from '../screens/Power'
+import { RouterManagerApp } from './RouterManagerApp'
 
 export const RouterCentral: FC = () => {
-  const [open, openChange] = useState<boolean>(false)
+  const [apper, apperChange] = useState<boolean>(false)
+  const [power, powerChange] = useState<boolean>(false)
   const router = useRouter({
     nomatch: '/app',
     options: [
@@ -41,12 +43,12 @@ export const RouterCentral: FC = () => {
             seperated: true,
             icon: 'power-off',
             label: 'Power',
-            click: () => openChange(!open),
+            click: () => powerChange(!power),
           },
           {
             icon: 'cog',
             label: 'Settings',
-            click: () => openChange(!open),
+            click: () => apperChange(!apper),
           },
           {
             icon: 'user-circle',
@@ -56,15 +58,20 @@ export const RouterCentral: FC = () => {
         ].map(({ click, ...rest }) => ({
           ...rest,
           click: () => {
-            openChange(false)
+            powerChange(false)
             click()
           },
         })),
       }),
-      open
+      create(RouterManagerApp, {
+        key: 'settings',
+        visible: apper,
+        close: () => apperChange(false),
+      }),
+      power
         ? create(Power, {
             key: 'power',
-            close: () => openChange(false),
+            close: () => powerChange(false),
           })
         : router.current &&
           create(Fragment, {

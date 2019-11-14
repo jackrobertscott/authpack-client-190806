@@ -34,6 +34,7 @@ export const UpdateProvider: FC<{
   return create(Gadgets, {
     title: 'Update Provider',
     subtitle: universal.appname,
+    loading: gqlUpdateProvider.loading,
     children: create(Layout, {
       column: true,
       padding: true,
