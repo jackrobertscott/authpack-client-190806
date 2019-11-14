@@ -15,7 +15,7 @@ export const ShowTeam: FC<{
   }, [])
   const team = gqlGetTeam.data ? gqlGetTeam.data.team : ({} as any)
   return create(Gadgets, {
-    title: 'Inspect Team',
+    title: 'Team',
     subtitle: universal.appname,
     children: create(Layout, {
       column: true,

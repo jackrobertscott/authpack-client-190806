@@ -22,6 +22,7 @@ export const InputStripe: FC<{
             fontFamily: 'futura-pt',
             fontWeight: 700,
             color: theme.input.valueHover,
+            iconColor: theme.input.valueHover,
             '::placeholder': {
               color: theme.input.placeholder,
             },

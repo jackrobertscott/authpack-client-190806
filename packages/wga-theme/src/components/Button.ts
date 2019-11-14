@@ -23,6 +23,7 @@ export const Button: FC<{
       alignItems: 'center',
       padding: 15,
       minWidth: 100,
+      flexGrow: 1,
       transition: '200ms',
       border: theme.button.border,
       borderRadius: theme.global.radius,

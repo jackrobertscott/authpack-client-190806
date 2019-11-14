@@ -54,7 +54,8 @@ export const useGQL = <T>({
             return done
           })
           .catch(e => {
-            if (mounted.current) {
+            count.current = count.current - 1
+            if (mounted.current && count.current === 0) {
               errorChange(e)
               loadingChange(false)
             }

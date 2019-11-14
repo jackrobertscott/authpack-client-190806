@@ -4,15 +4,16 @@ import { Poster, Layout, Button, Focus } from 'wga-theme'
 export const ConfirmRemove: FC<{
   helper: string
   alert: string
+  keyword?: string
   change: () => void
-}> = ({ helper, alert, change }) => {
+}> = ({ helper, alert, keyword = 'Remove', change }) => {
   const [confirm, confirmChange] = useState<boolean>(false)
   return create(Fragment, {
     children: [
       create(Poster, {
         key: 'poster',
         icon: 'fire-alt',
-        label: 'Remove',
+        label: keyword,
         helper,
       }),
       create(Layout, {
@@ -21,7 +22,7 @@ export const ConfirmRemove: FC<{
         padding: true,
         divide: true,
         children: create(Button, {
-          label: 'Remove',
+          label: keyword,
           click: () => confirmChange(true),
         }),
       }),

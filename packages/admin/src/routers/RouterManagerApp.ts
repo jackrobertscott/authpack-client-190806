@@ -4,6 +4,7 @@ import { UpdateApp } from '../screens/UpdateApp'
 import { UpdatePayment } from '../screens/UpdatePayment'
 import { useUniversal } from '../hooks/useUniversal'
 import { RemovePayment } from '../screens/RemovePayment'
+import { ShowApp } from '../screens/ShowApp'
 
 export const RouterManagerApp: FC<{
   visible?: boolean
@@ -11,8 +12,9 @@ export const RouterManagerApp: FC<{
 }> = ({ close, visible }) => {
   const universal = useUniversal()
   const router = useLocalRouter({
-    nomatch: '/update',
+    nomatch: '/inspect',
     options: [
+      { key: '/inspect', children: create(ShowApp) },
       { key: '/update', children: create(UpdateApp) },
       { key: '/payment', children: create(UpdatePayment) },
       { key: '/cancel', children: create(RemovePayment) },
@@ -28,7 +30,12 @@ export const RouterManagerApp: FC<{
           icons: universal.subscribed
             ? [
                 {
-                  icon: 'plus',
+                  icon: 'glasses',
+                  label: 'Inspect',
+                  click: () => router.change('/inspect'),
+                },
+                {
+                  icon: 'sliders-h',
                   label: 'Update',
                   click: () => router.change('/update'),
                 },
@@ -38,8 +45,8 @@ export const RouterManagerApp: FC<{
                   click: () => router.change('/payment'),
                 },
                 {
-                  icon: 'undo-alt',
-                  label: 'Cancel',
+                  icon: 'fire-alt',
+                  label: 'Danger Zone',
                   click: () => router.change('/cancel'),
                 },
                 {
@@ -51,6 +58,11 @@ export const RouterManagerApp: FC<{
                 },
               ]
             : [
+                {
+                  icon: 'glasses',
+                  label: 'Inspect',
+                  click: () => router.change('/inspect'),
+                },
                 {
                   icon: 'plus',
                   label: 'Update',

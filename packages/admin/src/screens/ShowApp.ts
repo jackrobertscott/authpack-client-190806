@@ -4,18 +4,16 @@ import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
 import { useUniversal } from '../hooks/useUniversal'
 
-export const ShowUser: FC<{
-  id: string
-}> = ({ id }) => {
+export const ShowApp: FC = () => {
   const universal = useUniversal()
-  const gqlGetUser = useGetUser()
+  const gqlGetApp = useGetApp()
   useEffect(() => {
-    gqlGetUser.fetch({ id })
+    gqlGetApp.fetch({ id: universal.current_app_id })
     // eslint-disable-next-line
   }, [])
-  const user = gqlGetUser.data ? gqlGetUser.data.user : ({} as any)
+  const app = gqlGetApp.data ? gqlGetApp.data.app : ({} as any)
   return create(Gadgets, {
-    title: 'User',
+    title: 'App',
     subtitle: universal.appname,
     children: create(Layout, {
       column: true,
@@ -24,66 +22,66 @@ export const ShowUser: FC<{
           key: 'id',
           icon: 'fingerprint',
           label: 'Id',
-          value: user.id,
-        }),
-        create(Snippet, {
-          key: 'email',
-          icon: 'at',
-          label: 'Email',
-          value: user.email,
+          value: app.id,
         }),
         create(Snippet, {
           key: 'name',
-          icon: 'user',
+          icon: 'tags',
           label: 'Name',
-          value: user.name,
+          value: app.name,
         }),
         create(Snippet, {
-          key: 'username',
-          icon: 'tags',
-          label: 'Username',
-          value: user.username,
+          key: 'power',
+          icon: 'power-off',
+          label: 'Power',
+          value: app.power,
+        }),
+        create(Snippet, {
+          key: 'subscribed',
+          icon: 'bolt',
+          label: 'Subscribed',
+          value: app.subscribed,
         }),
         create(Snippet, {
           key: 'created',
           icon: 'clock',
           label: 'Created',
           value:
-            user.created &&
-            format(new Date(user.created), 'dd LLL yyyy @ h:mm a'),
+            app.created &&
+            format(new Date(app.created), 'dd LLL yyyy @ h:mm a'),
         }),
         create(Snippet, {
           key: 'updated',
           icon: 'clock',
           label: 'Updated',
           value:
-            user.updated &&
-            format(new Date(user.updated), 'dd LLL yyyy @ h:mm a'),
+            app.updated &&
+            format(new Date(app.updated), 'dd LLL yyyy @ h:mm a'),
         }),
       ],
     }),
   })
 }
 
-const useGetUser = createUseServer<{
-  user: {
+const useGetApp = createUseServer<{
+  app: {
     id: string
     created: string
     updated: string
-    email: string
-    name?: string
-    username?: string
+    name: string
+    power: boolean
+    subscribed: boolean
   }
 }>({
   query: `
-    query apiGetUser($id: String!) {
-      user: apiGetUser(id: $id) {
+    query wgaGetApp($id: String!) {
+      app: wgaGetApp(id: $id) {
         id
         created
         updated
-        email
         name
-        username
+        power
+        subscribed
       }
     }
   `,

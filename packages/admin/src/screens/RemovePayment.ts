@@ -14,6 +14,7 @@ export const RemovePayment: FC<{
     title: 'Terminate Payment',
     subtitle: universal.appname,
     children: create(ConfirmRemove, {
+      keyword: 'Terminate',
       helper: 'Remove payment card and disable app',
       alert: 'Consider powering off your app instead',
       change: () =>

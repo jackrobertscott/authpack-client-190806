@@ -17,7 +17,7 @@ export const ShowPermission: FC<{
     ? gqlGetPermission.data.permission
     : ({} as any)
   return create(Gadgets, {
-    title: 'Inspect Permission',
+    title: 'Permission',
     subtitle: universal.appname,
     children: create(Layout, {
       column: true,

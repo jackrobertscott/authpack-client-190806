@@ -17,7 +17,7 @@ export const ShowProvider: FC<{
     ? gqlGetProvider.data.provider
     : ({} as any)
   return create(Gadgets, {
-    title: 'Inspect Provider',
+    title: 'Provider',
     subtitle: universal.appname,
     children: create(Layout, {
       column: true,
