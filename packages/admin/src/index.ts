@@ -5,8 +5,8 @@ import { createElement as create, FC, useState, useEffect } from 'react'
 import { render } from 'react-dom'
 import { BlueHarvester, Theme, IronMaiden } from 'wga-theme'
 import { App } from './App'
-import { GlobalStore } from './utils/global'
-import { Global } from './contexts/Global'
+import { UniversalStore } from './utils/universal'
+import { Universal } from './contexts/Universal'
 import { ErrorBoundary } from './screens/ErrorBoundary'
 import { config } from './config'
 
@@ -16,13 +16,13 @@ Sentry.init({
 })
 
 export const Root: FC = () => {
-  const [global, globalChange] = useState(GlobalStore.current)
-  useEffect(() => GlobalStore.listen(globalChange), [])
+  const [universal, universalChange] = useState(UniversalStore.current)
+  useEffect(() => UniversalStore.listen(universalChange), [])
   return create(ErrorBoundary, {
-    children: create(Global.Provider, {
-      value: global,
+    children: create(Universal.Provider, {
+      value: universal,
       children: create(Theme.Provider, {
-        value: global.theme === 'blue_harvester' ? BlueHarvester : IronMaiden,
+        value: universal.theme === 'blue_harvester' ? BlueHarvester : IronMaiden,
         children: create(App),
       }),
     }),

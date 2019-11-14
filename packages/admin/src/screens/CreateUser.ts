@@ -8,13 +8,13 @@ import {
   Control,
   InputString,
 } from 'wga-theme'
-import { useGlobal } from '../hooks/useGlobal'
+import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 
 export const CreateUser: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
-  const global = useGlobal()
+  const universal = useUniversal()
   const gqlCreateUser = useCreateUser()
   const schema = useSchema({
     schema: SchemaCreateUser,
@@ -26,7 +26,7 @@ export const CreateUser: FC<{
   })
   return create(Gadgets, {
     title: 'Create User',
-    subtitle: global.appname,
+    subtitle: universal.appname,
     children: create(Layout, {
       column: true,
       padding: true,

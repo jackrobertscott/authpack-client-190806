@@ -4,12 +4,12 @@ import { graphql, useTheme } from 'wga-theme'
 import GraphiQL from 'graphiql'
 import 'graphiql/graphiql.css'
 import { config } from '../config'
-import { useGlobal } from '../hooks/useGlobal'
+import { useUniversal } from '../hooks/useUniversal'
 import { wga } from '../utils/gadgets'
 
 export const Explorer: FC = () => {
   const theme = useTheme()
-  const global = useGlobal()
+  const universal = useUniversal()
   return create('div', {
     children: create(GraphiQL, {
       fetcher: async (graphQLParams: any) => {
@@ -17,7 +17,7 @@ export const Explorer: FC = () => {
           const data = await graphql<any>({
             ...graphQLParams,
             url: config.api,
-            authorization: [global.current_domain_key, wga.current.bearer]
+            authorization: [universal.current_domain_key, wga.current.bearer]
               .filter(Boolean)
               .join(','),
           })

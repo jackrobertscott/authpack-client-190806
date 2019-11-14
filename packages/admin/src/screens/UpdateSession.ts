@@ -1,14 +1,14 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useEffect } from 'react'
 import { Gadgets, useSchema, Layout, Control, InputBoolean } from 'wga-theme'
-import { useGlobal } from '../hooks/useGlobal'
+import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 
 export const UpdateSession: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
-  const global = useGlobal()
+  const universal = useUniversal()
   const gqlGetSession = useGetSession()
   const gqlUpdateSession = useUpdateSession()
   const schema = useSchema({
@@ -25,7 +25,7 @@ export const UpdateSession: FC<{
   }, [id])
   return create(Gadgets, {
     title: 'Update Session',
-    subtitle: global.appname,
+    subtitle: universal.appname,
     children: create(Layout, {
       column: true,
       padding: true,

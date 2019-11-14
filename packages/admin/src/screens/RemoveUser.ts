@@ -2,17 +2,17 @@ import { createElement as create, FC } from 'react'
 import { Gadgets } from 'wga-theme'
 import { createUseServer } from '../hooks/useServer'
 import { ConfirmRemove } from '../templates/GadgetsRemove'
-import { useGlobal } from '../hooks/useGlobal'
+import { useUniversal } from '../hooks/useUniversal'
 
 export const RemoveUser: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
-  const global = useGlobal()
+  const universal = useUniversal()
   const gqlRemoveUser = useRemoveUser()
   return create(Gadgets, {
     title: 'Remove User',
-    subtitle: global.appname,
+    subtitle: universal.appname,
     children: create(ConfirmRemove, {
       helper: 'Permanently remove this user',
       alert: 'Please confirm the removal of this user',

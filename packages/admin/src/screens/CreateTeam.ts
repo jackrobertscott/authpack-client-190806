@@ -10,13 +10,13 @@ import {
   InputSelect,
   drip,
 } from 'wga-theme'
-import { useGlobal } from '../hooks/useGlobal'
+import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 
 export const CreateTeam: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
-  const global = useGlobal()
+  const universal = useUniversal()
   const gqlCreateTeam = useCreateTeam()
   const gqlListUsers = useListUsers()
   const queryListUsers = useRef(drip(1000, gqlListUsers.fetch))
@@ -34,7 +34,7 @@ export const CreateTeam: FC<{
   }, [])
   return create(Gadgets, {
     title: 'Create Team',
-    subtitle: global.appname,
+    subtitle: universal.appname,
     children: create(Layout, {
       column: true,
       padding: true,

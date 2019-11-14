@@ -2,12 +2,12 @@ import { createElement as create, FC, useEffect } from 'react'
 import { Gadgets, Layout, Snippet } from 'wga-theme'
 import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
-import { useGlobal } from '../hooks/useGlobal'
+import { useUniversal } from '../hooks/useUniversal'
 
 export const ShowSession: FC<{
   id: string
 }> = ({ id }) => {
-  const global = useGlobal()
+  const universal = useUniversal()
   const gqlGetSession = useGetSession()
   useEffect(() => {
     gqlGetSession.fetch({ id })
@@ -16,7 +16,7 @@ export const ShowSession: FC<{
   const session = gqlGetSession.data ? gqlGetSession.data.session : ({} as any)
   return create(Gadgets, {
     title: 'Inspect Session',
-    subtitle: global.appname,
+    subtitle: universal.appname,
     children: create(Layout, {
       column: true,
       children: [

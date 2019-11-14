@@ -1,6 +1,6 @@
 import { KeyStore } from 'events-and-things'
 
-export interface IGlobalStore {
+export interface IUniversalStore {
   current_app_id?: string
   current_domain_key?: string
   appname: string
@@ -9,11 +9,11 @@ export interface IGlobalStore {
   theme: string
 }
 
-const defaults: IGlobalStore = {
+const defaults: IUniversalStore = {
   appname: 'Window Gadgets',
   subscribed: false,
   power: false,
   theme: 'blue_harvester',
 }
 
-export const GlobalStore = new KeyStore<IGlobalStore>(defaults, 'wga.global')
+export const UniversalStore = new KeyStore<IUniversalStore>(defaults, 'wga.universal')

@@ -5,8 +5,10 @@ import { format } from 'date-fns'
 import { RouterManagerUser } from '../routers/RouterManagerUser'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'
 import { createUseServer } from '../hooks/useServer'
+import { useUniversal } from '../hooks/useUniversal'
 
 export const ListUsers: FC = () => {
+  const universal = useUniversal()
   const apiListUsers = useListUsers()
   const [build, buildChange] = useState<boolean>(false)
   const [ready, readyChange] = useState<boolean>(false)
@@ -28,7 +30,7 @@ export const ListUsers: FC = () => {
       : FakeUsers
   return create(Page, {
     title: 'Users',
-    subtitle: 'See all users of your app',
+    subtitle: `All users signed up to ${universal.appname}`,
     hidden: !apiListUsers.data,
     corner: {
       icon: 'plus',

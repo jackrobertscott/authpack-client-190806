@@ -9,14 +9,14 @@ import {
   InputString,
   Poster,
 } from 'wga-theme'
-import { useGlobal } from '../hooks/useGlobal'
+import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 
 export const UpdateUserPassword: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
-  const global = useGlobal()
+  const universal = useUniversal()
   const gqlUpdateUser = useUpdateUser()
   const schema = useSchema({
     schema: SchemaUpdateUser,
@@ -28,7 +28,7 @@ export const UpdateUserPassword: FC<{
   })
   return create(Gadgets, {
     title: 'Change Password',
-    subtitle: global.appname,
+    subtitle: universal.appname,
     children: [
       create(Poster, {
         key: 'poster',

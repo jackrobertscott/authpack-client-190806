@@ -2,12 +2,12 @@ import { createElement as create, FC, useEffect } from 'react'
 import { Gadgets, Layout, Snippet } from 'wga-theme'
 import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
-import { useGlobal } from '../hooks/useGlobal'
+import { useUniversal } from '../hooks/useUniversal'
 
 export const ShowTeam: FC<{
   id: string
 }> = ({ id }) => {
-  const global = useGlobal()
+  const universal = useUniversal()
   const gqlGetTeam = useGetTeam()
   useEffect(() => {
     gqlGetTeam.fetch({ id })
@@ -16,7 +16,7 @@ export const ShowTeam: FC<{
   const team = gqlGetTeam.data ? gqlGetTeam.data.team : ({} as any)
   return create(Gadgets, {
     title: 'Inspect Team',
-    subtitle: global.appname,
+    subtitle: universal.appname,
     children: create(Layout, {
       column: true,
       children: [

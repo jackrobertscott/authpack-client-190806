@@ -2,12 +2,12 @@ import { createElement as create, FC, useEffect } from 'react'
 import { Gadgets, Layout, Snippet } from 'wga-theme'
 import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
-import { useGlobal } from '../hooks/useGlobal'
+import { useUniversal } from '../hooks/useUniversal'
 
 export const ShowUser: FC<{
   id: string
 }> = ({ id }) => {
-  const global = useGlobal()
+  const universal = useUniversal()
   const gqlGetUser = useGetUser()
   useEffect(() => {
     gqlGetUser.fetch({ id })
@@ -16,7 +16,7 @@ export const ShowUser: FC<{
   const user = gqlGetUser.data ? gqlGetUser.data.user : ({} as any)
   return create(Gadgets, {
     title: 'Inspect User',
-    subtitle: global.appname,
+    subtitle: universal.appname,
     children: create(Layout, {
       column: true,
       children: [

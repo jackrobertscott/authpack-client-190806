@@ -1,21 +1,37 @@
-import { createElement as create, FC } from 'react'
-import { Focus, Button, InputBoolean, Layout } from 'wga-theme'
+import { createElement as create, FC, useEffect } from 'react'
+import { Focus, InputBoolean, Layout, Button } from 'wga-theme'
+import { createUseServer } from '../hooks/useServer'
+import { useUniversal } from '../hooks/useUniversal'
+import { UniversalStore } from '../utils/universal'
 
 export const Power: FC<{
   close: () => void
 }> = ({ close }) => {
+  const universal = useUniversal()
+  const gqlGetApp = useGetApp()
+  const gqlUpdateApp = useUpdateApp()
+  useEffect(() => {
+    gqlGetApp.fetch({ id: universal.current_app_id })
+    // eslint-disable-next-line
+  }, [])
   return create(Layout, {
+    grow: true,
     children: create(Focus, {
       icon: 'power-off',
       label: 'Power',
-      helper: 'Turn your gadgets off',
+      helper: 'Users will only be able to login to your gadgets while on',
       children: create(Layout, {
         divide: true,
         center: true,
         children: [
           create(InputBoolean, {
             key: 'toggle',
-            value: false,
+            value: universal.power,
+            change: power => {
+              gqlUpdateApp
+                .fetch({ id: universal.current_app_id, power })
+                .then(({ user }) => UniversalStore.update({ power: user.power }))
+            },
           }),
           create(Button, {
             key: 'button',
@@ -28,3 +44,31 @@ export const Power: FC<{
     }),
   })
 }
+
+const useGetApp = createUseServer<{
+  user: {
+    power: boolean
+  }
+}>({
+  query: `
+    query wgaGetApp($id: String!) {
+      user: wgaGetApp(id: $id) {
+        power
+      }
+    }
+  `,
+})
+
+const useUpdateApp = createUseServer<{
+  user: {
+    power: boolean
+  }
+}>({
+  query: `
+    mutation wgaUpdateApp($id: String!, $power: Boolean) {
+      user: wgaUpdateApp(id: $id, power: $power) {
+        power
+      }
+    }
+  `,
+})

@@ -1,37 +1,38 @@
 import { useEffect } from 'react'
 import { useGadgets } from './useGadgets'
 import { createUseServer } from './useServer'
-import { GlobalStore } from '../utils/global'
-import { useGlobal } from './useGlobal'
+import { UniversalStore } from '../utils/universal'
+import { useUniversal } from './useUniversal'
 
 export const useSetup = () => {
-  const global = useGlobal()
+  const universal = useUniversal()
   const gadgets = useGadgets()
   const gqlGetApp = useGetApp()
   const gqlCreateApp = useCreateApp()
   useEffect(() => {
     if (gadgets && gadgets.bearer && gadgets.team) {
       gqlGetApp
-        .fetch({ id: global.current_app_id })
+        .fetch({ id: universal.current_app_id })
         .then(({ app }) => {
           if (app) {
-            GlobalStore.update({
+            UniversalStore.update({
               appname: app.name,
               subscribed: app.subscribed,
               power: app.power,
+              current_app_id: app.id,
               current_domain_key: app.keys.domain,
             })
           } else if (!gqlCreateApp.loading) {
             gqlCreateApp.fetch({ name: 'App' }).then(data => {
-              GlobalStore.update({
+              UniversalStore.update({
                 current_app_id: data.app.id,
               })
             })
           }
         })
-        .catch(() => GlobalStore.reset())
+        .catch(() => UniversalStore.reset())
     } else {
-      GlobalStore.reset()
+      UniversalStore.reset()
     }
     // eslint-disable-next-line
   }, [gadgets.bearer, gadgets.user, gadgets.team])

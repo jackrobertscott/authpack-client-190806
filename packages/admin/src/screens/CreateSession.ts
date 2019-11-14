@@ -10,13 +10,13 @@ import {
   InputBoolean,
   drip,
 } from 'wga-theme'
-import { useGlobal } from '../hooks/useGlobal'
+import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 
 export const CreateSession: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
-  const global = useGlobal()
+  const universal = useUniversal()
   const gqlCreateSession = useCreateSession()
   const gqlListUsers = useListUsers()
   const gqlListTeams = useListTeams()
@@ -38,10 +38,11 @@ export const CreateSession: FC<{
     schema.change('team_id')(undefined)
     if (schema.value('user_id'))
       queryListTeams.current({ user_id: schema.value('user_id') })
+    // eslint-disable-next-line
   }, [schema.value('user_id')])
   return create(Gadgets, {
     title: 'Create Session',
-    subtitle: global.appname,
+    subtitle: universal.appname,
     children: create(Layout, {
       column: true,
       padding: true,

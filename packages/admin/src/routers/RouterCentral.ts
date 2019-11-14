@@ -48,7 +48,13 @@ export const RouterCentral: FC = () => {
             label: 'Personal Settings',
             click: () => wga.show(),
           },
-        ],
+        ].map(({ click, ...rest }) => ({
+          ...rest,
+          click: () => {
+            openChange(false)
+            click()
+          },
+        })),
       }),
       open
         ? create(Power, {

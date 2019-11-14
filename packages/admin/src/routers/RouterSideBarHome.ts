@@ -1,12 +1,12 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useRouter, SideBar } from 'wga-theme'
-import { useGlobal } from '../hooks/useGlobal'
+import { useUniversal } from '../hooks/useUniversal'
 import { ListUsers } from '../screens/ListUsers'
 import { ListTeams } from '../screens/ListTeams'
 import { ListSessions } from '../screens/ListSessions'
 
 export const RouterSideBarHome: FC = () => {
-  const config = useGlobal()
+  const config = useUniversal()
   const router = useRouter({
     base: '/app',
     nomatch: '/users',
@@ -29,14 +29,14 @@ export const RouterSideBarHome: FC = () => {
             click: () => router.change('/users'),
           },
           {
-            icon: 'history',
-            label: 'Sessions',
-            click: () => router.change('/sessions'),
-          },
-          {
             icon: 'users',
             label: 'Teams',
             click: () => router.change('/teams'),
+          },
+          {
+            icon: 'history',
+            label: 'Sessions',
+            click: () => router.change('/sessions'),
           },
         ],
       }),
