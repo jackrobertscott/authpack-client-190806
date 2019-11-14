@@ -22,7 +22,8 @@ export const Root: FC = () => {
     children: create(Universal.Provider, {
       value: universal,
       children: create(Theme.Provider, {
-        value: universal.theme === 'blue_harvester' ? BlueHarvester : IronMaiden,
+        value:
+          universal.theme === 'blue_harvester' ? BlueHarvester : IronMaiden,
         children: create(App),
       }),
     }),

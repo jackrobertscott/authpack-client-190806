@@ -18,6 +18,7 @@
     "no-empty": false,
     "no-object-literal-type-assertion": false,
     "no-unexpected-multiline": false,
+    "no-invalid-template-strings": false,
     "no-console": false,
     "no-submodule-imports": false,
     "jsx-no-multiline-js": false,
