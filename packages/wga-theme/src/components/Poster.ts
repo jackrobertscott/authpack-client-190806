@@ -5,11 +5,11 @@ import { Icon } from './Icon'
 
 export const Poster: FC<{
   icon: string
-  solid?: boolean
+  prefix?: string
   label: string
   helper?: string
   children?: ReactNode
-}> = ({ icon, solid, label, helper, children }) => {
+}> = ({ icon, prefix, label, helper, children }) => {
   const theme = useTheme()
   return create('div', {
     className: css({
@@ -33,7 +33,7 @@ export const Poster: FC<{
         create(Icon, {
           key: 'icon',
           icon,
-          solid,
+          prefix,
           size: 25,
         }),
         create('div', {

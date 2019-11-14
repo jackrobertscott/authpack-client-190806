@@ -12,7 +12,7 @@ export const Page: FC<{
   hidden?: boolean
   corner?: {
     icon: string
-    solid?: boolean
+    prefix?: string
     label: string
     click: () => void
   }
@@ -74,7 +74,7 @@ const Header: FC<{
   subtitle: string
   corner?: {
     icon: string
-    solid?: boolean
+    prefix?: string
     label: string
     click: () => void
   }
@@ -128,10 +128,10 @@ const Header: FC<{
 
 const Corner: FC<{
   icon: string
-  solid?: boolean
+  prefix?: string
   label: string
   click: () => void
-}> = ({ icon, solid, label, click }) => {
+}> = ({ icon, prefix, label, click }) => {
   const theme = useTheme()
   return create('div', {
     onClick: click,
@@ -154,7 +154,7 @@ const Corner: FC<{
       create(Icon, {
         key: 'icon',
         icon,
-        solid,
+        prefix,
         size: 25,
       }),
       create('div', {

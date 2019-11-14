@@ -6,13 +6,13 @@ import { Portal } from './Portal'
 
 export const Focus: FC<{
   icon: string
-  solid?: boolean
+  prefix?: string
   label: string
   helper?: string
   visible?: boolean
   portal?: boolean
   children?: ReactNode
-}> = ({ icon, solid, label, helper, visible = true, portal, children }) => {
+}> = ({ icon, prefix, label, helper, visible = true, portal, children }) => {
   const theme = useTheme()
   const nodes = create('div', {
     className: css({
@@ -46,7 +46,7 @@ export const Focus: FC<{
         create(Icon, {
           key: 'icon',
           icon,
-          solid,
+          prefix,
           size: 25,
         }),
         create('div', {

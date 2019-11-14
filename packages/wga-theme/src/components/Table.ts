@@ -7,7 +7,7 @@ export const Table: FC<{
   header: Array<{
     label: string
     icon?: string
-    solid?: boolean
+    prefix?: string
     click?: () => void
   }>
   rows: Array<{
@@ -16,7 +16,7 @@ export const Table: FC<{
     cells: Array<{
       value?: string | number
       icon?: string
-      solid?: boolean
+      prefix?: string
     }>
   }>
 }> = ({ header, rows }) => {
@@ -59,7 +59,7 @@ const Header: FC<{
   header: Array<{
     label: string
     icon?: string
-    solid?: boolean
+    prefix?: string
     click?: () => void
   }>
 }> = ({ header }) => {
@@ -70,7 +70,7 @@ const Header: FC<{
       display: 'table-row',
       background: theme.table.header,
     }),
-    children: header.map(({ label, icon, solid, click }, index) => {
+    children: header.map(({ label, icon, prefix, click }, index) => {
       return create('th', {
         key: `header-${index}`,
         onClick: click,
@@ -110,7 +110,7 @@ const Header: FC<{
                 }),
                 children: create(Icon, {
                   icon,
-                  solid,
+                  prefix,
                 }),
               }),
           ],
@@ -125,7 +125,7 @@ const Row: FC<{
   cells: Array<{
     value?: string | number
     icon?: string
-    solid?: boolean
+    prefix?: string
   }>
 }> = ({ click, cells }) => {
   const theme = useTheme()
@@ -153,8 +153,8 @@ const Row: FC<{
 const Cell: FC<{
   value?: string | number
   icon?: string
-  solid?: boolean
-}> = ({ value, icon, solid }) => {
+  prefix?: string
+}> = ({ value, icon, prefix }) => {
   const theme = useTheme()
   return create('td', {
     className: css({
@@ -183,7 +183,7 @@ const Cell: FC<{
             }),
             children: create(Icon, {
               icon,
-              solid,
+              prefix,
             }),
           }),
         create('div', {

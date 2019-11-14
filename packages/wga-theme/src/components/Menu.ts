@@ -9,7 +9,7 @@ export const Menu: FC<{
     label: string
     helper?: string
     icon: string
-    solid?: boolean
+    prefix?: string
     click?: () => void
   }>
 }> = ({ options }) => {
@@ -21,7 +21,7 @@ export const Menu: FC<{
     children: create(Scroller, {
       maxheight: 340,
       border: theme.menu.border,
-      children: options.map(({ label, helper, icon, solid, click }) => {
+      children: options.map(({ label, helper, icon, prefix, click }) => {
         return create('div', {
           key: label,
           onClick: click,
@@ -45,7 +45,7 @@ export const Menu: FC<{
             create(Icon, {
               key: 'icon',
               icon,
-              solid,
+              prefix,
             }),
             create('div', {
               key: 'text',

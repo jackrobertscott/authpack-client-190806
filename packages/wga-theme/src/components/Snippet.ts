@@ -5,11 +5,11 @@ import { Icon } from './Icon'
 
 export const Snippet: FC<{
   icon: string
-  solid?: boolean
+  prefix?: string
   label: string
   value?: string
   click?: () => void
-}> = ({ icon, solid, label, value, click }) => {
+}> = ({ icon, prefix, label, value, click }) => {
   const theme = useTheme()
   return create('div', {
     className: css({
@@ -33,7 +33,7 @@ export const Snippet: FC<{
       create(Icon, {
         key: 'icon',
         icon,
-        solid,
+        prefix,
       }),
       create('div', {
         key: 'text',
@@ -69,7 +69,7 @@ export const Snippet: FC<{
           children: create(Icon, {
             key: 'icon',
             icon: 'chevron-right',
-            solid,
+            prefix,
           }),
         }),
     ],

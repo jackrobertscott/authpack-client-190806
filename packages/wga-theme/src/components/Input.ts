@@ -87,12 +87,12 @@ export const InputPopover: FC<{
 
 export const InputOption: FC<{
   icon: string
-  solid?: boolean
+  prefix?: string
   label: string
   helper?: string
   click: (value: string) => void
   reverse?: boolean
-}> = ({ icon, solid, label, helper, click, reverse }) => {
+}> = ({ icon, prefix, label, helper, click, reverse }) => {
   const theme = useTheme()
   return create('div', {
     onClick: click,
@@ -142,7 +142,7 @@ export const InputOption: FC<{
       create(Icon, {
         key: 'icon',
         icon,
-        solid,
+        prefix,
         padding: 1,
       }),
     ],

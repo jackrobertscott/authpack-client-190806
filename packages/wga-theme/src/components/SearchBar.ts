@@ -10,7 +10,7 @@ export const SearchBar: FC<{
   placeholder?: string
   options?: Array<{
     icon: string
-    solid?: boolean
+    prefix?: string
     label: string
     click?: () => void
     disabled?: boolean
@@ -86,7 +86,6 @@ const Searcher: FC<{
       create(Icon, {
         key: 'icon',
         icon: 'search',
-        solid: true,
       }),
       create('input', {
         key: 'input',
@@ -105,7 +104,7 @@ const Searcher: FC<{
 
 const Option: FC<{
   icon: string
-  solid?: boolean
+  prefix?: string
   label: string
   click?: () => void
   disabled?: boolean
@@ -113,7 +112,7 @@ const Option: FC<{
     label: string
     helper: string
   }
-}> = ({ icon, solid, label, click, disabled, pointer }) => {
+}> = ({ icon, prefix, label, click, disabled, pointer }) => {
   const theme = useTheme()
   const children = create('div', {
     onClick: disabled ? undefined : click,
@@ -141,7 +140,7 @@ const Option: FC<{
       create(Icon, {
         key: 'icon',
         icon,
-        solid,
+        prefix,
       }),
       create('div', {
         key: 'label',
@@ -164,11 +163,11 @@ const Option: FC<{
 
 const OptionPointer: FC<{
   icon: string
-  solid?: boolean
+  prefix?: string
   label: string
   helper: string
   children: ReactNode
-}> = ({ icon, solid, label, helper, children }) => {
+}> = ({ icon, prefix, label, helper, children }) => {
   return create('div', {
     className: css({
       all: 'unset',
@@ -202,7 +201,7 @@ const OptionPointer: FC<{
         }).concat(' pointer'),
         children: create(Pointer, {
           icon,
-          solid,
+          prefix,
           label,
           helper,
         }),

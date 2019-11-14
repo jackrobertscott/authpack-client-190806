@@ -41,7 +41,7 @@ const stories = storiesOf('Gadgets', module).addDecorator(data => {
               {
                 seperated: true,
                 icon: 'times-circle',
-                solid: false,
+                prefix: 'far',
                 label: 'Close',
                 click: close,
               },

@@ -10,7 +10,7 @@ export const IconBar: FC<{
   icons: Array<{
     icon: string
     label: string
-    solid?: boolean
+    prefix?: string
     focused?: boolean
     seperated?: boolean
     click?: () => void
@@ -18,7 +18,7 @@ export const IconBar: FC<{
       label: string
       helper?: string
       icon: string
-      solid?: boolean
+      prefix?: string
       click?: () => void
     }>
   }>
@@ -68,7 +68,7 @@ const IconSpacer: FC<{
 const IconPointer: FC<{
   icon: string
   label: string
-  solid?: boolean
+  prefix?: string
   focused?: boolean
   seperated?: boolean
   click?: () => void
@@ -76,10 +76,10 @@ const IconPointer: FC<{
     label: string
     helper?: string
     icon: string
-    solid?: boolean
+    prefix?: string
     click?: () => void
   }>
-}> = ({ icon, label, solid, focused, seperated, click, options = [] }) => {
+}> = ({ icon, label, prefix, focused, seperated, click, options = [] }) => {
   const theme = useTheme()
   const [open, openChange] = useState<boolean>(false)
   return create('div', {
@@ -116,7 +116,7 @@ const IconPointer: FC<{
           icon,
           size: 22,
           padding: 8,
-          solid,
+          prefix,
         }),
       }),
       create('div', {
@@ -140,7 +140,7 @@ const IconPointer: FC<{
           children: create(Pointer, {
             icon,
             label,
-            solid,
+            prefix,
             children:
               open &&
               !!options.length &&

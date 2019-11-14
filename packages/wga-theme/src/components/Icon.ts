@@ -6,9 +6,9 @@ export const Icon: FC<{
   icon: string
   size?: number
   padding?: number
-  solid?: boolean
+  prefix?: string
   color?: string
-}> = ({ icon, size, padding = 0, solid = true, color }) => {
+}> = ({ icon, size, padding = 0, prefix = 'fas', color }) => {
   const theme = useTheme()
   return create('div', {
     className: css({
@@ -23,7 +23,7 @@ export const Icon: FC<{
       fontSize: size ? size : '1rem',
     }),
     children: create('div', {
-      className: `${solid ? 'fas' : 'far'} fa-${icon} ${css({
+      className: `${prefix} fa-${icon} ${css({
         textAlign: 'center',
       })}`,
     }),

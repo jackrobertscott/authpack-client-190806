@@ -9,7 +9,7 @@ export const SideBar: FC<{
   options: Array<{
     label: string
     icon: string
-    solid?: boolean
+    prefix?: string
     click?: () => void
     focused?: boolean
   }>
@@ -81,7 +81,7 @@ const Options: FC<{
   options: Array<{
     label: string
     icon: string
-    solid?: boolean
+    prefix?: string
     click?: () => void
     focused?: boolean
   }>
@@ -94,7 +94,7 @@ const Options: FC<{
       display: 'flex',
       flexDirection: 'column',
     }),
-    children: options.map(({ label, icon, solid, click, focused }, index) => {
+    children: options.map(({ label, icon, prefix, click, focused }, index) => {
       return create('div', {
         key: `option-${index}`,
         onClick: click,
@@ -114,7 +114,7 @@ const Options: FC<{
           create(Icon, {
             key: 'icon',
             icon,
-            solid,
+            prefix,
           }),
           create('div', {
             key: 'label',

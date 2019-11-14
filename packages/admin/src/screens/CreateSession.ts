@@ -56,7 +56,7 @@ export const CreateSession: FC<{
             value: schema.value('user_id'),
             change: schema.change('user_id'),
             placeholder: 'Select user...',
-            filter: regex => queryListUsers.current({ regex }),
+            filter: phrase => queryListUsers.current({ phrase }),
             options: !gqlListUsers.data
               ? []
               : gqlListUsers.data.users.map(user => ({
@@ -79,9 +79,9 @@ export const CreateSession: FC<{
               value: schema.value('team_id'),
               change: schema.change('team_id'),
               placeholder: 'Select user...',
-              filter: regex =>
+              filter: phrase =>
                 queryListTeams.current({
-                  regex,
+                  phrase,
                   user_id: schema.value('user_id'),
                 }),
               options: !gqlListTeams.data
@@ -145,8 +145,8 @@ const useListUsers = createUseServer<{
   }>
 }>({
   query: `
-    query apiListUsers($regex: String) {
-      users: apiListUsers(regex: $regex, options: { limit: 5 }) {
+    query apiListUsers($phrase: String) {
+      users: apiListUsers(phrase: $phrase, options: { limit: 5 }) {
         id
         name
         email
@@ -165,8 +165,8 @@ const useListTeams = createUseServer<{
   }>
 }>({
   query: `
-    query apiListTeams($regex: String, $user_id: String!) {
-      teams: apiListTeams(regex: $regex, where: { user_id: $user_id }, options: { limit: 5 }) {
+    query apiListTeams($phrase: String, $user_id: String!) {
+      teams: apiListTeams(phrase: $phrase, where: { user_id: $user_id }, options: { limit: 5 }) {
         id
         name
         tag

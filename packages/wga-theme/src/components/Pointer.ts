@@ -5,11 +5,11 @@ import { Icon } from './Icon'
 
 export const Pointer: FC<{
   icon: string
-  solid?: boolean
+  prefix?: string
   label: string
   helper?: string
   children?: ReactNode
-}> = ({ icon, solid, label, helper, children }) => {
+}> = ({ icon, prefix, label, helper, children }) => {
   const theme = useTheme()
   return create('div', {
     className: css({
@@ -31,7 +31,7 @@ export const Pointer: FC<{
       create(Header, {
         key: 'header',
         icon,
-        solid,
+        prefix,
         label,
         helper,
       }),
@@ -46,10 +46,10 @@ export const Pointer: FC<{
 
 const Header: FC<{
   icon: string
-  solid?: boolean
+  prefix?: string
   label: string
   helper?: string
-}> = ({ icon, solid, label, helper }) => {
+}> = ({ icon, prefix, label, helper }) => {
   const theme = useTheme()
   return create('div', {
     key: 'header',
@@ -88,7 +88,7 @@ const Header: FC<{
       create(Icon, {
         key: 'icon',
         icon,
-        solid,
+        prefix,
       }),
     ],
   })

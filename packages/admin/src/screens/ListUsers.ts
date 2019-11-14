@@ -11,7 +11,6 @@ export const ListUsers: FC = () => {
   const universal = useUniversal()
   const apiListUsers = useListUsers()
   const [build, buildChange] = useState<boolean>(false)
-  const [ready, readyChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [variables, variablesChange] = useState<{ [key: string]: any }>({})
   const queryListUsers = useRef(drip(1000, apiListUsers.fetch))
@@ -19,19 +18,14 @@ export const ListUsers: FC = () => {
     if (variables) queryListUsers.current(variables)
     // eslint-disable-next-line
   }, [variables])
-  useEffect(() => {
-    if (apiListUsers.data && apiListUsers.data.users && !ready)
-      readyChange(true)
-    // eslint-disable-next-line
-  }, [apiListUsers.data])
   const list =
-    apiListUsers.data && apiListUsers.data.users
+    apiListUsers.data && apiListUsers.data.count
       ? apiListUsers.data.users
       : FakeUsers
   return create(Page, {
     title: 'Users',
     subtitle: `All users signed up to ${universal.appname}`,
-    hidden: !apiListUsers.data,
+    hidden: !apiListUsers.data || !apiListUsers.data.count,
     corner: {
       icon: 'plus',
       label: 'Create User',
@@ -42,10 +36,10 @@ export const ListUsers: FC = () => {
     },
     noscroll: create(TemplateSearchBar, {
       count: apiListUsers.data && apiListUsers.data.count,
-      showing: apiListUsers.data && apiListUsers.data.users.length,
+      current: apiListUsers.data && apiListUsers.data.users.length,
       change: (search, limit, skip) => {
         variablesChange({
-          regex: search,
+          phrase: search,
           options: { ...(variables.options || {}), limit, skip },
         })
       },
@@ -107,13 +101,13 @@ export const ListUsers: FC = () => {
           ],
         })),
       }),
-      !ready
+      !apiListUsers.data
         ? create(Focus, {
             key: 'loading',
             icon: 'sync-alt',
             label: 'Loading',
           })
-        : !apiListUsers.data &&
+        : !apiListUsers.data.count &&
           create(Empty, {
             key: 'empty',
             icon: 'users',
@@ -140,9 +134,9 @@ const useListUsers = createUseServer<{
   }>
 }>({
   query: `
-    query apiListUsers($regex: String, $options: WhereOptions) {
-      count: apiCountUsers(regex: $regex)
-      users: apiListUsers(regex: $regex, options: $options) {
+    query apiListUsers($phrase: String, $options: WhereOptions) {
+      count: apiCountUsers(phrase: $phrase)
+      users: apiListUsers(phrase: $phrase, options: $options) {
         id
         updated
         email

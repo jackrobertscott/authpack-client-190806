@@ -7,11 +7,11 @@ export const Button: FC<{
   label: string
   click: () => void
   icon?: string
-  solid?: boolean
+  prefix?: string
   minor?: boolean
   disabled?: boolean
   style?: ITheme['button']
-}> = ({ label, click, icon, solid, minor, disabled, style }) => {
+}> = ({ label, click, icon, prefix, minor, disabled, style }) => {
   const theme = useTheme({ button: style })
   return create('div', {
     onClick: disabled ? () => {} : click,
@@ -53,7 +53,7 @@ export const Button: FC<{
       create(Icon, {
         key: 'icon',
         icon: icon ? icon : disabled ? 'times-circle' : 'check-circle',
-        solid,
+        prefix,
       }),
     ],
   })

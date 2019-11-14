@@ -79,7 +79,7 @@ export const CreateTeam: FC<{
             value: schema.value('user_id'),
             change: schema.change('user_id'),
             placeholder: 'Select user...',
-            filter: regex => queryListUsers.current({ regex }),
+            filter: phrase => queryListUsers.current({ phrase }),
             options: !gqlListUsers.data
               ? []
               : gqlListUsers.data.users.map(user => ({
@@ -133,8 +133,8 @@ const useListUsers = createUseServer<{
   }>
 }>({
   query: `
-    query apiListUsers($regex: String) {
-      users: apiListUsers(regex: $regex, options: { limit: 5 }) {
+    query apiListUsers($phrase: String) {
+      users: apiListUsers(phrase: $phrase, options: { limit: 5 }) {
         id
         name
         email

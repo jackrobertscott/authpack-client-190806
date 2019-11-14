@@ -21,7 +21,7 @@ export const Toaster: FC<{
       zIndex: 1250,
       padding: 25,
     }),
-    children: toaster.map(({ id, icon, solid, label, helper, close }) => {
+    children: toaster.map(({ id, icon, prefix, label, helper, close }) => {
       return create('div', {
         key: id,
         className: css({
@@ -42,7 +42,7 @@ export const Toaster: FC<{
           create(Icon, {
             key: 'icon',
             icon: icon || 'bell',
-            solid,
+            prefix,
           }),
           create('div', {
             key: 'text',
@@ -86,7 +86,7 @@ export const Toaster: FC<{
             }),
             children: create(Icon, {
               icon: 'times-circle',
-              solid: false,
+              prefix: 'far',
             }),
           }),
         ],

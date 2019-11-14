@@ -4,7 +4,7 @@ type ToasterArray = Array<{
   id: string
   close: (id: string) => void
   icon?: string
-  solid?: boolean
+  prefix?: string
   label: string
   helper: string
 }>
@@ -13,7 +13,7 @@ class ToasterArrayStore extends Store<ToasterArray> {
   public add(
     toast: {
       icon?: string
-      solid?: boolean
+      prefix?: string
       label: string
       helper: string
     },

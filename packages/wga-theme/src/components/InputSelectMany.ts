@@ -9,7 +9,7 @@ export const InputSelectMany: FC<{
   options?: Array<{
     value: string
     icon?: string
-    solid?: boolean
+    prefix?: string
     label: string
     helper?: string
   }>
@@ -44,12 +44,12 @@ export const InputSelectMany: FC<{
 
 const Option: FC<{
   icon?: string
-  solid?: boolean
+  prefix?: string
   label: string
   helper?: string
   state?: boolean
   click?: () => void
-}> = ({ icon, solid, label, helper, state, click }) => {
+}> = ({ icon, prefix, label, helper, state, click }) => {
   const theme = useTheme()
   return create('div', {
     key: label,
@@ -119,7 +119,7 @@ const Option: FC<{
         create(Icon, {
           key: 'icon',
           icon,
-          solid,
+          prefix,
         }),
     ],
   })

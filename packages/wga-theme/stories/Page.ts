@@ -32,7 +32,7 @@ const stories = storiesOf('Page', module).addDecorator(data => {
             {
               seperated: true,
               icon: 'times-circle',
-              solid: false,
+              prefix: 'far',
               label: 'Close',
               click: close,
             },

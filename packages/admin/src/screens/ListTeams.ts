@@ -9,7 +9,6 @@ import { createUseServer } from '../hooks/useServer'
 export const ListTeams: FC = () => {
   const apiListTeams = useListTeams()
   const [build, buildChange] = useState<boolean>(false)
-  const [ready, readyChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [variables, variablesChange] = useState<{ [key: string]: any }>({})
   const queryListTeams = useRef(drip(1000, apiListTeams.fetch))
@@ -17,19 +16,14 @@ export const ListTeams: FC = () => {
     if (variables) queryListTeams.current(variables)
     // eslint-disable-next-line
   }, [variables])
-  useEffect(() => {
-    if (apiListTeams.data && apiListTeams.data.teams && !ready)
-      readyChange(true)
-    // eslint-disable-next-line
-  }, [apiListTeams.data])
   const list =
-    apiListTeams.data && apiListTeams.data.teams
+    apiListTeams.data && apiListTeams.data.count
       ? apiListTeams.data.teams
       : FakeTeams
   return create(Page, {
     title: 'Teams',
     subtitle: 'See all teams of your app',
-    hidden: !apiListTeams.data,
+    hidden: !apiListTeams.data || !apiListTeams.data.count,
     corner: {
       icon: 'plus',
       label: 'Create Team',
@@ -40,10 +34,10 @@ export const ListTeams: FC = () => {
     },
     noscroll: create(TemplateSearchBar, {
       count: apiListTeams.data && apiListTeams.data.count,
-      showing: apiListTeams.data && apiListTeams.data.teams.length,
+      current: apiListTeams.data && apiListTeams.data.teams.length,
       change: (search, limit, skip) => {
         variablesChange({
-          regex: search,
+          phrase: search,
           options: { ...(variables.options || {}), limit, skip },
         })
       },
@@ -105,13 +99,13 @@ export const ListTeams: FC = () => {
           ],
         })),
       }),
-      !ready
+      !apiListTeams.data
         ? create(Focus, {
             key: 'loading',
             icon: 'sync-alt',
             label: 'Loading',
           })
-        : !apiListTeams.data &&
+        : !apiListTeams.data.count &&
           create(Empty, {
             key: 'empty',
             icon: 'teams',
@@ -138,9 +132,9 @@ const useListTeams = createUseServer<{
   }>
 }>({
   query: `
-    query apiListTeams($regex: String, $options: WhereOptions) {
-      count: apiCountTeams(regex: $regex)
-      teams: apiListTeams(regex: $regex, options: $options) {
+    query apiListTeams($phrase: String, $options: WhereOptions) {
+      count: apiCountTeams(phrase: $phrase)
+      teams: apiListTeams(phrase: $phrase, options: $options) {
         id
         updated
         name

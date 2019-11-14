@@ -59,7 +59,7 @@ export const RouterManagerUser: FC<{
                   icon: 'times-circle',
                   label: 'Close',
                   click: close,
-                  solid: false,
+                  prefix: 'far',
                   seperated: true,
                 },
               ]
@@ -73,7 +73,7 @@ export const RouterManagerUser: FC<{
                   icon: 'times-circle',
                   label: 'Close',
                   click: close,
-                  solid: false,
+                  prefix: 'far',
                   seperated: true,
                 },
               ],

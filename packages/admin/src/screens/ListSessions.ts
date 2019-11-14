@@ -9,7 +9,6 @@ import { createUseServer } from '../hooks/useServer'
 export const ListSessions: FC = () => {
   const apiListSessions = useListSessions()
   const [build, buildChange] = useState<boolean>(false)
-  const [ready, readyChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [variables, variablesChange] = useState<{ [key: string]: any }>({})
   const queryListSessions = useRef(drip(1000, apiListSessions.fetch))
@@ -17,19 +16,14 @@ export const ListSessions: FC = () => {
     if (variables) queryListSessions.current(variables)
     // eslint-disable-next-line
   }, [variables])
-  useEffect(() => {
-    if (apiListSessions.data && apiListSessions.data.sessions && !ready)
-      readyChange(true)
-    // eslint-disable-next-line
-  }, [apiListSessions.data])
   const list =
-    apiListSessions.data && apiListSessions.data.sessions
+    apiListSessions.data && apiListSessions.data.count
       ? apiListSessions.data.sessions
       : FakeSessions
   return create(Page, {
     title: 'Sessions',
     subtitle: 'See all sessions of your app',
-    hidden: !apiListSessions.data,
+    hidden: !apiListSessions.data || !apiListSessions.data.count,
     corner: {
       icon: 'plus',
       label: 'Create Session',
@@ -40,7 +34,7 @@ export const ListSessions: FC = () => {
     },
     noscroll: create(TemplateSearchBar, {
       count: apiListSessions.data && apiListSessions.data.count,
-      showing: apiListSessions.data && apiListSessions.data.sessions.length,
+      current: apiListSessions.data && apiListSessions.data.sessions.length,
       input: false,
       change: (_, limit, skip) => {
         variablesChange({
@@ -109,13 +103,13 @@ export const ListSessions: FC = () => {
           ],
         })),
       }),
-      !ready
+      !apiListSessions.data
         ? create(Focus, {
             key: 'loading',
             icon: 'sync-alt',
             label: 'Loading',
           })
-        : !apiListSessions.data &&
+        : !apiListSessions.data.count &&
           create(Empty, {
             key: 'empty',
             icon: 'sessions',
