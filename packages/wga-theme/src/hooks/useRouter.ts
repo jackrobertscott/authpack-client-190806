@@ -3,6 +3,7 @@ import * as pathToRegexp from 'path-to-regexp'
 import { useMemo, ReactNode, useState, useEffect } from 'react'
 import { Location } from 'history'
 import { history } from '../utils/history'
+import { useMounted } from './useMounted'
 
 export const useRouter = ({
   base,
@@ -17,6 +18,7 @@ export const useRouter = ({
     exact?: boolean
   }>
 }) => {
+  const mounted = useMounted()
   const [location, locationChange] = useState<Location>(history.location)
   const compare = (path: string, exact: boolean = false) => {
     const regexp: RegExp = pathToRegexp(`${base || ''}${path}`, [], {
@@ -33,7 +35,7 @@ export const useRouter = ({
   const backward = () => history.goForward()
   useEffect(() => {
     return history.listen((data: Location) => {
-      locationChange(data)
+      if (mounted.current) locationChange(data)
     })
   }, [])
   useEffect(() => {

@@ -2,6 +2,7 @@ import * as yup from 'yup'
 import { useState, useMemo, useRef, useEffect } from 'react'
 import { ToasterStore } from '../utils/toaster'
 import { drip } from '../utils/throttle'
+import { useMounted } from './useMounted'
 
 export const useSchema = ({
   schema,
@@ -14,7 +15,7 @@ export const useSchema = ({
   submit?: (value: { [key: string]: any }) => void
   poller?: (value: { [key: string]: any }) => void
 }) => {
-  const mounted = useRef(false)
+  const mounted = useMounted()
   const [valid, validChange] = useState<boolean>(false)
   const [ready, readyChange] = useState<boolean>(false)
   const [state, stateChange] = useState<{ [key: string]: any }>({
@@ -45,12 +46,6 @@ export const useSchema = ({
         errorChange({ ...error, [key]: e })
       })
   }
-  useEffect(() => {
-    mounted.current = true
-    return () => {
-      mounted.current = false
-    }
-  }, [])
   useEffect(() => {
     if (mounted.current && change) change(state)
     const validatedFields = Object.keys(state).map(async key => {

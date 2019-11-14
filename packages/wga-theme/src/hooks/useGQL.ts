@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { ToasterStore } from '../utils/toaster'
 import { graphql } from '../utils/graphql'
+import { useMounted } from './useMounted'
 
 export const createUseGQL = <T>(options: {
   url: string
@@ -23,16 +24,10 @@ export const useGQL = <T>({
   authorization?: string
 }) => {
   const count = useRef(0)
-  const mounted = useRef(false)
+  const mounted = useMounted()
   const [data, dataChange] = useState<T | undefined>()
   const [loading, loadingChange] = useState<boolean>()
   const [error, errorChange] = useState<Error | undefined>()
-  useEffect(() => {
-    mounted.current = true
-    return () => {
-      mounted.current = false
-    }
-  }, [])
   return useMemo(() => {
     return {
       data,
