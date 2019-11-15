@@ -4,7 +4,7 @@ import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 import { SettingsStore } from '../utils/settings'
 
-export const SwitchTeam: FC = () => {
+export const SwitchTeam: FC<{ change: () => void }> = ({ change }) => {
   const settings = useSettings()
   const gqlListTeams = useListTeams()
   const gqlSwitchTeam = useSwitchTeam()
@@ -33,8 +33,8 @@ export const SwitchTeam: FC = () => {
               value: description,
               click: () =>
                 gqlSwitchTeam.fetch({ id }).then(({ session }) => {
-                  console.log(session.token)
                   SettingsStore.update({ bearer: `Bearer ${session.token}` })
+                  change()
                 }),
             })
           }),

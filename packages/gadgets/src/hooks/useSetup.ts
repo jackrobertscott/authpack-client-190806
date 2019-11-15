@@ -21,6 +21,12 @@ export const useSetup = () => {
     // eslint-disable-next-line
   }, [settings.domain])
   useEffect(() => {
+    SettingsStore.update({
+      user: undefined,
+      team: undefined,
+      session: undefined,
+      permissions: undefined,
+    })
     if (settings.bearer) {
       if (settings.domain) {
         gqlGetSession
@@ -37,19 +43,8 @@ export const useSetup = () => {
       } else {
         SettingsStore.update({
           bearer: undefined,
-          user: undefined,
-          team: undefined,
-          session: undefined,
-          permissions: undefined,
         })
       }
-    } else if (settings.user) {
-      SettingsStore.update({
-        user: undefined,
-        team: undefined,
-        session: undefined,
-        permissions: undefined,
-      })
     }
     // eslint-disable-next-line
   }, [settings.domain, settings.bearer])
