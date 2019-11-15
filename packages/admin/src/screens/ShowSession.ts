@@ -16,7 +16,7 @@ export const ShowSession: FC<{
   const session = gqlGetSession.data ? gqlGetSession.data.session : ({} as any)
   return create(Gadgets, {
     title: 'Session',
-    subtitle: universal.appname,
+    subtitle: universal.app_name,
     children: create(Layout, {
       column: true,
       children: [

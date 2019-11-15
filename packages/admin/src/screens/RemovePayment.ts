@@ -1,7 +1,7 @@
 import { createElement as create, FC } from 'react'
 import { Gadgets } from 'wga-theme'
 import { createUseServer } from '../hooks/useServer'
-import { ConfirmRemove } from '../templates/GadgetsRemove'
+import { ConfirmRemove } from '../templates/ConfirmRemove'
 import { useUniversal } from '../hooks/useUniversal'
 import { UniversalStore } from '../utils/universal'
 
@@ -12,21 +12,19 @@ export const RemovePayment: FC<{
   const gqlRemoveUser = useRemoveUser()
   return create(Gadgets, {
     title: 'Terminate Payment',
-    subtitle: universal.appname,
+    subtitle: universal.app_name,
     children: create(ConfirmRemove, {
       keyword: 'Terminate',
       helper: 'Remove payment card and disable app',
       alert: 'Consider powering off your app instead',
       change: () =>
-        gqlRemoveUser
-          .fetch({ id: universal.current_app_id })
-          .then(({ app }) => {
-            if (change) change(app.id)
-            UniversalStore.update({
-              power: app.power,
-              subscribed: app.subscribed,
-            })
-          }),
+        gqlRemoveUser.fetch({ id: universal.app_id }).then(({ app }) => {
+          if (change) change(app.id)
+          UniversalStore.update({
+            power: app.power,
+            subscribed: app.subscribed,
+          })
+        }),
     }),
   })
 }

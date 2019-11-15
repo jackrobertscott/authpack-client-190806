@@ -16,24 +16,26 @@ import { SettingsStore } from '../utils/settings'
 export const CreateTeam: FC = () => {
   const settings = useSettings()
   const gqlCreateTeam = useCreateTeam()
-  const start = settings.team_required && !settings.team
-  const [open, openChange] = useState<boolean>(start)
+  const gqlSwitchTeam = useSwitchTeam()
+  const initial = !!settings.app && settings.app.force_teams && !settings.team
+  const [open, openChange] = useState<boolean>(initial)
   const schema = useSchema({
     schema: yup.object().shape({
       name: yup.string().required('Please provide a team name'),
       tag: yup.string().required('Add a unique team id'),
     }),
     submit: value => {
-      gqlCreateTeam.fetch(value).then(({ session }) => {
-        SettingsStore.update({
-          bearer: `Bearer ${session.token}`,
+      gqlCreateTeam
+        .fetch(value)
+        .then(({ team }) => gqlSwitchTeam.fetch({ id: team.id }))
+        .then(({ session }) => {
+          SettingsStore.update({ bearer: `Bearer ${session.token}` })
         })
-      })
     },
   })
   return create(Gadgets, {
     title: 'Create Team',
-    subtitle: settings.appname,
+    subtitle: settings.app && settings.app.name,
     children: [
       create(Layout, {
         key: 'layout',
@@ -62,6 +64,17 @@ export const CreateTeam: FC = () => {
               placeholder: 'my-team-123',
             }),
           }),
+          create(Control, {
+            key: 'description',
+            label: 'Description',
+            helper: 'Add a description for your team',
+            error: schema.error('description'),
+            children: create(InputString, {
+              value: schema.value('description'),
+              change: schema.change('description'),
+              placeholder: 'We do...',
+            }),
+          }),
           create(Button, {
             key: 'submit',
             label: 'Login',
@@ -80,15 +93,27 @@ export const CreateTeam: FC = () => {
 }
 
 const useCreateTeam = createUseServer<{
-  session: {
+  team: {
     id: string
-    token: string
   }
 }>({
   query: `
     mutation wgaCreateTeam($name: String!, $tag: String!) {
-      session: wgaCreateTeam(name: $name, tag: $tag) {
+      team: wgaCreateTeam(name: $name, tag: $tag) {
         id
+      }
+    }
+  `,
+})
+
+const useSwitchTeam = createUseServer<{
+  session: {
+    token: string
+  }
+}>({
+  query: `
+    mutation wgaSwitchTeam($id: String!) {
+      session: wgaSwitchTeam(id: $id) {
         token
       }
     }

@@ -8,13 +8,13 @@ export const ShowApp: FC = () => {
   const universal = useUniversal()
   const gqlGetApp = useGetApp()
   useEffect(() => {
-    gqlGetApp.fetch({ id: universal.current_app_id })
+    gqlGetApp.fetch({ id: universal.app_id })
     // eslint-disable-next-line
   }, [])
   const app = gqlGetApp.data ? gqlGetApp.data.app : ({} as any)
   return create(Gadgets, {
     title: 'App',
-    subtitle: universal.appname,
+    subtitle: universal.app_name,
     children: create(Layout, {
       column: true,
       children: [

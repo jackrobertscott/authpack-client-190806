@@ -30,7 +30,7 @@ export const UpdatePayment: FC<{
         .then(token => {
           gqlUpdatePayment
             .fetch({
-              id: universal.current_app_id,
+              id: universal.app_id,
               token: token.id,
               name: value.name,
               email: value.email,
@@ -54,7 +54,7 @@ export const UpdatePayment: FC<{
   })
   return create(Gadgets, {
     title: 'Update Payment',
-    subtitle: universal.appname,
+    subtitle: universal.app_name,
     loading: gqlUpdatePayment.loading,
     children: create(Layout, {
       column: true,

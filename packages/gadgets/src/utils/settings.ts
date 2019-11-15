@@ -1,18 +1,17 @@
 import { KeyStore } from 'events-and-things'
 
 export type ISettings = {
+  open: boolean
+  ready: boolean
   domain?: string
   bearer?: string
-  ready: boolean
-  open: boolean
-  appname?: string
-  subscribed: boolean
-  power: boolean
-  team_required: boolean
+  subscribed?: boolean
+  power?: boolean
   theme?: string
-  session?: {
+  app?: {
     id: string
-    token: string
+    name: string
+    force_teams: boolean
   }
   user?: {
     id: string
@@ -27,6 +26,10 @@ export type ISettings = {
     tag: string
     description?: string
   }
+  session?: {
+    id: string
+    token: string
+  }
   permissions?: Array<{
     id: string
     name: string
@@ -36,11 +39,8 @@ export type ISettings = {
 }
 
 export const defaults: ISettings = {
-  ready: false,
   open: false,
-  subscribed: false,
-  power: false,
-  team_required: false,
+  ready: false,
   theme: 'blue_harvester',
 }
 

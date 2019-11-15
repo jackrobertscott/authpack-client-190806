@@ -21,7 +21,7 @@ export const RouterModalOnauthed: FC<{
   const settings = useSettings()
   const router = useLocalRouter({
     nomatch:
-      settings.team_required && !settings.team
+      settings.app && settings.app.force_teams && !settings.team
         ? '/team/create'
         : '/user/update',
     options: [

@@ -13,39 +13,43 @@ export const useSetup = () => {
     if (settings.domain) {
       gqlCurrentApp.fetch().then(({ app }) => {
         SettingsStore.update({
+          app,
           ready: true,
-          appname: app.name || settings.appname,
-          subscribed: !!app.subscribed,
-          power: !!app.power,
         })
       })
     }
     // eslint-disable-next-line
   }, [settings.domain])
   useEffect(() => {
-    if (settings.domain) {
-      if (settings.bearer) {
-        gqlGetSession.fetch().then(({ session }) => {
-          if (session) {
-            const { user, team, permissions, ...data } = session
+    if (settings.bearer) {
+      if (settings.domain) {
+        gqlGetSession
+          .fetch()
+          .then(({ session: { user, team, permissions, ...session } }) => {
             SettingsStore.update({
               bearer: `Bearer ${session.token}`,
-              session: data,
               user,
               team,
+              session,
               permissions,
             })
-          }
-        })
+          })
       } else {
         SettingsStore.update({
           bearer: undefined,
-          session: undefined,
           user: undefined,
           team: undefined,
+          session: undefined,
           permissions: undefined,
         })
       }
+    } else if (settings.user) {
+      SettingsStore.update({
+        user: undefined,
+        team: undefined,
+        session: undefined,
+        permissions: undefined,
+      })
     }
     // eslint-disable-next-line
   }, [settings.domain, settings.bearer])
@@ -91,8 +95,9 @@ const useCurrentApp = createUseServer<{
   app: {
     id: string
     name: string
-    subscribed: boolean
     power: boolean
+    subscribed: boolean
+    force_teams: boolean
   }
 }>({
   query: `
@@ -100,8 +105,9 @@ const useCurrentApp = createUseServer<{
       app: wgaCurrentApp {
         id
         name
-        subscribed
         power
+        subscribed
+        force_teams
       }
     }
   `,

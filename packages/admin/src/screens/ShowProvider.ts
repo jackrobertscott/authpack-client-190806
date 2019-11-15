@@ -18,7 +18,7 @@ export const ShowProvider: FC<{
     : ({} as any)
   return create(Gadgets, {
     title: 'Provider',
-    subtitle: universal.appname,
+    subtitle: universal.app_name,
     children: create(Layout, {
       column: true,
       children: [

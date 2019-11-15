@@ -34,7 +34,7 @@ export const CreateTeam: FC<{
   }, [])
   return create(Gadgets, {
     title: 'Create Team',
-    subtitle: universal.appname,
+    subtitle: universal.app_name,
     loading: gqlCreateTeam.loading,
     children: create(Layout, {
       column: true,

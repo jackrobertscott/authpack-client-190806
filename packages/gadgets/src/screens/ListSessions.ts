@@ -7,7 +7,7 @@ export const ListSessions: FC = () => {
   const settings = useSettings()
   return create(Gadgets, {
     title: 'Sessions',
-    subtitle: settings.appname,
+    subtitle: settings.app && settings.app.name,
     children: null,
   })
 }

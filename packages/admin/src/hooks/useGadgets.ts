@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { IGadgets } from 'wga-plugin'
-import { wga } from '../utils/gadgets'
+import { wga } from '../utils/wga'
 
 export const useGadgets = () => {
   const [state, stateChange] = useState<IGadgets>(wga.current)

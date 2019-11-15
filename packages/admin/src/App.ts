@@ -11,21 +11,23 @@ export const App: FC = () => {
   const universal = useUniversal()
   const gadgets = useGadgets()
   return create(Fragment, {
-    children: [
-      gadgets.bearer &&
-      gadgets.user &&
-      gadgets.team &&
-      universal.current_domain_key
-        ? create(RouterCentral, {
-            key: 'router',
-          })
-        : create(Unauthenticated, {
-            key: 'unauthenticated',
-            loading: !gadgets,
+    children: !gadgets.ready
+      ? null
+      : [
+          gadgets.bearer &&
+          gadgets.user &&
+          gadgets.team &&
+          universal.app_domain_key
+            ? create(RouterCentral, {
+                key: 'router',
+              })
+            : create(Unauthenticated, {
+                key: 'unauthenticated',
+                loading: !gadgets,
+              }),
+          create(Toaster, {
+            key: 'toaster',
           }),
-      create(Toaster, {
-        key: 'toaster',
-      }),
-    ],
+        ],
   })
 }

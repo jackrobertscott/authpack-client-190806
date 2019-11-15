@@ -42,7 +42,7 @@ export const CreateSession: FC<{
   }, [schema.value('user_id')])
   return create(Gadgets, {
     title: 'Create Session',
-    subtitle: universal.appname,
+    subtitle: universal.app_name,
     loading: gqlCreateSession.loading,
     children: create(Layout, {
       column: true,

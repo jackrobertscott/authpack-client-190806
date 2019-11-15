@@ -1,6 +1,6 @@
 import { createElement as create, FC } from 'react'
 import { Focus, Button } from 'wga-theme'
-import { wga } from '../utils/gadgets'
+import { wga } from '../utils/wga'
 
 export const Unauthenticated: FC<{
   loading: boolean

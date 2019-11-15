@@ -3,7 +3,7 @@ import { Layout, IconBar, useRouter } from 'wga-theme'
 import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterSideBarCustomize } from './RouterSideBarCustomize'
 import { RouterSideBarDeveloper } from './RouterSideBarDeveloper'
-import { wga } from '../utils/gadgets'
+import { wga } from '../utils/wga'
 import { Power } from '../screens/Power'
 import { RouterManagerApp } from './RouterManagerApp'
 

@@ -25,7 +25,7 @@ export const UpdateUser: FC<{
   }, [id])
   return create(Gadgets, {
     title: 'Update User',
-    subtitle: universal.appname,
+    subtitle: universal.app_name,
     loading: gqlUpdateUser.loading,
     children: create(Layout, {
       column: true,

@@ -7,7 +7,7 @@ export const RemoveTeam: FC = () => {
   const settings = useSettings()
   return create(Gadgets, {
     title: 'Danger Zone',
-    subtitle: settings.appname,
+    subtitle: settings.app && settings.app.name,
     children: null,
   })
 }

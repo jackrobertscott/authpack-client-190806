@@ -83,6 +83,7 @@ export const useSchema = ({
       value: (key: string) => state[key],
       error: (key: string) => error[key],
       change: (key: string) => update(key),
+      reset: () => set({ ...schema.default() }),
       submit: () => {
         if (submit)
           schema

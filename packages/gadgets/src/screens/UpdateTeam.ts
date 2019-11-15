@@ -7,7 +7,7 @@ export const UpdateTeam: FC = () => {
   const settings = useSettings()
   return create(Gadgets, {
     title: 'Update Team',
-    subtitle: settings.appname,
+    subtitle: settings.app && settings.app.name,
     children: null,
   })
 }

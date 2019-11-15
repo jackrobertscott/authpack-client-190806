@@ -1,7 +1,7 @@
 import { createElement as create, FC } from 'react'
 import { Gadgets } from 'wga-theme'
 import { createUseServer } from '../hooks/useServer'
-import { ConfirmRemove } from '../templates/GadgetsRemove'
+import { ConfirmRemove } from '../templates/ConfirmRemove'
 import { useUniversal } from '../hooks/useUniversal'
 
 export const RemoveProvider: FC<{
@@ -12,7 +12,7 @@ export const RemoveProvider: FC<{
   const gqlRemoveProvider = useRemoveProvider()
   return create(Gadgets, {
     title: 'Remove Provider',
-    subtitle: universal.appname,
+    subtitle: universal.app_name,
     children: create(ConfirmRemove, {
       helper: 'Permanently remove this provider',
       alert: 'Please confirm the removal of this provider',

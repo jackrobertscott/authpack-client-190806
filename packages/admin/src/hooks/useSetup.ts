@@ -5,41 +5,48 @@ import { UniversalStore } from '../utils/universal'
 import { useUniversal } from './useUniversal'
 
 export const useSetup = () => {
-  const universal = useUniversal()
   const gadgets = useGadgets()
+  const universal = useUniversal()
   const gqlGetApp = useGetApp()
-  const gqlCreateApp = useCreateApp()
   useEffect(() => {
-    if (gadgets && gadgets.bearer && gadgets.team) {
+    if (gadgets.bearer && gadgets.team && gadgets.team.id) {
       gqlGetApp
-        .fetch({ id: universal.current_app_id })
+        .fetch()
         .then(({ app }) => {
-          if (app) {
-            UniversalStore.update({
-              appname: app.name,
-              subscribed: app.subscribed,
-              power: app.power,
-              current_app_id: app.id,
-              current_domain_key: app.keys.domain,
-            })
-          } else if (!gqlCreateApp.loading) {
-            gqlCreateApp.fetch({ name: 'App' }).then(data => {
-              UniversalStore.update({
-                current_app_id: data.app.id,
-              })
-            })
-          }
+          UniversalStore.update({
+            app_id: app.id,
+            app_name: app.name,
+            app_domain_key: app.keys.domain,
+            subscribed: app.subscribed,
+            power: app.power,
+          })
         })
         .catch(() => UniversalStore.reset())
     } else {
       UniversalStore.reset()
     }
     // eslint-disable-next-line
-  }, [gadgets.bearer, gadgets.user, gadgets.team])
+  }, [gadgets.bearer])
+  useEffect(() => {
+    if (universal.app_id) {
+      gqlGetApp
+        .fetch({ id: universal.app_id })
+        .then(({ app }) => {
+          UniversalStore.update({
+            app_name: app.name,
+            app_domain_key: app.keys.domain,
+            subscribed: app.subscribed,
+            power: app.power,
+          })
+        })
+        .catch(() => UniversalStore.reset())
+    }
+    // eslint-disable-next-line
+  }, [universal.app_id])
 }
 
 const useGetApp = createUseServer<{
-  app?: {
+  app: {
     id: string
     name: string
     subscribed: boolean
@@ -59,20 +66,6 @@ const useGetApp = createUseServer<{
         keys {
           domain
         }
-      }
-    }
-  `,
-})
-
-const useCreateApp = createUseServer<{
-  app: {
-    id: string
-  }
-}>({
-  query: `
-    mutation wgaCreateApp($name: String!) {
-      app: wgaCreateApp(name: $name) {
-        id
       }
     }
   `,

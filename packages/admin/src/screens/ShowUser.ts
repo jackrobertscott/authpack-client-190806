@@ -16,7 +16,7 @@ export const ShowUser: FC<{
   const user = gqlGetUser.data ? gqlGetUser.data.user : ({} as any)
   return create(Gadgets, {
     title: 'User',
-    subtitle: universal.appname,
+    subtitle: universal.app_name,
     children: create(Layout, {
       column: true,
       children: [

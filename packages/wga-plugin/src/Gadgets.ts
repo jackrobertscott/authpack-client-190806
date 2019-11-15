@@ -6,7 +6,6 @@ import { createGadgetsStore, IGadgets } from './utils/state'
 export interface IOptions {
   domain_key: string
   iframe_id?: string
-  team_required?: boolean
 }
 
 export class Gadgets {
@@ -54,7 +53,6 @@ export class Gadgets {
     store.update({
       ready: false,
       domain: options.domain_key,
-      team_required: options.team_required,
     })
     store.listen(data => {
       if (this.iframe)

@@ -34,7 +34,7 @@ export const Menu: FC<{
             flexGrow: 1,
             color: theme.menu.label,
             background: theme.menu.background,
-            '&:not(:first-child)': {
+            '&:not(:last-child)': {
               borderBottom: theme.menu.border,
             },
             '&:hover': {

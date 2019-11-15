@@ -1,16 +1,16 @@
 import { KeyStore } from 'events-and-things'
 
 export type IGadgets = {
+  open: boolean
+  ready: boolean
   domain?: string
   bearer?: string
-  ready: boolean
-  open: boolean
-  appname?: string
-  subscribed: boolean
-  team_required: boolean
-  session?: {
+  subscribed?: boolean
+  power?: boolean
+  app?: {
     id: string
-    token: string
+    name: string
+    team_required: boolean
   }
   user?: {
     id: string
@@ -25,6 +25,10 @@ export type IGadgets = {
     tag: string
     description?: string
   }
+  session?: {
+    id: string
+    token: string
+  }
   permissions?: Array<{
     id: string
     name: string
@@ -34,10 +38,8 @@ export type IGadgets = {
 }
 
 export const defaults: IGadgets = {
-  ready: false,
   open: false,
-  subscribed: false,
-  team_required: false,
+  ready: false,
 }
 
 export const createGadgetsStore = (data: Partial<IGadgets> = {}) =>

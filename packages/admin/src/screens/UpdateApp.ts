@@ -21,23 +21,19 @@ export const UpdateApp: FC<{
   const schema = useSchema({
     schema: SchemaUpdateApp,
     poller: value => {
-      gqlUpdateApp
-        .fetch({ ...value, id: universal.current_app_id })
-        .then(({ app }) => {
-          if (change) change(app.id)
-          UniversalStore.update({ appname: app.name })
-        })
+      gqlUpdateApp.fetch({ ...value, id: universal.app_id }).then(({ app }) => {
+        if (change) change(app.id)
+        UniversalStore.update({ app_name: app.name })
+      })
     },
   })
   useEffect(() => {
-    gqlGetApp
-      .fetch({ id: universal.current_app_id })
-      .then(({ app }) => schema.set(app))
+    gqlGetApp.fetch({ id: universal.app_id }).then(({ app }) => schema.set(app))
     // eslint-disable-next-line
-  }, [universal.current_app_id])
+  }, [universal.app_id])
   return create(Gadgets, {
     title: 'Update App',
-    subtitle: universal.appname,
+    subtitle: universal.app_name,
     loading: gqlUpdateApp.loading,
     children: create(Layout, {
       column: true,

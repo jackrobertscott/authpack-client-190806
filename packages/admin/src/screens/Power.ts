@@ -11,7 +11,7 @@ export const Power: FC<{
   const gqlGetApp = useGetApp()
   const gqlUpdateApp = useUpdateApp()
   useEffect(() => {
-    gqlGetApp.fetch({ id: universal.current_app_id })
+    gqlGetApp.fetch({ id: universal.app_id })
     // eslint-disable-next-line
   }, [])
   return create(Layout, {
@@ -29,8 +29,10 @@ export const Power: FC<{
             value: universal.power,
             change: power => {
               gqlUpdateApp
-                .fetch({ id: universal.current_app_id, power })
-                .then(({ user }) => UniversalStore.update({ power: user.power }))
+                .fetch({ id: universal.app_id, power })
+                .then(({ user }) =>
+                  UniversalStore.update({ power: user.power })
+                )
             },
           }),
           create(Button, {

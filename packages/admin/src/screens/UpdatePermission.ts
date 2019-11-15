@@ -27,7 +27,7 @@ export const UpdatePermission: FC<{
   }, [id])
   return create(Gadgets, {
     title: 'Update Permission',
-    subtitle: universal.appname,
+    subtitle: universal.app_name,
     loading: gqlUpdatePermission.loading,
     children: create(Layout, {
       column: true,

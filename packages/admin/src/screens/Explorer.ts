@@ -5,7 +5,7 @@ import GraphiQL from 'graphiql'
 import 'graphiql/graphiql.css'
 import { config } from '../config'
 import { useUniversal } from '../hooks/useUniversal'
-import { wga } from '../utils/gadgets'
+import { wga } from '../utils/wga'
 
 export const Explorer: FC = () => {
   const theme = useTheme()
@@ -17,7 +17,7 @@ export const Explorer: FC = () => {
           const data = await graphql<any>({
             ...graphQLParams,
             url: config.api,
-            authorization: [universal.current_domain_key, wga.current.bearer]
+            authorization: [universal.app_domain_key, wga.current.bearer]
               .filter(Boolean)
               .join(','),
           })
