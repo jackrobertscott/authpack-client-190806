@@ -8,16 +8,16 @@ import { useMounted } from './useMounted'
 export const useRouter = ({
   base,
   nomatch,
-  options,
+  options = [],
 }: {
   base?: string
   nomatch?: string
-  options: Array<{
+  options?: Array<{
     path: string
     children: ReactNode
     exact?: boolean
   }>
-}) => {
+} = {}) => {
   const mounted = useMounted()
   const [location, locationChange] = useState<Location>(history.location)
   const compare = (path: string, exact: boolean = false) => {

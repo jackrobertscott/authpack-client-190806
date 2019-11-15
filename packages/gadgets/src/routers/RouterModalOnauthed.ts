@@ -24,24 +24,42 @@ export const RouterModalOnauthed: FC<{
       settings.app && settings.app.force_teams && !settings.team
         ? '/team/create'
         : '/user/update',
-    options: [
-      { key: '/user/update', children: create(UpdateUser) },
-      { key: '/user/password', children: create(UpdateUserPassword) },
-      { key: '/user/apps', children: create(ListProviders) },
-      { key: '/user/danger', children: create(RemoveUser) },
-      { key: '/logout', children: create(LogoutUser) },
-      { key: '/team/create', children: create(CreateTeam) },
-    ].concat(
+    options:
       settings.bearer && settings.team
         ? [
+            { key: '/user/update', children: create(UpdateUser) },
+            { key: '/user/password', children: create(UpdateUserPassword) },
+            { key: '/user/apps', children: create(ListProviders) },
+            { key: '/user/danger', children: create(RemoveUser) },
+            { key: '/logout', children: create(LogoutUser) },
             { key: '/team/switch', children: create(SwitchTeam) },
             { key: '/team/update', children: create(UpdateTeam) },
-            { key: '/team/members/create', children: create(CreateMembership) },
+            {
+              key: '/team/members/create',
+              children: create(CreateMembership),
+            },
             { key: '/team/members', children: create(ListMemberships) },
+            {
+              key: '/team/create',
+              children: create(CreateTeam, {
+                change: () => router.change('/team/update'),
+              }),
+            },
             { key: '/team/danger', children: create(RemoveTeam) },
           ]
-        : []
-    ),
+        : [
+            { key: '/user/update', children: create(UpdateUser) },
+            { key: '/user/password', children: create(UpdateUserPassword) },
+            { key: '/user/apps', children: create(ListProviders) },
+            { key: '/user/danger', children: create(RemoveUser) },
+            { key: '/logout', children: create(LogoutUser) },
+            {
+              key: '/team/create',
+              children: create(CreateTeam, {
+                change: () => router.change('/team/update'),
+              }),
+            },
+          ],
   })
   if (!settings.bearer) return null
   return create(Layout, {

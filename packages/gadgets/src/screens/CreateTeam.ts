@@ -13,23 +13,23 @@ import { createUseServer } from '../hooks/useServer'
 import { NoTeam } from './NoTeam'
 import { SettingsStore } from '../utils/settings'
 
-export const CreateTeam: FC = () => {
+export const CreateTeam: FC<{
+  change: (id: string) => void
+}> = ({ change }) => {
   const settings = useSettings()
   const gqlCreateTeam = useCreateTeam()
   const gqlSwitchTeam = useSwitchTeam()
   const initial = !!settings.app && settings.app.force_teams && !settings.team
   const [open, openChange] = useState<boolean>(initial)
   const schema = useSchema({
-    schema: yup.object().shape({
-      name: yup.string().required('Please provide a team name'),
-      tag: yup.string().required('Add a unique team id'),
-    }),
+    schema: SchemaCreateTeam,
     submit: value => {
       gqlCreateTeam
         .fetch(value)
         .then(({ team }) => gqlSwitchTeam.fetch({ id: team.id }))
         .then(({ session }) => {
           SettingsStore.update({ bearer: `Bearer ${session.token}` })
+          change(session.team_id)
         })
     },
   })
@@ -77,7 +77,7 @@ export const CreateTeam: FC = () => {
           }),
           create(Button, {
             key: 'submit',
-            label: 'Login',
+            label: 'Create',
             disabled: !schema.valid,
             click: schema.submit,
           }),
@@ -91,6 +91,12 @@ export const CreateTeam: FC = () => {
     ],
   })
 }
+
+const SchemaCreateTeam = yup.object().shape({
+  name: yup.string().required('Please provide a team name'),
+  tag: yup.string().required('Add a unique team id'),
+  description: yup.string().required('Please provide a team description'),
+})
 
 const useCreateTeam = createUseServer<{
   team: {
@@ -109,12 +115,14 @@ const useCreateTeam = createUseServer<{
 const useSwitchTeam = createUseServer<{
   session: {
     token: string
+    team_id: string
   }
 }>({
   query: `
     mutation wgaSwitchTeam($id: String!) {
       session: wgaSwitchTeam(id: $id) {
         token
+        team_id
       }
     }
   `,
