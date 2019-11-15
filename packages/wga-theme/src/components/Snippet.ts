@@ -12,6 +12,7 @@ export const Snippet: FC<{
 }> = ({ icon, prefix, label, value, click }) => {
   const theme = useTheme()
   return create('div', {
+    onClick: click,
     className: css({
       all: 'unset',
       display: 'flex',

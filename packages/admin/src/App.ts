@@ -17,6 +17,7 @@ export const App: FC = () => {
           gadgets.bearer &&
           gadgets.user &&
           gadgets.team &&
+          universal.app_id &&
           universal.app_domain_key
             ? create(RouterCentral, {
                 key: 'router',

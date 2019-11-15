@@ -10,23 +10,21 @@ export const useSetup = () => {
   const gqlGetApp = useGetApp()
   useEffect(() => {
     if (gadgets.bearer && gadgets.team && gadgets.team.id) {
-      gqlGetApp
-        .fetch()
-        .then(({ app }) => {
-          UniversalStore.update({
-            app_id: app.id,
-            app_name: app.name,
-            app_domain_key: app.keys.domain,
-            subscribed: app.subscribed,
-            power: app.power,
-          })
+      UniversalStore.reset()
+      gqlGetApp.fetch().then(({ app }) => {
+        UniversalStore.update({
+          app_id: app.id,
+          app_name: app.name,
+          app_domain_key: app.keys.domain,
+          subscribed: app.subscribed,
+          power: app.power,
         })
-        .catch(() => UniversalStore.reset())
+      })
     } else {
       UniversalStore.reset()
     }
     // eslint-disable-next-line
-  }, [gadgets.bearer])
+  }, [gadgets.bearer, gadgets.team && gadgets.team.id])
   useEffect(() => {
     if (universal.app_id) {
       gqlGetApp

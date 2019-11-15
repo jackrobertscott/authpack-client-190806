@@ -1,14 +1,45 @@
-import { createElement as create, FC } from 'react'
-import { Gadgets } from 'wga-theme'
+import { createElement as create, FC, useEffect } from 'react'
+import { Gadgets, Layout, Poster, Snippet } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
+import { SettingsStore } from '../utils/settings'
 
 export const SwitchTeam: FC = () => {
   const settings = useSettings()
+  const gqlListTeams = useListTeams()
+  const gqlSwitchTeam = useSwitchTeam()
+  useEffect(() => {
+    gqlListTeams.fetch()
+  }, [])
   return create(Gadgets, {
     title: 'Switch Team',
     subtitle: settings.app && settings.app.name,
-    children: null,
+    loading: gqlListTeams.loading || gqlSwitchTeam.loading,
+    children: create(Layout, {
+      column: true,
+      children: [
+        create(Poster, {
+          key: 'poster',
+          icon: 'users',
+          label: 'Team',
+          helper: 'Select a team to switch',
+        }),
+        gqlListTeams.data &&
+          gqlListTeams.data.teams.map(({ id, name, description }) => {
+            return create(Snippet, {
+              key: id,
+              icon: 'bookmark',
+              label: name,
+              value: description,
+              click: () =>
+                gqlSwitchTeam.fetch({ id }).then(({ session }) => {
+                  console.log(session.token)
+                  SettingsStore.update({ bearer: `Bearer ${session.token}` })
+                }),
+            })
+          }),
+      ],
+    }),
   })
 }
 
@@ -16,13 +47,17 @@ const useListTeams = createUseServer<{
   teams: Array<{
     id: string
     name: string
+    tag: string
+    description?: string
   }>
 }>({
   query: `
     query wgaListTeams {
-      teams: ListTeams {
+      teams: wgaListTeams {
         id
         name
+        tag
+        description
       }
     }
   `,
@@ -30,13 +65,13 @@ const useListTeams = createUseServer<{
 
 const useSwitchTeam = createUseServer<{
   session: {
-    id: string
+    token: string
   }
 }>({
   query: `
     mutation wgaSwitchTeam($id: String!) {
       session: wgaSwitchTeam(id: $id) {
-        id
+        token
       }
     }
   `,
