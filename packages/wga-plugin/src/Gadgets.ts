@@ -14,12 +14,15 @@ export class Gadgets {
   private queue: Array<{ name: string; payload?: any }>
   private radio: Radio<{ name: string; payload?: any }>
   private store: KeyStore<IGadgets>
+  private loaded: boolean
   constructor(options: IOptions) {
     this.queue = []
+    this.loaded = false
     this.options = options
     this.store = this.createStore(this.options)
     this.iframe = this.createIFrame(this.options)
     this.radio = this.createRadio(this.iframe)
+    this.sendMessage('plugin:current', this.store.current)
   }
   /**
    * Public...
@@ -50,8 +53,11 @@ export class Gadgets {
    */
   private createStore(options: IOptions) {
     const store = createGadgetsStore()
+    const { open, bearer } = store.current
+    store.reset()
     store.update({
-      ready: false,
+      open,
+      bearer,
       domain: options.domain_key,
     })
     store.listen(data => {
@@ -79,15 +85,13 @@ export class Gadgets {
       if (config.debug)
         console.log(`Plugin received: ${name} @ ${Date.now() % 86400000}`)
       switch (name) {
-        case 'gadgets:ready':
-          this.store.update({
-            ready: true,
-          })
-          this.sendMessage('plugin:current', this.store.current)
-          while (this.queue.length) {
-            const message = this.queue.shift()
+        case 'gadgets:loaded':
+          this.loaded = true
+          const stack = [...this.queue]
+          for (const message of stack) {
             if (message) this.sendMessage(message.name, message.payload)
           }
+          this.queue = []
           break
         case 'gadgets:update':
           this.store.update({ ...payload })
@@ -102,7 +106,7 @@ export class Gadgets {
     if (!this.radio)
       throw new Error('Failed to send message as radio does not exist')
     const message = { name, payload }
-    if (!this.store.current.ready) this.queue = [...this.queue, message]
+    if (!this.loaded) this.queue = [...this.queue, message]
     else this.radio.message(message)
   }
 }

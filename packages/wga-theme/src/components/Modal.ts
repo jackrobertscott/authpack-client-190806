@@ -34,7 +34,7 @@ export const Modal: FC<{
         background: theme.modal.cover,
       }),
       children: create('div', {
-        children,
+        children: visible ? children : null,
         className: css({
           all: 'unset',
           display: 'flex',

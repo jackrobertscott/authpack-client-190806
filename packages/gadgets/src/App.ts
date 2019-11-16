@@ -12,9 +12,8 @@ export const App: FC = () => {
   const settings = useSettings()
   return create(Modal, {
     visible: settings.open,
-    children: !settings.ready
-      ? null
-      : [
+    children: settings.ready
+      ? [
           settings.domain
             ? settings.bearer && settings.user
               ? create(RouterModalOnauthed, {
@@ -32,6 +31,7 @@ export const App: FC = () => {
           create(Toaster, {
             key: 'toaster',
           }),
-        ],
+        ]
+      : null,
   })
 }

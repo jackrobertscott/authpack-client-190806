@@ -15,7 +15,4 @@ const defaults: IUniversalStore = {
   theme: 'blue_harvester',
 }
 
-export const UniversalStore = new KeyStore<IUniversalStore>(
-  defaults,
-  'wga.universal'
-)
+export const UniversalStore = new KeyStore<IUniversalStore>(defaults)

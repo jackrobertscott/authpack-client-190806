@@ -8,27 +8,24 @@ import { useUniversal } from './hooks/useUniversal'
 
 export const App: FC = () => {
   useSetup()
-  const universal = useUniversal()
   const gadgets = useGadgets()
+  const universal = useUniversal()
   return create(Fragment, {
-    children: !gadgets.ready
-      ? null
-      : [
-          gadgets.bearer &&
-          gadgets.user &&
-          gadgets.team &&
-          universal.app_id &&
-          universal.app_domain_key
-            ? create(RouterCentral, {
-                key: 'router',
-              })
-            : create(Unauthenticated, {
-                key: 'unauthenticated',
-                loading: !gadgets,
-              }),
-          create(Toaster, {
-            key: 'toaster',
-          }),
-        ],
+    children:
+      gadgets.ready && universal.app_id && universal.app_domain_key
+        ? [
+            gadgets.bearer && gadgets.user && gadgets.team
+              ? create(RouterCentral, {
+                  key: 'router',
+                })
+              : create(Unauthenticated, {
+                  key: 'unauthenticated',
+                  loading: !gadgets,
+                }),
+            create(Toaster, {
+              key: 'toaster',
+            }),
+          ]
+        : null,
   })
 }

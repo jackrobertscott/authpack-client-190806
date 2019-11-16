@@ -12,10 +12,7 @@ export const useSetup = () => {
   useEffect(() => {
     if (settings.domain) {
       gqlCurrentApp.fetch().then(({ app }) => {
-        SettingsStore.update({
-          app,
-          ready: true,
-        })
+        SettingsStore.update({ app })
       })
     }
     // eslint-disable-next-line
@@ -51,7 +48,7 @@ export const useSetup = () => {
   }, [settings.domain, settings.bearer])
   useEffect(() => {
     radio.message({
-      name: 'gadgets:ready',
+      name: 'gadgets:loaded',
     })
     return SettingsStore.listen(data => {
       radio.message({
