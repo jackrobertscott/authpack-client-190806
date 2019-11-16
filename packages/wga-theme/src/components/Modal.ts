@@ -1,4 +1,4 @@
-import { createElement as create, FC, ReactNode } from 'react'
+import { createElement as create, FC, ReactNode, useRef } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../contexts/Theme'
 import { Portal } from './Portal'
@@ -12,11 +12,15 @@ export const Modal: FC<{
   height?: number
 }> = ({ id, children, visible = true, close, width = 810, height = 560 }) => {
   const theme = useTheme()
+  const unfocused = useRef<boolean>(!document.querySelector(':focus-within'))
   return create(Portal, {
     id,
     children: create('div', {
-      onClick: (event: any) =>
-        event.target === event.currentTarget && close && close(),
+      onClick: event => {
+        if (close && event.target === event.currentTarget && unfocused.current)
+          close()
+        else unfocused.current = !document.querySelector(':focus-within')
+      },
       className: css({
         all: 'unset',
         display: 'flex',

@@ -10,19 +10,22 @@ import { SettingsStore } from './utils/settings'
 export const App: FC = () => {
   useSetup()
   const settings = useSettings()
+  const close = () => SettingsStore.update({ open: false })
   return create(Modal, {
+    close,
     visible: settings.open,
-    children: settings.ready
-      ? [
+    children: !settings.ready
+      ? null
+      : [
           settings.domain
             ? settings.bearer && settings.user
               ? create(RouterModalOnauthed, {
                   key: 'onauthed',
-                  close: () => SettingsStore.update({ open: false }),
+                  close,
                 })
               : create(RouterModalUnauthed, {
                   key: 'unauthed',
-                  close: () => SettingsStore.update({ open: false }),
+                  close,
                 })
             : create(NoKey, {
                 key: 'nokey',
@@ -31,7 +34,6 @@ export const App: FC = () => {
           create(Toaster, {
             key: 'toaster',
           }),
-        ]
-      : null,
+        ],
   })
 }

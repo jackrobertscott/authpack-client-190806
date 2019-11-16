@@ -22,6 +22,7 @@ export const RouterManagerProvider: FC<{
       : [{ key: '/create', children: create(CreateProvider, { change }) }],
   })
   return create(Modal, {
+    close,
     visible,
     children: create(Layout, {
       grow: true,

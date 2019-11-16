@@ -106,17 +106,12 @@ export const RouterModalOnauthed: FC<{
           {
             icon: 'users',
             label: 'Team',
-            click: settings.team
+            click: !settings.team
+              ? () => router.change('/team/create')
+              : undefined,
+            options: !settings.team
               ? undefined
-              : () => router.change('/team/create'),
-            options: settings.team
-              ? [
-                  {
-                    icon: 'plus',
-                    label: 'Create Team',
-                    helper: 'Make a new team',
-                    click: () => router.change('/team/create'),
-                  },
+              : [
                   {
                     icon: 'sync-alt',
                     label: 'Switch Team',
@@ -128,6 +123,12 @@ export const RouterModalOnauthed: FC<{
                     label: 'Update Team',
                     helper: 'Your team settings',
                     click: () => router.change('/team/update'),
+                  },
+                  {
+                    icon: 'plus',
+                    label: 'Create Team',
+                    helper: 'Make a new team',
+                    click: () => router.change('/team/create'),
                   },
                   {
                     icon: 'user-plus',
@@ -147,8 +148,7 @@ export const RouterModalOnauthed: FC<{
                     helper: 'Remove this team',
                     click: () => router.change('/team/danger'),
                   },
-                ]
-              : [],
+                ],
           },
           {
             icon: 'power-off',

@@ -22,6 +22,7 @@ export const RouterManagerTeam: FC<{
       : [{ key: '/create', children: create(CreateTeam, { change }) }],
   })
   return create(Modal, {
+    close,
     visible,
     children: create(Layout, {
       grow: true,

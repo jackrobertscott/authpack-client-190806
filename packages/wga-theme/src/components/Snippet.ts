@@ -70,7 +70,6 @@ export const Snippet: FC<{
           children: create(Icon, {
             key: 'icon',
             icon: 'chevron-right',
-            prefix,
           }),
         }),
     ],

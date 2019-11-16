@@ -21,6 +21,7 @@ export const RouterManagerApp: FC<{
     ],
   })
   return create(Modal, {
+    close,
     visible,
     children: create(Layout, {
       grow: true,

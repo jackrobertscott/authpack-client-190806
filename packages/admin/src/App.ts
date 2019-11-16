@@ -12,7 +12,7 @@ export const App: FC = () => {
   const universal = useUniversal()
   return create(Fragment, {
     children:
-      gadgets.ready && universal.app_id && universal.app_domain_key
+      gadgets.ready && universal.ready
         ? [
             gadgets.bearer && gadgets.user && gadgets.team
               ? create(RouterCentral, {

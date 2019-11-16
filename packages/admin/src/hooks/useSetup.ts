@@ -9,10 +9,11 @@ export const useSetup = () => {
   const universal = useUniversal()
   const gqlGetApp = useGetApp()
   useEffect(() => {
+    UniversalStore.reset()
     if (gadgets.bearer && gadgets.team && gadgets.team.id) {
-      UniversalStore.reset()
       gqlGetApp.fetch().then(({ app }) => {
         UniversalStore.update({
+          ready: true,
           app_id: app.id,
           app_name: app.name,
           app_domain_key: app.keys.domain,
@@ -21,7 +22,7 @@ export const useSetup = () => {
         })
       })
     } else {
-      UniversalStore.reset()
+      setTimeout(() => UniversalStore.update({ ready: true }))
     }
     // eslint-disable-next-line
   }, [gadgets.bearer, gadgets.team && gadgets.team.id])

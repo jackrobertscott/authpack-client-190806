@@ -28,6 +28,7 @@ export const RouterManagerPermission: FC<{
       : [{ key: '/create', children: create(CreatePermission, { change }) }],
   })
   return create(Modal, {
+    close,
     visible,
     children: create(Layout, {
       grow: true,

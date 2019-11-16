@@ -32,6 +32,7 @@ export const CreateMembership: FC<{
   return create(Gadgets, {
     title: 'Add Member',
     subtitle: settings.app && settings.app.name,
+    loading: gqlCreateMembership.loading || gqlListPermissions.loading,
     children: create(Layout, {
       column: true,
       padding: true,

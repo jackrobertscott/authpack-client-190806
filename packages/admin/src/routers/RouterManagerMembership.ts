@@ -14,6 +14,7 @@ export const RouterManagerMembership: FC<{
       : [{ key: '/create', children: null }],
   })
   return create(Modal, {
+    close,
     visible,
     children: create(Layout, {
       grow: true,

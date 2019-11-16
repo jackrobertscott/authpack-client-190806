@@ -27,6 +27,7 @@ export const RouterManagerUser: FC<{
       : [{ key: '/create', children: create(CreateUser, { change }) }],
   })
   return create(Modal, {
+    close,
     visible,
     children: create(Layout, {
       grow: true,

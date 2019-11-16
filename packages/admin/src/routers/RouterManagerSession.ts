@@ -22,6 +22,7 @@ export const RouterManagerSession: FC<{
       : [{ key: '/create', children: create(CreateSession, { change }) }],
   })
   return create(Modal, {
+    close,
     visible,
     children: create(Layout, {
       grow: true,

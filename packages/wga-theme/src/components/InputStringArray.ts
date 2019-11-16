@@ -32,10 +32,16 @@ export const InputStringArray: FC<{
       children: [
         create('div', {
           key: 'value',
-          children: value.join(', ') || placeholder,
+          children:
+            value
+              .join(', ')
+              .substr(0, 50)
+              .concat(value.join(', ').length > 50 ? '...' : '') || placeholder,
           className: css({
             flexGrow: 1,
             height: 18,
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
           }),
         }),
         open &&

@@ -29,6 +29,7 @@ export const SwitchTeam: FC<{ change: () => void }> = ({ change }) => {
             return create(Snippet, {
               key: id,
               icon: 'bookmark',
+              prefix: settings.team && settings.team.id === id ? 'fas' : 'far',
               label: name,
               value: description,
               click: () =>
