@@ -12,8 +12,8 @@ import {
   Empty,
   Theme,
   ToasterStore,
-} from '../src/index'
-import { BlueHarvester } from '../src/themes/BlueHarvester'
+} from '../../src/index'
+import { BlueHarvester } from '../../src/themes/BlueHarvester'
 
 console.clear()
 
@@ -21,6 +21,7 @@ const stories = storiesOf('Page', module).addDecorator(data => {
   return create(Theme.Provider, {
     value: BlueHarvester,
     children: create(Layout, {
+      grow: true,
       children: [
         create(IconBar, {
           key: 'iconBar',

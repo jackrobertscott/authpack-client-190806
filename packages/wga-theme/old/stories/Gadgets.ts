@@ -19,9 +19,9 @@ import {
   InputStringArray,
   InputSelectMany,
   Theme,
-} from '../src/index'
-import { useSchema } from '../src/hooks/useSchema'
-import { BlueHarvester } from '../src/themes/BlueHarvester'
+} from '../../src/index'
+import { useSchema } from '../../src/hooks/useSchema'
+import { BlueHarvester } from '../../src/themes/BlueHarvester'
 
 console.clear()
 
@@ -30,6 +30,7 @@ const stories = storiesOf('Gadgets', module).addDecorator(data => {
     value: BlueHarvester,
     children: create(Modal, {
       children: create(Layout, {
+        grow: true,
         children: [
           create(IconBar, {
             key: 'iconBar',
