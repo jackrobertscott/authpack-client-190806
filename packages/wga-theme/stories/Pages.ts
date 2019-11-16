@@ -1,6 +1,6 @@
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import faker from 'faker'
-import { createElement as create, FC, ReactNode, useState } from 'react'
+import { createElement as create, FC, useState } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
 import { IconBar, Layout, SideBar, Page, Table, SearchBar } from '../src/index'
