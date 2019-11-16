@@ -12,24 +12,26 @@ export const App: FC = () => {
   const settings = useSettings()
   return create(Modal, {
     visible: settings.open,
-    children: [
-      settings.domain
-        ? settings.bearer && settings.user
-          ? create(RouterModalOnauthed, {
-              key: 'onauthed',
-              close: () => SettingsStore.update({ open: false }),
-            })
-          : create(RouterModalUnauthed, {
-              key: 'unauthed',
-              close: () => SettingsStore.update({ open: false }),
-            })
-        : create(NoKey, {
-            key: 'nokey',
-            loading: !settings.ready,
+    children: !settings.ready
+      ? null
+      : [
+          settings.domain
+            ? settings.bearer && settings.user
+              ? create(RouterModalOnauthed, {
+                  key: 'onauthed',
+                  close: () => SettingsStore.update({ open: false }),
+                })
+              : create(RouterModalUnauthed, {
+                  key: 'unauthed',
+                  close: () => SettingsStore.update({ open: false }),
+                })
+            : create(NoKey, {
+                key: 'nokey',
+                loading: !settings.ready,
+              }),
+          create(Toaster, {
+            key: 'toaster',
           }),
-      create(Toaster, {
-        key: 'toaster',
-      }),
-    ],
+        ],
   })
 }

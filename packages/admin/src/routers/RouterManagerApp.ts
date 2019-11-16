@@ -64,7 +64,7 @@ export const RouterManagerApp: FC<{
                   click: () => router.change('/inspect'),
                 },
                 {
-                  icon: 'plus',
+                  icon: 'sliders-h',
                   label: 'Update',
                   click: () => router.change('/update'),
                 },

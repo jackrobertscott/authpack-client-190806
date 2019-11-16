@@ -11,7 +11,7 @@ export const config: {
   stripe_key: process.env.REACT_APP_STRIPE_KEY as string,
   segment_id: process.env.REACT_APP_SEGMENT_ID as string,
   sentry_dsn: process.env.REACT_APP_SENTRY_DSN as string,
-  gadgets_domain_key: 'wga-domain-key-bb1fa928912c2d67753f8fcd7',
+  gadgets_domain_key: 'wga-domain-key-8669c1897e0b5abb2b857c989',
   api: 'http://localhost:4000',
   debug: true,
 }

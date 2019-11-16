@@ -22,29 +22,30 @@ export const useSetup = () => {
   }, [settings.domain])
   useEffect(() => {
     SettingsStore.update({
+      ready: false,
       user: undefined,
       team: undefined,
       session: undefined,
       permissions: undefined,
     })
-    if (settings.bearer) {
-      if (settings.domain) {
-        gqlGetSession
-          .fetch()
-          .then(({ session: { user, team, permissions, ...session } }) => {
-            SettingsStore.update({
-              bearer: `Bearer ${session.token}`,
-              user,
-              team,
-              session,
-              permissions,
-            })
+    if (settings.bearer && settings.domain) {
+      gqlGetSession
+        .fetch()
+        .then(({ session: { user, team, permissions, ...session } }) => {
+          SettingsStore.update({
+            ready: true,
+            bearer: `Bearer ${session.token}`,
+            user,
+            team,
+            session,
+            permissions,
           })
-      } else {
-        SettingsStore.update({
-          bearer: undefined,
         })
-      }
+    } else {
+      SettingsStore.update({
+        ready: true,
+        bearer: undefined,
+      })
     }
     // eslint-disable-next-line
   }, [settings.domain, settings.bearer])

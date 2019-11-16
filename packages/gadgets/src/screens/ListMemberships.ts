@@ -5,6 +5,7 @@ import { createUseServer } from '../hooks/useServer'
 
 export const ListMemberships: FC = () => {
   const settings = useSettings()
+  const gqlListMemberships = useListMemberships()
   return create(Gadgets, {
     title: 'Members',
     subtitle: settings.app && settings.app.name,
@@ -15,12 +16,24 @@ export const ListMemberships: FC = () => {
 const useListMemberships = createUseServer<{
   memberships: Array<{
     id: string
+    admin: boolean
+    user: {
+      name: string
+      email: string
+      username: string
+    }
   }>
 }>({
   query: `
     query wgaListMemberships {
       memberships: wgaListMemberships {
         id
+        admin
+        user {
+          name
+          email
+          username
+        }
       }
     }
   `,
