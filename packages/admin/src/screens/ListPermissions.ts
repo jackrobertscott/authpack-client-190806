@@ -153,7 +153,7 @@ const FakePermissions: Array<{
   name: string
   tag: string
   description?: string
-}> = Array.from(Array(10).keys()).map(() => ({
+}> = Array.from(Array(8).keys()).map(() => ({
   id: faker.random.uuid(),
   updated: faker.date.recent(100).toDateString(),
   name: faker.random.words(2),

@@ -30,7 +30,7 @@ export const ShowSession: FC<{
           key: 'disabled',
           icon: 'battery-three-quarters',
           label: 'Disabled',
-          value: session.disabled ? 'Yes' : 'No',
+          value: String(session.disabled),
         }),
         create(Snippet, {
           key: 'user',

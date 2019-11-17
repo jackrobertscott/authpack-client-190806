@@ -174,7 +174,7 @@ const FakeSessions: Array<{
     name: string
     tag: string
   }
-}> = Array.from(Array(10).keys()).map(() => ({
+}> = Array.from(Array(20).keys()).map(() => ({
   id: faker.random.uuid(),
   created: faker.date.recent(100).toDateString(),
   user: {

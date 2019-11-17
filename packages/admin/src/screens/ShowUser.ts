@@ -36,13 +36,13 @@ export const ShowUser: FC<{
           key: 'name',
           icon: 'user',
           label: 'Name',
-          value: user.name,
+          value: user.name || '...',
         }),
         create(Snippet, {
           key: 'username',
           icon: 'tags',
           label: 'Username',
-          value: user.username,
+          value: user.username || '...',
         }),
         create(Snippet, {
           key: 'created',

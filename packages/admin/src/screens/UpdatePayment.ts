@@ -63,12 +63,22 @@ export const UpdatePayment: FC<{
       children: [
         create(Control, {
           key: 'name',
-          label: 'Name',
+          label: 'Name On Card',
           error: schema.error('name'),
           children: create(InputString, {
             value: schema.value('name'),
             change: schema.change('name'),
             placeholder: 'Fred Blogs',
+          }),
+        }),
+        create(Control, {
+          key: 'card',
+          label: 'Card',
+          helper: 'Powered by Stripe',
+          error: schema.error('card'),
+          children: create(InputStripe, {
+            stripe,
+            change: schema.change('card'),
           }),
         }),
         create(Control, {
@@ -80,16 +90,6 @@ export const UpdatePayment: FC<{
             value: schema.value('email'),
             change: schema.change('email'),
             placeholder: 'fred@example.com',
-          }),
-        }),
-        create(Control, {
-          key: 'card',
-          label: 'Card',
-          helper: 'Powered by Stripe',
-          error: schema.error('card'),
-          children: create(InputStripe, {
-            stripe,
-            change: schema.change('card'),
           }),
         }),
         create(Button, {

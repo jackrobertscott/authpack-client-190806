@@ -42,7 +42,7 @@ export const ShowTeam: FC<{
           key: 'description',
           icon: 'book',
           label: 'Description',
-          value: team.tag,
+          value: team.description || '...',
         }),
         create(Snippet, {
           key: 'created',

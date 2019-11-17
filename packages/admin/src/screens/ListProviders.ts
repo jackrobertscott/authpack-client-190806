@@ -148,7 +148,7 @@ const FakeProviders: Array<{
   updated: string
   preset: string
   scopes: string[]
-}> = Array.from(Array(10).keys()).map(() => ({
+}> = Array.from(Array(4).keys()).map(() => ({
   id: faker.random.uuid(),
   updated: faker.date.recent(100).toDateString(),
   preset: faker.random.words(2),

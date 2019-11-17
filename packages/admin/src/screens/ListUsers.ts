@@ -153,7 +153,7 @@ const FakeUsers: Array<{
   email: string
   username?: string
   name?: string
-}> = Array.from(Array(10).keys()).map(() => ({
+}> = Array.from(Array(20).keys()).map(() => ({
   id: faker.random.uuid(),
   updated: faker.date.recent(100).toDateString(),
   email: faker.internet.email(),

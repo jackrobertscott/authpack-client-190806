@@ -44,7 +44,7 @@ export const ShowPermission: FC<{
           key: 'description',
           icon: 'book',
           label: 'Description',
-          value: permission.tag,
+          value: permission.description || '...',
         }),
         create(Snippet, {
           key: 'created',
