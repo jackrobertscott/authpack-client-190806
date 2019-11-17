@@ -14,7 +14,7 @@ export const RemoveProvider: FC<{
     title: 'Remove Provider',
     subtitle: universal.app_name,
     children: create(ConfirmRemove, {
-      helper: 'Permanently remove this provider',
+      helper: 'Remove this provider',
       alert: 'Please confirm the removal of this provider',
       change: () =>
         gqlRemoveProvider.fetch({ id }).then(() => change && change()),

@@ -26,9 +26,6 @@ export const Snippet: FC<{
       '&:hover:not(:active)': click && {
         background: theme.snippet.backgroundHover,
       },
-      '&:not(:last-child)': {
-        borderBottom: theme.snippet.border,
-      },
     }),
     children: [
       create(Icon, {

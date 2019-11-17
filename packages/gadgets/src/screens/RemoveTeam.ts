@@ -30,7 +30,7 @@ export const RemoveTeam: FC<{
         key: 'poster',
         icon: 'fire-alt',
         label: 'Remove',
-        helper: 'Permanently remove this team and all members',
+        helper: 'Remove this team and all members',
       }),
       create(Layout, {
         key: 'layout',

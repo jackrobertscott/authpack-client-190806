@@ -14,7 +14,7 @@ export const RemoveTeam: FC<{
     title: 'Remove Team',
     subtitle: universal.app_name,
     children: create(ConfirmRemove, {
-      helper: 'Permanently remove this team',
+      helper: 'Remove this team',
       alert: 'Please confirm the removal of this team',
       change: () => gqlRemoveTeam.fetch({ id }).then(() => change && change()),
     }),

@@ -27,21 +27,24 @@ export const RouterCentral: FC = () => {
           {
             icon: 'home',
             label: 'Home',
+            focused: router.current.path === '/app',
             click: () => router.change('/app'),
           },
           {
             icon: 'sliders-h',
             label: 'Customize',
+            focused: router.current.path === '/customize',
             click: () => router.change('/customize'),
           },
           {
             icon: 'code',
             label: 'Developer',
+            focused: router.current.path === '/developer',
             click: () => router.change('/developer'),
           },
           {
             seperated: true,
-            icon: 'power-off',
+            icon: 'bolt',
             label: 'Power',
             click: () => powerChange(!power),
           },

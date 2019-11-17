@@ -39,21 +39,25 @@ export const RouterManagerUser: FC<{
                 {
                   icon: 'glasses',
                   label: 'Inspect',
+                  focused: router.current.key === '/inspect',
                   click: () => router.change('/inspect'),
                 },
                 {
                   icon: 'sliders-h',
                   label: 'Update',
+                  focused: router.current.key === '/update',
                   click: () => router.change('/update'),
                 },
                 {
                   icon: 'unlock',
                   label: 'Change Password',
+                  focused: router.current.key === '/update/password',
                   click: () => router.change('/update/password'),
                 },
                 {
                   icon: 'fire-alt',
                   label: 'Remove',
+                  focused: router.current.key === '/remove',
                   click: () => router.change('/remove'),
                 },
                 {
@@ -68,6 +72,7 @@ export const RouterManagerUser: FC<{
                 {
                   icon: 'plus',
                   label: 'Create',
+                  focused: router.current.key === '/create',
                   click: () => router.change('/create'),
                 },
                 {

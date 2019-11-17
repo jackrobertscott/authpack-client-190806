@@ -38,13 +38,13 @@ export const ShowApp: FC = () => {
         }),
         create(Snippet, {
           key: 'power',
-          icon: 'power-off',
+          icon: 'bolt',
           label: 'Power',
           value: String(app.power),
         }),
         create(Snippet, {
           key: 'subscribed',
-          icon: 'bolt',
+          icon: 'wallet',
           label: 'Subscribed',
           value: String(app.subscribed),
         }),

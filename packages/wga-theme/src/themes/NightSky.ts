@@ -78,7 +78,7 @@ export const NightSky: ITheme = {
   },
   modal: {
     background: slate(5),
-    shadow: `0 0 13px -3px ${slate(0, 0.7)}`,
+    shadow: `0 0 13px -3px ${slate(0, 0.5)}`,
     border: `1px solid ${slate(2.5)}`,
     cover: slate(5, 0.25),
   },
@@ -115,7 +115,7 @@ export const NightSky: ITheme = {
     background: slate(12.5),
     backgroundHover: slate(17.5),
     backgroundDisabled: slate(10),
-    shadow: `0 0 13px -3px ${slate(0, 0.7)}`,
+    shadow: `0 0 13px -3px ${slate(0, 0.5)}`,
     border: `1px solid ${slate(5)}`,
     borderFocused: `1px solid ${slate(55)}`,
     on: slate(32.5),
@@ -129,7 +129,7 @@ export const NightSky: ITheme = {
     backgroundMinor: slate(15),
     backgroundDisabled: slate(7.5),
     backgroundHover: slate(22.5),
-    shadow: `0 0 13px -3px ${slate(0, 0.7)}`,
+    shadow: `0 0 13px -3px ${slate(0, 0.5)}`,
     border: `1px solid ${slate(5)}`,
   },
   /**
@@ -139,7 +139,7 @@ export const NightSky: ITheme = {
     label: slate(95),
     helper: slate(65),
     background: slate(22.5),
-    shadow: `0 0 13px -3px ${slate(0, 0.7)}`,
+    shadow: `0 0 13px -3px ${slate(0, 0.5)}`,
     border: `none`,
   },
   menu: {
@@ -159,7 +159,7 @@ export const NightSky: ITheme = {
     label: slate(95),
     helper: slate(65),
     background: slate(12.5),
-    shadow: `0 0 13px -3px ${slate(0, 0.7)}`,
+    shadow: `0 0 13px -3px ${slate(0, 0.5)}`,
     border: `none`,
     cover: slate(5, 0.75),
   },
@@ -173,7 +173,7 @@ export const NightSky: ITheme = {
     helper: slate(65),
     background: slate(12.5),
     backgroundHover: slate(17.5),
-    shadow: `0 0 13px -3px ${slate(0, 0.7)}`,
+    shadow: `0 0 13px -3px ${slate(0, 0.5)}`,
     border: `none`,
   },
 }

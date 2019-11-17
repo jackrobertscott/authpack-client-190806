@@ -14,7 +14,7 @@ export const RemovePermission: FC<{
     title: 'Remove Permission',
     subtitle: universal.app_name,
     children: create(ConfirmRemove, {
-      helper: 'Permanently remove this permission',
+      helper: 'Remove this permission',
       alert: 'Please confirm the removal of this permission',
       change: () =>
         gqlRemovePermission.fetch({ id }).then(() => change && change()),

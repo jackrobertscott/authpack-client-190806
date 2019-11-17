@@ -16,7 +16,7 @@ export const useSetup = () => {
       })
     }
     // eslint-disable-next-line
-  }, [settings.domain])
+  }, [settings.domain, settings.open])
   useEffect(() => {
     SettingsStore.update({
       ready: false,

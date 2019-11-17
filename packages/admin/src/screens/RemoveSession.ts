@@ -14,7 +14,7 @@ export const RemoveSession: FC<{
     title: 'Remove Session',
     subtitle: universal.app_name,
     children: create(ConfirmRemove, {
-      helper: 'Permanently remove this session',
+      helper: 'Remove this session',
       alert: 'Please confirm the removal of this session',
       change: () =>
         gqlRemoveSession.fetch({ id }).then(() => change && change()),

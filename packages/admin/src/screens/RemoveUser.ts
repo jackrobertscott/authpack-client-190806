@@ -14,7 +14,7 @@ export const RemoveUser: FC<{
     title: 'Remove User',
     subtitle: universal.app_name,
     children: create(ConfirmRemove, {
-      helper: 'Permanently remove this user',
+      helper: 'Remove this user',
       alert: 'Please confirm the removal of this user',
       change: () => gqlRemoveUser.fetch({ id }).then(() => change && change()),
     }),

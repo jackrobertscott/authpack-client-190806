@@ -29,7 +29,7 @@ export const RemoveUser: FC<{
         key: 'poster',
         icon: 'fire-alt',
         label: 'Remove',
-        helper: 'Permanently remove your account',
+        helper: 'Remove your account',
       }),
       create(Layout, {
         key: 'layout',
