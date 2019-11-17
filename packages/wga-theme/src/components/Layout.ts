@@ -21,7 +21,7 @@ export const Layout: FC<{
       position: 'relative',
       overflow: hide ? 'hidden' : 'visible',
       flexGrow: grow ? 1 : 0,
-      padding: padding ? 25 : 0,
+      padding: padding ? '20px 25px' : 0,
       '& > div:not(:last-child)': divide && {
         margin: column ? `0 0 20px 0` : `0 25px 0 0`,
       },

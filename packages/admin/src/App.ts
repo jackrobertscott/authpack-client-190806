@@ -14,6 +14,9 @@ export const App: FC = () => {
     children:
       gadgets.ready && universal.ready
         ? [
+            create(Toaster, {
+              key: 'toaster',
+            }),
             gadgets.bearer && gadgets.user && gadgets.team
               ? create(RouterCentral, {
                   key: 'router',
@@ -22,10 +25,9 @@ export const App: FC = () => {
                   key: 'unauthenticated',
                   loading: !gadgets,
                 }),
-            create(Toaster, {
-              key: 'toaster',
-            }),
           ]
-        : null,
+        : create(Toaster, {
+            key: 'toaster',
+          }),
   })
 }

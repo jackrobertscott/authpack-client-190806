@@ -3,7 +3,7 @@ import * as Sentry from '@sentry/browser'
 import * as serviceWorker from './serviceWorker'
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { render } from 'react-dom'
-import { BlueHarvester, Theme, IronMaiden } from 'wga-theme'
+import { NightSky, Theme } from 'wga-theme'
 import { App } from './App'
 import { UniversalStore } from './utils/universal'
 import { Universal } from './contexts/Universal'
@@ -21,9 +21,8 @@ export const Root: FC = () => {
   return create(ErrorBoundary, {
     children: create(Universal.Provider, {
       value: universal,
-      children: create(Theme.Provider, {
-        value:
-          universal.theme === 'blue_harvester' ? BlueHarvester : IronMaiden,
+      children: create(Theme, {
+        value: universal.theme === 'night_sky' ? NightSky : NightSky,
         children: create(App),
       }),
     }),

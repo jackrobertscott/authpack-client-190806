@@ -76,7 +76,7 @@ export const NightSky: ITheme = {
     background: slate(5),
     shadow: `0 0 13px -3px ${slate(0, 0.7)}`,
     border: `1px solid ${slate(2.5)}`,
-    cover: slate(5, 0.05),
+    cover: slate(5, 0.25),
   },
   /**
    * Lists.
@@ -141,9 +141,9 @@ export const NightSky: ITheme = {
   menu: {
     label: slate(95),
     helper: slate(65),
-    background: slate(25),
-    backgroundHover: slate(30),
-    border: `none`,
+    background: slate(12.5),
+    backgroundHover: slate(17.5),
+    border: `1px solid ${slate(7.5)}`,
   },
   poster: {
     label: slate(95),

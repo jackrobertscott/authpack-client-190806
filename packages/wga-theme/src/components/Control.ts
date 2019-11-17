@@ -5,11 +5,13 @@ import { Icon } from './Icon'
 import { Pointer } from './Pointer'
 
 export const Control: FC<{
+  icon?: string
+  prefix?: string
   label: string
   helper?: string
   children: ReactNode
   error?: Error
-}> = ({ label, helper, children, error }) => {
+}> = ({ icon, prefix, label, helper, children, error }) => {
   const theme = useTheme()
   return create('div', {
     className: css({
@@ -38,6 +40,8 @@ export const Control: FC<{
           error &&
             create(Alert, {
               key: 'error',
+              icon,
+              prefix,
               error,
             }),
         ],
@@ -62,8 +66,10 @@ export const Control: FC<{
 }
 
 const Alert: FC<{
+  icon?: string
+  prefix?: string
   error: Error
-}> = ({ error }) => {
+}> = ({ icon = 'flag', prefix, error }) => {
   return create('div', {
     className: css({
       all: 'unset',
@@ -77,7 +83,8 @@ const Alert: FC<{
     children: [
       create(Icon, {
         key: 'icon',
-        icon: 'bell',
+        icon,
+        prefix,
       }),
       create('div', {
         key: 'pointer',
@@ -93,7 +100,8 @@ const Alert: FC<{
           opacity: 0,
         }).concat(' alert'),
         children: create(Pointer, {
-          icon: 'bell',
+          icon,
+          prefix,
           label: 'Error',
           helper: error.message,
         }),

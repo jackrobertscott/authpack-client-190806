@@ -41,7 +41,7 @@ export type ISettings = {
 export const defaults: ISettings = {
   open: false,
   ready: false,
-  theme: 'blue_harvester',
+  theme: 'night_sky',
 }
 
 export const SettingsStore = new KeyStore<ISettings>(defaults)

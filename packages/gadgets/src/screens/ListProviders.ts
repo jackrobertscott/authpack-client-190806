@@ -15,26 +15,26 @@ export const ListProviders: FC<{
   return create(Gadgets, {
     title: '3rd Party Logins',
     subtitle: settings.app && settings.app.name,
-    children: create(Layout, {
-      column: true,
-      padding: true,
-      divide: true,
-      children: !gqlListProviders.data
-        ? null
-        : !gqlListProviders.data.providers.length
-        ? create(Poster, {
-            icon: 'handshake',
-            label: 'Providers',
-            helper: 'There are no authentication providers currently available',
-          })
-        : gqlListProviders.data.providers.map(provider => {
+    children: !gqlListProviders.data
+      ? null
+      : !gqlListProviders.data.providers.length
+      ? create(Poster, {
+          icon: 'handshake',
+          label: 'Providers',
+          helper: 'There are no authentication providers currently available',
+        })
+      : create(Layout, {
+          column: true,
+          padding: true,
+          divide: true,
+          children: gqlListProviders.data.providers.map(provider => {
             return create(Button, {
               icon: 'handshake',
               label: provider.preset,
               click: () => window.open(provider.url),
             })
           }),
-    }),
+        }),
   })
 }
 

@@ -14,7 +14,7 @@ const defaults: IUniversalStore = {
   ready: false,
   subscribed: false,
   power: false,
-  theme: 'blue_harvester',
+  theme: 'night_sky',
 }
 
 export const UniversalStore = new KeyStore<IUniversalStore>(defaults)
