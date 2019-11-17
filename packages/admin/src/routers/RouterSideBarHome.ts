@@ -26,19 +26,19 @@ export const RouterSideBarHome: FC = () => {
           {
             icon: 'user-circle',
             label: 'Users',
-            focused: router.current.path === '/users',
+            focused: !!router.current && router.current.path === '/users',
             click: () => router.change('/users'),
           },
           {
             icon: 'users',
             label: 'Teams',
-            focused: router.current.path === '/teams',
+            focused: !!router.current && router.current.path === '/teams',
             click: () => router.change('/teams'),
           },
           {
             icon: 'history',
             label: 'Sessions',
-            focused: router.current.path === '/sessions',
+            focused: !!router.current && router.current.path === '/sessions',
             click: () => router.change('/sessions'),
           },
         ],

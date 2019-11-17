@@ -110,7 +110,7 @@ export const ListUsers: FC = () => {
         : !apiListUsers.data.count &&
           create(Empty, {
             key: 'empty',
-            icon: 'users',
+            icon: 'user',
             label: 'Users',
             helper: 'Create a user manually or by using the Authenticator API',
             children: create(Button, {

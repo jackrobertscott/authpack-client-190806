@@ -113,7 +113,7 @@ export const ListMemberships: FC = () => {
         : !apiListMemberships.data.count &&
           create(Empty, {
             key: 'empty',
-            icon: 'memberships',
+            icon: 'users',
             label: 'Memberships',
             helper:
               'Create a membership manually or by using the Authenticator API',

@@ -24,13 +24,13 @@ export const RouterSideBarCustomize: FC = () => {
           {
             icon: 'handshake',
             label: 'Providers',
-            focused: router.current.path === '/providers',
+            focused: !!router.current && router.current.path === '/providers',
             click: () => router.change('/providers'),
           },
           {
             icon: 'user-shield',
             label: 'Permissions',
-            focused: router.current.path === '/permissions',
+            focused: !!router.current && router.current.path === '/permissions',
             click: () => router.change('/permissions'),
           },
         ],

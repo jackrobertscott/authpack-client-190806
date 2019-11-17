@@ -20,7 +20,7 @@ export const RouterSideBarDeveloper: FC = () => {
           {
             icon: 'globe-americas',
             label: 'Explorer',
-            focused: router.current.path === '/explorer',
+            focused: !!router.current && router.current.path === '/explorer',
             click: () => router.change('/explorer'),
           },
         ],

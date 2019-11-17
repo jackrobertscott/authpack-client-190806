@@ -112,7 +112,7 @@ export const ListSessions: FC = () => {
         : !apiListSessions.data.count &&
           create(Empty, {
             key: 'empty',
-            icon: 'sessions',
+            icon: 'history',
             label: 'Sessions',
             helper:
               'Create a session manually or by using the Authenticator API',

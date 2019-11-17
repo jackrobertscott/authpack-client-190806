@@ -33,25 +33,27 @@ export const RouterManagerApp: FC<{
                 {
                   icon: 'glasses',
                   label: 'Inspect',
-                  focused: router.current.key === '/inspect',
+                  focused:
+                    !!router.current && router.current.key === '/inspect',
                   click: () => router.change('/inspect'),
                 },
                 {
                   icon: 'sliders-h',
                   label: 'Update',
-                  focused: router.current.key === '/update',
+                  focused: !!router.current && router.current.key === '/update',
                   click: () => router.change('/update'),
                 },
                 {
                   icon: 'piggy-bank',
                   label: 'Payment',
-                  focused: router.current.key === '/payment',
+                  focused:
+                    !!router.current && router.current.key === '/payment',
                   click: () => router.change('/payment'),
                 },
                 {
                   icon: 'fire-alt',
                   label: 'Danger Zone',
-                  focused: router.current.key === '/cancel',
+                  focused: !!router.current && router.current.key === '/cancel',
                   click: () => router.change('/cancel'),
                 },
                 {
@@ -66,19 +68,21 @@ export const RouterManagerApp: FC<{
                 {
                   icon: 'glasses',
                   label: 'Inspect',
-                  focused: router.current.key === '/inspect',
+                  focused:
+                    !!router.current && router.current.key === '/inspect',
                   click: () => router.change('/inspect'),
                 },
                 {
                   icon: 'sliders-h',
                   label: 'Update',
-                  focused: router.current.key === '/update',
+                  focused: !!router.current && router.current.key === '/update',
                   click: () => router.change('/update'),
                 },
                 {
                   icon: 'wallet',
                   label: 'Payment',
-                  focused: router.current.key === '/payment',
+                  focused:
+                    !!router.current && router.current.key === '/payment',
                   click: () => router.change('/payment'),
                 },
                 {

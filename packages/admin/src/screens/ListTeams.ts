@@ -108,7 +108,7 @@ export const ListTeams: FC = () => {
         : !apiListTeams.data.count &&
           create(Empty, {
             key: 'empty',
-            icon: 'teams',
+            icon: 'users',
             label: 'Teams',
             helper: 'Create a team manually or by using the Authenticator API',
             children: create(Button, {
