@@ -17,33 +17,41 @@ export const InputContainer: FC<{
 }> = ({ children, disabled, nofocus = false }) => {
   const theme = useTheme()
   return create('div', {
-    children,
     className: css({
       all: 'unset',
       display: 'flex',
-      alignItems: 'center',
-      transition: '200ms',
       position: 'relative',
       flexGrow: 1,
-      borderRadius: theme.global.radius,
-      background: disabled
-        ? theme.input.backgroundDisabled
-        : theme.input.background,
-      border: theme.input.border,
-      color: theme.input.value,
-      'input::placeholder': {
-        color: theme.input.placeholder,
-      },
-      '&:focus-within': !nofocus && {
-        background: theme.input.backgroundHover,
-        boxShadow: theme.input.shadow,
-        color: theme.input.valueHover,
-      },
-      [`&:hover${nofocus ? ':not(:focus-within)' : ''}`]: !disabled && {
-        background: theme.input.backgroundHover,
-        boxShadow: theme.input.shadow,
-        color: theme.input.valueHover,
-      },
+    }),
+    children: create('div', {
+      children,
+      className: css({
+        all: 'unset',
+        display: 'flex',
+        alignItems: 'center',
+        transition: '200ms',
+        flexGrow: 1,
+        borderRadius: theme.global.radius,
+        background: disabled
+          ? theme.input.backgroundDisabled
+          : theme.input.background,
+        border: theme.input.border,
+        color: theme.input.value,
+        'input::placeholder': {
+          color: theme.input.placeholder,
+        },
+        '&:focus-within': !nofocus && {
+          border: theme.input.borderFocused,
+          background: theme.input.backgroundHover,
+          boxShadow: theme.input.shadow,
+          color: theme.input.valueHover,
+        },
+        [`&:hover${nofocus ? ':not(:focus-within)' : ''}`]: !disabled && {
+          background: theme.input.backgroundHover,
+          boxShadow: theme.input.shadow,
+          color: theme.input.valueHover,
+        },
+      }),
     }),
   })
 }
@@ -80,6 +88,9 @@ export const InputPopover: FC<{
         background: theme.input.background,
         boxShadow: theme.input.shadow,
         border: theme.input.border,
+        '&:focus-within': {
+          border: theme.input.borderFocused,
+        },
       }),
     }),
   })

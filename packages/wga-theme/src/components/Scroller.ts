@@ -28,6 +28,7 @@ export const Scroller: FC<{
       },
       '&::-webkit-scrollbar-track': {
         backgroundColor: 'hsla(0, 0, 0, 0)',
+        background: theme.scroller.underneath,
       },
       '&::-webkit-scrollbar-thumb': {
         cursor: 'pointer',

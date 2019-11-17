@@ -26,6 +26,7 @@ export const IronMaiden: ITheme = {
     backgroundDisabled: '#2C2C2C',
     shadow: '0 1px 10px -3px rgba(0, 0, 0, 0.15)',
     border: 'none',
+    borderFocused: `none`,
     on: '#3c933a',
     off: '#515151',
   },
@@ -51,9 +52,10 @@ export const IronMaiden: ITheme = {
     background: '#414141',
   },
   scroller: {
-    border: '1px solid #454545',
     background: '#505050',
     backgroundHover: '#999999',
+    underneath: '#030303',
+    border: '1px solid #454545',
   },
   sideBar: {
     title: '#AAAAAA',

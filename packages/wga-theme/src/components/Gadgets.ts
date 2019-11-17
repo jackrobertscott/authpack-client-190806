@@ -57,7 +57,7 @@ const Header: FC<{
     className: css({
       all: 'unset',
       display: 'flex',
-      padding: '30px 25px 25px',
+      padding: '25px 25px 20px',
       justifyContent: 'space-between',
       alignItems: 'flex-start',
       background: theme.gadgets.header,

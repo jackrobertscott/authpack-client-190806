@@ -33,7 +33,7 @@ export const Empty: FC<{
         alignItems: 'center',
         textAlign: 'center',
         width: 300,
-        padding: 40,
+        padding: 35,
         maxWidth: '100%',
         color: theme.empty.label,
         border: theme.empty.border,

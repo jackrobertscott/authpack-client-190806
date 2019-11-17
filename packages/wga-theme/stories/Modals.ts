@@ -19,16 +19,21 @@ import {
   InputSelect,
   InputBoolean,
   InputStringArray,
+  Theme,
+  NightSky,
 } from '../src/index'
 
 console.clear()
 
 const stories = storiesOf('Modals', module).addDecorator(data => {
-  return create('div', {
-    children: data(),
-    className: css({
-      display: 'flex',
-      flexGrow: 1,
+  return create(Theme, {
+    value: NightSky,
+    children: create('div', {
+      children: data(),
+      className: css({
+        display: 'flex',
+        flexGrow: 1,
+      }),
     }),
   })
 })
@@ -291,6 +296,7 @@ const SimpleSnippets: FC = () => {
         key: 'Pancake',
         icon: 'bookmark',
         label: 'Pancake Team',
+        value: 'This is a nice value',
         click: () => console.log('Pancake'),
       }),
       create(Snippet, {

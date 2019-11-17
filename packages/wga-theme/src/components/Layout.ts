@@ -23,7 +23,7 @@ export const Layout: FC<{
       flexGrow: grow ? 1 : 0,
       padding: padding ? 25 : 0,
       '& > div:not(:last-child)': divide && {
-        margin: column ? `0 0 15px 0` : `0 15px 0 0`,
+        margin: column ? `0 0 20px 0` : `0 25px 0 0`,
       },
     }),
   })

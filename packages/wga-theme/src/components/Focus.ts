@@ -39,7 +39,7 @@ export const Focus: FC<{
         alignItems: 'center',
         textAlign: 'center',
         width: 300,
-        padding: '20px 25px',
+        padding: 35,
         maxWidth: '100%',
       }),
       children: [

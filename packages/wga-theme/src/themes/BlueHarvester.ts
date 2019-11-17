@@ -34,6 +34,7 @@ export const BlueHarvester: ITheme = {
     backgroundDisabled: color(0.15),
     shadow: `0 0 13px -3px ${color(0, 0.25)}`,
     border: `none`,
+    borderFocused: `none`,
     on: color(0.6),
     off: color(0.2),
   },
@@ -59,9 +60,10 @@ export const BlueHarvester: ITheme = {
     background: color(0.25),
   },
   scroller: {
-    border: `1px solid ${color(0.2)}`,
     background: color(0.3),
     backgroundHover: color(0.4),
+    underneath: color(0.2),
+    border: `1px solid ${color(0.2)}`,
   },
   sideBar: {
     title: color(0.85),

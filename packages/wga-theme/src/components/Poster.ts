@@ -26,7 +26,7 @@ export const Poster: FC<{
         flexDirection: 'column',
         alignItems: 'center',
         textAlign: 'center',
-        padding: '20px 25px',
+        padding: 35,
         maxWidth: 300,
       }),
       children: [

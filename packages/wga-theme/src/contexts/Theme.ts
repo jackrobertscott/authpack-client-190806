@@ -31,20 +31,6 @@ export interface ITheme extends IKeys {
     backgroundHover: string
     border: string
   }
-  pointer: {
-    label: string
-    helper: string
-    background: string
-    shadow: string
-    border: string
-  }
-  menu: {
-    label: string
-    helper: string
-    background: string
-    backgroundHover: string
-    border: string
-  }
   /**
    * Screens.
    */
@@ -82,6 +68,7 @@ export interface ITheme extends IKeys {
   scroller: {
     background: string
     backgroundHover: string
+    underneath: string
     border: string
   }
   modal: {
@@ -125,6 +112,7 @@ export interface ITheme extends IKeys {
     backgroundDisabled: string
     shadow: string
     border: string
+    borderFocused: string
     on: string
     off: string
   }
@@ -142,6 +130,20 @@ export interface ITheme extends IKeys {
   /**
    * Helpers.
    */
+  pointer: {
+    label: string
+    helper: string
+    background: string
+    shadow: string
+    border: string
+  }
+  menu: {
+    label: string
+    helper: string
+    background: string
+    backgroundHover: string
+    border: string
+  }
   poster: {
     label: string
     helper: string
