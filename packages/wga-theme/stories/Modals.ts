@@ -1,5 +1,6 @@
+import * as yup from 'yup'
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import { createElement as create, FC } from 'react'
+import { createElement as create, FC, useState } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
 import {
@@ -10,6 +11,14 @@ import {
   InputString,
   Button,
   Poster,
+  Snippet,
+  useSchema,
+  Control,
+  InputNumber,
+  InputSelectMany,
+  InputSelect,
+  InputBoolean,
+  InputStringArray,
 } from '../src/index'
 
 console.clear()
@@ -31,7 +40,7 @@ stories.add('Form', () => {
       children: [
         create(SimpleIconBar, { key: 'SimpleIconBar' }),
         create(Gadgets, {
-          title: 'Users',
+          title: 'Create',
           subtitle: 'Window Gadgets',
           children: create(SimpleForm),
         }),
@@ -40,7 +49,24 @@ stories.add('Form', () => {
   })
 })
 
-stories.add('Buttons', () => {
+stories.add('Buttons & Poster', () => {
+  return create(Modal, {
+    children: create(Layout, {
+      grow: true,
+      children: [
+        create(SimpleIconBar, { key: 'SimpleIconBar' }),
+        create(Gadgets, {
+          key: 'Gadgets',
+          title: 'Buttons',
+          subtitle: 'Window Gadgets',
+          children: create(SimpleButtons),
+        }),
+      ],
+    }),
+  })
+})
+
+stories.add('Snippets', () => {
   return create(Modal, {
     children: create(Layout, {
       grow: true,
@@ -50,7 +76,7 @@ stories.add('Buttons', () => {
           key: 'Gadgets',
           title: 'Users',
           subtitle: 'Window Gadgets',
-          children: create(SimpleButtons),
+          children: create(SimpleSnippets),
         }),
       ],
     }),
@@ -86,20 +112,125 @@ const SimpleIconBar: FC = () => {
   })
 }
 
+const Foods = [
+  { value: 'Banana', label: 'Banana' },
+  { value: 'Apple', label: 'Apple' },
+  {
+    value: 'Icecream',
+    label: 'Icecream',
+    helper: 'This is bad for you',
+  },
+  { value: 'Mango', label: 'Mango' },
+]
+
 const SimpleForm: FC = () => {
+  const [foodFilter, changeFoodFilter] = useState<string>('')
+  const schema = useSchema({
+    change: console.log,
+    schema: yup.object().shape({
+      name: yup
+        .string()
+        .default('')
+        .required('This is a required field')
+        .min(5, 'Must be at least 5 characters long'),
+      age: yup.string().required('This is a required field'),
+      dogs: yup.boolean().required('This is a required field'),
+      food: yup.string().required('Tell me your fav food!'),
+      extras: yup.array().of(yup.string()),
+      emails: yup
+        .array()
+        .of(yup.string().email('Please verify your emails are valid')),
+    }),
+  })
   return create(Layout, {
     column: true,
     padding: true,
     divide: true,
     children: [
-      create(InputString, {
-        key: 'InputString',
-        value: 'Hello world!',
+      create(Control, {
+        key: 'name',
+        label: 'Name',
+        helper: 'Please use your full name',
+        error: schema.error('name'),
+        children: create(InputString, {
+          value: schema.value('name'),
+          change: schema.change('name'),
+          placeholder: 'E.g. Fred Blogs',
+        }),
+      }),
+      create(Control, {
+        key: 'age',
+        label: 'Age',
+        helper: 'Please present your age',
+        error: schema.error('age'),
+        children: create(InputNumber, {
+          value: schema.value('age'),
+          change: schema.change('age'),
+          placeholder: 'E.g. 33',
+          integer: true,
+        }),
+      }),
+      create(Control, {
+        key: 'dogs',
+        label: 'Dogs vs Cats',
+        helper: 'Do you prefer dogs over cats',
+        error: schema.error('dogs'),
+        children: create(InputBoolean, {
+          value: schema.value('dogs'),
+          change: schema.change('dogs'),
+        }),
+      }),
+      create(Control, {
+        key: 'select',
+        label: 'Favourite Food',
+        error: schema.error('food'),
+        children: create(InputSelect, {
+          value: schema.value('food'),
+          change: schema.change('food'),
+          filter: changeFoodFilter,
+          options: Foods.filter(food => food.label.includes(foodFilter)),
+        }),
+      }),
+      create(Control, {
+        key: 'extras',
+        label: 'Extras',
+        error: schema.error('extras'),
+        children: create(InputSelectMany, {
+          value: schema.value('extras'),
+          change: schema.change('extras'),
+          options: [
+            {
+              value: 'Coffee',
+              label: 'Coffee',
+              helper: 'Tastes nice.',
+            },
+            {
+              value: 'Tea',
+              label: 'Tea',
+              helper: 'Smooth to drink.',
+            },
+            {
+              value: 'Orange Juice',
+              label: 'Orange Juice',
+            },
+          ],
+        }),
+      }),
+      create(Control, {
+        key: 'array',
+        label: 'Emails',
+        error: schema.error('emails'),
+        children: create(InputStringArray, {
+          value: schema.value('emails'),
+          change: schema.change('emails'),
+          placeholder: 'Add email...',
+        }),
       }),
       create(Button, {
-        key: 'Button',
-        label: 'Submit',
-        click: () => console.log('Submit'),
+        key: 'Regular',
+        label: 'Regular',
+        disabled: !schema.valid,
+        click: () => console.log('Regular'),
       }),
     ],
   })
@@ -141,6 +272,32 @@ const SimpleButtons: FC = () => {
             disabled: true,
           }),
         ],
+      }),
+    ],
+  })
+}
+
+const SimpleSnippets: FC = () => {
+  return create(Layout, {
+    column: true,
+    children: [
+      create(Snippet, {
+        key: 'Awesome',
+        icon: 'bookmark',
+        label: 'Awesome Team',
+        click: () => console.log('Awesome'),
+      }),
+      create(Snippet, {
+        key: 'Pancake',
+        icon: 'bookmark',
+        label: 'Pancake Team',
+        click: () => console.log('Pancake'),
+      }),
+      create(Snippet, {
+        key: 'Seagul',
+        icon: 'bookmark',
+        label: 'Seagul Team',
+        click: () => console.log('Seagul'),
       }),
     ],
   })
