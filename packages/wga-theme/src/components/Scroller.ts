@@ -24,10 +24,10 @@ export const Scroller: FC<{
         cursor: 'pointer',
         display: 'initial',
         backgroundColor: 'hsla(0, 0, 0, 0)',
-        borderLeft: theme.scroller.border,
       },
       '&::-webkit-scrollbar-track': {
         backgroundColor: 'hsla(0, 0, 0, 0)',
+        borderLeft: theme.scroller.border,
         background: theme.scroller.underneath,
       },
       '&::-webkit-scrollbar-thumb': {

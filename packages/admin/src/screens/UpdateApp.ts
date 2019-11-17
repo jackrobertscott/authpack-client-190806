@@ -7,6 +7,7 @@ import {
   Control,
   InputString,
   InputStringArray,
+  InputSelect,
 } from 'wga-theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
@@ -23,7 +24,10 @@ export const UpdateApp: FC<{
     poller: value => {
       gqlUpdateApp.fetch({ ...value, id: universal.app_id }).then(({ app }) => {
         if (change) change(app.id)
-        UniversalStore.update({ app_name: app.name })
+        UniversalStore.update({
+          app_name: app.name,
+          theme: app.theme,
+        })
       })
     },
   })
@@ -53,6 +57,27 @@ export const UpdateApp: FC<{
               }),
             }),
             create(Control, {
+              key: 'theme',
+              label: 'Theme',
+              error: schema.error('theme'),
+              children: create(InputSelect, {
+                value: schema.value('theme'),
+                change: schema.change('theme'),
+                options: [
+                  {
+                    value: 'night_sky',
+                    label: 'Night Sky',
+                    helper: 'Dark theme',
+                  },
+                  {
+                    value: 'snow_storm',
+                    label: 'Snow Storm',
+                    helper: 'Light theme',
+                  },
+                ],
+              }),
+            }),
+            create(Control, {
               key: 'domains',
               label: 'Whitelisted Domains',
               helper: 'Domains allowed to make authorized requests',
@@ -70,20 +95,17 @@ export const UpdateApp: FC<{
 
 const SchemaUpdateApp = yup.object().shape({
   name: yup.string().required('Please provide the app name'),
+  theme: yup.string().required('Please select a theme'),
   domains: yup
     .array()
-    .of(
-      yup
-        .string()
-        .url('Please use a valid url')
-        .required()
-    )
+    .of(yup.string().required())
     .default([]),
 })
 
 const useGetApp = createUseServer<{
   app: {
     name: string
+    theme: string
     domains: string[]
   }
 }>({
@@ -91,6 +113,7 @@ const useGetApp = createUseServer<{
     query wgaGetApp($id: String!) {
       app: wgaGetApp(id: $id) {
         name
+        theme
         domains
       }
     }
@@ -101,13 +124,15 @@ const useUpdateApp = createUseServer<{
   app: {
     id: string
     name: string
+    theme: string
   }
 }>({
   query: `
-    mutation wgaUpdateApp($id: String!, $name: String, $domains: [String!]) {
-      app: wgaUpdateApp(id: $id, name: $name, domains: $domains) {
+    mutation wgaUpdateApp($id: String!, $name: String, $theme: String, $domains: [String!]) {
+      app: wgaUpdateApp(id: $id, name: $name, theme: $theme, domains: $domains) {
         id
         name
+        theme
       }
     }
   `,

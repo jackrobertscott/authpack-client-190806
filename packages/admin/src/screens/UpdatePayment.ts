@@ -85,6 +85,7 @@ export const UpdatePayment: FC<{
         create(Control, {
           key: 'card',
           label: 'Card',
+          helper: 'Powered by Stripe',
           error: schema.error('card'),
           children: create(InputStripe, {
             stripe,

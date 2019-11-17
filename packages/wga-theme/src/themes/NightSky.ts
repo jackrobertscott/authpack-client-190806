@@ -3,8 +3,12 @@ import { ITheme } from '../contexts/Theme'
 const slate = (
   lightness: number = 0,
   opacity: number = 1,
-  saturation: number = 15
-) => `hsla(200, ${saturation}%, ${lightness}%, ${opacity})`
+  saturation: number = 15,
+  hue: number = 200
+) =>
+  opacity === 1
+    ? `hsl(${hue}, ${saturation}%, ${lightness}%)`
+    : `hsla(${hue}, ${saturation}%, ${lightness}%, ${opacity})`
 
 export const NightSky: ITheme = {
   global: {
@@ -97,7 +101,7 @@ export const NightSky: ITheme = {
     arrow: slate(65),
     background: slate(12.5),
     backgroundHover: slate(17.5),
-    border: `1px solid ${slate(7.5)}`,
+    border: `1px solid ${slate(10)}`,
   },
   /**
    * Forms.
@@ -157,12 +161,12 @@ export const NightSky: ITheme = {
     background: slate(12.5),
     shadow: `0 0 13px -3px ${slate(0, 0.7)}`,
     border: `none`,
-    cover: slate(0),
+    cover: slate(5, 0.75),
   },
   focus: {
     label: slate(95),
     helper: slate(65),
-    background: slate(12.5),
+    background: slate(7.5),
   },
   toaster: {
     label: slate(95),

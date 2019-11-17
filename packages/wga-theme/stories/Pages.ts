@@ -11,14 +11,14 @@ import {
   Table,
   SearchBar,
   Theme,
-  NightSky,
+  SnowStorm,
 } from '../src/index'
 
 console.clear()
 
 const stories = storiesOf('Pages', module).addDecorator(data => {
   return create(Theme, {
-    value: NightSky,
+    value: SnowStorm,
     children: create('div', {
       children: data(),
       className: css({

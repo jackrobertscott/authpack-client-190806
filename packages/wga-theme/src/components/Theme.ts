@@ -1,10 +1,24 @@
 import { createElement as create, FC, ReactNode } from 'react'
-import { ITheme, ThemeContext } from '../contexts/Theme'
+import { ThemeContext } from '../contexts/Theme'
+import { NightSky } from '../themes/NightSky'
+import { SnowStorm } from '../themes/SnowStorm'
 
 export const Theme: FC<{
-  value: ITheme
+  id?: string
   children: ReactNode
-}> = ({ value, children }) => {
+}> = ({ id, children }) => {
+  let value
+  switch (id) {
+    case 'night_sky':
+      value = NightSky
+      break
+    case 'snow_storm':
+      value = SnowStorm
+      break
+    default:
+      value = NightSky
+      break
+  }
   return create(ThemeContext.Provider, {
     value,
     children,

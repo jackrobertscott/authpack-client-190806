@@ -3,7 +3,7 @@ import * as Sentry from '@sentry/browser'
 import * as serviceWorker from './serviceWorker'
 import { createElement as create, FC, useState, useEffect } from 'react'
 import { render } from 'react-dom'
-import { Theme, NightSky } from 'wga-theme'
+import { Theme } from 'wga-theme'
 import { SettingsStore } from './utils/settings'
 import { Settings } from './contexts/Settings'
 import { App } from './App'
@@ -22,7 +22,7 @@ export const Root: FC = () => {
     children: create(Settings.Provider, {
       value: settings,
       children: create(Theme, {
-        value: settings.theme === 'night_sky' ? NightSky : NightSky,
+        id: settings.app && settings.app.theme,
         children: create(App),
       }),
     }),

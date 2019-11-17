@@ -7,10 +7,10 @@ export type ISettings = {
   bearer?: string
   subscribed?: boolean
   power?: boolean
-  theme?: string
   app?: {
     id: string
     name: string
+    theme: string
     force_teams: boolean
   }
   user?: {
@@ -41,7 +41,6 @@ export type ISettings = {
 export const defaults: ISettings = {
   open: false,
   ready: false,
-  theme: 'night_sky',
 }
 
 export const SettingsStore = new KeyStore<ISettings>(defaults)

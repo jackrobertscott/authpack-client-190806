@@ -19,6 +19,7 @@ export const useSetup = () => {
           app_domain_key: app.keys.domain,
           subscribed: app.subscribed,
           power: app.power,
+          theme: app.theme,
         })
       })
     } else {
@@ -48,6 +49,7 @@ const useGetApp = createUseServer<{
   app: {
     id: string
     name: string
+    theme: string
     subscribed: boolean
     power: boolean
     keys: {
@@ -60,6 +62,7 @@ const useGetApp = createUseServer<{
       app: wgaGetApp(id: $id) {
         id
         name
+        theme
         subscribed
         power
         keys {

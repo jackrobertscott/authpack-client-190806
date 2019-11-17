@@ -31,16 +31,22 @@ export const ShowApp: FC = () => {
           value: app.name,
         }),
         create(Snippet, {
+          key: 'theme',
+          icon: 'magic',
+          label: 'Theme',
+          value: app.theme || 'default',
+        }),
+        create(Snippet, {
           key: 'power',
           icon: 'power-off',
           label: 'Power',
-          value: app.power,
+          value: String(app.power),
         }),
         create(Snippet, {
           key: 'subscribed',
           icon: 'bolt',
           label: 'Subscribed',
-          value: app.subscribed,
+          value: String(app.subscribed),
         }),
         create(Snippet, {
           key: 'created',
@@ -69,6 +75,7 @@ const useGetApp = createUseServer<{
     created: string
     updated: string
     name: string
+    theme: string
     power: boolean
     subscribed: boolean
   }
@@ -80,6 +87,7 @@ const useGetApp = createUseServer<{
         created
         updated
         name
+        theme
         power
         subscribed
       }

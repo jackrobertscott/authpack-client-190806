@@ -87,10 +87,7 @@ export const InputPopover: FC<{
         borderRadius: theme.global.radius,
         background: theme.input.background,
         boxShadow: theme.input.shadow,
-        border: theme.input.border,
-        '&:focus-within': {
-          border: theme.input.borderFocused,
-        },
+        border: theme.input.borderFocused,
       }),
     }),
   })
@@ -116,7 +113,9 @@ export const InputOption: FC<{
       padding: 15,
       flexGrow: 1,
       color: theme.input.label,
-      borderTop: theme.input.border,
+      '&:not(:last-child)': {
+        borderBottom: theme.input.border,
+      },
       background: reverse
         ? theme.input.backgroundDisabled
         : theme.input.background,

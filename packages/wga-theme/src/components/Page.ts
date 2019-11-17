@@ -46,6 +46,7 @@ export const Page: FC<{
             className: css({
               display: 'flex',
               flexDirection: 'column',
+              position: 'relative',
               flexGrow: 1,
             }),
           }),

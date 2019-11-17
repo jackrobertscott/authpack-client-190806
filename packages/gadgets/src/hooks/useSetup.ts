@@ -88,6 +88,7 @@ const useCurrentApp = createUseServer<{
   app: {
     id: string
     name: string
+    theme: string
     power: boolean
     subscribed: boolean
     force_teams: boolean
@@ -98,6 +99,7 @@ const useCurrentApp = createUseServer<{
       app: wgaCurrentApp {
         id
         name
+        theme
         power
         subscribed
         force_teams
