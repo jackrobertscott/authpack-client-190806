@@ -29,6 +29,7 @@ export * from './components/SearchBar'
 export * from './components/SideBar'
 export * from './components/Snippet'
 export * from './components/Table'
+export * from './components/Theme'
 export * from './components/Toaster'
 /**
  * Contexts
@@ -51,6 +52,7 @@ export * from './hooks/useToaster'
  */
 export * from './themes/IronMaiden'
 export * from './themes/BlueHarvester'
+export * from './themes/NightSky'
 /**
  * Utils
  */

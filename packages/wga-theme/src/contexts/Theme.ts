@@ -9,55 +9,17 @@ export interface ITheme extends IKeys {
   global: {
     radius: number
   }
-  button: {
-    label: string
-    labelHover: string
-    labelDisabled: string
+  /**
+   * Navigation.
+   */
+  iconBar: {
+    icon: string
+    iconHover: string
+    iconFocused: string
+    iconBackground: string
+    iconBackgroundHover: string
     background: string
-    backgroundMinor: string
-    backgroundDisabled: string
-    backgroundHover: string
-    shadow: string
     border: string
-  }
-  input: {
-    label: string
-    helper: string
-    placeholder: string
-    value: string
-    valueHover: string
-    background: string
-    backgroundHover: string
-    backgroundDisabled: string
-    shadow: string
-    border: string
-    on: string
-    off: string
-  }
-  gadgets: {
-    title: string
-    subtitle: string
-    branding: string
-    brandingHover: string
-    header: string
-    border: string
-    background: string
-  }
-  page: {
-    title: string
-    subtitle: string
-    branding: string
-    brandingHover: string
-    label: string
-    labelHover: string
-    header: string
-    headerHover: string
-    border: string
-    background: string
-  }
-  scroller: {
-    background: string
-    backgroundHover: string
   }
   sideBar: {
     title: string
@@ -67,25 +29,6 @@ export interface ITheme extends IKeys {
     optionsFocused: string
     background: string
     backgroundHover: string
-    border: string
-  }
-  searchBar: {
-    label: string
-    labelHover: string
-    labelDisabled: string
-    placeholder: string
-    background: string
-    backgroundHover: string
-    backgroundDisabled: string
-    border: string
-  }
-  iconBar: {
-    icon: string
-    iconHover: string
-    iconFocused: string
-    iconBackground: string
-    iconBackgroundHover: string
-    background: string
     border: string
   }
   pointer: {
@@ -102,11 +45,63 @@ export interface ITheme extends IKeys {
     backgroundHover: string
     border: string
   }
+  /**
+   * Screens.
+   */
+  page: {
+    title: string
+    subtitle: string
+    branding: string
+    brandingHover: string
+    label: string
+    labelHover: string
+    header: string
+    headerHover: string
+    border: string
+    background: string
+  }
+  gadgets: {
+    title: string
+    subtitle: string
+    branding: string
+    brandingHover: string
+    header: string
+    border: string
+    background: string
+  }
+  searchBar: {
+    label: string
+    labelHover: string
+    labelDisabled: string
+    placeholder: string
+    background: string
+    backgroundHover: string
+    backgroundDisabled: string
+    border: string
+  }
+  scroller: {
+    background: string
+    backgroundHover: string
+    border: string
+  }
   modal: {
     background: string
     shadow: string
     border: string
     cover: string
+  }
+  /**
+   * Lists.
+   */
+  table: {
+    label: string
+    value: string
+    valueHover: string
+    header: string
+    headerHover: string
+    background: string
+    backgroundHover: string
+    border: string
   }
   snippet: {
     label: string
@@ -116,13 +111,41 @@ export interface ITheme extends IKeys {
     backgroundHover: string
     border: string
   }
-  table: {
+  /**
+   * Forms.
+   */
+  input: {
     label: string
+    helper: string
+    placeholder: string
     value: string
-    header: string
-    headerHover: string
+    valueHover: string
     background: string
     backgroundHover: string
+    backgroundDisabled: string
+    shadow: string
+    border: string
+    on: string
+    off: string
+  }
+  button: {
+    label: string
+    labelHover: string
+    labelDisabled: string
+    background: string
+    backgroundMinor: string
+    backgroundDisabled: string
+    backgroundHover: string
+    shadow: string
+    border: string
+  }
+  /**
+   * Helpers.
+   */
+  poster: {
+    label: string
+    helper: string
+    background: string
     border: string
   }
   empty: {
@@ -133,6 +156,11 @@ export interface ITheme extends IKeys {
     border: string
     cover: string
   }
+  focus: {
+    label: string
+    helper: string
+    background: string
+  }
   toaster: {
     label: string
     helper: string
@@ -141,23 +169,12 @@ export interface ITheme extends IKeys {
     shadow: string
     border: string
   }
-  poster: {
-    label: string
-    helper: string
-    background: string
-    border: string
-  }
-  focus: {
-    label: string
-    helper: string
-    background: string
-  }
 }
 
-export const Theme = createContext<ITheme>(IronMaiden)
+export const ThemeContext = createContext<ITheme>(IronMaiden)
 
 export const useTheme = (overrides: Partial<ITheme> = {}): ITheme => {
-  const theme = useContext(Theme)
+  const theme = useContext(ThemeContext)
   return Object.keys(theme).reduce((all, key) => {
     if (overrides[key]) all[key] = { ...theme[key], ...overrides[key] }
     return all

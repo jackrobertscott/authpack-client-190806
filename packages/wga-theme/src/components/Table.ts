@@ -77,7 +77,7 @@ const Header: FC<{
         className: css({
           all: 'unset',
           display: 'table-cell',
-          padding: 25,
+          padding: '20px 25px',
           color: theme.table.label,
           borderBottom: theme.table.border,
           transition: '200ms',
@@ -85,34 +85,30 @@ const Header: FC<{
             cursor: 'pointer',
             background: theme.table.headerHover,
           },
-          '&:not(:last-child)': {
-            borderRight: theme.table.border,
-          },
         }),
         children: create('div', {
           className: css({
             all: 'unset',
             display: 'flex',
-            justifyContent: 'space-between',
             alignItems: 'center',
           }),
           children: [
-            create('div', {
-              key: 'label',
-              children: label,
-            }),
             icon &&
               create('div', {
                 key: 'icon',
                 className: css({
                   marginTop: 1,
-                  marginLeft: 15,
+                  marginRight: 15,
                 }),
                 children: create(Icon, {
                   icon,
                   prefix,
                 }),
               }),
+            create('div', {
+              key: 'label',
+              children: label,
+            }),
           ],
         }),
       })
@@ -134,10 +130,12 @@ const Row: FC<{
     className: css({
       all: 'unset',
       display: 'table-row',
+      color: theme.table.value,
       background: theme.table.background,
       transition: '200ms',
       '&:hover': click && {
         cursor: 'pointer',
+        color: theme.table.valueHover,
         background: theme.table.backgroundHover,
       },
     }),
@@ -160,12 +158,8 @@ const Cell: FC<{
     className: css({
       all: 'unset',
       display: 'table-cell',
-      padding: 25,
-      color: theme.table.value,
+      padding: '20px 25px',
       borderBottom: theme.table.border,
-      '&:not(:last-child)': {
-        borderRight: theme.table.border,
-      },
     }),
     children: create('div', {
       className: css({

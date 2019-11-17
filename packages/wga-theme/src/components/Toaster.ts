@@ -19,7 +19,7 @@ export const Toaster: FC<{
       right: 0,
       bottom: 0,
       zIndex: 1250,
-      padding: 25,
+      padding: '20px 25px',
     }),
     children: toaster.map(({ id, icon, prefix, label, helper, close }) => {
       return create('div', {

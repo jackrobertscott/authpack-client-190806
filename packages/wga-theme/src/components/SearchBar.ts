@@ -70,7 +70,7 @@ const Searcher: FC<{
       alignItems: 'center',
       transition: '200ms',
       cursor: 'pointer',
-      padding: 25,
+      padding: '20px 25px 25px',
       flexGrow: 1,
       color: theme.searchBar.label,
       background: theme.searchBar.background,
@@ -121,7 +121,7 @@ const Option: FC<{
       display: 'flex',
       alignItems: 'center',
       transition: '200ms',
-      padding: 25,
+      padding: '20px 25px 25px',
       cursor: disabled || !click ? undefined : 'pointer',
       color: disabled ? theme.searchBar.labelDisabled : theme.searchBar.label,
       background: disabled

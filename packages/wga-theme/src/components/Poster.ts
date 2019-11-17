@@ -26,8 +26,8 @@ export const Poster: FC<{
         flexDirection: 'column',
         alignItems: 'center',
         textAlign: 'center',
+        padding: '20px 25px',
         maxWidth: 300,
-        padding: 25,
       }),
       children: [
         create(Icon, {
@@ -52,7 +52,7 @@ export const Poster: FC<{
             children: helper,
             className: css({
               color: theme.poster.helper,
-              marginTop: 10,
+              marginTop: 5,
             }),
           }),
         children &&

@@ -39,7 +39,7 @@ export const Focus: FC<{
         alignItems: 'center',
         textAlign: 'center',
         width: 300,
-        padding: 25,
+        padding: '20px 25px',
         maxWidth: '100%',
       }),
       children: [
@@ -65,7 +65,7 @@ export const Focus: FC<{
             children: helper,
             className: css({
               color: theme.focus.helper,
-              marginTop: 10,
+              marginTop: 5,
             }),
           }),
         children &&

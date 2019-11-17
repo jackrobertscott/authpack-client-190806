@@ -30,17 +30,16 @@ export const Page: FC<{
       background: theme.page.background,
     }),
     children: [
-      create(Header, {
-        key: 'header',
-        title,
-        subtitle,
-        corner,
-      }),
       create(Scroller, {
         key: 'scroller',
-        border: theme.page.border,
         disable: hidden,
         children: [
+          create(Header, {
+            key: 'header',
+            title,
+            subtitle,
+            corner,
+          }),
           create('div', {
             key: 'children',
             children,
@@ -95,7 +94,7 @@ const Header: FC<{
           all: 'unset',
           display: 'flex',
           flexDirection: 'column',
-          padding: 25,
+          padding: '25px 25px 20px',
         }),
         children: [
           create('div', {
@@ -140,7 +139,7 @@ const Corner: FC<{
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'flex-end',
-      padding: '25px',
+      padding: '25px 25px 20px',
       cursor: 'pointer',
       transition: '200ms',
       color: theme.page.label,
@@ -178,7 +177,7 @@ const Branding: FC<{
       all: 'unset',
       display: 'flex',
       justifyContent: 'flex-end',
-      padding: 25,
+      padding: '20px 25px',
     }),
     children: create('a', {
       href: url,

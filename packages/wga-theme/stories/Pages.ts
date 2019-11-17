@@ -3,16 +3,28 @@ import faker from 'faker'
 import { createElement as create, FC, useState } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
-import { IconBar, Layout, SideBar, Page, Table, SearchBar } from '../src/index'
+import {
+  IconBar,
+  Layout,
+  SideBar,
+  Page,
+  Table,
+  SearchBar,
+  Theme,
+  NightSky,
+} from '../src/index'
 
 console.clear()
 
 const stories = storiesOf('Pages', module).addDecorator(data => {
-  return create('div', {
-    children: data(),
-    className: css({
-      display: 'flex',
-      flexGrow: 1,
+  return create(Theme, {
+    value: NightSky,
+    children: create('div', {
+      children: data(),
+      className: css({
+        display: 'flex',
+        flexGrow: 1,
+      }),
     }),
   })
 })
@@ -39,6 +51,7 @@ const SimpleIconBar: FC = () => {
       {
         icon: 'sliders-h',
         label: 'Preferences',
+        helper: 'Change your settings',
       },
       {
         icon: 'code',
@@ -154,7 +167,7 @@ const FakeUsers: Array<{
   name: string
   email: string
   username: string
-}> = Array.from(Array(7).keys()).map(() => ({
+}> = Array.from(Array(15).keys()).map(() => ({
   id: faker.random.uuid(),
   name: faker.name.findName(),
   email: faker.internet.email(),

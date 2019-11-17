@@ -21,7 +21,6 @@ export const Gadgets: FC<{
       background: theme.gadgets.background,
     }),
     children: create(Scroller, {
-      border: theme.gadgets.border,
       children: [
         create(Header, {
           key: 'header',
@@ -115,7 +114,7 @@ const Branding: FC<{
       all: 'unset',
       display: 'flex',
       justifyContent: 'flex-end',
-      padding: '25px 25px 30px',
+      padding: '20px 25px',
     }),
     children: create('a', {
       href: url,

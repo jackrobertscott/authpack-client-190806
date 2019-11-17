@@ -6,8 +6,7 @@ export const Scroller: FC<{
   children: ReactNode
   disable?: boolean
   maxheight?: number
-  border?: string
-}> = ({ children, disable, maxheight, border }) => {
+}> = ({ children, disable, maxheight }) => {
   const theme = useTheme()
   return create('div', {
     children,
@@ -25,7 +24,7 @@ export const Scroller: FC<{
         cursor: 'pointer',
         display: 'initial',
         backgroundColor: 'hsla(0, 0, 0, 0)',
-        borderLeft: border,
+        borderLeft: theme.scroller.border,
       },
       '&::-webkit-scrollbar-track': {
         backgroundColor: 'hsla(0, 0, 0, 0)',
@@ -33,7 +32,7 @@ export const Scroller: FC<{
       '&::-webkit-scrollbar-thumb': {
         cursor: 'pointer',
         transition: '200ms',
-        borderLeft: border,
+        borderLeft: theme.scroller.border,
         background: theme.scroller.background,
       },
       '&::-webkit-scrollbar-thumb:hover': {

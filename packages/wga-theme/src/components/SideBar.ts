@@ -54,7 +54,7 @@ const Title: FC<{
     className: css({
       lineHeight: '1em',
       fontSize: '1.5rem',
-      padding: 25,
+      padding: '25px 25px 20px',
       marginBottom: 48,
       color: theme.sideBar.title,
     }),
@@ -71,7 +71,7 @@ const Footer: FC<{
       whiteSpace: 'pre',
       transition: '200ms',
       marginTop: 'auto',
-      padding: 25,
+      padding: '20px 25px 25px',
       color: theme.sideBar.footer,
     }),
   })

@@ -51,6 +51,7 @@ export const IronMaiden: ITheme = {
     background: '#414141',
   },
   scroller: {
+    border: '1px solid #454545',
     background: '#505050',
     backgroundHover: '#999999',
   },
@@ -114,6 +115,7 @@ export const IronMaiden: ITheme = {
   table: {
     label: '#CCCCCC',
     value: '#FFFFFF',
+    valueHover: '#FFFFFF',
     header: '#4A4A4A',
     headerHover: '#585858',
     background: '#4F4F4F',

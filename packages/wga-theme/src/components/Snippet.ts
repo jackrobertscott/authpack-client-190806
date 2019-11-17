@@ -19,7 +19,7 @@ export const Snippet: FC<{
       justifyContent: 'space-between',
       transition: '200ms',
       cursor: click && 'pointer',
-      padding: 25,
+      padding: '20px 25px',
       color: theme.snippet.label,
       background: theme.snippet.background,
       borderBottom: theme.snippet.border,
