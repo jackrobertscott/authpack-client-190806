@@ -20,14 +20,9 @@ export const App: FC = () => {
       children: create(Root, {
         theme: universal.theme,
         children: create(Fragment, {
-          children: [
-            create(Admin, {
-              key: 'admin',
-            }),
-            create(Toaster, {
-              key: 'toaster',
-            }),
-          ],
+          children: create(Toaster, {
+            children: create(Admin),
+          }),
         }),
       }),
     }),

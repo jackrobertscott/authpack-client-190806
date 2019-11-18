@@ -1,5 +1,5 @@
-import { useState, useMemo, useEffect, useRef } from 'react'
-import { ToasterStore } from '../utils/toaster'
+import { useState, useMemo, useRef } from 'react'
+import { useToaster } from '../hooks/useToaster'
 import { graphql } from '../utils/graphql'
 import { useMounted } from './useMounted'
 
@@ -25,6 +25,7 @@ export const useGQL = <T>({
 }) => {
   const count = useRef(0)
   const mounted = useMounted()
+  const toaster = useToaster()
   const [data, dataChange] = useState<T | undefined>()
   const [loading, loadingChange] = useState<boolean>()
   const [error, errorChange] = useState<Error | undefined>()
@@ -59,9 +60,9 @@ export const useGQL = <T>({
               errorChange(e)
               loadingChange(false)
             }
-            ToasterStore.add({
+            toaster.add({
               icon: e.icon || 'bell',
-              label: `${e.status || 'Error'} ${e.code}`,
+              label: e.status || 'Error',
               helper: e.message,
             })
             return Promise.reject(e)

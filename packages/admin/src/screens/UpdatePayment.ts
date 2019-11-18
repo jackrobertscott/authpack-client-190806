@@ -9,7 +9,7 @@ import {
   useStripe,
   Button,
   InputStripe,
-  ToasterStore,
+  useToaster,
 } from 'wga-theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
@@ -19,6 +19,7 @@ import { UniversalStore } from '../utils/universal'
 export const UpdatePayment: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
+  const toaster = useToaster()
   const universal = useUniversal()
   const gqlUpdatePayment = useUpdatePayment()
   const payment = useStripe(stripe)
@@ -44,7 +45,7 @@ export const UpdatePayment: FC<{
             })
         })
         .catch(error => {
-          ToasterStore.add({
+          toaster.add({
             icon: 'credit-card',
             label: 'Card Error',
             helper: error.message || 'There was a problem processing the card',

@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react'
+import { createContext } from 'react'
 import { SnowStorm } from '../themes/SnowStorm'
 
 interface IKeys {
@@ -176,11 +176,3 @@ export interface ITheme extends IKeys {
 }
 
 export const ThemeContext = createContext<ITheme>(SnowStorm)
-
-export const useTheme = (overrides: Partial<ITheme> = {}): ITheme => {
-  const theme = useContext(ThemeContext)
-  return Object.keys(theme).reduce((all, key) => {
-    if (overrides[key]) all[key] = { ...theme[key], ...overrides[key] }
-    return all
-  }, theme)
-}

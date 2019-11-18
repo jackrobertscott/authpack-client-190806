@@ -1,17 +1,16 @@
-import { createElement as create, FC, Fragment } from 'react'
-import { useRouter } from 'wga-theme'
+import queryString from 'query-string'
+import { createElement as create, FC, useRef } from 'react'
 import { Gadgets } from '../screens/Gadgets'
 import { Oauth } from '../screens/Oauth'
 
 export const RouterCentral: FC = () => {
-  const router = useRouter({
-    nomatch: '/gadgets',
-    options: [
-      { path: '/gadgets', children: create(Gadgets) },
-      { path: '/oauth', children: create(Oauth) },
-    ],
-  })
-  return create(Fragment, {
-    children: router.current ? router.current.children : null,
-  })
+  const query = useRef(queryString.parse(document.location.search))
+  if (query.current.code) {
+    return create(Oauth, {
+      code: Array.isArray(query.current.code)
+        ? query.current.code[0]
+        : query.current.code,
+    })
+  }
+  return create(Gadgets)
 }

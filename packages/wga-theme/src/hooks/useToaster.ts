@@ -1,8 +1,6 @@
-import { useStore } from './useStore'
-import { ToasterStore } from '../utils/toaster'
+import { useContext } from 'react'
+import { ToasterContext } from '../contexts/Toaster'
 
 export const useToaster = () => {
-  return useStore({
-    store: ToasterStore,
-  })
+  return useContext(ToasterContext)
 }

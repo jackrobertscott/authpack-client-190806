@@ -172,7 +172,7 @@ export const SnowStorm: ITheme = {
   },
   toaster: {
     label: slate(95),
-    helper: slate(65),
+    helper: slate(80),
     background: slate(50),
     backgroundHover: slate(35),
     shadow: `0 0 13px -3px ${slate(25, 0.25)}`,

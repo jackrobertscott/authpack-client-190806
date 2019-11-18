@@ -1,6 +1,6 @@
 import { createElement as create, FC, ReactNode } from 'react'
 import { css } from 'emotion'
-import { useTheme } from '../contexts/Theme'
+import { useTheme } from '../hooks/useTheme'
 import { Scroller } from './Scroller'
 import { Icon } from './Icon'
 

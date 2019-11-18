@@ -1,14 +1,68 @@
-import { createElement as create, FC } from 'react'
-import { useTheme } from '../contexts/Theme'
+import {
+  createElement as create,
+  FC,
+  ReactNode,
+  useState,
+  useMemo,
+  Fragment,
+} from 'react'
 import { css } from 'emotion'
 import { Icon } from './Icon'
-import { useToaster } from '../hooks/useToaster'
+import { useTheme } from '../hooks/useTheme'
+import { ToasterArray, ToasterContext } from '../contexts/Toaster'
 
 export const Toaster: FC<{
+  children: ReactNode
+  initial?: ToasterArray
   width?: number
-}> = ({ width = 300 }) => {
+}> = ({ children, initial = [], width }) => {
+  const [current, setCurrent] = useState<ToasterArray>(initial)
+  const add = (
+    toast: {
+      icon?: string
+      prefix?: string
+      label: string
+      helper: string
+    },
+    timer: number = 5000
+  ) => {
+    const id = Math.random()
+      .toString(36)
+      .substring(6)
+    setCurrent([...current, { ...toast, id, close: () => remove(id) }])
+    setTimeout(() => remove(id), timer)
+  }
+  const remove = (id: string) => {
+    setCurrent(current.filter((i: any) => i.id !== id))
+  }
+  const value = useMemo(() => {
+    return {
+      current,
+      add,
+      remove,
+    }
+  }, [current])
+  return create(ToasterContext.Provider, {
+    value,
+    children: [
+      create(Fragment, {
+        key: 'children',
+        children,
+      }),
+      create(ToasterAlerts, {
+        key: 'toaster',
+        current,
+        width,
+      }),
+    ],
+  })
+}
+
+export const ToasterAlerts: FC<{
+  current: ToasterArray
+  width?: number
+}> = ({ current, width = 300 }) => {
   const theme = useTheme()
-  const toaster = useToaster()
   return create('div', {
     className: css({
       all: 'unset',
@@ -21,7 +75,7 @@ export const Toaster: FC<{
       zIndex: 1250,
       padding: '20px 25px',
     }),
-    children: toaster.map(({ id, icon, prefix, label, helper, close }) => {
+    children: current.map(({ id, icon, prefix, label, helper, close }) => {
       return create('div', {
         key: id,
         className: css({

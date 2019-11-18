@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 import { useState, useMemo, useRef, useEffect } from 'react'
-import { ToasterStore } from '../utils/toaster'
+import { useToaster } from '../hooks/useToaster'
 import { drip } from '../utils/throttle'
 import { useMounted } from './useMounted'
 
@@ -16,6 +16,7 @@ export const useSchema = ({
   poller?: (value: { [key: string]: any }) => void
 }) => {
   const mounted = useMounted()
+  const toaster = useToaster()
   const [valid, validChange] = useState<boolean>(false)
   const [ready, readyChange] = useState<boolean>(false)
   const [state, stateChange] = useState<{ [key: string]: any }>({
@@ -90,7 +91,7 @@ export const useSchema = ({
             .validate(state, { stripUnknown: true })
             .then(data => submit(data))
             .catch(e => {
-              ToasterStore.add({
+              toaster.add({
                 icon: 'bell',
                 label: 'Error',
                 helper: e.message,

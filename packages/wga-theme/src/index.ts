@@ -46,6 +46,7 @@ export * from './hooks/useRouter'
 export * from './hooks/useSchema'
 export * from './hooks/useStore'
 export * from './hooks/useStripe'
+export * from './hooks/useTheme'
 export * from './hooks/useToaster'
 /**
  * Themes
@@ -61,5 +62,4 @@ export * from './utils/history'
 export * from './utils/monaco'
 export * from './utils/pretty'
 export * from './utils/throttle'
-export * from './utils/toaster'
 export * from './utils/yup'

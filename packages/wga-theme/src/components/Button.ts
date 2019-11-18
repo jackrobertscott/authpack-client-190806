@@ -1,6 +1,7 @@
 import { createElement as create, FC } from 'react'
 import { css } from 'emotion'
-import { useTheme, ITheme } from '../contexts/Theme'
+import { ITheme } from '../contexts/Theme'
+import { useTheme } from '../hooks/useTheme'
 import { Icon } from './Icon'
 
 export const Button: FC<{

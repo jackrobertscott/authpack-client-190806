@@ -8,7 +8,7 @@ import {
   Control,
   InputString,
   Button,
-  ToasterStore,
+  useToaster,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
@@ -16,6 +16,7 @@ import { createUseServer } from '../hooks/useServer'
 export const UpdateUserPassword: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
+  const toaster = useToaster()
   const settings = useSettings()
   const gqlUpdatePassword = useUpdatePassword()
   const schema = useSchema({
@@ -24,7 +25,7 @@ export const UpdateUserPassword: FC<{
       gqlUpdatePassword.fetch({ ...value }).then(({ user }) => {
         if (change) change(user.id)
         schema.reset()
-        ToasterStore.add({
+        toaster.add({
           icon: 'check',
           label: 'Success',
           helper: 'Password has been changed',

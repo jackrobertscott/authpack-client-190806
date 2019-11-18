@@ -1,6 +1,6 @@
 import { createElement as create, ReactNode, FC } from 'react'
 import { css } from 'emotion'
-import { useTheme } from '../contexts/Theme'
+import { useTheme } from '../hooks/useTheme'
 
 export const Scroller: FC<{
   children: ReactNode

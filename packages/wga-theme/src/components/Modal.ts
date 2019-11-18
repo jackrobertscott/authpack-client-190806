@@ -1,7 +1,8 @@
 import { createElement as create, FC, ReactNode, useRef } from 'react'
 import { css } from 'emotion'
-import { useTheme } from '../contexts/Theme'
+import { useTheme } from '../hooks/useTheme'
 import { Portal } from './Portal'
+import { Toaster } from './Toaster'
 
 export const Modal: FC<{
   id?: string
@@ -38,7 +39,11 @@ export const Modal: FC<{
         background: theme.modal.cover,
       }),
       children: create('div', {
-        children: visible ? children : null,
+        children: !visible
+          ? null
+          : create(Toaster, {
+              children,
+            }),
         className: css({
           all: 'unset',
           display: 'flex',

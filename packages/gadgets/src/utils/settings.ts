@@ -5,13 +5,13 @@ export type ISettings = {
   ready: boolean
   domain?: string
   bearer?: string
-  subscribed?: boolean
-  power?: boolean
   app?: {
     id: string
     name: string
     theme: string
     force_teams: boolean
+    subscribed: boolean
+    power: boolean
   }
   user?: {
     id: string

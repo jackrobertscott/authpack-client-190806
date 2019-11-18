@@ -1,6 +1,6 @@
 import { createElement as create, FC, useRef, useEffect } from 'react'
 import { css } from 'emotion'
-import { useTheme } from '../contexts/Theme'
+import { useTheme } from '../hooks/useTheme'
 import { InputContainer } from './Input'
 
 export const InputStripe: FC<{

@@ -1,6 +1,6 @@
 import { createElement as create, FC, ReactNode, useState } from 'react'
 import { css } from 'emotion'
-import { useTheme } from '../contexts/Theme'
+import { useTheme } from '../hooks/useTheme'
 import { Icon } from './Icon'
 import { Pointer } from './Pointer'
 import { Menu } from './Menu'

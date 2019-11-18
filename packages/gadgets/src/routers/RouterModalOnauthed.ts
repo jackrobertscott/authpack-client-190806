@@ -76,6 +76,7 @@ export const RouterModalOnauthed: FC<{
           {
             icon: 'user-circle',
             label: 'User',
+            focused: router.current && router.current.key.startsWith('/user'),
             options: [
               {
                 icon: 'user-cog',
@@ -109,6 +110,7 @@ export const RouterModalOnauthed: FC<{
             click: !settings.team
               ? () => router.change('/team/create')
               : undefined,
+            focused: router.current && router.current.key.startsWith('/team'),
             options: !settings.team
               ? undefined
               : [
@@ -154,6 +156,7 @@ export const RouterModalOnauthed: FC<{
             icon: 'power-off',
             label: 'Logout',
             click: () => router.change('/logout'),
+            focused: router.current && router.current.key === '/logout',
           },
           {
             icon: 'times-circle',

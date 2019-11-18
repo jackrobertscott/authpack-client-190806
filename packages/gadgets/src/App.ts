@@ -20,14 +20,9 @@ export const App: FC = () => {
       children: create(Root, {
         theme: settings.app && settings.app.theme,
         children: create(Fragment, {
-          children: [
-            create(RouterCentral, {
-              key: 'router',
-            }),
-            create(Toaster, {
-              key: 'toaster',
-            }),
-          ],
+          children: create(Toaster, {
+            children: create(RouterCentral),
+          }),
         }),
       }),
     }),

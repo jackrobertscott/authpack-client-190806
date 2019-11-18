@@ -1,5 +1,5 @@
 import { createElement as create, FC, ReactNode } from 'react'
-import { useTheme } from '../contexts/Theme'
+import { useTheme } from '../hooks/useTheme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
 import { Portal } from './Portal'

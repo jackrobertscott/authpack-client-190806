@@ -2,7 +2,7 @@ import { createElement as create, FC } from 'react'
 import { css } from 'emotion'
 import { InputContainer } from './Input'
 import { Icon } from './Icon'
-import { useTheme } from '../contexts/Theme'
+import { useTheme } from '../hooks/useTheme'
 
 export const InputBoolean: FC<{
   value?: boolean

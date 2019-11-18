@@ -22,7 +22,6 @@ export class Gadgets {
     this.store = this.createStore(this.options)
     this.iframe = this.createIFrame(this.options)
     this.radio = this.createRadio(this.iframe)
-    this.sendMessage('plugin:current', this.store.current)
   }
   /**
    * Public...
@@ -86,6 +85,7 @@ export class Gadgets {
         console.log(`Plugin received: ${name} @ ${Date.now() % 86400000}`)
       switch (name) {
         case 'gadgets:loaded':
+          this.sendMessage('plugin:current', this.store.current)
           this.loaded = true
           const stack = [...this.queue]
           for (const message of stack) {

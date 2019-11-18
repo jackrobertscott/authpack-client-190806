@@ -176,6 +176,6 @@ export const NightSky: ITheme = {
     background: slate(12.5),
     backgroundHover: slate(17.5),
     shadow: `0 0 13px -3px ${slate(0, 0.5)}`,
-    border: `none`,
+    border: `1px solid ${slate(55)}`,
   },
 }
