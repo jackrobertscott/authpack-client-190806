@@ -95,7 +95,7 @@ export const CreateTeam: FC<{
 const SchemaCreateTeam = yup.object().shape({
   name: yup.string().required('Please provide a team name'),
   tag: yup.string().required('Add a unique team id'),
-  description: yup.string().required('Please provide a team description'),
+  description: yup.string(),
 })
 
 const useCreateTeam = createUseServer<{

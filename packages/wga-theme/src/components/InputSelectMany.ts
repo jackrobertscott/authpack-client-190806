@@ -96,7 +96,7 @@ const Option: FC<{
           display: 'flex',
           flexDirection: 'column',
           flexGrow: 1,
-          marginLeft: 15,
+          marginLeft: 10,
           marginRight: icon ? 10 : 0,
         }),
         children: [

@@ -94,7 +94,7 @@ const Searcher: FC<{
         placeholder,
         className: css({
           all: 'unset',
-          marginLeft: 15,
+          marginLeft: 10,
           flexGrow: 1,
         }),
       }),
@@ -146,7 +146,7 @@ const Option: FC<{
         key: 'label',
         children: label,
         className: css({
-          marginLeft: 15,
+          marginLeft: 10,
           whiteSpace: 'nowrap',
         }),
       }),

@@ -76,7 +76,7 @@ const Header: FC<{
             key: 'title',
             children: title,
             className: css({
-              marginRight: '15px',
+              marginRight: 10,
             }),
           }),
           create('div', {

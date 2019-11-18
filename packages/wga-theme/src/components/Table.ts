@@ -98,7 +98,7 @@ const Header: FC<{
                 key: 'icon',
                 className: css({
                   marginTop: 1,
-                  marginRight: 15,
+                  marginRight: 10,
                 }),
                 children: create(Icon, {
                   icon,
@@ -174,7 +174,7 @@ const Cell: FC<{
             key: 'icon',
             className: css({
               marginTop: 1,
-              marginRight: 15,
+              marginRight: 10,
             }),
             children: create(Icon, {
               icon,

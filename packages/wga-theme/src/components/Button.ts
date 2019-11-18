@@ -49,7 +49,7 @@ export const Button: FC<{
         key: 'label',
         children: label,
         className: css({
-          marginRight: 15,
+          marginRight: 10,
         }),
       }),
       create(Icon, {
