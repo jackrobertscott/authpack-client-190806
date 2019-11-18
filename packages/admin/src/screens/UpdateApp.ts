@@ -74,6 +74,11 @@ export const UpdateApp: FC<{
                     label: 'Snow Storm',
                     helper: 'Light theme',
                   },
+                  {
+                    value: 'blue_harvester',
+                    label: 'Blue Harvester',
+                    helper: 'Eye Friendly',
+                  },
                 ],
               }),
             }),

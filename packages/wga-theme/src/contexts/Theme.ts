@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react'
-import { IronMaiden } from '../themes/IronMaiden'
+import { SnowStorm } from '../themes/SnowStorm'
 
 interface IKeys {
   [key: string]: any
@@ -175,7 +175,7 @@ export interface ITheme extends IKeys {
   }
 }
 
-export const ThemeContext = createContext<ITheme>(IronMaiden)
+export const ThemeContext = createContext<ITheme>(SnowStorm)
 
 export const useTheme = (overrides: Partial<ITheme> = {}): ITheme => {
   const theme = useContext(ThemeContext)

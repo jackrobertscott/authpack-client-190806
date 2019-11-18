@@ -1,33 +1,35 @@
-import { createElement as create, FC, Fragment } from 'react'
-import { Toaster } from 'wga-theme'
-import { RouterCentral } from './routers/RouterCentral'
-import { useSetup } from './hooks/useSetup'
-import { useGadgets } from './hooks/useGadgets'
-import { Unauthenticated } from './screens/Unauthenticated'
-import { useUniversal } from './hooks/useUniversal'
+import {
+  createElement as create,
+  FC,
+  Fragment,
+  useState,
+  useEffect,
+} from 'react'
+import { Root, Toaster } from 'wga-theme'
+import { UniversalStore } from './utils/universal'
+import { Universal } from './contexts/Universal'
+import { ErrorBoundary } from './screens/ErrorBoundary'
+import { Admin } from './screens/Admin'
 
 export const App: FC = () => {
-  useSetup()
-  const gadgets = useGadgets()
-  const universal = useUniversal()
-  return create(Fragment, {
-    children:
-      gadgets.ready && universal.ready
-        ? [
+  const [universal, universalChange] = useState(UniversalStore.current)
+  useEffect(() => UniversalStore.listen(universalChange), [])
+  return create(ErrorBoundary, {
+    children: create(Universal.Provider, {
+      value: universal,
+      children: create(Root, {
+        theme: universal.theme,
+        children: create(Fragment, {
+          children: [
+            create(Admin, {
+              key: 'admin',
+            }),
             create(Toaster, {
               key: 'toaster',
             }),
-            gadgets.bearer && gadgets.user && gadgets.team
-              ? create(RouterCentral, {
-                  key: 'router',
-                })
-              : create(Unauthenticated, {
-                  key: 'unauthenticated',
-                  loading: !gadgets,
-                }),
-          ]
-        : create(Toaster, {
-            key: 'toaster',
-          }),
+          ],
+        }),
+      }),
+    }),
   })
 }

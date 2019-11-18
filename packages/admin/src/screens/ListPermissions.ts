@@ -1,6 +1,6 @@
 import faker from 'faker'
 import { createElement as create, FC, useState, useEffect, useRef } from 'react'
-import { Page, Table, Empty, Button, Focus, drip } from 'wga-theme'
+import { Page, Table, Empty, Button, drip } from 'wga-theme'
 import { format } from 'date-fns'
 import { RouterManagerPermission } from '../routers/RouterManagerPermission'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'
@@ -10,7 +10,9 @@ export const ListPermissions: FC = () => {
   const apiListPermissions = useListPermissions()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
-  const [variables, variablesChange] = useState<{ [key: string]: any }>({})
+  const [variables, variablesChange] = useState<{ [key: string]: any }>({
+    options: { sort: 'created' },
+  })
   const queryListPermissions = useRef(drip(1000, apiListPermissions.fetch))
   useEffect(() => {
     if (variables) queryListPermissions.current(variables)
@@ -62,63 +64,59 @@ export const ListPermissions: FC = () => {
         },
         visible: build,
       }),
-      create(Table, {
-        key: 'table',
-        header: [
-          { key: 'name', label: 'Name' },
-          { key: 'tag', label: 'Tag' },
-          { key: 'description', label: 'Description' },
-          { key: 'updated', label: 'Updated' },
-        ].map(({ key, label }) => ({
-          label,
-          icon:
-            variables.options && variables.options.sort === key
-              ? variables.options.reverse
-                ? 'chevron-down'
-                : 'chevron-up'
-              : 'equals',
-          click: () =>
-            variablesChange(({ options = {}, ...data }) => ({
-              ...data,
-              options: { ...options, sort: key, reverse: !options.reverse },
-            })),
-        })),
-        rows: list.map(data => ({
-          id: data.id,
-          click: () => {
-            idcurrentChange(data.id)
-            buildChange(true)
-          },
-          cells: [
-            { icon: 'users', value: data.name },
-            { icon: 'fingerprint', value: data.tag || '...' },
-            { icon: 'book', value: data.description || '...' },
-            {
-              icon: 'clock',
-              value: format(new Date(data.updated), 'dd LLL yyyy @ h:mm a'),
-            },
-          ],
-        })),
-      }),
-      !apiListPermissions.data
-        ? create(Focus, {
-            key: 'loading',
-            icon: 'sync-alt',
-            label: 'Loading',
-          })
-        : !apiListPermissions.data.count &&
-          create(Empty, {
-            key: 'empty',
-            icon: 'user-shield',
-            label: 'Permissions',
-            helper:
-              'Create a permission manually or by using the Authenticator API',
-            children: create(Button, {
-              key: 'Regular',
-              label: 'See API',
-              click: () => window.open('https://windowgadgets.io'),
-            }),
+      apiListPermissions.data &&
+        !apiListPermissions.data.count &&
+        create(Empty, {
+          key: 'empty',
+          icon: 'user-shield',
+          label: 'Permissions',
+          helper:
+            'Create a permission manually or by using the Authenticator API',
+          children: create(Button, {
+            key: 'Regular',
+            label: 'See API',
+            click: () => window.open('https://windowgadgets.io'),
           }),
+        }),
+      apiListPermissions.data &&
+        create(Table, {
+          key: 'table',
+          header: [
+            { key: 'name', label: 'Name' },
+            { key: 'tag', label: 'Tag' },
+            { key: 'description', label: 'Description' },
+            { key: 'updated', label: 'Updated' },
+          ].map(({ key, label }) => ({
+            label,
+            icon:
+              variables.options && variables.options.sort === key
+                ? variables.options.reverse
+                  ? 'chevron-down'
+                  : 'chevron-up'
+                : 'equals',
+            click: () =>
+              variablesChange(({ options = {}, ...data }) => ({
+                ...data,
+                options: { ...options, sort: key, reverse: !options.reverse },
+              })),
+          })),
+          rows: list.map(data => ({
+            id: data.id,
+            click: () => {
+              idcurrentChange(data.id)
+              buildChange(true)
+            },
+            cells: [
+              { icon: 'users', value: data.name },
+              { icon: 'fingerprint', value: data.tag || '...' },
+              { icon: 'book', value: data.description || '...' },
+              {
+                icon: 'clock',
+                value: format(new Date(data.updated), 'dd LLL yyyy @ h:mm a'),
+              },
+            ],
+          })),
+        }),
     ],
   })
 }

@@ -1,41 +1,35 @@
-import { createElement as create, FC } from 'react'
-import { useSetup } from './hooks/useSetup'
-import { useSettings } from './hooks/useSettings'
-import { RouterModalUnauthed } from './routers/RouterModalUnauthed'
-import { RouterModalOnauthed } from './routers/RouterModalOnauthed'
-import { NoKey } from './screens/NoKey'
-import { Toaster, Modal } from 'wga-theme'
+import {
+  createElement as create,
+  FC,
+  Fragment,
+  useEffect,
+  useState,
+} from 'react'
+import { Root, Toaster } from 'wga-theme'
+import { RouterCentral } from './routers/RouterCentral'
 import { SettingsStore } from './utils/settings'
+import { Settings } from './contexts/Settings'
+import { ErrorBoundary } from './screens/ErrorBoundary'
 
 export const App: FC = () => {
-  useSetup()
-  const settings = useSettings()
-  const close = () => SettingsStore.update({ open: false })
-  return create(Modal, {
-    close,
-    visible: settings.open,
-    children: settings.ready
-      ? [
-          create(Toaster, {
-            key: 'toaster',
-          }),
-          settings.domain
-            ? settings.bearer && settings.user
-              ? create(RouterModalOnauthed, {
-                  key: 'onauthed',
-                  close,
-                })
-              : create(RouterModalUnauthed, {
-                  key: 'unauthed',
-                  close,
-                })
-            : create(NoKey, {
-                key: 'nokey',
-                loading: !settings.ready,
-              }),
-        ]
-      : create(Toaster, {
-          key: 'toaster',
+  const [settings, settingsChange] = useState(SettingsStore.current)
+  useEffect(() => SettingsStore.listen(settingsChange), [])
+  return create(ErrorBoundary, {
+    children: create(Settings.Provider, {
+      value: settings,
+      children: create(Root, {
+        theme: settings.app && settings.app.theme,
+        children: create(Fragment, {
+          children: [
+            create(RouterCentral, {
+              key: 'router',
+            }),
+            create(Toaster, {
+              key: 'toaster',
+            }),
+          ],
         }),
+      }),
+    }),
   })
 }

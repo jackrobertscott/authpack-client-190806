@@ -1,6 +1,6 @@
 import faker from 'faker'
 import { createElement as create, FC, useState, useEffect, useRef } from 'react'
-import { Page, Table, Empty, Button, Focus, drip } from 'wga-theme'
+import { Page, Table, Empty, Button, drip } from 'wga-theme'
 import { format } from 'date-fns'
 import { RouterManagerProvider } from '../routers/RouterManagerProvider'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'
@@ -10,7 +10,9 @@ export const ListProviders: FC = () => {
   const apiListProviders = useListProviders()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
-  const [variables, variablesChange] = useState<{ [key: string]: any }>({})
+  const [variables, variablesChange] = useState<{ [key: string]: any }>({
+    options: { sort: 'created' },
+  })
   const queryListProviders = useRef(drip(1000, apiListProviders.fetch))
   useEffect(() => {
     if (variables) queryListProviders.current(variables)
@@ -61,62 +63,58 @@ export const ListProviders: FC = () => {
         },
         visible: build,
       }),
-      create(Table, {
-        key: 'table',
-        header: [
-          { key: 'preset', label: 'Preset' },
-          { key: 'scopes', label: 'Scopes' },
-          { key: 'updated', label: 'Updated' },
-        ].map(({ key, label }) => ({
-          label,
-          icon:
-            variables.options && variables.options.sort === key
-              ? variables.options.reverse
-                ? 'chevron-down'
-                : 'chevron-up'
-              : 'equals',
-          click: () =>
-            variablesChange(({ options = {}, ...data }) => ({
-              ...data,
-              options: { ...options, sort: key, reverse: !options.reverse },
-            })),
-        })),
-        rows: list.map(data => ({
-          id: data.id,
-          click: () => {
-            idcurrentChange(data.id)
-            buildChange(true)
-          },
-          cells: [
-            { icon: 'share-alt', value: data.preset },
-            { icon: 'user-shield', value: data.scopes.join(', ') || '...' },
-            {
-              icon: 'clock',
-              value: format(new Date(data.updated), 'dd LLL yyyy @ h:mm a'),
-            },
-          ],
-        })),
-      }),
-      !apiListProviders.data
-        ? create(Focus, {
-            key: 'loading',
-            icon: 'sync-alt',
-            label: 'Loading',
-          })
-        : !apiListProviders.data.count &&
-          create(Empty, {
-            key: 'empty',
-            icon: 'facebook',
-            prefix: 'fab',
-            label: 'Providers',
-            helper:
-              'Create a provider manually or by using the Authenticator API',
-            children: create(Button, {
-              key: 'Regular',
-              label: 'See API',
-              click: () => window.open('https://windowgadgets.io'),
-            }),
+      apiListProviders.data &&
+        !apiListProviders.data.count &&
+        create(Empty, {
+          key: 'empty',
+          icon: 'facebook',
+          prefix: 'fab',
+          label: 'Providers',
+          helper:
+            'Create a provider manually or by using the Authenticator API',
+          children: create(Button, {
+            key: 'Regular',
+            label: 'See API',
+            click: () => window.open('https://windowgadgets.io'),
           }),
+        }),
+      apiListProviders.data &&
+        create(Table, {
+          key: 'table',
+          header: [
+            { key: 'preset', label: 'Preset' },
+            { key: 'scopes', label: 'Scopes' },
+            { key: 'updated', label: 'Updated' },
+          ].map(({ key, label }) => ({
+            label,
+            icon:
+              variables.options && variables.options.sort === key
+                ? variables.options.reverse
+                  ? 'chevron-down'
+                  : 'chevron-up'
+                : 'equals',
+            click: () =>
+              variablesChange(({ options = {}, ...data }) => ({
+                ...data,
+                options: { ...options, sort: key, reverse: !options.reverse },
+              })),
+          })),
+          rows: list.map(data => ({
+            id: data.id,
+            click: () => {
+              idcurrentChange(data.id)
+              buildChange(true)
+            },
+            cells: [
+              { icon: 'share-alt', value: data.preset },
+              { icon: 'user-shield', value: data.scopes.join(', ') || '...' },
+              {
+                icon: 'clock',
+                value: format(new Date(data.updated), 'dd LLL yyyy @ h:mm a'),
+              },
+            ],
+          })),
+        }),
     ],
   })
 }
@@ -152,5 +150,5 @@ const FakeProviders: Array<{
   id: faker.random.uuid(),
   updated: faker.date.recent(100).toDateString(),
   preset: faker.random.words(2),
-  scopes: faker.random.words(5).split(' '),
+  scopes: faker.random.words(3).split(' '),
 }))

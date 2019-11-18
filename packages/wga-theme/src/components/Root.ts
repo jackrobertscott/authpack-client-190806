@@ -3,6 +3,7 @@ import { css } from 'emotion'
 import { ThemeContext } from '../contexts/Theme'
 import { NightSky } from '../themes/NightSky'
 import { SnowStorm } from '../themes/SnowStorm'
+import { BlueHarvester } from '../themes/BlueHarvester'
 
 export const Root: FC<{
   theme?: string
@@ -15,6 +16,9 @@ export const Root: FC<{
       break
     case 'snow_storm':
       value = SnowStorm
+      break
+    case 'blue_harvester':
+      value = BlueHarvester
       break
     default:
       value = NightSky
@@ -31,9 +35,11 @@ export const Root: FC<{
       }),
       children: [
         create(Fragment, {
+          key: 'children',
           children,
         }),
         create('div', {
+          key: 'portals',
           id: 'portals',
         }),
       ],

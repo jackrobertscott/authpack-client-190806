@@ -1,4 +1,4 @@
-import { createElement as create, FC, ReactNode } from 'react'
+import { createElement as create, FC, ReactNode, Fragment } from 'react'
 import { useTheme } from '../contexts/Theme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
@@ -42,18 +42,23 @@ export const Page: FC<{
           }),
           create('div', {
             key: 'children',
-            children,
+            children: [
+              create(Fragment, {
+                key: 'children',
+                children,
+              }),
+              create(Branding, {
+                key: 'branding',
+                url: 'https://windowgadgets.io',
+                text: `Window Gadgets`,
+              }),
+            ],
             className: css({
               display: 'flex',
               flexDirection: 'column',
               position: 'relative',
               flexGrow: 1,
             }),
-          }),
-          create(Branding, {
-            key: 'branding',
-            url: 'https://windowgadgets.io',
-            text: `Window Gadgets`,
           }),
         ],
       }),
@@ -179,6 +184,7 @@ const Branding: FC<{
       display: 'flex',
       justifyContent: 'flex-end',
       padding: '20px 25px',
+      marginTop: 'auto',
     }),
     children: create('a', {
       href: url,

@@ -1,35 +1,17 @@
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import * as Sentry from '@sentry/browser'
 import * as serviceWorker from './serviceWorker'
-import { createElement as create, FC, useState, useEffect } from 'react'
+import { createElement as create } from 'react'
 import { render } from 'react-dom'
-import { Root } from 'wga-theme'
-import { SettingsStore } from './utils/settings'
-import { Settings } from './contexts/Settings'
-import { App } from './App'
-import { ErrorBoundary } from './screens/ErrorBoundary'
 import { config } from './config'
+import { App } from './App'
 
 Sentry.init({
   dsn: config.sentryDSN,
   environment: config.environment,
 })
 
-export const Index: FC = () => {
-  const [settings, settingsChange] = useState(SettingsStore.current)
-  useEffect(() => SettingsStore.listen(settingsChange), [])
-  return create(ErrorBoundary, {
-    children: create(Settings.Provider, {
-      value: settings,
-      children: create(Root, {
-        theme: settings.app && settings.app.theme,
-        children: create(App),
-      }),
-    }),
-  })
-}
-
-render(create(Index), document.getElementById('root'))
+render(create(App), document.getElementById('root'))
 
 /**
  * If you want your app to work offline and load faster, you can change

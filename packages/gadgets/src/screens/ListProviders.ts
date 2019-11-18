@@ -1,4 +1,4 @@
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as create, FC, useEffect, Fragment } from 'react'
 import { Gadgets, Layout, Poster, Button } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
@@ -23,17 +23,22 @@ export const ListProviders: FC<{
           label: 'Providers',
           helper: 'There are no authentication providers currently available',
         })
-      : create(Layout, {
-          column: true,
-          padding: true,
-          divide: true,
-          children: gqlListProviders.data.providers.map(provider => {
-            return create(Button, {
-              icon: 'handshake',
-              label: provider.preset,
-              click: () => window.open(provider.url),
-            })
-          }),
+      : create(Fragment, {
+          children: [
+            create(Layout, {
+              key: 'layout',
+              column: true,
+              padding: true,
+              divide: true,
+              children: gqlListProviders.data.providers.map(provider => {
+                return create(Button, {
+                  icon: 'handshake',
+                  label: provider.preset,
+                  click: () => window.open(provider.url),
+                })
+              }),
+            }),
+          ],
         }),
   })
 }

@@ -50,7 +50,6 @@ export * from './hooks/useToaster'
 /**
  * Themes
  */
-export * from './themes/IronMaiden'
 export * from './themes/BlueHarvester'
 export * from './themes/NightSky'
 export * from './themes/SnowStorm'

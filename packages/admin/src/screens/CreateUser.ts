@@ -103,9 +103,9 @@ export const CreateUser: FC<{
 }
 
 const SchemaCreateUser = yup.object().shape({
-  given_name: yup.string().required('Please provide your given name'),
-  family_name: yup.string().required('Please provide your family name'),
-  username: yup.string().required('Please provide your username'),
+  given_name: yup.string(),
+  family_name: yup.string(),
+  username: yup.string(),
   email: yup
     .string()
     .email('Please make sure you have used a valid email address')

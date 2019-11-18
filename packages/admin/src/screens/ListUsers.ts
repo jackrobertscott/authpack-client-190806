@@ -1,6 +1,6 @@
 import faker from 'faker'
 import { createElement as create, FC, useState, useEffect, useRef } from 'react'
-import { Page, Table, Empty, Button, Focus, drip } from 'wga-theme'
+import { Page, Table, Empty, Button, drip } from 'wga-theme'
 import { format } from 'date-fns'
 import { RouterManagerUser } from '../routers/RouterManagerUser'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'
@@ -12,7 +12,9 @@ export const ListUsers: FC = () => {
   const apiListUsers = useListUsers()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
-  const [variables, variablesChange] = useState<{ [key: string]: any }>({})
+  const [variables, variablesChange] = useState<{ [key: string]: any }>({
+    options: { sort: 'created' },
+  })
   const queryListUsers = useRef(drip(1000, apiListUsers.fetch))
   useEffect(() => {
     if (variables) queryListUsers.current(variables)
@@ -63,62 +65,58 @@ export const ListUsers: FC = () => {
         },
         visible: build,
       }),
-      create(Table, {
-        key: 'table',
-        header: [
-          { key: 'email', label: 'Email' },
-          { key: 'given_name', label: 'Name' },
-          { key: 'username', label: 'Username' },
-          { key: 'updated', label: 'Updated' },
-        ].map(({ key, label }) => ({
-          label,
-          icon:
-            variables.options && variables.options.sort === key
-              ? variables.options.reverse
-                ? 'chevron-down'
-                : 'chevron-up'
-              : 'equals',
-          click: () =>
-            variablesChange(({ options = {}, ...data }) => ({
-              ...data,
-              options: { ...options, sort: key, reverse: !options.reverse },
-            })),
-        })),
-        rows: list.map(data => ({
-          id: data.id,
-          click: () => {
-            idcurrentChange(data.id)
-            buildChange(true)
-          },
-          cells: [
-            { icon: 'at', value: data.email },
-            { icon: 'user', value: data.name || '...' },
-            { icon: 'tags', value: data.username || '...' },
-            {
-              icon: 'clock',
-              value: format(new Date(data.updated), 'dd LLL yyyy @ h:mm a'),
-            },
-          ],
-        })),
-      }),
-      !apiListUsers.data
-        ? create(Focus, {
-            key: 'loading',
-            icon: 'sync-alt',
-            label: 'Loading',
-          })
-        : !apiListUsers.data.count &&
-          create(Empty, {
-            key: 'empty',
-            icon: 'user',
-            label: 'Users',
-            helper: 'Create a user manually or by using the Authenticator API',
-            children: create(Button, {
-              key: 'Regular',
-              label: 'See API',
-              click: () => window.open('https://windowgadgets.io'),
-            }),
+      apiListUsers.data &&
+        !apiListUsers.data.count &&
+        create(Empty, {
+          key: 'empty',
+          icon: 'user',
+          label: 'Users',
+          helper: 'Create a user manually or by using the Authenticator API',
+          children: create(Button, {
+            key: 'Regular',
+            label: 'See API',
+            click: () => window.open('https://windowgadgets.io'),
           }),
+        }),
+      apiListUsers.data &&
+        create(Table, {
+          key: 'table',
+          header: [
+            { key: 'email', label: 'Email' },
+            { key: 'given_name', label: 'Name' },
+            { key: 'username', label: 'Username' },
+            { key: 'updated', label: 'Updated' },
+          ].map(({ key, label }) => ({
+            label,
+            icon:
+              variables.options && variables.options.sort === key
+                ? variables.options.reverse
+                  ? 'chevron-down'
+                  : 'chevron-up'
+                : 'equals',
+            click: () =>
+              variablesChange(({ options = {}, ...data }) => ({
+                ...data,
+                options: { ...options, sort: key, reverse: !options.reverse },
+              })),
+          })),
+          rows: list.map(data => ({
+            id: data.id,
+            click: () => {
+              idcurrentChange(data.id)
+              buildChange(true)
+            },
+            cells: [
+              { icon: 'at', value: data.email },
+              { icon: 'user', value: data.name || '...' },
+              { icon: 'tags', value: data.username || '...' },
+              {
+                icon: 'clock',
+                value: format(new Date(data.updated), 'dd LLL yyyy @ h:mm a'),
+              },
+            ],
+          })),
+        }),
     ],
   })
 }
@@ -153,7 +151,7 @@ const FakeUsers: Array<{
   email: string
   username?: string
   name?: string
-}> = Array.from(Array(20).keys()).map(() => ({
+}> = Array.from(Array(8).keys()).map(() => ({
   id: faker.random.uuid(),
   updated: faker.date.recent(100).toDateString(),
   email: faker.internet.email(),
