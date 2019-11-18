@@ -53,6 +53,7 @@ export const Snippet: FC<{
               className: css({
                 marginTop: 5,
                 color: theme.snippet.value,
+                fontWeight: theme.global.thin,
               }),
             }),
         ],

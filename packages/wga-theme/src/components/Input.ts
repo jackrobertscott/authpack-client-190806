@@ -145,6 +145,7 @@ export const InputOption: FC<{
               className: css({
                 marginTop: 5,
                 color: theme.input.helper,
+                fontWeight: theme.global.thin,
               }),
             }),
         ],

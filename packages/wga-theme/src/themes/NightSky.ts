@@ -13,6 +13,8 @@ const slate = (
 export const NightSky: ITheme = {
   global: {
     radius: 3,
+    thick: 800,
+    thin: 600,
   },
   /**
    * Navigation.
@@ -108,7 +110,7 @@ export const NightSky: ITheme = {
    */
   input: {
     label: slate(95),
-    helper: slate(35),
+    helper: slate(45),
     placeholder: slate(35),
     value: slate(65),
     valueHover: slate(95),

@@ -65,6 +65,7 @@ export const Menu: FC<{
                     children: helper,
                     className: css({
                       marginTop: 5,
+                      fontWeight: theme.global.thin,
                       color: theme.menu.helper,
                     }),
                   }),

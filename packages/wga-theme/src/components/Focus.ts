@@ -65,6 +65,7 @@ export const Focus: FC<{
             children: helper,
             className: css({
               color: theme.focus.helper,
+              fontWeight: theme.global.thin,
               marginTop: 5,
             }),
           }),

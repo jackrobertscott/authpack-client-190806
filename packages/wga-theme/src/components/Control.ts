@@ -52,6 +52,7 @@ export const Control: FC<{
         className: css({
           marginTop: 3,
           color: theme.input.helper,
+          fontWeight: theme.global.thin,
         }),
       }),
       create('div', {

@@ -8,6 +8,8 @@ interface IKeys {
 export interface ITheme extends IKeys {
   global: {
     radius: number
+    thick: number
+    thin: number
   }
   /**
    * Navigation.

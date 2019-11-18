@@ -36,6 +36,7 @@ export const CreateUser: FC<{
         create(Layout, {
           key: 'name',
           divide: true,
+          media: true,
           children: [
             create(Control, {
               key: 'given_name',

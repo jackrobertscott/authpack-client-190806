@@ -24,12 +24,12 @@ export * from './components/Page'
 export * from './components/Pointer'
 export * from './components/Portal'
 export * from './components/Poster'
+export * from './components/Root'
 export * from './components/Scroller'
 export * from './components/SearchBar'
 export * from './components/SideBar'
 export * from './components/Snippet'
 export * from './components/Table'
-export * from './components/Theme'
 export * from './components/Toaster'
 /**
  * Contexts

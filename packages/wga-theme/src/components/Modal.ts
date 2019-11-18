@@ -56,6 +56,7 @@ export const Modal: FC<{
             height: '100%',
             flexGrow: 1,
             borderRadius: 0,
+            border: 'none',
           },
         }),
       }),

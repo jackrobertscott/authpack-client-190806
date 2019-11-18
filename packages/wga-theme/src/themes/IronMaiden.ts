@@ -3,6 +3,8 @@ import { ITheme } from '../contexts/Theme'
 export const IronMaiden: ITheme = {
   global: {
     radius: 3,
+    thick: 800,
+    thin: 600,
   },
   button: {
     label: '#FFFFFF',

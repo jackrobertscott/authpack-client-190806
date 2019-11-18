@@ -110,6 +110,7 @@ const Option: FC<{
               children: helper,
               className: css({
                 marginTop: 5,
+                fontWeight: theme.global.thin,
                 color: theme.input.helper,
               }),
             }),

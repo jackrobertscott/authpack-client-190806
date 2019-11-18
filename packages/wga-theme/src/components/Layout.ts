@@ -9,7 +9,19 @@ export const Layout: FC<{
   center?: boolean
   grow?: boolean
   hide?: boolean
-}> = ({ children, column, padding, divide, center, grow, hide }) => {
+  media?: boolean
+  breakpoint?: number
+}> = ({
+  children,
+  column,
+  padding,
+  divide,
+  center,
+  grow,
+  hide,
+  media,
+  breakpoint = 810,
+}) => {
   return create('div', {
     children,
     className: css({
@@ -24,6 +36,14 @@ export const Layout: FC<{
       padding: padding ? '20px 25px' : 0,
       '& > div:not(:last-child)': divide && {
         margin: column ? `0 0 20px 0` : `0 25px 0 0`,
+      },
+      [`@media (max-width: ${breakpoint + 50}px)`]: media && {
+        flexDirection: 'column',
+        justifyContent: 'stretch',
+        alignItems: center ? 'center' : 'stretch',
+        '& > div:not(:last-child)': divide && {
+          margin: `0 0 20px 0`,
+        },
       },
     }),
   })

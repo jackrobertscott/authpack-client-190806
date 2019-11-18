@@ -131,6 +131,7 @@ const Row: FC<{
       all: 'unset',
       display: 'table-row',
       color: theme.table.value,
+      fontWeight: theme.global.thin,
       background: theme.table.background,
       transition: '200ms',
       '&:hover': click && {

@@ -34,6 +34,7 @@ export const ConfirmRemove: FC<{
         visible: confirm,
         children: create(Layout, {
           divide: true,
+          media: true,
           children: [
             create(Button, {
               key: 'confirm',

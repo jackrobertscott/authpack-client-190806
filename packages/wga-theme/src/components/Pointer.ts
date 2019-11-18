@@ -81,6 +81,7 @@ const Header: FC<{
               className: css({
                 marginTop: 5,
                 color: theme.pointer.helper,
+                fontWeight: theme.global.thin,
               }),
             }),
         ],

@@ -13,6 +13,8 @@ const slate = (
 export const SnowStorm: ITheme = {
   global: {
     radius: 3,
+    thick: 800,
+    thin: 600,
   },
   /**
    * Navigation.
