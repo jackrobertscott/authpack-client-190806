@@ -5,6 +5,7 @@ import { Icon } from './Icon'
 import { Scroller } from './Scroller'
 
 export const Menu: FC<{
+  isolated?: boolean
   options: Array<{
     label: string
     helper?: string
@@ -12,10 +13,14 @@ export const Menu: FC<{
     prefix?: string
     click?: () => void
   }>
-}> = ({ options }) => {
+}> = ({ isolated, options }) => {
   const theme = useTheme()
   return create('div', {
     className: css({
+      overflow: 'hidden',
+      borderRadius: isolated ? theme.global.radius : undefined,
+      border: isolated ? theme.menu.border : undefined,
+      boxShadow: isolated ? theme.menu.shadow : undefined,
       borderTop: theme.menu.border,
     }),
     children: create(Scroller, {
@@ -36,7 +41,7 @@ export const Menu: FC<{
             '&:not(:last-child)': {
               borderBottom: theme.menu.border,
             },
-            '&:hover': {
+            '&:hover:not(:active)': {
               background: theme.menu.backgroundHover,
             },
           }),

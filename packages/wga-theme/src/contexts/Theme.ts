@@ -145,6 +145,7 @@ export interface ITheme extends IKeys {
     background: string
     backgroundHover: string
     border: string
+    shadow: string
   }
   poster: {
     label: string

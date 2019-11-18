@@ -152,6 +152,7 @@ export const BlueHarvester: ITheme = {
     background: color(17.5),
     backgroundHover: color(22.5),
     border: `1px solid ${color(12.5)}`,
+    shadow: `0 0 13px -3px ${color(0, 0.5)}`,
   },
   poster: {
     label: color(95),

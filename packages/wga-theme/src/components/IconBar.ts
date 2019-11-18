@@ -161,8 +161,8 @@ const IconPointer: FC<{
                 options: options.map(option => ({
                   ...option,
                   click: () => {
-                    openChange(false)
                     if (option.click) option.click()
+                    setTimeout(() => openChange(false))
                   },
                 })),
               }),

@@ -290,6 +290,10 @@ const SimpleSnippets: FC = () => {
         icon: 'bookmark',
         label: 'Awesome Team',
         click: () => console.log('Awesome'),
+        options: [
+          { icon: 'sliders-h', label: 'Update', helper: 'Change "em up' },
+          { icon: 'fire-alt', label: 'Remove', helper: 'Get rid of them!' },
+        ],
       }),
       create(Snippet, {
         key: 'Pancake',
