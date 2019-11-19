@@ -64,7 +64,7 @@ export const CreateSession: FC<{
                   value: user.id,
                   label:
                     user.name && user.username
-                      ? `${user.name} (${user.username})`
+                      ? `${user.name} - ${user.username}`
                       : user.name || user.username,
                   helper: user.email,
                 })),

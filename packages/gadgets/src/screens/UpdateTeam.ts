@@ -1,6 +1,13 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useEffect } from 'react'
-import { Gadgets, useSchema, Layout, Control, InputString } from 'wga-theme'
+import {
+  Gadgets,
+  useSchema,
+  Layout,
+  Control,
+  InputString,
+  testAlphanumeric,
+} from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 
@@ -71,7 +78,14 @@ export const UpdateTeam: FC<{
 
 const SchemaUpdateTeam = yup.object().shape({
   name: yup.string().required('Please provide the team name'),
-  tag: yup.string().required('Please provide the team tag'),
+  tag: yup
+    .string()
+    .test(
+      'alphamun',
+      'Please use only numbers, letters and underscores',
+      testAlphanumeric
+    )
+    .required('Please provide the team tag'),
   description: yup.string(),
 })
 

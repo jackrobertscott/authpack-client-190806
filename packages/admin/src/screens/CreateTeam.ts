@@ -9,6 +9,7 @@ import {
   InputString,
   InputSelect,
   drip,
+  testAlphanumeric,
 } from 'wga-theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
@@ -87,7 +88,7 @@ export const CreateTeam: FC<{
                   value: user.id,
                   label:
                     user.name && user.username
-                      ? `${user.name} (${user.username})`
+                      ? `${user.name} - ${user.username}`
                       : user.name || user.username,
                   helper: user.email,
                 })),
@@ -106,7 +107,14 @@ export const CreateTeam: FC<{
 
 const SchemaCreateTeam = yup.object().shape({
   name: yup.string().required('Please provide the team name'),
-  tag: yup.string().required('Please provide the team tag'),
+  tag: yup
+    .string()
+    .test(
+      'alphamun',
+      'Please use only numbers, letters and underscores',
+      testAlphanumeric
+    )
+    .required('Please provide the team tag'),
   description: yup.string(),
   user_id: yup.string().required('Please select an admin user'),
 })

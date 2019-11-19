@@ -7,6 +7,7 @@ import {
   Control,
   InputString,
   Button,
+  testAlphanumeric,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
@@ -94,7 +95,14 @@ export const CreateTeam: FC<{
 
 const SchemaCreateTeam = yup.object().shape({
   name: yup.string().required('Please provide a team name'),
-  tag: yup.string().required('Add a unique team id'),
+  tag: yup
+    .string()
+    .test(
+      'alphamun',
+      'Please use only numbers, letters and underscores',
+      testAlphanumeric
+    )
+    .required('Add a unique team id'),
   description: yup.string(),
 })
 

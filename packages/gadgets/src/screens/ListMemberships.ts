@@ -24,11 +24,9 @@ export const ListMemberships: FC = () => {
               settings.team && settings.team.id === membership.id
                 ? 'fas'
                 : 'far',
-            label: (
-              membership.user.name ||
-              membership.user.username ||
-              membership.user.email
-            ).concat(membership.admin ? ' (admin)' : ''),
+            label: membership.user.summary.concat(
+              membership.admin ? ' (admin)' : ''
+            ),
             value: membership.permissions.map(({ name }) => name).join(', '),
           })
         }),
@@ -41,9 +39,7 @@ const useListMemberships = createUseServer<{
     id: string
     admin: boolean
     user: {
-      name: string
-      email: string
-      username: string
+      summary: string
     }
     permissions: Array<{
       name: string
@@ -56,9 +52,7 @@ const useListMemberships = createUseServer<{
         id
         admin
         user {
-          name
-          email
-          username
+          summary
         }
         permissions {
           name

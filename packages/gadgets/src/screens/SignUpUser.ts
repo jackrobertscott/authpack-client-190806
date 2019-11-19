@@ -7,6 +7,7 @@ import {
   Control,
   InputString,
   Button,
+  testAlphanumeric,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { SettingsStore } from '../utils/settings'
@@ -104,9 +105,16 @@ export const SignupUser: FC = () => {
 }
 
 const SchemaSignupUser = yup.object().shape({
-  given_name: yup.string().required('Please provide your given name'),
-  family_name: yup.string().required('Please provide your family name'),
-  username: yup.string().required('Please provide your username'),
+  given_name: yup.string(),
+  family_name: yup.string(),
+  username: yup
+    .string()
+    .test(
+      'alphamun',
+      'Please use only numbers, letters and underscores',
+      testAlphanumeric
+    )
+    .required('Please provide your username'),
   email: yup
     .string()
     .email('Please make sure you have used a valid email address')

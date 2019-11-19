@@ -108,13 +108,11 @@ export const ListMemberships: FC = () => {
             cells: [
               {
                 icon: 'user',
-                value: data.user.name || data.user.username || data.user.email,
+                value: data.user.summary,
               },
               {
                 icon: 'users',
-                value: data.team
-                  ? `${data.team.name} (${data.team.tag})`
-                  : '...',
+                value: data.team ? data.team.summary : '...',
               },
               {
                 icon: 'clock',
@@ -133,13 +131,10 @@ const useListMemberships = createUseServer<{
     id: string
     created: string
     user: {
-      name: string
-      username: string
-      email: string
+      summary: string
     }
     team?: {
-      name: string
-      tag: string
+      summary: string
     }
   }>
 }>({
@@ -150,13 +145,10 @@ const useListMemberships = createUseServer<{
         id
         created
         user {
-          name
-          username
-          email
+          summary
         }
         team {
-          name
-          tag
+          summary
         }
       }
     }
@@ -167,25 +159,18 @@ const FakeMemberships: Array<{
   id: string
   created: string
   user: {
-    name: string
-    username: string
-    email: string
+    summary: string
   }
   team?: {
-    name: string
-    tag: string
+    summary: string
   }
 }> = Array.from(Array(20).keys()).map(() => ({
   id: faker.random.uuid(),
   created: faker.date.recent(100).toDateString(),
   user: {
-    email: faker.internet.email(),
-    username: faker.internet.userName(),
-    name: faker.name.findName(),
+    summary: faker.name.findName(),
   },
   team: {
-    name: faker.random.words(2),
-    tag: faker.internet.userName(),
-    description: faker.random.words(10),
+    summary: faker.random.words(2),
   },
 }))

@@ -36,29 +36,13 @@ export const ShowSession: FC<{
           key: 'user',
           icon: 'user',
           label: 'User',
-          value: !session.user
-            ? undefined
-            : session.user.id
-                .concat(' - ')
-                .concat(
-                  [session.user.name, session.user.username, session.user.email]
-                    .filter(Boolean)
-                    .join(', ')
-                ),
+          value: !session.user ? '...' : session.user.summary,
         }),
         create(Snippet, {
           key: 'team',
           icon: 'users',
           label: 'Team',
-          value: !session.team
-            ? '...'
-            : session.team.id
-                .concat(' - ')
-                .concat(
-                  [session.team.name, session.team.tag]
-                    .filter(Boolean)
-                    .join(', ')
-                ),
+          value: !session.team ? '...' : session.team.summary,
         }),
         create(Snippet, {
           key: 'created',
@@ -89,14 +73,11 @@ const useGetSession = createUseServer<{
     updated: string
     user: {
       id: string
-      name?: string
-      username?: string
-      email: string
+      summary: string
     }
     team?: {
       id: string
-      name: string
-      tag: string
+      summary: string
     }
   }
 }>({
@@ -109,14 +90,11 @@ const useGetSession = createUseServer<{
         disabled
         user {
           id
-          name
-          username
-          email
+          summary
         }
         team {
           id
-          name
-          tag
+          summary
         }
       }
     }

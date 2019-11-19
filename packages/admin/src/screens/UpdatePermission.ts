@@ -1,6 +1,13 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useEffect } from 'react'
-import { Gadgets, useSchema, Layout, Control, InputString } from 'wga-theme'
+import {
+  Gadgets,
+  useSchema,
+  Layout,
+  Control,
+  InputString,
+  testAlphanumeric,
+} from 'wga-theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 
@@ -74,7 +81,14 @@ export const UpdatePermission: FC<{
 
 const SchemaUpdatePermission = yup.object().shape({
   name: yup.string().required('Please provide the permission name'),
-  tag: yup.string().required('Please provide the permission tag'),
+  tag: yup
+    .string()
+    .test(
+      'alphamun',
+      'Please use only numbers, letters and underscores',
+      testAlphanumeric
+    )
+    .required('Please provide the permission tag'),
   description: yup.string(),
 })
 

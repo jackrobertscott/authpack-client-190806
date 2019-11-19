@@ -1,3 +1,5 @@
 export const testAlphanumeric = (value: any) => {
-  return typeof value === 'string' && new RegExp('^[a-z0-9]+$', 'i').test(value)
+  return (
+    typeof value === 'string' && new RegExp('^[0-9a-zA-Z_]+$', 'i').test(value)
+  )
 }

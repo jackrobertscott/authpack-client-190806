@@ -1,6 +1,13 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useEffect } from 'react'
-import { Gadgets, useSchema, Layout, Control, InputString } from 'wga-theme'
+import {
+  Gadgets,
+  useSchema,
+  Layout,
+  Control,
+  InputString,
+  testAlphanumeric,
+} from 'wga-theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 
@@ -89,7 +96,13 @@ export const UpdateUser: FC<{
 const SchemaUpdateUser = yup.object().shape({
   given_name: yup.string(),
   family_name: yup.string(),
-  username: yup.string(),
+  username: yup
+    .string()
+    .test(
+      'alphamun',
+      'Please use only numbers, letters and underscores',
+      testAlphanumeric
+    ),
   email: yup
     .string()
     .email('Please make sure you have used a valid email address'),
