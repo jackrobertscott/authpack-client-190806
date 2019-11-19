@@ -51,7 +51,7 @@ export const RouterManagerPermission: FC<{
                   click: () => router.change('/update'),
                 },
                 {
-                  icon: 'fire-alt',
+                  icon: 'trash-alt',
                   label: 'Remove',
                   focused: !!router.current && router.current.key === '/remove',
                   click: () => router.change('/remove'),

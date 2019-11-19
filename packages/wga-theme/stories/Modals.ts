@@ -292,7 +292,7 @@ const SimpleSnippets: FC = () => {
         click: () => console.log('Awesome'),
         options: [
           { icon: 'sliders-h', label: 'Update', helper: 'Change "em up' },
-          { icon: 'fire-alt', label: 'Remove', helper: 'Get rid of them!' },
+          { icon: 'trash-alt', label: 'Remove', helper: 'Get rid of them!' },
         ],
       }),
       create(Snippet, {

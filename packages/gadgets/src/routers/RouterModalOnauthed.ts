@@ -32,17 +32,9 @@ export const RouterModalOnauthed: FC<{
             { key: '/user/apps', children: create(ListProviders) },
             { key: '/user/danger', children: create(RemoveUser) },
             { key: '/logout', children: create(LogoutUser) },
-            {
-              key: '/team/switch',
-              children: create(SwitchTeam, {
-                change: () => router.change('/team/update'),
-              }),
-            },
+            { key: '/team/switch', children: create(SwitchTeam) },
             { key: '/team/update', children: create(UpdateTeam) },
-            {
-              key: '/team/members/create',
-              children: create(CreateMembership),
-            },
+            { key: '/team/members/create', children: create(CreateMembership) },
             { key: '/team/members', children: create(ListMemberships) },
             {
               key: '/team/create',

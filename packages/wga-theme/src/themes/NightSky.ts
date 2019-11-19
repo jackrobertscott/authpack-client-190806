@@ -103,7 +103,7 @@ export const NightSky: ITheme = {
     arrow: slate(65),
     background: slate(12.5),
     backgroundHover: slate(17.5),
-    border: `1px solid ${slate(10)}`,
+    border: `1px solid ${slate(7.5)}`,
   },
   /**
    * Forms.

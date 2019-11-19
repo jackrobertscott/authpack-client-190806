@@ -19,7 +19,7 @@ export const ConfirmRemove: FC<{
     children: [
       create(Poster, {
         key: 'poster',
-        icon: 'fire-alt',
+        icon: 'trash-alt',
         label: keyword,
         helper,
       }),

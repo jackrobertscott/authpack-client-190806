@@ -28,6 +28,7 @@ export const CreateMembership: FC<{
   })
   useEffect(() => {
     gqlListPermissions.fetch()
+    // eslint-disable-next-line
   }, [])
   return create(Gadgets, {
     title: 'Add Member',

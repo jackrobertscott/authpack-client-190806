@@ -28,7 +28,7 @@ export const RemoveTeam: FC<{
     children: [
       create(Poster, {
         key: 'poster',
-        icon: 'fire-alt',
+        icon: 'trash-alt',
         label: 'Remove',
         helper: 'Remove this team and all members',
       }),

@@ -33,6 +33,7 @@ export const RouterModalUnauthed: FC<{
   }
   useEffect(() => {
     powerChange(!!settings.app && settings.app.power)
+    // eslint-disable-next-line
   }, [settings.app && settings.app.power])
   return create(Layout, {
     grow: true,

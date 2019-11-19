@@ -89,17 +89,3 @@ const useLoginUser = createUseServer<{
     }
   `,
 })
-
-const useListProviders = createUseServer<{
-  providers: Array<{
-    id: string
-  }>
-}>({
-  query: `
-    query wgaListProviders {
-      providers: wgaListProviders {
-        id
-      }
-    }
-  `,
-})

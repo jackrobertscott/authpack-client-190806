@@ -27,7 +27,7 @@ export const RemoveUser: FC<{
     children: [
       create(Poster, {
         key: 'poster',
-        icon: 'fire-alt',
+        icon: 'trash-alt',
         label: 'Remove',
         helper: 'Remove your account',
       }),

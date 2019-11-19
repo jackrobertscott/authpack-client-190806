@@ -4,12 +4,13 @@ import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 import { SettingsStore } from '../utils/settings'
 
-export const SwitchTeam: FC<{ change: () => void }> = ({ change }) => {
+export const SwitchTeam: FC<{ change?: () => void }> = ({ change }) => {
   const settings = useSettings()
   const gqlListTeams = useListTeams()
   const gqlSwitchTeam = useSwitchTeam()
   useEffect(() => {
     gqlListTeams.fetch()
+    // eslint-disable-next-line
   }, [])
   return create(Gadgets, {
     title: 'Switch Team',
@@ -28,14 +29,17 @@ export const SwitchTeam: FC<{ change: () => void }> = ({ change }) => {
           gqlListTeams.data.teams.map(({ id, name, description }) => {
             return create(Snippet, {
               key: id,
-              icon: 'bookmark',
-              prefix: settings.team && settings.team.id === id ? 'fas' : 'far',
+              icon:
+                settings.team && settings.team.id === id
+                  ? 'dot-circle'
+                  : 'circle',
+              prefix: 'far',
               label: name,
               value: description,
               click: () =>
                 gqlSwitchTeam.fetch({ id }).then(({ session }) => {
                   SettingsStore.update({ bearer: `Bearer ${session.token}` })
-                  change()
+                  if (change) change()
                 }),
             })
           }),

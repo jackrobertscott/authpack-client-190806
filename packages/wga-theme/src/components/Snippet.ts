@@ -3,7 +3,6 @@ import { useTheme } from '../hooks/useTheme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
 import { ClickOutside } from './ClickOutside'
-import { Pointer } from './Pointer'
 import { Menu } from './Menu'
 
 export const Snippet: FC<{
@@ -72,37 +71,38 @@ export const Snippet: FC<{
             }),
         ],
       }),
-      create('div', {
-        key: 'arrow',
-        onClick: () => options.length && openChange(true),
-        className: css({
-          padding: 5,
-          margin: -5,
-          position: 'relative',
-          color: theme.snippet.arrow,
-          borderRadius: theme.global.radius,
-          cursor: options.length || click ? 'pointer' : 'default',
-          '&:hover:not(:active)': options.length && {
-            background: theme.snippet.backgroundHover,
-          },
-          '&:hover .toggle': {
-            opacity: 1,
-          },
-        }),
-        children: [
-          create(Icon, {
-            key: 'icon',
-            icon: 'bars',
+      Boolean(options.length || click) &&
+        create('div', {
+          key: 'arrow',
+          onClick: () => options.length && openChange(true),
+          className: css({
+            padding: 5,
+            margin: -5,
+            position: 'relative',
+            color: theme.snippet.arrow,
+            borderRadius: theme.global.radius,
+            cursor: options.length ? 'pointer' : undefined,
+            '&:hover:not(:active)': options.length && {
+              background: theme.snippet.backgroundHover,
+            },
+            '&:hover .toggle': {
+              opacity: 1,
+            },
           }),
-          !!options.length &&
-            create(Dropdown, {
-              key: 'dropdown',
-              options,
-              close: () => openChange(false),
-              open,
+          children: [
+            create(Icon, {
+              key: 'icon',
+              icon: options.length ? 'bars' : 'hand-pointer',
             }),
-        ],
-      }),
+            !!options.length &&
+              create(Dropdown, {
+                key: 'dropdown',
+                options,
+                close: () => openChange(false),
+                open,
+              }),
+          ],
+        }),
     ],
   })
 }
@@ -128,8 +128,8 @@ export const Dropdown: FC<{
       pointerEvents: open ? 'all' : 'none',
       opacity: open ? 1 : 0,
       zIndex: 300,
-      right: -10,
-      top: -10,
+      right: -5,
+      top: 0,
       '& > div': {
         flexGrow: 1,
       },

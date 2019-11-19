@@ -8,6 +8,7 @@ export const ListMemberships: FC = () => {
   const gqlListMemberships = useListMemberships()
   useEffect(() => {
     gqlListMemberships.fetch()
+    // eslint-disable-next-line
   }, [])
   return create(Gadgets, {
     title: 'Members',

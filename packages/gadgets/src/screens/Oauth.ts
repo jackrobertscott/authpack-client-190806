@@ -7,7 +7,7 @@ export const Oauth: FC<{
   useEffect(() => {
     const data = JSON.stringify({ code, created: Date.now() })
     localStorage.setItem('wga.code', data)
-  }, [])
+  }, [code])
   return create(Loading, {
     key: 'Window will close automatically',
   })
