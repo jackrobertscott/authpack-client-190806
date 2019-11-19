@@ -75,7 +75,7 @@ export const UpdateUser: FC<{
               children: create(InputString, {
                 value: schema.value('username'),
                 change: schema.change('username'),
-                placeholder: 'example-username-123',
+                placeholder: 'example_username_123',
               }),
             }),
             create(Control, {

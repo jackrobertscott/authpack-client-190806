@@ -52,7 +52,7 @@ export const CreatePermission: FC<{
           children: create(InputString, {
             value: schema.value('tag'),
             change: schema.change('tag'),
-            placeholder: 'admin:editor',
+            placeholder: 'admin_editor',
           }),
         }),
         create(Control, {

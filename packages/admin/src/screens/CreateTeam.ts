@@ -60,7 +60,7 @@ export const CreateTeam: FC<{
           children: create(InputString, {
             value: schema.value('tag'),
             change: schema.change('tag'),
-            placeholder: 'awesome-people',
+            placeholder: 'awesome_people',
           }),
         }),
         create(Control, {
