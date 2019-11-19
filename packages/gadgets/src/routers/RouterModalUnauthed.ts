@@ -75,6 +75,7 @@ export const RouterModalUnauthed: FC<{
           })
         : start
         ? create(GetStarted, {
+            key: 'started',
             login: clicker('/login'),
             signup: clicker('/signup'),
           })

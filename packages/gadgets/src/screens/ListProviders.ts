@@ -33,13 +33,21 @@ export const ListProviders: FC<{
           code: oauthCode.code,
         })
         .then(() => gqlListCredentials.fetch())
-        .finally(() => oauthCode.clearCode())
+        .finally(() => {
+          currentChange(undefined)
+          oauthCode.clearCode()
+        })
     }
     // eslint-disable-next-line
   }, [oauthCode.code])
   return create(Gadgets, {
     title: '3rd Party Logins',
     subtitle: settings.app && settings.app.name,
+    loading:
+      gqlListProviders.loading ||
+      gqlListCredentials.loading ||
+      gqlRemoveCredential.loading ||
+      gqlUpsertCredential.loading,
     children: !gqlListProviders.data
       ? null
       : !gqlListProviders.data.providers.length
@@ -149,16 +157,12 @@ const useListCredentials = createUseServer<{
 const useUpsertCredential = createUseServer<{
   credential: {
     id: string
-    access_token: string
-    email?: string
   }
 }>({
   query: `
     mutation wgaUpsertCredential($provider_id: String!, $code: String!) {
       credential: wgaUpsertCredential(provider_id: $provider_id, code: $code) {
         id
-        access_token
-        email
       }
     }
   `,

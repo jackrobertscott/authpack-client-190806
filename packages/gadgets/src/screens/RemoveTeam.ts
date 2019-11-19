@@ -75,9 +75,7 @@ export const RemoveTeam: FC<{
               click: () =>
                 gqlRemoveTeam.fetch({ ...schema.state }).then(() => {
                   if (change) change()
-                  SettingsStore.update({
-                    team: undefined,
-                  })
+                  SettingsStore.update({ team: undefined })
                 }),
             }),
             create(Button, {

@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as create, FC, useEffect, useState } from 'react'
 import {
   Gadgets,
   useSchema,
@@ -7,7 +7,7 @@ import {
   Control,
   InputString,
   InputStringArray,
-  InputSelect,
+  Poster,
 } from 'wga-theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
@@ -19,6 +19,9 @@ export const UpdateProvider: FC<{
   const universal = useUniversal()
   const gqlGetProvider = useGetProvider()
   const gqlUpdateProvider = useUpdateProvider()
+  const [details, detailsChange] = useState<
+    { name: string; preset: string } | undefined
+  >()
   const schema = useSchema({
     schema: SchemaUpdateProvider,
     poller: value => {
@@ -28,7 +31,12 @@ export const UpdateProvider: FC<{
     },
   })
   useEffect(() => {
-    gqlGetProvider.fetch({ id }).then(({ provider }) => schema.set(provider))
+    gqlGetProvider
+      .fetch({ id })
+      .then(({ provider: { name, preset, ...provider } }) => {
+        detailsChange({ name, preset })
+        schema.set(provider)
+      })
     // eslint-disable-next-line
   }, [id])
   return create(Gadgets, {
@@ -42,21 +50,12 @@ export const UpdateProvider: FC<{
       children: !gqlGetProvider.data
         ? null
         : [
-            create(Control, {
-              key: 'preset',
-              label: 'Preset',
-              error: schema.error('preset'),
-              children: create(InputSelect, {
-                value: schema.value('preset'),
-                change: schema.change('preset'),
-                options: [
-                  { value: 'facebook', label: 'Facebook' },
-                  { value: 'google', label: 'Google' },
-                  { value: 'github', label: 'GitHub' },
-                  { value: 'slack', label: 'Slack' },
-                ],
+            details &&
+              create(Poster, {
+                icon: details.preset,
+                label: details.name,
+                helper: 'Update provider details',
               }),
-            }),
             create(Control, {
               key: 'client',
               label: 'Client Id',
@@ -111,10 +110,6 @@ export const UpdateProvider: FC<{
 }
 
 const SchemaUpdateProvider = yup.object().shape({
-  preset: yup
-    .string()
-    .oneOf(['facebook', 'google', 'github', 'slack'])
-    .required('Please provide a preset'),
   client: yup.string().required('Please provide the oauth client id'),
   secret: yup.string(),
   redirect_uri: yup.string().required('Please provide your oauth redirect uri'),
@@ -126,6 +121,7 @@ const SchemaUpdateProvider = yup.object().shape({
 
 const useGetProvider = createUseServer<{
   provider: {
+    name: string
     preset: string
     client: string
     redirect_uri: string
@@ -135,6 +131,7 @@ const useGetProvider = createUseServer<{
   query: `
     query apiGetProvider($id: String!) {
       provider: apiGetProvider(id: $id) {
+        name
         preset
         client
         redirect_uri

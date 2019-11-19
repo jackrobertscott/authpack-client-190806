@@ -11,5 +11,5 @@ export const config: {
   segmentId: process.env.REACT_APP_SEGMENT_ID as string,
   sentryDSN: process.env.REACT_APP_SENTRY_DSN as string,
   api: 'http://localhost:4000',
-  debug: true,
+  debug: process.env.REACT_APP_NODE_ENV === 'development',
 }

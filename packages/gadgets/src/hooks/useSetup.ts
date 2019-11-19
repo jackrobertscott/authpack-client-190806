@@ -65,7 +65,6 @@ export const useSetup = () => {
         console.log(`Gadget received: ${name} @ ${Date.now() % 86400000}`)
       switch (name) {
         case 'plugin:current':
-          console.log(payload)
           SettingsStore.update({ ...payload })
           break
         case 'plugin:show':

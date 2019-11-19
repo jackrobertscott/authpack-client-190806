@@ -73,10 +73,8 @@ export const RemoveUser: FC<{
               label: 'Confirm',
               click: () =>
                 gqlRemoveUser.fetch({ ...schema.state }).then(() => {
+                  SettingsStore.update({ bearer: undefined })
                   if (change) change()
-                  SettingsStore.update({
-                    bearer: undefined,
-                  })
                 }),
             }),
             create(Button, {

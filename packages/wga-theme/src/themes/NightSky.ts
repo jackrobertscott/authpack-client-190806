@@ -149,7 +149,7 @@ export const NightSky: ITheme = {
     helper: slate(65),
     background: slate(12.5),
     backgroundHover: slate(17.5),
-    border: `1px solid ${slate(7.5)}`,
+    border: `1px solid ${slate(10)}`,
     shadow: `0 0 13px -3px ${slate(0, 0.5)}`,
   },
   poster: {
