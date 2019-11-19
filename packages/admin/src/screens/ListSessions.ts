@@ -106,7 +106,7 @@ export const ListSessions: FC = () => {
             cells: [
               {
                 icon: 'user',
-                value: data.user.summary,
+                value: data.user ? data.user.summary : '...',
               },
               {
                 icon: 'users',
@@ -128,7 +128,7 @@ const useListSessions = createUseServer<{
   sessions: Array<{
     id: string
     created: string
-    user: {
+    user?: {
       summary: string
     }
     team?: {
@@ -156,7 +156,7 @@ const useListSessions = createUseServer<{
 const FakeSessions: Array<{
   id: string
   created: string
-  user: {
+  user?: {
     summary: string
   }
   team?: {
