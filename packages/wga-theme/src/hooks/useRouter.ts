@@ -30,15 +30,20 @@ export const useRouter = ({
   const [current] = options
     .sort((a, b) => (a.exact ? (b.exact ? 0 : 1) : -1))
     .filter(option => compare(option.path, option.exact))
-  const change = (path: string) => history.push(`${base || ''}${path}`)
+  const change = (path: string) => {
+    if (!mounted.current) return
+    history.push(`${base || ''}${path}`)
+  }
   const forward = () => history.goForward()
   const backward = () => history.goForward()
   useEffect(() => {
     return history.listen((data: Location) => {
-      if (mounted.current) locationChange(data)
+      if (!mounted.current) return
+      locationChange(data)
     })
   }, [])
   useEffect(() => {
+    if (!mounted.current) return
     if (!current && nomatch) change(nomatch)
   }, [location, options.map(option => option.path).join()])
   return useMemo(() => {

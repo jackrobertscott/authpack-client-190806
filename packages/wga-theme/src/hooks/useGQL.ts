@@ -35,9 +35,11 @@ export const useGQL = <T>({
       loading,
       error,
       fetch: async (variables?: any): Promise<T> => {
-        if (!loading) loadingChange(true)
-        errorChange(undefined)
         count.current = count.current + 1
+        if (mounted.current) {
+          if (!loading) loadingChange(true)
+          errorChange(undefined)
+        }
         return graphql<T>({
           url,
           query,

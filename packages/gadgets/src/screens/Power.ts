@@ -1,10 +1,9 @@
 import { createElement as create, FC } from 'react'
 import { Focus, Button, Gadgets } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
+import { SettingsStore } from '../utils/settings'
 
-export const Power: FC<{
-  close: () => void
-}> = ({ close }) => {
+export const Power: FC = () => {
   const settings = useSettings()
   return create(Gadgets, {
     title: 'Power',
@@ -16,7 +15,7 @@ export const Power: FC<{
       children: create(Button, {
         icon: 'times',
         label: 'Okay',
-        click: close,
+        click: () => SettingsStore.update({ open: false }),
       }),
     }),
   })

@@ -1,24 +1,14 @@
-import {
-  createElement as create,
-  FC,
-  useState,
-  Fragment,
-  useEffect,
-} from 'react'
+import { createElement as create, FC, useState, Fragment } from 'react'
 import { useLocalRouter, Layout, IconBar } from 'wga-theme'
-import { useSettings } from '../hooks/useSettings'
 import { LoginUser } from '../screens/LoginUser'
 import { SignupUser } from '../screens/SignupUser'
 import { ForgotUserPassword } from '../screens/ForgotUserPassword'
-import { Power } from '../screens/Power'
 import { GetStarted } from '../screens/GetStarted'
 
 export const RouterModalUnauthed: FC<{
   close: () => void
 }> = ({ close }) => {
-  const settings = useSettings()
-  const [power, powerChange] = useState<boolean>(false)
-  const [start, startChange] = useState<boolean>(true)
+  const [startup, startupChange] = useState<boolean>(true)
   const router = useLocalRouter({
     nomatch: '/login',
     options: [
@@ -28,13 +18,9 @@ export const RouterModalUnauthed: FC<{
     ],
   })
   const clicker = (screen: string) => () => {
-    startChange(false)
+    startupChange(false)
     router.change(screen)
   }
-  useEffect(() => {
-    powerChange(!!settings.app && settings.app.power)
-    // eslint-disable-next-line
-  }, [settings.app && settings.app.power])
   return create(Layout, {
     grow: true,
     children: [
@@ -68,12 +54,7 @@ export const RouterModalUnauthed: FC<{
           },
         ],
       }),
-      power
-        ? create(Power, {
-            key: 'power',
-            close: () => powerChange(false),
-          })
-        : start
+      startup
         ? create(GetStarted, {
             key: 'started',
             login: clicker('/login'),

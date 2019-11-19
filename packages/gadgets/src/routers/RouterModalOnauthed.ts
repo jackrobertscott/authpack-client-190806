@@ -1,4 +1,4 @@
-import { createElement as create, FC, useState, Fragment } from 'react'
+import { createElement as create, FC, Fragment } from 'react'
 import { useLocalRouter, Layout, IconBar } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { UpdateUser } from '../screens/UpdateUser'
@@ -12,12 +12,10 @@ import { CreateMembership } from '../screens/CreateMembership'
 import { ListMemberships } from '../screens/ListMemberships'
 import { RemoveTeam } from '../screens/RemoveTeam'
 import { LogoutUser } from '../screens/LogoutUser'
-import { Power } from '../screens/Power'
 
 export const RouterModalOnauthed: FC<{
   close: () => void
 }> = ({ close }) => {
-  const [devopen, devopenChange] = useState<boolean>(false)
   const settings = useSettings()
   const router = useLocalRouter({
     nomatch:
@@ -159,16 +157,11 @@ export const RouterModalOnauthed: FC<{
           },
         ],
       }),
-      devopen
-        ? create(Power, {
-            key: 'power',
-            close: () => devopenChange(false),
-          })
-        : router.current &&
-          create(Fragment, {
-            key: 'children',
-            children: router.current.children,
-          }),
+      router.current &&
+        create(Fragment, {
+          key: 'children',
+          children: router.current.children,
+        }),
     ],
   })
 }

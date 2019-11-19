@@ -19,11 +19,7 @@ export const ListMemberships: FC = () => {
         gqlListMemberships.data.memberships.map(membership => {
           return create(Snippet, {
             key: membership.id,
-            icon: 'user',
-            prefix:
-              settings.team && settings.team.id === membership.id
-                ? 'fas'
-                : 'far',
+            icon: 'user-circle',
             label: membership.user.summary.concat(
               membership.admin ? ' (admin)' : ''
             ),
