@@ -1,6 +1,5 @@
 import { createElement as create, FC } from 'react'
 import { css } from 'emotion'
-import { ITheme } from '../contexts/Theme'
 import { useTheme } from '../hooks/useTheme'
 import { Icon } from './Icon'
 
@@ -11,9 +10,9 @@ export const Button: FC<{
   prefix?: string
   minor?: boolean
   disabled?: boolean
-  style?: ITheme['button']
-}> = ({ label, click, icon, prefix, minor, disabled, style }) => {
-  const theme = useTheme({ button: style })
+  style?: any
+}> = ({ label, click, icon, prefix, minor, disabled, style = {} }) => {
+  const theme = useTheme()
   return create('div', {
     onClick: disabled ? () => {} : click,
     className: `${disabled ? 'disabled' : ''} ${css({
@@ -43,6 +42,7 @@ export const Button: FC<{
         background: theme.button.background,
         boxShadow: 'none',
       },
+      ...style,
     })}`,
     children: [
       create('div', {

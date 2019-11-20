@@ -57,6 +57,10 @@ export interface ITheme extends IKeys {
     border: string
     background: string
   }
+  layout: {
+    background: string
+    border: string
+  }
   searchBar: {
     label: string
     labelHover: string

@@ -62,6 +62,10 @@ export const SnowStorm: ITheme = {
     border: `1px solid ${slate(90)}`,
     background: slate(97.5),
   },
+  layout: {
+    background: slate(100),
+    border: `1px solid ${slate(92.5)}`,
+  },
   searchBar: {
     label: slate(60),
     labelHover: slate(30),

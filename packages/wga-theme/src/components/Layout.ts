@@ -1,5 +1,6 @@
 import { createElement as create, FC, ReactNode } from 'react'
 import { css } from 'emotion'
+import { useTheme } from '../hooks/useTheme'
 
 export const Layout: FC<{
   children: ReactNode
@@ -11,6 +12,7 @@ export const Layout: FC<{
   hide?: boolean
   media?: boolean
   breakpoint?: number
+  styled?: boolean
 }> = ({
   children,
   column,
@@ -21,7 +23,9 @@ export const Layout: FC<{
   hide,
   media,
   breakpoint = 810,
+  styled,
 }) => {
+  const theme = useTheme()
   return create('div', {
     children,
     className: css({
@@ -34,6 +38,8 @@ export const Layout: FC<{
       overflow: hide ? 'hidden' : 'visible',
       flexGrow: grow ? 1 : 0,
       padding: padding ? '20px 25px' : 0,
+      background: styled ? theme.layout.background : undefined,
+      borderBottom: styled ? theme.layout.border : undefined,
       '& > div:not(:last-child)': divide && {
         margin: column ? `0 0 20px 0` : `0 20px 0 0`,
       },

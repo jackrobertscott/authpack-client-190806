@@ -62,6 +62,10 @@ export const NightSky: ITheme = {
     border: `1px solid ${slate(2.5)}`,
     background: slate(10),
   },
+  layout: {
+    background: slate(12.5),
+    border: `1px solid ${slate(7.5)}`,
+  },
   searchBar: {
     label: slate(65),
     labelHover: slate(95),

@@ -43,69 +43,75 @@ export const UpdateProvider: FC<{
     title: 'Update Provider',
     subtitle: universal.app_name,
     loading: gqlUpdateProvider.loading,
-    children: create(Layout, {
-      column: true,
-      padding: true,
-      divide: true,
-      children: !gqlGetProvider.data
-        ? null
-        : [
-            details &&
-              create(Poster, {
-                icon: details.preset,
-                label: details.name,
-                helper: 'Update provider details',
+    children: [
+      details &&
+        create(Poster, {
+          key: 'poster',
+          icon: details.preset,
+          prefix: 'fab',
+          label: details.name,
+          helper: 'Update provider details',
+        }),
+      create(Layout, {
+        key: 'layout',
+        column: true,
+        padding: true,
+        divide: true,
+        children: !gqlGetProvider.data
+          ? null
+          : [
+              create(Control, {
+                key: 'client',
+                label: 'Client Id',
+                helper: `The oauth client id provided by ${schema.value(
+                  'preset'
+                ) || 'the app'}`,
+                error: schema.error('client'),
+                children: create(InputString, {
+                  value: schema.value('client'),
+                  change: schema.change('client'),
+                  placeholder: '...',
+                }),
               }),
-            create(Control, {
-              key: 'client',
-              label: 'Client Id',
-              helper: `The oauth client id provided by ${schema.value(
-                'preset'
-              ) || 'the app'}`,
-              error: schema.error('client'),
-              children: create(InputString, {
-                value: schema.value('client'),
-                change: schema.change('client'),
-                placeholder: '...',
+              create(Control, {
+                key: 'secret',
+                label: 'Secret',
+                helper: `The oauth secret provided by ${schema.value(
+                  'preset'
+                ) || 'the app'}`,
+                error: schema.error('secret'),
+                children: create(InputString, {
+                  value: schema.value('secret'),
+                  change: schema.change('secret'),
+                  placeholder: '...',
+                }),
               }),
-            }),
-            create(Control, {
-              key: 'secret',
-              label: 'Secret',
-              helper: `The oauth secret provided by ${schema.value('preset') ||
-                'the app'}`,
-              error: schema.error('secret'),
-              children: create(InputString, {
-                value: schema.value('secret'),
-                change: schema.change('secret'),
-                placeholder: '...',
+              create(Control, {
+                key: 'redirect_uri',
+                label: 'Redirect URI',
+                helper:
+                  'The user will be sent to this location after authenticating',
+                error: schema.error('redirect_uri'),
+                children: create(InputString, {
+                  value: schema.value('redirect_uri'),
+                  change: schema.change('redirect_uri'),
+                  placeholder: 'https://v1.windowgadgets.io',
+                }),
               }),
-            }),
-            create(Control, {
-              key: 'redirect_uri',
-              label: 'Redirect URI',
-              helper:
-                'The user will be sent to this location after authenticating',
-              error: schema.error('redirect_uri'),
-              children: create(InputString, {
-                value: schema.value('redirect_uri'),
-                change: schema.change('redirect_uri'),
-                placeholder: 'https://v1.windowgadgets.io',
+              create(Control, {
+                key: 'scopes',
+                label: 'Scopes',
+                helper: 'A set of oauth permission scopes',
+                error: schema.error('scopes'),
+                children: create(InputStringArray, {
+                  value: schema.value('scopes'),
+                  change: schema.change('scopes'),
+                  placeholder: '...',
+                }),
               }),
-            }),
-            create(Control, {
-              key: 'scopes',
-              label: 'Scopes',
-              helper: 'A set of oauth permission scopes',
-              error: schema.error('scopes'),
-              children: create(InputStringArray, {
-                value: schema.value('scopes'),
-                change: schema.change('scopes'),
-                placeholder: '...',
-              }),
-            }),
-          ],
-    }),
+            ],
+      }),
+    ],
   })
 }
 

@@ -14,6 +14,7 @@ import { SettingsStore } from '../utils/settings'
 import { createUseServer } from '../hooks/useServer'
 import { useOauthCode } from '../hooks/useOauthCode'
 import { Loading } from './Loading'
+import { presetColors } from '../utils/presets'
 
 export const LoginUser: FC = () => {
   const mounted = useMounted()
@@ -73,52 +74,63 @@ export const LoginUser: FC = () => {
         })
       : !gqlListProviders.data
       ? null
-      : create(Layout, {
-          column: true,
-          padding: true,
-          divide: true,
-          children: [
-            gqlListProviders.data.providers.map(provider => {
+      : [
+          create(Layout, {
+            key: 'oauth',
+            column: true,
+            padding: true,
+            divide: true,
+            styled: true,
+            children: gqlListProviders.data.providers.map(provider => {
               return create(Button, {
                 key: provider.id,
                 icon: provider.preset,
                 label: provider.name || provider.preset,
                 prefix: 'fab',
+                style: presetColors(provider.preset),
                 click: () => {
                   currentChange(provider.id)
                   oauthCode.openUrl(provider.url)
                 },
               })
             }),
-            create(Control, {
-              key: 'email',
-              label: 'Email',
-              error: schema.error('email'),
-              children: create(InputString, {
-                value: schema.value('email'),
-                change: schema.change('email'),
-                placeholder: 'example@email.com',
+          }),
+          create(Layout, {
+            key: 'form',
+            column: true,
+            padding: true,
+            divide: true,
+            children: [
+              create(Control, {
+                key: 'email',
+                label: 'Email',
+                error: schema.error('email'),
+                children: create(InputString, {
+                  value: schema.value('email'),
+                  change: schema.change('email'),
+                  placeholder: 'example@email.com',
+                }),
               }),
-            }),
-            create(Control, {
-              key: 'password',
-              label: 'Password',
-              error: schema.error('password'),
-              children: create(InputString, {
-                value: schema.value('password'),
-                change: schema.change('password'),
-                placeholder: '* * * * * * * *',
-                password: true,
+              create(Control, {
+                key: 'password',
+                label: 'Password',
+                error: schema.error('password'),
+                children: create(InputString, {
+                  value: schema.value('password'),
+                  change: schema.change('password'),
+                  placeholder: '* * * * * * * *',
+                  password: true,
+                }),
               }),
-            }),
-            create(Button, {
-              key: 'submit',
-              label: 'Login',
-              disabled: !schema.valid,
-              click: schema.submit,
-            }),
-          ],
-        }),
+              create(Button, {
+                key: 'submit',
+                label: 'Login',
+                disabled: !schema.valid,
+                click: schema.submit,
+              }),
+            ],
+          }),
+        ],
   })
 }
 

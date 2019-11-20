@@ -64,6 +64,10 @@ export const BlueHarvester: ITheme = {
     border: `1px solid ${color(7.5)}`,
     background: color(15),
   },
+  layout: {
+    background: color(17.5),
+    border: `1px solid ${color(10)}`,
+  },
   searchBar: {
     label: color(65),
     labelHover: color(95),

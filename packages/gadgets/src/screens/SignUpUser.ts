@@ -15,6 +15,7 @@ import { SettingsStore } from '../utils/settings'
 import { createUseServer } from '../hooks/useServer'
 import { useOauthCode } from '../hooks/useOauthCode'
 import { Loading } from './Loading'
+import { presetColors } from '../utils/presets'
 
 export const SignupUser: FC = () => {
   const mounted = useMounted()
@@ -73,90 +74,100 @@ export const SignupUser: FC = () => {
         })
       : !gqlListProviders.data
       ? null
-      : create(Layout, {
-          column: true,
-          padding: true,
-          divide: true,
-          children: [
-            gqlListProviders.data.providers.map(provider => {
+      : [
+          create(Layout, {
+            key: 'oauth',
+            column: true,
+            padding: true,
+            divide: true,
+            styled: true,
+            children: gqlListProviders.data.providers.map(provider => {
               return create(Button, {
                 key: provider.id,
                 icon: provider.preset,
                 label: provider.name || provider.preset,
                 prefix: 'fab',
+                style: presetColors(provider.preset),
                 click: () => {
-                  if (!mounted.current) return
                   currentChange(provider.id)
                   oauthCode.openUrl(provider.url)
                 },
               })
             }),
-            create(Layout, {
-              key: 'name',
-              divide: true,
-              media: true,
-              children: [
-                create(Control, {
-                  key: 'given_name',
-                  label: 'First Name',
-                  error: schema.error('given_name'),
-                  children: create(InputString, {
-                    value: schema.value('given_name'),
-                    change: schema.change('given_name'),
-                    placeholder: 'Fred',
+          }),
+          create(Layout, {
+            key: 'form',
+            column: true,
+            padding: true,
+            divide: true,
+            children: [
+              create(Layout, {
+                key: 'name',
+                divide: true,
+                media: true,
+                children: [
+                  create(Control, {
+                    key: 'given_name',
+                    label: 'First Name',
+                    error: schema.error('given_name'),
+                    children: create(InputString, {
+                      value: schema.value('given_name'),
+                      change: schema.change('given_name'),
+                      placeholder: 'Fred',
+                    }),
                   }),
-                }),
-                create(Control, {
-                  key: 'family_name',
-                  label: 'Last Name',
-                  error: schema.error('family_name'),
-                  children: create(InputString, {
-                    value: schema.value('family_name'),
-                    change: schema.change('family_name'),
-                    placeholder: 'Blogs',
+                  create(Control, {
+                    key: 'family_name',
+                    label: 'Last Name',
+                    error: schema.error('family_name'),
+                    children: create(InputString, {
+                      value: schema.value('family_name'),
+                      change: schema.change('family_name'),
+                      placeholder: 'Blogs',
+                    }),
                   }),
+                ],
+              }),
+              create(Control, {
+                key: 'username',
+                label: 'Username',
+                error: schema.error('username'),
+                children: create(InputString, {
+                  value: schema.value('username'),
+                  change: schema.change('username'),
+                  placeholder: 'example_username_123',
                 }),
-              ],
-            }),
-            create(Control, {
-              key: 'username',
-              label: 'Username',
-              error: schema.error('username'),
-              children: create(InputString, {
-                value: schema.value('username'),
-                change: schema.change('username'),
-                placeholder: 'example_username_123',
               }),
-            }),
-            create(Control, {
-              key: 'email',
-              label: 'Email',
-              error: schema.error('email'),
-              children: create(InputString, {
-                value: schema.value('email'),
-                change: schema.change('email'),
-                placeholder: 'example@email.com',
+              create(Control, {
+                key: 'email',
+                label: 'Email',
+                error: schema.error('email'),
+                children: create(InputString, {
+                  value: schema.value('email'),
+                  change: schema.change('email'),
+                  placeholder: 'example@email.com',
+                }),
               }),
-            }),
-            create(Control, {
-              key: 'password',
-              label: 'Password',
-              error: schema.error('password'),
-              children: create(InputString, {
-                value: schema.value('password'),
-                change: schema.change('password'),
-                placeholder: '* * * * * * * *',
-                password: true,
+              create(Control, {
+                key: 'password',
+                label: 'Password',
+                error: schema.error('password'),
+                children: create(InputString, {
+                  value: schema.value('password'),
+                  change: schema.change('password'),
+                  placeholder: '* * * * * * * *',
+                  password: true,
+                }),
               }),
-            }),
-            create(Button, {
-              key: 'submit',
-              label: 'Login',
-              disabled: !schema.valid,
-              click: schema.submit,
-            }),
-          ],
-        }),
+              create(Button, {
+                key: 'submit',
+                label: 'Login',
+                disabled: !schema.valid,
+                click: schema.submit,
+              }),
+            ],
+          }),
+        ],
   })
 }
 

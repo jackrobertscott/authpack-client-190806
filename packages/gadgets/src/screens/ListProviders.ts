@@ -74,7 +74,7 @@ export const ListProviders: FC<{
                           {
                             icon: 'plus',
                             label: 'Connect',
-                            helper: 'Add GitHub OAuth',
+                            helper: `Add ${provider.name} OAuth`,
                             click: () => {
                               currentChange(provider.id)
                               oauthCode.openUrl(provider.url)
@@ -85,7 +85,7 @@ export const ListProviders: FC<{
                           {
                             icon: 'redo-alt',
                             label: 'Refresh',
-                            helper: 'Update your GitHub OAuth',
+                            helper: `Update your ${provider.name} OAuth`,
                             click: () => {
                               currentChange(provider.id)
                               oauthCode.openUrl(provider.url)
