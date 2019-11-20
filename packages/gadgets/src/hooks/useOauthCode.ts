@@ -44,7 +44,7 @@ export const useOauthCode = () => {
     // eslint-disable-next-line
   }, [tab])
   const openUrl = (url: string) => {
-    tabChange(window.open(url))
+    setTimeout(() => tabChange(window.open(url)))
   }
   const clearCode = () => {
     codeChange(undefined)
