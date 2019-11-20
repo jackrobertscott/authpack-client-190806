@@ -22,7 +22,7 @@ export const UpdateUserPassword: FC<{
   const schema = useSchema({
     schema: SchemaUpdatePassword,
     submit: value => {
-      gqlUpdatePassword.fetch({ ...value }).then(({ user }) => {
+      gqlUpdatePassword.fetch(value).then(({ user }) => {
         if (change) change(user.id)
         schema.reset()
         toaster.add({
@@ -103,8 +103,8 @@ const useUpdatePassword = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaUpdateUserPassword($password_current: String!, $password_new: String!) {
-      user: wgaUpdateUserPassword(password_current: $password_current, password_new: $password_new) {
+    mutation wgaUpdateCurrentUserPassword($password_current: String!, $password_new: String!) {
+      user: wgaUpdateCurrentUserPassword(password_current: $password_current, password_new: $password_new) {
         id
       }
     }

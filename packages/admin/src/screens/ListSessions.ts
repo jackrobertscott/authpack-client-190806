@@ -21,6 +21,8 @@ export const ListSessions: FC = () => {
   const list =
     apiListSessions.data && apiListSessions.data.count
       ? apiListSessions.data.sessions
+      : apiListSessions.loading || variables.phrase
+      ? []
       : FakeSessions
   return create(Page, {
     title: 'Sessions',

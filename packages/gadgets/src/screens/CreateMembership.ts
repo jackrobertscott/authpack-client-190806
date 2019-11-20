@@ -20,9 +20,9 @@ export const CreateMembership: FC<{
   const gqlListPermissions = useListPermissions()
   const schema = useSchema({
     schema: SchemaCreateMembership,
-    submit: value => {
+    submit: input => {
       gqlCreateMembership
-        .fetch({ ...value })
+        .fetch({ input })
         .then(({ membership }) => change && change(membership.id))
     },
   })
@@ -97,8 +97,8 @@ const useCreateMembership = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaCreateMembership($email: String, $permission_ids: [String!]) {
-      membership: wgaCreateMembership(email: $email, permission_ids: $permission_ids) {
+    mutation wgaCreateMembership($input: CreateMembershipInput!) {
+      membership: wgaCreateMembership(input: $input) {
         id
       }
     }

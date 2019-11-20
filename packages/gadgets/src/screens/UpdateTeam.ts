@@ -19,9 +19,9 @@ export const UpdateTeam: FC<{
   const gqlUpdateTeam = useUpdateTeam()
   const schema = useSchema({
     schema: SchemaUpdateTeam,
-    poller: value => {
+    poller: input => {
       gqlUpdateTeam
-        .fetch({ ...value })
+        .fetch({ input })
         .then(({ team }) => change && change(team.id))
     },
   })
@@ -97,8 +97,8 @@ const useGetTeam = createUseServer<{
   }
 }>({
   query: `
-    query wgaGetTeam {
-      team: wgaGetTeam {
+    query wgaGetCurrentTeam {
+      team: wgaGetCurrentTeam {
         name
         tag
         description
@@ -113,8 +113,8 @@ const useUpdateTeam = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaUpdateTeam($name: String, $tag: String, $description: String) {
-      team: wgaUpdateTeam(name: $name, tag: $tag, description: $description) {
+    mutation wgaUpdateCurrentTeam($input: UpdateCurrentTeamInput!) {
+      team: wgaUpdateCurrentTeam(input: $input) {
         id
       }
     }

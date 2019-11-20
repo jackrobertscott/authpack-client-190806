@@ -21,6 +21,8 @@ export const ListMemberships: FC = () => {
   const list =
     apiListMemberships.data && apiListMemberships.data.count
       ? apiListMemberships.data.memberships
+      : apiListMemberships.loading || variables.phrase
+      ? []
       : FakeMemberships
   return create(Page, {
     title: 'Memberships',

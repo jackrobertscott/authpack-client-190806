@@ -17,20 +17,24 @@ export const UpdateMembership: FC<{
   close: () => void
 }> = ({ id, change, close }) => {
   const settings = useSettings()
+  const gqlGetMembership = useGetMembership()
   const gqlUpdateMembership = useUpdateMembership()
   const gqlListPermissions = useListPermissions()
   const schema = useSchema({
     schema: SchemaUpdateMembership,
-    poller: value => {
+    poller: input => {
       gqlUpdateMembership
-        .fetch({ ...value, id })
+        .fetch({ id, input })
         .then(({ membership }) => change && change(membership.id))
     },
   })
   useEffect(() => {
     gqlListPermissions.fetch()
+    gqlGetMembership
+      .fetch({ id })
+      .then(({ membership }) => schema.set(membership))
     // eslint-disable-next-line
-  }, [])
+  }, [id])
   return create(Gadgets, {
     title: 'Update Member',
     subtitle: settings.app && settings.app.name,
@@ -85,14 +89,28 @@ const SchemaUpdateMembership = yup.object().shape({
     .default([]),
 })
 
+const useGetMembership = createUseServer<{
+  membership: {
+    permission_ids: string
+  }
+}>({
+  query: `
+    query wgaGetMembership($id: String!) {
+      membership: wgaGetMembership(id: $id) {
+        permission_ids
+      }
+    }
+  `,
+})
+
 const useUpdateMembership = createUseServer<{
   membership: {
     id: string
   }
 }>({
   query: `
-    mutation wgaUpdateMembership($id: String!, $permission_ids: [String!]) {
-      membership: wgaUpdateMembership(id: $id, permission_ids: $permission_ids) {
+    mutation wgaUpdateMembership($id: String!, $input: UpdateMembershipInput!) {
+      membership: wgaUpdateMembership(id: $id, input: $input) {
         id
       }
     }

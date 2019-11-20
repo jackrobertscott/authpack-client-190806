@@ -23,6 +23,8 @@ export const ListUsers: FC = () => {
   const list =
     apiListUsers.data && apiListUsers.data.count
       ? apiListUsers.data.users
+      : apiListUsers.loading || variables.phrase
+      ? []
       : FakeUsers
   return create(Page, {
     title: 'Users',

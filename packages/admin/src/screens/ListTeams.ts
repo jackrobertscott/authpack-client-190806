@@ -21,6 +21,8 @@ export const ListTeams: FC = () => {
   const list =
     apiListTeams.data && apiListTeams.data.count
       ? apiListTeams.data.teams
+      : apiListTeams.loading || variables.phrase
+      ? []
       : FakeTeams
   return create(Page, {
     title: 'Teams',

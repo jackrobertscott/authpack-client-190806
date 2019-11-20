@@ -21,6 +21,8 @@ export const ListProviders: FC = () => {
   const list =
     apiListProviders.data && apiListProviders.data.count
       ? apiListProviders.data.providers
+      : apiListProviders.loading || variables.phrase
+      ? []
       : FakeProviders
   return create(Page, {
     title: 'Providers',

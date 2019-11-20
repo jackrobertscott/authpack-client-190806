@@ -24,9 +24,9 @@ export const CreateTeam: FC<{
   const [open, openChange] = useState<boolean>(initial)
   const schema = useSchema({
     schema: SchemaCreateTeam,
-    submit: value => {
+    submit: input => {
       gqlCreateTeam
-        .fetch(value)
+        .fetch({ input })
         .then(({ team }) => gqlSwitchTeam.fetch({ id: team.id }))
         .then(({ session }) => {
           SettingsStore.update({ bearer: `Bearer ${session.token}` })
@@ -112,8 +112,8 @@ const useCreateTeam = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaCreateTeam($name: String!, $tag: String!) {
-      team: wgaCreateTeam(name: $name, tag: $tag) {
+    mutation wgaCreateTeam($input: CreateTeamInput!) {
+      team: wgaCreateTeam(input: $input) {
         id
       }
     }

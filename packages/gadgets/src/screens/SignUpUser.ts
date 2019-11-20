@@ -26,8 +26,8 @@ export const SignupUser: FC = () => {
   const [current, currentChange] = useState<string | undefined>()
   const schema = useSchema({
     schema: SchemaSignupUser,
-    submit: value => {
-      gqlSignupUser.fetch(value).then(({ session }) => {
+    submit: input => {
+      gqlSignupUser.fetch({ input }).then(({ session }) => {
         schema.change('password')('')
         SettingsStore.update({
           open: false,
@@ -188,8 +188,8 @@ const useSignupUser = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaSignupUser($email: String!, $password: String!, $username: String, $given_name: String, $family_name: String) {
-      session: wgaSignupUser(email: $email, password: $password, username: $username, given_name: $given_name, family_name: $family_name) {
+    mutation wgaSignupUser($input: SignupUserInput!) {
+      session: wgaSignupUser(input: $input) {
         id
         token
       }

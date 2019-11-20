@@ -21,6 +21,8 @@ export const ListPermissions: FC = () => {
   const list =
     apiListPermissions.data && apiListPermissions.data.count
       ? apiListPermissions.data.permissions
+      : apiListPermissions.loading || variables.phrase
+      ? []
       : FakePermissions
   return create(Page, {
     title: 'Permissions',

@@ -28,10 +28,7 @@ export const ListProviders: FC<{
   useEffect(() => {
     if (current && oauthCode.code) {
       gqlUpsertCredential
-        .fetch({
-          provider_id: current,
-          code: oauthCode.code,
-        })
+        .fetch({ input: { provider_id: current, code: oauthCode.code } })
         .then(() => gqlListCredentials.fetch())
         .finally(() => {
           currentChange(undefined)
@@ -48,73 +45,68 @@ export const ListProviders: FC<{
       gqlListCredentials.loading ||
       gqlRemoveCredential.loading ||
       gqlUpsertCredential.loading,
-    children: !gqlListProviders.data
-      ? null
-      : !gqlListProviders.data.providers.length
-      ? create(Poster, {
-          icon: 'handshake',
-          label: 'Providers',
-          helper: 'There are no authentication providers currently available',
-        })
-      : create(Fragment, {
-          children: [
-            create(Layout, {
-              key: 'layout',
-              column: true,
-              children: gqlListProviders.data.providers.map(provider => {
-                const credential =
-                  gqlListCredentials.data &&
-                  gqlListCredentials.data.credentials.find(
+    children:
+      !gqlListProviders.data || !gqlListCredentials.data
+        ? null
+        : !gqlListProviders.data.providers.length
+        ? create(Poster, {
+            icon: 'handshake',
+            label: 'Providers',
+            helper: 'There are no authentication providers currently available',
+          })
+        : create(Fragment, {
+            children: [
+              create(Layout, {
+                key: 'layout',
+                column: true,
+                children: gqlListProviders.data.providers.map(provider => {
+                  const credential = gqlListCredentials.data!.credentials.find(
                     ({ provider_id }) => provider_id === provider.id
                   )
-                return create(Snippet, {
-                  key: provider.id,
-                  icon: provider.preset,
-                  label: provider.name || provider.preset,
-                  prefix: 'fab',
-                  value: !gqlListCredentials.data
-                    ? ''
-                    : !credential
-                    ? 'Not connected'
-                    : 'Connected',
-                  options: !credential
-                    ? [
-                        {
-                          icon: 'plus',
-                          label: 'Connect',
-                          helper: 'Add GitHub OAuth',
-                          click: () => {
-                            currentChange(provider.id)
-                            oauthCode.openUrl(provider.url)
+                  return create(Snippet, {
+                    key: provider.id,
+                    icon: provider.preset,
+                    label: provider.name || provider.preset,
+                    prefix: 'fab',
+                    value: !credential ? 'Not connected' : 'Connected',
+                    options: !credential
+                      ? [
+                          {
+                            icon: 'plus',
+                            label: 'Connect',
+                            helper: 'Add GitHub OAuth',
+                            click: () => {
+                              currentChange(provider.id)
+                              oauthCode.openUrl(provider.url)
+                            },
                           },
-                        },
-                      ]
-                    : [
-                        {
-                          icon: 'redo-alt',
-                          label: 'Refresh',
-                          helper: 'Update your GitHub OAuth',
-                          click: () => {
-                            currentChange(provider.id)
-                            oauthCode.openUrl(provider.url)
+                        ]
+                      : [
+                          {
+                            icon: 'redo-alt',
+                            label: 'Refresh',
+                            helper: 'Update your GitHub OAuth',
+                            click: () => {
+                              currentChange(provider.id)
+                              oauthCode.openUrl(provider.url)
+                            },
                           },
-                        },
-                        {
-                          icon: 'trash-alt',
-                          label: 'Remove',
-                          helper: 'Delete this OAuth provider',
-                          click: () => {
-                            gqlRemoveCredential
-                              .fetch({ id: credential.id })
-                              .finally(() => gqlListCredentials.fetch())
+                          {
+                            icon: 'trash-alt',
+                            label: 'Remove',
+                            helper: 'Delete this OAuth provider',
+                            click: () => {
+                              gqlRemoveCredential
+                                .fetch({ id: credential.id })
+                                .finally(() => gqlListCredentials.fetch())
+                            },
                           },
-                        },
-                      ],
-                })
+                        ],
+                  })
+                }),
               }),
-            }),
-          ],
-        }),
+            ],
+          }),
   })
 }
 
@@ -160,8 +152,8 @@ const useUpsertCredential = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaUpsertCredential($provider_id: String!, $code: String!) {
-      credential: wgaUpsertCredential(provider_id: $provider_id, code: $code) {
+    mutation wgaUpsertCredential($input: UpsertCredentialInput!) {
+      credential: wgaUpsertCredential(input: $input) {
         id
       }
     }

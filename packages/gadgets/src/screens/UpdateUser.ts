@@ -19,9 +19,9 @@ export const UpdateUser: FC<{
   const gqlUpdateUser = useUpdateUser()
   const schema = useSchema({
     schema: SchemaUpdateUser,
-    poller: value => {
+    poller: input => {
       gqlUpdateUser
-        .fetch({ ...value })
+        .fetch({ input })
         .then(({ user }) => change && change(user.id))
     },
   })
@@ -116,8 +116,8 @@ const useGetUser = createUseServer<{
   }
 }>({
   query: `
-    query wgaGetUser {
-      user: wgaGetUser {
+    query wgaGetCurrentUser {
+      user: wgaGetCurrentUser {
         given_name
         family_name
         username
@@ -133,8 +133,8 @@ const useUpdateUser = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaUpdateUser($given_name: String, $family_name: String, $username: String, $email: String) {
-      user: wgaUpdateUser(given_name: $given_name, family_name: $family_name, username: $username, email: $email) {
+    mutation wgaUpdateCurrentUser($input: UpdateCurrentUserInput!) {
+      user: wgaUpdateCurrentUser(input: $input) {
         id
       }
     }

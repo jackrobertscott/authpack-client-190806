@@ -7,11 +7,11 @@ import { config } from '../config'
 
 export const useSetup = () => {
   const settings = useSettings()
-  const gqlCurrentApp = useCurrentApp()
-  const gqlGetSession = useGetSession()
+  const gqlGetCurrentApp = useGetCurrentApp()
+  const gqlGetCurrentSession = useGetCurrentSession()
   useEffect(() => {
     if (settings.domain) {
-      gqlCurrentApp.fetch().then(({ app }) => {
+      gqlGetCurrentApp.fetch().then(({ app }) => {
         SettingsStore.update({ app })
       })
     }
@@ -26,7 +26,7 @@ export const useSetup = () => {
       permissions: undefined,
     })
     if (settings.bearer && settings.domain) {
-      gqlGetSession
+      gqlGetCurrentSession
         .fetch()
         .then(({ session: { user, team, permissions, ...session } }) => {
           SettingsStore.update({
@@ -84,7 +84,7 @@ export const useSetup = () => {
   }, [])
 }
 
-const useCurrentApp = createUseServer<{
+const useGetCurrentApp = createUseServer<{
   app: {
     id: string
     name: string
@@ -108,7 +108,7 @@ const useCurrentApp = createUseServer<{
   `,
 })
 
-const useGetSession = createUseServer<{
+const useGetCurrentSession = createUseServer<{
   session: {
     id: string
     token: string
@@ -134,8 +134,8 @@ const useGetSession = createUseServer<{
   }
 }>({
   query: `
-    query wgaGetSession {
-      session: wgaGetSession {
+    query wgaGetCurrentSession {
+      session: wgaGetCurrentSession {
         id
         token
         user {
