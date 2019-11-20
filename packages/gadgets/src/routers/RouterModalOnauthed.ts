@@ -9,15 +9,17 @@ import { CreateTeam } from '../screens/CreateTeam'
 import { SwitchTeam } from '../screens/SwitchTeam'
 import { UpdateTeam } from '../screens/UpdateTeam'
 import { CreateMembership } from '../screens/CreateMembership'
-import { ListMemberships } from '../screens/ListMemberships'
 import { RemoveTeam } from '../screens/RemoveTeam'
 import { LogoutUser } from '../screens/LogoutUser'
+import { RouterMemberships } from './RouterMemberships'
+import { ListSessions } from '../screens/ListSessions'
 
 export const RouterModalOnauthed: FC<{
   close: () => void
 }> = ({ close }) => {
   const settings = useSettings()
   const router = useLocalRouter({
+    name: 'onauthed',
     nomatch:
       settings.app && settings.app.force_teams && !settings.team
         ? '/team/create'
@@ -28,12 +30,13 @@ export const RouterModalOnauthed: FC<{
             { key: '/user/update', children: create(UpdateUser) },
             { key: '/user/password', children: create(UpdateUserPassword) },
             { key: '/user/apps', children: create(ListProviders) },
+            { key: '/user/sessions', children: create(ListSessions) },
             { key: '/user/danger', children: create(RemoveUser) },
             { key: '/logout', children: create(LogoutUser) },
             { key: '/team/switch', children: create(SwitchTeam) },
             { key: '/team/update', children: create(UpdateTeam) },
             { key: '/team/members/create', children: create(CreateMembership) },
-            { key: '/team/members', children: create(ListMemberships) },
+            { key: '/team/members', children: create(RouterMemberships) },
             {
               key: '/team/create',
               children: create(CreateTeam, {
@@ -85,6 +88,12 @@ export const RouterModalOnauthed: FC<{
                 label: '3rd Party Apps',
                 helper: 'Connect to other apps',
                 click: () => router.change('/user/apps'),
+              },
+              {
+                icon: 'history',
+                label: 'Latest Sessions',
+                helper: 'See when you logged in last',
+                click: () => router.change('/user/sessions'),
               },
               {
                 icon: 'fire-alt',

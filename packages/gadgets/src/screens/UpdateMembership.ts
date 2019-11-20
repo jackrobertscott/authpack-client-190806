@@ -5,8 +5,8 @@ import {
   useSchema,
   Control,
   Layout,
-  InputString,
   InputSelectMany,
+  Snippet,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
@@ -14,7 +14,8 @@ import { createUseServer } from '../hooks/useServer'
 export const UpdateMembership: FC<{
   id: string
   change?: (id?: string) => void
-}> = ({ id, change }) => {
+  close: () => void
+}> = ({ id, change, close }) => {
   const settings = useSettings()
   const gqlUpdateMembership = useUpdateMembership()
   const gqlListPermissions = useListPermissions()
@@ -28,53 +29,56 @@ export const UpdateMembership: FC<{
   })
   useEffect(() => {
     gqlListPermissions.fetch()
+    // eslint-disable-next-line
   }, [])
   return create(Gadgets, {
     title: 'Update Member',
     subtitle: settings.app && settings.app.name,
     loading: gqlUpdateMembership.loading || gqlListPermissions.loading,
-    children: create(Layout, {
-      column: true,
-      padding: true,
-      divide: true,
-      children: [
-        create(Control, {
-          key: 'email',
-          label: 'Email',
-          error: schema.error('email'),
-          children: create(InputString, {
-            value: schema.value('email'),
-            change: schema.change('email'),
-            placeholder: 'example@email.com',
-          }),
-        }),
-        !gqlListPermissions.data || !gqlListPermissions.data.permissions.length
+    children: [
+      create(Snippet, {
+        key: 'snippet',
+        icon: 'arrow-alt-circle-left',
+        prefix: 'far',
+        label: 'Back',
+        click: close,
+      }),
+      create(Layout, {
+        key: 'layout',
+        column: true,
+        padding: true,
+        divide: true,
+        children: !gqlListPermissions.data
           ? null
-          : create(Control, {
-              key: 'permission_ids',
-              label: 'Permission Ids',
-              error: schema.error('permission_ids'),
-              children: create(InputSelectMany, {
-                value: schema.value('permission_ids'),
-                change: schema.change('permission_ids'),
-                options: gqlListPermissions.data.permissions.map(permission => {
-                  return {
-                    value: permission.id,
-                    icon: 'user-sheild',
-                    label: permission.name,
-                    helper: permission.description,
-                  }
+          : [
+              gqlListPermissions.data.permissions.length &&
+                create(Control, {
+                  key: 'permission_ids',
+                  label: 'Permissions',
+                  helper: 'Determine what the member can access',
+                  error: schema.error('permission_ids'),
+                  children: create(InputSelectMany, {
+                    value: schema.value('permission_ids'),
+                    change: schema.change('permission_ids'),
+                    options: gqlListPermissions.data.permissions.map(
+                      permission => {
+                        return {
+                          value: permission.id,
+                          icon: 'user-sheild',
+                          label: permission.name,
+                          helper: permission.description,
+                        }
+                      }
+                    ),
+                  }),
                 }),
-              }),
-            }),
-      ],
-    }),
+            ],
+      }),
+    ],
   })
 }
 
 const SchemaUpdateMembership = yup.object().shape({
-  email: yup.string().email('Please use a valid email'),
-  user_id: yup.string(),
   permission_ids: yup
     .array()
     .of(yup.string().required())
@@ -87,8 +91,8 @@ const useUpdateMembership = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaUpdateMembership($id: String!, $user_id: String, $email: String, $permission_ids: [String!]) {
-      membership: wgaUpdateMembership(id: $id, user_id: $user_id, email: $email, permission_ids: $permission_ids) {
+    mutation wgaUpdateMembership($id: String!, $permission_ids: [String!]) {
+      membership: wgaUpdateMembership(id: $id, permission_ids: $permission_ids) {
         id
       }
     }

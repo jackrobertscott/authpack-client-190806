@@ -24,7 +24,7 @@ export const Menu: FC<{
       borderTop: theme.menu.border,
     }),
     children: create(Scroller, {
-      maxheight: 340,
+      maxheight: 320,
       children: options.map(({ label, helper, icon, prefix, click }) => {
         return create('div', {
           key: label,

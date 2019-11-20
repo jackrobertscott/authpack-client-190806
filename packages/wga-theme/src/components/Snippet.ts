@@ -4,6 +4,7 @@ import { css } from 'emotion'
 import { Icon } from './Icon'
 import { ClickOutside } from './ClickOutside'
 import { Menu } from './Menu'
+import { useMounted } from '../hooks/useMounted'
 
 export const Snippet: FC<{
   icon: string
@@ -19,8 +20,9 @@ export const Snippet: FC<{
     click?: () => void
   }>
 }> = ({ icon, prefix, label, value, click, options = [] }) => {
-  const [open, openChange] = useState<boolean>(false)
   const theme = useTheme()
+  const mounted = useMounted()
+  const [open, openChange] = useState<boolean>(false)
   return create('div', {
     onClick: click,
     className: css({
@@ -98,7 +100,7 @@ export const Snippet: FC<{
               create(Dropdown, {
                 key: 'dropdown',
                 options,
-                close: () => openChange(false),
+                close: () => mounted.current && openChange(false),
                 open,
               }),
           ],

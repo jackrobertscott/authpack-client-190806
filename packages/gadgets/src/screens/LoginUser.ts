@@ -7,18 +7,21 @@ import {
   Control,
   InputString,
   Button,
+  useMounted,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { SettingsStore } from '../utils/settings'
 import { createUseServer } from '../hooks/useServer'
 import { useOauthCode } from '../hooks/useOauthCode'
+import { Loading } from './Loading'
 
 export const LoginUser: FC = () => {
+  const mounted = useMounted()
   const settings = useSettings()
   const oauthCode = useOauthCode()
   const gqlLoginUser = useLoginUser()
   const gqlListProviders = useListProviders()
-  const gqlLoginOauthUser = useLoginOauthUser()
+  const gqlLoginUserOauth = useLoginUserOauth()
   const [current, currentChange] = useState<string | undefined>()
   const schema = useSchema({
     schema: SchemaLoginUser,
@@ -38,7 +41,7 @@ export const LoginUser: FC = () => {
   }, [])
   useEffect(() => {
     if (current && oauthCode.code) {
-      gqlLoginOauthUser
+      gqlLoginUserOauth
         .fetch({
           provider_id: current,
           code: oauthCode.code,
@@ -50,6 +53,7 @@ export const LoginUser: FC = () => {
           })
         })
         .finally(() => {
+          if (!mounted.current) return
           currentChange(undefined)
           oauthCode.clearCode()
         })
@@ -62,54 +66,59 @@ export const LoginUser: FC = () => {
     loading:
       gqlLoginUser.loading ||
       gqlListProviders.loading ||
-      gqlLoginOauthUser.loading,
-    children: create(Layout, {
-      column: true,
-      padding: true,
-      divide: true,
-      children: [
-        gqlListProviders.data &&
-          gqlListProviders.data.providers.map(provider => {
-            return create(Button, {
-              key: provider.id,
-              icon: provider.preset,
-              label: provider.name || provider.preset,
-              prefix: 'fab',
-              click: () => {
-                currentChange(provider.id)
-                oauthCode.openUrl(provider.url)
-              },
-            })
-          }),
-        create(Control, {
-          key: 'email',
-          label: 'Email',
-          error: schema.error('email'),
-          children: create(InputString, {
-            value: schema.value('email'),
-            change: schema.change('email'),
-            placeholder: 'example@email.com',
-          }),
+      gqlLoginUserOauth.loading,
+    children: current
+      ? create(Loading, {
+          helper: 'Checking your credentials',
+        })
+      : !gqlListProviders.data
+      ? null
+      : create(Layout, {
+          column: true,
+          padding: true,
+          divide: true,
+          children: [
+            gqlListProviders.data.providers.map(provider => {
+              return create(Button, {
+                key: provider.id,
+                icon: provider.preset,
+                label: provider.name || provider.preset,
+                prefix: 'fab',
+                click: () => {
+                  currentChange(provider.id)
+                  oauthCode.openUrl(provider.url)
+                },
+              })
+            }),
+            create(Control, {
+              key: 'email',
+              label: 'Email',
+              error: schema.error('email'),
+              children: create(InputString, {
+                value: schema.value('email'),
+                change: schema.change('email'),
+                placeholder: 'example@email.com',
+              }),
+            }),
+            create(Control, {
+              key: 'password',
+              label: 'Password',
+              error: schema.error('password'),
+              children: create(InputString, {
+                value: schema.value('password'),
+                change: schema.change('password'),
+                placeholder: '* * * * * * * *',
+                password: true,
+              }),
+            }),
+            create(Button, {
+              key: 'submit',
+              label: 'Login',
+              disabled: !schema.valid,
+              click: schema.submit,
+            }),
+          ],
         }),
-        create(Control, {
-          key: 'password',
-          label: 'Password',
-          error: schema.error('password'),
-          children: create(InputString, {
-            value: schema.value('password'),
-            change: schema.change('password'),
-            placeholder: '* * * * * * * *',
-            password: true,
-          }),
-        }),
-        create(Button, {
-          key: 'submit',
-          label: 'Login',
-          disabled: !schema.valid,
-          click: schema.submit,
-        }),
-      ],
-    }),
   })
 }
 
@@ -137,15 +146,15 @@ const useLoginUser = createUseServer<{
   `,
 })
 
-const useLoginOauthUser = createUseServer<{
+const useLoginUserOauth = createUseServer<{
   session: {
     id: string
     token: string
   }
 }>({
   query: `
-    mutation wgaLoginOauthUser($provider_id: String!, $code: String!) {
-      session: wgaLoginOauthUser(provider_id: $provider_id, code: $code) {
+    mutation wgaLoginUserOauth($provider_id: String!, $code: String!) {
+      session: wgaLoginUserOauth(provider_id: $provider_id, code: $code) {
         id
         token
       }

@@ -8,18 +8,21 @@ import {
   InputString,
   Button,
   testAlphanumeric,
+  useMounted,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { SettingsStore } from '../utils/settings'
 import { createUseServer } from '../hooks/useServer'
 import { useOauthCode } from '../hooks/useOauthCode'
+import { Loading } from './Loading'
 
 export const SignupUser: FC = () => {
+  const mounted = useMounted()
   const settings = useSettings()
   const oauthCode = useOauthCode()
   const gqlSignupUser = useSignupUser()
   const gqlListProviders = useListProviders()
-  const gqlSignupOauthUser = useSignupOauthUser()
+  const gqlSignupUserOauth = useSignupUserOauth()
   const [current, currentChange] = useState<string | undefined>()
   const schema = useSchema({
     schema: SchemaSignupUser,
@@ -39,7 +42,7 @@ export const SignupUser: FC = () => {
   }, [])
   useEffect(() => {
     if (current && oauthCode.code) {
-      gqlSignupOauthUser
+      gqlSignupUserOauth
         .fetch({
           provider_id: current,
           code: oauthCode.code,
@@ -63,91 +66,97 @@ export const SignupUser: FC = () => {
     loading:
       gqlListProviders.loading ||
       gqlSignupUser.loading ||
-      gqlSignupOauthUser.loading,
-    children: create(Layout, {
-      column: true,
-      padding: true,
-      divide: true,
-      children: [
-        gqlListProviders.data &&
-          gqlListProviders.data.providers.map(provider => {
-            return create(Button, {
-              key: provider.id,
-              icon: provider.preset,
-              label: provider.name || provider.preset,
-              prefix: 'fab',
-              click: () => {
-                currentChange(provider.id)
-                oauthCode.openUrl(provider.url)
-              },
-            })
-          }),
-        create(Layout, {
-          key: 'name',
+      gqlSignupUserOauth.loading,
+    children: current
+      ? create(Loading, {
+          helper: 'Checking your credentials',
+        })
+      : !gqlListProviders.data
+      ? null
+      : create(Layout, {
+          column: true,
+          padding: true,
           divide: true,
-          media: true,
           children: [
+            gqlListProviders.data.providers.map(provider => {
+              return create(Button, {
+                key: provider.id,
+                icon: provider.preset,
+                label: provider.name || provider.preset,
+                prefix: 'fab',
+                click: () => {
+                  if (!mounted.current) return
+                  currentChange(provider.id)
+                  oauthCode.openUrl(provider.url)
+                },
+              })
+            }),
+            create(Layout, {
+              key: 'name',
+              divide: true,
+              media: true,
+              children: [
+                create(Control, {
+                  key: 'given_name',
+                  label: 'First Name',
+                  error: schema.error('given_name'),
+                  children: create(InputString, {
+                    value: schema.value('given_name'),
+                    change: schema.change('given_name'),
+                    placeholder: 'Fred',
+                  }),
+                }),
+                create(Control, {
+                  key: 'family_name',
+                  label: 'Last Name',
+                  error: schema.error('family_name'),
+                  children: create(InputString, {
+                    value: schema.value('family_name'),
+                    change: schema.change('family_name'),
+                    placeholder: 'Blogs',
+                  }),
+                }),
+              ],
+            }),
             create(Control, {
-              key: 'given_name',
-              label: 'First Name',
-              error: schema.error('given_name'),
+              key: 'username',
+              label: 'Username',
+              error: schema.error('username'),
               children: create(InputString, {
-                value: schema.value('given_name'),
-                change: schema.change('given_name'),
-                placeholder: 'Fred',
+                value: schema.value('username'),
+                change: schema.change('username'),
+                placeholder: 'example_username_123',
               }),
             }),
             create(Control, {
-              key: 'family_name',
-              label: 'Last Name',
-              error: schema.error('family_name'),
+              key: 'email',
+              label: 'Email',
+              error: schema.error('email'),
               children: create(InputString, {
-                value: schema.value('family_name'),
-                change: schema.change('family_name'),
-                placeholder: 'Blogs',
+                value: schema.value('email'),
+                change: schema.change('email'),
+                placeholder: 'example@email.com',
               }),
+            }),
+            create(Control, {
+              key: 'password',
+              label: 'Password',
+              error: schema.error('password'),
+              children: create(InputString, {
+                value: schema.value('password'),
+                change: schema.change('password'),
+                placeholder: '* * * * * * * *',
+                password: true,
+              }),
+            }),
+            create(Button, {
+              key: 'submit',
+              label: 'Login',
+              disabled: !schema.valid,
+              click: schema.submit,
             }),
           ],
         }),
-        create(Control, {
-          key: 'username',
-          label: 'Username',
-          error: schema.error('username'),
-          children: create(InputString, {
-            value: schema.value('username'),
-            change: schema.change('username'),
-            placeholder: 'example_username_123',
-          }),
-        }),
-        create(Control, {
-          key: 'email',
-          label: 'Email',
-          error: schema.error('email'),
-          children: create(InputString, {
-            value: schema.value('email'),
-            change: schema.change('email'),
-            placeholder: 'example@email.com',
-          }),
-        }),
-        create(Control, {
-          key: 'password',
-          label: 'Password',
-          error: schema.error('password'),
-          children: create(InputString, {
-            value: schema.value('password'),
-            change: schema.change('password'),
-            placeholder: '* * * * * * * *',
-            password: true,
-          }),
-        }),
-        create(Button, {
-          key: 'submit',
-          label: 'Login',
-          disabled: !schema.valid,
-          click: schema.submit,
-        }),
-      ],
-    }),
   })
 }
 
@@ -188,15 +197,15 @@ const useSignupUser = createUseServer<{
   `,
 })
 
-const useSignupOauthUser = createUseServer<{
+const useSignupUserOauth = createUseServer<{
   session: {
     id: string
     token: string
   }
 }>({
   query: `
-    mutation wgaSignupOauthUser($provider_id: String!, $code: String!) {
-      session: wgaSignupOauthUser(provider_id: $provider_id, code: $code) {
+    mutation wgaSignupUserOauth($provider_id: String!, $code: String!) {
+      session: wgaSignupUserOauth(provider_id: $provider_id, code: $code) {
         id
         token
       }

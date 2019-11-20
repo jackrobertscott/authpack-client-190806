@@ -38,50 +38,53 @@ export const CreateMembership: FC<{
       column: true,
       padding: true,
       divide: true,
-      children: [
-        create(Control, {
-          key: 'email',
-          label: 'Email',
-          error: schema.error('email'),
-          children: create(InputString, {
-            value: schema.value('email'),
-            change: schema.change('email'),
-            placeholder: 'example@email.com',
-          }),
-        }),
-        !gqlListPermissions.data || !gqlListPermissions.data.permissions.length
-          ? null
-          : create(Control, {
-              key: 'permission_ids',
-              label: 'Permission Ids',
-              error: schema.error('permission_ids'),
-              children: create(InputSelectMany, {
-                value: schema.value('permission_ids'),
-                change: schema.change('permission_ids'),
-                options: gqlListPermissions.data.permissions.map(permission => {
-                  return {
-                    value: permission.id,
-                    icon: 'user-sheild',
-                    label: permission.name,
-                    helper: permission.description,
-                  }
-                }),
+      children: !gqlListPermissions.data
+        ? null
+        : [
+            create(Control, {
+              key: 'email',
+              label: 'Email',
+              error: schema.error('email'),
+              children: create(InputString, {
+                value: schema.value('email'),
+                change: schema.change('email'),
+                placeholder: 'example@email.com',
               }),
             }),
-        create(Button, {
-          key: 'submit',
-          label: 'Create',
-          disabled: !schema.valid,
-          click: schema.submit,
-        }),
-      ],
+            gqlListPermissions.data.permissions.length &&
+              create(Control, {
+                key: 'permission_ids',
+                label: 'Permissions',
+                helper: 'Determine what the member can access',
+                error: schema.error('permission_ids'),
+                children: create(InputSelectMany, {
+                  value: schema.value('permission_ids'),
+                  change: schema.change('permission_ids'),
+                  options: gqlListPermissions.data.permissions.map(
+                    permission => {
+                      return {
+                        value: permission.id,
+                        icon: 'user-sheild',
+                        label: permission.name,
+                        helper: permission.description,
+                      }
+                    }
+                  ),
+                }),
+              }),
+            create(Button, {
+              key: 'submit',
+              label: 'Add',
+              disabled: !schema.valid,
+              click: schema.submit,
+            }),
+          ],
     }),
   })
 }
 
 const SchemaCreateMembership = yup.object().shape({
   email: yup.string().email('Please use a valid email'),
-  user_id: yup.string(),
   permission_ids: yup
     .array()
     .of(yup.string().required())
@@ -94,8 +97,8 @@ const useCreateMembership = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaCreateMembership($user_id: String, $email: String, $permission_ids: [String!]) {
-      membership: wgaCreateMembership(user_id: $user_id, email: $email, permission_ids: $permission_ids) {
+    mutation wgaCreateMembership($email: String, $permission_ids: [String!]) {
+      membership: wgaCreateMembership(email: $email, permission_ids: $permission_ids) {
         id
       }
     }

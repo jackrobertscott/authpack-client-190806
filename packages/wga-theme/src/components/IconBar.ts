@@ -5,6 +5,7 @@ import { Icon } from './Icon'
 import { Pointer } from './Pointer'
 import { Menu } from './Menu'
 import { ClickOutside } from './ClickOutside'
+import { useMounted } from '../hooks/useMounted'
 
 export const IconBar: FC<{
   icons: Array<{
@@ -92,6 +93,7 @@ const IconPointer: FC<{
   options = [],
 }) => {
   const theme = useTheme()
+  const mounted = useMounted()
   const [open, openChange] = useState<boolean>(false)
   return create('div', {
     onClick: () => options.length && !open && openChange(true),
@@ -162,7 +164,7 @@ const IconPointer: FC<{
                   ...option,
                   click: () => {
                     if (option.click) option.click()
-                    setTimeout(() => openChange(false))
+                    if (mounted.current) openChange(false)
                   },
                 })),
               }),

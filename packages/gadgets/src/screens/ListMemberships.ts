@@ -3,7 +3,10 @@ import { Gadgets, Snippet } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 
-export const ListMemberships: FC = () => {
+export const ListMemberships: FC<{
+  update: (id: string) => void
+  remove: (id: string) => void
+}> = ({ update, remove }) => {
   const settings = useSettings()
   const gqlListMemberships = useListMemberships()
   useEffect(() => {
@@ -14,19 +17,31 @@ export const ListMemberships: FC = () => {
     title: 'Members',
     subtitle: settings.app && settings.app.name,
     loading: gqlListMemberships.loading,
-    children: [
-      gqlListMemberships.data &&
-        gqlListMemberships.data.memberships.map(membership => {
+    children: !gqlListMemberships.data
+      ? null
+      : gqlListMemberships.data.memberships.map(membership => {
+          const suffix = membership.admin ? ' (admin)' : ''
           return create(Snippet, {
             key: membership.id,
             icon: 'user-circle',
-            label: membership.user.summary.concat(
-              membership.admin ? ' (admin)' : ''
-            ),
+            label: `${membership.user.summary}${suffix}`,
             value: membership.permissions.map(({ name }) => name).join(', '),
+            options: [
+              {
+                icon: 'sliders-h',
+                label: 'Update',
+                helper: 'Change member permissions',
+                click: () => update(membership.id),
+              },
+              {
+                icon: 'trash-alt',
+                label: 'Remove',
+                helper: 'Delete member from team',
+                click: () => remove(membership.id),
+              },
+            ],
           })
         }),
-    ],
   })
 }
 
