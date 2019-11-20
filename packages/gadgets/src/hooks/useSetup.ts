@@ -95,8 +95,8 @@ const useCurrentApp = createUseServer<{
   }
 }>({
   query: `
-    query wgaCurrentApp {
-      app: wgaCurrentApp {
+    query wgaGetCurrentApp {
+      app: wgaGetCurrentApp {
         id
         name
         theme

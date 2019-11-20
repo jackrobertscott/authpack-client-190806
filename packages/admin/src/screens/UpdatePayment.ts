@@ -13,8 +13,8 @@ import {
 } from 'wga-theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
-import { stripe } from '../utils/stripe'
 import { UniversalStore } from '../utils/universal'
+import { stripe } from '../utils/stripe'
 
 export const UpdatePayment: FC<{
   change?: (id?: string) => void
@@ -32,9 +32,11 @@ export const UpdatePayment: FC<{
           gqlUpdatePayment
             .fetch({
               id: universal.app_id,
-              token: token.id,
-              name: value.name,
-              email: value.email,
+              input: {
+                token: token.id,
+                email: value.email,
+                name: value.name,
+              },
             })
             .then(({ app }) => {
               if (change) change(app.id)
@@ -121,8 +123,8 @@ const useUpdatePayment = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaUpdatePayment($id: String!, $token: String!, $name: String!, $email: String!) {
-      app: wgaUpdatePayment(id: $id, token: $token, name: $name, email: $email) {
+    mutation wgaUpdatePayment($id: String!, $input: UpdatePaymentInput!) {
+      app: wgaUpdatePayment(id: $id, input: $input) {
         id
         power
         subscribed

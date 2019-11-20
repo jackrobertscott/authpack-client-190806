@@ -21,8 +21,8 @@ export const UpdateApp: FC<{
   const gqlUpdateApp = useUpdateApp()
   const schema = useSchema({
     schema: SchemaUpdateApp,
-    poller: value => {
-      gqlUpdateApp.fetch({ ...value, id: universal.app_id }).then(({ app }) => {
+    poller: input => {
+      gqlUpdateApp.fetch({ input, id: universal.app_id }).then(({ app }) => {
         if (change) change(app.id)
         UniversalStore.update({
           app_name: app.name,
@@ -133,8 +133,8 @@ const useUpdateApp = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaUpdateApp($id: String!, $name: String, $theme: String, $domains: [String!]) {
-      app: wgaUpdateApp(id: $id, name: $name, theme: $theme, domains: $domains) {
+    mutation wgaUpdateApp($id: String!, $input: UpdateAppInput!) {
+      app: wgaUpdateApp(id: $id, input: $input) {
         id
         name
         theme
