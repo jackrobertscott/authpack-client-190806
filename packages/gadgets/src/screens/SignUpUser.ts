@@ -55,6 +55,7 @@ export const SignupUser: FC = () => {
           })
         })
         .finally(() => {
+          if (!mounted.current) return
           currentChange(undefined)
           oauthCode.clearCode()
         })
