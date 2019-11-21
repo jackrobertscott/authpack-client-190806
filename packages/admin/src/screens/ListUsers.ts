@@ -85,7 +85,7 @@ export const ListUsers: FC = () => {
           key: 'table',
           header: [
             { key: 'email', label: 'Email' },
-            { key: 'given_name', label: 'Name' },
+            { key: 'name_given', label: 'Name' },
             { key: 'username', label: 'Username' },
             { key: 'updated', label: 'Updated' },
           ].map(({ key, label }) => ({

@@ -76,26 +76,27 @@ export const SignupUser: FC = () => {
       : !gqlListProviders.data
       ? null
       : [
-          create(Layout, {
-            key: 'oauth',
-            column: true,
-            padding: true,
-            divide: true,
-            styled: true,
-            children: gqlListProviders.data.providers.map(provider => {
-              return create(Button, {
-                key: provider.id,
-                icon: provider.preset,
-                label: provider.name || provider.preset,
-                prefix: 'fab',
-                style: presetColors(provider.preset),
-                click: () => {
-                  currentChange(provider.id)
-                  oauthCode.openUrl(provider.url)
-                },
-              })
+          !!gqlListProviders.data.providers.length &&
+            create(Layout, {
+              key: 'oauth',
+              column: true,
+              padding: true,
+              divide: true,
+              styled: true,
+              children: gqlListProviders.data.providers.map(provider => {
+                return create(Button, {
+                  key: provider.id,
+                  icon: provider.preset,
+                  label: provider.name || provider.preset,
+                  prefix: 'fab',
+                  style: presetColors(provider.preset),
+                  click: () => {
+                    currentChange(provider.id)
+                    oauthCode.openUrl(provider.url)
+                  },
+                })
+              }),
             }),
-          }),
           create(Layout, {
             key: 'form',
             column: true,
@@ -108,22 +109,22 @@ export const SignupUser: FC = () => {
                 media: true,
                 children: [
                   create(Control, {
-                    key: 'given_name',
+                    key: 'name_given',
                     label: 'First Name',
-                    error: schema.error('given_name'),
+                    error: schema.error('name_given'),
                     children: create(InputString, {
-                      value: schema.value('given_name'),
-                      change: schema.change('given_name'),
+                      value: schema.value('name_given'),
+                      change: schema.change('name_given'),
                       placeholder: 'Fred',
                     }),
                   }),
                   create(Control, {
-                    key: 'family_name',
+                    key: 'name_family',
                     label: 'Last Name',
-                    error: schema.error('family_name'),
+                    error: schema.error('name_family'),
                     children: create(InputString, {
-                      value: schema.value('family_name'),
-                      change: schema.change('family_name'),
+                      value: schema.value('name_family'),
+                      change: schema.change('name_family'),
                       placeholder: 'Blogs',
                     }),
                   }),
@@ -173,8 +174,8 @@ export const SignupUser: FC = () => {
 }
 
 const SchemaSignupUser = yup.object().shape({
-  given_name: yup.string(),
-  family_name: yup.string(),
+  name_given: yup.string(),
+  name_family: yup.string(),
   username: yup
     .string()
     .test(

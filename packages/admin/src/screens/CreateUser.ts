@@ -40,22 +40,22 @@ export const CreateUser: FC<{
           media: true,
           children: [
             create(Control, {
-              key: 'given_name',
+              key: 'name_given',
               label: 'First Name',
-              error: schema.error('given_name'),
+              error: schema.error('name_given'),
               children: create(InputString, {
-                value: schema.value('given_name'),
-                change: schema.change('given_name'),
+                value: schema.value('name_given'),
+                change: schema.change('name_given'),
                 placeholder: 'Fred',
               }),
             }),
             create(Control, {
-              key: 'family_name',
+              key: 'name_family',
               label: 'Last Name',
-              error: schema.error('family_name'),
+              error: schema.error('name_family'),
               children: create(InputString, {
-                value: schema.value('family_name'),
-                change: schema.change('family_name'),
+                value: schema.value('name_family'),
+                change: schema.change('name_family'),
                 placeholder: 'Blogs',
               }),
             }),
@@ -104,8 +104,8 @@ export const CreateUser: FC<{
 }
 
 const SchemaCreateUser = yup.object().shape({
-  given_name: yup.string(),
-  family_name: yup.string(),
+  name_given: yup.string(),
+  name_family: yup.string(),
   username: yup
     .string()
     .test(

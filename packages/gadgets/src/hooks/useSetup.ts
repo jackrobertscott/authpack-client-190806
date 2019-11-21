@@ -116,8 +116,8 @@ const useGetCurrentSession = createUseServer<{
       id: string
       email: string
       username?: string
-      given_name?: string
-      family_name?: string
+      name_given?: string
+      name_family?: string
     }
     team?: {
       id: string
@@ -142,8 +142,8 @@ const useGetCurrentSession = createUseServer<{
           id
           email
           username
-          given_name
-          family_name
+          name_given
+          name_family
         }
         team {
           id

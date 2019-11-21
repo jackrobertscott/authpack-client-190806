@@ -75,26 +75,27 @@ export const LoginUser: FC = () => {
       : !gqlListProviders.data
       ? null
       : [
-          create(Layout, {
-            key: 'oauth',
-            column: true,
-            padding: true,
-            divide: true,
-            styled: true,
-            children: gqlListProviders.data.providers.map(provider => {
-              return create(Button, {
-                key: provider.id,
-                icon: provider.preset,
-                label: provider.name || provider.preset,
-                prefix: 'fab',
-                style: presetColors(provider.preset),
-                click: () => {
-                  currentChange(provider.id)
-                  oauthCode.openUrl(provider.url)
-                },
-              })
+          !!gqlListProviders.data.providers.length &&
+            create(Layout, {
+              key: 'oauth',
+              column: true,
+              padding: true,
+              divide: true,
+              styled: true,
+              children: gqlListProviders.data.providers.map(provider => {
+                return create(Button, {
+                  key: provider.id,
+                  icon: provider.preset,
+                  label: provider.name || provider.preset,
+                  prefix: 'fab',
+                  style: presetColors(provider.preset),
+                  click: () => {
+                    currentChange(provider.id)
+                    oauthCode.openUrl(provider.url)
+                  },
+                })
+              }),
             }),
-          }),
           create(Layout, {
             key: 'form',
             column: true,

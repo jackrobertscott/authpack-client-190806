@@ -23,7 +23,7 @@
     "emotion": "^10.0.17",
     "events-and-things": "^0.7.0",
     "faker": "^4.1.0",
-    "graphiql": "^0.14.2",
+    "graphiql": "^0.16.0",
     "graphql": "^14.5.8",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
