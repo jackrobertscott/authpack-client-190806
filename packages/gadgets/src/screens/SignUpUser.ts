@@ -64,7 +64,7 @@ export const SignupUser: FC = () => {
   }, [oauthCode.code])
   return create(Gadgets, {
     title: 'Sign Up',
-    subtitle: settings.app && settings.app.name,
+    subtitle: settings.cluster && settings.cluster.name,
     loading:
       gqlListProviders.loading ||
       gqlSignupUser.loading ||

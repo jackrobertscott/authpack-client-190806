@@ -12,7 +12,7 @@ export const RemoveTeam: FC<{
   const gqlRemoveTeam = useRemoveTeam()
   return create(Gadgets, {
     title: 'Remove Team',
-    subtitle: universal.app_name,
+    subtitle: universal.cluster_name,
     children: create(ConfirmRemove, {
       helper: 'Remove this team',
       alert: 'Please confirm the removal of this team',

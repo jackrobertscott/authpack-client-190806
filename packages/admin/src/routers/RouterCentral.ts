@@ -5,7 +5,7 @@ import { RouterSideBarCustomize } from './RouterSideBarCustomize'
 import { RouterSideBarDeveloper } from './RouterSideBarDeveloper'
 import { wga } from '../utils/wga'
 import { Power } from '../screens/Power'
-import { RouterManagerApp } from './RouterManagerApp'
+import { RouterManagerCluster } from './RouterManagerCluster'
 
 export const RouterCentral: FC = () => {
   const [apper, apperChange] = useState<boolean>(false)
@@ -66,7 +66,7 @@ export const RouterCentral: FC = () => {
           },
         })),
       }),
-      create(RouterManagerApp, {
+      create(RouterManagerCluster, {
         key: 'settings',
         visible: apper,
         close: () => apperChange(false),

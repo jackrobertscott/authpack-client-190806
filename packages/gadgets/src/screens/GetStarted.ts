@@ -12,7 +12,7 @@ export const GetStarted: FC<{
     children: create(Focus, {
       key: 'unlock',
       icon: 'unlock',
-      label: settings.app ? settings.app.name : '',
+      label: settings.cluster ? settings.cluster.name : '',
       helper: 'Create an account or login',
       children: create(Layout, {
         divide: true,

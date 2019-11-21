@@ -13,7 +13,7 @@ export const LogoutUser: FC = () => {
       .finally(() => SettingsStore.update({ bearer: undefined }))
   return create(Gadgets, {
     title: 'Logout',
-    subtitle: settings.app && settings.app.name,
+    subtitle: settings.cluster && settings.cluster.name,
     children: [
       create(Poster, {
         key: 'poster',

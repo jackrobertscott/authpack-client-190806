@@ -21,7 +21,7 @@ export const RouterSideBarHome: FC = () => {
       create(SideBar, {
         key: 'sideBar',
         title: 'Home',
-        footer: config.app_name,
+        footer: config.cluster_name,
         options: [
           {
             icon: 'user-circle',

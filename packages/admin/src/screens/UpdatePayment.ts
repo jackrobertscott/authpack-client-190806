@@ -31,18 +31,18 @@ export const UpdatePayment: FC<{
         .then(token => {
           gqlUpdatePayment
             .fetch({
-              id: universal.app_id,
+              id: universal.cluster_id,
               input: {
                 token: token.id,
                 email: value.email,
                 name: value.name,
               },
             })
-            .then(({ app }) => {
-              if (change) change(app.id)
+            .then(({ cluster }) => {
+              if (change) change(cluster.id)
               UniversalStore.update({
-                power: app.power,
-                subscribed: app.subscribed,
+                power: cluster.power,
+                subscribed: cluster.subscribed,
               })
             })
         })
@@ -57,7 +57,7 @@ export const UpdatePayment: FC<{
   })
   return create(Gadgets, {
     title: 'Update Payment',
-    subtitle: universal.app_name,
+    subtitle: universal.cluster_name,
     loading: gqlUpdatePayment.loading,
     children: create(Layout, {
       column: true,
@@ -116,7 +116,7 @@ const SchemaUpdatePayment = yup.object().shape({
 })
 
 const useUpdatePayment = createUseServer<{
-  app: {
+  cluster: {
     id: string
     power: boolean
     subscribed: boolean
@@ -124,7 +124,7 @@ const useUpdatePayment = createUseServer<{
 }>({
   query: `
     mutation wgaUpdatePayment($id: String!, $input: UpdatePaymentInput!) {
-      app: wgaUpdatePayment(id: $id, input: $input) {
+      cluster: wgaUpdatePayment(id: $id, input: $input) {
         id
         power
         subscribed

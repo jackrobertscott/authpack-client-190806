@@ -39,7 +39,7 @@ export const ListProviders: FC<{
   }, [oauthCode.code])
   return create(Gadgets, {
     title: '3rd Party Logins',
-    subtitle: settings.app && settings.app.name,
+    subtitle: settings.cluster && settings.cluster.name,
     loading:
       gqlListProviders.loading ||
       gqlListCredentials.loading ||

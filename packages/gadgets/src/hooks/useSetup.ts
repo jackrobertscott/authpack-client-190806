@@ -7,12 +7,12 @@ import { config } from '../config'
 
 export const useSetup = () => {
   const settings = useSettings()
-  const gqlGetCurrentApp = useGetCurrentApp()
+  const gqlGetCurrentCluster = useGetCurrentCluster()
   const gqlGetCurrentSession = useGetCurrentSession()
   useEffect(() => {
     if (settings.domain) {
-      gqlGetCurrentApp.fetch().then(({ app }) => {
-        SettingsStore.update({ app })
+      gqlGetCurrentCluster.fetch().then(({ cluster }) => {
+        SettingsStore.update({ cluster })
       })
     }
     // eslint-disable-next-line
@@ -84,8 +84,8 @@ export const useSetup = () => {
   }, [])
 }
 
-const useGetCurrentApp = createUseServer<{
-  app: {
+const useGetCurrentCluster = createUseServer<{
+  cluster: {
     id: string
     name: string
     theme: string
@@ -95,8 +95,8 @@ const useGetCurrentApp = createUseServer<{
   }
 }>({
   query: `
-    query wgaGetCurrentApp {
-      app: wgaGetCurrentApp {
+    query wgaGetCurrentCluster {
+      cluster: wgaGetCurrentCluster {
         id
         name
         theme

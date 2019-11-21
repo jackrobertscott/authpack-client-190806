@@ -12,7 +12,7 @@ export const RemoveSession: FC<{
   const gqlRemoveSession = useRemoveSession()
   return create(Gadgets, {
     title: 'Remove Session',
-    subtitle: universal.app_name,
+    subtitle: universal.cluster_name,
     children: create(ConfirmRemove, {
       helper: 'Remove this session',
       alert: 'Please confirm the removal of this session',

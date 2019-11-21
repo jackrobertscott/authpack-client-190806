@@ -15,7 +15,7 @@ export const ListMemberships: FC<{
   }, [])
   return create(Gadgets, {
     title: 'Members',
-    subtitle: settings.app && settings.app.name,
+    subtitle: settings.cluster && settings.cluster.name,
     loading: gqlListMemberships.loading,
     children: !gqlListMemberships.data
       ? null

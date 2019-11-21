@@ -19,7 +19,7 @@ export const RouterSideBarCustomize: FC = () => {
       create(SideBar, {
         key: 'sideBar',
         title: 'Customize',
-        footer: config.app_name,
+        footer: config.cluster_name,
         options: [
           {
             icon: 'handshake',

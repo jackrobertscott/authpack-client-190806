@@ -7,7 +7,7 @@ export type IGadgets = {
   bearer?: string
   subscribed?: boolean
   power?: boolean
-  app?: {
+  cluster?: {
     id: string
     name: string
     team_required: boolean

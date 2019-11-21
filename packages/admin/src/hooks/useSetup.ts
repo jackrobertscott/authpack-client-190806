@@ -5,19 +5,19 @@ import { UniversalStore } from '../utils/universal'
 
 export const useSetup = () => {
   const gadgets = useGadgets()
-  const gqlGetApp = useGetApp()
+  const gqlGetCluster = useGetCluster()
   useEffect(() => {
     UniversalStore.reset()
     if (gadgets.bearer && gadgets.team && gadgets.team.id) {
-      gqlGetApp.fetch().then(({ app }) => {
+      gqlGetCluster.fetch().then(({ cluster }) => {
         UniversalStore.update({
           ready: true,
-          app_id: app.id,
-          app_name: app.name,
-          app_domain_key: app.key_domain,
-          subscribed: app.subscribed,
-          power: app.power,
-          theme: app.theme,
+          cluster_id: cluster.id,
+          cluster_name: cluster.name,
+          cluster_domain_key: cluster.key_domain,
+          subscribed: cluster.subscribed,
+          power: cluster.power,
+          theme: cluster.theme,
         })
       })
     } else {
@@ -27,8 +27,8 @@ export const useSetup = () => {
   }, [gadgets.bearer, gadgets.team && gadgets.team.id])
 }
 
-const useGetApp = createUseServer<{
-  app: {
+const useGetCluster = createUseServer<{
+  cluster: {
     id: string
     name: string
     theme: string
@@ -38,8 +38,8 @@ const useGetApp = createUseServer<{
   }
 }>({
   query: `
-    query wgaGetApp($id: String) {
-      app: wgaGetApp(id: $id) {
+    query wgaGetCluster($id: String) {
+      cluster: wgaGetCluster(id: $id) {
         id
         name
         theme

@@ -8,7 +8,7 @@ export const Power: FC<{
   close: () => void
 }> = ({ close }) => {
   const universal = useUniversal()
-  const gqlUpdateApp = useUpdateApp()
+  const gqlUpdateCluster = useUpdateCluster()
   return create(Layout, {
     grow: true,
     children: create(Focus, {
@@ -23,10 +23,10 @@ export const Power: FC<{
             key: 'toggle',
             value: universal.power,
             change: power => {
-              gqlUpdateApp
-                .fetch({ id: universal.app_id, input: { power } })
-                .then(({ app }) => {
-                  UniversalStore.update({ power: app.power })
+              gqlUpdateCluster
+                .fetch({ id: universal.cluster_id, input: { power } })
+                .then(({ cluster }) => {
+                  UniversalStore.update({ power: cluster.power })
                 })
             },
           }),
@@ -42,14 +42,14 @@ export const Power: FC<{
   })
 }
 
-const useUpdateApp = createUseServer<{
-  app: {
+const useUpdateCluster = createUseServer<{
+  cluster: {
     power: boolean
   }
 }>({
   query: `
-    mutation wgaUpdateApp($id: String!, $input: UpdateAppInput!) {
-      app: wgaUpdateApp(id: $id, input: $input) {
+    mutation wgaUpdateCluster($id: String!, $input: UpdateClusterInput!) {
+      cluster: wgaUpdateCluster(id: $id, input: $input) {
         power
       }
     }

@@ -35,7 +35,7 @@ export const UpdateUserPassword: FC<{
   })
   return create(Gadgets, {
     title: 'Change Password',
-    subtitle: settings.app && settings.app.name,
+    subtitle: settings.cluster && settings.cluster.name,
     loading: gqlUpdatePassword.loading,
     children: [
       create(Poster, {

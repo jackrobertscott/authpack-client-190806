@@ -12,7 +12,7 @@ export const RemovePermission: FC<{
   const gqlRemovePermission = useRemovePermission()
   return create(Gadgets, {
     title: 'Remove Permission',
-    subtitle: universal.app_name,
+    subtitle: universal.cluster_name,
     children: create(ConfirmRemove, {
       helper: 'Remove this permission',
       alert: 'Please confirm the removal of this permission',

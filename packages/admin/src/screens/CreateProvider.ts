@@ -28,7 +28,7 @@ export const CreateProvider: FC<{
   })
   return create(Gadgets, {
     title: 'Create Provider',
-    subtitle: universal.app_name,
+    subtitle: universal.cluster_name,
     loading: gqlCreateProvider.loading,
     children: create(Layout, {
       column: true,

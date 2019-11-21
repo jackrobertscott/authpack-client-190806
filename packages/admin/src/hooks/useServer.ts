@@ -19,7 +19,7 @@ export const useServer = <T>(options: {
     ...options,
     url: config.api,
     authorization: [
-      universal.app_domain_key || config.gadgets_domain_key,
+      universal.cluster_domain_key || config.gadgets_domain_key,
       wga.current.bearer,
     ]
       .filter(Boolean)

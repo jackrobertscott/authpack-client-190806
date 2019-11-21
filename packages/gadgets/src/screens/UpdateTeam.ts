@@ -31,7 +31,7 @@ export const UpdateTeam: FC<{
   }, [])
   return create(Gadgets, {
     title: 'Update Team',
-    subtitle: settings.app && settings.app.name,
+    subtitle: settings.cluster && settings.cluster.name,
     loading: gqlGetTeam.loading || gqlUpdateTeam.loading,
     children: create(Layout, {
       column: true,

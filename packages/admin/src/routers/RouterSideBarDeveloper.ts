@@ -15,7 +15,7 @@ export const RouterSideBarDeveloper: FC = () => {
       create(SideBar, {
         key: 'sideBar',
         title: 'Developer',
-        footer: config.app_name,
+        footer: config.cluster_name,
         options: [
           {
             icon: 'globe-americas',

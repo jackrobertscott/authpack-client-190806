@@ -37,7 +37,7 @@ export const UpdateMembership: FC<{
   }, [id])
   return create(Gadgets, {
     title: 'Update Member',
-    subtitle: settings.app && settings.app.name,
+    subtitle: settings.cluster && settings.cluster.name,
     loading: gqlUpdateMembership.loading || gqlListPermissions.loading,
     children: [
       create(Snippet, {

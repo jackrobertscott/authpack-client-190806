@@ -28,7 +28,7 @@ export const ListUsers: FC = () => {
       : FakeUsers
   return create(Page, {
     title: 'Users',
-    subtitle: `Accounts created on ${universal.app_name}`,
+    subtitle: `Accounts created on ${universal.cluster_name}`,
     hidden: !apiListUsers.data || !apiListUsers.data.count,
     corner: {
       icon: 'plus',

@@ -13,37 +13,41 @@ import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 import { UniversalStore } from '../utils/universal'
 
-export const UpdateApp: FC<{
+export const UpdateCluster: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
   const universal = useUniversal()
-  const gqlGetApp = useGetApp()
-  const gqlUpdateApp = useUpdateApp()
+  const gqlGetCluster = useGetCluster()
+  const gqlUpdateCluster = useUpdateCluster()
   const schema = useSchema({
-    schema: SchemaUpdateApp,
+    schema: SchemaUpdateCluster,
     poller: input => {
-      gqlUpdateApp.fetch({ input, id: universal.app_id }).then(({ app }) => {
-        if (change) change(app.id)
-        UniversalStore.update({
-          app_name: app.name,
-          theme: app.theme,
+      gqlUpdateCluster
+        .fetch({ input, id: universal.cluster_id })
+        .then(({ cluster }) => {
+          if (change) change(cluster.id)
+          UniversalStore.update({
+            cluster_name: cluster.name,
+            theme: cluster.theme,
+          })
         })
-      })
     },
   })
   useEffect(() => {
-    gqlGetApp.fetch({ id: universal.app_id }).then(({ app }) => schema.set(app))
+    gqlGetCluster
+      .fetch({ id: universal.cluster_id })
+      .then(({ cluster }) => schema.set(cluster))
     // eslint-disable-next-line
-  }, [universal.app_id])
+  }, [universal.cluster_id])
   return create(Gadgets, {
-    title: 'Update App',
-    subtitle: universal.app_name,
-    loading: gqlUpdateApp.loading,
+    title: 'Update Cluster',
+    subtitle: universal.cluster_name,
+    loading: gqlUpdateCluster.loading,
     children: create(Layout, {
       column: true,
       padding: true,
       divide: true,
-      children: !gqlGetApp.data
+      children: !gqlGetCluster.data
         ? null
         : [
             create(Control, {
@@ -53,7 +57,7 @@ export const UpdateApp: FC<{
               children: create(InputString, {
                 value: schema.value('name'),
                 change: schema.change('name'),
-                placeholder: 'App',
+                placeholder: 'Cluster',
               }),
             }),
             create(Control, {
@@ -98,8 +102,8 @@ export const UpdateApp: FC<{
   })
 }
 
-const SchemaUpdateApp = yup.object().shape({
-  name: yup.string().required('Please provide the app name'),
+const SchemaUpdateCluster = yup.object().shape({
+  name: yup.string().required('Please provide the cluster name'),
   theme: yup.string().required('Please select a theme'),
   domains: yup
     .array()
@@ -107,16 +111,16 @@ const SchemaUpdateApp = yup.object().shape({
     .default([]),
 })
 
-const useGetApp = createUseServer<{
-  app: {
+const useGetCluster = createUseServer<{
+  cluster: {
     name: string
     theme: string
     domains: string[]
   }
 }>({
   query: `
-    query wgaGetApp($id: String!) {
-      app: wgaGetApp(id: $id) {
+    query wgaGetCluster($id: String!) {
+      cluster: wgaGetCluster(id: $id) {
         name
         theme
         domains
@@ -125,16 +129,16 @@ const useGetApp = createUseServer<{
   `,
 })
 
-const useUpdateApp = createUseServer<{
-  app: {
+const useUpdateCluster = createUseServer<{
+  cluster: {
     id: string
     name: string
     theme: string
   }
 }>({
   query: `
-    mutation wgaUpdateApp($id: String!, $input: UpdateAppInput!) {
-      app: wgaUpdateApp(id: $id, input: $input) {
+    mutation wgaUpdateCluster($id: String!, $input: UpdateClusterInput!) {
+      cluster: wgaUpdateCluster(id: $id, input: $input) {
         id
         name
         theme

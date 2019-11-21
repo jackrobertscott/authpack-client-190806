@@ -1,12 +1,12 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useLocalRouter, Modal, Layout, IconBar } from 'wga-theme'
-import { UpdateApp } from '../screens/UpdateApp'
+import { UpdateCluster } from '../screens/UpdateCluster'
 import { UpdatePayment } from '../screens/UpdatePayment'
 import { useUniversal } from '../hooks/useUniversal'
 import { RemovePayment } from '../screens/RemovePayment'
-import { ShowApp } from '../screens/ShowApp'
+import { ShowCluster } from '../screens/ShowCluster'
 
-export const RouterManagerApp: FC<{
+export const RouterManagerCluster: FC<{
   visible?: boolean
   close: () => void
 }> = ({ close, visible }) => {
@@ -14,8 +14,8 @@ export const RouterManagerApp: FC<{
   const router = useLocalRouter({
     nomatch: '/inspect',
     options: [
-      { key: '/inspect', children: create(ShowApp) },
-      { key: '/update', children: create(UpdateApp) },
+      { key: '/inspect', children: create(ShowCluster) },
+      { key: '/update', children: create(UpdateCluster) },
       { key: '/payment', children: create(UpdatePayment) },
       { key: '/cancel', children: create(RemovePayment) },
     ],

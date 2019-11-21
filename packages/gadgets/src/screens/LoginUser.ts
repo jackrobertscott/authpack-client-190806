@@ -63,7 +63,7 @@ export const LoginUser: FC = () => {
   }, [oauthCode.code])
   return create(Gadgets, {
     title: 'Login',
-    subtitle: settings.app && settings.app.name,
+    subtitle: settings.cluster && settings.cluster.name,
     loading:
       gqlLoginUser.loading ||
       gqlListProviders.loading ||

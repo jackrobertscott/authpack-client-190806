@@ -31,7 +31,7 @@ export const UpdateUser: FC<{
   }, [])
   return create(Gadgets, {
     title: 'Update User',
-    subtitle: settings.app && settings.app.name,
+    subtitle: settings.cluster && settings.cluster.name,
     loading: gqlGetUser.loading || gqlUpdateUser.loading,
     children: create(Layout, {
       column: true,

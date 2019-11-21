@@ -18,7 +18,7 @@ export const ShowPermission: FC<{
     : ({} as any)
   return create(Gadgets, {
     title: 'Permission',
-    subtitle: universal.app_name,
+    subtitle: universal.cluster_name,
     children: create(Layout, {
       column: true,
       children: [

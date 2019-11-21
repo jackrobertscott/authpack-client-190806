@@ -7,7 +7,7 @@ export const Power: FC = () => {
   const settings = useSettings()
   return create(Gadgets, {
     title: 'Power',
-    subtitle: settings.app && settings.app.name,
+    subtitle: settings.cluster && settings.cluster.name,
     children: create(Focus, {
       icon: 'power-off',
       label: 'Power',

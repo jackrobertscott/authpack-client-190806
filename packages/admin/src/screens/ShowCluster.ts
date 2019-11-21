@@ -4,17 +4,17 @@ import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
 import { useUniversal } from '../hooks/useUniversal'
 
-export const ShowApp: FC = () => {
+export const ShowCluster: FC = () => {
   const universal = useUniversal()
-  const gqlGetApp = useGetApp()
+  const gqlGetCluster = useGetCluster()
   useEffect(() => {
-    gqlGetApp.fetch({ id: universal.app_id })
+    gqlGetCluster.fetch({ id: universal.cluster_id })
     // eslint-disable-next-line
   }, [])
-  const app = gqlGetApp.data ? gqlGetApp.data.app : ({} as any)
+  const cluster = gqlGetCluster.data ? gqlGetCluster.data.cluster : ({} as any)
   return create(Gadgets, {
-    title: 'App',
-    subtitle: universal.app_name,
+    title: 'Cluster',
+    subtitle: universal.cluster_name,
     children: create(Layout, {
       column: true,
       children: [
@@ -22,55 +22,55 @@ export const ShowApp: FC = () => {
           key: 'id',
           icon: 'fingerprint',
           label: 'Id',
-          value: app.id,
+          value: cluster.id,
         }),
         create(Snippet, {
           key: 'name',
           icon: 'tags',
           label: 'Name',
-          value: app.name,
+          value: cluster.name,
         }),
         create(Snippet, {
           key: 'theme',
           icon: 'magic',
           label: 'Theme',
-          value: app.theme || 'default',
+          value: cluster.theme || 'default',
         }),
         create(Snippet, {
           key: 'power',
           icon: 'bolt',
           label: 'Power',
-          value: String(app.power),
+          value: String(cluster.power),
         }),
         create(Snippet, {
           key: 'subscribed',
           icon: 'wallet',
           label: 'Subscribed',
-          value: String(app.subscribed),
+          value: String(cluster.subscribed),
         }),
         create(Snippet, {
           key: 'created',
           icon: 'clock',
           label: 'Created',
           value:
-            app.created &&
-            format(new Date(app.created), 'dd LLL yyyy @ h:mm a'),
+            cluster.created &&
+            format(new Date(cluster.created), 'dd LLL yyyy @ h:mm a'),
         }),
         create(Snippet, {
           key: 'updated',
           icon: 'clock',
           label: 'Updated',
           value:
-            app.updated &&
-            format(new Date(app.updated), 'dd LLL yyyy @ h:mm a'),
+            cluster.updated &&
+            format(new Date(cluster.updated), 'dd LLL yyyy @ h:mm a'),
         }),
       ],
     }),
   })
 }
 
-const useGetApp = createUseServer<{
-  app: {
+const useGetCluster = createUseServer<{
+  cluster: {
     id: string
     created: string
     updated: string
@@ -81,8 +81,8 @@ const useGetApp = createUseServer<{
   }
 }>({
   query: `
-    query wgaGetApp($id: String!) {
-      app: wgaGetApp(id: $id) {
+    query wgaGetCluster($id: String!) {
+      cluster: wgaGetCluster(id: $id) {
         id
         created
         updated

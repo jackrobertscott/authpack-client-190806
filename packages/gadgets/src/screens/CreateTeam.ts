@@ -20,7 +20,7 @@ export const CreateTeam: FC<{
   const settings = useSettings()
   const gqlCreateTeam = useCreateTeam()
   const gqlSwitchTeam = useSwitchTeam()
-  const initial = !!settings.app && settings.app.force_teams && !settings.team
+  const initial = !!settings.cluster && settings.cluster.force_teams && !settings.team
   const [open, openChange] = useState<boolean>(initial)
   const schema = useSchema({
     schema: SchemaCreateTeam,
@@ -36,7 +36,7 @@ export const CreateTeam: FC<{
   })
   return create(Gadgets, {
     title: 'Create Team',
-    subtitle: settings.app && settings.app.name,
+    subtitle: settings.cluster && settings.cluster.name,
     children: [
       create(Layout, {
         key: 'layout',

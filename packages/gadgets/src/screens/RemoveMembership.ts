@@ -13,7 +13,7 @@ export const RemoveMembership: FC<{
   const [confirm, confirmChange] = useState<boolean>(false)
   return create(Gadgets, {
     title: 'Remove Member',
-    subtitle: settings.app && settings.app.name,
+    subtitle: settings.cluster && settings.cluster.name,
     children: [
       create(Poster, {
         key: 'poster',

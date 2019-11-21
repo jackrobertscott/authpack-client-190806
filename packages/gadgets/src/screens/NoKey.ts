@@ -13,7 +13,7 @@ export const NoKey: FC<{
   return create(Focus, {
     icon: 'user-lock',
     label: 'Authenticator',
-    helper: "Please provide your app's domain key",
+    helper: "Please provide your cluster's domain key",
     children: create(Button, {
       icon: 'question',
       label: 'Learn More',

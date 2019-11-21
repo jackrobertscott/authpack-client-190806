@@ -17,7 +17,7 @@ export const Explorer: FC = () => {
           const data = await graphql<any>({
             ...graphQLParams,
             url: config.api,
-            authorization: [universal.app_domain_key, wga.current.bearer]
+            authorization: [universal.cluster_domain_key, wga.current.bearer]
               .filter(Boolean)
               .join(','),
           })

@@ -2,9 +2,9 @@ import { KeyStore } from 'events-and-things'
 
 export interface IUniversalStore {
   ready: boolean
-  app_id?: string
-  app_domain_key?: string
-  app_name?: string
+  cluster_id?: string
+  cluster_domain_key?: string
+  cluster_name?: string
   subscribed: boolean
   power: boolean
   theme: string

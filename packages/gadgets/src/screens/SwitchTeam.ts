@@ -14,7 +14,7 @@ export const SwitchTeam: FC<{ change?: () => void }> = ({ change }) => {
   }, [])
   return create(Gadgets, {
     title: 'Switch Team',
-    subtitle: settings.app && settings.app.name,
+    subtitle: settings.cluster && settings.cluster.name,
     loading: gqlListTeams.loading || gqlSwitchTeam.loading,
     children: create(Layout, {
       column: true,

@@ -5,7 +5,7 @@ export type ISettings = {
   ready: boolean
   domain?: string
   bearer?: string
-  app?: {
+  cluster?: {
     id: string
     name: string
     theme: string

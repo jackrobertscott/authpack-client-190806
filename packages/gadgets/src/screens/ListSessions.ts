@@ -13,7 +13,7 @@ export const ListSessions: FC = () => {
   }, [])
   return create(Gadgets, {
     title: 'Latest Sessions',
-    subtitle: settings.app && settings.app.name,
+    subtitle: settings.cluster && settings.cluster.name,
     children: !gqlListSessions.data
       ? null
       : gqlListSessions.data.sessions.map(({ id, created, ended, team }) => {

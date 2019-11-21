@@ -27,7 +27,7 @@ export const CreatePermission: FC<{
   })
   return create(Gadgets, {
     title: 'Create Permission',
-    subtitle: universal.app_name,
+    subtitle: universal.cluster_name,
     loading: gqlCreatePermission.loading,
     children: create(Layout, {
       column: true,

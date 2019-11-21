@@ -12,7 +12,7 @@ export const RemoveProvider: FC<{
   const gqlRemoveProvider = useRemoveProvider()
   return create(Gadgets, {
     title: 'Remove Provider',
-    subtitle: universal.app_name,
+    subtitle: universal.cluster_name,
     children: create(ConfirmRemove, {
       helper: 'Remove this provider',
       alert: 'Please confirm the removal of this provider',

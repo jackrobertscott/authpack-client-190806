@@ -9,28 +9,30 @@ export const RemovePayment: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
   const universal = useUniversal()
-  const gqlRemoveUser = useRemoveUser()
+  const gqlRemovePayment = useRemovePayment()
   return create(Gadgets, {
     title: 'Terminate Payment',
-    subtitle: universal.app_name,
+    subtitle: universal.cluster_name,
     children: create(ConfirmRemove, {
       keyword: 'Terminate',
-      helper: 'Remove payment card and disable app',
-      alert: 'Consider powering off your app instead',
+      helper: 'Remove payment card and disable cluster',
+      alert: 'Consider powering off your cluster instead',
       change: () =>
-        gqlRemoveUser.fetch({ id: universal.app_id }).then(({ app }) => {
-          if (change) change(app.id)
-          UniversalStore.update({
-            power: app.power,
-            subscribed: app.subscribed,
-          })
-        }),
+        gqlRemovePayment
+          .fetch({ id: universal.cluster_id })
+          .then(({ cluster }) => {
+            if (change) change(cluster.id)
+            UniversalStore.update({
+              power: cluster.power,
+              subscribed: cluster.subscribed,
+            })
+          }),
     }),
   })
 }
 
-const useRemoveUser = createUseServer<{
-  app: {
+const useRemovePayment = createUseServer<{
+  cluster: {
     id: string
     subscribed: boolean
     power: boolean
@@ -38,7 +40,7 @@ const useRemoveUser = createUseServer<{
 }>({
   query: `
     mutation apiRemovePayment($id: String!) {
-      user: apiRemovePayment(id: $id) {
+      cluster: apiRemovePayment(id: $id) {
         id
         subscribed
         power

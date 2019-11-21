@@ -12,7 +12,7 @@ export const RemoveUser: FC<{
   const gqlRemoveUser = useRemoveUser()
   return create(Gadgets, {
     title: 'Remove User',
-    subtitle: universal.app_name,
+    subtitle: universal.cluster_name,
     children: create(ConfirmRemove, {
       helper: 'Remove this user',
       alert: 'Please confirm the removal of this user',

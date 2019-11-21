@@ -23,7 +23,7 @@ export const RemoveTeam: FC<{
   const [confirm, confirmChange] = useState<boolean>(false)
   return create(Gadgets, {
     title: 'Danger Zone',
-    subtitle: settings.app && settings.app.name,
+    subtitle: settings.cluster && settings.cluster.name,
     loading: gqlRemoveTeam.loading,
     children: [
       create(Poster, {

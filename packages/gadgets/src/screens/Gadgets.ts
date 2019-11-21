@@ -23,7 +23,7 @@ export const Gadgets: FC = () => {
           key: 'nokey',
           loading: !settings.ready,
         })
-      : settings.app && !settings.app.power
+      : settings.cluster && !settings.cluster.power
       ? create(Power)
       : settings.bearer && settings.user
       ? create(RouterModalOnauthed, {
