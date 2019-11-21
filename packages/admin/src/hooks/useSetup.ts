@@ -14,7 +14,7 @@ export const useSetup = () => {
           ready: true,
           app_id: app.id,
           app_name: app.name,
-          app_domain_key: app.keys.domain,
+          app_domain_key: app.key_domain,
           subscribed: app.subscribed,
           power: app.power,
           theme: app.theme,
@@ -34,9 +34,7 @@ const useGetApp = createUseServer<{
     theme: string
     subscribed: boolean
     power: boolean
-    keys: {
-      domain: string
-    }
+    key_domain: string
   }
 }>({
   query: `
@@ -47,9 +45,7 @@ const useGetApp = createUseServer<{
         theme
         subscribed
         power
-        keys {
-          domain
-        }
+        key_domain
       }
     }
   `,
