@@ -1,7 +1,7 @@
 import { createElement as create, FC, useState, Fragment } from 'react'
 import { useLocalRouter, Layout, IconBar } from 'wga-theme'
 import { LoginUser } from '../screens/LoginUser'
-import { SignupUser } from '../screens/TempUser'
+import { SignupUser } from '../screens/SignupUser'
 import { ForgotUserPassword } from '../screens/ForgotUserPassword'
 import { GetStarted } from '../screens/GetStarted'
 
