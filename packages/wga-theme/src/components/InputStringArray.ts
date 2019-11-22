@@ -62,6 +62,7 @@ export const InputStringArray: FC<{
                   cursor: 'pointer',
                   flexGrow: 1,
                   padding: 15,
+                  width: 0,
                 }),
               }),
               create(InputOption, {

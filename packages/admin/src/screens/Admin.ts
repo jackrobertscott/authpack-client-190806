@@ -11,15 +11,14 @@ export const Admin: FC = () => {
   const gadgets = useGadgets()
   const universal = useUniversal()
   return create(Fragment, {
-    children:
-      gadgets.ready && universal.ready
-        ? gadgets.bearer && gadgets.user && gadgets.team
-          ? create(RouterCentral, {
-              key: 'router',
-            })
-          : create(Unauthenticated, {
-              key: 'unauthenticated',
-            })
-        : create(Loading),
+    children: !Boolean(gadgets.ready && universal.ready)
+      ? create(Loading)
+      : gadgets.bearer && gadgets.user && gadgets.team
+      ? create(RouterCentral, {
+          key: 'router',
+        })
+      : create(Unauthenticated, {
+          key: 'unauthenticated',
+        }),
   })
 }

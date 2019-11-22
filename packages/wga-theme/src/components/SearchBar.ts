@@ -96,6 +96,7 @@ const Searcher: FC<{
           all: 'unset',
           marginLeft: 10,
           flexGrow: 1,
+          width: 0,
         }),
       }),
     ],

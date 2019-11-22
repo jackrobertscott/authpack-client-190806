@@ -15,6 +15,7 @@ import { createUseServer } from '../hooks/useServer'
 import { useOauthCode } from '../hooks/useOauthCode'
 import { Loading } from './Loading'
 import { presetColors } from '../utils/presets'
+import { ReconcileUser } from './ReconcileUser'
 
 export const LoginUser: FC = () => {
   const mounted = useMounted()
@@ -24,15 +25,20 @@ export const LoginUser: FC = () => {
   const gqlListProviders = useListProviders()
   const gqlLoginUserOauth = useLoginUserOauth()
   const [current, currentChange] = useState<string | undefined>()
+  const [email, emailChange] = useState<string | undefined>()
   const schema = useSchema({
     schema: SchemaLoginUser,
     submit: value => {
       gqlLoginUser.fetch(value).then(({ session }) => {
         schema.change('password')('')
-        SettingsStore.update({
-          open: false,
-          bearer: `Bearer ${session.token}`,
-        })
+        if (session) {
+          SettingsStore.update({
+            open: false,
+            bearer: `Bearer ${session.token}`,
+          })
+        } else {
+          emailChange(schema.value('email'))
+        }
       })
     },
   })
@@ -71,6 +77,10 @@ export const LoginUser: FC = () => {
     children: current
       ? create(Loading, {
           helper: 'Checking your credentials',
+        })
+      : email
+      ? create(ReconcileUser, {
+          email,
         })
       : !gqlListProviders.data
       ? null
@@ -126,7 +136,10 @@ export const LoginUser: FC = () => {
               create(Button, {
                 key: 'submit',
                 label: 'Login',
-                disabled: !schema.valid,
+                disabled:
+                  !schema.valid ||
+                  gqlLoginUser.loading ||
+                  gqlLoginUserOauth.loading,
                 click: schema.submit,
               }),
             ],
@@ -144,7 +157,7 @@ const SchemaLoginUser = yup.object().shape({
 })
 
 const useLoginUser = createUseServer<{
-  session: {
+  session?: {
     id: string
     token: string
   }

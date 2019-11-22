@@ -11,6 +11,7 @@ export const useLocalRouter = ({
   options: Array<{
     key: string
     children: ReactNode
+    nosave?: boolean
   }>
 }) => {
   const mounted = useMounted()
@@ -26,8 +27,9 @@ export const useLocalRouter = ({
   }
   useEffect(() => {
     if (!mounted.current) return
-    if (!current && start) return keyChange(start)
-    if (name && key) localStorage.setItem(`wga.router.${name}`, key)
+    if (!current) return start ? keyChange(start) : undefined
+    if (!current.nosave && name)
+      localStorage.setItem(`wga.router.${name}`, current.key)
   }, [key, options.map(option => option.key).join()])
   return useMemo(() => {
     return {

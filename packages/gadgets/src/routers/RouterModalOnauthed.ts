@@ -50,7 +50,7 @@ export const RouterModalOnauthed: FC<{
             { key: '/user/password', children: create(UpdateUserPassword) },
             { key: '/user/apps', children: create(ListProviders) },
             { key: '/user/danger', children: create(RemoveUser) },
-            { key: '/logout', children: create(LogoutUser) },
+            { key: '/logout', nosave: true, children: create(LogoutUser) },
             {
               key: '/team/create',
               children: create(CreateTeam, {

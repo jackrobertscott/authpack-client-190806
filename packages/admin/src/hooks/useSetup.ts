@@ -9,17 +9,20 @@ export const useSetup = () => {
   useEffect(() => {
     UniversalStore.reset()
     if (gadgets.bearer && gadgets.team && gadgets.team.id) {
-      gqlGetCluster.fetch().then(({ cluster }) => {
-        UniversalStore.update({
-          ready: true,
-          cluster_id: cluster.id,
-          cluster_name: cluster.name,
-          cluster_domain_key: cluster.key_domain,
-          subscribed: cluster.subscribed,
-          power: cluster.power,
-          theme: cluster.theme,
+      gqlGetCluster
+        .fetch()
+        .then(({ cluster }) => {
+          UniversalStore.update({
+            ready: true,
+            cluster_id: cluster.id,
+            cluster_name: cluster.name,
+            cluster_domain_key: cluster.key_domain,
+            subscribed: cluster.subscribed,
+            power: cluster.power,
+            theme: cluster.theme,
+          })
         })
-      })
+        .catch(() => UniversalStore.update({ ready: true }))
     } else {
       setTimeout(() => UniversalStore.update({ ready: true }))
     }

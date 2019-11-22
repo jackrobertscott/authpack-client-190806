@@ -52,14 +52,13 @@ export class Gadgets {
    */
   private createStore(options: IOptions) {
     const store = createGadgetsStore()
-    const { open, bearer } = store.current
-    store.reset()
     store.update({
-      open,
-      bearer,
+      bearer: localStorage.getItem('wga.bearer') || undefined,
       domain: options.domain_key,
     })
     store.listen(data => {
+      if (data.bearer) localStorage.setItem('wga.bearer', data.bearer)
+      else localStorage.removeItem('wga.bearer')
       if (this.iframe)
         this.iframe.style.pointerEvents = data.open ? 'all' : 'none'
     })

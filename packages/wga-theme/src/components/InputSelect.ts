@@ -96,6 +96,7 @@ const Search: FC<{
       cursor: 'pointer',
       flexGrow: 1,
       padding: 15,
+      width: 0,
     }),
   })
 }

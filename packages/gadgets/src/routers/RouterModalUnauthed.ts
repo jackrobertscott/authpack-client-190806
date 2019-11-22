@@ -2,7 +2,7 @@ import { createElement as create, FC, useState, Fragment } from 'react'
 import { useLocalRouter, Layout, IconBar } from 'wga-theme'
 import { LoginUser } from '../screens/LoginUser'
 import { SignupUser } from '../screens/SignupUser'
-import { ForgotUserPassword } from '../screens/ForgotUserPassword'
+import { RecoverUserPassword } from '../screens/RecoverUserPassword'
 import { GetStarted } from '../screens/GetStarted'
 
 export const RouterModalUnauthed: FC<{
@@ -14,7 +14,7 @@ export const RouterModalUnauthed: FC<{
     options: [
       { key: '/login', children: create(LoginUser) },
       { key: '/signup', children: create(SignupUser) },
-      { key: '/forgot', children: create(ForgotUserPassword) },
+      { key: '/forgot', children: create(RecoverUserPassword) },
     ],
   })
   const clicker = (screen: string) => () => {
@@ -41,7 +41,7 @@ export const RouterModalUnauthed: FC<{
           },
           {
             icon: 'question-circle',
-            label: 'Forgot Password?',
+            label: 'Recover Password',
             focused: router.current && router.current.key === '/forgot',
             click: clicker('/forgot'),
           },

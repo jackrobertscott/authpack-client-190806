@@ -43,4 +43,4 @@ export const defaults: IGadgets = {
 }
 
 export const createGadgetsStore = (data: Partial<IGadgets> = {}) =>
-  new KeyStore<IGadgets>({ ...defaults, ...data }, 'wga.plugin.v1')
+  new KeyStore<IGadgets>({ ...defaults, ...data })

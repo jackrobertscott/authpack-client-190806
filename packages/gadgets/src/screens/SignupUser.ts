@@ -16,6 +16,7 @@ import { createUseServer } from '../hooks/useServer'
 import { useOauthCode } from '../hooks/useOauthCode'
 import { Loading } from './Loading'
 import { presetColors } from '../utils/presets'
+import { ReconcileUser } from './ReconcileUser'
 
 export const SignupUser: FC = () => {
   const mounted = useMounted()
@@ -25,15 +26,13 @@ export const SignupUser: FC = () => {
   const gqlListProviders = useListProviders()
   const gqlSignupUserOauth = useSignupUserOauth()
   const [current, currentChange] = useState<string | undefined>()
+  const [email, emailChange] = useState<string | undefined>()
   const schema = useSchema({
     schema: SchemaSignupUser,
     submit: input => {
-      gqlSignupUser.fetch({ input }).then(({ session }) => {
+      gqlSignupUser.fetch({ input }).then(() => {
         schema.change('password')('')
-        SettingsStore.update({
-          open: false,
-          bearer: `Bearer ${session.token}`,
-        })
+        emailChange(schema.value('email'))
       })
     },
   })
@@ -72,6 +71,10 @@ export const SignupUser: FC = () => {
     children: current
       ? create(Loading, {
           helper: 'Checking your credentials',
+        })
+      : email
+      ? create(ReconcileUser, {
+          email,
         })
       : !gqlListProviders.data
       ? null
@@ -163,8 +166,11 @@ export const SignupUser: FC = () => {
               }),
               create(Button, {
                 key: 'submit',
-                label: 'Login',
-                disabled: !schema.valid,
+                label: 'Sign Up',
+                disabled:
+                  !schema.valid ||
+                  gqlSignupUser.loading ||
+                  gqlSignupUserOauth.loading,
                 click: schema.submit,
               }),
             ],
@@ -194,15 +200,10 @@ const SchemaSignupUser = yup.object().shape({
     .required('Please provide your password'),
 })
 
-const useSignupUser = createUseServer<{
-  session: {
-    id: string
-    token: string
-  }
-}>({
+const useSignupUser = createUseServer<{}>({
   query: `
     mutation wgaSignupUser($input: SignupUserInput!) {
-      session: wgaSignupUser(input: $input) {
+      wgaSignupUser(input: $input) {
         id
         token
       }

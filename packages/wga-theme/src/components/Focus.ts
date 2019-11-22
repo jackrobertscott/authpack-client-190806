@@ -36,39 +36,48 @@ export const Focus: FC<{
       className: css({
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        textAlign: 'center',
         width: 300,
-        padding: 35,
+        padding: '20px 25px',
         maxWidth: '100%',
       }),
       children: [
-        create(Icon, {
-          key: 'icon',
-          icon,
-          prefix,
-          size: 25,
-        }),
         create('div', {
-          key: 'label',
-          children: label,
+          key: 'centered',
           className: css({
-            color: theme.focus.label,
-            fontSize: '1.5rem',
-            lineHeight: '1em',
-            marginTop: 15,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textAlign: 'center',
           }),
-        }),
-        helper &&
-          create('div', {
-            key: 'helper',
-            children: helper,
-            className: css({
-              color: theme.focus.helper,
-              fontWeight: theme.global.thin,
-              marginTop: 5,
+          children: [
+            create(Icon, {
+              key: 'icon',
+              icon,
+              prefix,
+              size: 25,
             }),
-          }),
+            create('div', {
+              key: 'label',
+              children: label,
+              className: css({
+                color: theme.focus.label,
+                fontSize: '1.5rem',
+                lineHeight: '1em',
+                marginTop: 15,
+              }),
+            }),
+            helper &&
+              create('div', {
+                key: 'helper',
+                children: helper,
+                className: css({
+                  color: theme.focus.helper,
+                  fontWeight: theme.global.thin,
+                  marginTop: 5,
+                }),
+              }),
+          ],
+        }),
         children &&
           create('div', {
             key: 'children',
