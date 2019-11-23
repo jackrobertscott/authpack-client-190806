@@ -125,8 +125,8 @@ const useCreateTeam = createUseServer<{
   }
 }>({
   query: `
-    mutation apiCreateTeam($value: CreateTeamValue!) {
-      team: apiCreateTeam(value: $value) {
+    mutation CreateTeam($value: CreateTeamValue!) {
+      team: CreateTeam(value: $value) {
         id
       }
     }
@@ -142,8 +142,8 @@ const useListUsers = createUseServer<{
   }>
 }>({
   query: `
-    query apiListUsers($phrase: String) {
-      users: apiListUsers(phrase: $phrase, options: { limit: 5 }) {
+    query ListUsers($phrase: String) {
+      users: ListUsers(phrase: $phrase, options: { limit: 5 }) {
         id
         name
         email

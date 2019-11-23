@@ -27,8 +27,8 @@ const useRemoveTeam = createUseServer<{
   }
 }>({
   query: `
-    mutation apiRemoveTeam($id: String!) {
-      team: apiRemoveTeam(id: $id) {
+    mutation RemoveTeam($id: String!) {
+      team: RemoveTeam(id: $id) {
         id
       }
     }

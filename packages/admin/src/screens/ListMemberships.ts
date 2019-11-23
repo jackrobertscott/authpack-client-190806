@@ -7,27 +7,27 @@ import { TemplateSearchBar } from '../templates/TemplateSearchBar'
 import { createUseServer } from '../hooks/useServer'
 
 export const ListMemberships: FC = () => {
-  const apiListMemberships = useListMemberships()
+  const gqlListMemberships = useListMemberships()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [variables, variablesChange] = useState<{ [key: string]: any }>({
     options: { sort: 'created' },
   })
-  const queryListMemberships = useRef(drip(1000, apiListMemberships.fetch))
+  const queryListMemberships = useRef(drip(1000, gqlListMemberships.fetch))
   useEffect(() => {
     if (variables) queryListMemberships.current(variables)
     // eslint-disable-next-line
   }, [variables])
   const list =
-    apiListMemberships.data && apiListMemberships.data.count
-      ? apiListMemberships.data.memberships
-      : apiListMemberships.loading || variables.phrase
+    gqlListMemberships.data && gqlListMemberships.data.count
+      ? gqlListMemberships.data.memberships
+      : gqlListMemberships.loading || variables.phrase
       ? []
       : FakeMemberships
   return create(Page, {
     title: 'Memberships',
     subtitle: 'See all memberships of your app',
-    hidden: !apiListMemberships.data || !apiListMemberships.data.count,
+    hidden: !gqlListMemberships.data || !gqlListMemberships.data.count,
     corner: {
       icon: 'plus',
       label: 'Create Membership',
@@ -37,9 +37,9 @@ export const ListMemberships: FC = () => {
       },
     },
     noscroll: create(TemplateSearchBar, {
-      count: apiListMemberships.data && apiListMemberships.data.count,
+      count: gqlListMemberships.data && gqlListMemberships.data.count,
       current:
-        apiListMemberships.data && apiListMemberships.data.memberships.length,
+        gqlListMemberships.data && gqlListMemberships.data.memberships.length,
       input: false,
       change: (_, limit, skip) => {
         variablesChange({
@@ -66,8 +66,8 @@ export const ListMemberships: FC = () => {
         },
         visible: build,
       }),
-      apiListMemberships.data &&
-        !apiListMemberships.data.count &&
+      gqlListMemberships.data &&
+        !gqlListMemberships.data.count &&
         create(Empty, {
           key: 'empty',
           icon: 'users',
@@ -80,7 +80,7 @@ export const ListMemberships: FC = () => {
             click: () => window.open('https://windowgadgets.io'),
           }),
         }),
-      apiListMemberships.data &&
+      gqlListMemberships.data &&
         create(Table, {
           key: 'table',
           header: [
@@ -141,9 +141,9 @@ const useListMemberships = createUseServer<{
   }>
 }>({
   query: `
-    query apiListMemberships($options: WhereOptions) {
-      count: apiCountMemberships
-      memberships: apiListMemberships(options: $options) {
+    query ListMemberships($options: WhereOptions) {
+      count: CountMemberships
+      memberships: ListMemberships(options: $options) {
         id
         created
         user {

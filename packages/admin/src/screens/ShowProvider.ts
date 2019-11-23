@@ -85,8 +85,8 @@ const useGetProvider = createUseServer<{
   }
 }>({
   query: `
-    query apiGetProvider($id: String!) {
-      provider: apiGetProvider(id: $id) {
+    query GetProvider($id: String!) {
+      provider: GetProvider(id: $id) {
         id
         created
         updated

@@ -27,8 +27,8 @@ const useRemoveUser = createUseServer<{
   }
 }>({
   query: `
-    mutation apiRemoveUser($id: String!) {
-      user: apiRemoveUser(id: $id) {
+    mutation RemoveUser($id: String!) {
+      user: RemoveUser(id: $id) {
         id
       }
     }

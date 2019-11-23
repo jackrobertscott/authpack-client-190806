@@ -7,27 +7,27 @@ import { TemplateSearchBar } from '../templates/TemplateSearchBar'
 import { createUseServer } from '../hooks/useServer'
 
 export const ListProviders: FC = () => {
-  const apiListProviders = useListProviders()
+  const gqlListProviders = useListProviders()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [variables, variablesChange] = useState<{ [key: string]: any }>({
     options: { sort: 'created' },
   })
-  const queryListProviders = useRef(drip(1000, apiListProviders.fetch))
+  const queryListProviders = useRef(drip(1000, gqlListProviders.fetch))
   useEffect(() => {
     if (variables) queryListProviders.current(variables)
     // eslint-disable-next-line
   }, [variables])
   const list =
-    apiListProviders.data && apiListProviders.data.count
-      ? apiListProviders.data.providers
-      : apiListProviders.loading || variables.phrase
+    gqlListProviders.data && gqlListProviders.data.count
+      ? gqlListProviders.data.providers
+      : gqlListProviders.loading || variables.phrase
       ? []
       : FakeProviders
   return create(Page, {
     title: 'Providers',
     subtitle: 'See all providers of your app',
-    hidden: !apiListProviders.data || !apiListProviders.data.count,
+    hidden: !gqlListProviders.data || !gqlListProviders.data.count,
     corner: {
       icon: 'plus',
       label: 'Create Provider',
@@ -37,8 +37,8 @@ export const ListProviders: FC = () => {
       },
     },
     noscroll: create(TemplateSearchBar, {
-      count: apiListProviders.data && apiListProviders.data.count,
-      current: apiListProviders.data && apiListProviders.data.providers.length,
+      count: gqlListProviders.data && gqlListProviders.data.count,
+      current: gqlListProviders.data && gqlListProviders.data.providers.length,
       change: (search, limit, skip) => {
         variablesChange({
           phrase: search,
@@ -65,8 +65,8 @@ export const ListProviders: FC = () => {
         },
         visible: build,
       }),
-      apiListProviders.data &&
-        !apiListProviders.data.count &&
+      gqlListProviders.data &&
+        !gqlListProviders.data.count &&
         create(Empty, {
           key: 'empty',
           icon: 'facebook',
@@ -80,7 +80,7 @@ export const ListProviders: FC = () => {
             click: () => window.open('https://windowgadgets.io'),
           }),
         }),
-      apiListProviders.data &&
+      gqlListProviders.data &&
         create(Table, {
           key: 'table',
           header: [
@@ -131,9 +131,9 @@ const useListProviders = createUseServer<{
   }>
 }>({
   query: `
-    query apiListProviders($phrase: String, $options: WhereOptions) {
-      count: apiCountProviders(phrase: $phrase)
-      providers: apiListProviders(phrase: $phrase, options: $options) {
+    query ListProviders($phrase: String, $options: WhereOptions) {
+      count: CountProviders(phrase: $phrase)
+      providers: ListProviders(phrase: $phrase, options: $options) {
         id
         updated
         preset

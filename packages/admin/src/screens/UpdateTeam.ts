@@ -98,8 +98,8 @@ const useGetTeam = createUseServer<{
   }
 }>({
   query: `
-    query apiGetTeam($id: String!) {
-      team: apiGetTeam(id: $id) {
+    query GetTeam($id: String!) {
+      team: GetTeam(id: $id) {
         name
         tag
         description
@@ -114,8 +114,8 @@ const useUpdateTeam = createUseServer<{
   }
 }>({
   query: `
-    mutation apiUpdateTeam($id: String!, $value: UpdateTeamValue!) {
-      team: apiUpdateTeam(id: $id, value: $value) {
+    mutation UpdateTeam($id: String!, $value: UpdateTeamValue!) {
+      team: UpdateTeam(id: $id, value: $value) {
         id
       }
     }

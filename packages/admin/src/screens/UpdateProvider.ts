@@ -135,8 +135,8 @@ const useGetProvider = createUseServer<{
   }
 }>({
   query: `
-    query apiGetProvider($id: String!) {
-      provider: apiGetProvider(id: $id) {
+    query GetProvider($id: String!) {
+      provider: GetProvider(id: $id) {
         name
         preset
         client
@@ -153,8 +153,8 @@ const useUpdateProvider = createUseServer<{
   }
 }>({
   query: `
-    mutation apiUpdateProvider($id: String!, $value: UpdateProviderValue!) {
-      provider: apiUpdateProvider(id: $id, value: $value) {
+    mutation UpdateProvider($id: String!, $value: UpdateProviderValue!) {
+      provider: UpdateProvider(id: $id, value: $value) {
         id
       }
     }

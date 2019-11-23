@@ -129,8 +129,8 @@ const useCreateUser = createUseServer<{
   }
 }>({
   query: `
-    mutation apiCreateUser($value: CreateUserValue!) {
-      user: apiCreateUser(value: $value) {
+    mutation CreateUser($value: CreateUserValue!) {
+      user: CreateUser(value: $value) {
         id
       }
     }

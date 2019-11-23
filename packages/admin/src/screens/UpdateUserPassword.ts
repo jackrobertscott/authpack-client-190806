@@ -80,8 +80,8 @@ const useUpdateUser = createUseServer<{
   }
 }>({
   query: `
-    mutation apiUpdateUser($id: String!, $value: UpdateUserValue!) {
-      user: apiUpdateUser(id: $id, value: $value) {
+    mutation UpdateUser($id: String!, $value: UpdateUserValue!) {
+      user: UpdateUser(id: $id, value: $value) {
         id
       }
     }

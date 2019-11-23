@@ -76,8 +76,8 @@ const useGetTeam = createUseServer<{
   }
 }>({
   query: `
-    query apiGetTeam($id: String!) {
-      team: apiGetTeam(id: $id) {
+    query GetTeam($id: String!) {
+      team: GetTeam(id: $id) {
         id
         created
         updated

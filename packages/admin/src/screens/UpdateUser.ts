@@ -117,8 +117,8 @@ const useGetUser = createUseServer<{
   }
 }>({
   query: `
-    query apiGetUser($id: String!) {
-      user: apiGetUser(id: $id) {
+    query GetUser($id: String!) {
+      user: GetUser(id: $id) {
         name_given
         name_family
         username
@@ -134,8 +134,8 @@ const useUpdateUser = createUseServer<{
   }
 }>({
   query: `
-    mutation apiUpdateUser($id: String!, $value: UpdateUserValue!) {
-      user: apiUpdateUser(id: $id, value: $value) {
+    mutation UpdateUser($id: String!, $value: UpdateUserValue!) {
+      user: UpdateUser(id: $id, value: $value) {
         id
       }
     }

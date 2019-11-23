@@ -76,8 +76,8 @@ const useGetUser = createUseServer<{
   }
 }>({
   query: `
-    query apiGetUser($id: String!) {
-      user: apiGetUser(id: $id) {
+    query GetUser($id: String!) {
+      user: GetUser(id: $id) {
         id
         created
         updated

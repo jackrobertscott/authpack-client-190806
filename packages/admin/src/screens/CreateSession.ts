@@ -130,8 +130,8 @@ const useCreateSession = createUseServer<{
   }
 }>({
   query: `
-    mutation apiCreateSession($value: CreateSessionValue!) {
-      session: apiCreateSession(value: $value) {
+    mutation CreateSession($value: CreateSessionValue!) {
+      session: CreateSession(value: $value) {
         id
       }
     }
@@ -147,8 +147,8 @@ const useListUsers = createUseServer<{
   }>
 }>({
   query: `
-    query apiListUsers($phrase: String) {
-      users: apiListUsers(phrase: $phrase, options: { limit: 5 }) {
+    query ListUsers($phrase: String) {
+      users: ListUsers(phrase: $phrase, options: { limit: 5 }) {
         id
         name
         email
@@ -167,8 +167,8 @@ const useListTeams = createUseServer<{
   }>
 }>({
   query: `
-    query apiListTeams($phrase: String, $user_id: String!) {
-      teams: apiListTeams(phrase: $phrase, where: { user_id: $user_id }, options: { limit: 5 }) {
+    query ListTeams($phrase: String, $user_id: String!) {
+      teams: ListTeams(phrase: $phrase, where: { user_id: $user_id }, options: { limit: 5 }) {
         id
         name
         tag

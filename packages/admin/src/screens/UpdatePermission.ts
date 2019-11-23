@@ -100,8 +100,8 @@ const useGetPermission = createUseServer<{
   }
 }>({
   query: `
-    query apiGetPermission($id: String!) {
-      permission: apiGetPermission(id: $id) {
+    query GetPermission($id: String!) {
+      permission: GetPermission(id: $id) {
         name
         tag
         description
@@ -116,8 +116,8 @@ const useUpdatePermission = createUseServer<{
   }
 }>({
   query: `
-    mutation apiUpdatePermission($id: String!, $value: UpdatePermissionValue!) {
-      permission: apiUpdatePermission(id: $id, value: $value) {
+    mutation UpdatePermission($id: String!, $value: UpdatePermissionValue!) {
+      permission: UpdatePermission(id: $id, value: $value) {
         id
       }
     }

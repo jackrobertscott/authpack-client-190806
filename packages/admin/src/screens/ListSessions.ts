@@ -7,27 +7,27 @@ import { TemplateSearchBar } from '../templates/TemplateSearchBar'
 import { createUseServer } from '../hooks/useServer'
 
 export const ListSessions: FC = () => {
-  const apiListSessions = useListSessions()
+  const gqlListSessions = useListSessions()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [variables, variablesChange] = useState<{ [key: string]: any }>({
     options: { sort: 'created' },
   })
-  const queryListSessions = useRef(drip(1000, apiListSessions.fetch))
+  const queryListSessions = useRef(drip(1000, gqlListSessions.fetch))
   useEffect(() => {
     if (variables) queryListSessions.current(variables)
     // eslint-disable-next-line
   }, [variables])
   const list =
-    apiListSessions.data && apiListSessions.data.count
-      ? apiListSessions.data.sessions
-      : apiListSessions.loading || variables.phrase
+    gqlListSessions.data && gqlListSessions.data.count
+      ? gqlListSessions.data.sessions
+      : gqlListSessions.loading || variables.phrase
       ? []
       : FakeSessions
   return create(Page, {
     title: 'Sessions',
     subtitle: 'Usage of your app',
-    hidden: !apiListSessions.data || !apiListSessions.data.count,
+    hidden: !gqlListSessions.data || !gqlListSessions.data.count,
     corner: {
       icon: 'plus',
       label: 'Create Session',
@@ -37,8 +37,8 @@ export const ListSessions: FC = () => {
       },
     },
     noscroll: create(TemplateSearchBar, {
-      count: apiListSessions.data && apiListSessions.data.count,
-      current: apiListSessions.data && apiListSessions.data.sessions.length,
+      count: gqlListSessions.data && gqlListSessions.data.count,
+      current: gqlListSessions.data && gqlListSessions.data.sessions.length,
       input: false,
       change: (_, limit, skip) => {
         variablesChange({
@@ -65,8 +65,8 @@ export const ListSessions: FC = () => {
         },
         visible: build,
       }),
-      apiListSessions.data &&
-        !apiListSessions.data.count &&
+      gqlListSessions.data &&
+        !gqlListSessions.data.count &&
         create(Empty, {
           key: 'empty',
           icon: 'history',
@@ -78,7 +78,7 @@ export const ListSessions: FC = () => {
             click: () => window.open('https://windowgadgets.io'),
           }),
         }),
-      apiListSessions.data &&
+      gqlListSessions.data &&
         create(Table, {
           key: 'table',
           header: [
@@ -139,9 +139,9 @@ const useListSessions = createUseServer<{
   }>
 }>({
   query: `
-    query apiListSessions($options: WhereOptions) {
-      count: apiCountSessions
-      sessions: apiListSessions(options: $options) {
+    query ListSessions($options: WhereOptions) {
+      count: CountSessions
+      sessions: ListSessions(options: $options) {
         id
         created
         user {

@@ -127,8 +127,8 @@ const useCreateProvider = createUseServer<{
   }
 }>({
   query: `
-    mutation apiCreateProvider($value: CreateProviderValue!) {
-      provider: apiCreateProvider(value: $value) {
+    mutation CreateProvider($value: CreateProviderValue!) {
+      provider: CreateProvider(value: $value) {
         id
       }
     }

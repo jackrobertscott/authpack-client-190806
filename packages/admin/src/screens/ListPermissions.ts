@@ -7,27 +7,27 @@ import { TemplateSearchBar } from '../templates/TemplateSearchBar'
 import { createUseServer } from '../hooks/useServer'
 
 export const ListPermissions: FC = () => {
-  const apiListPermissions = useListPermissions()
+  const gqlListPermissions = useListPermissions()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [variables, variablesChange] = useState<{ [key: string]: any }>({
     options: { sort: 'created' },
   })
-  const queryListPermissions = useRef(drip(1000, apiListPermissions.fetch))
+  const queryListPermissions = useRef(drip(1000, gqlListPermissions.fetch))
   useEffect(() => {
     if (variables) queryListPermissions.current(variables)
     // eslint-disable-next-line
   }, [variables])
   const list =
-    apiListPermissions.data && apiListPermissions.data.count
-      ? apiListPermissions.data.permissions
-      : apiListPermissions.loading || variables.phrase
+    gqlListPermissions.data && gqlListPermissions.data.count
+      ? gqlListPermissions.data.permissions
+      : gqlListPermissions.loading || variables.phrase
       ? []
       : FakePermissions
   return create(Page, {
     title: 'Permissions',
     subtitle: 'See all permissions of your app',
-    hidden: !apiListPermissions.data || !apiListPermissions.data.count,
+    hidden: !gqlListPermissions.data || !gqlListPermissions.data.count,
     corner: {
       icon: 'plus',
       label: 'Create Permission',
@@ -37,9 +37,9 @@ export const ListPermissions: FC = () => {
       },
     },
     noscroll: create(TemplateSearchBar, {
-      count: apiListPermissions.data && apiListPermissions.data.count,
+      count: gqlListPermissions.data && gqlListPermissions.data.count,
       current:
-        apiListPermissions.data && apiListPermissions.data.permissions.length,
+        gqlListPermissions.data && gqlListPermissions.data.permissions.length,
       change: (search, limit, skip) => {
         variablesChange({
           phrase: search,
@@ -66,8 +66,8 @@ export const ListPermissions: FC = () => {
         },
         visible: build,
       }),
-      apiListPermissions.data &&
-        !apiListPermissions.data.count &&
+      gqlListPermissions.data &&
+        !gqlListPermissions.data.count &&
         create(Empty, {
           key: 'empty',
           icon: 'user-shield',
@@ -80,7 +80,7 @@ export const ListPermissions: FC = () => {
             click: () => window.open('https://windowgadgets.io'),
           }),
         }),
-      apiListPermissions.data &&
+      gqlListPermissions.data &&
         create(Table, {
           key: 'table',
           header: [
@@ -134,9 +134,9 @@ const useListPermissions = createUseServer<{
   }>
 }>({
   query: `
-    query apiListPermissions($phrase: String, $options: WhereOptions) {
-      count: apiCountPermissions(phrase: $phrase)
-      permissions: apiListPermissions(phrase: $phrase, options: $options) {
+    query ListPermissions($phrase: String, $options: WhereOptions) {
+      count: CountPermissions(phrase: $phrase)
+      permissions: ListPermissions(phrase: $phrase, options: $options) {
         id
         updated
         name

@@ -28,8 +28,8 @@ const useRemoveProvider = createUseServer<{
   }
 }>({
   query: `
-    mutation apiRemoveProvider($id: String!) {
-      provider: apiRemoveProvider(id: $id) {
+    mutation RemoveProvider($id: String!) {
+      provider: RemoveProvider(id: $id) {
         id
       }
     }

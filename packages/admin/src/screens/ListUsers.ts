@@ -9,27 +9,27 @@ import { useUniversal } from '../hooks/useUniversal'
 
 export const ListUsers: FC = () => {
   const universal = useUniversal()
-  const apiListUsers = useListUsers()
+  const gqlListUsers = useListUsers()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [variables, variablesChange] = useState<{ [key: string]: any }>({
     options: { sort: 'created' },
   })
-  const queryListUsers = useRef(drip(1000, apiListUsers.fetch))
+  const queryListUsers = useRef(drip(1000, gqlListUsers.fetch))
   useEffect(() => {
     if (variables) queryListUsers.current(variables)
     // eslint-disable-next-line
   }, [variables])
   const list =
-    apiListUsers.data && apiListUsers.data.count
-      ? apiListUsers.data.users
-      : apiListUsers.loading || variables.phrase
+    gqlListUsers.data && gqlListUsers.data.count
+      ? gqlListUsers.data.users
+      : gqlListUsers.loading || variables.phrase
       ? []
       : FakeUsers
   return create(Page, {
     title: 'Users',
     subtitle: `Accounts created on ${universal.cluster_name}`,
-    hidden: !apiListUsers.data || !apiListUsers.data.count,
+    hidden: !gqlListUsers.data || !gqlListUsers.data.count,
     corner: {
       icon: 'plus',
       label: 'Create User',
@@ -39,8 +39,8 @@ export const ListUsers: FC = () => {
       },
     },
     noscroll: create(TemplateSearchBar, {
-      count: apiListUsers.data && apiListUsers.data.count,
-      current: apiListUsers.data && apiListUsers.data.users.length,
+      count: gqlListUsers.data && gqlListUsers.data.count,
+      current: gqlListUsers.data && gqlListUsers.data.users.length,
       change: (search, limit, skip) => {
         variablesChange({
           phrase: search,
@@ -67,8 +67,8 @@ export const ListUsers: FC = () => {
         },
         visible: build,
       }),
-      apiListUsers.data &&
-        !apiListUsers.data.count &&
+      gqlListUsers.data &&
+        !gqlListUsers.data.count &&
         create(Empty, {
           key: 'empty',
           icon: 'user',
@@ -80,7 +80,7 @@ export const ListUsers: FC = () => {
             click: () => window.open('https://windowgadgets.io'),
           }),
         }),
-      apiListUsers.data &&
+      gqlListUsers.data &&
         create(Table, {
           key: 'table',
           header: [
@@ -134,9 +134,9 @@ const useListUsers = createUseServer<{
   }>
 }>({
   query: `
-    query apiListUsers($phrase: String, $options: WhereOptions) {
-      count: apiCountUsers(phrase: $phrase)
-      users: apiListUsers(phrase: $phrase, options: $options) {
+    query ListUsers($phrase: String, $options: WhereOptions) {
+      count: CountUsers(phrase: $phrase)
+      users: ListUsers(phrase: $phrase, options: $options) {
         id
         updated
         email

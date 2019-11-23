@@ -39,8 +39,8 @@ const useRemovePayment = createUseServer<{
   }
 }>({
   query: `
-    mutation apiRemovePayment($id: String!) {
-      cluster: apiRemovePayment(id: $id) {
+    mutation RemovePayment($id: String!) {
+      cluster: RemovePayment(id: $id) {
         id
         subscribed
         power

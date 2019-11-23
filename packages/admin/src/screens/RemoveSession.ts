@@ -28,8 +28,8 @@ const useRemoveSession = createUseServer<{
   }
 }>({
   query: `
-    mutation apiRemoveSession($id: String!) {
-      session: apiRemoveSession(id: $id) {
+    mutation RemoveSession($id: String!) {
+      session: RemoveSession(id: $id) {
         id
       }
     }

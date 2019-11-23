@@ -78,8 +78,8 @@ const useGetPermission = createUseServer<{
   }
 }>({
   query: `
-    query apiGetPermission($id: String!) {
-      permission: apiGetPermission(id: $id) {
+    query GetPermission($id: String!) {
+      permission: GetPermission(id: $id) {
         id
         created
         updated

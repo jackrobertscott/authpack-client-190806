@@ -95,8 +95,8 @@ const useCreatePermission = createUseServer<{
   }
 }>({
   query: `
-    mutation apiCreatePermission($value: CreatePermissionValue!) {
-      permission: apiCreatePermission(value: $value) {
+    mutation CreatePermission($value: CreatePermissionValue!) {
+      permission: CreatePermission(value: $value) {
         id
       }
     }

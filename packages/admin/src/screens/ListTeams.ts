@@ -7,27 +7,27 @@ import { TemplateSearchBar } from '../templates/TemplateSearchBar'
 import { createUseServer } from '../hooks/useServer'
 
 export const ListTeams: FC = () => {
-  const apiListTeams = useListTeams()
+  const gqlListTeams = useListTeams()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [variables, variablesChange] = useState<{ [key: string]: any }>({
     options: { sort: 'created' },
   })
-  const queryListTeams = useRef(drip(1000, apiListTeams.fetch))
+  const queryListTeams = useRef(drip(1000, gqlListTeams.fetch))
   useEffect(() => {
     if (variables) queryListTeams.current(variables)
     // eslint-disable-next-line
   }, [variables])
   const list =
-    apiListTeams.data && apiListTeams.data.count
-      ? apiListTeams.data.teams
-      : apiListTeams.loading || variables.phrase
+    gqlListTeams.data && gqlListTeams.data.count
+      ? gqlListTeams.data.teams
+      : gqlListTeams.loading || variables.phrase
       ? []
       : FakeTeams
   return create(Page, {
     title: 'Teams',
     subtitle: 'Groups of users',
-    hidden: !apiListTeams.data || !apiListTeams.data.count,
+    hidden: !gqlListTeams.data || !gqlListTeams.data.count,
     corner: {
       icon: 'plus',
       label: 'Create Team',
@@ -37,8 +37,8 @@ export const ListTeams: FC = () => {
       },
     },
     noscroll: create(TemplateSearchBar, {
-      count: apiListTeams.data && apiListTeams.data.count,
-      current: apiListTeams.data && apiListTeams.data.teams.length,
+      count: gqlListTeams.data && gqlListTeams.data.count,
+      current: gqlListTeams.data && gqlListTeams.data.teams.length,
       change: (search, limit, skip) => {
         variablesChange({
           phrase: search,
@@ -65,8 +65,8 @@ export const ListTeams: FC = () => {
         },
         visible: build,
       }),
-      apiListTeams.data &&
-        !apiListTeams.data.count &&
+      gqlListTeams.data &&
+        !gqlListTeams.data.count &&
         create(Empty, {
           key: 'empty',
           icon: 'users',
@@ -78,7 +78,7 @@ export const ListTeams: FC = () => {
             click: () => window.open('https://windowgadgets.io'),
           }),
         }),
-      apiListTeams.data &&
+      gqlListTeams.data &&
         create(Table, {
           key: 'table',
           header: [
@@ -132,9 +132,9 @@ const useListTeams = createUseServer<{
   }>
 }>({
   query: `
-    query apiListTeams($phrase: String, $options: WhereOptions) {
-      count: apiCountTeams(phrase: $phrase)
-      teams: apiListTeams(phrase: $phrase, options: $options) {
+    query ListTeams($phrase: String, $options: WhereOptions) {
+      count: CountTeams(phrase: $phrase)
+      teams: ListTeams(phrase: $phrase, options: $options) {
         id
         updated
         name

@@ -28,8 +28,8 @@ const useRemovePermission = createUseServer<{
   }
 }>({
   query: `
-    mutation apiRemovePermission($id: String!) {
-      permission: apiRemovePermission(id: $id) {
+    mutation RemovePermission($id: String!) {
+      permission: RemovePermission(id: $id) {
         id
       }
     }

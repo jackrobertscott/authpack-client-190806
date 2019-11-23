@@ -82,8 +82,8 @@ const useGetSession = createUseServer<{
   }
 }>({
   query: `
-    query apiGetSession($id: String!) {
-      session: apiGetSession(id: $id) {
+    query GetSession($id: String!) {
+      session: GetSession(id: $id) {
         id
         created
         updated

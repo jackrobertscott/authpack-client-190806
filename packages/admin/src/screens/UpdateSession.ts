@@ -61,8 +61,8 @@ const useGetSession = createUseServer<{
   }
 }>({
   query: `
-    query apiGetSession($id: String!) {
-      session: apiGetSession(id: $id) {
+    query GetSession($id: String!) {
+      session: GetSession(id: $id) {
         disabled
       }
     }
@@ -75,8 +75,8 @@ const useUpdateSession = createUseServer<{
   }
 }>({
   query: `
-    mutation apiUpdateSession($id: String!, $value: UpdateSessionValue!) {
-      session: apiUpdateSession(id: $id, value: $value) {
+    mutation UpdateSession($id: String!, $value: UpdateSessionValue!) {
+      session: UpdateSession(id: $id, value: $value) {
         id
       }
     }
