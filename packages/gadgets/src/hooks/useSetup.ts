@@ -95,8 +95,8 @@ const useGetCurrentCluster = createUseServer<{
   }
 }>({
   query: `
-    query wgaGetCurrentCluster {
-      cluster: wgaGetCurrentCluster {
+    query GetCurrentClusterClient {
+      cluster: GetCurrentClusterClient {
         id
         name
         theme
@@ -134,8 +134,8 @@ const useGetCurrentSession = createUseServer<{
   }
 }>({
   query: `
-    query wgaGetCurrentSession {
-      session: wgaGetCurrentSession {
+    query GetCurrentSessionClient {
+      session: GetCurrentSessionClient {
         id
         token
         user {

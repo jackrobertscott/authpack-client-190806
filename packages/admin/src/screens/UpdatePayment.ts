@@ -123,8 +123,8 @@ const useUpdatePayment = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaUpdatePayment($id: String!, $input: UpdatePaymentInput!) {
-      cluster: wgaUpdatePayment(id: $id, input: $input) {
+    mutation UpdatePaymentClient($id: String!, $input: UpdatePaymentInput!) {
+      cluster: UpdatePaymentClient(id: $id, input: $input) {
         id
         power
         subscribed

@@ -41,8 +41,8 @@ const useLogoutUser = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaLogoutUser {
-      session: wgaLogoutUser {
+    mutation LogoutUserClient {
+      session: LogoutUserClient {
         id
       }
     }

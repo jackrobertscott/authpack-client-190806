@@ -119,8 +119,8 @@ const useListProviders = createUseServer<{
   }>
 }>({
   query: `
-    query wgaListProviders {
-      providers: wgaListProviders {
+    query ListProvidersClient {
+      providers: ListProvidersClient {
         id
         preset
         name
@@ -137,8 +137,8 @@ const useListCredentials = createUseServer<{
   }>
 }>({
   query: `
-    query wgaListCredentials {
-      credentials: wgaListCredentials {
+    query ListCredentialsClient {
+      credentials: ListCredentialsClient {
         id
         provider_id
       }
@@ -152,8 +152,8 @@ const useUpsertCredential = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaUpsertCredential($input: UpsertCredentialInput!) {
-      credential: wgaUpsertCredential(input: $input) {
+    mutation UpsertCredentialClient($input: UpsertCredentialInput!) {
+      credential: UpsertCredentialClient(input: $input) {
         id
       }
     }
@@ -166,8 +166,8 @@ const useRemoveCredential = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaRemoveCredential($id: String!) {
-      credential: wgaRemoveCredential(id: $id) {
+    mutation RemoveCredentialClient($id: String!) {
+      credential: RemoveCredentialClient(id: $id) {
         id
       }
     }

@@ -119,8 +119,8 @@ const useGetCluster = createUseServer<{
   }
 }>({
   query: `
-    query wgaGetCluster($id: String!) {
-      cluster: wgaGetCluster(id: $id) {
+    query GetClusterClient($id: String!) {
+      cluster: GetClusterClient(id: $id) {
         name
         theme
         domains
@@ -137,8 +137,8 @@ const useUpdateCluster = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaUpdateCluster($id: String!, $input: UpdateClusterInput!) {
-      cluster: wgaUpdateCluster(id: $id, input: $input) {
+    mutation UpdateClusterClient($id: String!, $input: UpdateClusterInput!) {
+      cluster: UpdateClusterClient(id: $id, input: $input) {
         id
         name
         theme

@@ -116,8 +116,8 @@ const useGetUser = createUseServer<{
   }
 }>({
   query: `
-    query wgaGetCurrentUser {
-      user: wgaGetCurrentUser {
+    query GetCurrentUserClient {
+      user: GetCurrentUserClient {
         name_given
         name_family
         username
@@ -133,8 +133,8 @@ const useUpdateUser = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaUpdateCurrentUser($input: UpdateCurrentUserInput!) {
-      user: wgaUpdateCurrentUser(input: $input) {
+    mutation UpdateCurrentUserClient($input: UpdateCurrentUserInput!) {
+      user: UpdateCurrentUserClient(input: $input) {
         id
       }
     }

@@ -97,8 +97,8 @@ const useCreateMembership = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaCreateMembership($input: CreateMembershipInput!) {
-      membership: wgaCreateMembership(input: $input) {
+    mutation CreateMembershipClient($input: CreateMembershipInput!) {
+      membership: CreateMembershipClient(input: $input) {
         id
       }
     }
@@ -113,8 +113,8 @@ const useListPermissions = createUseServer<{
   }>
 }>({
   query: `
-    query wgaListPermissions {
-      permissions: wgaListPermissions {
+    query ListPermissionsClient {
+      permissions: ListPermissionsClient {
         id
         name
         description

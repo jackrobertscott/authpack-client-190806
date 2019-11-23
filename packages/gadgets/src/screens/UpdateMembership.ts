@@ -95,8 +95,8 @@ const useGetMembership = createUseServer<{
   }
 }>({
   query: `
-    query wgaGetMembership($id: String!) {
-      membership: wgaGetMembership(id: $id) {
+    query GetMembershipClient($id: String!) {
+      membership: GetMembershipClient(id: $id) {
         permission_ids
       }
     }
@@ -109,8 +109,8 @@ const useUpdateMembership = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaUpdateMembership($id: String!, $input: UpdateMembershipInput!) {
-      membership: wgaUpdateMembership(id: $id, input: $input) {
+    mutation UpdateMembershipClient($id: String!, $input: UpdateMembershipInput!) {
+      membership: UpdateMembershipClient(id: $id, input: $input) {
         id
       }
     }
@@ -125,8 +125,8 @@ const useListPermissions = createUseServer<{
   }>
 }>({
   query: `
-    query wgaListPermissions {
-      permissions: wgaListPermissions {
+    query ListPermissionsClient {
+      permissions: ListPermissionsClient {
         id
         name
         description

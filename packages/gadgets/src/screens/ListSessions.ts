@@ -44,8 +44,8 @@ const useListSessions = createUseServer<{
   }>
 }>({
   query: `
-    query wgaListSessions {
-      sessions: wgaListSessions {
+    query ListSessionsClient {
+      sessions: ListSessionsClient {
         id
         created
         ended

@@ -58,8 +58,8 @@ const useListMemberships = createUseServer<{
   }>
 }>({
   query: `
-    query wgaListMemberships {
-      memberships: wgaListMemberships {
+    query ListMembershipsClient {
+      memberships: ListMembershipsClient {
         id
         admin
         user {

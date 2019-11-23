@@ -79,8 +79,8 @@ const useRemoveMembership = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaRemoveMembership($id: String!) {
-      membership: wgaRemoveMembership(id: $id) {
+    mutation RemoveMembershipClient($id: String!) {
+      membership: RemoveMembershipClient(id: $id) {
         id
       }
     }

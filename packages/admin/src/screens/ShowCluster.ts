@@ -81,8 +81,8 @@ const useGetCluster = createUseServer<{
   }
 }>({
   query: `
-    query wgaGetCluster($id: String!) {
-      cluster: wgaGetCluster(id: $id) {
+    query GetClusterClient($id: String!) {
+      cluster: GetClusterClient(id: $id) {
         id
         created
         updated

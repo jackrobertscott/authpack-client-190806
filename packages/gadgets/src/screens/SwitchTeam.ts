@@ -57,8 +57,8 @@ const useListTeams = createUseServer<{
   }>
 }>({
   query: `
-    query wgaListTeams {
-      teams: wgaListTeams {
+    query ListTeamsClient {
+      teams: ListTeamsClient {
         id
         name
         tag
@@ -74,8 +74,8 @@ const useSwitchTeam = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaSwitchTeam($id: String!) {
-      session: wgaSwitchTeam(id: $id) {
+    mutation SwitchTeamClient($id: String!) {
+      session: SwitchTeamClient(id: $id) {
         token
       }
     }

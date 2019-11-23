@@ -97,8 +97,8 @@ const useGetTeam = createUseServer<{
   }
 }>({
   query: `
-    query wgaGetCurrentTeam {
-      team: wgaGetCurrentTeam {
+    query GetCurrentTeamClient {
+      team: GetCurrentTeamClient {
         name
         tag
         description
@@ -113,8 +113,8 @@ const useUpdateTeam = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaUpdateCurrentTeam($input: UpdateCurrentTeamInput!) {
-      team: wgaUpdateCurrentTeam(input: $input) {
+    mutation UpdateCurrentTeamClient($input: UpdateCurrentTeamInput!) {
+      team: UpdateCurrentTeamClient(input: $input) {
         id
       }
     }

@@ -163,8 +163,8 @@ const useLoginUser = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaLoginUser($email: String!, $password: String!) {
-      session: wgaLoginUser(email: $email, password: $password) {
+    mutation LoginUserClient($email: String!, $password: String!) {
+      session: LoginUserClient(email: $email, password: $password) {
         id
         token
       }
@@ -179,8 +179,8 @@ const useLoginUserOauth = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaLoginUserOauth($provider_id: String!, $code: String!) {
-      session: wgaLoginUserOauth(provider_id: $provider_id, code: $code) {
+    mutation LoginUserOauthClient($provider_id: String!, $code: String!) {
+      session: LoginUserOauthClient(provider_id: $provider_id, code: $code) {
         id
         token
       }
@@ -197,8 +197,8 @@ const useListProviders = createUseServer<{
   }>
 }>({
   query: `
-    query wgaListProviders {
-      providers: wgaListProviders {
+    query ListProvidersClient {
+      providers: ListProvidersClient {
         id
         preset
         name

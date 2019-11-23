@@ -70,8 +70,8 @@ const useRecoverUser = createUseServer<{
   email: string
 }>({
   query: `
-    mutation wgaRecoverUser($email: String!) {
-      email: wgaRecoverUser(email: $email)
+    mutation RecoverUserClient($email: String!) {
+      email: RecoverUserClient(email: $email)
     }
   `,
 })

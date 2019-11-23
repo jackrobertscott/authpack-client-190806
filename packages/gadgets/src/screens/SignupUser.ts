@@ -202,8 +202,8 @@ const SchemaSignupUser = yup.object().shape({
 
 const useSignupUser = createUseServer<{}>({
   query: `
-    mutation wgaSignupUser($input: SignupUserInput!) {
-      wgaSignupUser(input: $input) {
+    mutation SignupUserClient($input: SignupUserInput!) {
+      SignupUserClient(input: $input) {
         id
         token
       }
@@ -218,8 +218,8 @@ const useSignupUserOauth = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaSignupUserOauth($provider_id: String!, $code: String!) {
-      session: wgaSignupUserOauth(provider_id: $provider_id, code: $code) {
+    mutation SignupUserOauthClient($provider_id: String!, $code: String!) {
+      session: SignupUserOauthClient(provider_id: $provider_id, code: $code) {
         id
         token
       }
@@ -236,8 +236,8 @@ const useListProviders = createUseServer<{
   }>
 }>({
   query: `
-    query wgaListProviders {
-      providers: wgaListProviders {
+    query ListProvidersClient {
+      providers: ListProvidersClient {
         id
         preset
         name

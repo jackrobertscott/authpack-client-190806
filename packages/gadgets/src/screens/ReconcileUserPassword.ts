@@ -88,8 +88,8 @@ const useReconcileUser = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaReconcileUser($email: String!, $code: String!, $password: String!) {
-      session: wgaReconcileUser(email: $email, code: $code, password: $password) {
+    mutation ReconcileUserClient($email: String!, $code: String!, $password: String!) {
+      session: ReconcileUserClient(email: $email, code: $code, password: $password) {
         id
         token
       }

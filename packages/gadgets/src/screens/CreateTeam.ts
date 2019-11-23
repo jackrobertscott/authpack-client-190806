@@ -20,7 +20,8 @@ export const CreateTeam: FC<{
   const settings = useSettings()
   const gqlCreateTeam = useCreateTeam()
   const gqlSwitchTeam = useSwitchTeam()
-  const initial = !!settings.cluster && settings.cluster.force_teams && !settings.team
+  const initial =
+    !!settings.cluster && settings.cluster.force_teams && !settings.team
   const [open, openChange] = useState<boolean>(initial)
   const schema = useSchema({
     schema: SchemaCreateTeam,
@@ -112,8 +113,8 @@ const useCreateTeam = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaCreateTeam($input: CreateTeamInput!) {
-      team: wgaCreateTeam(input: $input) {
+    mutation CreateTeamClient($input: CreateTeamInput!) {
+      team: CreateTeamClient(input: $input) {
         id
       }
     }
@@ -127,8 +128,8 @@ const useSwitchTeam = createUseServer<{
   }
 }>({
   query: `
-    mutation wgaSwitchTeam($id: String!) {
-      session: wgaSwitchTeam(id: $id) {
+    mutation SwitchTeamClient($id: String!) {
+      session: SwitchTeamClient(id: $id) {
         token
         team_id
       }
