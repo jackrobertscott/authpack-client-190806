@@ -36,7 +36,7 @@ export const CreateTeam: FC<{
     },
   })
   return create(Page, {
-    title: 'Create Team',
+    title: 'Create',
     subtitle: settings.cluster && settings.cluster.name,
     children: [
       create(Layout, {

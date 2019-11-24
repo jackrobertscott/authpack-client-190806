@@ -30,7 +30,7 @@ export const UpdateUser: FC<{
     // eslint-disable-next-line
   }, [])
   return create(Page, {
-    title: 'Update User',
+    title: 'Update',
     subtitle: settings.cluster && settings.cluster.name,
     children: create(Layout, {
       column: true,

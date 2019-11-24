@@ -13,7 +13,7 @@ export const SwitchTeam: FC<{ change?: () => void }> = ({ change }) => {
     // eslint-disable-next-line
   }, [])
   return create(Page, {
-    title: 'Switch Team',
+    title: 'Switch',
     subtitle: settings.cluster && settings.cluster.name,
     children: create(Layout, {
       column: true,

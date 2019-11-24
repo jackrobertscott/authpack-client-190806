@@ -52,7 +52,7 @@ export const RouterManagerCluster: FC<{
                 },
                 {
                   icon: 'fire-alt',
-                  label: 'Danger Zone',
+                  label: 'Danger',
                   focused: !!router.current && router.current.key === '/cancel',
                   click: () => router.change('/cancel'),
                 },

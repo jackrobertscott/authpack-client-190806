@@ -12,7 +12,7 @@ export const ListSessions: FC = () => {
     // eslint-disable-next-line
   }, [])
   return create(Page, {
-    title: 'Latest Sessions',
+    title: 'Sessions',
     subtitle: settings.cluster && settings.cluster.name,
     children: !gqlListSessions.data
       ? null
@@ -26,7 +26,7 @@ export const ListSessions: FC = () => {
           return create(Snippet, {
             key: id,
             icon: 'history',
-            label: difference ? `${creation} ~ ${difference}` : creation,
+            label: difference ? `${creation} - ${difference}` : creation,
             value: team && team.name,
           })
         }),

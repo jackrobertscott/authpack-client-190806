@@ -30,7 +30,7 @@ export const UpdateTeam: FC<{
     // eslint-disable-next-line
   }, [])
   return create(Page, {
-    title: 'Update Team',
+    title: 'Update',
     subtitle: settings.cluster && settings.cluster.name,
     children: create(Layout, {
       column: true,

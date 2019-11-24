@@ -8,22 +8,25 @@ import {
   InputString,
   InputSelectMany,
   Page,
+  Snippet,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 
 export const CreateMembership: FC<{
   change?: (id?: string) => void
-}> = ({ change }) => {
+  close: () => void
+}> = ({ change, close }) => {
   const settings = useSettings()
   const gqlCreateMembership = useCreateMembership()
   const gqlListPermissions = useListPermissions()
   const schema = useSchema({
     schema: SchemaCreateMembership,
     submit: input => {
-      gqlCreateMembership
-        .fetch({ input })
-        .then(({ membership }) => change && change(membership.id))
+      gqlCreateMembership.fetch({ input }).then(({ membership }) => {
+        if (change) change(membership.id)
+        close()
+      })
     },
   })
   useEffect(() => {
@@ -33,53 +36,63 @@ export const CreateMembership: FC<{
   return create(Page, {
     title: 'Add Member',
     subtitle: settings.cluster && settings.cluster.name,
-    children: create(Layout, {
-      column: true,
-      padding: true,
-      divide: true,
-      children: !gqlListPermissions.data
-        ? null
-        : [
-            create(Control, {
-              key: 'email',
-              label: 'Email',
-              error: schema.error('email'),
-              children: create(InputString, {
-                value: schema.value('email'),
-                change: schema.change('email'),
-                placeholder: 'example@email.com',
-              }),
-            }),
-            !!gqlListPermissions.data.permissions.length &&
+    children: [
+      create(Snippet, {
+        key: 'snippet',
+        icon: 'arrow-alt-circle-left',
+        prefix: 'far',
+        label: 'Cancel',
+        click: close,
+      }),
+      create(Layout, {
+        key: 'layout',
+        column: true,
+        padding: true,
+        divide: true,
+        children: !gqlListPermissions.data
+          ? null
+          : [
               create(Control, {
-                key: 'permission_ids',
-                label: 'Permissions',
-                helper: 'Determine what the member can access',
-                error: schema.error('permission_ids'),
-                children: create(InputSelectMany, {
-                  value: schema.value('permission_ids'),
-                  change: schema.change('permission_ids'),
-                  options: gqlListPermissions.data.permissions.map(
-                    permission => {
-                      return {
-                        value: permission.id,
-                        icon: 'user-sheild',
-                        label: permission.name,
-                        helper: permission.description,
-                      }
-                    }
-                  ),
+                key: 'email',
+                label: 'Email',
+                error: schema.error('email'),
+                children: create(InputString, {
+                  value: schema.value('email'),
+                  change: schema.change('email'),
+                  placeholder: 'example@email.com',
                 }),
               }),
-            create(Button, {
-              key: 'submit',
-              label: 'Add',
-              loading: gqlCreateMembership.loading,
-              disabled: !schema.valid,
-              click: schema.submit,
-            }),
-          ],
-    }),
+              !!gqlListPermissions.data.permissions.length &&
+                create(Control, {
+                  key: 'permission_ids',
+                  label: 'Permissions',
+                  helper: 'Determine what the member can access',
+                  error: schema.error('permission_ids'),
+                  children: create(InputSelectMany, {
+                    value: schema.value('permission_ids'),
+                    change: schema.change('permission_ids'),
+                    options: gqlListPermissions.data.permissions.map(
+                      permission => {
+                        return {
+                          value: permission.id,
+                          icon: 'user-sheild',
+                          label: permission.name,
+                          helper: permission.description,
+                        }
+                      }
+                    ),
+                  }),
+                }),
+              create(Button, {
+                key: 'submit',
+                label: 'Add',
+                loading: gqlCreateMembership.loading,
+                disabled: !schema.valid,
+                click: schema.submit,
+              }),
+            ],
+      }),
+    ],
   })
 }
 

@@ -38,7 +38,7 @@ export const ListProviders: FC<{
     // eslint-disable-next-line
   }, [oauthCode.code])
   return create(Page, {
-    title: '3rd Party Logins',
+    title: 'Apps',
     subtitle: settings.cluster && settings.cluster.name,
     children:
       !gqlListProviders.data || !gqlListCredentials.data
@@ -46,7 +46,7 @@ export const ListProviders: FC<{
         : !gqlListProviders.data.providers.length
         ? create(Poster, {
             icon: 'handshake',
-            label: 'Providers',
+            label: '3rd Party Logins',
             helper: 'There are no authentication providers currently available',
           })
         : create(Fragment, {

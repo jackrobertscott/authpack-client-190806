@@ -4,9 +4,10 @@ import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 
 export const ListMemberships: FC<{
+  add: () => void
   update: (id: string) => void
   remove: (id: string) => void
-}> = ({ update, remove }) => {
+}> = ({ add, update, remove }) => {
   const settings = useSettings()
   const gqlListMemberships = useListMemberships()
   useEffect(() => {
@@ -16,6 +17,11 @@ export const ListMemberships: FC<{
   return create(Page, {
     title: 'Members',
     subtitle: settings.cluster && settings.cluster.name,
+    corner: {
+      icon: 'plus',
+      label: 'Add Member',
+      click: add,
+    },
     children: !gqlListMemberships.data
       ? null
       : gqlListMemberships.data.memberships.map(membership => {

@@ -54,7 +54,7 @@ export const UpdateMembership: FC<{
         children: !gqlListPermissions.data
           ? null
           : [
-              gqlListPermissions.data.permissions.length &&
+              !!gqlListPermissions.data.permissions.length &&
                 create(Control, {
                   key: 'permission_ids',
                   label: 'Permissions',
