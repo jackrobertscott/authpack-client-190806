@@ -3,8 +3,8 @@ import { ITheme } from '../contexts/Theme'
 const slate = (
   lightness: number = 0,
   opacity: number = 1,
-  saturation: number = 15,
-  hue: number = 200
+  saturation: number = 10,
+  hue: number = 210
 ) =>
   opacity === 1
     ? `hsl(${hue}, ${saturation}%, ${lightness}%)`
