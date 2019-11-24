@@ -1,9 +1,10 @@
 import { createElement as create, FC, Fragment } from 'react'
-import { useLocalRouter, Layout, IconBar, SideBar } from 'wga-theme'
+import { useLocalRouter, Layout, IconBar } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { RouterSideBarUser } from './RouterSideBarUser'
 import { RouterSideBarTeam } from './RouterSideBarTeam'
 import { LogoutUser } from './LogoutUser'
+import { ReconcileUser } from './ReconcileUser'
 
 export const RouterModalOnauthed: FC<{
   close: () => void
@@ -11,14 +12,27 @@ export const RouterModalOnauthed: FC<{
   const settings = useSettings()
   const router = useLocalRouter({
     name: 'onauthed',
-    nomatch: '/user',
-    options: [
-      { key: '/user', children: create(RouterSideBarUser) },
-      { key: '/team', children: create(RouterSideBarTeam) },
-      { key: '/logout', children: create(LogoutUser), nosave: true },
-    ],
+    nomatch: !settings.user || !settings.user.verified ? '/verified' : '/user',
+    options: !settings.user
+      ? []
+      : [
+          { key: '/user', children: create(RouterSideBarUser) },
+          { key: '/team', children: create(RouterSideBarTeam) },
+          {
+            key: '/logout',
+            nosave: true,
+            children: create(LogoutUser),
+          },
+          {
+            key: '/verify',
+            nosave: true,
+            children: create(ReconcileUser, {
+              email: settings.user.email,
+            }),
+          },
+        ],
   })
-  if (!settings.bearer) return null
+  if (!settings.bearer || !settings.user) return null
   return create(Layout, {
     grow: true,
     children: [
@@ -43,12 +57,19 @@ export const RouterModalOnauthed: FC<{
             focused: router.current && router.current.key === '/logout',
             click: () => router.change('/logout'),
           },
+          !settings.user.verified && {
+            icon: 'exclamation-circle',
+            label: 'Verify Email',
+            focused: router.current && router.current.key === '/verify',
+            click: () => router.change('/verify'),
+            seperated: true,
+          },
           {
             icon: 'times-circle',
             label: 'Close',
             click: close,
             prefix: 'far',
-            seperated: true,
+            seperated: !!settings.user.verified,
           },
         ],
       }),

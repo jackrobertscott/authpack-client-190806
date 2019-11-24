@@ -4,7 +4,6 @@ import { useSettings } from '../hooks/useSettings'
 import { CreateTeam } from './CreateTeam'
 import { SwitchTeam } from './SwitchTeam'
 import { UpdateTeam } from './UpdateTeam'
-import { CreateMembership } from './CreateMembership'
 import { RemoveTeam } from './RemoveTeam'
 import { RouterMemberships } from './RouterMemberships'
 

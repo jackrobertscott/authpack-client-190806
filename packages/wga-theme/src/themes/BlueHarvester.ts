@@ -37,8 +37,8 @@ export const BlueHarvester: ITheme = {
     optionsHover: color(95),
     optionsFocused: color(95),
     background: color(12.5),
-    backgroundHover: color(17.5),
-    backgroundFocused: color(15),
+    backgroundHover: color(15),
+    backgroundFocused: color(10),
     border: `1px solid ${color(7.5)}`,
   },
   /**
@@ -51,9 +51,9 @@ export const BlueHarvester: ITheme = {
     brandingHover: color(65),
     label: color(65),
     labelHover: color(95),
-    header: color(12.5),
-    headerHover: color(17.5),
-    border: `1px solid ${color(7.5)}`,
+    header: color(15),
+    headerHover: color(20),
+    border: `1px solid ${color(12.5)}`,
     background: color(15),
   },
   gadgets: {

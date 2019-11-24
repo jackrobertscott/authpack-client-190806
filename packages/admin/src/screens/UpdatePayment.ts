@@ -11,6 +11,7 @@ import {
   useToaster,
   Page,
   Poster,
+  useMounted,
 } from 'wga-theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
@@ -24,6 +25,7 @@ export const UpdatePayment: FC<{
   const toaster = useToaster()
   const universal = useUniversal()
   const gadgets = useGadgets()
+  const mounted = useMounted()
   const [stripeCard, stripeCardChange] = useState<any>()
   const [loading, loadingChange] = useState<boolean>(false)
   const gqlUpdatePayment = useUpdatePayment()
@@ -74,6 +76,7 @@ export const UpdatePayment: FC<{
         name: gadgets.user.name,
         email: gadgets.user.email,
       })
+    // eslint-disable-next-line
   }, [])
   return create(Page, {
     title: 'Payment',
@@ -99,7 +102,7 @@ export const UpdatePayment: FC<{
             error: schema.error('card'),
             children: create(InputStripe, {
               stripe,
-              change: value => stripeCardChange(value),
+              change: value => mounted.current && stripeCardChange(value),
             }),
           }),
           create(Layout, {

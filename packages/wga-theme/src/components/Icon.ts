@@ -1,6 +1,5 @@
 import { createElement as create, FC } from 'react'
 import { css } from 'emotion'
-import { useTheme } from '../hooks/useTheme'
 
 export const Icon: FC<{
   icon: string
@@ -9,7 +8,6 @@ export const Icon: FC<{
   prefix?: string
   color?: string
 }> = ({ icon, size, padding = 0, prefix = 'fas', color }) => {
-  const theme = useTheme()
   return create('div', {
     className: css({
       all: 'unset',

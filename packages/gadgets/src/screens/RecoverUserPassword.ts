@@ -66,12 +66,10 @@ const SchemaRecoverUser = yup.object().shape({
     .required('Please provide your email'),
 })
 
-const useRecoverUser = createUseServer<{
-  email: string
-}>({
+const useRecoverUser = createUseServer<{}>({
   query: `
     mutation RecoverUserClient($email: String!) {
-      email: RecoverUserClient(email: $email)
+      RecoverUserClient(email: $email) { id }
     }
   `,
 })

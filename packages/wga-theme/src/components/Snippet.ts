@@ -78,8 +78,8 @@ export const Snippet: FC<{
           key: 'arrow',
           onClick: () => options.length && openChange(true),
           className: css({
-            padding: 5,
-            margin: -5,
+            padding: 7.5,
+            margin: -7.5,
             position: 'relative',
             color: theme.snippet.arrow,
             borderRadius: theme.global.radius,
@@ -94,7 +94,7 @@ export const Snippet: FC<{
           children: [
             create(Icon, {
               key: 'icon',
-              icon: options.length ? 'bars' : 'hand-pointer',
+              icon: options.length ? 'bars' : 'minus',
             }),
             !!options.length &&
               create(Dropdown, {

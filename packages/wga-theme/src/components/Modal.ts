@@ -9,9 +9,9 @@ export const Modal: FC<{
   children: ReactNode
   visible?: boolean
   close?: () => void
-  small?: boolean
-}> = ({ id, children, visible = true, close, small }) => {
-  const width = 1035 - (small ? 260 : 0)
+  large?: boolean
+}> = ({ id, children, visible = true, close, large }) => {
+  const width = 1035 - (large ? 0 : 260)
   const height = 640
   const theme = useTheme()
   const unfocused = useRef<boolean>(!document.querySelector(':focus-within'))

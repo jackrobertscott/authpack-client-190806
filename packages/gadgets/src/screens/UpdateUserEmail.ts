@@ -32,7 +32,11 @@ export const UpdateUserEmail: FC<{
           helper: 'Email has been changed',
         })
         SettingsStore.update({
-          user: { ...settings.user, ...(user as any) },
+          user: {
+            ...settings.user!,
+            email: user.email,
+            verified: user.verified,
+          },
         })
       })
     },

@@ -15,7 +15,6 @@ import { createUseServer } from '../hooks/useServer'
 import { useOauthCode } from '../hooks/useOauthCode'
 import { Loading } from './Loading'
 import { presetColors } from '../utils/presets'
-import { ReconcileUser } from './ReconcileUser'
 
 export const LoginUser: FC = () => {
   const mounted = useMounted()
@@ -25,7 +24,6 @@ export const LoginUser: FC = () => {
   const gqlListProviders = useListProviders()
   const gqlLoginUserOauth = useLoginUserOauth()
   const [current, currentChange] = useState<string | undefined>()
-  const [email, emailChange] = useState<string | undefined>()
   const schema = useSchema({
     schema: SchemaLoginUser,
     submit: value => {
@@ -69,10 +67,6 @@ export const LoginUser: FC = () => {
     children: current
       ? create(Loading, {
           helper: 'Checking your credentials',
-        })
-      : email
-      ? create(ReconcileUser, {
-          email,
         })
       : !gqlListProviders.data
       ? null

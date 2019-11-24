@@ -1,12 +1,12 @@
 import * as yup from 'yup'
-import { createElement as create, FC, Fragment } from 'react'
+import { createElement as create, FC } from 'react'
 import {
   Layout,
   Control,
   useSchema,
   InputString,
   Button,
-  Poster,
+  Focus,
 } from 'wga-theme'
 import { createUseServer } from '../hooks/useServer'
 import { SettingsStore } from '../utils/settings'
@@ -14,49 +14,58 @@ import { SettingsStore } from '../utils/settings'
 export const ReconcileUser: FC<{
   email: string
 }> = ({ email }) => {
+  const gqlRecoverUser = useRecoverUser()
   const gqlReconcileUser = useReconcileUser()
   const schema = useSchema({
     schema: SchemaReconcileUser,
     submit: value => {
       gqlReconcileUser.fetch({ ...value, email }).then(({ session }) => {
         SettingsStore.update({
-          open: false,
           bearer: `Bearer ${session.token}`,
         })
       })
     },
   })
-  return create(Fragment, {
+  return create(Layout, {
+    grow: true,
     children: [
-      create(Poster, {
+      create(Focus, {
         key: 'poster',
         icon: 'unlock',
-        label: 'Verify Account',
+        label: 'Verify Email',
         helper: 'A code was sent to your email',
-      }),
-      create(Layout, {
-        column: true,
-        padding: true,
-        divide: true,
-        children: [
-          create(Control, {
-            key: 'code',
-            label: 'Code',
-            error: schema.error('code'),
-            children: create(InputString, {
+        children: create(Layout, {
+          column: true,
+          divide: true,
+          children: [
+            create(InputString, {
+              key: 'code',
               value: schema.value('code'),
               change: schema.change('code'),
-              placeholder: '1234567890',
+              placeholder: 'Code...',
             }),
-          }),
-          create(Button, {
-            key: 'submit',
-            label: 'Verify',
-            loading: gqlReconcileUser.loading,
-            disabled: !schema.valid,
-            click: schema.submit,
-          }),
-        ],
+            create(Layout, {
+              key: 'layout',
+              divide: true,
+              children: [
+                create(Button, {
+                  key: 'submit',
+                  label: 'Verify',
+                  loading: gqlReconcileUser.loading,
+                  disabled: !schema.valid,
+                  click: schema.submit,
+                }),
+                create(Button, {
+                  key: 'resend',
+                  icon: 'paper-plane',
+                  label: 'Resend',
+                  loading: gqlRecoverUser.loading,
+                  click: () => gqlRecoverUser.fetch({ email }),
+                }),
+              ],
+            }),
+          ],
+        }),
       }),
     ],
   })
@@ -78,6 +87,14 @@ const useReconcileUser = createUseServer<{
         id
         token
       }
+    }
+  `,
+})
+
+const useRecoverUser = createUseServer<{}>({
+  query: `
+    mutation RecoverUserClient($email: String!) {
+      RecoverUserClient(email: $email) { id }
     }
   `,
 })

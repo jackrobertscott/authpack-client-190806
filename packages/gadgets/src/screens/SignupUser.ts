@@ -16,7 +16,6 @@ import { createUseServer } from '../hooks/useServer'
 import { useOauthCode } from '../hooks/useOauthCode'
 import { Loading } from './Loading'
 import { presetColors } from '../utils/presets'
-import { ReconcileUser } from './ReconcileUser'
 
 export const SignupUser: FC = () => {
   const mounted = useMounted()
@@ -26,7 +25,6 @@ export const SignupUser: FC = () => {
   const gqlListProviders = useListProviders()
   const gqlSignupUserOauth = useSignupUserOauth()
   const [current, currentChange] = useState<string | undefined>()
-  const [email, emailChange] = useState<string | undefined>()
   const schema = useSchema({
     schema: SchemaSignupUser,
     submit: input => {
@@ -71,10 +69,6 @@ export const SignupUser: FC = () => {
       ? create(Loading, {
           helper: 'Checking your credentials',
         })
-      : email
-      ? create(ReconcileUser, {
-          email,
-        })
       : !gqlListProviders.data
       ? null
       : [
@@ -105,6 +99,17 @@ export const SignupUser: FC = () => {
             padding: true,
             divide: true,
             children: [
+              create(Control, {
+                key: 'username',
+                label: 'Username',
+                helper: 'Claim a unique username',
+                error: schema.error('username'),
+                children: create(InputString, {
+                  value: schema.value('username'),
+                  change: schema.change('username'),
+                  placeholder: 'example_username_123',
+                }),
+              }),
               create(Layout, {
                 key: 'name',
                 divide: true,
@@ -131,16 +136,6 @@ export const SignupUser: FC = () => {
                     }),
                   }),
                 ],
-              }),
-              create(Control, {
-                key: 'username',
-                label: 'Username',
-                error: schema.error('username'),
-                children: create(InputString, {
-                  value: schema.value('username'),
-                  change: schema.change('username'),
-                  placeholder: 'example_username_123',
-                }),
               }),
               create(Control, {
                 key: 'email',

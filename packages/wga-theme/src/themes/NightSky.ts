@@ -35,8 +35,8 @@ export const NightSky: ITheme = {
     optionsHover: slate(95),
     optionsFocused: slate(95),
     background: slate(7.5),
-    backgroundHover: slate(12.5),
-    backgroundFocused: slate(10),
+    backgroundHover: slate(10),
+    backgroundFocused: slate(5),
     border: `1px solid ${slate(2.5)}`,
   },
   /**
@@ -49,9 +49,9 @@ export const NightSky: ITheme = {
     brandingHover: slate(65),
     label: slate(65),
     labelHover: slate(95),
-    header: slate(7.5),
-    headerHover: slate(12.5),
-    border: `1px solid ${slate(2.5)}`,
+    header: slate(10),
+    headerHover: slate(15),
+    border: `1px solid ${slate(7.5)}`,
     background: slate(10),
   },
   gadgets: {

@@ -8,22 +8,25 @@ import { ClickOutside } from './ClickOutside'
 import { useMounted } from '../hooks/useMounted'
 
 export const IconBar: FC<{
-  icons: Array<{
-    icon: string
-    label: string
-    helper?: string
-    prefix?: string
-    focused?: boolean
-    seperated?: boolean
-    click?: () => void
-    options?: Array<{
-      label: string
-      helper?: string
-      icon: string
-      prefix?: string
-      click?: () => void
-    }>
-  }>
+  icons: Array<
+    | {
+        icon: string
+        label: string
+        helper?: string
+        prefix?: string
+        focused?: boolean
+        seperated?: boolean
+        click?: () => void
+        options?: Array<{
+          label: string
+          helper?: string
+          icon: string
+          prefix?: string
+          click?: () => void
+        }>
+      }
+    | boolean
+  >
 }> = ({ icons }) => {
   const theme = useTheme()
   return create('div', {
@@ -38,7 +41,7 @@ export const IconBar: FC<{
       borderRight: theme.iconBar.border,
     }),
     children: create(IconSpacer, {
-      children: icons.map((data, index) => {
+      children: icons.filter(Boolean).map((data: any, index) => {
         return create(IconPointer, {
           key: `icon-${index}`,
           ...data,

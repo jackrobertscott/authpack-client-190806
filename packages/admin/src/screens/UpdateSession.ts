@@ -1,14 +1,12 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useEffect } from 'react'
 import { useSchema, Layout, Control, InputBoolean, Page } from 'wga-theme'
-import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 
 export const UpdateSession: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
-  const universal = useUniversal()
   const gqlGetSession = useGetSession()
   const gqlUpdateSession = useUpdateSession()
   const schema = useSchema({
