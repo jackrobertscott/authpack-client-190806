@@ -16,7 +16,9 @@ export type ISettings = {
   user?: {
     id: string
     email: string
-    username?: string
+    verified: boolean
+    username: string
+    name?: string
     name_given?: string
     name_family?: string
   }

@@ -185,7 +185,7 @@ const Branding: FC<{
       all: 'unset',
       display: 'flex',
       justifyContent: 'flex-end',
-      padding: '20px 25px',
+      padding: '20px 25px 25px',
       marginTop: 'auto',
     }),
     children: create('a', {

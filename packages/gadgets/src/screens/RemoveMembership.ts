@@ -28,10 +28,12 @@ export const RemoveMembership: FC<{
         media: true,
         children: [
           create(Button, {
+            key: 'remove',
             label: 'Remove',
             click: () => confirmChange(true),
           }),
           create(Button, {
+            key: 'cancel',
             icon: 'arrow-alt-circle-left',
             prefix: 'far',
             label: 'Cancel',

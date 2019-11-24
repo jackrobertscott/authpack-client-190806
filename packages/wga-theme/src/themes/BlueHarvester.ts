@@ -87,7 +87,7 @@ export const BlueHarvester: ITheme = {
   },
   modal: {
     background: color(10),
-    shadow: `0 0 13px -3px ${color(0, 0.5)}`,
+    shadow: `0 0 13px -3px ${color(5, 0.5)}`,
     border: `1px solid ${color(7.5)}`,
     cover: color(10, 0.25),
   },
@@ -124,7 +124,7 @@ export const BlueHarvester: ITheme = {
     background: color(17.5),
     backgroundHover: color(22.5),
     backgroundDisabled: color(15),
-    shadow: `0 0 13px -3px ${color(0, 0.5)}`,
+    shadow: `0 0 13px -3px ${color(5, 0.5)}`,
     border: `1px solid ${color(10)}`,
     borderFocused: `1px solid ${color(55)}`,
     on: color(32.5),
@@ -138,7 +138,7 @@ export const BlueHarvester: ITheme = {
     backgroundMinor: color(20),
     backgroundDisabled: color(12.5),
     backgroundHover: color(27.5),
-    shadow: `0 0 13px -3px ${color(0, 0.5)}`,
+    shadow: `0 0 13px -3px ${color(5, 0.5)}`,
     border: `1px solid ${color(10)}`,
   },
   /**
@@ -148,7 +148,7 @@ export const BlueHarvester: ITheme = {
     label: color(95),
     helper: color(65),
     background: color(27.5),
-    shadow: `0 0 13px -3px ${color(0, 0.5)}`,
+    shadow: `0 0 13px -3px ${color(5, 0.5)}`,
     border: `none`,
   },
   menu: {
@@ -157,7 +157,7 @@ export const BlueHarvester: ITheme = {
     background: color(17.5),
     backgroundHover: color(22.5),
     border: `1px solid ${color(12.5)}`,
-    shadow: `0 0 13px -3px ${color(0, 0.5)}`,
+    shadow: `0 0 13px -3px ${color(5, 0.5)}`,
   },
   poster: {
     label: color(95),
@@ -183,7 +183,7 @@ export const BlueHarvester: ITheme = {
     helper: color(65),
     background: color(17.5),
     backgroundHover: color(22.5),
-    shadow: `0 0 13px -3px ${color(0, 0.5)}`,
+    shadow: `0 0 13px -3px ${color(5, 0.5)}`,
     border: `1px solid ${color(55)}`,
   },
 }

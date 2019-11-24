@@ -41,7 +41,7 @@ export const UpdateUserPassword: FC<{
         key: 'poster',
         icon: 'unlock',
         label: 'Change Password',
-        helper: 'Improve your security',
+        helper: 'Improve the security of your account',
       }),
       create(Layout, {
         key: 'layout',
@@ -52,7 +52,6 @@ export const UpdateUserPassword: FC<{
           create(Control, {
             key: 'password_current',
             label: 'Current Password',
-            helper: 'Please provide your password',
             error: schema.error('password_current'),
             children: create(InputString, {
               value: schema.value('password_current'),
@@ -103,8 +102,8 @@ const useUpdatePassword = createUseServer<{
   }
 }>({
   query: `
-    mutation UpdateCurrentUserPasswordClient($password_current: String!, $password_new: String!) {
-      user: UpdateCurrentUserPasswordClient(password_current: $password_current, password_new: $password_new) {
+    mutation UpdateUserPasswordClient($password_current: String!, $password_new: String!) {
+      user: UpdateUserPasswordClient(password_current: $password_current, password_new: $password_new) {
         id
       }
     }

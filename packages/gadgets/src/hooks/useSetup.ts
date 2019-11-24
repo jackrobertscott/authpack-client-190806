@@ -7,11 +7,11 @@ import { config } from '../config'
 
 export const useSetup = () => {
   const settings = useSettings()
-  const gqlGetCurrentCluster = useGetCurrentCluster()
-  const gqlGetCurrentSession = useGetCurrentSession()
+  const gqlGetCluster = useGetCluster()
+  const gqlGetSession = useGetSession()
   useEffect(() => {
     if (settings.domain) {
-      gqlGetCurrentCluster.fetch().then(({ cluster }) => {
+      gqlGetCluster.fetch().then(({ cluster }) => {
         SettingsStore.update({ cluster })
       })
     }
@@ -26,7 +26,7 @@ export const useSetup = () => {
       permissions: undefined,
     })
     if (settings.bearer && settings.domain) {
-      gqlGetCurrentSession
+      gqlGetSession
         .fetch()
         .then(({ session: { user, team, permissions, ...session } }) => {
           SettingsStore.update({
@@ -84,7 +84,7 @@ export const useSetup = () => {
   }, [])
 }
 
-const useGetCurrentCluster = createUseServer<{
+const useGetCluster = createUseServer<{
   cluster: {
     id: string
     name: string
@@ -95,8 +95,8 @@ const useGetCurrentCluster = createUseServer<{
   }
 }>({
   query: `
-    query GetCurrentClusterClient {
-      cluster: GetCurrentClusterClient {
+    query GetClusterCurrentClient {
+      cluster: GetClusterCurrentClient {
         id
         name
         theme
@@ -108,14 +108,16 @@ const useGetCurrentCluster = createUseServer<{
   `,
 })
 
-const useGetCurrentSession = createUseServer<{
+const useGetSession = createUseServer<{
   session: {
     id: string
     token: string
     user: {
       id: string
       email: string
-      username?: string
+      verified: boolean
+      username: string
+      name?: string
       name_given?: string
       name_family?: string
     }
@@ -134,14 +136,16 @@ const useGetCurrentSession = createUseServer<{
   }
 }>({
   query: `
-    query GetCurrentSessionClient {
-      session: GetCurrentSessionClient {
+    query GetSessionClient {
+      session: GetSessionClient {
         id
         token
         user {
           id
           email
+          verified
           username
+          name
           name_given
           name_family
         }

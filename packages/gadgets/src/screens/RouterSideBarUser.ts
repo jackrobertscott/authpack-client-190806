@@ -6,6 +6,7 @@ import { ListProviders } from './ListProviders'
 import { RemoveUser } from './RemoveUser'
 import { UpdateUserPassword } from './UpdateUserPassword'
 import { ListSessions } from './ListSessions'
+import { UpdateUserEmail } from './UpdateUserEmail'
 
 export const RouterSideBarUser: FC = () => {
   const settings = useSettings()
@@ -14,6 +15,7 @@ export const RouterSideBarUser: FC = () => {
     nomatch: '/user/update',
     options: [
       { key: '/user/update', children: create(UpdateUser) },
+      { key: '/user/email', children: create(UpdateUserEmail) },
       { key: '/user/password', children: create(UpdateUserPassword) },
       { key: '/user/apps', children: create(ListProviders) },
       { key: '/user/sessions', children: create(ListSessions) },
@@ -26,13 +28,19 @@ export const RouterSideBarUser: FC = () => {
       create(SideBar, {
         key: 'sideBar',
         title: 'User',
-        footer: settings.user && settings.user.name_given,
+        footer: settings.user && settings.user.name,
         options: [
           {
             icon: 'user-cog',
             label: 'Update',
             focused: router.current && router.current.key === '/user/update',
             click: () => router.change('/user/update'),
+          },
+          {
+            icon: 'at',
+            label: 'Email',
+            focused: router.current && router.current.key === '/user/email',
+            click: () => router.change('/user/email'),
           },
           {
             icon: 'key',

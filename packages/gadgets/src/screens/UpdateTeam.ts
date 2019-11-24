@@ -96,8 +96,8 @@ const useGetTeam = createUseServer<{
   }
 }>({
   query: `
-    query GetCurrentTeamClient {
-      team: GetCurrentTeamClient {
+    query GetTeamClient {
+      team: GetTeamClient {
         name
         tag
         description
@@ -112,8 +112,8 @@ const useUpdateTeam = createUseServer<{
   }
 }>({
   query: `
-    mutation UpdateCurrentTeamClient($input: UpdateCurrentTeamInput!) {
-      team: UpdateCurrentTeamClient(input: $input) {
+    mutation UpdateTeamClient($input: UpdateTeamInput!) {
+      team: UpdateTeamClient(input: $input) {
         id
       }
     }
