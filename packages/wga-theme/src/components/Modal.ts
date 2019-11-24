@@ -11,7 +11,7 @@ export const Modal: FC<{
   close?: () => void
   small?: boolean
 }> = ({ id, children, visible = true, close, small }) => {
-  const width = small ? 560 : 1035
+  const width = 1035 - (small ? 260 : 0)
   const height = 640
   const theme = useTheme()
   const unfocused = useRef<boolean>(!document.querySelector(':focus-within'))
