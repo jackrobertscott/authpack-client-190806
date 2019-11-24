@@ -9,9 +9,10 @@ export const Modal: FC<{
   children: ReactNode
   visible?: boolean
   close?: () => void
-  width?: number
-  height?: number
-}> = ({ id, children, visible = true, close, width = 1035, height = 640 }) => {
+  small?: boolean
+}> = ({ id, children, visible = true, close, small }) => {
+  const width = small ? 560 : 1035
+  const height = 640
   const theme = useTheme()
   const unfocused = useRef<boolean>(!document.querySelector(':focus-within'))
   return create(Portal, {

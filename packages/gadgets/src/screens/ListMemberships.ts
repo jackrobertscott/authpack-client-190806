@@ -29,7 +29,9 @@ export const ListMemberships: FC<{
           return create(Snippet, {
             key: membership.id,
             icon: 'user-circle',
-            label: `${membership.user.summary}${suffix}`,
+            label: membership.user
+              ? `${membership.user.summary}${suffix}`
+              : membership.user_email || 'User Unknown',
             value: membership.permissions.map(({ name }) => name).join(', '),
             options: [
               {
@@ -54,7 +56,8 @@ const useListMemberships = createUseServer<{
   memberships: Array<{
     id: string
     admin: boolean
-    user: {
+    user_email?: string
+    user?: {
       summary: string
     }
     permissions: Array<{
@@ -67,6 +70,7 @@ const useListMemberships = createUseServer<{
       memberships: ListMembershipsClient {
         id
         admin
+        user_email
         user {
           summary
         }

@@ -73,7 +73,7 @@ export const ToasterAlerts: FC<{
       right: 0,
       bottom: 0,
       zIndex: 1250,
-      padding: '20px 25px',
+      padding: '20px 50px 25px 25px',
     }),
     children: current.map(({ id, icon, prefix, label, helper, close }) => {
       return create('div', {
