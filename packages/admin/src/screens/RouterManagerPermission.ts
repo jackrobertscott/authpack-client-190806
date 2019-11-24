@@ -1,12 +1,11 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useLocalRouter, Modal, Layout, IconBar } from 'wga-theme'
-import { CreateUser } from '../screens/CreateUser'
-import { UpdateUser } from '../screens/UpdateUser'
-import { RemoveUser } from '../screens/RemoveUser'
-import { UpdateUserPassword } from '../screens/UpdateUserPassword'
-import { ShowUser } from '../screens/ShowUser'
+import { CreatePermission } from './CreatePermission'
+import { UpdatePermission } from './UpdatePermission'
+import { RemovePermission } from './RemovePermission'
+import { ShowPermission } from './ShowPermission'
 
-export const RouterManagerUser: FC<{
+export const RouterManagerPermission: FC<{
   id?: string
   change?: (id?: string) => void
   visible?: boolean
@@ -16,15 +15,17 @@ export const RouterManagerUser: FC<{
     nomatch: id ? '/inspect' : '/create',
     options: id
       ? [
-          { key: '/inspect', children: create(ShowUser, { id }) },
-          { key: '/update', children: create(UpdateUser, { id, change }) },
+          { key: '/inspect', children: create(ShowPermission, { id }) },
           {
-            key: '/update/password',
-            children: create(UpdateUserPassword, { id, change }),
+            key: '/update',
+            children: create(UpdatePermission, { id, change }),
           },
-          { key: '/remove', children: create(RemoveUser, { id, change }) },
+          {
+            key: '/remove',
+            children: create(RemovePermission, { id, change }),
+          },
         ]
-      : [{ key: '/create', children: create(CreateUser, { change }) }],
+      : [{ key: '/create', children: create(CreatePermission, { change }) }],
   })
   return create(Modal, {
     close,
@@ -48,14 +49,6 @@ export const RouterManagerUser: FC<{
                   label: 'Update',
                   focused: !!router.current && router.current.key === '/update',
                   click: () => router.change('/update'),
-                },
-                {
-                  icon: 'unlock',
-                  label: 'Change Password',
-                  focused:
-                    !!router.current &&
-                    router.current.key === '/update/password',
-                  click: () => router.change('/update/password'),
                 },
                 {
                   icon: 'trash-alt',

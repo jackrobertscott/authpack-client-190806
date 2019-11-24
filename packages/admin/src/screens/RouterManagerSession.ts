@@ -1,11 +1,11 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useLocalRouter, Modal, Layout, IconBar } from 'wga-theme'
-import { CreateProvider } from '../screens/CreateProvider'
-import { UpdateProvider } from '../screens/UpdateProvider'
-import { RemoveProvider } from '../screens/RemoveProvider'
-import { ShowProvider } from '../screens/ShowProvider'
+import { CreateSession } from './CreateSession'
+import { UpdateSession } from './UpdateSession'
+import { RemoveSession } from './RemoveSession'
+import { ShowSession } from './ShowSession'
 
-export const RouterManagerProvider: FC<{
+export const RouterManagerSession: FC<{
   id?: string
   change?: (id?: string) => void
   visible?: boolean
@@ -15,11 +15,11 @@ export const RouterManagerProvider: FC<{
     nomatch: id ? '/inspect' : '/create',
     options: id
       ? [
-          { key: '/inspect', children: create(ShowProvider, { id }) },
-          { key: '/update', children: create(UpdateProvider, { id, change }) },
-          { key: '/remove', children: create(RemoveProvider, { id, change }) },
+          { key: '/inspect', children: create(ShowSession, { id }) },
+          { key: '/update', children: create(UpdateSession, { id, change }) },
+          { key: '/remove', children: create(RemoveSession, { id, change }) },
         ]
-      : [{ key: '/create', children: create(CreateProvider, { change }) }],
+      : [{ key: '/create', children: create(CreateSession, { change }) }],
   })
   return create(Modal, {
     close,

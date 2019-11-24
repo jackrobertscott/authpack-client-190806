@@ -1,10 +1,10 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useLocalRouter, Modal, Layout, IconBar } from 'wga-theme'
-import { UpdateCluster } from '../screens/UpdateCluster'
-import { UpdatePayment } from '../screens/UpdatePayment'
+import { UpdateCluster } from './UpdateCluster'
+import { UpdatePayment } from './UpdatePayment'
 import { useUniversal } from '../hooks/useUniversal'
-import { RemovePayment } from '../screens/RemovePayment'
-import { ShowCluster } from '../screens/ShowCluster'
+import { RemovePayment } from './RemovePayment'
+import { ShowCluster } from './ShowCluster'
 
 export const RouterManagerCluster: FC<{
   visible?: boolean

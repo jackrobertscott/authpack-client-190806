@@ -30,9 +30,12 @@ export const SignupUser: FC = () => {
   const schema = useSchema({
     schema: SchemaSignupUser,
     submit: input => {
-      gqlSignupUser.fetch({ input }).then(() => {
+      gqlSignupUser.fetch({ input }).then(({ session }) => {
         schema.change('password')('')
-        emailChange(schema.value('email'))
+        SettingsStore.update({
+          open: false,
+          bearer: `Bearer ${session.token}`,
+        })
       })
     },
   })
@@ -200,11 +203,14 @@ const SchemaSignupUser = yup.object().shape({
     .required('Please provide your password'),
 })
 
-const useSignupUser = createUseServer<{}>({
+const useSignupUser = createUseServer<{
+  session: {
+    token: string
+  }
+}>({
   query: `
     mutation SignupUserClient($input: SignupUserInput!) {
-      SignupUserClient(input: $input) {
-        id
+      session: SignupUserClient(input: $input) {
         token
       }
     }
@@ -213,14 +219,12 @@ const useSignupUser = createUseServer<{}>({
 
 const useSignupUserOauth = createUseServer<{
   session: {
-    id: string
     token: string
   }
 }>({
   query: `
     mutation SignupUserOauthClient($provider_id: String!, $code: String!) {
       session: SignupUserOauthClient(provider_id: $provider_id, code: $code) {
-        id
         token
       }
     }

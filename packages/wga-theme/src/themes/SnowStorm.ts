@@ -35,7 +35,8 @@ export const SnowStorm: ITheme = {
     optionsHover: slate(30),
     optionsFocused: slate(30),
     background: slate(95),
-    backgroundHover: slate(97.5),
+    backgroundHover: slate(100),
+    backgroundFocused: slate(97.5),
     border: `1px solid ${slate(90)}`,
   },
   /**

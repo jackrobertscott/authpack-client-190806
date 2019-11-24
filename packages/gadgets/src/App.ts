@@ -6,7 +6,7 @@ import {
   useState,
 } from 'react'
 import { Root, Toaster } from 'wga-theme'
-import { RouterCentral } from './routers/RouterCentral'
+import { RouterCentral } from './screens/RouterCentral'
 import { SettingsStore } from './utils/settings'
 import { Settings } from './contexts/Settings'
 import { ErrorBoundary } from './screens/ErrorBoundary'

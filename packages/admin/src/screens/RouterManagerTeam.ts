@@ -1,11 +1,11 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useLocalRouter, Modal, Layout, IconBar } from 'wga-theme'
-import { CreatePermission } from '../screens/CreatePermission'
-import { UpdatePermission } from '../screens/UpdatePermission'
-import { RemovePermission } from '../screens/RemovePermission'
-import { ShowPermission } from '../screens/ShowPermission'
+import { CreateTeam } from './CreateTeam'
+import { UpdateTeam } from './UpdateTeam'
+import { RemoveTeam } from './RemoveTeam'
+import { ShowTeam } from './ShowTeam'
 
-export const RouterManagerPermission: FC<{
+export const RouterManagerTeam: FC<{
   id?: string
   change?: (id?: string) => void
   visible?: boolean
@@ -15,17 +15,11 @@ export const RouterManagerPermission: FC<{
     nomatch: id ? '/inspect' : '/create',
     options: id
       ? [
-          { key: '/inspect', children: create(ShowPermission, { id }) },
-          {
-            key: '/update',
-            children: create(UpdatePermission, { id, change }),
-          },
-          {
-            key: '/remove',
-            children: create(RemovePermission, { id, change }),
-          },
+          { key: '/inspect', children: create(ShowTeam, { id }) },
+          { key: '/update', children: create(UpdateTeam, { id, change }) },
+          { key: '/remove', children: create(RemoveTeam, { id, change }) },
         ]
-      : [{ key: '/create', children: create(CreatePermission, { change }) }],
+      : [{ key: '/create', children: create(CreateTeam, { change }) }],
   })
   return create(Modal, {
     close,

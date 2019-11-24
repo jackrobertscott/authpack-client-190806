@@ -1,8 +1,8 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useRouter, SideBar } from 'wga-theme'
 import { useUniversal } from '../hooks/useUniversal'
-import { ListPermissions } from '../screens/ListPermissions'
-import { ListProviders } from '../screens/ListProviders'
+import { ListPermissions } from './ListPermissions'
+import { ListProviders } from './ListProviders'
 
 export const RouterSideBarCustomize: FC = () => {
   const config = useUniversal()

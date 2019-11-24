@@ -1,9 +1,9 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useRouter, SideBar } from 'wga-theme'
 import { useUniversal } from '../hooks/useUniversal'
-import { ListUsers } from '../screens/ListUsers'
-import { ListTeams } from '../screens/ListTeams'
-import { ListSessions } from '../screens/ListSessions'
+import { ListUsers } from './ListUsers'
+import { ListTeams } from './ListTeams'
+import { ListSessions } from './ListSessions'
 
 export const RouterSideBarHome: FC = () => {
   const config = useUniversal()

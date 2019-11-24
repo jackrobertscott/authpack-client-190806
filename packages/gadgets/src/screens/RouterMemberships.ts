@@ -1,7 +1,7 @@
 import { createElement as create, FC, useState } from 'react'
-import { RemoveMembership } from '../screens/RemoveMembership'
-import { UpdateMembership } from '../screens/UpdateMembership'
-import { ListMemberships } from '../screens/ListMemberships'
+import { RemoveMembership } from './RemoveMembership'
+import { UpdateMembership } from './UpdateMembership'
+import { ListMemberships } from './ListMemberships'
 
 export const RouterMemberships: FC = () => {
   const [staged, stagedChange] = useState<string | undefined>()

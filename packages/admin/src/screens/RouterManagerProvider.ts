@@ -1,11 +1,11 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useLocalRouter, Modal, Layout, IconBar } from 'wga-theme'
-import { CreateTeam } from '../screens/CreateTeam'
-import { UpdateTeam } from '../screens/UpdateTeam'
-import { RemoveTeam } from '../screens/RemoveTeam'
-import { ShowTeam } from '../screens/ShowTeam'
+import { CreateProvider } from './CreateProvider'
+import { UpdateProvider } from './UpdateProvider'
+import { RemoveProvider } from './RemoveProvider'
+import { ShowProvider } from './ShowProvider'
 
-export const RouterManagerTeam: FC<{
+export const RouterManagerProvider: FC<{
   id?: string
   change?: (id?: string) => void
   visible?: boolean
@@ -15,11 +15,11 @@ export const RouterManagerTeam: FC<{
     nomatch: id ? '/inspect' : '/create',
     options: id
       ? [
-          { key: '/inspect', children: create(ShowTeam, { id }) },
-          { key: '/update', children: create(UpdateTeam, { id, change }) },
-          { key: '/remove', children: create(RemoveTeam, { id, change }) },
+          { key: '/inspect', children: create(ShowProvider, { id }) },
+          { key: '/update', children: create(UpdateProvider, { id, change }) },
+          { key: '/remove', children: create(RemoveProvider, { id, change }) },
         ]
-      : [{ key: '/create', children: create(CreateTeam, { change }) }],
+      : [{ key: '/create', children: create(CreateProvider, { change }) }],
   })
   return create(Modal, {
     close,

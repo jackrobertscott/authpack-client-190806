@@ -105,6 +105,7 @@ const Options: FC<{
           transition: '200ms',
           padding: '15px 25px',
           color: focused ? theme.sideBar.optionsFocused : theme.sideBar.options,
+          background: focused ? theme.sideBar.backgroundFocused : undefined,
           '&:hover': {
             color: theme.sideBar.optionsHover,
             background: theme.sideBar.backgroundHover,

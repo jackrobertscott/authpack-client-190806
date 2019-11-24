@@ -4,7 +4,7 @@ import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterSideBarCustomize } from './RouterSideBarCustomize'
 import { RouterSideBarDeveloper } from './RouterSideBarDeveloper'
 import { wga } from '../utils/wga'
-import { Power } from '../screens/Power'
+import { Power } from './Power'
 import { RouterManagerCluster } from './RouterManagerCluster'
 
 export const RouterCentral: FC = () => {

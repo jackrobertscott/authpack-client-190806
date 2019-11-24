@@ -31,6 +31,7 @@ export interface ITheme extends IKeys {
     optionsFocused: string
     background: string
     backgroundHover: string
+    backgroundFocused: string
     border: string
   }
   /**

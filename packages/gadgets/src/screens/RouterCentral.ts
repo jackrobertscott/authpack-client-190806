@@ -1,7 +1,7 @@
 import queryString from 'query-string'
 import { createElement as create, FC, useRef } from 'react'
-import { Gadgets } from '../screens/Gadgets'
-import { Oauth } from '../screens/Oauth'
+import { Gadgets } from './Gadgets'
+import { Oauth } from './Oauth'
 
 export const RouterCentral: FC = () => {
   const query = useRef(queryString.parse(document.location.search))

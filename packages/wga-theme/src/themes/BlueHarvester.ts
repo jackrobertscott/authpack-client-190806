@@ -38,6 +38,7 @@ export const BlueHarvester: ITheme = {
     optionsFocused: color(95),
     background: color(12.5),
     backgroundHover: color(17.5),
+    backgroundFocused: color(15),
     border: `1px solid ${color(7.5)}`,
   },
   /**

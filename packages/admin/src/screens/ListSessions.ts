@@ -2,7 +2,7 @@ import faker from 'faker'
 import { createElement as create, FC, useState, useEffect, useRef } from 'react'
 import { Page, Table, Empty, Button, drip } from 'wga-theme'
 import { format } from 'date-fns'
-import { RouterManagerSession } from '../routers/RouterManagerSession'
+import { RouterManagerSession } from './RouterManagerSession'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'
 import { createUseServer } from '../hooks/useServer'
 

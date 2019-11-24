@@ -1,9 +1,9 @@
 import { createElement as create, FC, useState, Fragment } from 'react'
 import { useLocalRouter, Layout, IconBar } from 'wga-theme'
-import { LoginUser } from '../screens/LoginUser'
-import { SignupUser } from '../screens/SignupUser'
-import { RecoverUserPassword } from '../screens/RecoverUserPassword'
-import { GetStarted } from '../screens/GetStarted'
+import { LoginUser } from './LoginUser'
+import { SignupUser } from './SignupUser'
+import { RecoverUserPassword } from './RecoverUserPassword'
+import { GetStarted } from './GetStarted'
 
 export const RouterModalUnauthed: FC<{
   close: () => void

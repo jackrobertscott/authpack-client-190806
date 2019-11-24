@@ -31,14 +31,10 @@ export const LoginUser: FC = () => {
     submit: value => {
       gqlLoginUser.fetch(value).then(({ session }) => {
         schema.change('password')('')
-        if (session) {
-          SettingsStore.update({
-            open: false,
-            bearer: `Bearer ${session.token}`,
-          })
-        } else {
-          emailChange(schema.value('email'))
-        }
+        SettingsStore.update({
+          open: false,
+          bearer: `Bearer ${session.token}`,
+        })
       })
     },
   })
@@ -157,15 +153,13 @@ const SchemaLoginUser = yup.object().shape({
 })
 
 const useLoginUser = createUseServer<{
-  session?: {
-    id: string
+  session: {
     token: string
   }
 }>({
   query: `
     mutation LoginUserClient($email: String!, $password: String!) {
       session: LoginUserClient(email: $email, password: $password) {
-        id
         token
       }
     }
@@ -174,14 +168,12 @@ const useLoginUser = createUseServer<{
 
 const useLoginUserOauth = createUseServer<{
   session: {
-    id: string
     token: string
   }
 }>({
   query: `
     mutation LoginUserOauthClient($provider_id: String!, $code: String!) {
       session: LoginUserOauthClient(provider_id: $provider_id, code: $code) {
-        id
         token
       }
     }
