@@ -23,7 +23,8 @@ export const ListUsers: FC = () => {
   const list =
     gqlListUsers.data && gqlListUsers.data.count
       ? gqlListUsers.data.users
-      : gqlListUsers.loading || variables.phrase
+      : variables.phrase ||
+        Boolean(gqlListUsers.data && !gqlListUsers.data.users)
       ? []
       : FakeUsers
   return create(Page, {

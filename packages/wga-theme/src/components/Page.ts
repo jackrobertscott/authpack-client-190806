@@ -33,6 +33,7 @@ export const Page: FC<{
       create(Scroller, {
         key: 'scroller',
         disable: hidden,
+        always: true,
         children: [
           create(Header, {
             key: 'header',

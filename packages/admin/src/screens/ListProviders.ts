@@ -21,7 +21,8 @@ export const ListProviders: FC = () => {
   const list =
     gqlListProviders.data && gqlListProviders.data.count
       ? gqlListProviders.data.providers
-      : gqlListProviders.loading || variables.phrase
+      : variables.phrase ||
+        Boolean(gqlListProviders.data && !gqlListProviders.data.providers)
       ? []
       : FakeProviders
   return create(Page, {

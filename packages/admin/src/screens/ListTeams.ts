@@ -21,7 +21,8 @@ export const ListTeams: FC = () => {
   const list =
     gqlListTeams.data && gqlListTeams.data.count
       ? gqlListTeams.data.teams
-      : gqlListTeams.loading || variables.phrase
+      : variables.phrase ||
+        Boolean(gqlListTeams.data && !gqlListTeams.data.teams)
       ? []
       : FakeTeams
   return create(Page, {

@@ -21,7 +21,8 @@ export const ListSessions: FC = () => {
   const list =
     gqlListSessions.data && gqlListSessions.data.count
       ? gqlListSessions.data.sessions
-      : gqlListSessions.loading || variables.phrase
+      : variables.phrase ||
+        Boolean(gqlListSessions.data && !gqlListSessions.data.sessions)
       ? []
       : FakeSessions
   return create(Page, {

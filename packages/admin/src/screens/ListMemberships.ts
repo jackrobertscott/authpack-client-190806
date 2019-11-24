@@ -21,7 +21,8 @@ export const ListMemberships: FC = () => {
   const list =
     gqlListMemberships.data && gqlListMemberships.data.count
       ? gqlListMemberships.data.memberships
-      : gqlListMemberships.loading || variables.phrase
+      : variables.phrase ||
+        Boolean(gqlListMemberships.data && !gqlListMemberships.data.memberships)
       ? []
       : FakeMemberships
   return create(Page, {

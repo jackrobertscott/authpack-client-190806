@@ -21,7 +21,8 @@ export const ListPermissions: FC = () => {
   const list =
     gqlListPermissions.data && gqlListPermissions.data.count
       ? gqlListPermissions.data.permissions
-      : gqlListPermissions.loading || variables.phrase
+      : variables.phrase ||
+        Boolean(gqlListPermissions.data && !gqlListPermissions.data.permissions)
       ? []
       : FakePermissions
   return create(Page, {

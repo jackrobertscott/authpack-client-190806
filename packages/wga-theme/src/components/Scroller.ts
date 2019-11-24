@@ -6,7 +6,8 @@ export const Scroller: FC<{
   children: ReactNode
   disable?: boolean
   maxheight?: number
-}> = ({ children, disable, maxheight }) => {
+  always?: boolean
+}> = ({ children, disable, maxheight, always }) => {
   const theme = useTheme()
   return create('div', {
     children,
@@ -15,7 +16,7 @@ export const Scroller: FC<{
       display: 'flex',
       position: 'relative',
       flexDirection: 'column',
-      overflowY: disable ? 'hidden' : 'auto',
+      overflowY: always ? 'scroll' : disable ? 'hidden' : 'auto',
       overflowX: 'hidden',
       flexGrow: 1,
       maxHeight: maxheight,
