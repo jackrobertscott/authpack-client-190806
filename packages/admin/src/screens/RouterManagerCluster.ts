@@ -12,12 +12,22 @@ export const RouterManagerCluster: FC<{
 }> = ({ close, visible }) => {
   const universal = useUniversal()
   const router = useLocalRouter({
-    nomatch: '/inspect',
+    nomatch: universal.subscribed ? '/inspect' : '/payment',
     options: [
       { key: '/inspect', children: create(ShowCluster) },
       { key: '/update', children: create(UpdateCluster) },
-      { key: '/payment', children: create(UpdatePayment) },
-      { key: '/cancel', children: create(RemovePayment) },
+      {
+        key: '/payment',
+        children: create(UpdatePayment, {
+          change: () => router.change('/inspect'),
+        }),
+      },
+      {
+        key: '/cancel',
+        children: create(RemovePayment, {
+          change: () => router.change('/inspect'),
+        }),
+      },
     ],
   })
   return create(Modal, {

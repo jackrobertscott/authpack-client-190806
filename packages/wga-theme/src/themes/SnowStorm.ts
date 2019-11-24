@@ -127,6 +127,7 @@ export const SnowStorm: ITheme = {
     borderFocused: `1px solid ${slate(60)}`,
     on: slate(65, 1, 80, 125),
     off: slate(87.5),
+    payment: '#333333',
   },
   button: {
     label: slate(60),

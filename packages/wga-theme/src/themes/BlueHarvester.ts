@@ -129,6 +129,7 @@ export const BlueHarvester: ITheme = {
     borderFocused: `1px solid ${color(55)}`,
     on: color(32.5),
     off: color(12.5),
+    payment: '#ffffff',
   },
   button: {
     label: color(65),
@@ -176,7 +177,7 @@ export const BlueHarvester: ITheme = {
   focus: {
     label: color(95),
     helper: color(65),
-    background: color(12.5),
+    background: color(15),
   },
   toaster: {
     label: color(95),

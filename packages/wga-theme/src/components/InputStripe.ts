@@ -21,11 +21,8 @@ export const InputStripe: FC<{
           base: {
             fontFamily: 'futura-pt',
             fontWeight: 700,
-            // color: theme.input.valueHover,
-            // iconColor: theme.input.valueHover,
-            // '::placeholder': {
-            //   color: theme.input.placeholder,
-            // },
+            color: theme.input.payment,
+            iconColor: theme.input.payment,
           },
         },
       })

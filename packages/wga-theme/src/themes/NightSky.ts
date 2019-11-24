@@ -127,6 +127,7 @@ export const NightSky: ITheme = {
     borderFocused: `1px solid ${slate(55)}`,
     on: slate(32.5),
     off: slate(7.5),
+    payment: '#ffffff',
   },
   button: {
     label: slate(65),
@@ -174,7 +175,7 @@ export const NightSky: ITheme = {
   focus: {
     label: slate(95),
     helper: slate(65),
-    background: slate(7.5),
+    background: slate(10),
   },
   toaster: {
     label: slate(95),
@@ -182,6 +183,6 @@ export const NightSky: ITheme = {
     background: slate(12.5),
     backgroundHover: slate(17.5),
     shadow: `0 0 13px -3px ${slate(2.5, 0.5)}`,
-    border: `1px solid ${slate(55)}`,
+    border: `1px solid ${slate(35)}`,
   },
 }

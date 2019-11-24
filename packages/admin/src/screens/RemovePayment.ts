@@ -11,21 +11,21 @@ export const RemovePayment: FC<{
   const universal = useUniversal()
   const gqlRemovePayment = useRemovePayment()
   return create(Page, {
-    title: 'Terminate',
-    subtitle: 'Stop Payments & Disable Gadgets',
+    title: 'Danger',
+    subtitle: 'Stop payments & disable gadgets',
     children: create(ConfirmRemove, {
       keyword: 'Terminate',
-      helper: 'Remove payment card and disable cluster',
+      helper: 'Cancel subscription and disable cluster',
       alert: 'Consider powering off your cluster instead',
       change: () =>
         gqlRemovePayment
           .fetch({ id: universal.cluster_id })
           .then(({ cluster }) => {
-            if (change) change(cluster.id)
             UniversalStore.update({
               power: cluster.power,
               subscribed: cluster.subscribed,
             })
+            if (change) change(cluster.id)
           }),
     }),
   })
@@ -39,8 +39,8 @@ const useRemovePayment = createUseServer<{
   }
 }>({
   query: `
-    mutation RemovePayment($id: String!) {
-      cluster: RemovePayment(id: $id) {
+    mutation RemovePaymentClient($id: String!) {
+      cluster: RemovePaymentClient(id: $id) {
         id
         subscribed
         power
