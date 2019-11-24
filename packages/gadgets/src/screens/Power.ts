@@ -1,11 +1,11 @@
 import { createElement as create, FC } from 'react'
-import { Focus, Button, Gadgets } from 'wga-theme'
+import { Focus, Button, Page } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { SettingsStore } from '../utils/settings'
 
 export const Power: FC = () => {
   const settings = useSettings()
-  return create(Gadgets, {
+  return create(Page, {
     title: 'Power',
     subtitle: settings.cluster && settings.cluster.name,
     children: create(Focus, {

@@ -1,22 +1,20 @@
 import * as yup from 'yup'
 import { createElement as create, FC } from 'react'
 import {
-  Gadgets,
   useSchema,
   Button,
   Layout,
   Control,
   InputString,
   Poster,
+  Page,
 } from 'wga-theme'
-import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 
 export const UpdateUserPassword: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
-  const universal = useUniversal()
   const gqlUpdateUser = useUpdateUser()
   const schema = useSchema({
     schema: SchemaUpdateUser,
@@ -26,10 +24,9 @@ export const UpdateUserPassword: FC<{
         .then(({ user }) => change && change(user.id))
     },
   })
-  return create(Gadgets, {
+  return create(Page, {
     title: 'Change Password',
-    subtitle: universal.cluster_name,
-    loading: gqlUpdateUser.loading,
+    subtitle: 'User',
     children: [
       create(Poster, {
         key: 'poster',
@@ -58,6 +55,7 @@ export const UpdateUserPassword: FC<{
           create(Button, {
             key: 'submit',
             label: 'Update',
+            loading: gqlUpdateUser.loading,
             disabled: !schema.valid,
             click: schema.submit,
           }),

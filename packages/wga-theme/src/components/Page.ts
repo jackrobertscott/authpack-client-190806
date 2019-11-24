@@ -6,7 +6,7 @@ import { Scroller } from './Scroller'
 
 export const Page: FC<{
   title: string
-  subtitle: string
+  subtitle?: string
   children: ReactNode
   noscroll?: ReactNode
   hidden?: boolean
@@ -76,7 +76,7 @@ export const Page: FC<{
 
 const Header: FC<{
   title: string
-  subtitle: string
+  subtitle?: string
   corner?: {
     icon: string
     prefix?: string
@@ -112,14 +112,15 @@ const Header: FC<{
               color: theme.page.title,
             }),
           }),
-          create('div', {
-            key: 'subtitle',
-            children: subtitle,
-            className: css({
-              marginTop: 7.5,
-              color: theme.page.subtitle,
+          subtitle &&
+            create('div', {
+              key: 'subtitle',
+              children: subtitle,
+              className: css({
+                marginTop: 7.5,
+                color: theme.page.subtitle,
+              }),
             }),
-          }),
         ],
       }),
       corner &&

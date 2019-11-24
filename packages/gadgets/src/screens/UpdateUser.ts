@@ -1,12 +1,12 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useEffect } from 'react'
 import {
-  Gadgets,
   useSchema,
   Layout,
   Control,
   InputString,
   testAlphanumeric,
+  Page,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
@@ -29,10 +29,9 @@ export const UpdateUser: FC<{
     gqlGetUser.fetch().then(({ user }) => schema.set(user))
     // eslint-disable-next-line
   }, [])
-  return create(Gadgets, {
+  return create(Page, {
     title: 'Update User',
     subtitle: settings.cluster && settings.cluster.name,
-    loading: gqlGetUser.loading || gqlUpdateUser.loading,
     children: create(Layout, {
       column: true,
       padding: true,

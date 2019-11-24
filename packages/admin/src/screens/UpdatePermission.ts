@@ -1,21 +1,19 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useEffect } from 'react'
 import {
-  Gadgets,
   useSchema,
   Layout,
   Control,
   InputString,
   testAlphanumeric,
+  Page,
 } from 'wga-theme'
-import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 
 export const UpdatePermission: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
-  const universal = useUniversal()
   const gqlGetPermission = useGetPermission()
   const gqlUpdatePermission = useUpdatePermission()
   const schema = useSchema({
@@ -32,10 +30,9 @@ export const UpdatePermission: FC<{
       .then(({ permission }) => schema.set(permission))
     // eslint-disable-next-line
   }, [id])
-  return create(Gadgets, {
-    title: 'Update Permission',
-    subtitle: universal.cluster_name,
-    loading: gqlUpdatePermission.loading,
+  return create(Page, {
+    title: 'Update',
+    subtitle: 'Permission',
     children: create(Layout, {
       column: true,
       padding: true,

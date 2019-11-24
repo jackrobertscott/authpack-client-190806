@@ -1,22 +1,20 @@
 import { createElement as create, FC, useEffect } from 'react'
-import { Gadgets, Layout, Snippet } from 'wga-theme'
+import { Layout, Snippet, Page } from 'wga-theme'
 import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
-import { useUniversal } from '../hooks/useUniversal'
 
 export const ShowTeam: FC<{
   id: string
 }> = ({ id }) => {
-  const universal = useUniversal()
   const gqlGetTeam = useGetTeam()
   useEffect(() => {
     gqlGetTeam.fetch({ id })
     // eslint-disable-next-line
   }, [])
   const team = gqlGetTeam.data ? gqlGetTeam.data.team : ({} as any)
-  return create(Gadgets, {
-    title: 'Team',
-    subtitle: universal.cluster_name,
+  return create(Page, {
+    title: 'Inspect',
+    subtitle: 'Team',
     children: create(Layout, {
       column: true,
       children: [

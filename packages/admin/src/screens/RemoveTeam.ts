@@ -1,18 +1,16 @@
 import { createElement as create, FC } from 'react'
-import { Gadgets } from 'wga-theme'
+import { Page } from 'wga-theme'
 import { createUseServer } from '../hooks/useServer'
 import { ConfirmRemove } from '../templates/ConfirmRemove'
-import { useUniversal } from '../hooks/useUniversal'
 
 export const RemoveTeam: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
-  const universal = useUniversal()
   const gqlRemoveTeam = useRemoveTeam()
-  return create(Gadgets, {
-    title: 'Remove Team',
-    subtitle: universal.cluster_name,
+  return create(Page, {
+    title: 'Remove',
+    subtitle: 'Team',
     children: create(ConfirmRemove, {
       helper: 'Remove this team',
       alert: 'Please confirm the removal of this team',

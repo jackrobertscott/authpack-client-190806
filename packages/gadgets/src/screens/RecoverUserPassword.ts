@@ -1,12 +1,12 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useState } from 'react'
 import {
-  Gadgets,
   useSchema,
   Layout,
   Control,
   InputString,
   Button,
+  Page,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
@@ -24,10 +24,9 @@ export const RecoverUserPassword: FC = () => {
       })
     },
   })
-  return create(Gadgets, {
+  return create(Page, {
     title: 'Recover Password',
     subtitle: settings.cluster && settings.cluster.name,
-    loading: gqlRecoverUser.loading,
     children: email
       ? create(ReconcileUserPassword, {
           email,
@@ -51,7 +50,8 @@ export const RecoverUserPassword: FC = () => {
             create(Button, {
               key: 'submit',
               label: 'Recover',
-              disabled: !schema.valid || gqlRecoverUser.loading,
+              loading: gqlRecoverUser.loading,
+              disabled: !schema.valid,
               click: schema.submit,
             }),
           ],

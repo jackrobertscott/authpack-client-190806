@@ -1,5 +1,5 @@
 import { createElement as create, FC, Fragment } from 'react'
-import { useLocalRouter, Layout, IconBar, SideBar } from 'wga-theme'
+import { useLocalRouter, Layout, IconBar } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { UpdateUser } from './UpdateUser'
 import { ListProviders } from './ListProviders'
@@ -163,27 +163,6 @@ export const RouterModalOnauthed: FC<{
             click: close,
             prefix: 'far',
             seperated: true,
-          },
-        ],
-      }),
-      create(SideBar, {
-        title: 'Users',
-        footer: settings.cluster && settings.cluster.name,
-        options: [
-          {
-            icon: 'user',
-            label: 'Overview',
-            click: () => {},
-          },
-          {
-            icon: 'sliders-h',
-            label: 'Update User',
-            click: () => {},
-          },
-          {
-            icon: 'sync-alt',
-            label: 'Switch Team',
-            click: () => {},
           },
         ],
       }),

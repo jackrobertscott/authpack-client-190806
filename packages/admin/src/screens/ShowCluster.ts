@@ -1,5 +1,5 @@
 import { createElement as create, FC, useEffect } from 'react'
-import { Gadgets, Layout, Snippet } from 'wga-theme'
+import { Layout, Snippet, Page } from 'wga-theme'
 import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
 import { useUniversal } from '../hooks/useUniversal'
@@ -12,9 +12,9 @@ export const ShowCluster: FC = () => {
     // eslint-disable-next-line
   }, [])
   const cluster = gqlGetCluster.data ? gqlGetCluster.data.cluster : ({} as any)
-  return create(Gadgets, {
-    title: 'Cluster',
-    subtitle: universal.cluster_name,
+  return create(Page, {
+    title: 'Inspect',
+    subtitle: 'Cluster',
     children: create(Layout, {
       column: true,
       children: [

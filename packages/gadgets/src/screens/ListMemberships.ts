@@ -1,5 +1,5 @@
 import { createElement as create, FC, useEffect } from 'react'
-import { Gadgets, Snippet } from 'wga-theme'
+import { Snippet, Page } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 
@@ -13,10 +13,9 @@ export const ListMemberships: FC<{
     gqlListMemberships.fetch()
     // eslint-disable-next-line
   }, [])
-  return create(Gadgets, {
+  return create(Page, {
     title: 'Members',
     subtitle: settings.cluster && settings.cluster.name,
-    loading: gqlListMemberships.loading,
     children: !gqlListMemberships.data
       ? null
       : gqlListMemberships.data.memberships.map(membership => {

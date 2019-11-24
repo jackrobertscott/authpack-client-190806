@@ -1,21 +1,19 @@
 import * as yup from 'yup'
 import { createElement as create, FC } from 'react'
 import {
-  Gadgets,
   useSchema,
   Button,
   Layout,
   Control,
   InputString,
   testAlphanumeric,
+  Page,
 } from 'wga-theme'
-import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 
 export const CreatePermission: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
-  const universal = useUniversal()
   const gqlCreatePermission = useCreatePermission()
   const schema = useSchema({
     schema: SchemaCreatePermission,
@@ -25,10 +23,9 @@ export const CreatePermission: FC<{
         .then(({ permission }) => change && change(permission.id))
     },
   })
-  return create(Gadgets, {
-    title: 'Create Permission',
-    subtitle: universal.cluster_name,
-    loading: gqlCreatePermission.loading,
+  return create(Page, {
+    title: 'New',
+    subtitle: 'Permission',
     children: create(Layout, {
       column: true,
       padding: true,
@@ -68,6 +65,7 @@ export const CreatePermission: FC<{
         create(Button, {
           key: 'submit',
           label: 'Create',
+          loading: gqlCreatePermission.loading,
           disabled: !schema.valid,
           click: schema.submit,
         }),

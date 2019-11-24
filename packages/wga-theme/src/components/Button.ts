@@ -10,12 +10,13 @@ export const Button: FC<{
   prefix?: string
   minor?: boolean
   disabled?: boolean
+  loading?: boolean
   style?: any
-}> = ({ label, click, icon, prefix, minor, disabled, style = {} }) => {
+}> = ({ label, click, icon, prefix, minor, disabled, loading, style = {} }) => {
   const theme = useTheme()
   return create('div', {
-    onClick: disabled ? () => {} : click,
-    className: `${disabled ? 'disabled' : ''} ${css({
+    onClick: disabled || loading ? () => {} : click,
+    className: `${disabled || loading ? 'disabled' : ''} ${css({
       all: 'unset',
       display: 'flex',
       cursor: disabled ? undefined : 'pointer',
@@ -27,12 +28,14 @@ export const Button: FC<{
       transition: '200ms',
       border: theme.button.border,
       borderRadius: theme.global.radius,
-      background: disabled
-        ? theme.button.backgroundDisabled
-        : minor
-        ? theme.button.backgroundMinor
-        : theme.button.background,
-      color: disabled ? theme.button.labelDisabled : theme.button.label,
+      background:
+        disabled || loading
+          ? theme.button.backgroundDisabled
+          : minor
+          ? theme.button.backgroundMinor
+          : theme.button.background,
+      color:
+        disabled || loading ? theme.button.labelDisabled : theme.button.label,
       '&:hover:not(.disabled)': {
         background: theme.button.backgroundHover,
         boxShadow: theme.button.shadow,
@@ -54,7 +57,13 @@ export const Button: FC<{
       }),
       create(Icon, {
         key: 'icon',
-        icon: icon ? icon : disabled ? 'times-circle' : 'check-circle',
+        icon: loading
+          ? 'sync-alt'
+          : icon
+          ? icon
+          : disabled
+          ? 'times-circle'
+          : 'check-circle',
         prefix,
       }),
     ],

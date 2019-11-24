@@ -1,7 +1,6 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useEffect, useRef } from 'react'
 import {
-  Gadgets,
   useSchema,
   Button,
   Layout,
@@ -10,14 +9,13 @@ import {
   InputSelect,
   drip,
   testAlphanumeric,
+  Page,
 } from 'wga-theme'
-import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 
 export const CreateTeam: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
-  const universal = useUniversal()
   const gqlCreateTeam = useCreateTeam()
   const gqlListUsers = useListUsers()
   const queryListUsers = useRef(drip(1000, gqlListUsers.fetch))
@@ -33,10 +31,9 @@ export const CreateTeam: FC<{
     queryListUsers.current()
     // eslint-disable-next-line
   }, [])
-  return create(Gadgets, {
-    title: 'Create Team',
-    subtitle: universal.cluster_name,
-    loading: gqlCreateTeam.loading,
+  return create(Page, {
+    title: 'New',
+    subtitle: 'Team',
     children: create(Layout, {
       column: true,
       padding: true,
@@ -97,6 +94,7 @@ export const CreateTeam: FC<{
         create(Button, {
           key: 'submit',
           label: 'Create',
+          loading: gqlCreateTeam.loading,
           disabled: !schema.valid,
           click: schema.submit,
         }),

@@ -1,22 +1,20 @@
 import { createElement as create, FC, useEffect } from 'react'
-import { Gadgets, Layout, Snippet } from 'wga-theme'
+import { Layout, Snippet, Page } from 'wga-theme'
 import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
-import { useUniversal } from '../hooks/useUniversal'
 
 export const ShowUser: FC<{
   id: string
 }> = ({ id }) => {
-  const universal = useUniversal()
   const gqlGetUser = useGetUser()
   useEffect(() => {
     gqlGetUser.fetch({ id })
     // eslint-disable-next-line
   }, [])
   const user = gqlGetUser.data ? gqlGetUser.data.user : ({} as any)
-  return create(Gadgets, {
-    title: 'User',
-    subtitle: universal.cluster_name,
+  return create(Page, {
+    title: 'Inspect',
+    subtitle: 'User',
     children: create(Layout, {
       column: true,
       children: [

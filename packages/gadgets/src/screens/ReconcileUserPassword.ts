@@ -64,6 +64,7 @@ export const ReconcileUserPassword: FC<{
           create(Button, {
             key: 'submit',
             label: 'Update Password',
+            loading: gqlReconcileUser.loading,
             disabled: !schema.valid,
             click: schema.submit,
           }),

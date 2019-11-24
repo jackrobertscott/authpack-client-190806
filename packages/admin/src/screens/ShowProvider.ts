@@ -1,13 +1,11 @@
 import { createElement as create, FC, useEffect } from 'react'
-import { Gadgets, Layout, Snippet } from 'wga-theme'
+import { Layout, Snippet, Page } from 'wga-theme'
 import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
-import { useUniversal } from '../hooks/useUniversal'
 
 export const ShowProvider: FC<{
   id: string
 }> = ({ id }) => {
-  const universal = useUniversal()
   const gqlGetProvider = useGetProvider()
   useEffect(() => {
     gqlGetProvider.fetch({ id })
@@ -16,9 +14,9 @@ export const ShowProvider: FC<{
   const provider = gqlGetProvider.data
     ? gqlGetProvider.data.provider
     : ({} as any)
-  return create(Gadgets, {
-    title: 'Provider',
-    subtitle: universal.cluster_name,
+  return create(Page, {
+    title: 'Inspect',
+    subtitle: 'Provider',
     children: create(Layout, {
       column: true,
       children: [

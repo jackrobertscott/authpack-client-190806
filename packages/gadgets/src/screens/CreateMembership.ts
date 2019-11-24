@@ -1,13 +1,13 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useEffect } from 'react'
 import {
-  Gadgets,
   useSchema,
   Button,
   Control,
   Layout,
   InputString,
   InputSelectMany,
+  Page,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
@@ -30,10 +30,9 @@ export const CreateMembership: FC<{
     gqlListPermissions.fetch()
     // eslint-disable-next-line
   }, [])
-  return create(Gadgets, {
+  return create(Page, {
     title: 'Add Member',
     subtitle: settings.cluster && settings.cluster.name,
-    loading: gqlCreateMembership.loading || gqlListPermissions.loading,
     children: create(Layout, {
       column: true,
       padding: true,
@@ -51,7 +50,7 @@ export const CreateMembership: FC<{
                 placeholder: 'example@email.com',
               }),
             }),
-            gqlListPermissions.data.permissions.length &&
+            !!gqlListPermissions.data.permissions.length &&
               create(Control, {
                 key: 'permission_ids',
                 label: 'Permissions',
@@ -75,6 +74,7 @@ export const CreateMembership: FC<{
             create(Button, {
               key: 'submit',
               label: 'Add',
+              loading: gqlCreateMembership.loading,
               disabled: !schema.valid,
               click: schema.submit,
             }),

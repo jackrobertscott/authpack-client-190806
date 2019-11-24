@@ -1,21 +1,19 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useEffect } from 'react'
 import {
-  Gadgets,
   useSchema,
   Layout,
   Control,
   InputString,
   testAlphanumeric,
+  Page,
 } from 'wga-theme'
-import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 
 export const UpdateUser: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
-  const universal = useUniversal()
   const gqlGetUser = useGetUser()
   const gqlUpdateUser = useUpdateUser()
   const schema = useSchema({
@@ -30,10 +28,9 @@ export const UpdateUser: FC<{
     gqlGetUser.fetch({ id }).then(({ user }) => schema.set(user))
     // eslint-disable-next-line
   }, [id])
-  return create(Gadgets, {
-    title: 'Update User',
-    subtitle: universal.cluster_name,
-    loading: gqlUpdateUser.loading,
+  return create(Page, {
+    title: 'Update',
+    subtitle: 'User',
     children: create(Layout, {
       column: true,
       padding: true,

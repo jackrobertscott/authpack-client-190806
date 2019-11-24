@@ -1,7 +1,6 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useState } from 'react'
 import {
-  Gadgets,
   useSchema,
   Control,
   InputString,
@@ -9,6 +8,7 @@ import {
   Poster,
   Layout,
   Focus,
+  Page,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
@@ -21,7 +21,7 @@ export const RemoveUser: FC<{
   const gqlRemoveUser = useRemoveUser()
   const schema = useSchema({ schema: SchemaPassword })
   const [confirm, confirmChange] = useState<boolean>(false)
-  return create(Gadgets, {
+  return create(Page, {
     title: 'Danger Zone',
     subtitle: settings.cluster && settings.cluster.name,
     children: [
@@ -71,6 +71,7 @@ export const RemoveUser: FC<{
               key: 'confirm',
               icon: 'check',
               label: 'Confirm',
+              loading: gqlRemoveUser.loading,
               click: () =>
                 gqlRemoveUser.fetch({ ...schema.state }).then(() => {
                   SettingsStore.update({ bearer: undefined })

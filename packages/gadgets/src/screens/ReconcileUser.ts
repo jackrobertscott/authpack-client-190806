@@ -52,6 +52,7 @@ export const ReconcileUser: FC<{
           create(Button, {
             key: 'submit',
             label: 'Verify',
+            loading: gqlReconcileUser.loading,
             disabled: !schema.valid,
             click: schema.submit,
           }),

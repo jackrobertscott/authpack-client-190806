@@ -1,13 +1,13 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useState } from 'react'
 import {
-  Gadgets,
   useSchema,
   Layout,
   Control,
   InputString,
   Button,
   testAlphanumeric,
+  Page,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
@@ -21,7 +21,7 @@ export const CreateTeam: FC<{
   const gqlCreateTeam = useCreateTeam()
   const gqlSwitchTeam = useSwitchTeam()
   const initial =
-    !!settings.cluster && settings.cluster.force_teams && !settings.team
+    !!settings.cluster && settings.cluster.teams_required && !settings.team
   const [open, openChange] = useState<boolean>(initial)
   const schema = useSchema({
     schema: SchemaCreateTeam,
@@ -35,7 +35,7 @@ export const CreateTeam: FC<{
         })
     },
   })
-  return create(Gadgets, {
+  return create(Page, {
     title: 'Create Team',
     subtitle: settings.cluster && settings.cluster.name,
     children: [
@@ -80,6 +80,7 @@ export const CreateTeam: FC<{
           create(Button, {
             key: 'submit',
             label: 'Create',
+            loading: gqlCreateTeam.loading || gqlSwitchTeam.loading,
             disabled: !schema.valid,
             click: schema.submit,
           }),

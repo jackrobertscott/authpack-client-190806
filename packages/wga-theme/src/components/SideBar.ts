@@ -23,7 +23,7 @@ export const SideBar: FC<{
       alignItems: 'stretch',
       width: '20%',
       maxWidth: '240px',
-      minWidth: '200px',
+      minWidth: '240px',
       background: theme.sideBar.background,
       borderRight: theme.sideBar.border,
     }),

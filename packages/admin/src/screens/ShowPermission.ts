@@ -1,13 +1,11 @@
 import { createElement as create, FC, useEffect } from 'react'
-import { Gadgets, Layout, Snippet } from 'wga-theme'
+import { Layout, Snippet, Page } from 'wga-theme'
 import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
-import { useUniversal } from '../hooks/useUniversal'
 
 export const ShowPermission: FC<{
   id: string
 }> = ({ id }) => {
-  const universal = useUniversal()
   const gqlGetPermission = useGetPermission()
   useEffect(() => {
     gqlGetPermission.fetch({ id })
@@ -16,9 +14,9 @@ export const ShowPermission: FC<{
   const permission = gqlGetPermission.data
     ? gqlGetPermission.data.permission
     : ({} as any)
-  return create(Gadgets, {
-    title: 'Permission',
-    subtitle: universal.cluster_name,
+  return create(Page, {
+    title: 'Inspect',
+    subtitle: 'Permission',
     children: create(Layout, {
       column: true,
       children: [

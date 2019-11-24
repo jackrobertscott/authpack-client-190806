@@ -1,6 +1,6 @@
 import { createElement as create, FC, useState } from 'react'
 import { createUseServer } from '../hooks/useServer'
-import { Gadgets, Button, Layout, Focus, Poster } from 'wga-theme'
+import { Button, Layout, Focus, Poster, Page } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 
 export const RemoveMembership: FC<{
@@ -11,7 +11,7 @@ export const RemoveMembership: FC<{
   const settings = useSettings()
   const gqlRemoveMembership = useRemoveMembership()
   const [confirm, confirmChange] = useState<boolean>(false)
-  return create(Gadgets, {
+  return create(Page, {
     title: 'Remove Member',
     subtitle: settings.cluster && settings.cluster.name,
     children: [
@@ -54,6 +54,7 @@ export const RemoveMembership: FC<{
               key: 'confirm',
               icon: 'check',
               label: 'Confirm',
+              loading: gqlRemoveMembership.loading,
               click: () =>
                 gqlRemoveMembership
                   .fetch({ id })

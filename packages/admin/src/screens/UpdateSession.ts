@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useEffect } from 'react'
-import { Gadgets, useSchema, Layout, Control, InputBoolean } from 'wga-theme'
+import { useSchema, Layout, Control, InputBoolean, Page } from 'wga-theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 
@@ -23,10 +23,9 @@ export const UpdateSession: FC<{
     gqlGetSession.fetch({ id }).then(({ session }) => schema.set(session))
     // eslint-disable-next-line
   }, [id])
-  return create(Gadgets, {
-    title: 'Update Session',
-    subtitle: universal.cluster_name,
-    loading: gqlUpdateSession.loading,
+  return create(Page, {
+    title: 'Update',
+    subtitle: 'Session',
     children: create(Layout, {
       column: true,
       padding: true,

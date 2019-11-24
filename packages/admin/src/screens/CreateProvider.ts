@@ -1,7 +1,6 @@
 import * as yup from 'yup'
 import { createElement as create, FC } from 'react'
 import {
-  Gadgets,
   useSchema,
   Button,
   Layout,
@@ -9,14 +8,13 @@ import {
   InputString,
   InputSelect,
   InputStringArray,
+  Page,
 } from 'wga-theme'
-import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 
 export const CreateProvider: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
-  const universal = useUniversal()
   const gqlCreateProvider = useCreateProvider()
   const schema = useSchema({
     schema: SchemaCreateProvider,
@@ -26,10 +24,9 @@ export const CreateProvider: FC<{
         .then(({ provider }) => change && change(provider.id))
     },
   })
-  return create(Gadgets, {
-    title: 'Create Provider',
-    subtitle: universal.cluster_name,
-    loading: gqlCreateProvider.loading,
+  return create(Page, {
+    title: 'New',
+    subtitle: 'Provider',
     children: create(Layout, {
       column: true,
       padding: true,
@@ -99,6 +96,7 @@ export const CreateProvider: FC<{
         create(Button, {
           key: 'submit',
           label: 'Create',
+          loading: gqlCreateProvider.loading,
           disabled: !schema.valid,
           click: schema.submit,
         }),

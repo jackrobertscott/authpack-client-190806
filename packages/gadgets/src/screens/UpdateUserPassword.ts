@@ -1,7 +1,6 @@
 import * as yup from 'yup'
 import { createElement as create, FC } from 'react'
 import {
-  Gadgets,
   useSchema,
   Poster,
   Layout,
@@ -9,6 +8,7 @@ import {
   InputString,
   Button,
   useToaster,
+  Page,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
@@ -33,10 +33,9 @@ export const UpdateUserPassword: FC<{
       })
     },
   })
-  return create(Gadgets, {
+  return create(Page, {
     title: 'Change Password',
     subtitle: settings.cluster && settings.cluster.name,
-    loading: gqlUpdatePassword.loading,
     children: [
       create(Poster, {
         key: 'poster',
@@ -77,6 +76,7 @@ export const UpdateUserPassword: FC<{
           create(Button, {
             key: 'submit',
             label: 'Update',
+            loading: gqlUpdatePassword.loading,
             disabled: !schema.valid,
             click: schema.submit,
           }),

@@ -5,7 +5,7 @@ import {
   Fragment,
   useState,
 } from 'react'
-import { Gadgets, Layout, Poster, Snippet } from 'wga-theme'
+import { Layout, Poster, Snippet, Page } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 import { useOauthCode } from '../hooks/useOauthCode'
@@ -37,14 +37,9 @@ export const ListProviders: FC<{
     }
     // eslint-disable-next-line
   }, [oauthCode.code])
-  return create(Gadgets, {
+  return create(Page, {
     title: '3rd Party Logins',
     subtitle: settings.cluster && settings.cluster.name,
-    loading:
-      gqlListProviders.loading ||
-      gqlListCredentials.loading ||
-      gqlRemoveCredential.loading ||
-      gqlUpsertCredential.loading,
     children:
       !gqlListProviders.data || !gqlListCredentials.data
         ? null

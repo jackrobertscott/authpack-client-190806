@@ -1,5 +1,5 @@
 import { createElement as create, FC } from 'react'
-import { Gadgets, Poster, Layout, Button } from 'wga-theme'
+import { Poster, Layout, Button, Page } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { SettingsStore } from '../utils/settings'
 import { createUseServer } from '../hooks/useServer'
@@ -11,7 +11,7 @@ export const LogoutUser: FC = () => {
     gqlLogoutUser
       .fetch()
       .finally(() => SettingsStore.update({ bearer: undefined }))
-  return create(Gadgets, {
+  return create(Page, {
     title: 'Logout',
     subtitle: settings.cluster && settings.cluster.name,
     children: [
@@ -28,6 +28,7 @@ export const LogoutUser: FC = () => {
         children: create(Button, {
           icon: 'power-off',
           label: 'Logout',
+          loading: gqlLogoutUser.loading,
           click: logout,
         }),
       }),

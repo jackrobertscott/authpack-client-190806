@@ -1,13 +1,13 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useEffect } from 'react'
 import {
-  Gadgets,
   useSchema,
   Layout,
   Control,
   InputString,
   InputStringArray,
   InputSelect,
+  Page,
 } from 'wga-theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
@@ -39,10 +39,9 @@ export const UpdateCluster: FC<{
       .then(({ cluster }) => schema.set(cluster))
     // eslint-disable-next-line
   }, [universal.cluster_id])
-  return create(Gadgets, {
-    title: 'Update Cluster',
-    subtitle: universal.cluster_name,
-    loading: gqlUpdateCluster.loading,
+  return create(Page, {
+    title: 'Update',
+    subtitle: 'Cluster',
     children: create(Layout, {
       column: true,
       padding: true,

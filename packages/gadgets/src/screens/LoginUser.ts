@@ -1,13 +1,13 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useEffect, useState } from 'react'
 import {
-  Gadgets,
   useSchema,
   Layout,
   Control,
   InputString,
   Button,
   useMounted,
+  Page,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { SettingsStore } from '../utils/settings'
@@ -63,13 +63,9 @@ export const LoginUser: FC = () => {
     }
     // eslint-disable-next-line
   }, [oauthCode.code])
-  return create(Gadgets, {
+  return create(Page, {
     title: 'Login',
     subtitle: settings.cluster && settings.cluster.name,
-    loading:
-      gqlLoginUser.loading ||
-      gqlListProviders.loading ||
-      gqlLoginUserOauth.loading,
     children: current
       ? create(Loading, {
           helper: 'Checking your credentials',
@@ -132,10 +128,9 @@ export const LoginUser: FC = () => {
               create(Button, {
                 key: 'submit',
                 label: 'Login',
-                disabled:
-                  !schema.valid ||
-                  gqlLoginUser.loading ||
-                  gqlLoginUserOauth.loading,
+
+                loading: gqlLoginUser.loading || gqlLoginUserOauth.loading,
+                disabled: !schema.valid,
                 click: schema.submit,
               }),
             ],

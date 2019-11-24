@@ -1,7 +1,6 @@
 import * as yup from 'yup'
-import { createElement as create, FC } from 'react'
+import { createElement as create, FC, useState } from 'react'
 import {
-  Gadgets,
   useSchema,
   Layout,
   Control,
@@ -10,6 +9,7 @@ import {
   Button,
   InputStripe,
   useToaster,
+  Page,
 } from 'wga-theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
@@ -21,11 +21,13 @@ export const UpdatePayment: FC<{
 }> = ({ change }) => {
   const toaster = useToaster()
   const universal = useUniversal()
+  const [loading, loadingChange] = useState<boolean>(false)
   const gqlUpdatePayment = useUpdatePayment()
   const payment = useStripe(stripe)
   const schema = useSchema({
     schema: SchemaUpdatePayment,
     submit: value => {
+      loadingChange(true)
       payment
         .tokenize(schema.value('card'))
         .then(token => {
@@ -53,12 +55,12 @@ export const UpdatePayment: FC<{
             helper: error.message || 'There was a problem processing the card',
           })
         })
+        .finally(() => loadingChange(false))
     },
   })
-  return create(Gadgets, {
-    title: 'Update Payment',
-    subtitle: universal.cluster_name,
-    loading: gqlUpdatePayment.loading,
+  return create(Page, {
+    title: 'Payment',
+    subtitle: 'Cluster',
     children: create(Layout, {
       column: true,
       padding: true,
@@ -100,6 +102,7 @@ export const UpdatePayment: FC<{
           label: 'Create',
           disabled: !schema.valid,
           click: schema.submit,
+          loading,
         }),
       ],
     }),

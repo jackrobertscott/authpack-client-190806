@@ -1,18 +1,16 @@
 import { createElement as create, FC } from 'react'
-import { Gadgets } from 'wga-theme'
+import { Page } from 'wga-theme'
 import { createUseServer } from '../hooks/useServer'
 import { ConfirmRemove } from '../templates/ConfirmRemove'
-import { useUniversal } from '../hooks/useUniversal'
 
 export const RemoveSession: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
-  const universal = useUniversal()
   const gqlRemoveSession = useRemoveSession()
-  return create(Gadgets, {
-    title: 'Remove Session',
-    subtitle: universal.cluster_name,
+  return create(Page, {
+    title: 'Remove',
+    subtitle: 'Session',
     children: create(ConfirmRemove, {
       helper: 'Remove this session',
       alert: 'Please confirm the removal of this session',

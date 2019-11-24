@@ -1,5 +1,5 @@
 import { createElement as create, FC } from 'react'
-import { Gadgets } from 'wga-theme'
+import { Page } from 'wga-theme'
 import { createUseServer } from '../hooks/useServer'
 import { ConfirmRemove } from '../templates/ConfirmRemove'
 import { useUniversal } from '../hooks/useUniversal'
@@ -10,9 +10,9 @@ export const RemovePayment: FC<{
 }> = ({ change }) => {
   const universal = useUniversal()
   const gqlRemovePayment = useRemovePayment()
-  return create(Gadgets, {
-    title: 'Terminate Payment',
-    subtitle: universal.cluster_name,
+  return create(Page, {
+    title: 'Terminate',
+    subtitle: 'Stop Payments & Disable Gadgets',
     children: create(ConfirmRemove, {
       keyword: 'Terminate',
       helper: 'Remove payment card and disable cluster',

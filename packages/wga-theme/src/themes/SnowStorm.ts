@@ -4,7 +4,7 @@ const slate = (
   lightness: number = 0,
   opacity: number = 1,
   saturation: number = 15,
-  hue: number = 200
+  hue: number = 250
 ) =>
   opacity === 1
     ? `hsl(${hue}, ${saturation}%, ${lightness}%)`
@@ -21,19 +21,19 @@ export const SnowStorm: ITheme = {
    */
   iconBar: {
     icon: slate(60),
-    iconHover: slate(30),
-    iconFocused: slate(30),
+    iconHover: slate(25),
+    iconFocused: slate(25),
     iconBackground: slate(92.5),
     iconBackgroundHover: slate(97.5),
     background: slate(92.5),
     border: `1px solid ${slate(85)}`,
   },
   sideBar: {
-    title: slate(30),
+    title: slate(25),
     footer: slate(60),
     options: slate(60),
-    optionsHover: slate(30),
-    optionsFocused: slate(30),
+    optionsHover: slate(25),
+    optionsFocused: slate(25),
     background: slate(95),
     backgroundHover: slate(100),
     backgroundFocused: slate(97.5),
@@ -43,19 +43,19 @@ export const SnowStorm: ITheme = {
    * Screens.
    */
   page: {
-    title: slate(30),
+    title: slate(25),
     subtitle: slate(60),
     branding: slate(80),
     brandingHover: slate(60),
     label: slate(60),
-    labelHover: slate(30),
+    labelHover: slate(25),
     header: slate(95),
     headerHover: slate(97.5),
     border: `1px solid ${slate(90)}`,
     background: slate(97.5),
   },
   gadgets: {
-    title: slate(30),
+    title: slate(25),
     subtitle: slate(60),
     branding: slate(80),
     brandingHover: slate(60),
@@ -69,7 +69,7 @@ export const SnowStorm: ITheme = {
   },
   searchBar: {
     label: slate(60),
-    labelHover: slate(30),
+    labelHover: slate(25),
     labelDisabled: slate(75),
     placeholder: slate(75),
     background: slate(95),
@@ -93,9 +93,9 @@ export const SnowStorm: ITheme = {
    * Lists.
    */
   table: {
-    label: slate(30),
+    label: slate(25),
     value: slate(50),
-    valueHover: slate(30),
+    valueHover: slate(25),
     header: slate(95),
     headerHover: slate(97.5),
     background: slate(100),
@@ -103,7 +103,7 @@ export const SnowStorm: ITheme = {
     border: `1px solid ${slate(92.5)}`,
   },
   snippet: {
-    label: slate(30),
+    label: slate(25),
     value: slate(50),
     arrow: slate(50),
     background: slate(100),
@@ -114,23 +114,23 @@ export const SnowStorm: ITheme = {
    * Forms.
    */
   input: {
-    label: slate(30),
+    label: slate(25),
     helper: slate(60),
     placeholder: slate(60),
     value: slate(50),
-    valueHover: slate(30),
+    valueHover: slate(25),
     background: slate(100),
     backgroundHover: slate(100),
     backgroundDisabled: slate(95),
     shadow: `0 0 13px -3px ${slate(80, 0.5)}`,
     border: `1px solid ${slate(92.5)}`,
     borderFocused: `1px solid ${slate(60)}`,
-    on: slate(65, 1, 80, 130),
+    on: slate(65, 1, 80, 125),
     off: slate(87.5),
   },
   button: {
     label: slate(60),
-    labelHover: slate(30),
+    labelHover: slate(25),
     labelDisabled: slate(80),
     background: slate(100),
     backgroundMinor: slate(97.5),
@@ -143,14 +143,14 @@ export const SnowStorm: ITheme = {
    * Helpers.
    */
   pointer: {
-    label: slate(30),
+    label: slate(25),
     helper: slate(60),
     background: slate(100),
     shadow: `0 0 13px -3px ${slate(80, 0.5)}`,
     border: `1px solid ${slate(87.5)}`,
   },
   menu: {
-    label: slate(30),
+    label: slate(25),
     helper: slate(60),
     background: slate(100),
     backgroundHover: slate(97.5),
@@ -158,21 +158,21 @@ export const SnowStorm: ITheme = {
     shadow: `0 0 13px -3px ${slate(80, 0.5)}`,
   },
   poster: {
-    label: slate(30),
+    label: slate(25),
     helper: slate(60),
     background: slate(97.5),
     border: `1px solid ${slate(92.5)}`,
   },
   empty: {
-    label: slate(30),
+    label: slate(25),
     helper: slate(60),
-    background: slate(97.5),
+    background: slate(100),
     shadow: `0 0 13px -3px ${slate(80, 0.5)}`,
     border: `1px solid ${slate(87.5)}`,
-    cover: slate(100, 0.75),
+    cover: slate(97.5, 0.75),
   },
   focus: {
-    label: slate(30),
+    label: slate(25),
     helper: slate(60),
     background: slate(97.5),
   },

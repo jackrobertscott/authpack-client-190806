@@ -1,12 +1,12 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useEffect } from 'react'
 import {
-  Gadgets,
   useSchema,
   Control,
   Layout,
   InputSelectMany,
   Snippet,
+  Page,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
@@ -35,10 +35,9 @@ export const UpdateMembership: FC<{
       .then(({ membership }) => schema.set(membership))
     // eslint-disable-next-line
   }, [id])
-  return create(Gadgets, {
+  return create(Page, {
     title: 'Update Member',
     subtitle: settings.cluster && settings.cluster.name,
-    loading: gqlUpdateMembership.loading || gqlListPermissions.loading,
     children: [
       create(Snippet, {
         key: 'snippet',

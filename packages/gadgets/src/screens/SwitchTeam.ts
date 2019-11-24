@@ -1,5 +1,5 @@
 import { createElement as create, FC, useEffect } from 'react'
-import { Gadgets, Layout, Poster, Snippet } from 'wga-theme'
+import { Layout, Poster, Snippet, Page } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 import { SettingsStore } from '../utils/settings'
@@ -12,10 +12,9 @@ export const SwitchTeam: FC<{ change?: () => void }> = ({ change }) => {
     gqlListTeams.fetch()
     // eslint-disable-next-line
   }, [])
-  return create(Gadgets, {
+  return create(Page, {
     title: 'Switch Team',
     subtitle: settings.cluster && settings.cluster.name,
-    loading: gqlListTeams.loading || gqlSwitchTeam.loading,
     children: create(Layout, {
       column: true,
       children: [

@@ -1,22 +1,20 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useEffect, useState } from 'react'
 import {
-  Gadgets,
   useSchema,
   Layout,
   Control,
   InputString,
   InputStringArray,
   Poster,
+  Page,
 } from 'wga-theme'
-import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 
 export const UpdateProvider: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
-  const universal = useUniversal()
   const gqlGetProvider = useGetProvider()
   const gqlUpdateProvider = useUpdateProvider()
   const [details, detailsChange] = useState<
@@ -39,10 +37,9 @@ export const UpdateProvider: FC<{
       })
     // eslint-disable-next-line
   }, [id])
-  return create(Gadgets, {
-    title: 'Update Provider',
-    subtitle: universal.cluster_name,
-    loading: gqlUpdateProvider.loading,
+  return create(Page, {
+    title: 'Update',
+    subtitle: 'Provider',
     children: [
       details &&
         create(Poster, {

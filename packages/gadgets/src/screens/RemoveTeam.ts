@@ -1,7 +1,6 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useState } from 'react'
 import {
-  Gadgets,
   Poster,
   Layout,
   Control,
@@ -9,6 +8,7 @@ import {
   Focus,
   Button,
   InputString,
+  Page,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
@@ -21,10 +21,9 @@ export const RemoveTeam: FC<{
   const gqlRemoveTeam = useRemoveTeam()
   const schema = useSchema({ schema: SchemaPassword })
   const [confirm, confirmChange] = useState<boolean>(false)
-  return create(Gadgets, {
+  return create(Page, {
     title: 'Danger Zone',
     subtitle: settings.cluster && settings.cluster.name,
-    loading: gqlRemoveTeam.loading,
     children: [
       create(Poster, {
         key: 'poster',
@@ -72,6 +71,7 @@ export const RemoveTeam: FC<{
               key: 'confirm',
               icon: 'check',
               label: 'Confirm',
+              loading: gqlRemoveTeam.loading,
               click: () =>
                 gqlRemoveTeam.fetch({ ...schema.state }).then(() => {
                   if (change) change()

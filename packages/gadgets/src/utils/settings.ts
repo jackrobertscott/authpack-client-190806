@@ -9,7 +9,7 @@ export type ISettings = {
     id: string
     name: string
     theme: string
-    force_teams: boolean
+    teams_required: boolean
     subscribed: boolean
     power: boolean
   }

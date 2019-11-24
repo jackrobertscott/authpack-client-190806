@@ -91,7 +91,7 @@ const useGetCurrentCluster = createUseServer<{
     theme: string
     power: boolean
     subscribed: boolean
-    force_teams: boolean
+    teams_required: boolean
   }
 }>({
   query: `
@@ -102,7 +102,7 @@ const useGetCurrentCluster = createUseServer<{
         theme
         power
         subscribed
-        force_teams
+        teams_required
       }
     }
   `,
