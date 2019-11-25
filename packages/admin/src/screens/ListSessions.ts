@@ -31,7 +31,7 @@ export const ListSessions: FC = () => {
     hidden: !gqlListSessions.data || !gqlListSessions.data.count,
     corner: {
       icon: 'plus',
-      label: 'Create Session',
+      label: 'New Session',
       click: () => {
         buildChange(true)
         setTimeout(() => idcurrentChange(undefined), 200) // animation

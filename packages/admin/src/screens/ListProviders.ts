@@ -31,7 +31,7 @@ export const ListProviders: FC = () => {
     hidden: !gqlListProviders.data || !gqlListProviders.data.count,
     corner: {
       icon: 'plus',
-      label: 'Create Provider',
+      label: 'New Provider',
       click: () => {
         buildChange(true)
         setTimeout(() => idcurrentChange(undefined), 200) // animation

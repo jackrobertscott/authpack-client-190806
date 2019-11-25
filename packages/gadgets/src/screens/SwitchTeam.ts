@@ -4,7 +4,10 @@ import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 import { SettingsStore } from '../utils/settings'
 
-export const SwitchTeam: FC<{ change?: () => void }> = ({ change }) => {
+export const SwitchTeam: FC<{
+  change?: () => void
+  add: () => void
+}> = ({ change, add }) => {
   const settings = useSettings()
   const gqlListTeams = useListTeams()
   const gqlSwitchTeam = useSwitchTeam()
@@ -15,6 +18,11 @@ export const SwitchTeam: FC<{ change?: () => void }> = ({ change }) => {
   return create(Page, {
     title: 'Switch',
     subtitle: settings.cluster && settings.cluster.name,
+    corner: {
+      icon: 'plus',
+      label: 'New Team',
+      click: add,
+    },
     children: create(Layout, {
       column: true,
       children: [

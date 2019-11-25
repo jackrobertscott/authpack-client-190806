@@ -31,7 +31,7 @@ export const ListTeams: FC = () => {
     hidden: !gqlListTeams.data || !gqlListTeams.data.count,
     corner: {
       icon: 'plus',
-      label: 'Create Team',
+      label: 'New Team',
       click: () => {
         buildChange(true)
         setTimeout(() => idcurrentChange(undefined), 200) // animation

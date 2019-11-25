@@ -2,15 +2,19 @@ import { useEffect } from 'react'
 import { useGadgets } from './useGadgets'
 import { createUseServer } from './useServer'
 import { UniversalStore } from '../utils/universal'
+import { useUniversal } from './useUniversal'
 
 export const useSetup = () => {
   const gadgets = useGadgets()
+  const universal = useUniversal()
   const gqlGetCluster = useGetCluster()
   useEffect(() => {
-    UniversalStore.reset()
+    UniversalStore.recreate({
+      cluster_id: universal.cluster_id,
+    })
     if (gadgets.bearer && gadgets.team && gadgets.team.id) {
       gqlGetCluster
-        .fetch()
+        .fetch({ id: universal.cluster_id })
         .then(({ cluster }) => {
           UniversalStore.update({
             ready: true,
@@ -27,7 +31,7 @@ export const useSetup = () => {
       setTimeout(() => UniversalStore.update({ ready: true }))
     }
     // eslint-disable-next-line
-  }, [gadgets.bearer, gadgets.team && gadgets.team.id])
+  }, [universal.cluster_id, gadgets.bearer, gadgets.team && gadgets.team.id])
 }
 
 const useGetCluster = createUseServer<{

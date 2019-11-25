@@ -38,6 +38,12 @@ export const useSetup = () => {
             permissions,
           })
         })
+        .catch(() => {
+          SettingsStore.update({
+            ready: true,
+            bearer: undefined,
+          })
+        })
     } else {
       SettingsStore.update({
         ready: true,

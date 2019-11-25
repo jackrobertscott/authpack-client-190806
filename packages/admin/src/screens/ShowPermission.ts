@@ -13,55 +13,57 @@ export const ShowPermission: FC<{
   }, [])
   const permission = gqlGetPermission.data
     ? gqlGetPermission.data.permission
-    : ({} as any)
+    : undefined
   return create(Page, {
     title: 'Inspect',
     subtitle: 'Permission',
-    children: create(Layout, {
-      column: true,
-      children: [
-        create(Snippet, {
-          key: 'id',
-          icon: 'fingerprint',
-          label: 'Id',
-          value: permission.id,
+    children: !permission
+      ? null
+      : create(Layout, {
+          column: true,
+          children: [
+            create(Snippet, {
+              key: 'id',
+              icon: 'fingerprint',
+              label: 'Id',
+              value: permission.id,
+            }),
+            create(Snippet, {
+              key: 'name',
+              icon: 'users',
+              label: 'Name',
+              value: permission.name,
+            }),
+            create(Snippet, {
+              key: 'tag',
+              icon: 'tags',
+              label: 'Tag',
+              value: permission.tag,
+            }),
+            create(Snippet, {
+              key: 'description',
+              icon: 'book',
+              label: 'Description',
+              value: permission.description || '...',
+            }),
+            create(Snippet, {
+              key: 'created',
+              icon: 'clock',
+              label: 'Created',
+              value:
+                permission.created &&
+                format(new Date(permission.created), 'dd LLL yyyy @ h:mm a'),
+            }),
+            create(Snippet, {
+              key: 'updated',
+              icon: 'clock',
+              label: 'Updated',
+              value:
+                permission.updated &&
+                format(new Date(permission.updated), 'dd LLL yyyy @ h:mm a'),
+            }),
+          ],
         }),
-        create(Snippet, {
-          key: 'name',
-          icon: 'users',
-          label: 'Name',
-          value: permission.name,
-        }),
-        create(Snippet, {
-          key: 'tag',
-          icon: 'tags',
-          label: 'Tag',
-          value: permission.tag,
-        }),
-        create(Snippet, {
-          key: 'description',
-          icon: 'book',
-          label: 'Description',
-          value: permission.description || '...',
-        }),
-        create(Snippet, {
-          key: 'created',
-          icon: 'clock',
-          label: 'Created',
-          value:
-            permission.created &&
-            format(new Date(permission.created), 'dd LLL yyyy @ h:mm a'),
-        }),
-        create(Snippet, {
-          key: 'updated',
-          icon: 'clock',
-          label: 'Updated',
-          value:
-            permission.updated &&
-            format(new Date(permission.updated), 'dd LLL yyyy @ h:mm a'),
-        }),
-      ],
-    }),
   })
 }
 

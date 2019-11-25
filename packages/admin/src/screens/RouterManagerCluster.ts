@@ -5,6 +5,9 @@ import { UpdatePayment } from './UpdatePayment'
 import { useUniversal } from '../hooks/useUniversal'
 import { RemovePayment } from './RemovePayment'
 import { ShowCluster } from './ShowCluster'
+import { SwitchCluster } from './SwitchCluster'
+import { ShowClusterKeys } from './ShowClusterKeys'
+import { CreateCluster } from './CreateCluster'
 
 export const RouterManagerCluster: FC<{
   visible?: boolean
@@ -12,14 +15,33 @@ export const RouterManagerCluster: FC<{
 }> = ({ close, visible }) => {
   const universal = useUniversal()
   const router = useLocalRouter({
-    nomatch: universal.subscribed ? '/inspect' : '/payment',
+    nomatch: '/inspect',
     options: [
-      { key: '/inspect', children: create(ShowCluster) },
+      {
+        key: '/inspect',
+        children: create(ShowCluster, {
+          keys: () => router.change('/keys'),
+        }),
+      },
+      {
+        key: '/keys',
+        children: create(ShowClusterKeys, {
+          back: () => router.change('/inspect'),
+        }),
+      },
       { key: '/update', children: create(UpdateCluster) },
+      {
+        key: '/switch',
+        children: create(SwitchCluster, {
+          add: () => router.change('/create'),
+        }),
+      },
+      { key: '/create', children: create(CreateCluster) },
       {
         key: '/payment',
         children: create(UpdatePayment, {
           change: () => router.change('/inspect'),
+          cancel: () => router.change('/cancel'),
         }),
       },
       {
@@ -38,71 +60,45 @@ export const RouterManagerCluster: FC<{
       children: [
         create(IconBar, {
           key: 'iconBar',
-          icons: universal.subscribed
-            ? [
-                {
-                  icon: 'glasses',
-                  label: 'Inspect',
-                  focused:
-                    !!router.current && router.current.key === '/inspect',
-                  click: () => router.change('/inspect'),
-                },
-                {
-                  icon: 'sliders-h',
-                  label: 'Update',
-                  focused: !!router.current && router.current.key === '/update',
-                  click: () => router.change('/update'),
-                },
-                {
-                  icon: 'piggy-bank',
-                  label: 'Payment',
-                  focused:
-                    !!router.current && router.current.key === '/payment',
-                  click: () => router.change('/payment'),
-                },
-                {
-                  icon: 'fire-alt',
-                  label: 'Danger',
-                  focused: !!router.current && router.current.key === '/cancel',
-                  click: () => router.change('/cancel'),
-                },
-                {
-                  icon: 'times-circle',
-                  label: 'Close',
-                  click: close,
-                  prefix: 'far',
-                  seperated: true,
-                },
-              ]
-            : [
-                {
-                  icon: 'glasses',
-                  label: 'Inspect',
-                  focused:
-                    !!router.current && router.current.key === '/inspect',
-                  click: () => router.change('/inspect'),
-                },
-                {
-                  icon: 'sliders-h',
-                  label: 'Update',
-                  focused: !!router.current && router.current.key === '/update',
-                  click: () => router.change('/update'),
-                },
-                {
-                  icon: 'wallet',
-                  label: 'Payment',
-                  focused:
-                    !!router.current && router.current.key === '/payment',
-                  click: () => router.change('/payment'),
-                },
-                {
-                  icon: 'times-circle',
-                  label: 'Close',
-                  click: close,
-                  prefix: 'far',
-                  seperated: true,
-                },
-              ],
+          icons: [
+            {
+              icon: 'glasses',
+              label: 'Inspect',
+              focused: !!router.current && router.current.key === '/inspect',
+              click: () => router.change('/inspect'),
+            },
+            !universal.subscribed && {
+              icon: 'bolt',
+              label: 'Activate',
+              focused: !!router.current && router.current.key === '/payment',
+              click: () => router.change('/payment'),
+            },
+            {
+              icon: 'sliders-h',
+              label: 'Update',
+              focused: !!router.current && router.current.key === '/update',
+              click: () => router.change('/update'),
+            },
+            {
+              icon: 'sync-alt',
+              label: 'Switch',
+              focused: !!router.current && router.current.key === '/switch',
+              click: () => router.change('/switch'),
+            },
+            !!universal.subscribed && {
+              icon: 'wallet',
+              label: 'Payment',
+              focused: !!router.current && router.current.key === '/payment',
+              click: () => router.change('/payment'),
+            },
+            {
+              icon: 'times-circle',
+              label: 'Close',
+              click: close,
+              prefix: 'far',
+              seperated: true,
+            },
+          ],
         }),
         router.current &&
           create(Fragment, {

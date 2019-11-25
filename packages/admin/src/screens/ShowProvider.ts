@@ -13,61 +13,63 @@ export const ShowProvider: FC<{
   }, [])
   const provider = gqlGetProvider.data
     ? gqlGetProvider.data.provider
-    : ({} as any)
+    : undefined
   return create(Page, {
     title: 'Inspect',
     subtitle: 'Provider',
-    children: create(Layout, {
-      column: true,
-      children: [
-        create(Snippet, {
-          key: 'id',
-          icon: 'fingerprint',
-          label: 'Id',
-          value: provider.id,
+    children: !provider
+      ? null
+      : create(Layout, {
+          column: true,
+          children: [
+            create(Snippet, {
+              key: 'id',
+              icon: 'fingerprint',
+              label: 'Id',
+              value: provider.id,
+            }),
+            create(Snippet, {
+              key: 'preset',
+              icon: 'share-alt',
+              label: 'Preset',
+              value: provider.preset,
+            }),
+            create(Snippet, {
+              key: 'client',
+              icon: 'key',
+              label: 'Client Id',
+              value: provider.client,
+            }),
+            create(Snippet, {
+              key: 'redirect_uri',
+              icon: 'compass',
+              label: 'Preset',
+              value: provider.redirect_uri,
+            }),
+            create(Snippet, {
+              key: 'scopes',
+              icon: 'user-shield',
+              label: 'Scopes',
+              value: provider.scopes && provider.scopes.join(', '),
+            }),
+            create(Snippet, {
+              key: 'created',
+              icon: 'clock',
+              label: 'Created',
+              value:
+                provider.created &&
+                format(new Date(provider.created), 'dd LLL yyyy @ h:mm a'),
+            }),
+            create(Snippet, {
+              key: 'updated',
+              icon: 'clock',
+              label: 'Updated',
+              value:
+                provider.updated &&
+                format(new Date(provider.updated), 'dd LLL yyyy @ h:mm a'),
+            }),
+          ],
         }),
-        create(Snippet, {
-          key: 'preset',
-          icon: 'share-alt',
-          label: 'Preset',
-          value: provider.preset,
-        }),
-        create(Snippet, {
-          key: 'client',
-          icon: 'key',
-          label: 'Client Id',
-          value: provider.client,
-        }),
-        create(Snippet, {
-          key: 'redirect_uri',
-          icon: 'compass',
-          label: 'Preset',
-          value: provider.redirect_uri,
-        }),
-        create(Snippet, {
-          key: 'scopes',
-          icon: 'user-shield',
-          label: 'Scopes',
-          value: provider.scopes && provider.scopes.join(', '),
-        }),
-        create(Snippet, {
-          key: 'created',
-          icon: 'clock',
-          label: 'Created',
-          value:
-            provider.created &&
-            format(new Date(provider.created), 'dd LLL yyyy @ h:mm a'),
-        }),
-        create(Snippet, {
-          key: 'updated',
-          icon: 'clock',
-          label: 'Updated',
-          value:
-            provider.updated &&
-            format(new Date(provider.updated), 'dd LLL yyyy @ h:mm a'),
-        }),
-      ],
-    }),
   })
 }
 

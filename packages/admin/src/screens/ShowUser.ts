@@ -11,55 +11,57 @@ export const ShowUser: FC<{
     gqlGetUser.fetch({ id })
     // eslint-disable-next-line
   }, [])
-  const user = gqlGetUser.data ? gqlGetUser.data.user : ({} as any)
+  const user = gqlGetUser.data ? gqlGetUser.data.user : undefined
   return create(Page, {
     title: 'Inspect',
     subtitle: 'User',
-    children: create(Layout, {
-      column: true,
-      children: [
-        create(Snippet, {
-          key: 'id',
-          icon: 'fingerprint',
-          label: 'Id',
-          value: user.id,
+    children: !user
+      ? null
+      : create(Layout, {
+          column: true,
+          children: [
+            create(Snippet, {
+              key: 'id',
+              icon: 'fingerprint',
+              label: 'Id',
+              value: user.id,
+            }),
+            create(Snippet, {
+              key: 'email',
+              icon: 'at',
+              label: 'Email',
+              value: user.email,
+            }),
+            create(Snippet, {
+              key: 'name',
+              icon: 'user',
+              label: 'Name',
+              value: user.name || '...',
+            }),
+            create(Snippet, {
+              key: 'username',
+              icon: 'tags',
+              label: 'Username',
+              value: user.username || '...',
+            }),
+            create(Snippet, {
+              key: 'created',
+              icon: 'clock',
+              label: 'Created',
+              value:
+                user.created &&
+                format(new Date(user.created), 'dd LLL yyyy @ h:mm a'),
+            }),
+            create(Snippet, {
+              key: 'updated',
+              icon: 'clock',
+              label: 'Updated',
+              value:
+                user.updated &&
+                format(new Date(user.updated), 'dd LLL yyyy @ h:mm a'),
+            }),
+          ],
         }),
-        create(Snippet, {
-          key: 'email',
-          icon: 'at',
-          label: 'Email',
-          value: user.email,
-        }),
-        create(Snippet, {
-          key: 'name',
-          icon: 'user',
-          label: 'Name',
-          value: user.name || '...',
-        }),
-        create(Snippet, {
-          key: 'username',
-          icon: 'tags',
-          label: 'Username',
-          value: user.username || '...',
-        }),
-        create(Snippet, {
-          key: 'created',
-          icon: 'clock',
-          label: 'Created',
-          value:
-            user.created &&
-            format(new Date(user.created), 'dd LLL yyyy @ h:mm a'),
-        }),
-        create(Snippet, {
-          key: 'updated',
-          icon: 'clock',
-          label: 'Updated',
-          value:
-            user.updated &&
-            format(new Date(user.updated), 'dd LLL yyyy @ h:mm a'),
-        }),
-      ],
-    }),
   })
 }
 

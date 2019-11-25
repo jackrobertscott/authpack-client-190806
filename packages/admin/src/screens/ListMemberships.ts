@@ -31,7 +31,7 @@ export const ListMemberships: FC = () => {
     hidden: !gqlListMemberships.data || !gqlListMemberships.data.count,
     corner: {
       icon: 'plus',
-      label: 'Create Membership',
+      label: 'New Membership',
       click: () => {
         buildChange(true)
         setTimeout(() => idcurrentChange(undefined), 200) // animation

@@ -99,7 +99,7 @@ const SimpleScreen: FC = () => {
     children: create(SimpleTable),
     corner: {
       icon: 'plus',
-      label: 'Create User',
+      label: 'New User',
       click: () => console.log('Create'),
     },
   })

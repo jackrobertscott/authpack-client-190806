@@ -33,7 +33,7 @@ export const ListUsers: FC = () => {
     hidden: !gqlListUsers.data || !gqlListUsers.data.count,
     corner: {
       icon: 'plus',
-      label: 'Create User',
+      label: 'New User',
       click: () => {
         buildChange(true)
         setTimeout(() => idcurrentChange(undefined), 200) // animation

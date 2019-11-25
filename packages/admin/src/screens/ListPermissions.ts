@@ -31,7 +31,7 @@ export const ListPermissions: FC = () => {
     hidden: !gqlListPermissions.data || !gqlListPermissions.data.count,
     corner: {
       icon: 'plus',
-      label: 'Create Permission',
+      label: 'New Permission',
       click: () => {
         buildChange(true)
         setTimeout(() => idcurrentChange(undefined), 200) // animation

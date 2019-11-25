@@ -27,7 +27,7 @@ export const InputStripe: FC<{
         },
       })
       cardStripe.mount(input.current)
-      if (change) change(cardStripe)
+      if (change) setTimeout(() => change(cardStripe))
       const handleError = (event: any = {}) => error && error(event.error)
       cardStripe.addEventListener('change', handleError)
       return () => cardStripe.removeEventListener('change', handleError)

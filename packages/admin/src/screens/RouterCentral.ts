@@ -44,7 +44,7 @@ export const RouterCentral: FC = () => {
           },
           {
             seperated: true,
-            icon: 'bolt',
+            icon: 'power-off',
             label: 'Power',
             click: () => powerChange(!power),
           },

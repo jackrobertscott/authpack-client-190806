@@ -19,7 +19,7 @@ export const ListMemberships: FC<{
     subtitle: settings.cluster && settings.cluster.name,
     corner: {
       icon: 'plus',
-      label: 'Add Member',
+      label: 'New Member',
       click: add,
     },
     children: !gqlListMemberships.data

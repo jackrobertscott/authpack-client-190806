@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useState, useEffect } from 'react'
+import { createElement as create, FC, useState, useEffect, useRef } from 'react'
 import {
   useSchema,
   Layout,
@@ -21,12 +21,13 @@ import { useGadgets } from '../hooks/useGadgets'
 
 export const UpdatePayment: FC<{
   change?: (id?: string) => void
-}> = ({ change }) => {
+  cancel: () => void
+}> = ({ change, cancel }) => {
   const toaster = useToaster()
   const universal = useUniversal()
   const gadgets = useGadgets()
   const mounted = useMounted()
-  const [stripeCard, stripeCardChange] = useState<any>()
+  const stripeCard = useRef<any>()
   const [loading, loadingChange] = useState<boolean>(false)
   const gqlUpdatePayment = useUpdatePayment()
   const payment = useStripe(stripe)
@@ -35,9 +36,9 @@ export const UpdatePayment: FC<{
     submit: value => {
       loadingChange(true)
       payment
-        .tokenize(stripeCard)
+        .tokenize(stripeCard.current)
         .then(token => {
-          gqlUpdatePayment
+          return gqlUpdatePayment
             .fetch({
               id: universal.cluster_id,
               input: {
@@ -58,7 +59,6 @@ export const UpdatePayment: FC<{
               })
               if (change) change(cluster.id)
             })
-            .finally(() => loadingChange(false))
         })
         .catch(error => {
           toaster.add({
@@ -66,8 +66,8 @@ export const UpdatePayment: FC<{
             label: 'Card Error',
             helper: error.message || 'There was a problem processing the card',
           })
-          loadingChange(false)
         })
+        .finally(() => loadingChange(false))
     },
   })
   useEffect(() => {
@@ -79,8 +79,15 @@ export const UpdatePayment: FC<{
     // eslint-disable-next-line
   }, [])
   return create(Page, {
-    title: 'Payment',
+    title: universal.subscribed ? 'Payment' : 'Activate',
     subtitle: 'Cluster',
+    corner: !universal.subscribed
+      ? undefined
+      : {
+          icon: 'ban',
+          label: 'Cancel Subscription',
+          click: cancel,
+        },
     children: [
       !universal.subscribed &&
         create(Poster, {
@@ -102,7 +109,9 @@ export const UpdatePayment: FC<{
             error: schema.error('card'),
             children: create(InputStripe, {
               stripe,
-              change: value => mounted.current && stripeCardChange(value),
+              change: value => {
+                if (mounted.current) stripeCard.current = value
+              },
             }),
           }),
           create(Layout, {
@@ -147,7 +156,7 @@ export const UpdatePayment: FC<{
           }),
           create(Button, {
             key: 'submit',
-            label: 'Submit',
+            label: universal.subscribed ? 'Update Payment' : 'Submit',
             disabled: !schema.valid,
             click: schema.submit,
             loading,

@@ -11,55 +11,57 @@ export const ShowSession: FC<{
     gqlGetSession.fetch({ id })
     // eslint-disable-next-line
   }, [])
-  const session = gqlGetSession.data ? gqlGetSession.data.session : ({} as any)
+  const session = gqlGetSession.data ? gqlGetSession.data.session : undefined
   return create(Page, {
     title: 'Inspect',
     subtitle: 'Session',
-    children: create(Layout, {
-      column: true,
-      children: [
-        create(Snippet, {
-          key: 'id',
-          icon: 'fingerprint',
-          label: 'Id',
-          value: session.id,
+    children: !session
+      ? null
+      : create(Layout, {
+          column: true,
+          children: [
+            create(Snippet, {
+              key: 'id',
+              icon: 'fingerprint',
+              label: 'Id',
+              value: session.id,
+            }),
+            create(Snippet, {
+              key: 'disabled',
+              icon: 'battery-three-quarters',
+              label: 'Disabled',
+              value: String(session.disabled),
+            }),
+            create(Snippet, {
+              key: 'user',
+              icon: 'user',
+              label: 'User',
+              value: !session.user ? '...' : session.user.summary,
+            }),
+            create(Snippet, {
+              key: 'team',
+              icon: 'users',
+              label: 'Team',
+              value: !session.team ? '...' : session.team.summary,
+            }),
+            create(Snippet, {
+              key: 'created',
+              icon: 'clock',
+              label: 'Created',
+              value:
+                session.created &&
+                format(new Date(session.created), 'dd LLL yyyy @ h:mm a'),
+            }),
+            create(Snippet, {
+              key: 'updated',
+              icon: 'clock',
+              label: 'Updated',
+              value:
+                session.updated &&
+                format(new Date(session.updated), 'dd LLL yyyy @ h:mm a'),
+            }),
+          ],
         }),
-        create(Snippet, {
-          key: 'disabled',
-          icon: 'battery-three-quarters',
-          label: 'Disabled',
-          value: String(session.disabled),
-        }),
-        create(Snippet, {
-          key: 'user',
-          icon: 'user',
-          label: 'User',
-          value: !session.user ? '...' : session.user.summary,
-        }),
-        create(Snippet, {
-          key: 'team',
-          icon: 'users',
-          label: 'Team',
-          value: !session.team ? '...' : session.team.summary,
-        }),
-        create(Snippet, {
-          key: 'created',
-          icon: 'clock',
-          label: 'Created',
-          value:
-            session.created &&
-            format(new Date(session.created), 'dd LLL yyyy @ h:mm a'),
-        }),
-        create(Snippet, {
-          key: 'updated',
-          icon: 'clock',
-          label: 'Updated',
-          value:
-            session.updated &&
-            format(new Date(session.updated), 'dd LLL yyyy @ h:mm a'),
-        }),
-      ],
-    }),
   })
 }
 
