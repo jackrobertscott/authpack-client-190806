@@ -1,9 +1,15 @@
 import { useState, useEffect, useMemo } from 'react'
 
-export const usePaginator = ({ count }: { count?: number }) => {
+export const usePaginator = ({
+  count,
+  limit,
+}: {
+  count?: number
+  limit?: number
+}) => {
   const [paginator, changePaginator] = useState({
     total: 0,
-    limit: 50,
+    limit: limit || 50,
     page: 0,
     skip: 0,
   })

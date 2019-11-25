@@ -3,7 +3,6 @@ import { useRouter, SideBar } from 'wga-theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { ListUsers } from './ListUsers'
 import { ListTeams } from './ListTeams'
-import { ListSessions } from './ListSessions'
 
 export const RouterSideBarHome: FC = () => {
   const config = useUniversal()
@@ -12,7 +11,6 @@ export const RouterSideBarHome: FC = () => {
     nomatch: '/users',
     options: [
       { path: '/users', children: create(ListUsers) },
-      { path: '/sessions', children: create(ListSessions) },
       { path: '/teams', children: create(ListTeams) },
     ],
   })
@@ -34,12 +32,6 @@ export const RouterSideBarHome: FC = () => {
             label: 'Teams',
             focused: !!router.current && router.current.path === '/teams',
             click: () => router.change('/teams'),
-          },
-          {
-            icon: 'history',
-            label: 'Sessions',
-            focused: !!router.current && router.current.path === '/sessions',
-            click: () => router.change('/sessions'),
           },
         ],
       }),

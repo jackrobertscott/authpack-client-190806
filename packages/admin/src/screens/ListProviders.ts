@@ -10,12 +10,13 @@ export const ListProviders: FC = () => {
   const gqlListProviders = useListProviders()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
-  const [variables, variablesChange] = useState<{ [key: string]: any }>({
-    options: { sort: 'created' },
-  })
+  const [variables, variablesChange] = useState<{
+    options: { [key: string]: any }
+    phrase?: string
+  }>({ options: { sort: 'created' } })
   const queryListProviders = useRef(drip(1000, gqlListProviders.fetch))
   useEffect(() => {
-    if (variables) queryListProviders.current(variables)
+    if (variables.options.limit) queryListProviders.current(variables)
     // eslint-disable-next-line
   }, [variables])
   const list =
@@ -40,10 +41,11 @@ export const ListProviders: FC = () => {
     noscroll: create(TemplateSearchBar, {
       count: gqlListProviders.data && gqlListProviders.data.count,
       current: gqlListProviders.data && gqlListProviders.data.providers.length,
-      change: (search, limit, skip) => {
+      change: (phrase, limit, skip) => {
         variablesChange({
-          phrase: search,
-          options: { ...(variables.options || {}), limit, skip },
+          ...variables,
+          options: { ...variables.options, limit, skip },
+          phrase,
         })
       },
     }),
@@ -51,8 +53,9 @@ export const ListProviders: FC = () => {
       create(RouterManagerProvider, {
         key: 'router',
         id: idcurrent,
+        visible: build,
         change: id => {
-          if (variables) queryListProviders.current(variables)
+          variablesChange({ ...variables })
           if (id) {
             idcurrentChange(id)
           } else {
@@ -64,7 +67,6 @@ export const ListProviders: FC = () => {
           buildChange(false)
           setTimeout(() => idcurrentChange(undefined), 200) // animation
         },
-        visible: build,
       }),
       gqlListProviders.data &&
         !gqlListProviders.data.count &&
@@ -97,10 +99,14 @@ export const ListProviders: FC = () => {
                   : 'chevron-up'
                 : 'equals',
             click: () =>
-              variablesChange(({ options = {}, ...data }) => ({
-                ...data,
-                options: { ...options, sort: key, reverse: !options.reverse },
-              })),
+              variablesChange({
+                ...variables,
+                options: {
+                  ...variables.options,
+                  sort: key,
+                  reverse: !variables.options.reverse,
+                },
+              }),
           })),
           rows: list.map(data => ({
             id: data.id,

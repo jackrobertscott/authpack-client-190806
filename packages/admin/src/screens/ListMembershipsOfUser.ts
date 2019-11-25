@@ -2,56 +2,55 @@ import faker from 'faker'
 import { createElement as create, FC, useState, useEffect, useRef } from 'react'
 import { Page, Table, Empty, Button, drip } from 'wga-theme'
 import { format } from 'date-fns'
-import { RouterManagerPermission } from './RouterManagerPermission'
+import { RouterManagerMembership } from './RouterManagerMembership'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'
 import { createUseServer } from '../hooks/useServer'
 
-export const ListPermissions: FC = () => {
-  const gqlListPermissions = useListPermissions()
+export const ListMembershipsOfUser: FC<{ user_id: string }> = ({ user_id }) => {
+  const gqlListMemberships = useListMemberships()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [variables, variablesChange] = useState<{
+    where: { user_id: string }
     options: { [key: string]: any }
-    phrase?: string
-  }>({ options: { sort: 'created' } })
-  const queryListPermissions = useRef(drip(1000, gqlListPermissions.fetch))
+  }>({ where: { user_id }, options: { sort: 'created' } })
+  const queryListMemberships = useRef(drip(1000, gqlListMemberships.fetch))
   useEffect(() => {
-    if (variables.options.limit) queryListPermissions.current(variables)
+    if (variables.where.user_id && variables.options.limit)
+      queryListMemberships.current(variables)
     // eslint-disable-next-line
   }, [variables])
   const list =
-    gqlListPermissions.data && gqlListPermissions.data.count
-      ? gqlListPermissions.data.permissions
-      : variables.phrase ||
-        Boolean(gqlListPermissions.data && !gqlListPermissions.data.permissions)
+    gqlListMemberships.data && gqlListMemberships.data.count
+      ? gqlListMemberships.data.memberships
+      : Boolean(gqlListMemberships.data && !gqlListMemberships.data.memberships)
       ? []
-      : FakePermissions
+      : FakeMemberships
   return create(Page, {
-    title: 'Permissions',
-    subtitle: 'See all permissions of your app',
-    hidden: !gqlListPermissions.data || !gqlListPermissions.data.count,
+    title: 'Memberships',
+    subtitle: 'See all memberships of your app',
+    hidden: !gqlListMemberships.data || !gqlListMemberships.data.count,
     corner: {
       icon: 'plus',
-      label: 'New Permission',
+      label: 'New Membership',
       click: () => {
         buildChange(true)
         setTimeout(() => idcurrentChange(undefined), 200) // animation
       },
     },
     noscroll: create(TemplateSearchBar, {
-      count: gqlListPermissions.data && gqlListPermissions.data.count,
+      count: gqlListMemberships.data && gqlListMemberships.data.count,
       current:
-        gqlListPermissions.data && gqlListPermissions.data.permissions.length,
-      change: (phrase, limit, skip) => {
+        gqlListMemberships.data && gqlListMemberships.data.memberships.length,
+      input: false,
+      change: (_, limit, skip) =>
         variablesChange({
           ...variables,
           options: { ...variables.options, limit, skip },
-          phrase,
-        })
-      },
+        }),
     }),
     children: [
-      create(RouterManagerPermission, {
+      create(RouterManagerMembership, {
         key: 'router',
         id: idcurrent,
         visible: build,
@@ -69,28 +68,26 @@ export const ListPermissions: FC = () => {
           setTimeout(() => idcurrentChange(undefined), 200) // animation
         },
       }),
-      gqlListPermissions.data &&
-        !gqlListPermissions.data.count &&
+      gqlListMemberships.data &&
+        !gqlListMemberships.data.count &&
         create(Empty, {
           key: 'empty',
-          icon: 'user-shield',
-          label: 'Permissions',
+          icon: 'users',
+          label: 'Memberships',
           helper:
-            'Create a permission manually or by using the Authenticator API',
+            'Create a membership manually or by using the Authenticator API',
           children: create(Button, {
             key: 'Regular',
             label: 'See API',
             click: () => window.open('https://windowgadgets.io'),
           }),
         }),
-      gqlListPermissions.data &&
+      gqlListMemberships.data &&
         create(Table, {
           key: 'table',
           header: [
-            { key: 'name', label: 'Name' },
-            { key: 'tag', label: 'Tag' },
-            { key: 'description', label: 'Description' },
-            { key: 'updated', label: 'Updated' },
+            { key: 'team_id', label: 'Team' },
+            { key: 'created', label: 'Created' },
           ].map(({ key, label }) => ({
             label,
             icon:
@@ -116,12 +113,13 @@ export const ListPermissions: FC = () => {
               buildChange(true)
             },
             cells: [
-              { icon: 'users', value: data.name },
-              { icon: 'fingerprint', value: data.tag || '...' },
-              { icon: 'book', value: data.description || '...' },
+              {
+                icon: 'users',
+                value: data.team ? data.team.summary : '...',
+              },
               {
                 icon: 'clock',
-                value: format(new Date(data.updated), 'dd LLL yyyy @ h:mm a'),
+                value: format(new Date(data.created), 'dd LLL yyyy @ h:mm a'),
               },
             ],
           })),
@@ -130,40 +128,52 @@ export const ListPermissions: FC = () => {
   })
 }
 
-const useListPermissions = createUseServer<{
+const useListMemberships = createUseServer<{
   count: number
-  permissions: Array<{
+  memberships: Array<{
     id: string
-    updated: string
-    name: string
-    tag: string
-    description?: string
+    created: string
+    user: {
+      summary: string
+    }
+    team?: {
+      summary: string
+    }
   }>
 }>({
   query: `
-    query ListPermissions($phrase: String, $options: WhereOptions) {
-      count: CountPermissions(phrase: $phrase)
-      permissions: ListPermissions(phrase: $phrase, options: $options) {
+    query ListMemberships($where: WhereMemberships, $options: WhereOptions) {
+      count: CountMemberships
+      memberships: ListMemberships(where: $where, options: $options) {
         id
-        updated
-        name
-        tag
-        description
+        created
+        user {
+          summary
+        }
+        team {
+          summary
+        }
       }
     }
   `,
 })
 
-const FakePermissions: Array<{
+const FakeMemberships: Array<{
   id: string
-  updated: string
-  name: string
-  tag: string
-  description?: string
-}> = Array.from(Array(8).keys()).map(() => ({
+  created: string
+  user: {
+    summary: string
+  }
+  team?: {
+    summary: string
+  }
+}> = Array.from(Array(20).keys()).map(() => ({
   id: faker.random.uuid(),
-  updated: faker.date.recent(100).toDateString(),
-  name: faker.random.words(2),
-  tag: faker.internet.userName(),
-  description: faker.random.words(5),
+  created: faker.date.recent(100).toDateString(),
+  user: {
+    summary: faker.name.findName(),
+  },
+  team: {
+    summary: faker.random.words(2),
+  },
 }))

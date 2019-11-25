@@ -6,23 +6,24 @@ import { RouterManagerMembership } from './RouterManagerMembership'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'
 import { createUseServer } from '../hooks/useServer'
 
-export const ListMemberships: FC = () => {
+export const ListMembershipsOfTeam: FC<{ team_id: string }> = ({ team_id }) => {
   const gqlListMemberships = useListMemberships()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
-  const [variables, variablesChange] = useState<{ [key: string]: any }>({
-    options: { sort: 'created' },
-  })
+  const [variables, variablesChange] = useState<{
+    where: { team_id: string }
+    options: { [key: string]: any }
+  }>({ where: { team_id }, options: { sort: 'created' } })
   const queryListMemberships = useRef(drip(1000, gqlListMemberships.fetch))
   useEffect(() => {
-    if (variables) queryListMemberships.current(variables)
+    if (variables.where.team_id && variables.options.limit)
+      queryListMemberships.current(variables)
     // eslint-disable-next-line
   }, [variables])
   const list =
     gqlListMemberships.data && gqlListMemberships.data.count
       ? gqlListMemberships.data.memberships
-      : variables.phrase ||
-        Boolean(gqlListMemberships.data && !gqlListMemberships.data.memberships)
+      : Boolean(gqlListMemberships.data && !gqlListMemberships.data.memberships)
       ? []
       : FakeMemberships
   return create(Page, {
@@ -42,18 +43,19 @@ export const ListMemberships: FC = () => {
       current:
         gqlListMemberships.data && gqlListMemberships.data.memberships.length,
       input: false,
-      change: (_, limit, skip) => {
+      change: (_, limit, skip) =>
         variablesChange({
-          options: { ...(variables.options || {}), limit, skip },
-        })
-      },
+          ...variables,
+          options: { ...variables.options, limit, skip },
+        }),
     }),
     children: [
       create(RouterManagerMembership, {
         key: 'router',
         id: idcurrent,
+        visible: build,
         change: id => {
-          if (variables) queryListMemberships.current(variables)
+          variablesChange({ ...variables })
           if (id) {
             idcurrentChange(id)
           } else {
@@ -65,7 +67,6 @@ export const ListMemberships: FC = () => {
           buildChange(false)
           setTimeout(() => idcurrentChange(undefined), 200) // animation
         },
-        visible: build,
       }),
       gqlListMemberships.data &&
         !gqlListMemberships.data.count &&
@@ -97,10 +98,14 @@ export const ListMemberships: FC = () => {
                   : 'chevron-up'
                 : 'equals',
             click: () =>
-              variablesChange(({ options = {}, ...data }) => ({
-                ...data,
-                options: { ...options, sort: key, reverse: !options.reverse },
-              })),
+              variablesChange({
+                ...variables,
+                options: {
+                  ...variables.options,
+                  sort: key,
+                  reverse: !variables.options.reverse,
+                },
+              }),
           })),
           rows: list.map(data => ({
             id: data.id,
@@ -142,9 +147,9 @@ const useListMemberships = createUseServer<{
   }>
 }>({
   query: `
-    query ListMemberships($options: WhereOptions) {
+    query ListMemberships($where: WhereMemberships, $options: WhereOptions) {
       count: CountMemberships
-      memberships: ListMemberships(options: $options) {
+      memberships: ListMemberships(where: $where, options: $options) {
         id
         created
         user {

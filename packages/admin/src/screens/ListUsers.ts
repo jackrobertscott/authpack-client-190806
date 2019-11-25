@@ -12,7 +12,10 @@ export const ListUsers: FC = () => {
   const gqlListUsers = useListUsers()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
-  const [variables, variablesChange] = useState<{ [key: string]: any }>({
+  const [variables, variablesChange] = useState<{
+    options: { [key: string]: any }
+    phrase?: string
+  }>({
     options: { sort: 'created' },
   })
   const queryListUsers = useRef(drip(1000, gqlListUsers.fetch))
@@ -42,10 +45,11 @@ export const ListUsers: FC = () => {
     noscroll: create(TemplateSearchBar, {
       count: gqlListUsers.data && gqlListUsers.data.count,
       current: gqlListUsers.data && gqlListUsers.data.users.length,
-      change: (search, limit, skip) => {
+      change: (phrase, limit, skip) => {
         variablesChange({
-          phrase: search,
-          options: { ...(variables.options || {}), limit, skip },
+          ...variables,
+          options: { ...variables.options, limit, skip },
+          phrase,
         })
       },
     }),
@@ -53,8 +57,9 @@ export const ListUsers: FC = () => {
       create(RouterManagerUser, {
         key: 'router',
         id: idcurrent,
+        visible: build,
         change: id => {
-          if (variables) queryListUsers.current(variables)
+          variablesChange({ ...variables })
           if (id) {
             idcurrentChange(id)
           } else {
@@ -66,7 +71,6 @@ export const ListUsers: FC = () => {
           buildChange(false)
           setTimeout(() => idcurrentChange(undefined), 200) // animation
         },
-        visible: build,
       }),
       gqlListUsers.data &&
         !gqlListUsers.data.count &&
@@ -98,10 +102,14 @@ export const ListUsers: FC = () => {
                   : 'chevron-up'
                 : 'equals',
             click: () =>
-              variablesChange(({ options = {}, ...data }) => ({
-                ...data,
-                options: { ...options, sort: key, reverse: !options.reverse },
-              })),
+              variablesChange({
+                ...variables,
+                options: {
+                  ...variables.options,
+                  sort: key,
+                  reverse: !variables.options.reverse,
+                },
+              }),
           })),
           rows: list.map(data => ({
             id: data.id,
