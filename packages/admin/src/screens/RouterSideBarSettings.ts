@@ -4,10 +4,10 @@ import { useUniversal } from '../hooks/useUniversal'
 import { ListPermissions } from './ListPermissions'
 import { ListProviders } from './ListProviders'
 
-export const RouterSideBarCustomize: FC = () => {
+export const RouterSideBarSettings: FC = () => {
   const config = useUniversal()
   const router = useRouter({
-    base: '/customize',
+    base: '/settings',
     nomatch: '/providers',
     options: [
       { path: '/providers', children: create(ListProviders) },
@@ -18,7 +18,7 @@ export const RouterSideBarCustomize: FC = () => {
     children: [
       create(SideBar, {
         key: 'sideBar',
-        title: 'Customize',
+        title: 'Settings',
         footer: config.cluster_name,
         options: [
           {

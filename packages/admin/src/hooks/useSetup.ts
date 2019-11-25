@@ -21,8 +21,8 @@ export const useSetup = () => {
             cluster_id: cluster.id,
             cluster_name: cluster.name,
             cluster_domain_key: cluster.key_domain,
-            subscribed: cluster.subscribed,
             power: cluster.power,
+            subscribed: cluster.subscribed,
             theme: cluster.theme,
           })
         })
@@ -39,8 +39,8 @@ const useGetCluster = createUseServer<{
     id: string
     name: string
     theme: string
-    subscribed: boolean
     power: boolean
+    subscribed: boolean
     key_domain: string
   }
 }>({
@@ -50,8 +50,8 @@ const useGetCluster = createUseServer<{
         id
         name
         theme
-        subscribed
         power
+        subscribed
         key_domain
       }
     }

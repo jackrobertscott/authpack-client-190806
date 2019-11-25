@@ -34,16 +34,16 @@ export const RemovePayment: FC<{
 const useRemovePayment = createUseServer<{
   cluster: {
     id: string
-    subscribed: boolean
     power: boolean
+    subscribed: boolean
   }
 }>({
   query: `
     mutation RemovePaymentClient($id: String!) {
       cluster: RemovePaymentClient(id: $id) {
         id
-        subscribed
         power
+        subscribed
       }
     }
   `,

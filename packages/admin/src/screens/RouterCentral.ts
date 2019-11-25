@@ -1,20 +1,18 @@
 import { createElement as create, FC, Fragment, useState } from 'react'
 import { Layout, IconBar, useRouter } from 'wga-theme'
-import { RouterSideBarHome } from './RouterSideBarHome'
-import { RouterSideBarCustomize } from './RouterSideBarCustomize'
-import { RouterSideBarDeveloper } from './RouterSideBarDeveloper'
 import { wga } from '../utils/wga'
-import { Power } from './Power'
+import { RouterSideBarHome } from './RouterSideBarHome'
+import { RouterSideBarSettings } from './RouterSideBarSettings'
+import { RouterSideBarDeveloper } from './RouterSideBarDeveloper'
 import { RouterManagerCluster } from './RouterManagerCluster'
 
 export const RouterCentral: FC = () => {
   const [apper, apperChange] = useState<boolean>(false)
-  const [power, powerChange] = useState<boolean>(false)
   const router = useRouter({
     nomatch: '/app',
     options: [
       { path: '/app', children: create(RouterSideBarHome) },
-      { path: '/customize', children: create(RouterSideBarCustomize) },
+      { path: '/settings', children: create(RouterSideBarSettings) },
       { path: '/developer', children: create(RouterSideBarDeveloper) },
     ],
   })
@@ -31,10 +29,10 @@ export const RouterCentral: FC = () => {
             click: () => router.change('/app'),
           },
           {
-            icon: 'sliders-h',
-            label: 'Customize',
-            focused: !!router.current && router.current.path === '/customize',
-            click: () => router.change('/customize'),
+            icon: 'cog',
+            label: 'Settings',
+            focused: !!router.current && router.current.path === '/settings',
+            click: () => router.change('/settings'),
           },
           {
             icon: 'code',
@@ -43,44 +41,28 @@ export const RouterCentral: FC = () => {
             click: () => router.change('/developer'),
           },
           {
-            seperated: true,
-            icon: 'power-off',
-            label: 'Power',
-            click: () => powerChange(!power),
-          },
-          {
-            icon: 'cog',
-            label: 'Settings',
+            icon: 'bars',
+            label: 'Cluster',
             click: () => apperChange(!apper),
+            seperated: true,
           },
           {
             icon: 'user-circle',
             label: 'Account',
             click: () => wga.show(),
           },
-        ].map(({ click, ...rest }) => ({
-          ...rest,
-          click: () => {
-            powerChange(false)
-            click()
-          },
-        })),
+        ],
       }),
       create(RouterManagerCluster, {
-        key: 'settings',
+        key: 'cluster',
         visible: apper,
         close: () => apperChange(false),
       }),
-      power
-        ? create(Power, {
-            key: 'power',
-            close: () => powerChange(false),
-          })
-        : router.current &&
-          create(Fragment, {
-            key: 'children',
-            children: router.current.children,
-          }),
+      router.current &&
+        create(Fragment, {
+          key: 'children',
+          children: router.current.children,
+        }),
     ],
   })
 }
