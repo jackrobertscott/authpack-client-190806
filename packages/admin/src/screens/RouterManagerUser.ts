@@ -5,7 +5,7 @@ import { UpdateUser } from './UpdateUser'
 import { RemoveUser } from './RemoveUser'
 import { UpdateUserPassword } from './UpdateUserPassword'
 import { ShowUser } from './ShowUser'
-import { ListSessions } from './ListSessions'
+import { ListSessionsOfUser } from './ListSessionsOfUser'
 import { ListMembershipsOfUser } from './ListMembershipsOfUser'
 
 export const RouterManagerUser: FC<{
@@ -28,7 +28,10 @@ export const RouterManagerUser: FC<{
             key: '/memberships',
             children: create(ListMembershipsOfUser, { user_id: id }),
           },
-          { key: '/sessions', children: create(ListSessions, { user_id: id }) },
+          {
+            key: '/sessions',
+            children: create(ListSessionsOfUser, { user_id: id }),
+          },
           { key: '/remove', children: create(RemoveUser, { id, change }) },
         ]
       : [{ key: '/create', children: create(CreateUser, { change }) }],

@@ -28,7 +28,7 @@ export const ListMembershipsOfUser: FC<{ user_id: string }> = ({ user_id }) => {
       : FakeMemberships
   return create(Page, {
     title: 'Memberships',
-    subtitle: 'See all memberships of your app',
+    subtitle: 'User',
     hidden: !gqlListMemberships.data || !gqlListMemberships.data.count,
     corner: {
       icon: 'plus',

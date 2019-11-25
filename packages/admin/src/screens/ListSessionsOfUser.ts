@@ -6,7 +6,7 @@ import { RouterManagerSession } from './RouterManagerSession'
 import { createUseServer } from '../hooks/useServer'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'
 
-export const ListSessions: FC<{ user_id: string }> = ({ user_id }) => {
+export const ListSessionsOfUser: FC<{ user_id: string }> = ({ user_id }) => {
   const gqlListSessions = useListSessions()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
@@ -28,7 +28,7 @@ export const ListSessions: FC<{ user_id: string }> = ({ user_id }) => {
       : FakeSessions
   return create(Page, {
     title: 'Sessions',
-    subtitle: 'Login sessions of user',
+    subtitle: 'User',
     hidden: !gqlListSessions.data || !gqlListSessions.data.count,
     noscroll: create(TemplateSearchBar, {
       input: false,
