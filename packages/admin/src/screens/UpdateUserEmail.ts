@@ -33,13 +33,13 @@ export const UpdateUserEmail: FC<{
     },
   })
   return create(Page, {
-    title: 'Change Email',
+    title: 'Email',
     subtitle: 'User',
     children: [
       create(Poster, {
         key: 'poster',
         icon: 'at',
-        label: 'Update Email',
+        label: 'Change Email',
         helper: 'User will need to reverify their account',
       }),
       create(Layout, {

@@ -41,7 +41,7 @@ export const UpdateUserPassword: FC<{
         key: 'poster',
         icon: 'unlock',
         label: 'Change Password',
-        helper: 'Improve the security of your account',
+        helper: 'Passwords are encrypted',
       }),
       create(Layout, {
         key: 'layout',

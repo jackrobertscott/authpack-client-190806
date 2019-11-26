@@ -33,14 +33,14 @@ export const UpdateUserPassword: FC<{
     },
   })
   return create(Page, {
-    title: 'Change Password',
+    title: 'Password',
     subtitle: 'User',
     children: [
       create(Poster, {
         key: 'poster',
         icon: 'unlock',
-        label: 'Password',
-        helper: 'Change password for user',
+        label: 'Change Password',
+        helper: 'Passwords are encrypted',
       }),
       create(Layout, {
         key: 'layout',
