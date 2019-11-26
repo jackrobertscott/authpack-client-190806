@@ -2,17 +2,17 @@ import * as yup from 'yup'
 import { createElement as create, FC } from 'react'
 import {
   useSchema,
-  Button,
+  Poster,
   Layout,
   Control,
   InputString,
-  Poster,
+  Button,
   Page,
   useToaster,
 } from 'wga-theme'
 import { createUseServer } from '../hooks/useServer'
 
-export const UpdateUserPassword: FC<{
+export const UpdateUserEmail: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
@@ -27,20 +27,20 @@ export const UpdateUserPassword: FC<{
         toaster.add({
           icon: 'check',
           label: 'Success',
-          helper: 'Password has been changed',
+          helper: 'Email has been changed',
         })
       })
     },
   })
   return create(Page, {
-    title: 'Change Password',
+    title: 'Change Email',
     subtitle: 'User',
     children: [
       create(Poster, {
         key: 'poster',
-        icon: 'unlock',
-        label: 'Password',
-        helper: 'Change password for user',
+        icon: 'at',
+        label: 'Update Email',
+        helper: 'User will need to reverify their account',
       }),
       create(Layout, {
         key: 'layout',
@@ -49,15 +49,13 @@ export const UpdateUserPassword: FC<{
         divide: true,
         children: [
           create(Control, {
-            key: 'password',
-            label: 'Password',
-            helper: 'Please use more than 6 characters',
-            error: schema.error('password'),
+            key: 'email',
+            label: 'Email',
+            error: schema.error('email'),
             children: create(InputString, {
-              value: schema.value('password'),
-              change: schema.change('password'),
-              placeholder: '* * * * * * * *',
-              password: true,
+              value: schema.value('email'),
+              change: schema.change('email'),
+              placeholder: 'example@email.com',
             }),
           }),
           create(Button, {
@@ -74,10 +72,10 @@ export const UpdateUserPassword: FC<{
 }
 
 const SchemaUpdateUser = yup.object().shape({
-  password: yup
+  email: yup
     .string()
-    .min(6, 'Password must be more than 6 characters')
-    .required('Password is required'),
+    .email('Please use a valid email address')
+    .required('Email is required'),
 })
 
 const useUpdateUser = createUseServer<{

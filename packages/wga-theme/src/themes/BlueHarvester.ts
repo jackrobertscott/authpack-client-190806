@@ -164,7 +164,7 @@ export const BlueHarvester: ITheme = {
     label: color(95),
     helper: color(65),
     background: color(17.5),
-    border: `1px solid ${color(10)}`,
+    border: `1px solid ${color(12.5)}`,
   },
   empty: {
     label: color(95),

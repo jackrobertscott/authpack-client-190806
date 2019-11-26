@@ -45,7 +45,7 @@ export const ListProviders: FC<{
         ? null
         : !gqlListProviders.data.providers.length
         ? create(Poster, {
-            icon: 'handshake',
+            icon: 'share-alt',
             label: '3rd Party Logins',
             helper: 'There are no authentication providers currently available',
           })

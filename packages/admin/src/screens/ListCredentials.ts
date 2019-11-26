@@ -2,37 +2,38 @@ import faker from 'faker'
 import { createElement as create, FC, useState, useEffect, useRef } from 'react'
 import { Page, Table, Empty, drip } from 'wga-theme'
 import { format } from 'date-fns'
-import { RouterManagerSession } from './RouterManagerSession'
+import { RouterManagerCredential } from './RouterManagerCredential'
 import { createUseServer } from '../hooks/useServer'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'
 
-export const ListSessions: FC<{ user_id?: string }> = ({ user_id }) => {
-  const gqlListSessions = useListSessions()
+export const ListCredentials: FC<{ user_id?: string }> = ({ user_id }) => {
+  const gqlListCredentials = useListCredentials()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [variables, variablesChange] = useState<{
     where: { user_id?: string }
     options: { [key: string]: any }
   }>({ where: { user_id }, options: { sort: 'created' } })
-  const queryListSessions = useRef(drip(1000, gqlListSessions.fetch))
+  const queryListCredentials = useRef(drip(1000, gqlListCredentials.fetch))
   useEffect(() => {
-    if (variables.options.limit) queryListSessions.current(variables)
+    if (variables.options.limit) queryListCredentials.current(variables)
     // eslint-disable-next-line
   }, [variables])
   const list =
-    gqlListSessions.data && gqlListSessions.data.count
-      ? gqlListSessions.data.sessions
-      : Boolean(gqlListSessions.data && !gqlListSessions.data.sessions)
+    gqlListCredentials.data && gqlListCredentials.data.count
+      ? gqlListCredentials.data.credentials
+      : Boolean(gqlListCredentials.data && !gqlListCredentials.data.credentials)
       ? []
-      : FakeSessions
+      : FakeCredentials
   return create(Page, {
-    title: 'Sessions',
+    title: 'Credentials',
     subtitle: 'User',
-    hidden: !gqlListSessions.data || !gqlListSessions.data.count,
+    hidden: !gqlListCredentials.data || !gqlListCredentials.data.count,
     noscroll: create(TemplateSearchBar, {
       input: false,
-      count: gqlListSessions.data && gqlListSessions.data.count,
-      current: gqlListSessions.data && gqlListSessions.data.sessions.length,
+      count: gqlListCredentials.data && gqlListCredentials.data.count,
+      current:
+        gqlListCredentials.data && gqlListCredentials.data.credentials.length,
       change: (_, limit, skip) =>
         variablesChange({
           ...variables,
@@ -40,7 +41,7 @@ export const ListSessions: FC<{ user_id?: string }> = ({ user_id }) => {
         }),
     }),
     children: [
-      create(RouterManagerSession, {
+      create(RouterManagerCredential, {
         key: 'router',
         id: idcurrent,
         visible: build,
@@ -58,19 +59,19 @@ export const ListSessions: FC<{ user_id?: string }> = ({ user_id }) => {
           setTimeout(() => idcurrentChange(undefined), 200) // animation
         },
       }),
-      gqlListSessions.data &&
-        !gqlListSessions.data.count &&
+      gqlListCredentials.data &&
+        !gqlListCredentials.data.count &&
         create(Empty, {
           key: 'empty',
           icon: 'history',
-          label: 'Sessions',
-          helper: 'No sessions currently exist',
+          label: 'Credentials',
+          helper: 'No credentials currently exist',
         }),
-      gqlListSessions.data &&
+      gqlListCredentials.data &&
         create(Table, {
           key: 'table',
           header: [
-            { key: 'team_id', label: 'Team' },
+            { key: 'provider_id', label: 'Provider' },
             { key: 'created', label: 'Created' },
           ].map(({ key, label }) => ({
             label,
@@ -99,7 +100,7 @@ export const ListSessions: FC<{ user_id?: string }> = ({ user_id }) => {
             cells: [
               {
                 icon: 'users',
-                value: data.team ? data.team.summary : '...',
+                value: data.provider ? data.provider.name : '...',
               },
               {
                 icon: 'clock',
@@ -112,40 +113,40 @@ export const ListSessions: FC<{ user_id?: string }> = ({ user_id }) => {
   })
 }
 
-const useListSessions = createUseServer<{
+const useListCredentials = createUseServer<{
   count: number
-  sessions: Array<{
+  credentials: Array<{
     id: string
     created: string
-    team?: {
-      summary: string
+    provider?: {
+      name: string
     }
   }>
 }>({
   query: `
-    query ListSessions($where: WhereSessions!, $options: WhereOptions) {
-      count: CountSessions(where: $where)
-      sessions: ListSessions(where: $where, options: $options) {
+    query ListCredentials($where: WhereCredentials!, $options: WhereOptions) {
+      count: CountCredentials(where: $where)
+      credentials: ListCredentials(where: $where, options: $options) {
         id
         created
-        team {
-          summary
+        provider {
+          name
         }
       }
     }
   `,
 })
 
-const FakeSessions: Array<{
+const FakeCredentials: Array<{
   id: string
   created: string
-  team?: {
-    summary: string
+  provider?: {
+    name: string
   }
 }> = Array.from(Array(5).keys()).map(() => ({
   id: faker.random.uuid(),
   created: faker.date.recent(100).toDateString(),
-  team: {
-    summary: faker.random.words(2),
+  provider: {
+    name: faker.random.words(1),
   },
 }))

@@ -75,16 +75,6 @@ export const UpdateUser: FC<{
                 placeholder: 'example_username_123',
               }),
             }),
-            create(Control, {
-              key: 'email',
-              label: 'Email',
-              error: schema.error('email'),
-              children: create(InputString, {
-                value: schema.value('email'),
-                change: schema.change('email'),
-                placeholder: 'example@email.com',
-              }),
-            }),
           ],
     }),
   })
@@ -100,9 +90,6 @@ const SchemaUpdateUser = yup.object().shape({
       'Please use only numbers, letters and underscores',
       testAlphanumeric
     ),
-  email: yup
-    .string()
-    .email('Please make sure you have used a valid email address'),
 })
 
 const useGetUser = createUseServer<{
@@ -110,7 +97,6 @@ const useGetUser = createUseServer<{
     name_given: string
     name_family: string
     username: string
-    email: string
   }
 }>({
   query: `
@@ -119,7 +105,6 @@ const useGetUser = createUseServer<{
         name_given
         name_family
         username
-        email
       }
     }
   `,

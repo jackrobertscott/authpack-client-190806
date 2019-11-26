@@ -49,7 +49,7 @@ export const RouterSideBarUser: FC = () => {
             click: () => router.change('/user/password'),
           },
           {
-            icon: 'handshake',
+            icon: 'share-alt',
             label: 'Apps',
             focused: router.current && router.current.key === '/user/apps',
             click: () => router.change('/user/apps'),

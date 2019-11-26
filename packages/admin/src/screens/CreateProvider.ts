@@ -112,7 +112,7 @@ const SchemaCreateProvider = yup.object().shape({
     .required('Please provide a preset'),
   client: yup.string().required('Please provide the oauth client id'),
   secret: yup.string().required('Please provide the oauth secret'),
-  redirect_uri: yup.string().required('Please provide your oauth redirect uri'),
+  redirect_uri: yup.string(),
   scopes: yup
     .array()
     .of(yup.string().required())

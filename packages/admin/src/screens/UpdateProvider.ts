@@ -115,7 +115,7 @@ export const UpdateProvider: FC<{
 const SchemaUpdateProvider = yup.object().shape({
   client: yup.string().required('Please provide the oauth client id'),
   secret: yup.string(),
-  redirect_uri: yup.string().required('Please provide your oauth redirect uri'),
+  redirect_uri: yup.string(),
   scopes: yup
     .array()
     .of(yup.string().required())

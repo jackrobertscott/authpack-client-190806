@@ -7,6 +7,8 @@ import { UpdateUserPassword } from './UpdateUserPassword'
 import { ShowUser } from './ShowUser'
 import { ListSessions } from './ListSessions'
 import { ListMemberships } from './ListMemberships'
+import { UpdateUserEmail } from './UpdateUserEmail'
+import { ListCredentials } from './ListCredentials'
 
 export const RouterManagerUser: FC<{
   id?: string
@@ -26,12 +28,20 @@ export const RouterManagerUser: FC<{
             children: create(UpdateUserPassword, { id, change }),
           },
           {
+            key: '/update/email',
+            children: create(UpdateUserEmail, { id, change }),
+          },
+          {
             key: '/memberships',
             children: create(ListMemberships, { user_id: id }),
           },
           {
             key: '/sessions',
             children: create(ListSessions, { user_id: id }),
+          },
+          {
+            key: '/credentials',
+            children: create(ListCredentials, { user_id: id }),
           },
         ]
       : [{ key: '/create', children: create(CreateUser, { change }) }],
@@ -68,6 +78,13 @@ export const RouterManagerUser: FC<{
                   click: () => router.change('/update/password'),
                 },
                 {
+                  icon: 'at',
+                  label: 'Change Email',
+                  focused:
+                    !!router.current && router.current.key === '/update/email',
+                  click: () => router.change('/update/email'),
+                },
+                {
                   icon: 'user-tag',
                   label: 'Memberships',
                   focused:
@@ -80,6 +97,13 @@ export const RouterManagerUser: FC<{
                   focused:
                     !!router.current && router.current.key === '/sessions',
                   click: () => router.change('/sessions'),
+                },
+                {
+                  icon: 'share-alt',
+                  label: 'Credentials',
+                  focused:
+                    !!router.current && router.current.key === '/credentials',
+                  click: () => router.change('/credentials'),
                 },
                 {
                   icon: 'trash-alt',

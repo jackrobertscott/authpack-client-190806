@@ -162,7 +162,7 @@ export const NightSky: ITheme = {
     label: slate(95),
     helper: slate(65),
     background: slate(12.5),
-    border: `1px solid ${slate(5)}`,
+    border: `1px solid ${slate(7.5)}`,
   },
   empty: {
     label: slate(95),

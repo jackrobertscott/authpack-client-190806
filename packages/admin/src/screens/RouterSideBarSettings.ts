@@ -22,7 +22,7 @@ export const RouterSideBarSettings: FC = () => {
         footer: config.cluster_name,
         options: [
           {
-            icon: 'handshake',
+            icon: 'share-alt',
             label: 'Providers',
             focused: !!router.current && router.current.path === '/providers',
             click: () => router.change('/providers'),
