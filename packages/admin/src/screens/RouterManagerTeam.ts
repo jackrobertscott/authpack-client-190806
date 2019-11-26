@@ -4,6 +4,7 @@ import { CreateTeam } from './CreateTeam'
 import { UpdateTeam } from './UpdateTeam'
 import { RemoveTeam } from './RemoveTeam'
 import { ShowTeam } from './ShowTeam'
+import { ListMemberships } from './ListMemberships'
 
 export const RouterManagerTeam: FC<{
   id?: string
@@ -18,6 +19,10 @@ export const RouterManagerTeam: FC<{
           { key: '/inspect', children: create(ShowTeam, { id }) },
           { key: '/update', children: create(UpdateTeam, { id, change }) },
           { key: '/remove', children: create(RemoveTeam, { id, change }) },
+          {
+            key: '/memberships',
+            children: create(ListMemberships, { team_id: id }),
+          },
         ]
       : [{ key: '/create', children: create(CreateTeam, { change }) }],
   })
@@ -43,6 +48,13 @@ export const RouterManagerTeam: FC<{
                   label: 'Update',
                   focused: !!router.current && router.current.key === '/update',
                   click: () => router.change('/update'),
+                },
+                {
+                  icon: 'user-tag',
+                  label: 'Memberships',
+                  focused:
+                    !!router.current && router.current.key === '/memberships',
+                  click: () => router.change('/memberships'),
                 },
                 {
                   icon: 'trash-alt',

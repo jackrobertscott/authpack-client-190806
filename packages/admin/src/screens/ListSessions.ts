@@ -2,47 +2,37 @@ import faker from 'faker'
 import { createElement as create, FC, useState, useEffect, useRef } from 'react'
 import { Page, Table, Empty, Button, drip } from 'wga-theme'
 import { format } from 'date-fns'
-import { RouterManagerMembership } from './RouterManagerMembership'
-import { TemplateSearchBar } from '../templates/TemplateSearchBar'
+import { RouterManagerSession } from './RouterManagerSession'
 import { createUseServer } from '../hooks/useServer'
+import { TemplateSearchBar } from '../templates/TemplateSearchBar'
 
-export const ListMembershipsOfUser: FC<{ user_id: string }> = ({ user_id }) => {
-  const gqlListMemberships = useListMemberships()
+export const ListSessions: FC<{ user_id?: string }> = ({ user_id }) => {
+  const gqlListSessions = useListSessions()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [variables, variablesChange] = useState<{
-    where: { user_id: string }
+    where: { user_id?: string }
     options: { [key: string]: any }
   }>({ where: { user_id }, options: { sort: 'created' } })
-  const queryListMemberships = useRef(drip(1000, gqlListMemberships.fetch))
+  const queryListSessions = useRef(drip(1000, gqlListSessions.fetch))
   useEffect(() => {
-    if (variables.where.user_id && variables.options.limit)
-      queryListMemberships.current(variables)
+    if (variables.options.limit) queryListSessions.current(variables)
     // eslint-disable-next-line
   }, [variables])
   const list =
-    gqlListMemberships.data && gqlListMemberships.data.count
-      ? gqlListMemberships.data.memberships
-      : Boolean(gqlListMemberships.data && !gqlListMemberships.data.memberships)
+    gqlListSessions.data && gqlListSessions.data.count
+      ? gqlListSessions.data.sessions
+      : Boolean(gqlListSessions.data && !gqlListSessions.data.sessions)
       ? []
-      : FakeMemberships
+      : FakeSessions
   return create(Page, {
-    title: 'Memberships',
+    title: 'Sessions',
     subtitle: 'User',
-    hidden: !gqlListMemberships.data || !gqlListMemberships.data.count,
-    corner: {
-      icon: 'plus',
-      label: 'New Membership',
-      click: () => {
-        buildChange(true)
-        setTimeout(() => idcurrentChange(undefined), 200) // animation
-      },
-    },
+    hidden: !gqlListSessions.data || !gqlListSessions.data.count,
     noscroll: create(TemplateSearchBar, {
-      count: gqlListMemberships.data && gqlListMemberships.data.count,
-      current:
-        gqlListMemberships.data && gqlListMemberships.data.memberships.length,
       input: false,
+      count: gqlListSessions.data && gqlListSessions.data.count,
+      current: gqlListSessions.data && gqlListSessions.data.sessions.length,
       change: (_, limit, skip) =>
         variablesChange({
           ...variables,
@@ -50,7 +40,7 @@ export const ListMembershipsOfUser: FC<{ user_id: string }> = ({ user_id }) => {
         }),
     }),
     children: [
-      create(RouterManagerMembership, {
+      create(RouterManagerSession, {
         key: 'router',
         id: idcurrent,
         visible: build,
@@ -68,21 +58,15 @@ export const ListMembershipsOfUser: FC<{ user_id: string }> = ({ user_id }) => {
           setTimeout(() => idcurrentChange(undefined), 200) // animation
         },
       }),
-      gqlListMemberships.data &&
-        !gqlListMemberships.data.count &&
+      gqlListSessions.data &&
+        !gqlListSessions.data.count &&
         create(Empty, {
           key: 'empty',
-          icon: 'users',
-          label: 'Memberships',
-          helper:
-            'Create a membership manually or by using the Authenticator API',
-          children: create(Button, {
-            key: 'Regular',
-            label: 'See API',
-            click: () => window.open('https://windowgadgets.io'),
-          }),
+          icon: 'history',
+          label: 'Sessions',
+          helper: 'No sessions currently exist',
         }),
-      gqlListMemberships.data &&
+      gqlListSessions.data &&
         create(Table, {
           key: 'table',
           header: [
@@ -119,7 +103,7 @@ export const ListMembershipsOfUser: FC<{ user_id: string }> = ({ user_id }) => {
               },
               {
                 icon: 'clock',
-                value: format(new Date(data.created), 'dd LLL yyyy @ h:mm a'),
+                value: format(new Date(data.created), 'dd LLL yy @ h:mm a'),
               },
             ],
           })),
@@ -128,28 +112,22 @@ export const ListMembershipsOfUser: FC<{ user_id: string }> = ({ user_id }) => {
   })
 }
 
-const useListMemberships = createUseServer<{
+const useListSessions = createUseServer<{
   count: number
-  memberships: Array<{
+  sessions: Array<{
     id: string
     created: string
-    user: {
-      summary: string
-    }
     team?: {
       summary: string
     }
   }>
 }>({
   query: `
-    query ListMemberships($where: WhereMemberships, $options: WhereOptions) {
-      count: CountMemberships
-      memberships: ListMemberships(where: $where, options: $options) {
+    query ListSessions($where: WhereSessions!, $options: WhereOptions) {
+      count: CountSessions(where: $where)
+      sessions: ListSessions(where: $where, options: $options) {
         id
         created
-        user {
-          summary
-        }
         team {
           summary
         }
@@ -158,21 +136,15 @@ const useListMemberships = createUseServer<{
   `,
 })
 
-const FakeMemberships: Array<{
+const FakeSessions: Array<{
   id: string
   created: string
-  user: {
-    summary: string
-  }
   team?: {
     summary: string
   }
-}> = Array.from(Array(20).keys()).map(() => ({
+}> = Array.from(Array(5).keys()).map(() => ({
   id: faker.random.uuid(),
   created: faker.date.recent(100).toDateString(),
-  user: {
-    summary: faker.name.findName(),
-  },
   team: {
     summary: faker.random.words(2),
   },

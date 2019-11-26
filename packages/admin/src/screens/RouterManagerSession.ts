@@ -5,18 +5,20 @@ import { RemoveSession } from './RemoveSession'
 import { ShowSession } from './ShowSession'
 
 export const RouterManagerSession: FC<{
-  id: string
+  id?: string
   change?: (id?: string) => void
   visible?: boolean
   close: () => void
 }> = ({ id, change, close, visible }) => {
   const router = useLocalRouter({
     nomatch: '/inspect',
-    options: [
-      { key: '/inspect', children: create(ShowSession, { id }) },
-      { key: '/update', children: create(UpdateSession, { id, change }) },
-      { key: '/remove', children: create(RemoveSession, { id, change }) },
-    ],
+    options: id
+      ? [
+          { key: '/inspect', children: create(ShowSession, { id }) },
+          { key: '/update', children: create(UpdateSession, { id, change }) },
+          { key: '/remove', children: create(RemoveSession, { id, change }) },
+        ]
+      : [],
   })
   return create(Modal, {
     close,

@@ -6,18 +6,20 @@ import { RouterManagerMembership } from './RouterManagerMembership'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'
 import { createUseServer } from '../hooks/useServer'
 
-export const ListMembershipsOfTeam: FC<{ team_id: string }> = ({ team_id }) => {
+export const ListMemberships: FC<{
+  user_id?: string
+  team_id?: string
+}> = ({ user_id, team_id }) => {
   const gqlListMemberships = useListMemberships()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [variables, variablesChange] = useState<{
-    where: { team_id: string }
+    where: { user_id?: string; team_id?: string }
     options: { [key: string]: any }
-  }>({ where: { team_id }, options: { sort: 'created' } })
+  }>({ where: { user_id, team_id }, options: { sort: 'created' } })
   const queryListMemberships = useRef(drip(1000, gqlListMemberships.fetch))
   useEffect(() => {
-    if (variables.where.team_id && variables.options.limit)
-      queryListMemberships.current(variables)
+    if (variables.options.limit) queryListMemberships.current(variables)
     // eslint-disable-next-line
   }, [variables])
   const list =
@@ -54,6 +56,8 @@ export const ListMembershipsOfTeam: FC<{ team_id: string }> = ({ team_id }) => {
         key: 'router',
         id: idcurrent,
         visible: build,
+        user_id,
+        team_id,
         change: id => {
           variablesChange({ ...variables })
           if (id) {
@@ -72,24 +76,23 @@ export const ListMembershipsOfTeam: FC<{ team_id: string }> = ({ team_id }) => {
         !gqlListMemberships.data.count &&
         create(Empty, {
           key: 'empty',
-          icon: 'users',
+          icon: 'user-tag',
           label: 'Memberships',
-          helper:
-            'Create a membership manually or by using the Authenticator API',
-          children: create(Button, {
-            key: 'Regular',
-            label: 'See API',
-            click: () => window.open('https://windowgadgets.io'),
-          }),
+          helper: 'No memberships currently exist',
         }),
       gqlListMemberships.data &&
         create(Table, {
           key: 'table',
-          header: [
-            { key: 'user_id', label: 'User' },
-            { key: 'team_id', label: 'Team' },
-            { key: 'created', label: 'Created' },
-          ].map(({ key, label }) => ({
+          header: (user_id
+            ? [
+                { key: 'team_id', label: 'Team' },
+                { key: 'created', label: 'Created' },
+              ]
+            : [
+                { key: 'user_id', label: 'User' },
+                { key: 'created', label: 'Created' },
+              ]
+          ).map(({ key, label }) => ({
             label,
             icon:
               variables.options && variables.options.sort === key
@@ -113,20 +116,29 @@ export const ListMembershipsOfTeam: FC<{ team_id: string }> = ({ team_id }) => {
               idcurrentChange(data.id)
               buildChange(true)
             },
-            cells: [
-              {
-                icon: 'user',
-                value: data.user.summary,
-              },
-              {
-                icon: 'users',
-                value: data.team ? data.team.summary : '...',
-              },
-              {
-                icon: 'clock',
-                value: format(new Date(data.created), 'dd LLL yyyy @ h:mm a'),
-              },
-            ],
+            cells: user_id
+              ? [
+                  {
+                    icon: 'users',
+                    value: data.team ? data.team.summary : '...',
+                  },
+                  {
+                    icon: 'clock',
+                    value: format(new Date(data.created), 'dd LLL yy @ h:mm a'),
+                  },
+                ]
+              : [
+                  {
+                    icon: 'user',
+                    value: data.user
+                      ? data.user.summary
+                      : data.user_email || '...',
+                  },
+                  {
+                    icon: 'clock',
+                    value: format(new Date(data.created), 'dd LLL yy @ h:mm a'),
+                  },
+                ],
           })),
         }),
     ],
@@ -138,7 +150,8 @@ const useListMemberships = createUseServer<{
   memberships: Array<{
     id: string
     created: string
-    user: {
+    user_email?: string
+    user?: {
       summary: string
     }
     team?: {
@@ -148,10 +161,11 @@ const useListMemberships = createUseServer<{
 }>({
   query: `
     query ListMemberships($where: WhereMemberships, $options: WhereOptions) {
-      count: CountMemberships
+      count: CountMemberships(where: $where)
       memberships: ListMemberships(where: $where, options: $options) {
         id
         created
+        user_email
         user {
           summary
         }
@@ -166,15 +180,17 @@ const useListMemberships = createUseServer<{
 const FakeMemberships: Array<{
   id: string
   created: string
+  user_email?: string
   user: {
     summary: string
   }
   team?: {
     summary: string
   }
-}> = Array.from(Array(20).keys()).map(() => ({
+}> = Array.from(Array(5).keys()).map(() => ({
   id: faker.random.uuid(),
   created: faker.date.recent(100).toDateString(),
+  user_email: faker.internet.email(),
   user: {
     summary: faker.name.findName(),
   },

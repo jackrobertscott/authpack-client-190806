@@ -1,17 +1,42 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useLocalRouter, Modal, Layout, IconBar } from 'wga-theme'
+import { CreateMembership } from './CreateMembership'
+import { UpdateMembership } from './UpdateMembership'
+import { RemoveMembership } from './RemoveMembership'
+import { ShowMembership } from './ShowMembership'
 
 export const RouterManagerMembership: FC<{
   id?: string
   change?: (id?: string) => void
   visible?: boolean
   close: () => void
-}> = ({ id, change, close, visible }) => {
+  user_id?: string
+  team_id?: string
+}> = ({ id, change, close, visible, user_id, team_id }) => {
   const router = useLocalRouter({
     nomatch: id ? '/update' : '/create',
     options: id
-      ? [{ key: '/update', children: null }]
-      : [{ key: '/create', children: null }],
+      ? [
+          { key: '/inspect', children: create(ShowMembership, { id }) },
+          {
+            key: '/update',
+            children: create(UpdateMembership, { id, change }),
+          },
+          {
+            key: '/remove',
+            children: create(RemoveMembership, { id, change }),
+          },
+        ]
+      : [
+          {
+            key: '/create',
+            children: create(CreateMembership, {
+              user_id,
+              team_id,
+              change,
+            }),
+          },
+        ],
   })
   return create(Modal, {
     close,
@@ -24,13 +49,26 @@ export const RouterManagerMembership: FC<{
           icons: id
             ? [
                 {
-                  icon: 'plus',
+                  icon: 'glasses',
+                  label: 'Inspect',
+                  focused:
+                    !!router.current && router.current.key === '/inspect',
+                  click: () => router.change('/inspect'),
+                },
+                {
+                  icon: 'sliders-h',
                   label: 'Update',
                   focused: !!router.current && router.current.key === '/update',
                   click: () => router.change('/update'),
                 },
                 {
-                  icon: 'times-circle',
+                  icon: 'trash-alt',
+                  label: 'Remove',
+                  focused: !!router.current && router.current.key === '/remove',
+                  click: () => router.change('/remove'),
+                },
+                {
+                  icon: 'arrow-alt-circle-left',
                   label: 'Close',
                   click: close,
                   prefix: 'far',
@@ -45,7 +83,7 @@ export const RouterManagerMembership: FC<{
                   click: () => router.change('/create'),
                 },
                 {
-                  icon: 'times-circle',
+                  icon: 'arrow-alt-circle-left',
                   label: 'Close',
                   click: close,
                   prefix: 'far',

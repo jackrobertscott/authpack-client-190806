@@ -27,6 +27,7 @@ export const useSchema = ({
   }>({})
   const dripPoller = useRef(drip(1000, poller))
   const set = (value: { [key: string]: any }) => {
+    if (!mounted.current) return
     const clean = Object.keys(value).reduce((all: any, next) => {
       if (value[next] !== null) all[next] = value[next]
       return all
@@ -34,6 +35,7 @@ export const useSchema = ({
     stateChange(clean)
   }
   const update = (key: string) => (data: any) => {
+    if (!mounted.current) return
     const value = { ...state, [key]: data }
     stateChange(value)
     schema
@@ -85,19 +87,19 @@ export const useSchema = ({
       error: (key: string) => error[key],
       change: (key: string) => update(key),
       reset: () => set({ ...schema.default() }),
-      submit: () => {
-        if (submit)
-          schema
-            .validate(state, { stripUnknown: true })
-            .then(data => submit(data))
-            .catch(e => {
-              toaster.add({
-                icon: 'bell',
-                label: 'Error',
-                helper: e.message,
-              })
+      submit: () =>
+        mounted.current &&
+        submit &&
+        schema
+          .validate(state, { stripUnknown: true })
+          .then(data => submit(data))
+          .catch(e => {
+            toaster.add({
+              icon: 'bell',
+              label: 'Error',
+              helper: e.message,
             })
-      },
+          }),
     }
   }, [valid, state, error, schema])
 }
