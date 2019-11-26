@@ -93,8 +93,8 @@ export const UpdatePayment: FC<{
         create(Poster, {
           key: 'payment',
           icon: 'bolt',
-          label: 'Payment',
-          helper: 'Add a payment card to activate gadgets',
+          label: 'Monthly',
+          helper: '$19 usd per set of 1,000 users',
         }),
       create(Layout, {
         key: 'layout',

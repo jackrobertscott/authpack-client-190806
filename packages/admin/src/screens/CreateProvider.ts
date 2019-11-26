@@ -73,8 +73,9 @@ export const CreateProvider: FC<{
         }),
         create(Control, {
           key: 'redirect_uri',
-          label: 'Redirect URI',
-          helper: 'The user will be sent to this location after authenticating',
+          label: 'Redirect Uri',
+          helper:
+            'Leave this empty unless you are creating your own login system',
           error: schema.error('redirect_uri'),
           children: create(InputString, {
             value: schema.value('redirect_uri'),

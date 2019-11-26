@@ -5,8 +5,10 @@ import { RouterSideBarUsers } from './RouterSideBarUsers'
 import { RouterSideBarTeams } from './RouterSideBarTeams'
 import { RouterSideBarDevelopers } from './RouterSideBarDevelopers'
 import { RouterManagerCluster } from './RouterManagerCluster'
+import { useUniversal } from '../hooks/useUniversal'
 
 export const RouterCentral: FC = () => {
+  const universal = useUniversal()
   const [apper, apperChange] = useState<boolean>(false)
   const router = useRouter({
     nomatch: '/users',
@@ -40,11 +42,19 @@ export const RouterCentral: FC = () => {
             focused: !!router.current && router.current.path === '/developers',
             click: () => router.change('/developers'),
           },
+          !universal.subscribed && {
+            icon: 'exclamation-circle',
+            label: 'Limited Usage',
+            helper:
+              'Limited to a maximum of 50 users - add payment card to remove all limits',
+            click: () => apperChange(!apper),
+            seperated: true,
+          },
           {
             icon: 'cog',
             label: 'Settings',
             click: () => apperChange(!apper),
-            seperated: true,
+            seperated: !!universal.subscribed,
           },
           {
             icon: 'user-circle',
