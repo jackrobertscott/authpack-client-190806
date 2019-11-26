@@ -97,6 +97,7 @@ const useGetCluster = createUseServer<{
     theme: string
     power: boolean
     subscribed: boolean
+    teams_enabled: boolean
     teams_required: boolean
   }
 }>({
@@ -108,6 +109,7 @@ const useGetCluster = createUseServer<{
         theme
         power
         subscribed
+        teams_enabled
         teams_required
       }
     }

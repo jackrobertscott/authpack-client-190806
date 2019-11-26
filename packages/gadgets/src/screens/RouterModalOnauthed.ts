@@ -45,7 +45,7 @@ export const RouterModalOnauthed: FC<{
             focused: router.current && router.current.key.startsWith('/user'),
             click: () => router.change('/user'),
           },
-          {
+          Boolean(settings.cluster && settings.cluster.teams_enabled) && {
             icon: 'users',
             label: 'Team',
             focused: router.current && router.current.key.startsWith('/team'),

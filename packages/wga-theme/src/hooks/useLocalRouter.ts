@@ -16,13 +16,19 @@ export const useLocalRouter = ({
 }) => {
   const mounted = useMounted()
   const local = name && localStorage.getItem(`wga.router.${name}`)
-  const index = options.findIndex(option => option.key === (local || nomatch))
-  const start = index >= 0 ? options[index].key : options[0] && options[0].key
+  const parsedOptions = options.filter(Boolean)
+  const index = parsedOptions.findIndex(option => {
+    return option.key === (local || nomatch)
+  })
+  const start =
+    index >= 0
+      ? parsedOptions[index].key
+      : parsedOptions[0] && parsedOptions[0].key
   const [key, keyChange] = useState<undefined | string>(start)
-  const [current] = options.filter(option => key && key === option.key)
+  const [current] = parsedOptions.filter(option => key && key === option.key)
   const change = (next: string) => {
     if (!mounted.current) return
-    const matching = options.filter(option => option.key === next)
+    const matching = parsedOptions.filter(option => option.key === next)
     keyChange(matching.length ? matching[0].key : undefined)
   }
   useEffect(() => {
@@ -30,7 +36,7 @@ export const useLocalRouter = ({
     if (!current) return start ? keyChange(start) : undefined
     if (!current.nosave && name)
       localStorage.setItem(`wga.router.${name}`, current.key)
-  }, [key, options.map(option => option.key).join()])
+  }, [key, parsedOptions.map(option => option.key).join()])
   return useMemo(() => {
     return {
       current,

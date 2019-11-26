@@ -25,7 +25,7 @@ export const IconBar: FC<{
           click?: () => void
         }>
       }
-    | boolean
+    | false
   >
 }> = ({ icons }) => {
   const theme = useTheme()
