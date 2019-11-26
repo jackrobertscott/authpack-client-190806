@@ -19,7 +19,7 @@ export const InputStripe: FC<{
         hidePostalCode: true,
         style: {
           base: {
-            fontFamily: 'futura-pt',
+            fontFamily: 'Rubik',
             fontWeight: 700,
             color: theme.input.payment,
             iconColor: theme.input.payment,

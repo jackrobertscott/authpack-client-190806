@@ -32,7 +32,7 @@ export const Explorer: FC = () => {
       '.graphiql-container': {
         fontSize: '15px',
         '.topBarWrap *, .historyPaneWrap *, .docExplorerWrap *': {
-          fontFamily: 'futura-pt',
+          fontFamily: 'Rubik',
           fontSize: '15px',
           fontWeight: 700,
         },

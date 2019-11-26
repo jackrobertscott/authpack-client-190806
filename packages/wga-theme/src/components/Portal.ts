@@ -7,12 +7,12 @@ export const Portal: FC<{
 }> = ({ id = 'portals', children }) => {
   const [element, elementChange] = useState(document.getElementById(id))
   useEffect(() => {
-    if (!element) {
-      const createdElement = document.createElement('div')
-      createdElement.id = id
-      document.body.appendChild(createdElement)
-      elementChange(createdElement)
-    }
+    if (!element)
+      setTimeout(() => {
+        const dom = document.getElementById(id)
+        if (!dom) throw new Error('Could not find portal dom element')
+        elementChange(dom)
+      })
   }, [])
   return element ? createPortal(children, element) : null
 }

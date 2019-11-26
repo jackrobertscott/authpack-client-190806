@@ -15,8 +15,8 @@ const color = (
 export const BlueHarvester: ITheme = {
   global: {
     radius: 3,
-    thick: 800,
-    thin: 600,
+    thick: 500,
+    thin: 400,
   },
   /**
    * Navigation.
