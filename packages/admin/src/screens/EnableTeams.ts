@@ -27,7 +27,7 @@ export const EnableTeams: FC = () => {
               UniversalStore.update({ teams_enabled: cluster.teams_enabled })
               if (cluster.teams_enabled)
                 toaster.add({
-                  label: 'Teams Enabled',
+                  label: 'Enabled Successfully',
                   helper: 'Turn teams off and on in settings',
                 })
             }),

@@ -24,7 +24,7 @@ export const Toaster: FC<{
       label: string
       helper: string
     },
-    timer: number = 5000
+    timer: number = 8000
   ) => {
     const id = Math.random()
       .toString(36)
