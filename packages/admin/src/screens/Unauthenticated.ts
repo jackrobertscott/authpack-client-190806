@@ -6,7 +6,7 @@ export const Unauthenticated: FC = () => {
   return create(Focus, {
     icon: 'unlock',
     label: 'Welcome',
-    helper: 'Supercharge your app with Authenticator',
+    helper: 'User and Team API and Dashboard',
     children: [
       create(Button, {
         key: 'login',
