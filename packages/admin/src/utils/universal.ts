@@ -5,6 +5,7 @@ export interface IUniversalStore {
   cluster_id?: string
   cluster_domain_key?: string
   cluster_name?: string
+  teams_enabled: boolean
   subscribed: boolean
   power: boolean
   theme: string
@@ -12,6 +13,7 @@ export interface IUniversalStore {
 
 const defaults: IUniversalStore = {
   ready: false,
+  teams_enabled: false,
   subscribed: false,
   power: false,
   theme: 'night_sky',

@@ -8,6 +8,7 @@ import {
   InputStringArray,
   InputSelect,
   Page,
+  InputBoolean,
 } from 'wga-theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
@@ -27,8 +28,9 @@ export const UpdateCluster: FC<{
         .then(({ cluster }) => {
           if (change) change(cluster.id)
           UniversalStore.update({
-            cluster_name: cluster.name,
             theme: cluster.theme,
+            cluster_name: cluster.name,
+            teams_enabled: cluster.teams_enabled,
           })
         })
     },
@@ -57,6 +59,16 @@ export const UpdateCluster: FC<{
                 value: schema.value('name'),
                 change: schema.change('name'),
                 placeholder: 'Cluster',
+              }),
+            }),
+            create(Control, {
+              key: 'teams_enabled',
+              label: 'Teams',
+              helper: 'Enable teams and allow users to create them',
+              error: schema.error('teams_enabled'),
+              children: create(InputBoolean, {
+                value: schema.value('teams_enabled'),
+                change: schema.change('teams_enabled'),
               }),
             }),
             create(Control, {
@@ -104,6 +116,7 @@ export const UpdateCluster: FC<{
 const SchemaUpdateCluster = yup.object().shape({
   name: yup.string().required('Please provide the cluster name'),
   theme: yup.string().required('Please select a theme'),
+  teams_enabled: yup.boolean().default(false),
   domains: yup
     .array()
     .of(yup.string().required())
@@ -115,6 +128,7 @@ const useGetCluster = createUseServer<{
     name: string
     theme: string
     domains: string[]
+    teams_enabled: boolean
   }
 }>({
   query: `
@@ -123,6 +137,7 @@ const useGetCluster = createUseServer<{
         name
         theme
         domains
+        teams_enabled
       }
     }
   `,
@@ -133,6 +148,7 @@ const useUpdateCluster = createUseServer<{
     id: string
     name: string
     theme: string
+    teams_enabled: boolean
   }
 }>({
   query: `
@@ -141,6 +157,7 @@ const useUpdateCluster = createUseServer<{
         id
         name
         theme
+        teams_enabled
       }
     }
   `,

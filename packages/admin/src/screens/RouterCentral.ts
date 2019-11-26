@@ -1,19 +1,19 @@
 import { createElement as create, FC, Fragment, useState } from 'react'
 import { Layout, IconBar, useRouter } from 'wga-theme'
 import { wga } from '../utils/wga'
-import { RouterSideBarHome } from './RouterSideBarHome'
-import { RouterSideBarSettings } from './RouterSideBarSettings'
-import { RouterSideBarDeveloper } from './RouterSideBarDeveloper'
+import { RouterSideBarUsers } from './RouterSideBarUsers'
+import { RouterSideBarTeams } from './RouterSideBarTeams'
+import { RouterSideBarDevelopers } from './RouterSideBarDevelopers'
 import { RouterManagerCluster } from './RouterManagerCluster'
 
 export const RouterCentral: FC = () => {
   const [apper, apperChange] = useState<boolean>(false)
   const router = useRouter({
-    nomatch: '/app',
+    nomatch: '/users',
     options: [
-      { path: '/app', children: create(RouterSideBarHome) },
-      { path: '/settings', children: create(RouterSideBarSettings) },
-      { path: '/developer', children: create(RouterSideBarDeveloper) },
+      { path: '/users', children: create(RouterSideBarUsers) },
+      { path: '/teams', children: create(RouterSideBarTeams) },
+      { path: '/developers', children: create(RouterSideBarDevelopers) },
     ],
   })
   return create(Layout, {
@@ -23,26 +23,26 @@ export const RouterCentral: FC = () => {
         key: 'iconBar',
         icons: [
           {
-            icon: 'home',
-            label: 'Home',
-            focused: !!router.current && router.current.path === '/app',
-            click: () => router.change('/app'),
+            icon: 'users',
+            label: 'Users',
+            focused: !!router.current && router.current.path === '/users',
+            click: () => router.change('/users'),
+          },
+          {
+            icon: 'handshake',
+            label: 'Teams',
+            focused: !!router.current && router.current.path === '/teams',
+            click: () => router.change('/teams'),
+          },
+          {
+            icon: 'code',
+            label: 'Developers',
+            focused: !!router.current && router.current.path === '/developers',
+            click: () => router.change('/developers'),
           },
           {
             icon: 'cog',
             label: 'Settings',
-            focused: !!router.current && router.current.path === '/settings',
-            click: () => router.change('/settings'),
-          },
-          {
-            icon: 'code',
-            label: 'Developer',
-            focused: !!router.current && router.current.path === '/developer',
-            click: () => router.change('/developer'),
-          },
-          {
-            icon: 'bars',
-            label: 'Cluster',
             click: () => apperChange(!apper),
             seperated: true,
           },

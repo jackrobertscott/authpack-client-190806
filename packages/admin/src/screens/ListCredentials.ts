@@ -65,7 +65,8 @@ export const ListCredentials: FC<{ user_id?: string }> = ({ user_id }) => {
           key: 'empty',
           icon: 'history',
           label: 'Credentials',
-          helper: 'No credentials currently exist',
+          helper:
+            'Credentials are created when a user logins in with a oauth provider',
         }),
       gqlListCredentials.data &&
         create(Table, {

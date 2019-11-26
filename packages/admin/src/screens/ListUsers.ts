@@ -78,7 +78,7 @@ export const ListUsers: FC = () => {
           key: 'empty',
           icon: 'user',
           label: 'Users',
-          helper: 'Create a user manually or by using the Authenticator API',
+          helper: 'Create a user manually or by using our API',
           children: create(Button, {
             key: 'Regular',
             label: 'See API',

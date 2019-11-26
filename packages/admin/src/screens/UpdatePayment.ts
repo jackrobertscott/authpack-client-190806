@@ -79,7 +79,7 @@ export const UpdatePayment: FC<{
     // eslint-disable-next-line
   }, [])
   return create(Page, {
-    title: universal.subscribed ? 'Payment' : 'Activate',
+    title: 'Payment',
     subtitle: 'Cluster',
     corner: !universal.subscribed
       ? undefined
@@ -93,7 +93,7 @@ export const UpdatePayment: FC<{
         create(Poster, {
           key: 'payment',
           icon: 'bolt',
-          label: 'Activate',
+          label: 'Payment',
           helper: 'Add a payment card to activate gadgets',
         }),
       create(Layout, {

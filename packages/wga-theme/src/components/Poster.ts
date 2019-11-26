@@ -53,7 +53,7 @@ export const Poster: FC<{
             className: css({
               color: theme.poster.helper,
               fontWeight: theme.global.thin,
-              marginTop: 5,
+              marginTop: 10,
             }),
           }),
         children &&

@@ -1,37 +1,37 @@
 import { createElement as create, FC, Fragment } from 'react'
 import { useRouter, SideBar } from 'wga-theme'
 import { useUniversal } from '../hooks/useUniversal'
-import { ListPermissions } from './ListPermissions'
+import { ListUsers } from './ListUsers'
 import { ListProviders } from './ListProviders'
 
-export const RouterSideBarSettings: FC = () => {
-  const config = useUniversal()
+export const RouterSideBarUsers: FC = () => {
+  const universal = useUniversal()
   const router = useRouter({
-    base: '/settings',
-    nomatch: '/providers',
+    base: '/users',
+    nomatch: '/',
     options: [
+      { path: '/', children: create(ListUsers) },
       { path: '/providers', children: create(ListProviders) },
-      { path: '/permissions', children: create(ListPermissions) },
     ],
   })
   return create(Fragment, {
     children: [
       create(SideBar, {
         key: 'sideBar',
-        title: 'Settings',
-        footer: config.cluster_name,
+        title: 'Users',
+        footer: universal.cluster_name,
         options: [
           {
-            icon: 'share-alt',
-            label: 'Providers',
-            focused: !!router.current && router.current.path === '/providers',
-            click: () => router.change('/providers'),
+            icon: 'user-circle',
+            label: 'Show users',
+            focused: !!router.current && router.current.path === '/',
+            click: () => router.change('/'),
           },
           {
-            icon: 'user-shield',
-            label: 'Permissions',
-            focused: !!router.current && router.current.path === '/permissions',
-            click: () => router.change('/permissions'),
+            icon: 'share-alt',
+            label: 'Show providers',
+            focused: !!router.current && router.current.path === '/providers',
+            click: () => router.change('/providers'),
           },
         ],
       }),

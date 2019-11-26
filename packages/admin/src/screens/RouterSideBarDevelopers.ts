@@ -3,10 +3,10 @@ import { useRouter, SideBar } from 'wga-theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { Explorer } from './Explorer'
 
-export const RouterSideBarDeveloper: FC = () => {
-  const config = useUniversal()
+export const RouterSideBarDevelopers: FC = () => {
+  const universal = useUniversal()
   const router = useRouter({
-    base: '/developer',
+    base: '/developers',
     nomatch: '/explorer',
     options: [{ path: '/explorer', children: create(Explorer) }],
   })
@@ -14,8 +14,8 @@ export const RouterSideBarDeveloper: FC = () => {
     children: [
       create(SideBar, {
         key: 'sideBar',
-        title: 'Developer',
-        footer: config.cluster_name,
+        title: 'Developers',
+        footer: universal.cluster_name,
         options: [
           {
             icon: 'globe-americas',

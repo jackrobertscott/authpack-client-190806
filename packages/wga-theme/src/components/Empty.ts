@@ -65,7 +65,7 @@ export const Empty: FC<{
             className: css({
               color: theme.empty.helper,
               fontWeight: theme.global.thin,
-              marginTop: 5,
+              marginTop: 10,
             }),
           }),
         children &&

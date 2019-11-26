@@ -46,6 +46,7 @@ export const CreateMembership: FC<{
         user_id,
       })
     })
+    // eslint-disable-next-line
   }, [user_id, team_id])
   return create(Page, {
     title: 'New',

@@ -12,9 +12,9 @@ export const InputStripe: FC<{
   const input = useRef()
   useEffect(() => {
     if (stripe) {
-      const elements = stripe.elements({
-        fonts: [{ cssSrc: 'https://use.typekit.net/xzq3xtm.css' }],
-      })
+      const cssSrc =
+        'https://fonts.googleapis.com/css?family=Rubik:400,500&display=swap'
+      const elements = stripe.elements({ fonts: [{ cssSrc }] })
       const cardStripe = elements.create('card', {
         hidePostalCode: true,
         style: {

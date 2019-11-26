@@ -78,7 +78,8 @@ export const ListMemberships: FC<{
           key: 'empty',
           icon: 'user-tag',
           label: 'Memberships',
-          helper: 'No memberships currently exist',
+          helper:
+            'Memberships are created when a user becomes a member of a team',
         }),
       gqlListMemberships.data &&
         create(Table, {

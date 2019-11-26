@@ -69,7 +69,7 @@ export const RouterManagerCluster: FC<{
             },
             !universal.subscribed && {
               icon: 'bolt',
-              label: 'Activate',
+              label: 'Payment',
               focused: !!router.current && router.current.key === '/payment',
               click: () => router.change('/payment'),
             },

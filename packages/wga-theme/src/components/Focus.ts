@@ -73,7 +73,7 @@ export const Focus: FC<{
                 className: css({
                   color: theme.focus.helper,
                   fontWeight: theme.global.thin,
-                  marginTop: 5,
+                  marginTop: 10,
                 }),
               }),
           ],

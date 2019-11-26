@@ -28,7 +28,7 @@ export const ListPermissions: FC = () => {
       : FakePermissions
   return create(Page, {
     title: 'Permissions',
-    subtitle: 'See all permissions of your app',
+    subtitle: 'Restrict team member abilities',
     hidden: !gqlListPermissions.data || !gqlListPermissions.data.count,
     corner: {
       icon: 'plus',

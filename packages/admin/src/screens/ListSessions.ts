@@ -64,7 +64,7 @@ export const ListSessions: FC<{ user_id?: string }> = ({ user_id }) => {
           key: 'empty',
           icon: 'history',
           label: 'Sessions',
-          helper: 'No sessions currently exist',
+          helper: 'Sessions are created when a user logs into your app',
         }),
       gqlListSessions.data &&
         create(Table, {

@@ -28,7 +28,7 @@ export const ListProviders: FC = () => {
       : FakeProviders
   return create(Page, {
     title: 'Providers',
-    subtitle: 'See all providers of your app',
+    subtitle: 'One click login with oauth providers',
     hidden: !gqlListProviders.data || !gqlListProviders.data.count,
     corner: {
       icon: 'plus',
@@ -75,11 +75,10 @@ export const ListProviders: FC = () => {
           icon: 'facebook',
           prefix: 'fab',
           label: 'Providers',
-          helper:
-            'Create a provider manually or by using the Authenticator API',
+          helper: 'Login your users with Facebook, Google, GitHub and more',
           children: create(Button, {
             key: 'Regular',
-            label: 'See API',
+            label: 'See Docs',
             click: () => window.open('https://windowgadgets.io'),
           }),
         }),
