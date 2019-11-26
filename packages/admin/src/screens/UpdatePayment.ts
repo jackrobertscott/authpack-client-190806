@@ -55,7 +55,7 @@ export const UpdatePayment: FC<{
               toaster.add({
                 icon: 'credit-card',
                 label: 'Success',
-                helper: 'You gadgets are active!',
+                helper: 'Payment method was successfully accepted',
               })
               if (change) change(cluster.id)
             })
