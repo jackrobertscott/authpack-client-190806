@@ -6,7 +6,7 @@ export const config = {
   urls: {
     plugin: localhost
       ? 'http://localhost:3100'
-      : 'https://plugin.v1.windowgadgets.io',
+      : 'https://gadgets.v1.windowgadgets.io',
     api: localhost
       ? 'http://localhost:4000'
       : 'https://api.v1.windowgadgets.io',
