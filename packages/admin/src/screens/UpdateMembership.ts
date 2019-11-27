@@ -93,8 +93,8 @@ const useGetMembership = createUseServer<{
   }
 }>({
   query: `
-    query GetMembershipClient($id: String!) {
-      membership: GetMembershipClient(id: $id) {
+    query GetMembership($id: String!) {
+      membership: GetMembership(id: $id) {
         admin
         permission_ids
       }
