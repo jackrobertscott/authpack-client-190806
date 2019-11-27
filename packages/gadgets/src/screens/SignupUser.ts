@@ -31,7 +31,6 @@ export const SignupUser: FC = () => {
       gqlSignupUser.fetch({ input }).then(({ session }) => {
         schema.change('password')('')
         SettingsStore.update({
-          open: false,
           bearer: `Bearer ${session.token}`,
         })
       })

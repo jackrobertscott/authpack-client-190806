@@ -88,7 +88,7 @@ export const RouterSideBarTeam: FC = () => {
           : [
               {
                 icon: 'plus',
-                label: 'Create Team',
+                label: 'Create',
                 focused:
                   router.current && router.current.key === '/team/create',
                 click: () => router.change('/team/create'),
