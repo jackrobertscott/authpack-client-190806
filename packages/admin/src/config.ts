@@ -12,6 +12,6 @@ export const config: {
   segment_id: process.env.REACT_APP_SEGMENT_ID as string,
   sentry_dsn: process.env.REACT_APP_SENTRY_DSN as string,
   gadgets_domain_key: process.env.REACT_APP_WGA_DOMAIN as string,
-  api: 'http://localhost:4000',
-  debug: true,
+  api: process.env.REACT_APP_WGA_API as string,
+  debug: process.env.REACT_APP_NODE_ENV !== 'production',
 }

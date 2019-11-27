@@ -32,7 +32,7 @@
     "react-scripts": "^3.2.0",
     "typescript": "^3.7.2",
     "wga-plugin": "^0.3.0",
-    "wga-theme": "^0.2.1",
+    "wga-theme": "^0.3.1",
     "yup": "^0.27.0"
   },
   "devDependencies": {
