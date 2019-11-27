@@ -23,13 +23,13 @@ export const RouterSideBarUsers: FC = () => {
         options: [
           {
             icon: 'user-circle',
-            label: 'Users',
+            label: 'See users',
             focused: !!router.current && router.current.path === '/',
             click: () => router.change('/'),
           },
           {
             icon: 'share-alt',
-            label: 'OAuth',
+            label: 'See oauth providers',
             focused: !!router.current && router.current.path === '/providers',
             click: () => router.change('/providers'),
           },

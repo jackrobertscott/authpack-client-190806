@@ -22,6 +22,7 @@ export const SideBar: FC<{
       flexDirection: 'column',
       alignItems: 'stretch',
       width: '260px',
+      minWidth: '260px',
       background: theme.sideBar.background,
       borderRight: theme.sideBar.border,
     }),
