@@ -27,8 +27,8 @@ export const ListProviders: FC = () => {
       ? []
       : FakeProviders
   return create(Page, {
-    title: 'Providers',
-    subtitle: 'One click login with oauth providers',
+    title: 'OAuth Providers',
+    subtitle: 'Login users with other apps',
     hidden: !gqlListProviders.data || !gqlListProviders.data.count,
     corner: {
       icon: 'plus',

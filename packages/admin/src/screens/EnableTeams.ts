@@ -28,7 +28,7 @@ export const EnableTeams: FC = () => {
               if (cluster.teams_enabled)
                 toaster.add({
                   label: 'Enabled Successfully',
-                  helper: 'Turn teams off and on in settings',
+                  helper: 'Turn teams on / off in settings',
                 })
             }),
       }),

@@ -24,13 +24,13 @@ export const RouterSideBarTeams: FC = () => {
         options: [
           {
             icon: 'users',
-            label: 'Show teams',
+            label: 'Teams',
             focused: !!router.current && router.current.path === '/',
             click: () => router.change('/'),
           },
           {
             icon: 'user-shield',
-            label: 'Show permissions',
+            label: 'Permissions',
             focused: !!router.current && router.current.path === '/permissions',
             click: () => router.change('/permissions'),
           },

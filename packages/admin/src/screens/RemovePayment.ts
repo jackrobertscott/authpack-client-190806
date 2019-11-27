@@ -15,8 +15,8 @@ export const RemovePayment: FC<{
     subtitle: 'Stop payments & disable gadgets',
     children: create(ConfirmRemove, {
       keyword: 'Terminate',
-      helper: 'Cancel subscription and disable cluster',
-      alert: 'Consider powering off your cluster instead',
+      helper: 'Cancel subscription and invoice now',
+      alert: 'User limits will be reapplied',
       change: () =>
         gqlRemovePayment
           .fetch({ id: universal.cluster_id })
