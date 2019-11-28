@@ -3,14 +3,16 @@ import { KeyStore } from 'events-and-things'
 export type IGadgets = {
   open: boolean
   ready: boolean
-  domain?: string
+  client?: string
   bearer?: string
-  subscribed?: boolean
-  power?: boolean
   cluster?: {
     id: string
     name: string
-    team_required: boolean
+    theme: string
+    teams_enabled: boolean
+    teams_required: boolean
+    power: boolean
+    subscribed: boolean
   }
   user?: {
     id: string

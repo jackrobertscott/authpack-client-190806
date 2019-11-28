@@ -3,7 +3,7 @@ import { KeyStore } from 'events-and-things'
 export type ISettings = {
   open: boolean
   ready: boolean
-  domain?: string
+  client?: string
   bearer?: string
   cluster?: {
     id: string

@@ -16,10 +16,10 @@ export const Gadgets: FC = () => {
   return create(Modal, {
     close,
     visible: settings.open,
-    large: Boolean(settings.domain && settings.bearer && settings.user),
+    large: Boolean(settings.client && settings.bearer && settings.user),
     children: !settings.ready
       ? create(Loading)
-      : !settings.domain
+      : !settings.client
       ? create(NoKey, {
           key: 'nokey',
           loading: !settings.ready,

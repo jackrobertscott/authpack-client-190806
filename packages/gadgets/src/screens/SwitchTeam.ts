@@ -45,7 +45,9 @@ export const SwitchTeam: FC<{
               value: description,
               click: () =>
                 gqlSwitchTeam.fetch({ id }).then(({ session }) => {
-                  SettingsStore.update({ bearer: `Bearer ${session.token}` })
+                  SettingsStore.update({
+                    bearer: `Bearer ${session.token}`,
+                  })
                   if (change) change()
                 }),
             })

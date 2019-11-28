@@ -17,6 +17,6 @@ export const useServer = <T>(options: {
   return useGQL<T>({
     ...options,
     url: config.api,
-    authorization: [settings.domain, settings.bearer].filter(Boolean).join(','),
+    authorization: [settings.client, settings.bearer].filter(Boolean).join(','),
   })
 }

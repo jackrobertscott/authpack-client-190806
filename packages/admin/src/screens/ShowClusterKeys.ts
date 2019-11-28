@@ -25,10 +25,10 @@ export const ShowClusterKeys: FC<{ back: () => void }> = ({ back }) => {
           column: true,
           children: [
             create(Snippet, {
-              key: 'key_domain',
+              key: 'key_client',
               icon: 'key',
               label: 'Domain Key',
-              value: cluster.key_domain,
+              value: cluster.key_client,
             }),
             create(Snippet, {
               key: 'name',
@@ -43,14 +43,14 @@ export const ShowClusterKeys: FC<{ back: () => void }> = ({ back }) => {
 
 const useGetCluster = createUseServer<{
   cluster: {
-    key_domain: string
+    key_client: string
     key_secret: string
   }
 }>({
   query: `
     query GetClusterClient($id: String!) {
       cluster: GetClusterClient(id: $id) {
-        key_domain
+        key_client
         key_secret
       }
     }

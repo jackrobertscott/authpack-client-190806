@@ -3,7 +3,7 @@ export const config: {
   stripe_key?: string
   segment_id?: string
   sentry_dsn?: string
-  gadgets_domain_key: string
+  gadgets_key_client: string
   api: string
   debug: boolean
 } = {
@@ -11,7 +11,7 @@ export const config: {
   stripe_key: process.env.REACT_APP_STRIPE_KEY as string,
   segment_id: process.env.REACT_APP_SEGMENT_ID as string,
   sentry_dsn: process.env.REACT_APP_SENTRY_DSN as string,
-  gadgets_domain_key: process.env.REACT_APP_WGA_DOMAIN as string,
+  gadgets_key_client: process.env.REACT_APP_WGA_DOMAIN as string,
   api: process.env.REACT_APP_WGA_API as string,
   debug: process.env.REACT_APP_NODE_ENV !== 'production',
 }

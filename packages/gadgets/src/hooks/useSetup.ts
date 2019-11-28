@@ -10,13 +10,13 @@ export const useSetup = () => {
   const gqlGetCluster = useGetCluster()
   const gqlGetSession = useGetSession()
   useEffect(() => {
-    if (settings.domain) {
+    if (settings.client) {
       gqlGetCluster.fetch().then(({ cluster }) => {
         SettingsStore.update({ cluster })
       })
     }
     // eslint-disable-next-line
-  }, [settings.domain, settings.open])
+  }, [settings.client, settings.open])
   useEffect(() => {
     SettingsStore.update({
       ready: false,
@@ -25,7 +25,7 @@ export const useSetup = () => {
       session: undefined,
       permissions: undefined,
     })
-    if (settings.bearer && settings.domain) {
+    if (settings.bearer && settings.client) {
       gqlGetSession
         .fetch()
         .then(({ session: { user, team, permissions, ...session } }) => {
@@ -51,7 +51,7 @@ export const useSetup = () => {
       })
     }
     // eslint-disable-next-line
-  }, [settings.domain, settings.bearer])
+  }, [settings.client, settings.bearer])
   useEffect(() => {
     radio.message({
       name: 'gadgets:loaded',

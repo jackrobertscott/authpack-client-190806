@@ -3,7 +3,7 @@ import { KeyStore } from 'events-and-things'
 export interface IUniversalStore {
   ready: boolean
   cluster_id?: string
-  cluster_domain_key?: string
+  cluster_key_client?: string
   cluster_name?: string
   teams_enabled: boolean
   subscribed: boolean

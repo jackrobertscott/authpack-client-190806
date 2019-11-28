@@ -9,7 +9,8 @@ import { RouterMemberships } from './RouterMemberships'
 
 export const RouterSideBarTeam: FC = () => {
   const settings = useSettings()
-  const current = settings.bearer && settings.team ? settings.team : undefined
+  const current =
+    settings.bearer && settings.team ? settings.team : undefined
   const router = useLocalRouter({
     name: 'team',
     nomatch: current ? '/team/update' : '/team/create',

@@ -4,7 +4,7 @@ import { sender } from './utils/sender'
 export type IAuthenticatorAPI = {
   handler?: (variables: IGraphql['variables']) => Promise<IGraphql['data']>
   secret?: string
-  domain?: string
+  client?: string
   bearer?: string
 }
 
@@ -14,14 +14,14 @@ export class AuthenticatorAPI {
   ) => Promise<IGraphql['data']>
   private keys: {
     secret?: string
-    domain?: string
+    client?: string
     bearer?: string
   }
-  constructor({ secret, domain, bearer, handler }: IAuthenticatorAPI) {
+  constructor({ secret, client, bearer, handler }: IAuthenticatorAPI) {
     this.handler = handler
     this.keys = {
       secret,
-      domain,
+      client,
       bearer,
     }
   }
@@ -45,7 +45,7 @@ export class AuthenticatorAPI {
     })
   }
   private genkeys() {
-    return [this.keys.secret, this.keys.domain, this.keys.bearer]
+    return [this.keys.secret, this.keys.client, this.keys.bearer]
       .filter(String)
       .join(',')
   }

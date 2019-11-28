@@ -4,7 +4,7 @@ import { config } from './config'
 import { createGadgetsStore, IGadgets } from './utils/state'
 
 export interface IOptions {
-  domain_key: string
+  key_client: string
   iframe_id?: string
 }
 
@@ -54,7 +54,7 @@ export class Gadgets {
     const store = createGadgetsStore()
     store.update({
       bearer: localStorage.getItem('wga.bearer') || undefined,
-      domain: options.domain_key,
+      client: options.key_client,
     })
     store.listen(data => {
       if (data.bearer) localStorage.setItem('wga.bearer', data.bearer)
