@@ -3,8 +3,8 @@ import { Layout, IconBar, useRouter } from 'wga-theme'
 import { wga } from '../utils/wga'
 import { RouterSideBarUsers } from './RouterSideBarUsers'
 import { RouterSideBarTeams } from './RouterSideBarTeams'
-import { RouterSideBarDevelopers } from './RouterSideBarDevelopers'
 import { RouterManagerCluster } from './RouterManagerCluster'
+import { Explorer } from './Explorer'
 import { useUniversal } from '../hooks/useUniversal'
 
 export const RouterCentral: FC = () => {
@@ -15,7 +15,7 @@ export const RouterCentral: FC = () => {
     options: [
       { path: '/users', children: create(RouterSideBarUsers) },
       { path: '/teams', children: create(RouterSideBarTeams) },
-      { path: '/developers', children: create(RouterSideBarDevelopers) },
+      { path: '/developers', children: create(Explorer) },
     ],
   })
   return create(Layout, {

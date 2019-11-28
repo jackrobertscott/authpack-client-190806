@@ -9,7 +9,7 @@ export const RouterSideBarTeams: FC = () => {
   const universal = useUniversal()
   const router = useRouter({
     base: '/teams',
-    nomatch: '/providers',
+    nomatch: '/',
     options: [
       { path: '/', children: create(ListTeams) },
       { path: '/permissions', children: create(ListPermissions) },
