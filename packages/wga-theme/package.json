@@ -55,6 +55,7 @@
     "@types/storybook__react": "^4.0.2",
     "babel-loader": "^8.0.6",
     "faker": "^4.1.0",
+    "graphiql": "^0.17.0",
     "nodemon": "^1.19.1",
     "ts-node": "^8.5.2",
     "typescript": "^3.7.2"

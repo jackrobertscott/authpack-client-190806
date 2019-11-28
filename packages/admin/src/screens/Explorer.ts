@@ -26,7 +26,7 @@ export const Explorer: FC = () => {
           return Promise.resolve(error)
         }
       },
-    } as any),
+    }),
     className: css({
       flexGrow: 1,
       '.graphiql-container': {
