@@ -29,180 +29,376 @@ export const Explorer: FC = () => {
     }),
     className: css({
       flexGrow: 1,
+      /**
+       * Container.
+       */
       '.graphiql-container': {
-        fontSize: '15px',
-        '.topBarWrap *, .historyPaneWrap *, .docExplorerWrap *': {
-          fontFamily: 'Rubik',
-          fontSize: '15px',
-          fontWeight: 700,
+        fontSize: '1rem',
+        background: theme.page.background,
+        '*': {
+          fontSize: '1rem !important',
+          lineHeight: '1.25rem !important',
+          fontFamily: 'Rubik !important',
+          fontWeight: '500 !important' as any,
+          outline: 'none !important',
+          letterSpacing: 'inherit !important',
         },
-        '.topBar, .docExplorerShow, .historyShow': {
+      },
+      /**
+       * Topbar.
+       */
+      '.topBarWrap': {
+        margin: 0,
+        padding: 0,
+        color: theme.page.title,
+        background: theme.page.header,
+        borderBottom: theme.page.border,
+      },
+      '.topBar': {
+        margin: 0,
+        padding: 0,
+        height: 'auto',
+        width: 'auto',
+        background: 'none',
+        border: 'none',
+        '.title': {
+          margin: '0 auto 0 0',
+          padding: '25px 25px',
+        },
+      },
+      '.execute-button-wrap': {
+        margin: 0,
+        padding: 0,
+        height: 'auto',
+        width: 'auto',
+      },
+      '.execute-button, .toolbar-button, .docExplorerShow': {
+        padding: '25px 25px',
+        margin: 0,
+        boxShadow: 'none',
+        transition: '200ms',
+        border: 'none',
+        borderRadius: 0,
+        color: theme.page.label,
+        background: theme.page.header,
+        '&:hover': {
+          color: theme.page.labelHover,
+          background: theme.page.headerHover,
+        },
+      },
+      '.execute-button': {
+        width: 'auto',
+        height: 'auto',
+        display: 'flex',
+        '&::before': {
+          content: '"\f04b"',
+          fontFamily: '"Font Awesome 5 Free"',
+          fontWeight: 900,
+        },
+        svg: {
+          display: 'none',
+        },
+      },
+      '.execute-options': {
+        margin: 0,
+        padding: 0,
+        top: '100%',
+        left: -10,
+        borderRadius: '0 0 3px 3px',
+        overflow: 'hidden',
+        background: 'transparent',
+        border: theme.page.border,
+        boxShadow: 'none',
+        li: {
+          margin: 0,
+          padding: 15,
+          color: theme.page.label,
+          background: theme.page.header,
+          transition: '200ms',
+          minWidth: 240,
+          '&:not(:last-child)': {
+            borderBottom: theme.page.border,
+          },
+          '&:hover': {
+            color: theme.page.labelHover,
+            background: theme.page.headerHover,
+          },
+        },
+      },
+      '.toolbar': {},
+      '.toolbar-button': {
+        '&:active': {
+          background: 'none',
+          boxShadow: 'none',
+        },
+      },
+      '.docExplorerShow': {
+        '&::before': {
+          content: 'none',
+        },
+      },
+      /**
+       * Documents & History.
+       */
+      '.docExplorerWrap, .historyPaneWrap': {
+        boxShadow: 'none',
+      },
+      '.doc-explorer': {
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        overflowY: 'hidden',
+        color: theme.page.title,
+        background: theme.page.background,
+        borderLeft: theme.page.border,
+      },
+      '.historyPaneWrap': {
+        color: theme.page.title,
+        background: theme.page.background,
+        borderRight: theme.page.border,
+        width: '40% !important',
+        maxWidth: '360px',
+      },
+      '.doc-explorer-title-bar, .history-title-bar': {
+        margin: 0,
+        padding: 0,
+        height: 'auto',
+        color: theme.page.title,
+        background: theme.page.header,
+        borderBottom: theme.page.border,
+      },
+      '.doc-explorer-title, .history-title': {
+        margin: 0,
+        padding: '25px 15px 24px',
+        height: 'auto',
+        textAlign: 'left',
+      },
+      '.doc-explorer-back': {
+        margin: 0,
+        padding: 15,
+        height: 'auto',
+        display: 'flex',
+        flexDirection: 'row-reverse',
+        transition: '200ms',
+        color: theme.page.title,
+        borderRight: theme.page.border,
+        '&:hover:not(:active)': {
+          background: theme.page.headerHover,
+        },
+        '&::before': {
+          content: 'none',
+        },
+        '&::after': {
+          content: '"\f100"',
+          fontFamily: '"Font Awesome 5 Free"',
+          fontWeight: 900,
+          marginRight: 15,
+          color: theme.page.title,
+        },
+      },
+      '.docExplorerHide': {
+        margin: 0,
+        padding: '25px 15px 24px',
+        height: 'auto',
+        color: 'transparent',
+        boxSizing: 'content-box',
+        width: '1rem',
+        '&::before': {
+          content: '"\f057"',
+          fontFamily: '"Font Awesome 5 Free"',
+          fontWeight: 900,
+          color: theme.page.title,
+        },
+      },
+      '.doc-explorer-contents, .history-contents': {
+        margin: 0,
+        padding: 0,
+        height: 'auto',
+        position: 'unset',
+        overflowY: 'auto',
+        border: 'none',
+      },
+      '.doc-alert-text': {
+        margin: 0,
+        padding: 15,
+        display: 'flex',
+        color: theme.input.value,
+        background: theme.input.background,
+        borderBottom: theme.input.border,
+      },
+      '.search-box': {
+        margin: 0,
+        padding: 0,
+        height: 'auto',
+        display: 'flex',
+        alignItems: 'center',
+        transition: '200ms',
+        color: theme.input.value,
+        background: theme.input.background,
+        borderBottom: theme.input.border,
+        '&:hover, &:focus-within': {
+          color: theme.input.valueHover,
+          background: theme.input.backgroundHover,
+        },
+        '.search-box-icon, .search-box-clear': {
+          margin: 0,
+          padding: 15,
+          height: 'auto',
+          position: 'unset',
+          transform: 'none',
+          background: 'none',
+          border: 'none',
+          width: '1rem',
+          boxSizing: 'content-box',
+          borderRadius: 0,
+          color: 'transparent',
+        },
+        '.search-box-icon': {
+          paddingRight: 0,
+          '&::before': {
+            content: '"\f002"',
+            fontFamily: '"Font Awesome 5 Free"',
+            fontWeight: 900,
+            color: theme.input.value,
+          },
+        },
+        '.search-box-clear': {
+          '&:hover, &:focus-within': {
+            background: theme.input.backgroundHover,
+          },
+          '&::before': {
+            content: '"\f057"',
+            fontFamily: '"Font Awesome 5 Free"',
+            fontWeight: 900,
+            color: theme.input.value,
+          },
+        },
+        input: {
+          margin: 0,
+          padding: 15,
+          height: 'auto',
+          background: 'transparent',
+          color: theme.input.value,
+          '&::placeholder': {
+            color: theme.input.placeholder,
+          },
+          '&:hover, &:focus-within': {
+            color: theme.input.valueHover,
+          },
+        },
+      },
+      '.error-container': {},
+      '.doc-type-description': {
+        margin: 0,
+        padding: 15,
+        color: theme.page.label,
+        background: theme.page.background,
+        borderBottom: theme.page.border,
+        p: {
+          margin: 0,
+          '&:not(:last-child)': {
+            marginBottom: 10,
+          },
+        },
+      },
+      '.doc-category': {
+        margin: 0,
+        padding: 0,
+        color: theme.page.label,
+        background: theme.page.background,
+        '& > span': {
+          display: 'flex',
+          padding: 15,
+        },
+      },
+      '.doc-category-title': {
+        margin: 0,
+        padding: '15px 15px 0 15px',
+        fontVariant: 'none',
+        textTransform: 'capitalize',
+        fontWeight: 'inherit',
+        color: theme.page.title,
+        background: theme.page.background,
+        borderBottom: 'none',
+      },
+      '.doc-category-item': {
+        margin: 0,
+        padding: 15,
+        color: theme.page.label,
+        background: theme.page.background,
+        borderBottom: theme.page.border,
+      },
+      '.field-short-description': {
+        margin: '15px 0 0',
+        padding: 0,
+        p: {
+          margin: 0,
+          '&:not(:last-child)': {
+            marginBottom: 10,
+          },
+        },
+      },
+      '.history-contents': {
+        li: {
+          margin: 0,
+          padding: 0,
+          color: theme.page.label,
           background: theme.page.header,
           borderBottom: theme.page.border,
-          borderLeft: 'none',
-          color: theme.page.title,
-          height: 'auto',
-          padding: '15px 25px',
           transition: '200ms',
-        },
-        '.doc-explorer-contents': {
-          background: 'transparent',
-          borderTop: 'none',
-          'p, & > span': {
-            padding: '15px',
-            display: 'block',
+          '&:hover': {
+            color: theme.page.labelHover,
+            background: theme.page.headerHover,
+          },
+          button: {
             margin: 0,
+            padding: 15,
           },
         },
-        '.docExplorerShow:hover': {
-          background: theme.page.headerHover,
-        },
-        '.docExplorerShow:before': {
-          borderColor: theme.page.title,
-        },
-        '.doc-explorer-back': {
-          background: '#111111',
-          color: '#999999',
-          '&:before': {
-            borderColor: '#999999',
-          },
-        },
-        '.doc-category-item': {
-          color: '#999999',
-          '.field-name': {
-            color: '#EEEEEE',
-          },
-        },
-        '.doc-category-title': {
-          margin: 0,
-          borderBottom: 'none',
-        },
-        '.execute-button-wrap': {
-          height: 'auto',
-          marginRight: 0,
-          svg: {
-            margin: '-7px',
-          },
-        },
-        '.execute-button, .toolbar-button': {
-          background: theme.page.headerHover,
-          borderRadius: '3px',
-          border: 'none',
-          boxShadow: 'none',
-          color: theme.page.labelHover,
-          fill: theme.page.labelHover,
-          padding: '15px',
-          height: 'auto',
-          width: 'auto',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          margin: '0 15px 0 0',
-        },
-        '.execute-options, .toolbar-menu-items, .toolbar-select-options': {
-          background: '#666666',
-          color: '#FFFFFF',
-          boxShadow: '0 1px 25px -5px hsla(0, 0%, 0%, 0.35)',
-          padding: '15px',
-          top: '100%',
-          borderRadius: '3px',
-          left: 0,
-          li: {
-            borderRadius: '3px',
-            padding: '7.5px',
-            width: '180px',
-            '&.selected': {
-              background: '#777777',
-            },
-          },
-        },
-        '.search-box': {
-          margin: 0,
-          borderBottom: 'none',
-          '&:before': {
-            content: 'unset',
-          },
-          '.search-box-clear': {
-            backgroundColor: '#515151',
-            borderRadius: '3px',
-            fontSize: '15px',
-            padding: '3.75px 7.5px',
-            right: '7.5px',
-            top: '7.5px',
-          },
-          input: {
-            backgroundColor: '#353535',
-            borderRadius: '3px',
-            padding: '15px',
-            color: '#FFFFFF',
-          },
-        },
-        '.historyPaneWrap, .docExplorerWrap, .doc-explorer': {
-          background: '#111111',
-          boxShadow: 'none',
-          color: '#FFFFFF',
-        },
-        '.historyPaneWrap': {
-          width: '30% !important',
-          maxWidth: '400px',
-          borderRight: theme.page.border,
-        },
-        '.docExplorerWrap': {
-          width: '40% !important',
-          maxWidth: '600px',
-          borderLeft: theme.page.border,
-        },
-        '.history-title-bar, .doc-explorer-title-bar': {
-          padding: '25px 15px',
-        },
-        '.history-title, .doc-explorer-title': {
-          textAlign: 'left',
-          padding: 0,
-        },
-        '.docExplorerHide': {
-          padding: '7px',
-        },
-        '.history-contents': {
-          backgroundColor: 'transparent',
-          borderTop: 'none',
-          p: {
-            borderBottom: 'none',
-            color: '#B5B5B5',
-            fontSize: '15px',
-            padding: '15px',
-            '&:hover': {
-              background: '#222222',
-              color: '#FFFFFF',
-            },
-          },
-        },
+      },
+      /**
+       * Editor.
+       */
+      '.editorBar': {},
+      '.queryWrap': {},
+      '.query-editor': {},
+      '.variable-editor': {
+        margin: 0,
+        padding: 0,
+        height: 'auto',
+      },
+      '.variable-editor-title': {
+        margin: 0,
+        padding: 15,
+        fontVariant: 'none',
+        textTransform: 'capitalize',
+        fontWeight: 'inherit',
+        borderBottom: theme.input.border,
+        borderTop: theme.input.border,
+        color: theme.input.label,
+        background: theme.input.backgroundHover,
+      },
+      '.resultWrap': {
+        borderLeft: 'none',
         '.CodeMirror': {
-          background: theme.page.background,
-          '.CodeMirror-sizer *': {
-            fontFamily: 'Inconsolata',
-            fontSize: '16px',
-            color: theme.page.title,
-            letterSpacing: '0.025em',
-            caretColor: '#FFFFFF',
+          '.CodeMirror-gutters': {
+            borderLeft: theme.input.border,
           },
+        },
+      },
+      '.CodeMirror': {
+        background: theme.input.background,
+        '*': {
+          fontFamily: 'Inconsolata !important',
+          caretColor: theme.input.valueHover,
         },
         '.CodeMirror-gutters': {
-          borderRight: theme.page.border,
-          borderLeft: theme.page.border,
-          backgroundColor: 'transparent',
-        },
-        '.variable-editor': {
-          height: 'auto',
-        },
-        '.variable-editor-title': {
-          background: theme.page.headerHover,
-          color: theme.page.title,
-          borderBottom: 'none',
-          borderTop: 'none',
-          padding: '15px',
-        },
-        '.resultWrap': {
           borderLeft: 'none',
+          borderRight: theme.input.border,
+          backgroundColor: theme.input.backgroundHover,
+        },
+        '.CodeMirror-hints': {
+          backgroundColor: theme.input.backgroundHover,
         },
       },
     }),
