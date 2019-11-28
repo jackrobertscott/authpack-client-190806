@@ -1,16 +1,16 @@
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import GraphiQL from 'graphiql'
 import 'graphiql/graphiql.css'
-import { createElement as create } from 'react'
+import { createElement as create, FC } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
-import { Root, graphql } from '../src/index'
+import { Root, graphql, useTheme } from '../src/index'
 
 console.clear()
 
 const stories = storiesOf('Pages', module).addDecorator(data => {
   return create(Root, {
-    theme: 'snow_storm',
+    theme: 'night_sky',
     children: create('div', {
       children: data(),
       className: css({
@@ -22,6 +22,11 @@ const stories = storiesOf('Pages', module).addDecorator(data => {
 })
 
 stories.add('Explorer', () => {
+  return create(Explorer)
+})
+
+const Explorer: FC = () => {
+  const theme = useTheme()
   return create('div', {
     children: create(GraphiQL, {
       fetcher: async (graphQLParams: any) => {
@@ -48,9 +53,11 @@ stories.add('Explorer', () => {
         fontSize: '1rem',
         '*': {
           fontSize: '1rem !important',
-          lineHeight: '1.2rem !important',
+          lineHeight: '1.25rem !important',
           fontFamily: 'Rubik !important',
+          fontWeight: '500 !important' as any,
           outline: 'none !important',
+          letterSpacing: 'inherit !important',
         },
       },
       /**
@@ -60,7 +67,9 @@ stories.add('Explorer', () => {
         // header styles
         margin: 0,
         padding: '20px 25px',
-        background: 'none',
+        color: theme.page.title,
+        background: theme.page.header,
+        borderBottom: theme.page.border,
       },
       '.topBar': {
         margin: 0,
@@ -80,17 +89,23 @@ stories.add('Explorer', () => {
         height: 'auto',
         width: 'auto',
       },
-      '.execute-button': {
-        // button styles
-        background: '#777',
-        color: '#EEE',
-        border: 'none',
-        boxShadow: 'none',
-        borderRadius: 3,
-        margin: '0 0 0 15px',
+      '.execute-button, .toolbar-button, .docExplorerShow': {
         padding: 15,
-        height: 'auto',
+        margin: '0 0 0 15px',
+        boxShadow: 'none',
+        transition: '200ms',
+        color: theme.page.label,
+        border: theme.page.border,
+        background: theme.page.header,
+        borderRadius: theme.global.radius,
+        '&:hover': {
+          color: theme.page.labelHover,
+          background: theme.page.headerHover,
+        },
+      },
+      '.execute-button': {
         width: 'auto',
+        height: 'auto',
         display: 'flex',
         '&::before': {
           content: '"\f04b"',
@@ -104,40 +119,35 @@ stories.add('Explorer', () => {
       '.execute-options': {
         margin: 0,
         padding: 0,
-        top: '100%',
-        left: '15px',
+        top: '75%',
+        left: 0,
         borderRadius: 3,
         overflow: 'hidden',
+        background: 'transparent',
+        border: theme.page.border,
+        boxShadow: 'none',
         li: {
           margin: 0,
           padding: 15,
+          color: theme.page.label,
+          background: theme.page.header,
+          borderBottom: theme.page.border,
+          transition: '200ms',
+          minWidth: 240,
           '&:hover': {
-            background: 'none',
-            color: 'initial',
+            color: theme.page.labelHover,
+            background: theme.page.headerHover,
           },
         },
       },
-      '.toolbar': {
-        '.toolbar-button': {
-          // button styles
-          background: '#777',
-          color: '#EEE',
-          border: 'none',
+      '.toolbar': {},
+      '.toolbar-button': {
+        '&:active': {
+          background: 'none',
           boxShadow: 'none',
-          borderRadius: 3,
-          margin: '0 0 0 15px',
-          padding: 15,
         },
       },
       '.docExplorerShow': {
-        // button styles
-        background: '#777',
-        color: '#EEE',
-        border: 'none',
-        boxShadow: 'none',
-        borderRadius: 3,
-        margin: '0 0 0 15px',
-        padding: 15,
         '&::before': {
           content: 'none',
         },
@@ -155,19 +165,40 @@ stories.add('Explorer', () => {
         display: 'flex',
         flexDirection: 'column',
         overflowY: 'hidden',
+        color: theme.page.title,
+        background: theme.page.background,
+        borderLeft: theme.page.border,
+      },
+      '.historyPaneWrap': {
+        color: theme.page.title,
+        background: theme.page.background,
+        borderRight: theme.page.border,
       },
       '.doc-explorer-back': {
         margin: 0,
         padding: 15,
         height: 'auto',
+        display: 'flex',
+        flexDirection: 'row-reverse',
+        color: theme.page.title,
         '&::before': {
           content: 'none',
+        },
+        '&::after': {
+          content: '"\f100"',
+          fontFamily: '"Font Awesome 5 Free"',
+          fontWeight: 900,
+          marginRight: 15,
+          color: theme.page.title,
         },
       },
       '.doc-explorer-title-bar, .history-title-bar': {
         margin: 0,
-        padding: '40px 0 0',
+        padding: 0,
         height: 'auto',
+        color: theme.page.title,
+        background: theme.page.header,
+        borderBottom: theme.page.border,
       },
       '.doc-explorer-title, .history-title': {
         margin: 0,
@@ -186,7 +217,7 @@ stories.add('Explorer', () => {
           content: '"\f057"',
           fontFamily: '"Font Awesome 5 Free"',
           fontWeight: 900,
-          color: 'black',
+          color: theme.page.title,
         },
       },
       '.doc-explorer-contents, .history-contents': {
@@ -195,11 +226,15 @@ stories.add('Explorer', () => {
         height: 'auto',
         position: 'unset',
         overflowY: 'auto',
+        border: 'none',
       },
       '.doc-alert-text': {
         margin: 0,
         padding: 15,
         display: 'flex',
+        color: theme.input.value,
+        background: theme.input.background,
+        borderBottom: theme.input.border,
       },
       '.search-box': {
         margin: 0,
@@ -207,46 +242,68 @@ stories.add('Explorer', () => {
         height: 'auto',
         display: 'flex',
         alignItems: 'center',
-      },
-      '.search-box-icon, .search-box-clear': {
-        margin: 0,
-        padding: 15,
-        height: 'auto',
-        color: 'transparent',
-        position: 'unset',
-        transform: 'none',
-        background: 'none',
-        border: 'none',
-        width: '1rem',
-        boxSizing: 'content-box',
-        borderRadius: 0,
-      },
-      '.search-box-icon': {
-        paddingRight: 0,
-        '&::before': {
-          content: '"\f002"',
-          fontFamily: '"Font Awesome 5 Free"',
-          fontWeight: 900,
-          color: 'black',
+        transition: '200ms',
+        color: theme.input.value,
+        background: theme.input.background,
+        borderBottom: theme.input.border,
+        '&:hover, &:focus-within': {
+          color: theme.input.valueHover,
+          background: theme.input.backgroundHover,
         },
-      },
-      '.search-box-clear': {
-        '&::before': {
-          content: '"\f057"',
-          fontFamily: '"Font Awesome 5 Free"',
-          fontWeight: 900,
-          color: 'black',
+        '.search-box-icon, .search-box-clear': {
+          margin: 0,
+          padding: 15,
+          height: 'auto',
+          position: 'unset',
+          transform: 'none',
+          background: 'none',
+          border: 'none',
+          width: '1rem',
+          boxSizing: 'content-box',
+          borderRadius: 0,
+          color: 'transparent',
         },
-      },
-      input: {
-        margin: 0,
-        padding: 15,
-        height: 'auto',
+        '.search-box-icon': {
+          paddingRight: 0,
+          '&::before': {
+            content: '"\f002"',
+            fontFamily: '"Font Awesome 5 Free"',
+            fontWeight: 900,
+            color: theme.input.value,
+          },
+        },
+        '.search-box-clear': {
+          '&:hover, &:focus-within': {
+            background: theme.input.backgroundHover,
+          },
+          '&::before': {
+            content: '"\f057"',
+            fontFamily: '"Font Awesome 5 Free"',
+            fontWeight: 900,
+            color: theme.input.value,
+          },
+        },
+        input: {
+          margin: 0,
+          padding: 15,
+          height: 'auto',
+          background: 'transparent',
+          color: theme.input.value,
+          '&::placeholder': {
+            color: theme.input.placeholder,
+          },
+          '&:hover, &:focus-within': {
+            color: theme.input.valueHover,
+          },
+        },
       },
       '.error-container': {},
       '.doc-type-description': {
         margin: 0,
         padding: 15,
+        color: theme.page.label,
+        background: theme.page.background,
+        borderBottom: theme.page.border,
         p: {
           margin: 0,
           '&:not(:last-child)': {
@@ -257,17 +314,29 @@ stories.add('Explorer', () => {
       '.doc-category': {
         margin: 0,
         padding: 0,
+        color: theme.page.label,
+        background: theme.page.background,
+        '& > span': {
+          display: 'flex',
+          padding: 15,
+        },
       },
       '.doc-category-title': {
         margin: 0,
-        padding: 15,
+        padding: '15px 15px 0 15px',
         fontVariant: 'none',
         textTransform: 'capitalize',
         fontWeight: 'inherit',
+        color: theme.page.title,
+        background: theme.page.background,
+        borderBottom: 'none',
       },
       '.doc-category-item': {
         margin: 0,
         padding: 15,
+        color: theme.page.label,
+        background: theme.page.background,
+        borderBottom: theme.page.border,
       },
       '.field-short-description': {
         margin: '15px 0 0',
@@ -283,9 +352,13 @@ stories.add('Explorer', () => {
         li: {
           margin: 0,
           padding: 15,
+          color: theme.page.label,
+          background: theme.page.header,
+          borderBottom: theme.page.border,
+          transition: '200ms',
           '&:hover': {
-            background: 'none',
-            color: 'initial',
+            color: theme.page.labelHover,
+            background: theme.page.headerHover,
           },
         },
       },
@@ -318,4 +391,4 @@ stories.add('Explorer', () => {
       },
     }),
   })
-})
+}
