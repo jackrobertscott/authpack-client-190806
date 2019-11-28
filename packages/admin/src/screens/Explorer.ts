@@ -7,11 +7,25 @@ import { config } from '../config'
 import { useUniversal } from '../hooks/useUniversal'
 import { wga } from '../utils/wga'
 
+const startingQuery = `
+query First10Users {
+  users: ListUsers(options: { limit: 10 }) {
+    id
+    name
+    email
+    username
+    created
+    updated
+  }
+}
+`
+
 export const Explorer: FC = () => {
   const theme = useTheme()
   const universal = useUniversal()
   return create('div', {
     children: create(GraphiQL, {
+      defaultQuery: startingQuery,
       fetcher: async (graphQLParams: any) => {
         try {
           const data = await graphql<any>({
@@ -36,12 +50,12 @@ export const Explorer: FC = () => {
         fontSize: '1rem',
         background: theme.page.background,
         '*': {
-          fontSize: '1rem !important',
-          lineHeight: '1.25rem !important',
-          fontFamily: 'Rubik !important',
-          fontWeight: '500 !important' as any,
-          outline: 'none !important',
-          letterSpacing: 'inherit !important',
+          fontSize: '1rem',
+          lineHeight: '1.25rem',
+          fontFamily: 'Rubik',
+          fontWeight: '500' as any,
+          outline: 'none',
+          letterSpacing: 'inherit',
         },
       },
       /**
@@ -62,8 +76,14 @@ export const Explorer: FC = () => {
         background: 'none',
         border: 'none',
         '.title': {
-          margin: '0 auto 0 0',
-          padding: '25px 25px',
+          margin: '26px auto 22px 0',
+          padding: '0 25px',
+          span: {
+            fontSize: '1.5rem',
+          },
+          em: {
+            fontSize: '1.5rem',
+          },
         },
       },
       '.execute-button-wrap': {
@@ -169,7 +189,7 @@ export const Explorer: FC = () => {
       },
       '.doc-explorer-title, .history-title': {
         margin: 0,
-        padding: '25px 15px 24px',
+        padding: '25px 15px',
         height: 'auto',
         textAlign: 'left',
       },
@@ -198,7 +218,7 @@ export const Explorer: FC = () => {
       },
       '.docExplorerHide': {
         margin: 0,
-        padding: '25px 15px 24px',
+        padding: '25px 15px',
         height: 'auto',
         color: 'transparent',
         boxSizing: 'content-box',

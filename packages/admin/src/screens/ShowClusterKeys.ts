@@ -27,7 +27,7 @@ export const ShowClusterKeys: FC<{ back: () => void }> = ({ back }) => {
             create(Snippet, {
               key: 'key_client',
               icon: 'key',
-              label: 'Domain Key',
+              label: 'Client Key',
               value: cluster.key_client,
             }),
             create(Snippet, {
