@@ -1,11 +1,10 @@
-import { createElement as create, FC, Fragment, useState } from 'react'
+import { createElement as create, FC, Fragment } from 'react'
 import { useLocalRouter, Layout, IconBar } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { RouterSideBarUser } from './RouterSideBarUser'
 import { RouterSideBarTeam } from './RouterSideBarTeam'
 import { LogoutUser } from './LogoutUser'
 import { ReconcileUser } from './ReconcileUser'
-import { NoTeam } from './NoTeam'
 
 export const RouterModalOnauthed: FC<{
   close: () => void
@@ -13,7 +12,13 @@ export const RouterModalOnauthed: FC<{
   const settings = useSettings()
   const router = useLocalRouter({
     name: 'onauthed',
-    nomatch: !settings.user || !settings.user.verified ? '/verified' : '/users',
+    nomatch: !settings.user
+      ? '/users'
+      : !settings.user.verified
+      ? '/verify'
+      : !settings.team && settings.enable_teams
+      ? '/teams'
+      : '/users',
     options: !settings.user
       ? []
       : [
@@ -40,9 +45,6 @@ export const RouterModalOnauthed: FC<{
           },
         ],
   })
-  const [open, openChange] = useState<boolean>(
-    settings.enable_teams && !settings.team
-  )
   if (!settings.bearer || !settings.user) return null
   return create(Layout, {
     grow: true,
@@ -88,14 +90,6 @@ export const RouterModalOnauthed: FC<{
         create(Fragment, {
           key: 'children',
           children: router.current.children,
-        }),
-      open &&
-        create(NoTeam, {
-          key: 'noteam',
-          close: () => {
-            router.change('/teams')
-            openChange(false)
-          },
         }),
     ],
   })

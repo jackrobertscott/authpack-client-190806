@@ -8,7 +8,6 @@ import {
   InputStringArray,
   InputSelect,
   Page,
-  InputBoolean,
 } from 'wga-theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
@@ -98,16 +97,6 @@ export const UpdateCluster: FC<{
                 ],
               }),
             }),
-            create(Control, {
-              key: 'teams_personal',
-              label: 'Team Creation',
-              helper: 'Create a personal team for a user on sign up',
-              error: schema.error('teams_personal'),
-              children: create(InputBoolean, {
-                value: schema.value('teams_personal'),
-                change: schema.change('teams_personal'),
-              }),
-            }),
           ],
     }),
   })
@@ -116,7 +105,6 @@ export const UpdateCluster: FC<{
 const SchemaUpdateCluster = yup.object().shape({
   name: yup.string().required('Please provide the cluster name'),
   theme: yup.string().required('Please select a theme'),
-  teams_personal: yup.boolean().default(false),
   domains: yup
     .array()
     .of(yup.string().required())
@@ -128,7 +116,6 @@ const useGetCluster = createUseServer<{
     name: string
     theme: string
     domains: string[]
-    teams_personal: boolean
   }
 }>({
   query: `
@@ -137,7 +124,6 @@ const useGetCluster = createUseServer<{
         name
         theme
         domains
-        teams_personal
       }
     }
   `,
@@ -148,7 +134,6 @@ const useUpdateCluster = createUseServer<{
     id: string
     name: string
     theme: string
-    teams_personal: boolean
   }
 }>({
   query: `
@@ -157,7 +142,6 @@ const useUpdateCluster = createUseServer<{
         id
         name
         theme
-        teams_personal
       }
     }
   `,
