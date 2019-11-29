@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useState } from 'react'
+import { createElement as create, FC } from 'react'
 import {
   useSchema,
   Layout,
@@ -11,7 +11,6 @@ import {
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
-import { NoTeam } from './NoTeam'
 import { SettingsStore } from '../utils/settings'
 
 export const CreateTeam: FC<{
@@ -20,9 +19,6 @@ export const CreateTeam: FC<{
   const settings = useSettings()
   const gqlCreateTeam = useCreateTeam()
   const gqlSwitchTeam = useSwitchTeam()
-  const initial =
-    !!settings.cluster && settings.cluster.teams_required && !settings.team
-  const [open, openChange] = useState<boolean>(initial)
   const schema = useSchema({
     schema: SchemaCreateTeam,
     submit: input => {
@@ -45,31 +41,39 @@ export const CreateTeam: FC<{
         padding: true,
         divide: true,
         children: [
-          create(Control, {
+          create(Layout, {
             key: 'name',
-            label: 'Team Name',
-            error: schema.error('name'),
-            children: create(InputString, {
-              value: schema.value('name'),
-              change: schema.change('name'),
-              placeholder: 'My Team',
-            }),
-          }),
-          create(Control, {
-            key: 'tag',
-            label: 'Tag',
-            helper: "Claim your team's unique id tag",
-            error: schema.error('tag'),
-            children: create(InputString, {
-              value: schema.value('tag'),
-              change: schema.change('tag'),
-              placeholder: 'my_team_123',
-            }),
+            divide: true,
+            media: true,
+            children: [
+              create(Control, {
+                key: 'name',
+                label: 'Team Name',
+                helper: 'This can be anything',
+                error: schema.error('name'),
+                children: create(InputString, {
+                  value: schema.value('name'),
+                  change: schema.change('name'),
+                  placeholder: 'My Team',
+                }),
+              }),
+              create(Control, {
+                key: 'tag',
+                label: 'Tag',
+                helper: "Claim your team's unique id tag",
+                error: schema.error('tag'),
+                children: create(InputString, {
+                  value: schema.value('tag'),
+                  change: schema.change('tag'),
+                  placeholder: 'my_team_123',
+                }),
+              }),
+            ],
           }),
           create(Control, {
             key: 'description',
             label: 'Description',
-            helper: 'Add a description for your team',
+            helper: 'Optionally describe what your team does',
             error: schema.error('description'),
             children: create(InputString, {
               value: schema.value('description'),
@@ -86,11 +90,6 @@ export const CreateTeam: FC<{
           }),
         ],
       }),
-      open &&
-        create(NoTeam, {
-          key: 'noteam',
-          close: () => openChange(false),
-        }),
     ],
   })
 }
@@ -103,8 +102,7 @@ const SchemaCreateTeam = yup.object().shape({
       'alphamun',
       'Please use only numbers, letters and underscores',
       testAlphanumeric
-    )
-    .required('Add a unique team id'),
+    ),
   description: yup.string(),
 })
 

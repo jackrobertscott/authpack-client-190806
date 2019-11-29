@@ -10,7 +10,7 @@ export const useSetup = () => {
   const gqlGetCluster = useGetCluster()
   useEffect(() => {
     UniversalStore.recreate({
-      cluster_id: universal.cluster_id,
+      cluster_id: gadgets.bearer && universal.cluster_id,
     })
     if (gadgets.bearer && gadgets.team && gadgets.team.id) {
       gqlGetCluster

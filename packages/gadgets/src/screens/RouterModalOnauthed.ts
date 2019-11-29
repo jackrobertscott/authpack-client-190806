@@ -1,10 +1,11 @@
-import { createElement as create, FC, Fragment } from 'react'
+import { createElement as create, FC, Fragment, useState } from 'react'
 import { useLocalRouter, Layout, IconBar } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { RouterSideBarUser } from './RouterSideBarUser'
 import { RouterSideBarTeam } from './RouterSideBarTeam'
 import { LogoutUser } from './LogoutUser'
 import { ReconcileUser } from './ReconcileUser'
+import { NoTeam } from './NoTeam'
 
 export const RouterModalOnauthed: FC<{
   close: () => void
@@ -16,22 +17,32 @@ export const RouterModalOnauthed: FC<{
     options: !settings.user
       ? []
       : [
-          { key: '/users', children: create(RouterSideBarUser) },
-          { key: '/teams', children: create(RouterSideBarTeam) },
           {
-            key: '/logout',
+            key: '/users',
+            children: create(RouterSideBarUser),
+          },
+          {
             nosave: true,
+            key: '/teams',
+            children: create(RouterSideBarTeam),
+          },
+          {
+            nosave: true,
+            key: '/logout',
             children: create(LogoutUser),
           },
           {
-            key: '/verify',
             nosave: true,
+            key: '/verify',
             children: create(ReconcileUser, {
               email: settings.user.email,
             }),
           },
         ],
   })
+  const [open, openChange] = useState<boolean>(
+    settings.enable_teams && !settings.team
+  )
   if (!settings.bearer || !settings.user) return null
   return create(Layout, {
     grow: true,
@@ -45,7 +56,7 @@ export const RouterModalOnauthed: FC<{
             focused: router.current && router.current.key.startsWith('/users'),
             click: () => router.change('/users'),
           },
-          settings.teams && {
+          settings.enable_teams && {
             icon: 'users',
             label: 'Team',
             focused: router.current && router.current.key.startsWith('/teams'),
@@ -77,6 +88,14 @@ export const RouterModalOnauthed: FC<{
         create(Fragment, {
           key: 'children',
           children: router.current.children,
+        }),
+      open &&
+        create(NoTeam, {
+          key: 'noteam',
+          close: () => {
+            router.change('/teams')
+            openChange(false)
+          },
         }),
     ],
   })

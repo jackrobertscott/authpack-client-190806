@@ -61,18 +61,20 @@ export const UpdateCluster: FC<{
               }),
             }),
             create(Control, {
-              key: 'teams_enabled',
-              label: 'Teams',
-              helper: 'Enable teams and allow users to create them',
-              error: schema.error('teams_enabled'),
-              children: create(InputBoolean, {
-                value: schema.value('teams_enabled'),
-                change: schema.change('teams_enabled'),
+              key: 'domains',
+              label: 'Whitelisted Domains',
+              helper: 'Domains allowed to make authorized requests',
+              error: schema.error('domains'),
+              children: create(InputStringArray, {
+                value: schema.value('domains'),
+                change: schema.change('domains'),
+                placeholder: '...',
               }),
             }),
             create(Control, {
               key: 'theme',
               label: 'Theme',
+              helper: 'Choose the color of your login gadgets',
               error: schema.error('theme'),
               children: create(InputSelect, {
                 value: schema.value('theme'),
@@ -97,14 +99,13 @@ export const UpdateCluster: FC<{
               }),
             }),
             create(Control, {
-              key: 'domains',
-              label: 'Whitelisted Domains',
-              helper: 'Domains allowed to make authorized requests',
-              error: schema.error('domains'),
-              children: create(InputStringArray, {
-                value: schema.value('domains'),
-                change: schema.change('domains'),
-                placeholder: '...',
+              key: 'teams_personal',
+              label: 'Team Creation',
+              helper: 'Create a personal team for a user on sign up',
+              error: schema.error('teams_personal'),
+              children: create(InputBoolean, {
+                value: schema.value('teams_personal'),
+                change: schema.change('teams_personal'),
               }),
             }),
           ],
@@ -115,7 +116,7 @@ export const UpdateCluster: FC<{
 const SchemaUpdateCluster = yup.object().shape({
   name: yup.string().required('Please provide the cluster name'),
   theme: yup.string().required('Please select a theme'),
-  teams_enabled: yup.boolean().default(false),
+  teams_personal: yup.boolean().default(false),
   domains: yup
     .array()
     .of(yup.string().required())
@@ -127,7 +128,7 @@ const useGetCluster = createUseServer<{
     name: string
     theme: string
     domains: string[]
-    teams_enabled: boolean
+    teams_personal: boolean
   }
 }>({
   query: `
@@ -136,7 +137,7 @@ const useGetCluster = createUseServer<{
         name
         theme
         domains
-        teams_enabled
+        teams_personal
       }
     }
   `,
@@ -147,7 +148,7 @@ const useUpdateCluster = createUseServer<{
     id: string
     name: string
     theme: string
-    teams_enabled: boolean
+    teams_personal: boolean
   }
 }>({
   query: `
@@ -156,7 +157,7 @@ const useUpdateCluster = createUseServer<{
         id
         name
         theme
-        teams_enabled
+        teams_personal
       }
     }
   `,

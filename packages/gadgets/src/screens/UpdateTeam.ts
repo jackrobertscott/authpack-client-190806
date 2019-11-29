@@ -39,30 +39,39 @@ export const UpdateTeam: FC<{
       children: !gqlGetTeam.data
         ? null
         : [
-            create(Control, {
+            create(Layout, {
               key: 'name',
-              label: 'Name',
-              error: schema.error('name'),
-              children: create(InputString, {
-                value: schema.value('name'),
-                change: schema.change('name'),
-                placeholder: 'Awesome People',
-              }),
-            }),
-            create(Control, {
-              key: 'tag',
-              label: 'Tag',
-              helper: 'A unique identifier for the team',
-              error: schema.error('tag'),
-              children: create(InputString, {
-                value: schema.value('tag'),
-                change: schema.change('tag'),
-                placeholder: 'awesome_people',
-              }),
+              divide: true,
+              media: true,
+              children: [
+                create(Control, {
+                  key: 'name',
+                  label: 'Team Name',
+                  helper: 'This can be anything',
+                  error: schema.error('name'),
+                  children: create(InputString, {
+                    value: schema.value('name'),
+                    change: schema.change('name'),
+                    placeholder: 'My Team',
+                  }),
+                }),
+                create(Control, {
+                  key: 'tag',
+                  label: 'Tag',
+                  helper: "Claim your team's unique id tag",
+                  error: schema.error('tag'),
+                  children: create(InputString, {
+                    value: schema.value('tag'),
+                    change: schema.change('tag'),
+                    placeholder: 'my_team_123',
+                  }),
+                }),
+              ],
             }),
             create(Control, {
               key: 'description',
               label: 'Description',
+              helper: 'Optionally describe what your team does',
               error: schema.error('description'),
               children: create(InputString, {
                 value: schema.value('description'),

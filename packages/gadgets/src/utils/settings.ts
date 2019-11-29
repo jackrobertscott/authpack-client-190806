@@ -5,12 +5,11 @@ export type ISettings = {
   ready: boolean
   client?: string
   bearer?: string
-  teams: boolean
+  enable_teams: boolean
   cluster?: {
     id: string
     name: string
     theme: string
-    teams_required: boolean
     power: boolean
     subscribed: boolean
   }
@@ -44,7 +43,7 @@ export type ISettings = {
 export const defaults: ISettings = {
   open: false,
   ready: false,
-  teams: false,
+  enable_teams: false,
 }
 
 export const SettingsStore = new KeyStore<ISettings>(defaults)

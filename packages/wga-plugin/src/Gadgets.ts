@@ -6,7 +6,7 @@ import { createGadgetsStore, IGadgets } from './utils/state'
 export interface IOptions {
   id?: string
   key: string
-  teams?: boolean
+  enable_teams?: boolean
 }
 
 export class Gadgets {
@@ -16,7 +16,7 @@ export class Gadgets {
   private radio: Radio<{ name: string; payload?: any }>
   private store: KeyStore<IGadgets>
   private loaded: boolean
-  constructor(options: { id?: string; key: string; teams?: boolean }) {
+  constructor(options: { id?: string; key: string; enable_teams?: boolean }) {
     this.queue = []
     this.loaded = false
     this.options = options
@@ -56,7 +56,7 @@ export class Gadgets {
     store.update({
       bearer: localStorage.getItem('wga.bearer') || undefined,
       client: options.key,
-      teams: options.teams,
+      enable_teams: options.enable_teams,
     })
     store.listen(data => {
       if (data.bearer) localStorage.setItem('wga.bearer', data.bearer)

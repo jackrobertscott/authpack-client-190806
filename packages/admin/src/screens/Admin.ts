@@ -20,13 +20,12 @@ export const Admin: FC = () => {
         })
       : gadgets.bearer && gadgets.user
       ? create(Focus, {
-          icon: 'unlock',
+          icon: 'users',
           label: 'Team Required',
           helper: 'Please create a team to start',
           children: create(Button, {
             key: 'team',
-            icon: 'users',
-            label: 'Open Gadgets',
+            label: 'Continue',
             click: () => wga.show(),
           }),
         })
