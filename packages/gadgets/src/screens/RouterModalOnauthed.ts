@@ -12,12 +12,12 @@ export const RouterModalOnauthed: FC<{
   const settings = useSettings()
   const router = useLocalRouter({
     name: 'onauthed',
-    nomatch: !settings.user || !settings.user.verified ? '/verified' : '/user',
+    nomatch: !settings.user || !settings.user.verified ? '/verified' : '/users',
     options: !settings.user
       ? []
       : [
-          { key: '/user', children: create(RouterSideBarUser) },
-          { key: '/team', children: create(RouterSideBarTeam) },
+          { key: '/users', children: create(RouterSideBarUser) },
+          { key: '/teams', children: create(RouterSideBarTeam) },
           {
             key: '/logout',
             nosave: true,
@@ -42,14 +42,14 @@ export const RouterModalOnauthed: FC<{
           {
             icon: 'user-circle',
             label: 'User',
-            focused: router.current && router.current.key.startsWith('/user'),
-            click: () => router.change('/user'),
+            focused: router.current && router.current.key.startsWith('/users'),
+            click: () => router.change('/users'),
           },
-          Boolean(settings.cluster && settings.cluster.teams_enabled) && {
+          settings.teams && {
             icon: 'users',
             label: 'Team',
-            focused: router.current && router.current.key.startsWith('/team'),
-            click: () => router.change('/team'),
+            focused: router.current && router.current.key.startsWith('/teams'),
+            click: () => router.change('/teams'),
           },
           {
             icon: 'power-off',

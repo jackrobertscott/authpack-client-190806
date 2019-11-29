@@ -14,6 +14,7 @@ export const RemoveTeam: FC<{
     children: create(ConfirmRemove, {
       helper: 'Remove this team',
       alert: 'Please confirm the removal of this team',
+      loading: gqlRemoveTeam.loading,
       change: () => gqlRemoveTeam.fetch({ id }).then(() => change && change()),
     }),
   })

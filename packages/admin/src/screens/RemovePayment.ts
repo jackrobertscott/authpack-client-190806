@@ -17,6 +17,7 @@ export const RemovePayment: FC<{
       keyword: 'Terminate',
       helper: 'Cancel subscription and invoice now',
       alert: 'User limits will be reapplied',
+      loading: gqlRemovePayment.loading,
       change: () =>
         gqlRemovePayment
           .fetch({ id: universal.cluster_id })

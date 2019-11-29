@@ -14,6 +14,7 @@ export const RemoveCredential: FC<{
     children: create(ConfirmRemove, {
       helper: 'Remove this credential',
       alert: 'Please confirm the removal of this credential',
+      loading: gqlRemoveCredential.loading,
       change: () =>
         gqlRemoveCredential.fetch({ id }).then(() => change && change()),
     }),

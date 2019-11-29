@@ -14,6 +14,7 @@ export const RemovePermission: FC<{
     children: create(ConfirmRemove, {
       helper: 'Remove this permission',
       alert: 'Please confirm the removal of this permission',
+      loading: gqlRemovePermission.loading,
       change: () =>
         gqlRemovePermission.fetch({ id }).then(() => change && change()),
     }),

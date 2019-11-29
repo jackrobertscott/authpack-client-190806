@@ -30,7 +30,6 @@ export const UpdateCluster: FC<{
           UniversalStore.update({
             theme: cluster.theme,
             cluster_name: cluster.name,
-            teams_enabled: cluster.teams_enabled,
           })
         })
     },

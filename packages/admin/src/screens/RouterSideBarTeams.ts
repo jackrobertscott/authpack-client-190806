@@ -3,7 +3,6 @@ import { useRouter, SideBar } from 'wga-theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { ListPermissions } from './ListPermissions'
 import { ListTeams } from './ListTeams'
-import { EnableTeams } from './EnableTeams'
 
 export const RouterSideBarTeams: FC = () => {
   const universal = useUniversal()
@@ -36,15 +35,11 @@ export const RouterSideBarTeams: FC = () => {
           },
         ],
       }),
-      !universal.teams_enabled
-        ? create(EnableTeams, {
-            key: 'enable',
-          })
-        : router.current &&
-          create(Fragment, {
-            key: 'children',
-            children: router.current.children,
-          }),
+      router.current &&
+        create(Fragment, {
+          key: 'children',
+          children: router.current.children,
+        }),
     ],
   })
 }

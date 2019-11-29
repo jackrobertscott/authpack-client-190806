@@ -24,7 +24,6 @@ export const useSetup = () => {
             power: cluster.power,
             subscribed: cluster.subscribed,
             theme: cluster.theme,
-            teams_enabled: cluster.teams_enabled,
           })
         })
         .catch(() => UniversalStore.update({ ready: true }))
@@ -43,7 +42,6 @@ const useGetCluster = createUseServer<{
     theme: string
     power: boolean
     subscribed: boolean
-    teams_enabled: boolean
   }
 }>({
   query: `
@@ -55,7 +53,6 @@ const useGetCluster = createUseServer<{
         theme
         power
         subscribed
-        teams_enabled
       }
     }
   `,

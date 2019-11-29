@@ -4,8 +4,9 @@ import { config } from './config'
 import { createGadgetsStore, IGadgets } from './utils/state'
 
 export interface IOptions {
-  key_client: string
-  iframe_id?: string
+  id?: string
+  key: string
+  teams?: boolean
 }
 
 export class Gadgets {
@@ -15,7 +16,7 @@ export class Gadgets {
   private radio: Radio<{ name: string; payload?: any }>
   private store: KeyStore<IGadgets>
   private loaded: boolean
-  constructor(options: IOptions) {
+  constructor(options: { id?: string; key: string; teams?: boolean }) {
     this.queue = []
     this.loaded = false
     this.options = options
@@ -54,7 +55,8 @@ export class Gadgets {
     const store = createGadgetsStore()
     store.update({
       bearer: localStorage.getItem('wga.bearer') || undefined,
-      client: options.key_client,
+      client: options.key,
+      teams: options.teams,
     })
     store.listen(data => {
       if (data.bearer) localStorage.setItem('wga.bearer', data.bearer)
@@ -66,7 +68,7 @@ export class Gadgets {
   }
   private createIFrame(options: IOptions) {
     const iframe = createIFrame()
-    if (options.iframe_id) iframe.id = options.iframe_id
+    if (options.id) iframe.id = options.id
     document.body.appendChild(iframe)
     return iframe
   }

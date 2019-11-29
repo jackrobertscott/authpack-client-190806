@@ -14,6 +14,7 @@ export const RemoveProvider: FC<{
     children: create(ConfirmRemove, {
       helper: 'Remove this provider',
       alert: 'Please confirm the removal of this provider',
+      loading: gqlRemoveProvider.loading,
       change: () =>
         gqlRemoveProvider.fetch({ id }).then(() => change && change()),
     }),

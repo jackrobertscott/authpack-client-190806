@@ -5,8 +5,9 @@ export const ConfirmRemove: FC<{
   helper: string
   alert: string
   keyword?: string
+  loading?: boolean
   change: () => void
-}> = ({ helper, alert, keyword = 'Remove', change }) => {
+}> = ({ helper, alert, keyword = 'Remove', change, loading }) => {
   const [confirm, confirmChange] = useState<boolean>(false)
   return create(Fragment, {
     children: [
@@ -41,6 +42,7 @@ export const ConfirmRemove: FC<{
               icon: 'check',
               label: 'Confirm',
               click: change,
+              loading,
             }),
             create(Button, {
               key: 'cancel',

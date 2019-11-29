@@ -14,6 +14,7 @@ export const RemoveSession: FC<{
     children: create(ConfirmRemove, {
       helper: 'Remove this session',
       alert: 'Please confirm the removal of this session',
+      loading: gqlRemoveSession.loading,
       change: () =>
         gqlRemoveSession.fetch({ id }).then(() => change && change()),
     }),

@@ -14,6 +14,7 @@ export const RemoveMembership: FC<{
     children: create(ConfirmRemove, {
       helper: 'Remove this membership',
       alert: 'Please confirm the removal of this membership',
+      loading: gqlRemoveMembership.loading,
       change: () =>
         gqlRemoveMembership.fetch({ id }).then(() => change && change()),
     }),
