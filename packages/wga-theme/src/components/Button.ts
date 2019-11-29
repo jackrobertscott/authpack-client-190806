@@ -34,8 +34,7 @@ export const Button: FC<{
           : minor
           ? theme.button.backgroundMinor
           : theme.button.background,
-      color:
-        disabled || loading ? theme.button.labelDisabled : theme.button.label,
+      color: disabled ? theme.button.labelDisabled : theme.button.label,
       '&:hover:not(.disabled)': {
         background: theme.button.backgroundHover,
         boxShadow: theme.button.shadow,
@@ -57,6 +56,7 @@ export const Button: FC<{
       }),
       create(Icon, {
         key: 'icon',
+        spin: loading,
         icon: loading
           ? 'sync-alt'
           : icon

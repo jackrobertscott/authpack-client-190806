@@ -64,7 +64,7 @@ export const RouterSideBarTeam: FC = () => {
                 click: () => router.change('/team/members'),
               },
               {
-                icon: 'sync-alt',
+                icon: 'random',
                 label: 'Switch',
                 focused:
                   router.current && router.current.key === '/team/switch',

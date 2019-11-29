@@ -26,7 +26,7 @@ export class ErrorBoundary extends Component<
         label: 'Error',
         helper: error.message || 'There was a bug in our code...',
         children: create(Button, {
-          icon: 'sync-alt',
+          icon: 'redo-alt',
           label: 'Reload App',
           click: () => document.location.reload(),
         }),

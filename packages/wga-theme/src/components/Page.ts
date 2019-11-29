@@ -125,12 +125,13 @@ const Header: FC<{
               create('div', {
                 key: 'icon',
                 className: css({
-                  transition: '200ms',
-                  opacity: spinner.loading ? 1 : 0,
+                  transition: '500ms',
+                  opacity: spinner.loading ? 0.5 : 0,
                   marginLeft: 10,
                 }),
                 children: create(Icon, {
                   icon: 'sync-alt',
+                  spin: true,
                 }),
               }),
             ],

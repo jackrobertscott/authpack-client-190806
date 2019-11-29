@@ -87,6 +87,7 @@ const Header: FC<{
             }),
             children: create(Icon, {
               icon: 'sync-alt',
+              spin: true,
             }),
           }),
         ],

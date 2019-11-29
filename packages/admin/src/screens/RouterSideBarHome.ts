@@ -38,13 +38,13 @@ export const RouterSideBarHome: FC = () => {
             click: () => router.change('/teams'),
           },
           {
-            icon: 'user-shield',
+            icon: 'shield-alt',
             label: 'Permissions',
             focused: !!router.current && router.current.path === '/permissions',
             click: () => router.change('/permissions'),
           },
           {
-            icon: 'share-alt',
+            icon: 'plug',
             label: 'Providers',
             focused: !!router.current && router.current.path === '/providers',
             click: () => router.change('/providers'),

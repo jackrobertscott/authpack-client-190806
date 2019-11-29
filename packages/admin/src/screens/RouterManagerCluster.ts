@@ -80,7 +80,7 @@ export const RouterManagerCluster: FC<{
               click: () => router.change('/update'),
             },
             {
-              icon: 'sync-alt',
+              icon: 'random',
               label: 'Switch',
               focused: !!router.current && router.current.key === '/switch',
               click: () => router.change('/switch'),

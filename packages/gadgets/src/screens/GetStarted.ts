@@ -15,6 +15,7 @@ export const GetStarted: FC<{
       label: settings.cluster ? settings.cluster.name : '',
       helper: 'Create an account or login',
       children: create(Layout, {
+        column: true,
         divide: true,
         media: true,
         children: [

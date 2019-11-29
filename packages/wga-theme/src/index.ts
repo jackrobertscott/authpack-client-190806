@@ -61,6 +61,7 @@ export * from './themes/SnowStorm'
 /**
  * Utils
  */
+export * from './utils/animation'
 export * from './utils/graphql'
 export * from './utils/history'
 export * from './utils/throttle'
