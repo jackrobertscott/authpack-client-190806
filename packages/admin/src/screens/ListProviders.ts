@@ -27,8 +27,8 @@ export const ListProviders: FC = () => {
       ? []
       : FakeProviders
   return create(Page, {
-    title: 'OAuth Providers',
-    subtitle: 'Login users with other apps',
+    title: 'Providers',
+    subtitle: 'Login with Facebook, Google, GitHub and more',
     hidden: !gqlListProviders.data || !gqlListProviders.data.count,
     corner: {
       icon: 'plus',
@@ -75,7 +75,8 @@ export const ListProviders: FC = () => {
           icon: 'facebook',
           prefix: 'fab',
           label: 'Providers',
-          helper: 'Login your users with Facebook, Google, GitHub and more',
+          helper:
+            'Authentication providers allow you to login your users with OAuth',
           children: create(Button, {
             key: 'Regular',
             label: 'See Docs',

@@ -4,33 +4,34 @@ import {
   ReactNode,
   useState,
   useMemo,
+  useRef,
 } from 'react'
 import { SpinnerContext } from '../contexts/Spinner'
+import { useMounted } from '../hooks/useMounted'
 
 export const Spinner: FC<{
   children: ReactNode
 }> = ({ children }) => {
-  const [log, logChange] = useState<string[]>([])
+  const log = useRef<string[]>([])
+  const mounted = useMounted()
   const [loading, loadingChange] = useState<boolean>(false)
   const begin = () => {
     const next = Math.random()
       .toString(36)
       .substring(6)
-    loadingChange(true)
-    logChange([...log, next])
+    if (mounted.current) loadingChange(true)
+    log.current = [...log.current, next]
     return () => {
-      const remaining = log.filter(id => id !== next)
-      logChange(remaining)
-      if (!remaining.length) loadingChange(false)
+      log.current = log.current.filter(id => id !== next)
+      if (mounted.current && !log.current.length) loadingChange(false)
     }
   }
   const value = useMemo(() => {
     return {
-      log,
       loading,
       begin,
     }
-  }, [log, loading])
+  }, [loading])
   return create(SpinnerContext.Provider, {
     value,
     children,
