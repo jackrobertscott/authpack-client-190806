@@ -6,6 +6,7 @@ export type IGadgets = {
   client?: string
   bearer?: string
   enable_teams: boolean
+  prompt_teams: boolean
   cluster?: {
     id: string
     name: string
@@ -43,6 +44,7 @@ export const defaults: IGadgets = {
   open: false,
   ready: false,
   enable_teams: false,
+  prompt_teams: false,
 }
 
 export const createGadgetsStore = (data: Partial<IGadgets> = {}) =>

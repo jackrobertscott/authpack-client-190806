@@ -22,7 +22,7 @@ export const Admin: FC = () => {
       ? create(Focus, {
           icon: 'users',
           label: 'Team Required',
-          helper: 'Please create a team to start',
+          helper: 'Please create a team to get started',
           children: create(Button, {
             key: 'team',
             label: 'Continue',

@@ -48,8 +48,8 @@ export const CreateTeam: FC<{
             children: [
               create(Control, {
                 key: 'name',
-                label: 'Team Name',
-                helper: 'This can be anything',
+                label: 'Name',
+                helper: "Your team's name",
                 error: schema.error('name'),
                 children: create(InputString, {
                   value: schema.value('name'),

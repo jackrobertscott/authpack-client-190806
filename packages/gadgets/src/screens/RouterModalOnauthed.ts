@@ -10,15 +10,15 @@ export const RouterModalOnauthed: FC<{
   close: () => void
 }> = ({ close }) => {
   const settings = useSettings()
-  const router = useLocalRouter({
-    name: 'onauthed',
-    nomatch: !settings.user
-      ? '/users'
-      : !settings.user.verified
+  const nomatch =
+    !settings.user || !settings.user.verified
       ? '/verify'
-      : !settings.team && settings.enable_teams
+      : settings.enable_teams && settings.prompt_teams && !settings.team
       ? '/teams'
-      : '/users',
+      : '/users'
+  const router = useLocalRouter({
+    name: nomatch === '/users' ? 'onauthed' : undefined,
+    nomatch,
     options: !settings.user
       ? []
       : [
@@ -27,18 +27,17 @@ export const RouterModalOnauthed: FC<{
             children: create(RouterSideBarUser),
           },
           {
-            nosave: true,
             key: '/teams',
             children: create(RouterSideBarTeam),
           },
           {
-            nosave: true,
             key: '/logout',
+            nosave: true,
             children: create(LogoutUser),
           },
           {
-            nosave: true,
             key: '/verify',
+            nosave: true,
             children: create(ReconcileUser, {
               email: settings.user.email,
             }),

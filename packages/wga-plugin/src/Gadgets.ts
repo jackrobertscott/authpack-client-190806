@@ -7,6 +7,7 @@ export interface IOptions {
   id?: string
   key: string
   enable_teams?: boolean
+  prompt_teams?: boolean
 }
 
 export class Gadgets {
@@ -16,7 +17,16 @@ export class Gadgets {
   private radio: Radio<{ name: string; payload?: any }>
   private store: KeyStore<IGadgets>
   private loaded: boolean
-  constructor(options: { id?: string; key: string; enable_teams?: boolean }) {
+  constructor(options: {
+    id?: string
+    key: string
+    enable_teams?: boolean
+    prompt_teams?: boolean
+  }) {
+    if (!options.key || !options.key.includes('wga-client-key')) {
+      const message = 'Please provide your client key i.e. "wga-client-key-..."'
+      throw new Error(message)
+    }
     this.queue = []
     this.loaded = false
     this.options = options
@@ -57,6 +67,7 @@ export class Gadgets {
       bearer: localStorage.getItem('wga.bearer') || undefined,
       client: options.key,
       enable_teams: options.enable_teams,
+      prompt_teams: options.prompt_teams,
     })
     store.listen(data => {
       if (data.bearer) localStorage.setItem('wga.bearer', data.bearer)

@@ -6,6 +6,7 @@ export type ISettings = {
   client?: string
   bearer?: string
   enable_teams: boolean
+  prompt_teams: boolean
   cluster?: {
     id: string
     name: string
@@ -43,6 +44,7 @@ export const defaults: ISettings = {
   open: false,
   ready: false,
   enable_teams: false,
+  prompt_teams: false,
 }
 
 export const SettingsStore = new KeyStore<ISettings>(defaults)
