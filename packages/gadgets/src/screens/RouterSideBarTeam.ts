@@ -9,8 +9,7 @@ import { RouterMemberships } from './RouterMemberships'
 
 export const RouterSideBarTeam: FC = () => {
   const settings = useSettings()
-  const current =
-    settings.bearer && settings.team ? settings.team : undefined
+  const current = settings.bearer && settings.team ? settings.team : undefined
   const router = useLocalRouter({
     name: 'team',
     nomatch: current ? '/team/update' : '/team/create',
@@ -36,7 +35,7 @@ export const RouterSideBarTeam: FC = () => {
           {
             key: '/team/create',
             children: create(CreateTeam, {
-              change: () => router.change('/team/update'),
+              change: () => setTimeout(() => router.change('/team/update')),
             }),
           },
         ],

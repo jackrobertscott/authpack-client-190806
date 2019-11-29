@@ -76,7 +76,8 @@ export const ListTeams: FC = () => {
           key: 'empty',
           icon: 'users',
           label: 'Teams',
-          helper: 'Create a team manually or by using our API',
+          helper:
+            'Create a team manually, with our gadgets, or by using our API',
           children: create(Button, {
             key: 'Regular',
             label: 'See API',

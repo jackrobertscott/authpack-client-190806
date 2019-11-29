@@ -1,8 +1,7 @@
 import { createElement as create, FC, Fragment, useState } from 'react'
 import { Layout, IconBar, useRouter } from 'wga-theme'
 import { wga } from '../utils/wga'
-import { RouterSideBarUsers } from './RouterSideBarUsers'
-import { RouterSideBarTeams } from './RouterSideBarTeams'
+import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterManagerCluster } from './RouterManagerCluster'
 import { Explorer } from './Explorer'
 import { useUniversal } from '../hooks/useUniversal'
@@ -11,10 +10,9 @@ export const RouterCentral: FC = () => {
   const universal = useUniversal()
   const [apper, apperChange] = useState<boolean>(false)
   const router = useRouter({
-    nomatch: '/users',
+    nomatch: '/app',
     options: [
-      { path: '/users', children: create(RouterSideBarUsers) },
-      { path: '/teams', children: create(RouterSideBarTeams) },
+      { path: '/app', children: create(RouterSideBarHome) },
       { path: '/developers', children: create(Explorer) },
     ],
   })
@@ -25,16 +23,10 @@ export const RouterCentral: FC = () => {
         key: 'iconBar',
         icons: [
           {
-            icon: 'users',
-            label: 'Users',
+            icon: 'home',
+            label: 'Home',
             focused: !!router.current && router.current.path === '/users',
             click: () => router.change('/users'),
-          },
-          {
-            icon: 'handshake',
-            label: 'Teams',
-            focused: !!router.current && router.current.path === '/teams',
-            click: () => router.change('/teams'),
           },
           {
             icon: 'code',
@@ -48,13 +40,12 @@ export const RouterCentral: FC = () => {
             helper:
               'Limited to a maximum of 50 users - add payment card to remove all limits',
             click: () => apperChange(!apper),
-            seperated: true,
           },
           {
             icon: 'cog',
             label: 'Settings',
             click: () => apperChange(!apper),
-            seperated: !!universal.subscribed,
+            seperated: true,
           },
           {
             icon: 'user-circle',

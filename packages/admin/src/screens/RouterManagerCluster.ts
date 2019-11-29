@@ -15,7 +15,7 @@ export const RouterManagerCluster: FC<{
 }> = ({ close, visible }) => {
   const universal = useUniversal()
   const router = useLocalRouter({
-    nomatch: '/inspect',
+    nomatch: !universal.subscribed ? '/payment' : '/inspect',
     options: [
       {
         key: '/inspect',
@@ -61,17 +61,17 @@ export const RouterManagerCluster: FC<{
         create(IconBar, {
           key: 'iconBar',
           icons: [
-            {
-              icon: 'glasses',
-              label: 'Inspect',
-              focused: !!router.current && router.current.key === '/inspect',
-              click: () => router.change('/inspect'),
-            },
             !universal.subscribed && {
               icon: 'bolt',
               label: 'Payment',
               focused: !!router.current && router.current.key === '/payment',
               click: () => router.change('/payment'),
+            },
+            {
+              icon: 'glasses',
+              label: 'Inspect',
+              focused: !!router.current && router.current.key === '/inspect',
+              click: () => router.change('/inspect'),
             },
             {
               icon: 'sliders-h',
