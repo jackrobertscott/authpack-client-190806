@@ -2,6 +2,7 @@ import { useState, useMemo, useRef } from 'react'
 import { useToaster } from '../hooks/useToaster'
 import { graphql } from '../utils/graphql'
 import { useMounted } from './useMounted'
+import { useSpinner } from './useSpinner'
 
 export const createUseGQL = <T>(options: {
   url: string
@@ -26,6 +27,7 @@ export const useGQL = <T>({
   const count = useRef(0)
   const mounted = useMounted()
   const toaster = useToaster()
+  const spinner = useSpinner()
   const [data, dataChange] = useState<T | undefined>()
   const [loading, loadingChange] = useState<boolean>()
   const [error, errorChange] = useState<Error | undefined>()
@@ -35,10 +37,12 @@ export const useGQL = <T>({
       loading,
       error,
       fetch: async (variables?: any): Promise<T> => {
+        let stop: () => void
         count.current = count.current + 1
         if (mounted.current) {
           if (!loading) loadingChange(true)
           errorChange(undefined)
+          stop = spinner.begin()
         }
         return graphql<T>({
           url,
@@ -69,6 +73,7 @@ export const useGQL = <T>({
             })
             return Promise.reject(e)
           })
+          .finally(() => stop && stop())
       },
     }
   }, [data, loading, error, url, query, name, authorization])

@@ -3,6 +3,7 @@ import { useTheme } from '../hooks/useTheme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
 import { Scroller } from './Scroller'
+import { useSpinner } from '../hooks/useSpinner'
 
 export const Page: FC<{
   title: string
@@ -85,6 +86,7 @@ const Header: FC<{
   }
 }> = ({ title, subtitle, corner }) => {
   const theme = useTheme()
+  const spinner = useSpinner()
   return create('div', {
     className: css({
       all: 'unset',
@@ -105,12 +107,33 @@ const Header: FC<{
         children: [
           create('div', {
             key: 'title',
-            children: title,
             className: css({
-              fontSize: '1.5rem',
-              lineHeight: '1em',
+              all: 'unset',
+              display: 'flex',
+              alignItems: 'center',
               color: theme.page.title,
             }),
+            children: [
+              create('div', {
+                key: 'title',
+                children: title,
+                className: css({
+                  fontSize: '1.5rem',
+                  lineHeight: '1em',
+                }),
+              }),
+              create('div', {
+                key: 'icon',
+                className: css({
+                  transition: '200ms',
+                  opacity: spinner.loading ? 1 : 0,
+                  marginLeft: 10,
+                }),
+                children: create(Icon, {
+                  icon: 'sync-alt',
+                }),
+              }),
+            ],
           }),
           subtitle &&
             create('div', {

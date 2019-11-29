@@ -4,6 +4,7 @@ import { ThemeContext } from '../contexts/Theme'
 import { NightSky } from '../themes/NightSky'
 import { SnowStorm } from '../themes/SnowStorm'
 import { BlueHarvester } from '../themes/BlueHarvester'
+import { Spinner } from './Spinner'
 
 export const Root: FC<{
   theme?: string
@@ -24,25 +25,27 @@ export const Root: FC<{
       value = NightSky
       break
   }
-  return create(ThemeContext.Provider, {
-    value,
-    children: create('div', {
-      className: css({
-        all: 'unset',
-        display: 'flex',
-        flexGrow: 1,
-        fontWeight: value.global.thick,
+  return create(Spinner, {
+    children: create(ThemeContext.Provider, {
+      value,
+      children: create('div', {
+        className: css({
+          all: 'unset',
+          display: 'flex',
+          flexGrow: 1,
+          fontWeight: value.global.thick,
+        }),
+        children: [
+          create(Fragment, {
+            key: 'children',
+            children,
+          }),
+          create('div', {
+            key: 'portals',
+            id: 'portals',
+          }),
+        ],
       }),
-      children: [
-        create(Fragment, {
-          key: 'children',
-          children,
-        }),
-        create('div', {
-          key: 'portals',
-          id: 'portals',
-        }),
-      ],
     }),
   })
 }
