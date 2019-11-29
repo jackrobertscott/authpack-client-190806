@@ -396,17 +396,13 @@ export const Explorer: FC = () => {
           textTransform: 'capitalize',
           fontWeight: 'inherit',
           letterSpacing: 'normal',
-          borderBottom: theme.input.border,
-          borderTop: theme.input.border,
-          color: theme.input.label,
-          background: theme.input.backgroundHover,
-        },
-        '.resultWrap': {
-          borderLeft: 'none',
-          '.CodeMirror': {
-            '.CodeMirror-gutters': {
-              borderLeft: theme.input.border,
-            },
+          transition: '200ms',
+          background: theme.page.header,
+          borderBottom: theme.page.border,
+          borderTop: theme.page.border,
+          color: theme.page.label,
+          '&:hover': {
+            background: theme.page.headerHover,
           },
         },
         '.CodeMirror': {
@@ -415,16 +411,23 @@ export const Explorer: FC = () => {
             '*': {
               fontWeight: 600,
               fontFamily: 'Inconsolata',
-              caretColor: `${theme.input.valueHover} !important`,
             },
           },
           '.CodeMirror-gutters': {
             borderLeft: 'none',
-            borderRight: theme.input.border,
-            backgroundColor: theme.input.backgroundHover,
+            borderRight: theme.page.border,
+            background: theme.page.header,
           },
           '.CodeMirror-hints': {
-            backgroundColor: theme.input.backgroundHover,
+            background: theme.page.header,
+          },
+        },
+        '.resultWrap': {
+          borderLeft: 'none',
+          '.CodeMirror': {
+            '.CodeMirror-gutters': {
+              borderLeft: theme.page.border,
+            },
           },
         },
       },
