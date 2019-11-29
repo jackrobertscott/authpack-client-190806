@@ -7,7 +7,6 @@ import { RouterModalOnauthed } from './RouterModalOnauthed'
 import { SettingsStore } from '../utils/settings'
 import { NoKey } from './NoKey'
 import { Loading } from './Loading'
-import { Power } from './Power'
 
 export const Gadgets: FC = () => {
   useSetup()
@@ -24,8 +23,6 @@ export const Gadgets: FC = () => {
           key: 'nokey',
           loading: !settings.ready,
         })
-      : settings.cluster && !settings.cluster.power
-      ? create(Power)
       : settings.bearer && settings.user
       ? create(RouterModalOnauthed, {
           key: 'onauthed',

@@ -49,7 +49,6 @@ export const UpdatePayment: FC<{
             })
             .then(({ cluster }) => {
               UniversalStore.update({
-                power: cluster.power,
                 subscribed: cluster.subscribed,
               })
               toaster.add({
@@ -179,7 +178,6 @@ const SchemaUpdatePayment = yup.object().shape({
 const useUpdatePayment = createUseServer<{
   cluster: {
     id: string
-    power: boolean
     subscribed: boolean
   }
 }>({
@@ -187,7 +185,6 @@ const useUpdatePayment = createUseServer<{
     mutation UpdatePaymentClient($id: String!, $input: UpdatePaymentInput!) {
       cluster: UpdatePaymentClient(id: $id, input: $input) {
         id
-        power
         subscribed
       }
     }

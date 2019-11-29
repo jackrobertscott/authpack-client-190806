@@ -6,14 +6,12 @@ export interface IUniversalStore {
   cluster_key_client?: string
   cluster_name?: string
   subscribed: boolean
-  power: boolean
   theme: string
 }
 
 const defaults: IUniversalStore = {
   ready: false,
   subscribed: false,
-  power: false,
   theme: 'night_sky',
 }
 

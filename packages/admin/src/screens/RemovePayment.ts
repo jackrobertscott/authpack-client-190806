@@ -23,7 +23,6 @@ export const RemovePayment: FC<{
           .fetch({ id: universal.cluster_id })
           .then(({ cluster }) => {
             UniversalStore.update({
-              power: cluster.power,
               subscribed: cluster.subscribed,
             })
             if (change) change(cluster.id)
@@ -35,7 +34,6 @@ export const RemovePayment: FC<{
 const useRemovePayment = createUseServer<{
   cluster: {
     id: string
-    power: boolean
     subscribed: boolean
   }
 }>({
@@ -43,7 +41,6 @@ const useRemovePayment = createUseServer<{
     mutation RemovePaymentClient($id: String!) {
       cluster: RemovePaymentClient(id: $id) {
         id
-        power
         subscribed
       }
     }

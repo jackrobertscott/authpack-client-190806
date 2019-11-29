@@ -21,7 +21,6 @@ export const useSetup = () => {
             cluster_id: cluster.id,
             cluster_name: cluster.name,
             cluster_key_client: cluster.key_client,
-            power: cluster.power,
             subscribed: cluster.subscribed,
             theme: cluster.theme,
           })
@@ -40,7 +39,6 @@ const useGetCluster = createUseServer<{
     key_client: string
     name: string
     theme: string
-    power: boolean
     subscribed: boolean
   }
 }>({
@@ -51,7 +49,6 @@ const useGetCluster = createUseServer<{
         key_client
         name
         theme
-        power
         subscribed
       }
     }

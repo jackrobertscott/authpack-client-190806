@@ -10,7 +10,6 @@ export type IGadgets = {
     id: string
     name: string
     theme: string
-    power: boolean
     subscribed: boolean
   }
   user?: {

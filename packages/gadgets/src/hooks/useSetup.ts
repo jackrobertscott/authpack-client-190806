@@ -95,7 +95,6 @@ const useGetCluster = createUseServer<{
     id: string
     name: string
     theme: string
-    power: boolean
     subscribed: boolean
   }
 }>({
@@ -105,7 +104,6 @@ const useGetCluster = createUseServer<{
         id
         name
         theme
-        power
         subscribed
       }
     }
