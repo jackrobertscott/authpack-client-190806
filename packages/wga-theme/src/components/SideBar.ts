@@ -1,35 +1,42 @@
-import { createElement as create, FC, ReactNode, Fragment } from 'react'
+import {
+  createElement as create,
+  FC,
+  ReactNode,
+  Fragment,
+  useState,
+} from 'react'
 import { useTheme } from '../hooks/useTheme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
 import { Scroller } from './Scroller'
+import { Snippet } from './Snippet'
 
 export const SideBar: FC<{
   title: string
   footer?: string
   children: ReactNode
-  horizontal?: boolean
-  options: Array<{
-    label: string
-    icon: string
-    prefix?: string
-    click?: () => void
-    focused?: boolean
-  }>
-}> = ({ title, footer, children, options, horizontal }) => {
+  options: Array<
+    | {
+        label: string
+        icon: string
+        prefix?: string
+        click?: () => void
+        focused?: boolean
+      }
+    | false
+  >
+}> = ({ title, footer, children, options }) => {
   const theme = useTheme()
+  const [open, openChange] = useState<boolean>(true)
+  const bp = `@media (max-width: 1000px)`
   return create('div', {
     className: css({
       all: 'unset',
       display: 'flex',
       flexGrow: 1,
-      flexDirection: horizontal ? 'column-reverse' : 'row-reverse',
+      flexDirection: 'row',
     }),
     children: [
-      create(Fragment, {
-        key: 'children',
-        children,
-      }),
       create('div', {
         key: 'sideBar',
         className: css({
@@ -37,18 +44,25 @@ export const SideBar: FC<{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'stretch',
-          position: horizontal ? 'absolute' : 'relative',
-          left: 0,
-          right: 0,
-          bottom: 0,
-          width: horizontal ? '100%' : '260px',
-          minWidth: horizontal ? '100%' : '260px',
+          position: 'relative',
+          width: '260px',
+          minWidth: '260px',
           background: theme.sideBar.background,
-          borderTop: horizontal ? theme.sideBar.border : undefined,
-          borderRight: !horizontal ? theme.sideBar.border : undefined,
+          borderRight: theme.sideBar.border,
+          [bp]: {
+            display: open ? 'flex' : 'none',
+            width: '100%',
+            minWidth: '100%',
+            borderRight: 'none',
+            position: 'absolute',
+            zIndex: 150,
+            left: 0,
+            top: 0,
+            right: 0,
+            bottom: 0,
+          },
         }),
         children: create(Scroller, {
-          maxheight: horizontal ? 320 : undefined,
           children: [
             create(Title, {
               key: 'title',
@@ -56,16 +70,51 @@ export const SideBar: FC<{
             }),
             create(Options, {
               key: 'options',
-              options,
+              options: options.filter(Boolean).map((data: any) => ({
+                ...data,
+                click: () => {
+                  if (data.click) data.click()
+                  openChange(false)
+                },
+              })),
+              bp,
             }),
             footer &&
-              !horizontal &&
               create(Footer, {
                 key: 'footer',
                 footer,
               }),
           ],
         }),
+      }),
+      create('div', {
+        className: css({
+          all: 'unset',
+          display: 'flex',
+          flexDirection: 'column',
+          flexGrow: 1,
+        }),
+        children: [
+          create('div', {
+            className: css({
+              all: 'unset',
+              display: 'none',
+              flexDirection: 'column',
+              [bp]: {
+                display: 'flex',
+              },
+            }),
+            children: create(Snippet, {
+              icon: 'angle-left',
+              label: 'Back',
+              click: () => openChange(true),
+            }),
+          }),
+          create(Fragment, {
+            key: 'children',
+            children,
+          }),
+        ],
       }),
     ],
   })
@@ -104,6 +153,7 @@ const Footer: FC<{
 }
 
 const Options: FC<{
+  bp: string
   options: Array<{
     label: string
     icon: string
@@ -111,7 +161,7 @@ const Options: FC<{
     click?: () => void
     focused?: boolean
   }>
-}> = ({ options }) => {
+}> = ({ bp, options }) => {
   const theme = useTheme()
   return create('div', {
     key: 'options',
@@ -128,6 +178,7 @@ const Options: FC<{
         className: css({
           all: 'unset',
           display: 'flex',
+          alignItems: 'center',
           cursor: 'pointer',
           transition: '200ms',
           padding: '15px 25px',
@@ -149,6 +200,20 @@ const Options: FC<{
             children: label,
             className: css({
               marginLeft: 10,
+            }),
+          }),
+          create('div', {
+            className: css({
+              all: 'unset',
+              display: 'none',
+              marginLeft: 'auto',
+              [bp]: {
+                display: 'flex',
+              },
+            }),
+            children: create(Icon, {
+              key: 'icon',
+              icon: 'angle-right',
             }),
           }),
         ],

@@ -98,17 +98,6 @@ export const SignupUser: FC = () => {
             padding: true,
             divide: true,
             children: [
-              create(Control, {
-                key: 'username',
-                label: 'Username',
-                helper: 'Claim a unique username',
-                error: schema.error('username'),
-                children: create(InputString, {
-                  value: schema.value('username'),
-                  change: schema.change('username'),
-                  placeholder: 'example_username_123',
-                }),
-              }),
               create(Layout, {
                 key: 'name',
                 divide: true,
@@ -135,6 +124,17 @@ export const SignupUser: FC = () => {
                     }),
                   }),
                 ],
+              }),
+              create(Control, {
+                key: 'username',
+                label: 'Username',
+                helper: 'Claim a unique username',
+                error: schema.error('username'),
+                children: create(InputString, {
+                  value: schema.value('username'),
+                  change: schema.change('username'),
+                  placeholder: 'example_username_123',
+                }),
               }),
               create(Control, {
                 key: 'email',

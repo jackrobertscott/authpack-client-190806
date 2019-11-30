@@ -48,7 +48,7 @@ export const RouterModalUnauthed: FC<{
       },
       {
         icon: 'question-circle',
-        label: 'Recover Password',
+        label: 'Recovery',
         focused: router.current && router.current.key === '/forgot',
         click: clicker('/forgot'),
       },

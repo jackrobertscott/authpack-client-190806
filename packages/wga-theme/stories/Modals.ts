@@ -74,12 +74,13 @@ stories.add('Snippets', () => {
     children: create(Layout, {
       grow: true,
       children: create(SimpleIconBar, {
-        key: 'slider',
-        children: create(Page, {
-          key: 'Gadgets',
-          title: 'Users',
-          subtitle: 'Window Gadgets',
-          children: create(SimpleSnippets),
+        children: create(SimpleSideBar, {
+          children: create(Page, {
+            key: 'Gadgets',
+            title: 'Users',
+            subtitle: 'Window Gadgets',
+            children: create(SimpleSnippets),
+          }),
         }),
       }),
     }),
@@ -89,7 +90,6 @@ stories.add('Snippets', () => {
 const SimpleIconBar: FC<{ children: ReactNode }> = ({ children }) => {
   return create(IconBar, {
     children,
-    horizontal: true,
     icons: [
       {
         icon: 'home',
@@ -327,7 +327,6 @@ const SimpleSideBar: FC<{ children: ReactNode }> = ({ children }) => {
   return create(SideBar, {
     title: 'Hello',
     footer: 'Jack Scott',
-    horizontal: true,
     children,
     options: [
       {

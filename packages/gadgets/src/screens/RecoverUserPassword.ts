@@ -25,7 +25,7 @@ export const RecoverUserPassword: FC = () => {
     },
   })
   return create(Page, {
-    title: 'Recover Password',
+    title: 'Recovery',
     subtitle: settings.cluster && settings.cluster.name,
     children: email
       ? create(ReconcileUserPassword, {
@@ -49,7 +49,7 @@ export const RecoverUserPassword: FC = () => {
             }),
             create(Button, {
               key: 'submit',
-              label: 'Recover',
+              label: 'Recover Account',
               loading: gqlRecoverUser.loading,
               disabled: !schema.valid,
               click: schema.submit,

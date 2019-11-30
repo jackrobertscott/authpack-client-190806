@@ -14,6 +14,9 @@ export const Modal: FC<{
 }> = ({ id, children, visible = true, close, large = true }) => {
   const width = large ? 1035 : 515
   const height = large ? 640 : 725
+  const bp = `@media
+    (max-width: ${width + 50}px),
+    (max-height: ${height + 50}px)`
   const theme = useTheme()
   const unfocused = useRef<boolean>(!document.querySelector(':focus-within'))
   return create(Portal, {
@@ -58,8 +61,7 @@ export const Modal: FC<{
             boxShadow: theme.modal.shadow,
             border: theme.modal.border,
             borderRadius: theme.global.radius,
-            [`@media (max-width: ${width + 50}px), (max-height: ${height +
-              50}px)`]: {
+            [bp]: {
               width: '100%',
               height: '100%',
               flexGrow: 1,

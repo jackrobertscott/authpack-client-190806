@@ -36,10 +36,9 @@ export const Snippet: FC<{
       color: theme.snippet.label,
       background: theme.snippet.background,
       borderBottom: theme.snippet.border,
-      '&:hover:not(:active)': click &&
-        !options.length && {
-          background: theme.snippet.backgroundHover,
-        },
+      '&:hover:not(:active)': click && {
+        background: theme.snippet.backgroundHover,
+      },
     }),
     children: [
       create(Icon, {
@@ -91,19 +90,20 @@ export const Snippet: FC<{
               opacity: 1,
             },
           }),
-          children: [
-            create(Icon, {
-              key: 'icon',
-              icon: options.length ? 'bars' : 'minus',
-            }),
-            !!options.length &&
-              create(Dropdown, {
-                key: 'dropdown',
-                options,
-                close: () => mounted.current && openChange(false),
-                open,
-              }),
-          ],
+          children: !options.length
+            ? null
+            : [
+                create(Icon, {
+                  key: 'icon',
+                  icon: options.length ? 'bars' : 'minus',
+                }),
+                create(Dropdown, {
+                  key: 'dropdown',
+                  options,
+                  close: () => mounted.current && openChange(false),
+                  open,
+                }),
+              ],
         }),
     ],
   })
