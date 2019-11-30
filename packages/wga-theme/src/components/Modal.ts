@@ -11,7 +11,7 @@ export const Modal: FC<{
   visible?: boolean
   close?: () => void
   large?: boolean
-}> = ({ id, children, visible = true, close, large }) => {
+}> = ({ id, children, visible = true, close, large = true }) => {
   const width = large ? 1035 : 515
   const height = large ? 640 : 725
   const theme = useTheme()

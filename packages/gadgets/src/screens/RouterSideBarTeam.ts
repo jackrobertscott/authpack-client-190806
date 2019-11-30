@@ -1,4 +1,4 @@
-import { createElement as create, FC, Fragment } from 'react'
+import { createElement as create, FC } from 'react'
 import { useLocalRouter, SideBar } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { CreateTeam } from './CreateTeam'
@@ -41,65 +41,51 @@ export const RouterSideBarTeam: FC = () => {
         ],
   })
   if (!settings.bearer) return null
-  return create(Fragment, {
-    children: [
-      create(SideBar, {
-        key: 'sideBar',
-        title: 'Team',
-        footer: current && current.name,
-        options: current
-          ? [
-              {
-                icon: 'cog',
-                label: 'Update',
-                focused:
-                  router.current && router.current.key === '/team/update',
-                click: () => router.change('/team/update'),
-              },
-              {
-                icon: 'user-friends',
-                label: 'Members',
-                focused:
-                  router.current && router.current.key === '/team/members',
-                click: () => router.change('/team/members'),
-              },
-              {
-                icon: 'random',
-                label: 'Switch',
-                focused:
-                  router.current && router.current.key === '/team/switch',
-                click: () => router.change('/team/switch'),
-              },
-              {
-                icon: 'plus',
-                label: 'Create',
-                focused:
-                  router.current && router.current.key === '/team/create',
-                click: () => router.change('/team/create'),
-              },
-              {
-                icon: 'trash-alt',
-                label: 'Remove',
-                focused:
-                  router.current && router.current.key === '/team/danger',
-                click: () => router.change('/team/danger'),
-              },
-            ]
-          : [
-              {
-                icon: 'plus',
-                label: 'Create',
-                focused:
-                  router.current && router.current.key === '/team/create',
-                click: () => router.change('/team/create'),
-              },
-            ],
-      }),
-      router.current &&
-        create(Fragment, {
-          key: 'children',
-          children: router.current.children,
-        }),
-    ],
+  return create(SideBar, {
+    key: 'sideBar',
+    title: 'Team',
+    footer: current && current.name,
+    children: router.current && router.current.children,
+    options: current
+      ? [
+          {
+            icon: 'cog',
+            label: 'Update',
+            focused: router.current && router.current.key === '/team/update',
+            click: () => router.change('/team/update'),
+          },
+          {
+            icon: 'user-friends',
+            label: 'Members',
+            focused: router.current && router.current.key === '/team/members',
+            click: () => router.change('/team/members'),
+          },
+          {
+            icon: 'random',
+            label: 'Switch',
+            focused: router.current && router.current.key === '/team/switch',
+            click: () => router.change('/team/switch'),
+          },
+          {
+            icon: 'plus',
+            label: 'Create',
+            focused: router.current && router.current.key === '/team/create',
+            click: () => router.change('/team/create'),
+          },
+          {
+            icon: 'trash-alt',
+            label: 'Remove',
+            focused: router.current && router.current.key === '/team/danger',
+            click: () => router.change('/team/danger'),
+          },
+        ]
+      : [
+          {
+            icon: 'plus',
+            label: 'Create',
+            focused: router.current && router.current.key === '/team/create',
+            click: () => router.change('/team/create'),
+          },
+        ],
   })
 }

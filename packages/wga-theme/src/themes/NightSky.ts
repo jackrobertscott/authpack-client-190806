@@ -23,9 +23,9 @@ export const NightSky: ITheme = {
     icon: slate(65),
     iconHover: slate(95),
     iconFocused: slate(95),
-    iconBackground: slate(5),
+    iconBackground: slate(7.5),
     iconBackgroundHover: slate(15),
-    background: slate(5),
+    background: slate(7.5),
     border: `1px solid ${slate(2.5)}`,
   },
   sideBar: {

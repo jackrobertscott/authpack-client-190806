@@ -1,5 +1,5 @@
-import { createElement as create, FC, Fragment } from 'react'
-import { useLocalRouter, Modal, Layout, IconBar } from 'wga-theme'
+import { createElement as create, FC } from 'react'
+import { useLocalRouter, Modal, IconBar } from 'wga-theme'
 import { UpdateCluster } from './UpdateCluster'
 import { UpdatePayment } from './UpdatePayment'
 import { useUniversal } from '../hooks/useUniversal'
@@ -55,56 +55,46 @@ export const RouterManagerCluster: FC<{
   return create(Modal, {
     close,
     visible,
-    children: create(Layout, {
-      grow: true,
-      children: [
-        create(IconBar, {
-          key: 'iconBar',
-          icons: [
-            !universal.subscribed && {
-              icon: 'bolt',
-              label: 'Payment',
-              focused: !!router.current && router.current.key === '/payment',
-              click: () => router.change('/payment'),
-            },
-            {
-              icon: 'glasses',
-              label: 'Inspect',
-              focused: !!router.current && router.current.key === '/inspect',
-              click: () => router.change('/inspect'),
-            },
-            {
-              icon: 'sliders-h',
-              label: 'Update',
-              focused: !!router.current && router.current.key === '/update',
-              click: () => router.change('/update'),
-            },
-            {
-              icon: 'random',
-              label: 'Switch',
-              focused: !!router.current && router.current.key === '/switch',
-              click: () => router.change('/switch'),
-            },
-            !!universal.subscribed && {
-              icon: 'wallet',
-              label: 'Payment',
-              focused: !!router.current && router.current.key === '/payment',
-              click: () => router.change('/payment'),
-            },
-            {
-              icon: 'times-circle',
-              label: 'Close',
-              click: close,
-              prefix: 'far',
-              seperated: true,
-            },
-          ],
-        }),
-        router.current &&
-          create(Fragment, {
-            key: 'children',
-            children: router.current.children,
-          }),
+    children: create(IconBar, {
+      children: router.current && router.current.children,
+      icons: [
+        !universal.subscribed && {
+          icon: 'bolt',
+          label: 'Payment',
+          focused: !!router.current && router.current.key === '/payment',
+          click: () => router.change('/payment'),
+        },
+        {
+          icon: 'glasses',
+          label: 'Inspect',
+          focused: !!router.current && router.current.key === '/inspect',
+          click: () => router.change('/inspect'),
+        },
+        {
+          icon: 'sliders-h',
+          label: 'Update',
+          focused: !!router.current && router.current.key === '/update',
+          click: () => router.change('/update'),
+        },
+        {
+          icon: 'random',
+          label: 'Switch',
+          focused: !!router.current && router.current.key === '/switch',
+          click: () => router.change('/switch'),
+        },
+        !!universal.subscribed && {
+          icon: 'wallet',
+          label: 'Payment',
+          focused: !!router.current && router.current.key === '/payment',
+          click: () => router.change('/payment'),
+        },
+        {
+          icon: 'times-circle',
+          label: 'Close',
+          click: close,
+          prefix: 'far',
+          seperated: true,
+        },
       ],
     }),
   })

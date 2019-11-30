@@ -23,10 +23,10 @@ export const SnowStorm: ITheme = {
     icon: slate(60),
     iconHover: slate(25),
     iconFocused: slate(25),
-    iconBackground: slate(92.5),
+    iconBackground: slate(95),
     iconBackgroundHover: slate(97.5),
-    background: slate(92.5),
-    border: `1px solid ${slate(85)}`,
+    background: slate(95),
+    border: `1px solid ${slate(90)}`,
   },
   sideBar: {
     title: slate(25),

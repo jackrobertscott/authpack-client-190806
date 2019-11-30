@@ -1,4 +1,4 @@
-import { createElement as create, FC, Fragment } from 'react'
+import { createElement as create, FC } from 'react'
 import { useLocalRouter, SideBar } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { UpdateUser } from './UpdateUser'
@@ -23,56 +23,48 @@ export const RouterSideBarUser: FC = () => {
     ],
   })
   if (!settings.bearer) return null
-  return create(Fragment, {
-    children: [
-      create(SideBar, {
-        key: 'sideBar',
-        title: 'User',
-        footer: settings.user && settings.user.name,
-        options: [
-          {
-            icon: 'user-cog',
-            label: 'Update',
-            focused: router.current && router.current.key === '/user/update',
-            click: () => router.change('/user/update'),
-          },
-          {
-            icon: 'at',
-            label: 'Email',
-            focused: router.current && router.current.key === '/user/email',
-            click: () => router.change('/user/email'),
-          },
-          {
-            icon: 'key',
-            label: 'Password',
-            focused: router.current && router.current.key === '/user/password',
-            click: () => router.change('/user/password'),
-          },
-          {
-            icon: 'share-alt',
-            label: 'Apps',
-            focused: router.current && router.current.key === '/user/apps',
-            click: () => router.change('/user/apps'),
-          },
-          {
-            icon: 'history',
-            label: 'Sessions',
-            focused: router.current && router.current.key === '/user/sessions',
-            click: () => router.change('/user/sessions'),
-          },
-          {
-            icon: 'trash-alt',
-            label: 'Remove',
-            focused: router.current && router.current.key === '/user/danger',
-            click: () => router.change('/user/danger'),
-          },
-        ],
-      }),
-      router.current &&
-        create(Fragment, {
-          key: 'children',
-          children: router.current.children,
-        }),
+  return create(SideBar, {
+    key: 'sideBar',
+    title: 'User',
+    footer: settings.user && settings.user.name,
+    children: router.current && router.current.children,
+    options: [
+      {
+        icon: 'user-cog',
+        label: 'Update',
+        focused: router.current && router.current.key === '/user/update',
+        click: () => router.change('/user/update'),
+      },
+      {
+        icon: 'at',
+        label: 'Email',
+        focused: router.current && router.current.key === '/user/email',
+        click: () => router.change('/user/email'),
+      },
+      {
+        icon: 'key',
+        label: 'Password',
+        focused: router.current && router.current.key === '/user/password',
+        click: () => router.change('/user/password'),
+      },
+      {
+        icon: 'share-alt',
+        label: 'Apps',
+        focused: router.current && router.current.key === '/user/apps',
+        click: () => router.change('/user/apps'),
+      },
+      {
+        icon: 'history',
+        label: 'Sessions',
+        focused: router.current && router.current.key === '/user/sessions',
+        click: () => router.change('/user/sessions'),
+      },
+      {
+        icon: 'trash-alt',
+        label: 'Remove',
+        focused: router.current && router.current.key === '/user/danger',
+        click: () => router.change('/user/danger'),
+      },
     ],
   })
 }
