@@ -1,5 +1,5 @@
 import { createElement as create, FC, Fragment } from 'react'
-import { Focus, Button } from 'wga-theme'
+import { Focus, Button, useMedia } from 'wga-theme'
 import { useGadgets } from '../hooks/useGadgets'
 import { useUniversal } from '../hooks/useUniversal'
 import { useSetup } from '../hooks/useSetup'
@@ -11,13 +11,20 @@ export const Admin: FC = () => {
   useSetup()
   const gadgets = useGadgets()
   const universal = useUniversal()
+  const media = useMedia()
   return create(Fragment, {
     children: !Boolean(gadgets.ready && universal.ready)
       ? create(Loading)
       : gadgets.bearer && gadgets.user && gadgets.team
-      ? create(RouterCentral, {
-          key: 'router',
-        })
+      ? media.width < 1120
+        ? create(Focus, {
+            icon: 'expand-arrows-alt',
+            label: 'Media Unsupported',
+            helper: 'Please use a wider device',
+          })
+        : create(RouterCentral, {
+            key: 'router',
+          })
       : gadgets.bearer && gadgets.user
       ? create(Focus, {
           icon: 'users',

@@ -28,13 +28,14 @@ export const SideBar: FC<{
 }> = ({ title, footer, children, options }) => {
   const theme = useTheme()
   const [open, openChange] = useState<boolean>(true)
-  const bp = `@media (max-width: 1000px)`
+  const bp = `@media (max-width: ${1035 + 50}px)`
   return create('div', {
     className: css({
       all: 'unset',
       display: 'flex',
       flexGrow: 1,
       flexDirection: 'row',
+      overflow: 'hidden',
     }),
     children: [
       create('div', {
@@ -88,6 +89,7 @@ export const SideBar: FC<{
         }),
       }),
       create('div', {
+        key: 'children',
         className: css({
           all: 'unset',
           display: 'flex',
@@ -96,6 +98,7 @@ export const SideBar: FC<{
         }),
         children: [
           create('div', {
+            key: 'back',
             className: css({
               all: 'unset',
               display: 'none',
@@ -164,7 +167,6 @@ const Options: FC<{
 }> = ({ bp, options }) => {
   const theme = useTheme()
   return create('div', {
-    key: 'options',
     className: css({
       all: 'unset',
       display: 'flex',
@@ -203,6 +205,7 @@ const Options: FC<{
             }),
           }),
           create('div', {
+            key: 'right',
             className: css({
               all: 'unset',
               display: 'none',

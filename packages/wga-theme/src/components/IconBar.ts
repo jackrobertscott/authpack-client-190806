@@ -30,7 +30,7 @@ export const IconBar: FC<{
   >
 }> = ({ icons, children }) => {
   const theme = useTheme()
-  const bp = `@media (max-width: 1000px)`
+  const bp = `@media (max-width: ${515 + 50}px)`
   return create('div', {
     className: css({
       all: 'unset',
@@ -56,7 +56,8 @@ export const IconBar: FC<{
           borderRight: theme.iconBar.border,
           [bp]: {
             flexDirection: 'row',
-            borderTop: theme.iconBar.border,
+            borderTop: theme.page.border,
+            background: theme.page.background,
             borderRight: 'none',
           },
         }),
@@ -105,10 +106,10 @@ const IconSpacer: FC<{
       },
       [bp]: {
         padding: '15px 20px',
-        flexDirection: 'row-reverse',
-        justifyContent: 'space-between',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
         '& > div:not(:last-child)': {
-          margin: '0 0 0 15px',
+          margin: '0 15px 0 0',
         },
       },
     }),
@@ -176,6 +177,9 @@ const IconPointer: FC<{
           '&:hover': {
             color: theme.iconBar.iconHover,
             background: theme.iconBar.iconBackgroundHover,
+          },
+          [bp]: {
+            background: theme.page.background,
           },
         }),
         children: create(Icon, {
