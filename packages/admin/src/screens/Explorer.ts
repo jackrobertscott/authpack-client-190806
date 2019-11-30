@@ -372,7 +372,7 @@ export const Explorer: FC = () => {
               color: theme.page.labelHover,
               background: theme.page.headerHover,
             },
-            button: {
+            'button, input': {
               margin: 0,
               padding: 15,
             },
