@@ -1,2 +1,2 @@
-export * from './Gadgets'
-export { IGadgets } from './utils/state'
+export { IOptions, Gadgets } from './Gadgets'
+export { IGadgets } from './store'

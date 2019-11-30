@@ -1,7 +1,7 @@
 import { createIFrame } from './utils/iframe'
 import { Radio, KeyStore } from 'events-and-things'
 import { config } from './config'
-import { createGadgetsStore, IGadgets } from './utils/state'
+import { createGadgetsStore, IGadgets } from './store'
 
 export interface IOptions {
   id?: string
