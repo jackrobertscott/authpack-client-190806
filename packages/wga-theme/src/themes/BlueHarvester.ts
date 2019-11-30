@@ -56,15 +56,6 @@ export const BlueHarvester: ITheme = {
     border: `1px solid ${color(12.5)}`,
     background: color(15),
   },
-  gadgets: {
-    title: color(95),
-    subtitle: color(65),
-    branding: color(35),
-    brandingHover: color(65),
-    header: color(12.5),
-    border: `1px solid ${color(7.5)}`,
-    background: color(15),
-  },
   layout: {
     background: color(17.5),
     border: `1px solid ${color(10)}`,

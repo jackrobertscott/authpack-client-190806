@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import { Universal } from '../contexts/Universal'
+import { UniversalContext } from '../utils/universal'
 
 export const useUniversal = () => {
-  return useContext(Universal)
+  return useContext(UniversalContext)
 }

@@ -10,7 +10,7 @@ export type ISettings = {
   cluster?: {
     id: string
     name: string
-    theme: string
+    theme_preference: string
     subscribed: boolean
   }
   user?: {

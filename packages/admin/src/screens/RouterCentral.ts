@@ -5,9 +5,11 @@ import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterManagerCluster } from './RouterManagerCluster'
 import { Explorer } from './Explorer'
 import { useUniversal } from '../hooks/useUniversal'
+import { usePreferences } from '../utils/preferences'
 
 export const RouterCentral: FC = () => {
   const universal = useUniversal()
+  const preferences = usePreferences()
   const [apper, apperChange] = useState<boolean>(false)
   const router = useRouter({
     nomatch: '/app',
@@ -50,10 +52,19 @@ export const RouterCentral: FC = () => {
         click: () => apperChange(!apper),
       },
       {
+        icon: preferences.theme === 'snow_storm' ? 'toggle-off' : 'toggle-on',
+        label: 'Dark Mode',
+        click: () =>
+          preferences.update({
+            theme:
+              preferences.theme === 'snow_storm' ? 'night_sky' : 'snow_storm',
+          }),
+        seperated: true,
+      },
+      {
         icon: 'cog',
         label: 'Settings',
         click: () => apperChange(!apper),
-        seperated: true,
       },
       {
         icon: 'user-circle',

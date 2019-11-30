@@ -49,15 +49,6 @@ export interface ITheme extends IKeys {
     border: string
     background: string
   }
-  gadgets: {
-    title: string
-    subtitle: string
-    branding: string
-    brandingHover: string
-    header: string
-    border: string
-    background: string
-  }
   layout: {
     background: string
     border: string

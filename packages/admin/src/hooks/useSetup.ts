@@ -22,7 +22,6 @@ export const useSetup = () => {
             cluster_name: cluster.name,
             cluster_key_client: cluster.key_client,
             subscribed: cluster.subscribed,
-            theme: cluster.theme,
           })
         })
         .catch(() => UniversalStore.update({ ready: true }))
@@ -38,7 +37,7 @@ const useGetCluster = createUseServer<{
     id: string
     key_client: string
     name: string
-    theme: string
+    theme_preference: string
     subscribed: boolean
   }
 }>({
@@ -48,7 +47,7 @@ const useGetCluster = createUseServer<{
         id
         key_client
         name
-        theme
+        theme_preference
         subscribed
       }
     }

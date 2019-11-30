@@ -18,7 +18,7 @@ export const App: FC = () => {
     children: create(Settings.Provider, {
       value: settings,
       children: create(Root, {
-        theme: settings.cluster && settings.cluster.theme,
+        theme: settings.cluster && settings.cluster.theme_preference,
         children: create(Fragment, {
           children: create(Toaster, {
             children: create(RouterCentral),

@@ -1,28 +1,16 @@
-import {
-  createElement as create,
-  FC,
-  Fragment,
-  useState,
-  useEffect,
-} from 'react'
-import { Root, Toaster } from 'wga-theme'
-import { UniversalStore } from './utils/universal'
-import { Universal } from './contexts/Universal'
+import { createElement as create, FC } from 'react'
+import { Spinner } from 'wga-theme'
+import { Universal } from './utils/universal'
 import { ErrorBoundary } from './screens/ErrorBoundary'
 import { Admin } from './screens/Admin'
+import { Preferences } from './utils/preferences'
 
 export const App: FC = () => {
-  const [universal, universalChange] = useState(UniversalStore.current)
-  useEffect(() => UniversalStore.listen(universalChange), [])
   return create(ErrorBoundary, {
-    children: create(Universal.Provider, {
-      value: universal,
-      children: create(Root, {
-        theme: universal.theme,
-        children: create(Fragment, {
-          children: create(Toaster, {
-            children: create(Admin),
-          }),
+    children: create(Preferences, {
+      children: create(Spinner, {
+        children: create(Universal, {
+          children: create(Admin),
         }),
       }),
     }),

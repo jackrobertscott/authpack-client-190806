@@ -94,7 +94,7 @@ const useGetCluster = createUseServer<{
   cluster: {
     id: string
     name: string
-    theme: string
+    theme_preference: string
     subscribed: boolean
   }
 }>({
@@ -103,7 +103,7 @@ const useGetCluster = createUseServer<{
       cluster: GetClusterCurrentClient {
         id
         name
-        theme
+        theme_preference
         subscribed
       }
     }

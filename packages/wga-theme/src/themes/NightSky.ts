@@ -54,15 +54,6 @@ export const NightSky: ITheme = {
     border: `1px solid ${slate(7.5)}`,
     background: slate(10),
   },
-  gadgets: {
-    title: slate(95),
-    subtitle: slate(65),
-    branding: slate(35),
-    brandingHover: slate(65),
-    header: slate(7.5),
-    border: `1px solid ${slate(2.5)}`,
-    background: slate(10),
-  },
   layout: {
     background: slate(12.5),
     border: `1px solid ${slate(7.5)}`,
@@ -80,7 +71,7 @@ export const NightSky: ITheme = {
   scroller: {
     background: slate(12.5),
     backgroundHover: slate(17.5),
-    underneath: slate(7.5),
+    underneath: slate(8.75),
     border: `1px solid ${slate(5)}`,
   },
   modal: {

@@ -10,7 +10,7 @@ export type IGadgets = {
   cluster?: {
     id: string
     name: string
-    theme: string
+    theme_preference: string
     subscribed: boolean
   }
   user?: {

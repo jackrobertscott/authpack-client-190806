@@ -27,7 +27,6 @@ export const UpdateCluster: FC<{
         .then(({ cluster }) => {
           if (change) change(cluster.id)
           UniversalStore.update({
-            theme: cluster.theme,
             cluster_name: cluster.name,
           })
         })
@@ -71,13 +70,13 @@ export const UpdateCluster: FC<{
               }),
             }),
             create(Control, {
-              key: 'theme',
+              key: 'theme_preference',
               label: 'Theme',
               helper: 'Choose the color of your login gadgets',
-              error: schema.error('theme'),
+              error: schema.error('theme_preference'),
               children: create(InputSelect, {
-                value: schema.value('theme'),
-                change: schema.change('theme'),
+                value: schema.value('theme_preference'),
+                change: schema.change('theme_preference'),
                 options: [
                   {
                     value: 'night_sky',
@@ -104,26 +103,26 @@ export const UpdateCluster: FC<{
 
 const SchemaUpdateCluster = yup.object().shape({
   name: yup.string().required('Please provide the cluster name'),
-  theme: yup.string().required('Please select a theme'),
   domains: yup
     .array()
     .of(yup.string().required())
     .default([]),
+  theme_preference: yup.string().required('Please select a theme'),
 })
 
 const useGetCluster = createUseServer<{
   cluster: {
     name: string
-    theme: string
     domains: string[]
+    theme_preference: string
   }
 }>({
   query: `
     query GetClusterClient($id: String!) {
       cluster: GetClusterClient(id: $id) {
         name
-        theme
         domains
+        theme_preference
       }
     }
   `,
@@ -133,7 +132,7 @@ const useUpdateCluster = createUseServer<{
   cluster: {
     id: string
     name: string
-    theme: string
+    theme_preference: string
   }
 }>({
   query: `
@@ -141,7 +140,7 @@ const useUpdateCluster = createUseServer<{
       cluster: UpdateClusterClient(id: $id, input: $input) {
         id
         name
-        theme
+        theme_preference
       }
     }
   `,
