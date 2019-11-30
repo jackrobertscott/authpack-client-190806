@@ -28,7 +28,7 @@ export const GetStarted: FC<{
           create(Button, {
             key: 'signup',
             icon: 'plus',
-            label: 'Sign Up',
+            label: 'Signup',
             click: signup,
           }),
         ],

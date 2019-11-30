@@ -157,7 +157,7 @@ const RouterComponent = () => {
    */
   return (
     <button click={() => gadgets.open()}>
-      Login Or Sign Up
+      Login Or Signup
     </button>
   );
 }

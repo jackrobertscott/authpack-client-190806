@@ -35,7 +35,7 @@ export const RouterModalUnauthed: FC<{
           },
           {
             icon: 'plus',
-            label: 'Sign Up',
+            label: 'Signup',
             focused: router.current && router.current.key === '/signup',
             click: clicker('/signup'),
           },

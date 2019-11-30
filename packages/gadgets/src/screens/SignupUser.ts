@@ -62,7 +62,7 @@ export const SignupUser: FC = () => {
     // eslint-disable-next-line
   }, [oauthCode.code])
   return create(Page, {
-    title: 'Sign Up',
+    title: 'Signup',
     subtitle: settings.cluster && settings.cluster.name,
     children: current
       ? create(Loading, {
@@ -159,7 +159,7 @@ export const SignupUser: FC = () => {
               }),
               create(Button, {
                 key: 'submit',
-                label: 'Sign Up',
+                label: 'Signup',
                 loading: gqlSignupUser.loading || gqlSignupUserOauth.loading,
                 disabled: !schema.valid,
                 click: schema.submit,
