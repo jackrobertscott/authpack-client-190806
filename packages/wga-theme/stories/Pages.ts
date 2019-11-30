@@ -1,6 +1,6 @@
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import faker from 'faker'
-import { createElement as create, FC, useState } from 'react'
+import { createElement as create, FC, useState, ReactNode } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
 import {
@@ -17,7 +17,7 @@ console.clear()
 
 const stories = storiesOf('Pages', module).addDecorator(data => {
   return create(Root, {
-    theme: 'snow_storm',
+    theme: 'night_sky',
     children: create('div', {
       children: data(),
       className: css({
@@ -32,15 +32,18 @@ stories.add('Table', () => {
   return create(Layout, {
     grow: true,
     children: [
-      create(SimpleIconBar, { key: 'SimpleIconBar' }),
-      create(SimpleSidebar, { key: 'SimpleSidebar' }),
-      create(SimpleScreen, { key: 'SimpleScreen' }),
+      create(SimpleIconBar, {
+        children: create(SimpleSidebar, {
+          children: create(SimpleScreen),
+        }),
+      }),
     ],
   })
 })
 
-const SimpleIconBar: FC = () => {
+const SimpleIconBar: FC<{ children: ReactNode }> = ({ children }) => {
   return create(IconBar, {
+    children,
     icons: [
       {
         icon: 'home',
@@ -69,10 +72,11 @@ const SimpleIconBar: FC = () => {
   })
 }
 
-const SimpleSidebar: FC = () => {
+const SimpleSidebar: FC<{ children: ReactNode }> = ({ children }) => {
   return create(SideBar, {
     title: 'Home',
     footer: 'Window Gadgets',
+    children,
     options: [
       {
         icon: 'user',

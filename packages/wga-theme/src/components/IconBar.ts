@@ -8,6 +8,8 @@ import { ClickOutside } from './ClickOutside'
 import { useMounted } from '../hooks/useMounted'
 
 export const IconBar: FC<{
+  children: ReactNode
+  horizontal?: boolean
   icons: Array<
     | {
         icon: string
@@ -27,44 +29,72 @@ export const IconBar: FC<{
       }
     | false
   >
-}> = ({ icons }) => {
+}> = ({ icons, children, horizontal = false }) => {
   const theme = useTheme()
   return create('div', {
     className: css({
       all: 'unset',
       display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-      flexShrink: 0,
-      background: theme.iconBar.background,
-      borderRight: theme.iconBar.border,
+      flexGrow: 1,
+      flexDirection: horizontal ? 'column-reverse' : 'row',
     }),
-    children: create(IconSpacer, {
-      children: icons.filter(Boolean).map((data: any, index) => {
-        return create(IconPointer, {
-          key: `icon-${index}`,
-          ...data,
-        })
+    children: [
+      create('div', {
+        key: 'iconBar',
+        className: css({
+          all: 'unset',
+          display: 'flex',
+          flexDirection: horizontal ? 'row' : 'column',
+          justifyContent: 'flex-start',
+          position: 'relative',
+          alignItems: 'center',
+          flexShrink: 0,
+          background: theme.iconBar.background,
+          borderTop: horizontal ? theme.iconBar.border : undefined,
+          borderRight: !horizontal ? theme.iconBar.border : undefined,
+        }),
+        children: create(IconSpacer, {
+          horizontal,
+          children: icons.filter(Boolean).map((data: any, index) => {
+            return create(IconPointer, {
+              key: `icon-${index}`,
+              horizontal,
+              ...data,
+            })
+          }),
+        }),
       }),
-    }),
+      create('div', {
+        key: 'children',
+        children,
+        className: css({
+          all: 'unset',
+          display: 'flex',
+          flexDirection: 'column',
+          flexGrow: 1,
+          position: 'relative',
+          overflow: 'hidden',
+        }),
+      }),
+    ],
   })
 }
 
 const IconSpacer: FC<{
   children: ReactNode
-}> = ({ children }) => {
+  horizontal?: boolean
+}> = ({ children, horizontal }) => {
   return create('div', {
     children,
     className: css({
       all: 'unset',
       display: 'flex',
-      flexDirection: 'column',
+      flexDirection: horizontal ? 'row-reverse' : 'column',
       alignItems: 'center',
-      padding: 20,
+      padding: horizontal ? '15px 20px' : 20,
       flexGrow: 1,
       '& > div:not(:last-child)': {
-        marginBottom: 15,
+        margin: horizontal ? '0 0 0 15px' : '0 0 15px 0',
       },
     }),
   })
@@ -77,6 +107,7 @@ const IconPointer: FC<{
   prefix?: string
   focused?: boolean
   seperated?: boolean
+  horizontal?: boolean
   click?: () => void
   options?: Array<{
     label: string
@@ -92,6 +123,7 @@ const IconPointer: FC<{
   prefix,
   focused,
   seperated,
+  horizontal,
   click,
   options = [],
 }) => {
@@ -103,8 +135,9 @@ const IconPointer: FC<{
     className: css({
       all: 'unset',
       display: 'flex',
-      position: 'relative',
-      marginTop: seperated ? 'auto' : 0,
+      position: horizontal ? undefined : 'relative',
+      marginTop: seperated && !horizontal ? 'auto !important' : undefined,
+      marginRight: seperated && horizontal ? 'auto !important' : undefined,
       '&:hover .toggle': {
         opacity: 1,
       },
@@ -135,45 +168,46 @@ const IconPointer: FC<{
           prefix,
         }),
       }),
-      create('div', {
-        key: 'pointer',
-        className: css({
-          all: 'unset',
-          display: 'flex',
-          minWidth: '290px',
-          position: 'absolute',
-          transition: '200ms',
-          pointerEvents: 'none',
-          opacity: 0,
-          zIndex: 300,
-          left: '100%',
-          top: -5,
-          paddingLeft: 7.5,
-        }).concat(' toggle'),
-        children: create(ClickOutside, {
-          disabled: !open,
-          click: () => openChange(false),
-          children: create(Pointer, {
-            icon,
-            label,
-            helper,
-            prefix,
-            children:
-              open &&
-              !!options.length &&
-              create(Menu, {
-                key: 'menu',
-                options: options.map(option => ({
-                  ...option,
-                  click: () => {
-                    if (option.click) option.click()
-                    if (mounted.current) openChange(false)
-                  },
-                })),
-              }),
+      !horizontal &&
+        create('div', {
+          key: 'pointer',
+          className: css({
+            all: 'unset',
+            display: 'flex',
+            minWidth: '290px',
+            position: 'absolute',
+            transition: '200ms',
+            pointerEvents: 'none',
+            opacity: 0,
+            zIndex: 300,
+            left: '100%',
+            top: -5,
+            paddingLeft: 7.5,
+          }).concat(' toggle'),
+          children: create(ClickOutside, {
+            disabled: !open,
+            click: () => openChange(false),
+            children: create(Pointer, {
+              icon,
+              label,
+              helper,
+              prefix,
+              children:
+                open &&
+                !!options.length &&
+                create(Menu, {
+                  key: 'menu',
+                  options: options.map(option => ({
+                    ...option,
+                    click: () => {
+                      if (option.click) option.click()
+                      if (mounted.current) openChange(false)
+                    },
+                  })),
+                }),
+            }),
           }),
         }),
-      }),
     ],
   })
 }

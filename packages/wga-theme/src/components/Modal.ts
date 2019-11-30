@@ -12,8 +12,8 @@ export const Modal: FC<{
   close?: () => void
   large?: boolean
 }> = ({ id, children, visible = true, close, large }) => {
-  const width = 1035 - (large ? 0 : 260)
-  const height = 640
+  const width = large ? 1035 : 515
+  const height = large ? 640 : 725
   const theme = useTheme()
   const unfocused = useRef<boolean>(!document.querySelector(':focus-within'))
   return create(Portal, {

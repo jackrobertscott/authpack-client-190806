@@ -27,6 +27,7 @@ export const Page: FC<{
       justifyContent: 'stretch',
       position: 'relative',
       maxHeight: '100vh',
+      overflow: 'hidden',
       flexGrow: 1,
       background: theme.page.background,
     }),
@@ -51,7 +52,7 @@ export const Page: FC<{
               create(Branding, {
                 key: 'branding',
                 url: 'https://windowgadgets.io',
-                text: `Window Gadgets`,
+                text: `WG Authenticator`,
               }),
             ],
             className: css({
@@ -207,7 +208,7 @@ const Branding: FC<{
     className: css({
       all: 'unset',
       display: 'flex',
-      justifyContent: 'flex-end',
+      justifyContent: 'flex-start',
       padding: '20px 25px 25px',
       marginTop: 'auto',
     }),

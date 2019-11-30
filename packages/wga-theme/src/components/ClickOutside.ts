@@ -6,6 +6,7 @@ import {
   useEffect,
 } from 'react'
 import { findDOMNode } from 'react-dom'
+import { css } from 'emotion'
 
 export const ClickOutside: FC<{
   click: () => void
@@ -29,5 +30,8 @@ export const ClickOutside: FC<{
   return create('div', {
     ref,
     children,
+    className: css({
+      flexGrow: 1,
+    }),
   })
 }

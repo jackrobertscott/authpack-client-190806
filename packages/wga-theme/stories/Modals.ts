@@ -1,12 +1,11 @@
 import * as yup from 'yup'
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import { createElement as create, FC, useState } from 'react'
+import { createElement as create, FC, useState, ReactNode } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
 import {
   Layout,
   IconBar,
-  Gadgets,
   Modal,
   InputString,
   Button,
@@ -20,13 +19,15 @@ import {
   InputBoolean,
   InputStringArray,
   Root,
+  Page,
+  SideBar,
 } from '../src/index'
 
 console.clear()
 
 const stories = storiesOf('Modals', module).addDecorator(data => {
   return create(Root, {
-    theme: 'snow_storm',
+    theme: 'night_sky',
     children: create('div', {
       children: data(),
       className: css({
@@ -41,14 +42,13 @@ stories.add('Form', () => {
   return create(Modal, {
     children: create(Layout, {
       grow: true,
-      children: [
-        create(SimpleIconBar, { key: 'SimpleIconBar' }),
-        create(Gadgets, {
+      children: create(SimpleIconBar, {
+        children: create(Page, {
           title: 'Create',
           subtitle: 'Window Gadgets',
           children: create(SimpleForm),
         }),
-      ],
+      }),
     }),
   })
 })
@@ -57,15 +57,14 @@ stories.add('Buttons & Poster', () => {
   return create(Modal, {
     children: create(Layout, {
       grow: true,
-      children: [
-        create(SimpleIconBar, { key: 'SimpleIconBar' }),
-        create(Gadgets, {
+      children: create(SimpleIconBar, {
+        children: create(Page, {
           key: 'Gadgets',
           title: 'Buttons',
           subtitle: 'Window Gadgets',
           children: create(SimpleButtons),
         }),
-      ],
+      }),
     }),
   })
 })
@@ -74,26 +73,42 @@ stories.add('Snippets', () => {
   return create(Modal, {
     children: create(Layout, {
       grow: true,
-      children: [
-        create(SimpleIconBar, { key: 'SimpleIconBar' }),
-        create(Gadgets, {
+      children: create(SimpleIconBar, {
+        key: 'slider',
+        children: create(Page, {
           key: 'Gadgets',
           title: 'Users',
           subtitle: 'Window Gadgets',
           children: create(SimpleSnippets),
         }),
-      ],
+      }),
     }),
   })
 })
 
-const SimpleIconBar: FC = () => {
+const SimpleIconBar: FC<{ children: ReactNode }> = ({ children }) => {
   return create(IconBar, {
+    children,
+    horizontal: true,
     icons: [
       {
         icon: 'home',
         label: 'Home',
         focused: true,
+        options: [
+          {
+            icon: 'home',
+            label: 'Home',
+          },
+          {
+            icon: 'sliders-h',
+            label: 'Preferences',
+          },
+          {
+            icon: 'code',
+            label: 'Developers',
+          },
+        ],
       },
       {
         icon: 'sliders-h',
@@ -104,13 +119,9 @@ const SimpleIconBar: FC = () => {
         label: 'Developers',
       },
       {
-        icon: 'cog',
-        label: 'Settings',
+        icon: 'times-circle',
+        label: 'Close',
         seperated: true,
-      },
-      {
-        icon: 'user-circle',
-        label: 'Account',
       },
     ],
   })
@@ -308,6 +319,30 @@ const SimpleSnippets: FC = () => {
         label: 'Seagul Team',
         click: () => console.log('Seagul'),
       }),
+    ],
+  })
+}
+
+const SimpleSideBar: FC<{ children: ReactNode }> = ({ children }) => {
+  return create(SideBar, {
+    title: 'Hello',
+    footer: 'Jack Scott',
+    horizontal: true,
+    children,
+    options: [
+      {
+        icon: 'home',
+        label: 'Home',
+        focused: true,
+      },
+      {
+        icon: 'sliders-h',
+        label: 'Preferences',
+      },
+      {
+        icon: 'code',
+        label: 'Developers',
+      },
     ],
   })
 }
