@@ -9,14 +9,11 @@ export const useSetup = () => {
   const universal = useUniversal()
   const gqlGetCluster = useGetCluster()
   useEffect(() => {
-    UniversalStore.recreate({
-      cluster_id: gadgets.bearer && universal.cluster_id,
-    })
     if (gadgets.bearer && gadgets.team && gadgets.team.id) {
       gqlGetCluster
-        .fetch({ id: universal.cluster_id })
+        .fetch({ id: gadgets.bearer && universal.cluster_id })
         .then(({ cluster }) => {
-          UniversalStore.update({
+          UniversalStore.recreate({
             ready: true,
             cluster_id: cluster.id,
             cluster_name: cluster.name,
@@ -24,9 +21,17 @@ export const useSetup = () => {
             subscribed: cluster.subscribed,
           })
         })
-        .catch(() => UniversalStore.update({ ready: true }))
+        .catch(() => {
+          UniversalStore.recreate({
+            ready: true,
+          })
+        })
     } else {
-      setTimeout(() => UniversalStore.update({ ready: true }))
+      setTimeout(() => {
+        UniversalStore.recreate({
+          ready: true,
+        })
+      })
     }
     // eslint-disable-next-line
   }, [universal.cluster_id, gadgets.bearer, gadgets.team && gadgets.team.id])
