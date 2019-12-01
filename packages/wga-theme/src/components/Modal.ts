@@ -12,8 +12,8 @@ export const Modal: FC<{
   close?: () => void
   large?: boolean
 }> = ({ id, children, visible = true, close, large = true }) => {
-  const width = large ? 1035 : 515
-  const height = large ? 640 : 725
+  const width = large ? 1035 : 525
+  const height = large ? 640 : 640
   const bp = `@media
     (max-width: ${width + 50}px),
     (max-height: ${height + 50}px)`
