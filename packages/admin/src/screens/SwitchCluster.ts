@@ -39,7 +39,8 @@ export const SwitchCluster: FC<{
               prefix: 'far',
               label: name,
               click: () => {
-                UniversalStore.recreate({ cluster_id: id })
+                if (universal.cluster_id !== id)
+                  UniversalStore.recreate({ cluster_id: id })
                 if (change) change(id)
               },
             })
