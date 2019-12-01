@@ -43,14 +43,14 @@ export const ShowProvider: FC<{
             create(Snippet, {
               key: 'redirect_uri',
               icon: 'compass',
-              label: 'Preset',
-              value: provider.redirect_uri,
+              label: 'Advanced - Redirect URI',
+              value: provider.redirect_uri || '...',
             }),
             create(Snippet, {
               key: 'scopes',
               icon: 'user-shield',
               label: 'Scopes',
-              value: provider.scopes && provider.scopes.join(', '),
+              value: (provider.scopes && provider.scopes.join(', ')) || '...',
             }),
             create(Snippet, {
               key: 'created',

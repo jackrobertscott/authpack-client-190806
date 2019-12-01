@@ -73,26 +73,12 @@ export const UpdateProvider: FC<{
               create(Control, {
                 key: 'secret',
                 label: 'Secret',
-                helper: `The oauth secret provided by ${schema.value(
-                  'preset'
-                ) || 'the app'}`,
+                helper: `This value has been hidden`,
                 error: schema.error('secret'),
                 children: create(InputString, {
                   value: schema.value('secret'),
                   change: schema.change('secret'),
                   placeholder: '...',
-                }),
-              }),
-              create(Control, {
-                key: 'redirect_uri',
-                label: 'Redirect URI',
-                helper:
-                  'Leave this empty unless you are creating your own login system',
-                error: schema.error('redirect_uri'),
-                children: create(InputString, {
-                  value: schema.value('redirect_uri'),
-                  change: schema.change('redirect_uri'),
-                  placeholder: 'https://v1.windowgadgets.io',
                 }),
               }),
               create(Control, {
@@ -104,6 +90,18 @@ export const UpdateProvider: FC<{
                   value: schema.value('scopes'),
                   change: schema.change('scopes'),
                   placeholder: '...',
+                }),
+              }),
+              create(Control, {
+                key: 'redirect_uri',
+                label: 'Advanced - Redirect URI',
+                helper:
+                  'Leave this empty unless you are creating your own login system',
+                error: schema.error('redirect_uri'),
+                children: create(InputString, {
+                  value: schema.value('redirect_uri'),
+                  change: schema.change('redirect_uri'),
+                  placeholder: 'https://v1.windowgadgets.io',
                 }),
               }),
             ],

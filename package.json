@@ -1,13 +1,6 @@
 {
   "name": "root",
   "private": true,
-  "scripts": {
-    "ship": "lerna publish",
-    "prepublishOnly": "yarn run build",
-    "bootstrap": "lerna bootstrap",
-    "build": "lerna run build",
-    "test": "lerna run test"
-  },
   "dependencies": {
     "fs-extra": "^8.1.0",
     "prettier": "^1.19.1",

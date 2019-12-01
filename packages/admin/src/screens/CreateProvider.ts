@@ -72,18 +72,6 @@ export const CreateProvider: FC<{
           }),
         }),
         create(Control, {
-          key: 'redirect_uri',
-          label: 'Redirect Uri',
-          helper:
-            'Leave this empty unless you are creating your own login system',
-          error: schema.error('redirect_uri'),
-          children: create(InputString, {
-            value: schema.value('redirect_uri'),
-            change: schema.change('redirect_uri'),
-            placeholder: 'https://v1.windowgadgets.io',
-          }),
-        }),
-        create(Control, {
           key: 'scopes',
           label: 'Scopes',
           helper: 'A set of oauth permission scopes',
@@ -92,6 +80,18 @@ export const CreateProvider: FC<{
             value: schema.value('scopes'),
             change: schema.change('scopes'),
             placeholder: '...',
+          }),
+        }),
+        create(Control, {
+          key: 'redirect_uri',
+          label: 'Advanced - Redirect Uri',
+          helper:
+            'Leave this empty unless you are creating your own login system',
+          error: schema.error('redirect_uri'),
+          children: create(InputString, {
+            value: schema.value('redirect_uri'),
+            change: schema.change('redirect_uri'),
+            placeholder: 'https://v1.windowgadgets.io',
           }),
         }),
         create(Button, {
