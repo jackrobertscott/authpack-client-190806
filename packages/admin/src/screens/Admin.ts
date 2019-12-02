@@ -23,8 +23,12 @@ export const Admin: FC = () => {
         ? media.width < 1120
           ? create(Focus, {
               icon: 'expand-arrows-alt',
-              label: 'Media Unsupported',
-              helper: 'Please use a wider device',
+              label: 'Dashboard',
+              helper: 'Use a wider screen to see dashboard',
+              children: create(Button, {
+                label: 'Okay',
+                click: () => wga.show(),
+              }),
             })
           : create(RouterCentral, {
               key: 'router',
