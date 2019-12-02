@@ -19,23 +19,19 @@ export const Admin: FC = () => {
     children: create(Toaster, {
       children: !Boolean(gadgets.ready && universal.ready)
         ? create(Loading)
-        : gadgets.bearer && gadgets.user && gadgets.team
-        ? media.width < 1120
-          ? create(Focus, {
-              icon: 'expand-arrows-alt',
-              label: 'Dashboard',
-              helper: 'Use a wider screen to see dashboard',
-              children: create(Button, {
-                label: 'Okay',
-                click: () => wga.show(),
-              }),
-            })
-          : universal.cluster_id && universal.cluster_key_client
-          ? create(RouterCentral, {
-              key: 'router',
-            })
-          : create(Loading)
-        : gadgets.bearer && gadgets.user
+        : !Boolean(gadgets.bearer && gadgets.user)
+        ? create(Focus, {
+            icon: 'unlock',
+            label: 'Welcome',
+            helper: 'User and Team API and Dashboard',
+            children: create(Button, {
+              key: 'login',
+              icon: 'bolt',
+              label: 'Get Started',
+              click: () => wga.show(),
+            }),
+          })
+        : !Boolean(gadgets.team)
         ? create(Focus, {
             icon: 'users',
             label: 'Team Required',
@@ -46,16 +42,20 @@ export const Admin: FC = () => {
               click: () => wga.show(),
             }),
           })
-        : create(Focus, {
-            icon: 'unlock',
-            label: 'Welcome',
-            helper: 'User and Team API and Dashboard',
+        : !Boolean(universal.cluster_id && universal.cluster_key_client)
+        ? create(Loading)
+        : media.width < 1120
+        ? create(Focus, {
+            icon: 'expand-arrows-alt',
+            label: 'Dashboard',
+            helper: 'Use a wider screen to see dashboard',
             children: create(Button, {
-              key: 'login',
-              icon: 'bolt',
-              label: 'Get Started',
+              label: 'Okay',
               click: () => wga.show(),
             }),
+          })
+        : create(RouterCentral, {
+            key: 'router',
           }),
     }),
   })
