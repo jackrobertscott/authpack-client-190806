@@ -16,5 +16,5 @@ The Authpack Gadgets provide you with a premade login system.
 Install.
 
 ```shell
-npm i --save wga-gadgets
+npm i --save wga-plugin
 ```
