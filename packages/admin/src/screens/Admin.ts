@@ -30,9 +30,11 @@ export const Admin: FC = () => {
                 click: () => wga.show(),
               }),
             })
-          : create(RouterCentral, {
+          : universal.cluster_id && universal.cluster_key_client
+          ? create(RouterCentral, {
               key: 'router',
             })
+          : create(Loading)
         : gadgets.bearer && gadgets.user
         ? create(Focus, {
             icon: 'users',
