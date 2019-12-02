@@ -76,11 +76,11 @@ export const ListPermissions: FC = () => {
           icon: 'user-shield',
           label: 'Permissions',
           helper:
-            'Create a permission manually or by using the Authenticator API',
+            'Create a permission manually or by using the Authpack API',
           children: create(Button, {
             key: 'Regular',
             label: 'See API',
-            click: () => window.open('https://windowgadgets.io'),
+            click: () => window.open('https://authpack.io'),
           }),
         }),
       gqlListPermissions.data &&

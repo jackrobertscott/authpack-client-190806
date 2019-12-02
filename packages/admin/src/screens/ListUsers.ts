@@ -83,7 +83,7 @@ export const ListUsers: FC = () => {
           children: create(Button, {
             key: 'Regular',
             label: 'See API',
-            click: () => window.open('https://windowgadgets.io'),
+            click: () => window.open('https://authpack.io'),
           }),
         }),
       gqlListUsers.data &&

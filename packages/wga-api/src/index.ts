@@ -1,14 +1,14 @@
 import { generator, IGraphql } from './utils/generator'
 import { sender } from './utils/sender'
 
-export type IAuthenticatorAPI = {
+export type IAuthpackAPI = {
   handler?: (variables: IGraphql['variables']) => Promise<IGraphql['data']>
   secret?: string
   client?: string
   bearer?: string
 }
 
-export class AuthenticatorAPI {
+export class AuthpackAPI {
   private handler?: (
     variables: IGraphql['variables']
   ) => Promise<IGraphql['data']>
@@ -17,7 +17,7 @@ export class AuthenticatorAPI {
     client?: string
     bearer?: string
   }
-  constructor({ secret, client, bearer, handler }: IAuthenticatorAPI) {
+  constructor({ secret, client, bearer, handler }: IAuthpackAPI) {
     this.handler = handler
     this.keys = {
       secret,

@@ -80,7 +80,7 @@ export const ListProviders: FC = () => {
           children: create(Button, {
             key: 'Regular',
             label: 'See Docs',
-            click: () => window.open('https://windowgadgets.io'),
+            click: () => window.open('https://authpack.io'),
           }),
         }),
       gqlListProviders.data &&

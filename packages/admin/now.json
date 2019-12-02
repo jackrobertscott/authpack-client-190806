@@ -1,7 +1,7 @@
 {
   "version": 2,
   "name": "wga-prod-admin",
-  "alias": "v1.windowgadgets.io",
+  "alias": "v1.authpack.io",
   "builds": [
     {
       "src": "package.json",

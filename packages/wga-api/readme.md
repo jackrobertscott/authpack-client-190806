@@ -1,8 +1,8 @@
-# 🏇 Depreciated: Authenticator API
+# 🏇 Depreciated: Authpack API
 
 > User and team management for your app
 
-Helper methods which may be used to access the Authenticator API using GraphQL.
+Helper methods which may be used to access the Authpack API using GraphQL.
 
 ## Install
 
@@ -20,16 +20,16 @@ yarn add wga-api
 
 ## Setup
 
-Start by importing the `AuthenticatorAPI` class.
+Start by importing the `AuthpackAPI` class.
 
 ```ts
-import { AuthenticatorAPI } from 'wga-api'
+import { AuthpackAPI } from 'wga-api'
 ```
 
-A secret security key can be found in your [Authenticator](https://authenticator.windowgadgets.io/) app settings.
+A secret security key can be found in your [Authpack](https://v1.authpack.io) app settings.
 
 ```ts
-const wga = new AuthenticatorAPI({
+const wga = new AuthpackAPI({
   secret: process.env.WGA_SECRET_KEY,
 })
 ```
@@ -38,4 +38,4 @@ const wga = new AuthenticatorAPI({
 
 ## Credits
 
-Created with ❤️ by [Window Gadgets](https://authenticator.windowgadgets.io/).
+Created with ❤️ by [Authpack](https://v1.authpack.io).

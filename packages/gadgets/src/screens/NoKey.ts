@@ -12,12 +12,12 @@ export const NoKey: FC<{
     })
   return create(Focus, {
     icon: 'user-lock',
-    label: 'Authenticator',
+    label: 'Authpack',
     helper: "Please provide your cluster's client key",
     children: create(Button, {
       icon: 'question',
       label: 'Learn More',
-      click: () => window.open('https://authenticator.windowgadgets.io'),
+      click: () => window.open('https://authpack.io'),
     }),
   })
 }

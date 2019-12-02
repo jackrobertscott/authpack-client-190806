@@ -51,8 +51,8 @@ export const Page: FC<{
               }),
               create(Branding, {
                 key: 'branding',
-                url: 'https://windowgadgets.io',
-                text: `WG Authenticator`,
+                url: 'https://authpack.io',
+                text: `Authpack`,
               }),
             ],
             className: css({

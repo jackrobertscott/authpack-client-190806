@@ -75,7 +75,7 @@ const SimpleIconBar: FC<{ children: ReactNode }> = ({ children }) => {
 const SimpleSidebar: FC<{ children: ReactNode }> = ({ children }) => {
   return create(SideBar, {
     title: 'Home',
-    footer: 'Window Gadgets',
+    footer: 'Authpack',
     children,
     options: [
       {

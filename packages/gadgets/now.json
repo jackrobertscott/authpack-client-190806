@@ -1,7 +1,7 @@
 {
   "version": 2,
   "name": "wga-prod-gadgets",
-  "alias": ["oauth.v1.windowgadgets.io", "gadgets.v1.windowgadgets.io"],
+  "alias": ["oauth.v1.authpack.io", "gadgets.v1.authpack.io"],
   "builds": [
     {
       "src": "package.json",

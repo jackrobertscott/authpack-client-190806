@@ -45,7 +45,7 @@ stories.add('Form', () => {
       children: create(SimpleIconBar, {
         children: create(Page, {
           title: 'Create',
-          subtitle: 'Window Gadgets',
+          subtitle: 'Authpack',
           children: create(SimpleForm),
         }),
       }),
@@ -61,7 +61,7 @@ stories.add('Buttons & Poster', () => {
         children: create(Page, {
           key: 'Gadgets',
           title: 'Buttons',
-          subtitle: 'Window Gadgets',
+          subtitle: 'Authpack',
           children: create(SimpleButtons),
         }),
       }),
@@ -78,7 +78,7 @@ stories.add('Snippets', () => {
           children: create(Page, {
             key: 'Gadgets',
             title: 'Users',
-            subtitle: 'Window Gadgets',
+            subtitle: 'Authpack',
             children: create(SimpleSnippets),
           }),
         }),

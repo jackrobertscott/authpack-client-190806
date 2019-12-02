@@ -2,7 +2,7 @@
   "name": "wga-theme",
   "private": false,
   "version": "0.4.5",
-  "description": "Theme for the Window Gadgets Authenticator.",
+  "description": "Theme for Authpack.",
   "license": "MIT",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
