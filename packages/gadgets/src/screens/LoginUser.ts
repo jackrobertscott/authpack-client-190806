@@ -8,12 +8,12 @@ import {
   Button,
   useMounted,
   Page,
+  Focus,
 } from 'wga-theme'
 import { useSettings } from '../hooks/useSettings'
 import { SettingsStore } from '../utils/settings'
 import { createUseServer } from '../hooks/useServer'
 import { useOauthCode } from '../hooks/useOauthCode'
-import { Loading } from './Loading'
 import { presetColors } from '../utils/presets'
 
 export const LoginUser: FC = () => {
@@ -64,8 +64,15 @@ export const LoginUser: FC = () => {
     title: 'Login',
     subtitle: settings.cluster && settings.cluster.name,
     children: current
-      ? create(Loading, {
-          helper: 'Checking your credentials',
+      ? create(Focus, {
+          icon: 'sync-alt',
+          label: 'Pending',
+          helper: 'Waiting for login with external app',
+          children: create(Button, {
+            icon: 'times-circle',
+            label: 'Cancel',
+            click: () => currentChange(undefined),
+          }),
         })
       : !gqlListProviders.data
       ? null

@@ -10,7 +10,16 @@ export const Scroller: FC<{
 }> = ({ children, disable, maxheight, always }) => {
   const theme = useTheme()
   return create('div', {
-    children,
+    children: create('div', {
+      children,
+      className: css({
+        all: 'unset',
+        display: 'flex',
+        flexDirection: 'column',
+        flexGrow: 1,
+        flexShrink: 0,
+      }),
+    }),
     className: css({
       all: 'unset',
       display: 'flex',

@@ -34,6 +34,9 @@ export const Root: FC<{
           display: 'flex',
           flexGrow: 1,
           fontWeight: value.global.thick,
+          '*': {
+            WebkitTextFillColor: 'initial !important',
+          },
         }),
         children: [
           create(Fragment, {

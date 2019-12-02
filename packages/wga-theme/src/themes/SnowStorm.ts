@@ -123,10 +123,10 @@ export const SnowStorm: ITheme = {
   button: {
     label: slate(60),
     labelHover: slate(25),
-    labelDisabled: slate(80),
+    labelDisabled: slate(75),
     background: slate(100),
     backgroundMinor: slate(97.5),
-    backgroundDisabled: slate(95),
+    backgroundDisabled: slate(92.5),
     backgroundHover: slate(100),
     shadow: `0 0 13px -3px ${slate(80, 0.5)}`,
     border: `1px solid ${slate(90)}`,

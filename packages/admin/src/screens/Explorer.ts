@@ -57,6 +57,7 @@ export const Explorer: FC = () => {
             fontWeight: '500' as any,
             outline: 'none',
             letterSpacing: 'normal',
+            WebkitTextFillColor: 'initial',
           },
         },
         /**
