@@ -24,6 +24,7 @@ export const Table: FC<{
     className: css({
       all: 'unset',
       display: 'table',
+      width: '100%',
       flexGrow: 1,
     }),
     children: [
