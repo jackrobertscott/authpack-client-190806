@@ -14,7 +14,7 @@ export const NightSky: ITheme = {
   global: {
     radius: 3,
     thick: 500,
-    thin: 400,
+    thin: 500,
   },
   /**
    * Navigation.
