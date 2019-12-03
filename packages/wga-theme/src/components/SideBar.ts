@@ -95,7 +95,6 @@ export const SideBar: FC<{
           display: 'flex',
           flexDirection: 'column',
           flexGrow: 1,
-          flexShrink: 0,
         }),
         children: [
           create('div', {
@@ -104,6 +103,7 @@ export const SideBar: FC<{
               all: 'unset',
               display: 'none',
               flexDirection: 'column',
+              flexShrink: 0,
               [bp]: {
                 display: 'flex',
               },
