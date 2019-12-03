@@ -44,6 +44,36 @@ export const RouterCentral: FC = () => {
         focused: !!router.current && router.current.path === '/developers',
         click: () => router.change('/developers'),
       },
+      {
+        prefix: 'far',
+        icon: 'question-circle',
+        label: 'Help & Feedback',
+        options: [
+          {
+            icon: 'book',
+            label: 'Documents',
+            helper: 'See installation instructions',
+            click: () =>
+              window.open(
+                'https://github.com/jackrobertscott/authpack/blob/master/readme.md'
+              ),
+          },
+          {
+            icon: 'magic',
+            label: 'Feature',
+            helper: 'Request a new feature',
+            click: () =>
+              window.open('https://github.com/jackrobertscott/authpack/issues'),
+          },
+          {
+            icon: 'bug',
+            label: 'Bug',
+            helper: 'Report an problem',
+            click: () =>
+              window.open('https://github.com/jackrobertscott/authpack/issues'),
+          },
+        ],
+      },
       !universal.subscribed && {
         icon: 'exclamation-circle',
         label: 'Limited Usage',

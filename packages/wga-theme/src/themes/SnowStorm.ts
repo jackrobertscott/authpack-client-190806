@@ -77,8 +77,8 @@ export const SnowStorm: ITheme = {
   modal: {
     background: slate(87.5),
     shadow: `0 0 13px -3px ${slate(25, 0.25)}`,
-    border: `1px solid ${slate(65)}`,
-    cover: slate(5, 0.25),
+    border: `1px solid ${slate(50)}`,
+    cover: slate(15, 0.5),
   },
   /**
    * Lists.

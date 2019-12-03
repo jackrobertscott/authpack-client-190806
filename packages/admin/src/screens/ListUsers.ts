@@ -82,8 +82,12 @@ export const ListUsers: FC = () => {
             'Create a user manually, with our gadgets, or by using our API',
           children: create(Button, {
             key: 'Regular',
-            label: 'See API',
-            click: () => window.open('https://authpack.io'),
+            icon: 'book',
+            label: 'See Documents',
+            click: () =>
+              window.open(
+                'https://github.com/jackrobertscott/authpack/blob/master/readme.md'
+              ),
           }),
         }),
       gqlListUsers.data &&

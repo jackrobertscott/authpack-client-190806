@@ -39,7 +39,6 @@ export const RecoverUserPassword: FC = () => {
             create(Control, {
               key: 'email',
               label: 'Email',
-              helper: 'Use your account email',
               error: schema.error('email'),
               children: create(InputString, {
                 value: schema.value('email'),

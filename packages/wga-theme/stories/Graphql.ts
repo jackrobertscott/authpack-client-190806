@@ -34,9 +34,7 @@ const Explorer: FC = () => {
           const data = await graphql<any>({
             ...graphQLParams,
             url: 'http://localhost:4000',
-            authorization: ['wga-secret-key-f94c72f42177ca30b3f861ead']
-              .filter(Boolean)
-              .join(','),
+            authorization: ['KEY_HERE'].filter(Boolean).join(','),
           })
           return data.__schema ? { data } : data
         } catch (error) {

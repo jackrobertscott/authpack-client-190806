@@ -79,8 +79,12 @@ export const ListProviders: FC = () => {
             'Authentication providers allow you to login your users with OAuth',
           children: create(Button, {
             key: 'Regular',
-            label: 'See Docs',
-            click: () => window.open('https://authpack.io'),
+            icon: 'book',
+            label: 'See Documents',
+            click: () =>
+              window.open(
+                'https://github.com/jackrobertscott/authpack/blob/master/readme.md'
+              ),
           }),
         }),
       gqlListProviders.data &&

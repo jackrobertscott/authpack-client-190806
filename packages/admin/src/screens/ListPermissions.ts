@@ -75,12 +75,15 @@ export const ListPermissions: FC = () => {
           key: 'empty',
           icon: 'user-shield',
           label: 'Permissions',
-          helper:
-            'Create a permission manually or by using the Authpack API',
+          helper: 'Create a permission manually or by using the Authpack API',
           children: create(Button, {
             key: 'Regular',
-            label: 'See API',
-            click: () => window.open('https://authpack.io'),
+            icon: 'book',
+            label: 'See Documents',
+            click: () =>
+              window.open(
+                'https://github.com/jackrobertscott/authpack/blob/master/readme.md'
+              ),
           }),
         }),
       gqlListPermissions.data &&

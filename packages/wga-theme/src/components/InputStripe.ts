@@ -13,14 +13,14 @@ export const InputStripe: FC<{
   useEffect(() => {
     if (stripe) {
       const cssSrc =
-        'https://fonts.googleapis.com/css?family=Rubik:400,500&display=swap'
+        'https://fonts.googleapis.com/css?family=Rubik:500&display=swap'
       const elements = stripe.elements({ fonts: [{ cssSrc }] })
       const cardStripe = elements.create('card', {
         hidePostalCode: true,
         style: {
           base: {
             fontFamily: 'Rubik',
-            fontWeight: 700,
+            fontWeight: 500,
             color: theme.input.payment,
             iconColor: theme.input.payment,
           },

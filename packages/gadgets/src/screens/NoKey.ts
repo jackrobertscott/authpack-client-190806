@@ -1,15 +1,7 @@
 import { createElement as create, FC } from 'react'
 import { Focus, Button } from 'wga-theme'
 
-export const NoKey: FC<{
-  loading: boolean
-}> = ({ loading }) => {
-  if (loading)
-    return create(Focus, {
-      icon: 'sync-alt',
-      label: 'Loading',
-      helper: 'Performing security checks',
-    })
+export const NoKey: FC = () => {
   return create(Focus, {
     icon: 'user-lock',
     label: 'Authpack',
@@ -17,7 +9,10 @@ export const NoKey: FC<{
     children: create(Button, {
       icon: 'question',
       label: 'Learn More',
-      click: () => window.open('https://authpack.io'),
+      click: () =>
+        window.open(
+          'https://github.com/jackrobertscott/authpack/blob/master/readme.md'
+        ),
     }),
   })
 }

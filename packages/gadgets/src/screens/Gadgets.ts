@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as create, FC, useRef } from 'react'
 import { Modal } from 'wga-theme'
 import { useSetup } from '../hooks/useSetup'
 import { useSettings } from '../hooks/useSettings'
@@ -11,9 +11,9 @@ import { Loading } from './Loading'
 export const Gadgets: FC = () => {
   useSetup()
   const settings = useSettings()
-  const close = () => SettingsStore.update({ open: false })
+  const close = useRef(() => SettingsStore.update({ open: false }))
   return create(Modal, {
-    close,
+    close: close.current,
     visible: settings.open,
     large: Boolean(settings.client && settings.bearer && settings.user),
     children: !settings.ready
@@ -21,16 +21,15 @@ export const Gadgets: FC = () => {
       : !settings.client
       ? create(NoKey, {
           key: 'nokey',
-          loading: !settings.ready,
         })
       : settings.bearer && settings.user
       ? create(RouterModalOnauthed, {
           key: 'onauthed',
-          close,
+          close: close.current,
         })
       : create(RouterModalUnauthed, {
           key: 'unauthed',
-          close,
+          close: close.current,
         }),
   })
 }
