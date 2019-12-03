@@ -63,6 +63,7 @@ export const ToasterAlerts: FC<{
   width?: number
 }> = ({ current, width = 300 }) => {
   const theme = useTheme()
+  const bp = `@media (max-width: ${525 + 50}px)`
   return create('div', {
     className: css({
       all: 'unset',
@@ -74,6 +75,10 @@ export const ToasterAlerts: FC<{
       bottom: 0,
       zIndex: 1250,
       margin: '20px 50px 25px 25px',
+      [bp]: {
+        left: 0,
+        margin: '25px',
+      },
     }),
     children: current.map(({ id, icon, prefix, label, helper, close }) => {
       return create('div', {
@@ -85,12 +90,16 @@ export const ToasterAlerts: FC<{
           overflow: 'hidden',
           padding: 15,
           marginTop: 15,
-          borderRadius: theme.global.radius,
           width,
+          borderRadius: theme.global.radius,
           boxShadow: theme.toaster.shadow,
           background: theme.toaster.background,
           border: theme.toaster.border,
           color: theme.toaster.label,
+          [bp]: {
+            width: 'auto',
+            flexGrow: 1,
+          },
         }),
         children: [
           create(Icon, {

@@ -47,6 +47,7 @@ export const RouterModalUnauthed: FC<{
         click: clicker('/signup'),
       },
       {
+        prefix: 'far',
         icon: 'question-circle',
         label: 'Recovery',
         focused: router.current && router.current.key === '/forgot',

@@ -26,6 +26,7 @@ export const Layout: FC<{
   styled,
 }) => {
   const theme = useTheme()
+  const bp = `@media (max-width: ${breakpoint + 50}px)`
   return create('div', {
     children,
     className: css({
@@ -43,7 +44,7 @@ export const Layout: FC<{
       '& > div:not(:last-child)': divide && {
         margin: column ? `0 0 20px 0` : `0 20px 0 0`,
       },
-      [`@media (max-width: ${breakpoint + 50}px)`]: media && {
+      [bp]: media && {
         flexDirection: 'column',
         justifyContent: 'stretch',
         alignItems: center ? 'center' : 'stretch',

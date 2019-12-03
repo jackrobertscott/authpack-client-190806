@@ -21,6 +21,7 @@ export const Pointer: FC<{
       position: 'relative',
       zIndex: 200,
       width: 300,
+      maxWidth: '100%',
       borderRadius: theme.global.radius,
       border: theme.pointer.border,
       boxShadow: theme.pointer.shadow,

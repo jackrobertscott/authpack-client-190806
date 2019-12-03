@@ -1,4 +1,4 @@
-import { createElement as create, FC, ReactNode } from 'react'
+import { createElement as create, FC, ReactNode, useState } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../hooks/useTheme'
 import { Icon } from './Icon'
@@ -18,6 +18,7 @@ export const Control: FC<{
       all: 'unset',
       display: 'flex',
       flexDirection: 'column',
+      position: 'relative',
       width: '100%',
       color: theme.input.label,
     }),
@@ -71,6 +72,8 @@ const Alert: FC<{
   prefix?: string
   error: Error
 }> = ({ icon = 'flag', prefix, error }) => {
+  const bp = `@media (max-width: ${525 + 50}px)`
+  const [open, openChange] = useState<boolean>(false)
   return create('div', {
     className: css({
       all: 'unset',
@@ -80,12 +83,22 @@ const Alert: FC<{
       '&:hover > .alert': {
         opacity: 1,
       },
+      [bp]: {
+        position: 'initial',
+      },
     }),
     children: [
-      create(Icon, {
+      create('div', {
         key: 'icon',
-        icon,
-        prefix,
+        onClick: () => openChange(!open),
+        className: css({
+          padding: 5,
+          margin: -5,
+        }),
+        children: create(Icon, {
+          icon,
+          prefix,
+        }),
       }),
       create('div', {
         key: 'pointer',
@@ -98,7 +111,13 @@ const Alert: FC<{
           right: -10,
           transform: 'translateX(100%)',
           pointerEvents: 'none',
-          opacity: 0,
+          opacity: open ? 1 : 0,
+          [bp]: {
+            top: -10,
+            right: 0,
+            left: 0,
+            transform: 'translateY(-100%)',
+          },
         }).concat(' alert'),
         children: create(Pointer, {
           icon,

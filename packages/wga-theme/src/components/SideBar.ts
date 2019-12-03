@@ -95,6 +95,7 @@ export const SideBar: FC<{
           display: 'flex',
           flexDirection: 'column',
           flexGrow: 1,
+          flexShrink: 0,
         }),
         children: [
           create('div', {
