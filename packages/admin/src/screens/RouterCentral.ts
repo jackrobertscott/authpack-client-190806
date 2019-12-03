@@ -59,16 +59,16 @@ export const RouterCentral: FC = () => {
               ),
           },
           {
-            icon: 'magic',
-            label: 'Feature',
-            helper: 'Request a new feature',
+            icon: 'bug',
+            label: 'Bug',
+            helper: 'Report an problem',
             click: () =>
               window.open('https://github.com/jackrobertscott/authpack/issues'),
           },
           {
-            icon: 'bug',
-            label: 'Bug',
-            helper: 'Report an problem',
+            icon: 'magic',
+            label: 'Feedback',
+            helper: 'Request a new feature',
             click: () =>
               window.open('https://github.com/jackrobertscott/authpack/issues'),
           },

@@ -128,7 +128,6 @@ export const LoginUser: FC = () => {
               create(Button, {
                 key: 'submit',
                 label: 'Login',
-
                 loading: gqlLoginUser.loading || gqlLoginUserOauth.loading,
                 disabled: !schema.valid,
                 click: schema.submit,

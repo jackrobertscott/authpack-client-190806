@@ -51,7 +51,7 @@ export const RemoveUser: FC<{
           }),
           create(Button, {
             key: 'submit',
-            label: 'Update',
+            label: 'Remove',
             disabled: !schema.valid,
             click: () => confirmChange(true),
           }),
