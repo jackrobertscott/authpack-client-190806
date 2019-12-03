@@ -36,7 +36,12 @@ export const RouterManagerCluster: FC<{
           add: () => router.change('/create'),
         }),
       },
-      { key: '/create', children: create(CreateCluster) },
+      {
+        key: '/create',
+        children: create(CreateCluster, {
+          change: () => router.change('/inspect'),
+        }),
+      },
       {
         key: '/payment',
         children: create(UpdatePayment, {

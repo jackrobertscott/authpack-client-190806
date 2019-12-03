@@ -48,9 +48,7 @@ export const UpdatePayment: FC<{
               },
             })
             .then(({ cluster }) => {
-              UniversalStore.update({
-                subscribed: cluster.subscribed,
-              })
+              UniversalStore.update({ subscribed: cluster.subscribed })
               toaster.add({
                 icon: 'credit-card',
                 label: 'Success',

@@ -22,9 +22,7 @@ export const RemovePayment: FC<{
         gqlRemovePayment
           .fetch({ id: universal.cluster_id })
           .then(({ cluster }) => {
-            UniversalStore.update({
-              subscribed: cluster.subscribed,
-            })
+            UniversalStore.update({ subscribed: cluster.subscribed })
             if (change) change(cluster.id)
           }),
     }),

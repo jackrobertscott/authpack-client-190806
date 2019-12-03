@@ -20,7 +20,7 @@ export const CreateCluster: FC<{
     schema: SchemaCreateCluster,
     submit: input => {
       gqlCreateCluster.fetch({ input }).then(({ cluster }) => {
-        UniversalStore.update({ cluster_id: cluster.id })
+        UniversalStore.recreate({ cluster_id: cluster.id })
         if (change) change(cluster.id)
       })
     },

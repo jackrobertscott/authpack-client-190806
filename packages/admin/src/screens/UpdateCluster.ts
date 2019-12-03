@@ -26,9 +26,7 @@ export const UpdateCluster: FC<{
         .fetch({ input, id: universal.cluster_id })
         .then(({ cluster }) => {
           if (change) change(cluster.id)
-          UniversalStore.update({
-            cluster_name: cluster.name,
-          })
+          UniversalStore.update({ cluster_name: cluster.name })
         })
     },
   })
