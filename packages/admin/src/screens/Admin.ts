@@ -23,11 +23,11 @@ export const Admin: FC = () => {
         ? create(Focus, {
             icon: 'unlock',
             label: 'Welcome',
-            helper: 'User and Team API and Dashboard',
+            helper: 'Get started with Authpack login system',
             children: create(Button, {
               key: 'login',
               icon: 'bolt',
-              label: 'Get Started',
+              label: 'Continue',
               click: () => wga.show(),
             }),
           })
