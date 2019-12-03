@@ -1,7 +1,7 @@
 {
   "name": "wga-theme",
   "private": false,
-  "version": "0.4.8",
+  "version": "0.4.9",
   "description": "Theme for Authpack.",
   "license": "MIT",
   "main": "lib/index.js",
