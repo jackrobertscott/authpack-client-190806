@@ -1,6 +1,6 @@
 # 🏇 Depreciated: Authpack API
 
-> User and team management for your app
+> Simple user and team management API for your app
 
 Helper methods which may be used to access the Authpack API using GraphQL.
 

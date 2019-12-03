@@ -1,6 +1,6 @@
 {
   "short_name": "Authpack",
-  "name": "User and team management for your app",
+  "name": "Simple user and team management API for your app",
   "icons": [
     {
       "src": "favicon.ico",

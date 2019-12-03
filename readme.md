@@ -1,6 +1,6 @@
 # 🏇 Authpack
 
-> User and team management for your app
+> Simple user and team management API for your app
 
 This repository contains example code to help you get started with Authpack.
 
