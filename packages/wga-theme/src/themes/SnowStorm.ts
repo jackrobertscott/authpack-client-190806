@@ -146,7 +146,7 @@ export const SnowStorm: ITheme = {
     helper: slate(60),
     background: slate(100),
     backgroundHover: slate(97.5),
-    border: `1px solid ${slate(92.5)}`,
+    border: `1px solid ${slate(87.5)}`,
     shadow: `0 0 13px -3px ${slate(80, 0.5)}`,
   },
   poster: {
