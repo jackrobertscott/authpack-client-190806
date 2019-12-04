@@ -101,7 +101,7 @@ export const UpdateProvider: FC<{
                 children: create(InputString, {
                   value: schema.value('redirect_uri'),
                   change: schema.change('redirect_uri'),
-                  placeholder: 'https://oauth.v1.authpack.io',
+                  placeholder: 'https://gadgets.v1.authpack.io',
                 }),
               }),
             ],
