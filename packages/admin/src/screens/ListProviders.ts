@@ -55,7 +55,7 @@ export const ListProviders: FC = () => {
         id: idcurrent,
         visible: build,
         change: id => {
-          variablesChange({ ...variables })
+          queryListProviders.current(variables)
           if (id) {
             idcurrentChange(id)
           } else {

@@ -18,7 +18,7 @@ export const ListTeams: FC = () => {
   })
   const queryListTeams = useRef(drip(1000, gqlListTeams.fetch))
   useEffect(() => {
-    if (variables) queryListTeams.current(variables)
+    if (variables.options.limit) queryListTeams.current(variables)
     // eslint-disable-next-line
   }, [variables])
   const list =
@@ -57,7 +57,7 @@ export const ListTeams: FC = () => {
         id: idcurrent,
         visible: build,
         change: id => {
-          variablesChange({ ...variables })
+          queryListTeams.current(variables)
           if (id) {
             idcurrentChange(id)
           } else {

@@ -46,7 +46,7 @@ export const ListCredentials: FC<{ user_id?: string }> = ({ user_id }) => {
         id: idcurrent,
         visible: build,
         change: id => {
-          variablesChange({ ...variables })
+          queryListCredentials.current(variables)
           if (id) {
             idcurrentChange(id)
           } else {

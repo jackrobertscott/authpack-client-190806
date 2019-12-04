@@ -59,7 +59,7 @@ export const ListMemberships: FC<{
         user_id,
         team_id,
         change: id => {
-          variablesChange({ ...variables })
+          queryListMemberships.current(variables)
           if (id) {
             idcurrentChange(id)
           } else {

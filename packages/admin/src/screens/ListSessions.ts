@@ -45,7 +45,7 @@ export const ListSessions: FC<{ user_id?: string }> = ({ user_id }) => {
         id: idcurrent,
         visible: build,
         change: id => {
-          variablesChange({ ...variables })
+          queryListSessions.current(variables)
           if (id) {
             idcurrentChange(id)
           } else {

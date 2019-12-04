@@ -56,7 +56,7 @@ export const ListPermissions: FC = () => {
         id: idcurrent,
         visible: build,
         change: id => {
-          variablesChange({ ...variables })
+          queryListPermissions.current(variables)
           if (id) {
             idcurrentChange(id)
           } else {
