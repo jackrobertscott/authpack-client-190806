@@ -36,7 +36,7 @@ export const RemoveMembership: FC<{
             key: 'cancel',
             icon: 'arrow-alt-circle-left',
             prefix: 'far',
-            label: 'Remove',
+            label: 'Cancel',
             click: close,
             minor: true,
           }),

@@ -43,7 +43,7 @@ export const UpdateMembership: FC<{
         key: 'snippet',
         icon: 'arrow-alt-circle-left',
         prefix: 'far',
-        label: 'Back',
+        label: 'See Members',
         click: close,
       }),
       create(Layout, {
