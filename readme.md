@@ -22,7 +22,9 @@
 ## Table of Contents
 
 - [Gadgets](#gadgets)
-- [API](#api)
+- [Usage](#usage)
+- [Security](#security)
+- [Links](#links)
 
 ## Gadgets
 
