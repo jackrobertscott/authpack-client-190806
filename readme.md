@@ -42,7 +42,7 @@ Using ES6 imports.
 import * as Authpack from 'wga-plugin'
 
 export default const authpack = new Authpack.Gadgets({
-  key: 'AUTHPACK_CLIENT_KEY',
+  key: 'wga-client-key-...',
 })
 ```
 
@@ -52,7 +52,7 @@ Using ES5 require.
 const Authpack = require('authpack')
 
 module.exports.authpack = new Authpack.Gadgets({
-  key: 'AUTHPACK_CLIENT_KEY',
+  key: 'wga-client-key-...',
 })
 ```
 
@@ -62,7 +62,7 @@ To enable teams, pass the following options.
 
 ```ts
 const authpack = new Authpack.Gadgets({
-  key: 'AUTHPACK_CLIENT_KEY',
+  key: 'wga-client-key-...',
   enable_teams: true,
   prompt_teams: true,
 })
