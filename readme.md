@@ -41,17 +41,7 @@ Using ES6 imports.
 ```ts
 import * as Authpack from 'wga-plugin'
 
-export default const authpack = new Authpack.Gadgets({
-  key: 'wga-client-key-...',
-})
-```
-
-Using ES5 require.
-
-```js
-const Authpack = require('wga-plugin')
-
-module.exports.authpack = new Authpack.Gadgets({
+export const authpack = new Authpack.Gadgets({
   key: 'wga-client-key-...',
 })
 ```
@@ -70,6 +60,48 @@ const authpack = new Authpack.Gadgets({
 
 - `enable_teams` [boolean]: will enable the teams tab once the user has authenticated.
 - `prompt_teams` [boolean]: will prompt the user to create a team once authenticated.
+
+## Usage
+
+The Authpack gadgets store a single state object. It stores the current user, team, session, permissions, bearer token etc. As the user interacts with the gadgets, this state object will be mutated. You may listen to this state object and update your app accordingly.
+
+**Listen** to gadgets state.
+
+```ts
+authpack.listen((state) => {
+  if (state.ready) {
+    if (state.user) {
+      console.log(`User email: ${state.user.email}`)
+    } else {
+      console.log(`No user is currently authenticated`)
+    }
+  }
+})
+```
+
+**Show** the gadgets.
+
+```ts
+authpack.show()
+```
+
+**Hide** the gadgets.
+
+```ts
+authpack.hide()
+```
+
+**Logout** the user manually.
+
+```ts
+authpack.exit()
+```
+
+**Get** the current state object.
+
+```ts
+authpack.current()
+```
 
 ## Security
 

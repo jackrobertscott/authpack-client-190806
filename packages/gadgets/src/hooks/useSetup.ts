@@ -9,6 +9,7 @@ export const useSetup = () => {
   const settings = useSettings()
   const gqlGetCluster = useGetCluster()
   const gqlGetSession = useGetSession()
+  const gqlLogoutUser = useLogoutUser()
   useEffect(() => {
     if (settings.client) {
       gqlGetCluster.fetch().then(({ cluster }) => {
@@ -80,7 +81,9 @@ export const useSetup = () => {
           SettingsStore.update({ open: false })
           break
         case 'plugin:exit':
-          SettingsStore.update({ bearer: undefined })
+          gqlLogoutUser
+            .fetch()
+            .finally(() => SettingsStore.update({ bearer: undefined }))
           break
         default:
           throw new Error(`Failed to process radio message: ${name}`)
@@ -163,6 +166,20 @@ const useGetSession = createUseServer<{
           tag
           description
         }
+      }
+    }
+  `,
+})
+
+const useLogoutUser = createUseServer<{
+  session: {
+    id: string
+  }
+}>({
+  query: `
+    mutation LogoutUserClient {
+      session: LogoutUserClient {
+        id
       }
     }
   `,
