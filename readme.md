@@ -49,7 +49,7 @@ export default const authpack = new Authpack.Gadgets({
 Using ES5 require.
 
 ```js
-const Authpack = require('authpack')
+const Authpack = require('wga-plugin')
 
 module.exports.authpack = new Authpack.Gadgets({
   key: 'wga-client-key-...',

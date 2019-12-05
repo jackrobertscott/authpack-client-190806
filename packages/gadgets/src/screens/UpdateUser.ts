@@ -98,7 +98,6 @@ const useGetUser = createUseServer<{
     name_given: string
     name_family: string
     username: string
-    email: string
   }
 }>({
   query: `
@@ -107,7 +106,6 @@ const useGetUser = createUseServer<{
         name_given
         name_family
         username
-        email
       }
     }
   `,
