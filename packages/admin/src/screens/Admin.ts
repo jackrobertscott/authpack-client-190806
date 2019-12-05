@@ -23,7 +23,7 @@ export const Admin: FC = () => {
         ? create(Focus, {
             icon: 'unlock',
             label: 'Welcome',
-            helper: 'Supercharge your login with Authpack',
+            helper: 'Supercharge your app with Authpack',
             children: create(Button, {
               key: 'login',
               icon: 'bolt',
