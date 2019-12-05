@@ -63,7 +63,9 @@ const authpack = new Authpack.Gadgets({
 
 ## Usage
 
-The Authpack gadgets store a single state object. It stores the current user, team, session, permissions, bearer token etc. As the user interacts with the gadgets, this state object will be mutated. You may listen to this state object and update your app accordingly.
+The Authpack gadgets store a single state object. This object will contain the current user, team, session, permissions, bearer token etc. As the user interacts with the gadgets, this state object will be mutated. You may listen to this state object and update your app accordingly.
+
+---
 
 **Listen** to gadgets state.
 
