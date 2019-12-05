@@ -58,8 +58,8 @@ const authpack = new Authpack.Gadgets({
 })
 ```
 
-- `enable_teams` [boolean]: will enable the teams tab once the user has authenticated.
-- `prompt_teams` [boolean]: will prompt the user to create a team once authenticated.
+- `enable_teams` `boolean`: will enable the teams tab once the user has authenticated.
+- `prompt_teams` `boolean`: will prompt the user to create a team once authenticated.
 
 ## Usage
 
