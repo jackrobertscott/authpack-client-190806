@@ -1,8 +1,6 @@
-# 🏇 Authpack
+![Authpack](https://raw.githubusercontent.com/jackrobertscott/authpack/master/docs/assets/banner.png)
 
-> Simple user and team management API for your app
-
-This repository contains example code to help you get started with Authpack.
+![npm](https://img.shields.io/npm/v/wga-plugin) ![language](https://img.shields.io/badge/language-typescript-blue) ![build](https://img.shields.io/badge/build-passing-green)
 
 ## Table of Contents
 
