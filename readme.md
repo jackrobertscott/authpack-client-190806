@@ -118,6 +118,6 @@ Authpack providers you with 2 different authentication keys; a client key and a 
 
 ## Links
 
-- [React Tutorial](https://github.com/jackrobertscott/authpack/tree/master/docs/react.md)
+- [Authpack with React](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/react.md)
 - [Authpack Website](https://authpack.io)
 - [Authpack Dashboard](https://v1.authpack.io)
