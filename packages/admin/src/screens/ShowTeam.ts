@@ -10,7 +10,7 @@ export const ShowTeam: FC<{
   useEffect(() => {
     gqlGetTeam.fetch({ id })
     // eslint-disable-next-line
-  }, [])
+  }, [id])
   const team = gqlGetTeam.data ? gqlGetTeam.data.team : undefined
   return create(Page, {
     title: 'Inspect',

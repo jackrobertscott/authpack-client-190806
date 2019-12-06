@@ -10,7 +10,7 @@ export const ShowMembership: FC<{
   useEffect(() => {
     gqlGetMembership.fetch({ id })
     // eslint-disable-next-line
-  }, [])
+  }, [id])
   const membership = gqlGetMembership.data
     ? gqlGetMembership.data.membership
     : undefined

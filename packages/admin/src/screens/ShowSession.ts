@@ -10,7 +10,7 @@ export const ShowSession: FC<{
   useEffect(() => {
     gqlGetSession.fetch({ id })
     // eslint-disable-next-line
-  }, [])
+  }, [id])
   const session = gqlGetSession.data ? gqlGetSession.data.session : undefined
   return create(Page, {
     title: 'Inspect',

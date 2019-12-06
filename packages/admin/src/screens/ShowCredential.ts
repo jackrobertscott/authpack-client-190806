@@ -10,7 +10,7 @@ export const ShowCredential: FC<{
   useEffect(() => {
     gqlGetCredential.fetch({ id })
     // eslint-disable-next-line
-  }, [])
+  }, [id])
   const credential = gqlGetCredential.data
     ? gqlGetCredential.data.credential
     : undefined
@@ -29,22 +29,35 @@ export const ShowCredential: FC<{
               value: credential.id,
             }),
             create(Snippet, {
-              key: 'disabled',
-              icon: 'battery-three-quarters',
-              label: 'Disabled',
-              value: String(credential.disabled),
-            }),
-            create(Snippet, {
               key: 'user',
               icon: 'user',
               label: 'User',
               value: !credential.user ? '...' : credential.user.summary,
             }),
             create(Snippet, {
-              key: 'team',
-              icon: 'users',
-              label: 'Team',
-              value: !credential.team ? '...' : credential.team.summary,
+              key: 'provider',
+              icon: 'share-alt',
+              label: 'Provider',
+              value: !credential.provider ? '...' : credential.provider.name,
+            }),
+            create(Snippet, {
+              key: 'scopes',
+              icon: 'user-shield',
+              label: 'Scopes',
+              value:
+                (credential.scopes && credential.scopes.join(', ')) || '...',
+            }),
+            create(Snippet, {
+              key: 'tags',
+              icon: 'at',
+              label: 'Token',
+              value: credential.access_token,
+            }),
+            create(Snippet, {
+              key: 'id_external',
+              icon: 'at',
+              label: 'External Id',
+              value: credential.id_external,
             }),
             create(Snippet, {
               key: 'created',
@@ -70,16 +83,18 @@ export const ShowCredential: FC<{
 const useGetCredential = createUseServer<{
   credential: {
     id: string
-    disabled: boolean
     created: string
     updated: string
+    access_token: string
+    id_external: string
+    scopes: string[]
     user: {
       id: string
       summary: string
     }
-    team?: {
+    provider?: {
       id: string
-      summary: string
+      name: string
     }
   }
 }>({
@@ -89,12 +104,14 @@ const useGetCredential = createUseServer<{
         id
         created
         updated
-        disabled
-        user {
+        access_token
+        id_external
+        scopes
+        provider {
           id
-          summary
+          name
         }
-        team {
+        user {
           id
           summary
         }

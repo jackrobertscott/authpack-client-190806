@@ -10,7 +10,7 @@ export const ShowCluster: FC<{ keys: () => void }> = ({ keys }) => {
   useEffect(() => {
     gqlGetCluster.fetch({ id: universal.cluster_id })
     // eslint-disable-next-line
-  }, [])
+  }, [universal.cluster_id])
   const cluster = gqlGetCluster.data ? gqlGetCluster.data.cluster : undefined
   return create(Page, {
     title: 'Inspect',

@@ -10,7 +10,7 @@ export const ShowPermission: FC<{
   useEffect(() => {
     gqlGetPermission.fetch({ id })
     // eslint-disable-next-line
-  }, [])
+  }, [id])
   const permission = gqlGetPermission.data
     ? gqlGetPermission.data.permission
     : undefined

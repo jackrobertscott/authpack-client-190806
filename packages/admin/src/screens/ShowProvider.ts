@@ -10,7 +10,7 @@ export const ShowProvider: FC<{
   useEffect(() => {
     gqlGetProvider.fetch({ id })
     // eslint-disable-next-line
-  }, [])
+  }, [id])
   const provider = gqlGetProvider.data
     ? gqlGetProvider.data.provider
     : undefined

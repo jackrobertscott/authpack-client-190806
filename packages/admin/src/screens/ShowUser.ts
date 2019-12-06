@@ -10,7 +10,7 @@ export const ShowUser: FC<{
   useEffect(() => {
     gqlGetUser.fetch({ id })
     // eslint-disable-next-line
-  }, [])
+  }, [id])
   const user = gqlGetUser.data ? gqlGetUser.data.user : undefined
   return create(Page, {
     title: 'Inspect',
