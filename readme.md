@@ -17,7 +17,7 @@
 - 👩‍👧‍👦 Teams and access permissions built in.
 - ✌️ More coming soon...
 
-2019 Release.
+**Note:** we have open sourced our client side code in this repository. Feel free to explore our code and learn how we built Authpack's dashboard and gadgets. The Authpack API and backend logic will remain private and is not included in this repository.
 
 ## Table of Contents
 
@@ -37,8 +37,6 @@ npm i --save wga-plugin
 ```
 
 ### Setup
-
-Using ES6 imports.
 
 ```ts
 import * as Authpack from 'wga-plugin'
@@ -120,5 +118,6 @@ Authpack providers you with 2 different authentication keys; a client key and a 
 
 ## Links
 
+- [React Tutorial](https://github.com/jackrobertscott/authpack/tree/master/docs/react.md)
 - [Authpack Website](https://authpack.io)
 - [Authpack Dashboard](https://v1.authpack.io)
