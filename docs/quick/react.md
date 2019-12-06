@@ -1,6 +1,6 @@
 # React Quickstart
 
-> 🔒 [Authpack](https://authpack.io)
+> [Authpack](https://authpack.io) 🔒 A complete user and team management system
 
 We designed Authpack to be as simple as possible to integrate with React.
 
