@@ -30,13 +30,13 @@
 
 Authpack Gadgets provide you with a premade login system.
 
-**Install**
+### Install
 
 ```shell
 npm i --save wga-plugin
 ```
 
-**Setup**
+### Setup
 
 Using ES6 imports.
 
@@ -48,7 +48,7 @@ export const authpack = new Authpack.Gadgets({
 })
 ```
 
-**Teams**
+### Teams
 
 To enable teams, pass the following options.
 
@@ -67,7 +67,7 @@ const authpack = new Authpack.Gadgets({
 
 The Authpack gadgets store a single state object. This object will contain the current user, team, session, permissions, bearer token etc. As the user interacts with the gadgets, this state object will be mutated. You may listen to this state object and update your app accordingly.
 
----
+### Methods
 
 **Listen** to gadgets state.
 
@@ -111,7 +111,7 @@ authpack.current()
 
 Authpack providers you with 2 different authentication keys; a client key and a secret key. The client key is safe to use on the browser. **Never use your secret key on the browser.** We also highly recommend you store both your client and secret keys as an environment variables.
 
-**Resources**
+### Resources
 
 - [dotenv - Node.js Environment Variables](https://www.npmjs.com/package/dotenv)
 - [Zeit Now - Environment Variables and Secrets](https://zeit.co/docs/v2/environment-variables-and-secrets)
