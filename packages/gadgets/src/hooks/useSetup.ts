@@ -68,8 +68,7 @@ export const useSetup = () => {
   useEffect(() => {
     return radio.listen(({ name, payload = {} }) => {
       if (!name.startsWith('plugin:')) return
-      if (config.debug)
-        console.log(`Gadget received: ${name} @ ${Date.now() % 86400000}`)
+      if (config.debug) console.log(`${name} @ ${Date.now() % 86400000}`)
       switch (name) {
         case 'plugin:current':
           SettingsStore.update({ ...payload })

@@ -89,8 +89,7 @@ export class Gadgets {
     })
     radio.listen(({ name, payload = {} }) => {
       if (!name.startsWith('gadgets:')) return
-      if (this.debug)
-        console.log(`Plugin received: ${name} @ ${Date.now() % 86400000}`)
+      if (this.debug) console.log(`${name} @ ${Date.now() % 86400000}`)
       switch (name) {
         case 'gadgets:loaded':
           this.sendMessage('plugin:current', this.store.current)
