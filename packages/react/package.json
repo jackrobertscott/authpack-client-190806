@@ -1,7 +1,7 @@
 {
   "name": "@authpack/react",
   "private": false,
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "Authpack's official integration for React",
   "license": "MIT",
   "main": "lib/index.js",
