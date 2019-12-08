@@ -1,17 +1,17 @@
 import { useEffect } from 'react'
-import { useGadgets } from './useGadgets'
+import { useAuthpack } from '@authpack/react'
 import { createUseServer } from './useServer'
 import { UniversalStore } from '../utils/universal'
 import { useUniversal } from './useUniversal'
 
 export const useSetup = () => {
-  const gadgets = useGadgets()
+  const authpack = useAuthpack()
   const universal = useUniversal()
   const gqlGetCluster = useGetCluster()
   useEffect(() => {
-    if (gadgets.bearer && gadgets.team && gadgets.team.id) {
+    if (authpack.bearer && authpack.team && authpack.team.id) {
       gqlGetCluster
-        .fetch({ id: gadgets.bearer && universal.cluster_id })
+        .fetch({ id: authpack.bearer && universal.cluster_id })
         .then(({ cluster }) => {
           UniversalStore.recreate({
             ready: true,
@@ -34,7 +34,7 @@ export const useSetup = () => {
       })
     }
     // eslint-disable-next-line
-  }, [universal.cluster_id, gadgets.bearer, gadgets.team && gadgets.team.id])
+  }, [universal.cluster_id, authpack.bearer, authpack.team && authpack.team.id])
 }
 
 const useGetCluster = createUseServer<{

@@ -1,5 +1,6 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useState, useEffect, useRef } from 'react'
+import { useAuthpack } from '@authpack/react'
 import {
   useSchema,
   Layout,
@@ -17,7 +18,6 @@ import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 import { UniversalStore } from '../utils/universal'
 import { stripe } from '../utils/stripe'
-import { useGadgets } from '../hooks/useGadgets'
 
 export const UpdatePayment: FC<{
   change?: (id?: string) => void
@@ -25,7 +25,7 @@ export const UpdatePayment: FC<{
 }> = ({ change, cancel }) => {
   const toaster = useToaster()
   const universal = useUniversal()
-  const gadgets = useGadgets()
+  const authpack = useAuthpack()
   const mounted = useMounted()
   const stripeCard = useRef<any>()
   const [loading, loadingChange] = useState<boolean>(false)
@@ -68,10 +68,10 @@ export const UpdatePayment: FC<{
     },
   })
   useEffect(() => {
-    if (gadgets.user)
+    if (authpack.user)
       schema.set({
-        name: gadgets.user.name,
-        email: gadgets.user.email,
+        name: authpack.user.name,
+        email: authpack.user.email,
       })
     // eslint-disable-next-line
   }, [])

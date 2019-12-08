@@ -1,13 +1,14 @@
 import { createElement as create, FC, Fragment, useState } from 'react'
 import { IconBar, useRouter } from '@authpack/theme'
-import { authpack } from '../utils/authpack'
 import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterManagerCluster } from './RouterManagerCluster'
 import { Explorer } from './Explorer'
 import { useUniversal } from '../hooks/useUniversal'
 import { usePreferences } from '../utils/preferences'
+import { useGadgets } from '@authpack/react'
 
 export const RouterCentral: FC = () => {
+  const gadgets = useGadgets()
   const universal = useUniversal()
   const preferences = usePreferences()
   const [apper, apperChange] = useState<boolean>(false)
@@ -99,7 +100,7 @@ export const RouterCentral: FC = () => {
       {
         icon: 'user-circle',
         label: 'Account',
-        click: () => authpack.show(),
+        click: () => gadgets.show(),
       },
     ],
   })
