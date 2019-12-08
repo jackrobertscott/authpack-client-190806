@@ -1,5 +1,5 @@
 import { createElement as create, FC } from 'react'
-import { useLocalRouter, Modal, IconBar } from 'wga-theme'
+import { useLocalRouter, Modal, IconBar } from '@authpack/theme'
 import { CreateTeam } from './CreateTeam'
 import { UpdateTeam } from './UpdateTeam'
 import { RemoveTeam } from './RemoveTeam'

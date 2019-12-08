@@ -1,5 +1,5 @@
 import { createElement as create, FC } from 'react'
-import { Focus, Button } from 'wga-theme'
+import { Focus, Button } from '@authpack/theme'
 
 export const NoKey: FC = () => {
   return create(Focus, {

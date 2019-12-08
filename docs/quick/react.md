@@ -11,13 +11,13 @@ Start by installing the gadgets like normal.
 ### Install
 
 ```shell
-npm i --save wga-plugin
+npm i --save @authpack/sdk
 ```
 
 ### Setup
 
 ```ts
-import * as Authpack from 'wga-plugin'
+import * as Authpack from '@authpack/sdk'
 
 export const authpack = new Authpack.Gadgets({
   key: 'wga-client-key-...',

@@ -7,7 +7,7 @@ import {
   InputString,
   Button,
   Page,
-} from 'wga-theme'
+} from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 import { ReconcileUserPassword } from './ReconcileUserPassword'

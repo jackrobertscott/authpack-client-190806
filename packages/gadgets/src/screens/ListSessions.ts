@@ -1,5 +1,5 @@
 import { createElement as create, FC, useEffect } from 'react'
-import { Snippet, Page } from 'wga-theme'
+import { Snippet, Page } from '@authpack/theme'
 import { format, differenceInMinutes } from 'date-fns'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'

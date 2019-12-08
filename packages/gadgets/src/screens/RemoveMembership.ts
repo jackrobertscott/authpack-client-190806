@@ -1,6 +1,6 @@
 import { createElement as create, FC, useState } from 'react'
 import { createUseServer } from '../hooks/useServer'
-import { Button, Layout, Focus, Poster, Page } from 'wga-theme'
+import { Button, Layout, Focus, Poster, Page } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 
 export const RemoveMembership: FC<{

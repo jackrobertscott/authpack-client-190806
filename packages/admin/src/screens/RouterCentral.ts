@@ -1,5 +1,5 @@
 import { createElement as create, FC, Fragment, useState } from 'react'
-import { IconBar, useRouter } from 'wga-theme'
+import { IconBar, useRouter } from '@authpack/theme'
 import { authpack } from '../utils/authpack'
 import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterManagerCluster } from './RouterManagerCluster'

@@ -7,7 +7,7 @@ import {
   InputString,
   Button,
   Poster,
-} from 'wga-theme'
+} from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { SettingsStore } from '../utils/settings'
 

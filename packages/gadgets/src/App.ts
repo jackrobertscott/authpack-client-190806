@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { Root, Toaster } from 'wga-theme'
+import { Root, Toaster } from '@authpack/theme'
 import { RouterCentral } from './screens/RouterCentral'
 import { SettingsStore } from './utils/settings'
 import { Settings } from './contexts/Settings'

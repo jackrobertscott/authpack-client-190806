@@ -8,7 +8,7 @@ import {
   InputString,
   Page,
   InputStringArray,
-} from 'wga-theme'
+} from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { UniversalStore } from '../utils/universal'
 

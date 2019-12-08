@@ -5,7 +5,7 @@ import {
   Fragment,
   useState,
 } from 'react'
-import { Layout, Poster, Snippet, Page } from 'wga-theme'
+import { Layout, Poster, Snippet, Page } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 import { useOauthCode } from '../hooks/useOauthCode'

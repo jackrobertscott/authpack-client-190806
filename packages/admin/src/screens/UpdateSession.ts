@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 import { createElement as create, FC, useEffect } from 'react'
-import { useSchema, Layout, Control, InputBoolean, Page } from 'wga-theme'
+import { useSchema, Layout, Control, InputBoolean, Page } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
 export const UpdateSession: FC<{

@@ -1,5 +1,5 @@
 import { createElement as create, FC } from 'react'
-import { Page } from 'wga-theme'
+import { Page } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { ConfirmRemove } from '../templates/ConfirmRemove'
 

@@ -1,5 +1,5 @@
 import { createElement as create, FC } from 'react'
-import { Focus, Button, useMedia, Root, Toaster } from 'wga-theme'
+import { Focus, Button, useMedia, Root, Toaster } from '@authpack/theme'
 import { useGadgets } from '../hooks/useGadgets'
 import { useUniversal } from '../hooks/useUniversal'
 import { useSetup } from '../hooks/useSetup'

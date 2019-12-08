@@ -1,5 +1,5 @@
 import { createElement as create, FC } from 'react'
-import { useRouter, SideBar } from 'wga-theme'
+import { useRouter, SideBar } from '@authpack/theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { ListUsers } from './ListUsers'
 import { ListProviders } from './ListProviders'

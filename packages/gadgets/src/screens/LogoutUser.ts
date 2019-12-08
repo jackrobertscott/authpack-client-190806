@@ -1,5 +1,5 @@
 import { createElement as create, FC } from 'react'
-import { Layout, Button, Focus } from 'wga-theme'
+import { Layout, Button, Focus } from '@authpack/theme'
 import { SettingsStore } from '../utils/settings'
 import { createUseServer } from '../hooks/useServer'
 

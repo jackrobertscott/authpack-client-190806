@@ -1,5 +1,5 @@
 import { createElement as create, FC, useState, Fragment } from 'react'
-import { useLocalRouter, IconBar } from 'wga-theme'
+import { useLocalRouter, IconBar } from '@authpack/theme'
 import { LoginUser } from './LoginUser'
 import { SignupUser } from './SignupUser'
 import { RecoverUserPassword } from './RecoverUserPassword'

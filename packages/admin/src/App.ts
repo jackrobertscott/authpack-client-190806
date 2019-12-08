@@ -1,5 +1,5 @@
 import { createElement as create, FC } from 'react'
-import { Spinner } from 'wga-theme'
+import { Spinner } from '@authpack/theme'
 import { Universal } from './utils/universal'
 import { ErrorBoundary } from './screens/ErrorBoundary'
 import { Admin } from './screens/Admin'

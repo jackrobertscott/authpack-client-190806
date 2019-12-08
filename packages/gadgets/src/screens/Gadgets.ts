@@ -1,5 +1,5 @@
 import { createElement as create, FC, useRef } from 'react'
-import { Modal } from 'wga-theme'
+import { Modal } from '@authpack/theme'
 import { useSetup } from '../hooks/useSetup'
 import { useSettings } from '../hooks/useSettings'
 import { RouterModalUnauthed } from './RouterModalUnauthed'

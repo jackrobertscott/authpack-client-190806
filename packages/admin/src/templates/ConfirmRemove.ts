@@ -1,5 +1,5 @@
 import { createElement as create, FC, useState, Fragment } from 'react'
-import { Poster, Layout, Button, Focus } from 'wga-theme'
+import { Poster, Layout, Button, Focus } from '@authpack/theme'
 
 export const ConfirmRemove: FC<{
   helper: string

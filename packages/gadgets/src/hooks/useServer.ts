@@ -1,4 +1,4 @@
-import { useGQL } from 'wga-theme'
+import { useGQL } from '@authpack/theme'
 import { useSettings } from './useSettings'
 import { config } from '../config'
 

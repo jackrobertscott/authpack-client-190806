@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react'
-import { useToaster, useMounted } from 'wga-theme'
+import { useToaster, useMounted } from '@authpack/theme'
 
 export const useOauthCode = () => {
   const toaster = useToaster()

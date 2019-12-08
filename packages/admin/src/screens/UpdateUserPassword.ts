@@ -9,7 +9,7 @@ import {
   Poster,
   Page,
   useToaster,
-} from 'wga-theme'
+} from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
 export const UpdateUserPassword: FC<{

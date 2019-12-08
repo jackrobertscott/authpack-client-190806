@@ -1,4 +1,4 @@
-import { useGQL } from 'wga-theme'
+import { useGQL } from '@authpack/theme'
 import { useUniversal } from './useUniversal'
 import { authpack } from '../utils/authpack'
 import { config } from '../config'

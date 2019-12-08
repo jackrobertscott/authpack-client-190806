@@ -1,5 +1,5 @@
 import { createElement as create, FC, useEffect } from 'react'
-import { Layout, Poster, Snippet, Page } from 'wga-theme'
+import { Layout, Poster, Snippet, Page } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { useUniversal } from '../hooks/useUniversal'
 import { UniversalStore } from '../utils/universal'

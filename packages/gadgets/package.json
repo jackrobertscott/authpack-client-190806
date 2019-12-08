@@ -11,6 +11,7 @@
     "ship": "now --prod"
   },
   "dependencies": {
+    "@authpack/theme": "^0.5.0",
     "@fortawesome/fontawesome-free": "^5.11.2",
     "@sentry/browser": "^5.7.1",
     "@types/jest": "^24.0.23",
@@ -26,7 +27,6 @@
     "react-dom": "^16.11.0",
     "react-scripts": "^3.2.0",
     "typescript": "^3.7.2",
-    "wga-theme": "^0.4.10",
     "yup": "^0.27.0"
   },
   "eslintConfig": {

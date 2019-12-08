@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { IGadgets } from 'wga-plugin'
+import { IGadgets } from '@authpack/sdk'
 import { authpack } from '../utils/authpack'
 
 export const useGadgets = () => {

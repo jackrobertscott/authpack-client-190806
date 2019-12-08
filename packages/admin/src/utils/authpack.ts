@@ -1,4 +1,4 @@
-import * as Authpack from 'wga-plugin'
+import * as Authpack from '@authpack/sdk'
 import { config } from '../config'
 
 export const authpack = new Authpack.Gadgets({

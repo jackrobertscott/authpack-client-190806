@@ -1,6 +1,6 @@
 import { createElement as create, FC } from 'react'
 import { css } from 'emotion'
-import { graphql, useTheme } from 'wga-theme'
+import { graphql, useTheme } from '@authpack/theme'
 import GraphiQL from 'graphiql'
 import 'graphiql/graphiql.css'
 import { config } from '../config'

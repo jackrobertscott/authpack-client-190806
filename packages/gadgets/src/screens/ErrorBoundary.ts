@@ -1,5 +1,5 @@
 import { createElement as create, Component, ReactNode } from 'react'
-import { Focus, Button } from 'wga-theme'
+import { Focus, Button } from '@authpack/theme'
 import * as Sentry from '@sentry/browser'
 
 export class ErrorBoundary extends Component<

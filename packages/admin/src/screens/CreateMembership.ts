@@ -10,7 +10,7 @@ import {
   Page,
   InputSelectMany,
   InputBoolean,
-} from 'wga-theme'
+} from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
 export const CreateMembership: FC<{

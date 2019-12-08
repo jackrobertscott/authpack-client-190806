@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 import { createElement as create, FC } from 'react'
-import { Layout, useSchema, InputString, Button, Focus } from 'wga-theme'
+import { Layout, useSchema, InputString, Button, Focus } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { SettingsStore } from '../utils/settings'
 

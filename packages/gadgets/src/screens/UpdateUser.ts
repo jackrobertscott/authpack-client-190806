@@ -7,7 +7,7 @@ import {
   InputString,
   testAlphanumeric,
   Page,
-} from 'wga-theme'
+} from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 

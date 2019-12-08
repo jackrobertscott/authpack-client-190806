@@ -1,5 +1,5 @@
 import { createElement as create, FC } from 'react'
-import { useLocalRouter, IconBar } from 'wga-theme'
+import { useLocalRouter, IconBar } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { RouterSideBarUser } from './RouterSideBarUser'
 import { RouterSideBarTeam } from './RouterSideBarTeam'

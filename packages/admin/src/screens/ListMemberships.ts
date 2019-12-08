@@ -1,6 +1,6 @@
 import faker from 'faker'
 import { createElement as create, FC, useState, useEffect, useRef } from 'react'
-import { Page, Table, Empty, drip } from 'wga-theme'
+import { Page, Table, Empty, drip } from '@authpack/theme'
 import { format } from 'date-fns'
 import { RouterManagerMembership } from './RouterManagerMembership'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'

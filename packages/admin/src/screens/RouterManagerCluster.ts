@@ -1,5 +1,5 @@
 import { createElement as create, FC } from 'react'
-import { useLocalRouter, Modal, IconBar } from 'wga-theme'
+import { useLocalRouter, Modal, IconBar } from '@authpack/theme'
 import { UpdateCluster } from './UpdateCluster'
 import { UpdatePayment } from './UpdatePayment'
 import { useUniversal } from '../hooks/useUniversal'

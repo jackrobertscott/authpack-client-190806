@@ -8,7 +8,7 @@ import {
   InputStringArray,
   Poster,
   Page,
-} from 'wga-theme'
+} from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
 export const UpdateProvider: FC<{

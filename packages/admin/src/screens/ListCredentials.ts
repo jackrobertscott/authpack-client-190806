@@ -1,6 +1,6 @@
 import faker from 'faker'
 import { createElement as create, FC, useState, useEffect, useRef } from 'react'
-import { Page, Table, Empty, drip } from 'wga-theme'
+import { Page, Table, Empty, drip } from '@authpack/theme'
 import { format } from 'date-fns'
 import { RouterManagerCredential } from './RouterManagerCredential'
 import { createUseServer } from '../hooks/useServer'
