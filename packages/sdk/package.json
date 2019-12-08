@@ -1,7 +1,7 @@
 {
   "name": "@authpack/sdk",
   "private": false,
-  "version": "0.5.2",
+  "version": "0.7.0",
   "description": "Plugin for Authpack.",
   "license": "MIT",
   "main": "lib/index.js",
