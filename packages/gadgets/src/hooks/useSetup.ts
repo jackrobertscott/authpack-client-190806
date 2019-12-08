@@ -81,9 +81,10 @@ export const useSetup = () => {
           SettingsStore.update({ open: false })
           break
         case 'plugin:exit':
-          gqlLogoutUser
-            .fetch()
-            .finally(() => SettingsStore.update({ bearer: undefined }))
+          if (settings.bearer)
+            gqlLogoutUser
+              .fetch()
+              .finally(() => SettingsStore.update({ bearer: undefined }))
           break
         default:
           throw new Error(`Failed to process radio message: ${name}`)
