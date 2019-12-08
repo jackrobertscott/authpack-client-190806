@@ -7,5 +7,5 @@ export interface ISpinnerContext {
 
 export const SpinnerContext = createContext<ISpinnerContext>({
   loading: false,
-  begin: () => () => console.error('Spinner not configured'),
+  begin: () => () => {},
 })

@@ -1,5 +1,6 @@
 import { createElement as create, FC, useEffect } from 'react'
 import { Loading } from './Loading'
+import { Root, Toaster } from '@authpack/theme'
 
 export const Oauth: FC<{
   code: string
@@ -9,7 +10,11 @@ export const Oauth: FC<{
     localStorage.setItem('authpack.code', data)
     setTimeout(() => localStorage.removeItem('authpack.code'), 60 * 1000)
   }, [code])
-  return create(Loading, {
-    key: 'Window will close automatically',
+  return create(Root, {
+    children: create(Toaster, {
+      children: create(Loading, {
+        key: 'Window will close automatically',
+      }),
+    }),
   })
 }

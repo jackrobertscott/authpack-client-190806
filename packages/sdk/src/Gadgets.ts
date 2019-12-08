@@ -39,12 +39,12 @@ export class Gadgets {
     this.queue = []
     this.loaded = false
     this.options = options
-    this.store = this.createStore()
-    this.iframe = this.createIFrame()
-    this.radio = this.createRadio(this.iframe)
     if (typeof id === 'string') this.id = id
     if (typeof url === 'string') this.url = url
     if (typeof debug === 'boolean') this.debug = debug
+    this.store = this.createStore()
+    this.iframe = this.createIFrame()
+    this.radio = this.createRadio(this.iframe)
   }
   /**
    * Public...

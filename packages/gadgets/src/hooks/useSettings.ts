@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import { Settings } from '../contexts/Settings'
+import { SettingsContext } from '../contexts/Settings'
 
 export const useSettings = () => {
-  return useContext(Settings)
+  return useContext(SettingsContext)
 }

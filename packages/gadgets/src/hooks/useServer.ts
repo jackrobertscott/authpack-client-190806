@@ -14,7 +14,6 @@ export const useServer = <T>(options: {
   query: string
 }) => {
   const settings = useSettings()
-  console.log(settings.client)
   return useGQL<T>({
     ...options,
     url: config.api,
