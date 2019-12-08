@@ -1,5 +1,5 @@
+import * as Authpack from '@authpack/react'
 import { createElement as create, FC } from 'react'
-import { Authpack } from '@authpack/react'
 import { Spinner, Toaster } from '@authpack/theme'
 import { Universal } from './utils/universal'
 import { ErrorBoundary } from './screens/ErrorBoundary'
@@ -13,7 +13,7 @@ export const App: FC = () => {
       children: create(Universal, {
         children: create(Toaster, {
           children: create(Spinner, {
-            children: create(Authpack, {
+            children: create(Authpack.Provider, {
               children: create(Admin),
               value: {
                 debug: true,

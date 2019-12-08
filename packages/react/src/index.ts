@@ -17,7 +17,7 @@ const AuthpackContext = createContext<{
 }>({})
 
 let instance: Gadgets
-export const Authpack: FC<{
+export const Provider: FC<{
   children: ReactNode
   value: IConstructor
 }> = ({ children, value }) => {
