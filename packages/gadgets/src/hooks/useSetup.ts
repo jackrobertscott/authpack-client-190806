@@ -90,7 +90,7 @@ export const useSetup = () => {
       }
     })
     // eslint-disable-next-line
-  }, [])
+  }, [settings.client, settings.bearer])
 }
 
 const useGetCluster = createUseServer<{

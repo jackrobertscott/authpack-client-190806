@@ -28,7 +28,6 @@ export const LoginUser: FC = () => {
     schema: SchemaLoginUser,
     submit: value => {
       gqlLoginUser.fetch(value).then(({ session }) => {
-        schema.change('password')('')
         SettingsStore.update({
           bearer: `Bearer ${session.token}`,
         })
@@ -48,7 +47,6 @@ export const LoginUser: FC = () => {
         })
         .then(({ session }) => {
           SettingsStore.update({
-            open: false,
             bearer: `Bearer ${session.token}`,
           })
         })
