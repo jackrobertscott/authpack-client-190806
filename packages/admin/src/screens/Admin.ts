@@ -5,7 +5,7 @@ import { useUniversal } from '../hooks/useUniversal'
 import { useSetup } from '../hooks/useSetup'
 import { RouterCentral } from './RouterCentral'
 import { Loading } from './Loading'
-import { wga } from '../utils/wga'
+import { authpack } from '../utils/authpack'
 import { usePreferences } from '../utils/preferences'
 
 export const Admin: FC = () => {
@@ -28,7 +28,7 @@ export const Admin: FC = () => {
               key: 'login',
               icon: 'bolt',
               label: 'Start',
-              click: () => wga.show(),
+              click: () => authpack.show(),
             }),
           })
         : !Boolean(gadgets.team)
@@ -39,7 +39,7 @@ export const Admin: FC = () => {
             children: create(Button, {
               key: 'team',
               label: 'Continue',
-              click: () => wga.show(),
+              click: () => authpack.show(),
             }),
           })
         : !Boolean(universal.cluster_id && universal.cluster_key_client)
@@ -51,7 +51,7 @@ export const Admin: FC = () => {
             helper: 'Use a wider screen to see dashboard',
             children: create(Button, {
               label: 'Okay',
-              click: () => wga.show(),
+              click: () => authpack.show(),
             }),
           })
         : create(RouterCentral, {

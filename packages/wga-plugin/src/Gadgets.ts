@@ -3,46 +3,53 @@ import { Radio, KeyStore } from 'events-and-things'
 import { createGadgetsStore, IGadgets } from './store'
 
 export interface IOptions {
-  id?: string
-  key: string
   enable_teams?: boolean
   prompt_teams?: boolean
 }
 
 export class Gadgets {
   private options: IOptions
+  private store: KeyStore<IGadgets>
   private iframe: HTMLIFrameElement
   private queue: Array<{ name: string; payload?: any }>
   private radio: Radio<{ name: string; payload?: any }>
-  private store: KeyStore<IGadgets>
   private loaded: boolean
+  private id: string = 'authpack'
+  private key: string
   private url: string = 'https://gadgets.v1.authpack.io'
   private debug: boolean = false
-  constructor(options: {
-    id?: string
+  constructor({
+    key,
+    id,
+    url,
+    debug,
+    options = {},
+  }: {
     key: string
-    enable_teams?: boolean
-    prompt_teams?: boolean
+    id?: string
     url?: string
     debug?: boolean
+    options?: IOptions
   }) {
-    if (!options.key || !options.key.includes('wga-client-key')) {
+    if (!key || !key.includes('wga-client-key')) {
       const message = 'Please provide your client key i.e. "wga-client-key-..."'
       throw new Error(message)
     }
+    this.key = key
     this.queue = []
     this.loaded = false
     this.options = options
-    this.store = this.createStore(this.options)
-    this.iframe = this.createIFrame(this.options)
+    this.store = this.createStore()
+    this.iframe = this.createIFrame()
     this.radio = this.createRadio(this.iframe)
-    if (typeof options.url === 'string') this.url = options.url
-    if (typeof options.debug === 'boolean') this.debug = options.debug
+    if (typeof id === 'string') this.id = id
+    if (typeof url === 'string') this.url = url
+    if (typeof debug === 'boolean') this.debug = debug
   }
   /**
    * Public...
    */
-  public get current() {
+  public current() {
     return this.store.current
   }
   public show() {
@@ -66,29 +73,27 @@ export class Gadgets {
   /**
    * Private...
    */
-  private createStore(options: IOptions) {
+  private createStore() {
     const store = createGadgetsStore()
     store.update({
-      bearer: localStorage.getItem('wga.bearer') || undefined,
-      client: options.key,
+      bearer: localStorage.getItem('authpack.bearer') || undefined,
+      client: this.key,
       options: {
-        enable_teams:
-          options.enable_teams || store.current.options.enable_teams,
-        prompt_teams:
-          options.prompt_teams || store.current.options.prompt_teams,
+        ...store.current.options,
+        ...this.options,
       },
     })
     store.listen(data => {
-      if (data.bearer) localStorage.setItem('wga.bearer', data.bearer)
-      else localStorage.removeItem('wga.bearer')
+      if (data.bearer) localStorage.setItem('authpack.bearer', data.bearer)
+      else localStorage.removeItem('authpack.bearer')
       if (this.iframe)
         this.iframe.style.pointerEvents = data.open ? 'all' : 'none'
     })
     return store
   }
-  private createIFrame(options: IOptions) {
+  private createIFrame() {
     const iframe = createIFrame(this.url)
-    if (options.id) iframe.id = options.id
+    if (this.id) iframe.id = this.id
     document.body.appendChild(iframe)
     return iframe
   }
@@ -97,7 +102,7 @@ export class Gadgets {
       name: string
       payload?: any
     }>(iframe.contentWindow, {
-      key: 'wga',
+      key: 'authpack',
       origin: this.url,
     })
     radio.listen(({ name, payload = {} }) => {

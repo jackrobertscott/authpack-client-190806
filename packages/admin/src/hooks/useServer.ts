@@ -1,6 +1,6 @@
 import { useGQL } from 'wga-theme'
 import { useUniversal } from './useUniversal'
-import { wga } from '../utils/wga'
+import { authpack } from '../utils/authpack'
 import { config } from '../config'
 
 export const createUseServer = <T>(options: {
@@ -15,12 +15,13 @@ export const useServer = <T>(options: {
   query: string
 }) => {
   const universal = useUniversal()
+  const state = authpack.current()
   return useGQL<T>({
     ...options,
     url: config.api,
     authorization: [
       universal.cluster_key_client || config.gadgets_key_client,
-      wga.current.bearer,
+      state.bearer,
     ]
       .filter(Boolean)
       .join(','),

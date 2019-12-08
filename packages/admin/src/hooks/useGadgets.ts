@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { IGadgets } from 'wga-plugin'
-import { wga } from '../utils/wga'
+import { authpack } from '../utils/authpack'
 
 export const useGadgets = () => {
-  const [state, stateChange] = useState<IGadgets>(wga.current)
+  const [state, stateChange] = useState<IGadgets>(authpack.current())
   useEffect(() => {
-    return wga.listen(data => stateChange(data))
+    return authpack.listen(data => stateChange(data))
     // eslint-disable-next-line
   }, [])
   return state

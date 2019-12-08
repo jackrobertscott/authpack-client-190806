@@ -1,6 +1,6 @@
 import { createElement as create, FC, Fragment, useState } from 'react'
 import { IconBar, useRouter } from 'wga-theme'
-import { wga } from '../utils/wga'
+import { authpack } from '../utils/authpack'
 import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterManagerCluster } from './RouterManagerCluster'
 import { Explorer } from './Explorer'
@@ -99,7 +99,7 @@ export const RouterCentral: FC = () => {
       {
         icon: 'user-circle',
         label: 'Account',
-        click: () => wga.show(),
+        click: () => authpack.show(),
       },
     ],
   })

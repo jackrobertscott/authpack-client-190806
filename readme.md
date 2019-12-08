@@ -102,7 +102,7 @@ authpack.exit()
 **Get** the current state object.
 
 ```ts
-console.log(authpack.current)
+authpack.current()
 ```
 
 ## Security

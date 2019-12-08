@@ -5,7 +5,7 @@ import GraphiQL from 'graphiql'
 import 'graphiql/graphiql.css'
 import { config } from '../config'
 import { useUniversal } from '../hooks/useUniversal'
-import { wga } from '../utils/wga'
+import { authpack } from '../utils/authpack'
 
 const startingQuery = `
 query First10Users {
@@ -28,10 +28,11 @@ export const Explorer: FC = () => {
       defaultQuery: startingQuery,
       fetcher: async (graphQLParams: any) => {
         try {
+          const state = authpack.current()
           const data = await graphql<any>({
             ...graphQLParams,
             url: config.api,
-            authorization: [universal.cluster_key_client, wga.current.bearer]
+            authorization: [universal.cluster_key_client, state.bearer]
               .filter(Boolean)
               .join(','),
           })

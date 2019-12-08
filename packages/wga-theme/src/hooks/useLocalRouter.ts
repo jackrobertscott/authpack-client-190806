@@ -15,7 +15,7 @@ export const useLocalRouter = ({
   }>
 }) => {
   const mounted = useMounted()
-  const local = name && localStorage.getItem(`wga.router.${name}`)
+  const local = name && localStorage.getItem(`authpack.router.${name}`)
   const parsedOptions = options.filter(Boolean)
   const index = parsedOptions.findIndex(option => {
     return option.key === (local || nomatch)
@@ -35,7 +35,7 @@ export const useLocalRouter = ({
     if (!mounted.current) return
     if (!current) return start ? keyChange(start) : undefined
     if (!current.nosave && name)
-      localStorage.setItem(`wga.router.${name}`, current.key)
+      localStorage.setItem(`authpack.router.${name}`, current.key)
   }, [key, parsedOptions.map(option => option.key).join()])
   return useMemo(() => {
     return {
