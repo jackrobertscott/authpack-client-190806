@@ -13,7 +13,9 @@ export const RouterModalOnauthed: FC<{
   const nomatch =
     !settings.user || !settings.user.verified
       ? '/verify'
-      : settings.enable_teams && settings.prompt_teams && !settings.team
+      : settings.options.enable_teams &&
+        settings.options.prompt_teams &&
+        !settings.team
       ? '/teams'
       : '/users'
   const router = useLocalRouter({
@@ -54,7 +56,7 @@ export const RouterModalOnauthed: FC<{
         focused: router.current && router.current.key.startsWith('/users'),
         click: () => router.change('/users'),
       },
-      settings.enable_teams && {
+      settings.options.enable_teams && {
         icon: 'users',
         label: 'Team',
         focused: router.current && router.current.key.startsWith('/teams'),

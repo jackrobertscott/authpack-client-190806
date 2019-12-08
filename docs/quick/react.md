@@ -33,7 +33,7 @@ As good practise, we will create a context which our components can access. Reac
 - Prevents app from refreshing unnecessarily down dom tree.
 
 ```ts
-export const AuthpackContext = React.createContext(authpack.current())
+export const AuthpackContext = React.createContext(authpack.current)
 ```
 
 ## Step 3
@@ -42,7 +42,7 @@ Create a component which will give the Authpack data to the context we just crea
 
 ```tsx
 export const AuthpackProvider = () => {
-  const [value, valueChange] = React.useState(authpack.current())
+  const [value, valueChange] = React.useState(authpack.current)
   React.useEffect(() => {
     return authpack.listen(value => valueChange(value))
   }, [authpack])

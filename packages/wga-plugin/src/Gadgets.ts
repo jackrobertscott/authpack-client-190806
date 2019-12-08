@@ -1,6 +1,5 @@
 import { createIFrame } from './utils/iframe'
 import { Radio, KeyStore } from 'events-and-things'
-import { config } from './config'
 import { createGadgetsStore, IGadgets } from './store'
 
 export interface IOptions {
@@ -17,11 +16,15 @@ export class Gadgets {
   private radio: Radio<{ name: string; payload?: any }>
   private store: KeyStore<IGadgets>
   private loaded: boolean
+  private url: string = 'https://gadgets.v1.authpack.io'
+  private debug: boolean = false
   constructor(options: {
     id?: string
     key: string
     enable_teams?: boolean
     prompt_teams?: boolean
+    url?: string
+    debug?: boolean
   }) {
     if (!options.key || !options.key.includes('wga-client-key')) {
       const message = 'Please provide your client key i.e. "wga-client-key-..."'
@@ -33,6 +36,8 @@ export class Gadgets {
     this.store = this.createStore(this.options)
     this.iframe = this.createIFrame(this.options)
     this.radio = this.createRadio(this.iframe)
+    if (typeof options.url === 'string') this.url = options.url
+    if (typeof options.debug === 'boolean') this.debug = options.debug
   }
   /**
    * Public...
@@ -66,8 +71,12 @@ export class Gadgets {
     store.update({
       bearer: localStorage.getItem('wga.bearer') || undefined,
       client: options.key,
-      enable_teams: options.enable_teams,
-      prompt_teams: options.prompt_teams,
+      options: {
+        enable_teams:
+          options.enable_teams || store.current.options.enable_teams,
+        prompt_teams:
+          options.prompt_teams || store.current.options.prompt_teams,
+      },
     })
     store.listen(data => {
       if (data.bearer) localStorage.setItem('wga.bearer', data.bearer)
@@ -78,7 +87,7 @@ export class Gadgets {
     return store
   }
   private createIFrame(options: IOptions) {
-    const iframe = createIFrame()
+    const iframe = createIFrame(this.url)
     if (options.id) iframe.id = options.id
     document.body.appendChild(iframe)
     return iframe
@@ -89,11 +98,11 @@ export class Gadgets {
       payload?: any
     }>(iframe.contentWindow, {
       key: 'wga',
-      origin: config.urls.plugin,
+      origin: this.url,
     })
     radio.listen(({ name, payload = {} }) => {
       if (!name.startsWith('gadgets:')) return
-      if (config.debug)
+      if (this.debug)
         console.log(`Plugin received: ${name} @ ${Date.now() % 86400000}`)
       switch (name) {
         case 'gadgets:loaded':

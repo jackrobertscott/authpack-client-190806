@@ -1,8 +1,6 @@
-import { config } from '../config'
-
-export const createIFrame = () => {
+export const createIFrame = (url: string) => {
   const iframe = document.createElement('iframe')
-  iframe.src = config.urls.plugin
+  iframe.src = url
   iframe.width = '100%'
   iframe.height = '100%'
   iframe.style.border = 'none'
