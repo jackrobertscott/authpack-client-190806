@@ -12,7 +12,7 @@ export const ShowClusterKeys: FC<{ back: () => void }> = ({ back }) => {
   }, [universal.cluster_id])
   const cluster = gqlGetCluster.data ? gqlGetCluster.data.cluster : undefined
   return create(Page, {
-    title: 'Inspect',
+    title: 'API Keys',
     subtitle: 'Cluster',
     corner: {
       icon: 'undo-alt',
