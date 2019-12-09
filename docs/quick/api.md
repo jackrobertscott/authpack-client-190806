@@ -48,11 +48,11 @@ The following is required to make a request to the Authpack API.
   - `variables?: object` the variables required by query.
   - `operationName?: string` optional operation name to identify GraphQL operation.
 
-**Note: ** these values are shared on both the server and client, the exception being that the client key is used on the browser and secret key on the server.
+**Note:** these values are shared on both the server and client, the exception being that the client key is used on the browser and secret key on the server.
 
 ## Authorization
 
-Every request to the API must contain either a client *or* secret key; both can be found in the **settings** area of the Authpack app.
+Every request to the API must contain either a client *or* secret key which can be found in **settings**.
 
 - `wga-client-key-...` can be used in the browser.
 - `wga-secret-key-...` *never* use in browser - store securely on your server.
