@@ -1,96 +1,97 @@
-# React Quickstart
+# React Quick Start
 
 > [Authpack](https://authpack.io) 🔒 A complete user and team management system
 
-We designed Authpack to be as simple as possible to integrate with React.
+Simple integration with client side React apps.
 
-## Step 1
+## 1. Install
 
-Start by installing the gadgets like normal.
-
-### Install
+Install using npm or yarn.
 
 ```shell
-npm i --save @authpack/sdk
+npm i --save @authpack/react
 ```
 
-### Setup
+Under the hood, the `@authpack/react` library contains the `@authpack/sdk` and adds some helpers for using with React.
 
-```ts
-import * as Authpack from '@authpack/sdk'
+## 2. Authpack Provider
 
-export const authpack = new Authpack.Gadgets({
-  key: 'wga-client-key-...',
-})
-```
-
-## Step 2
-
-As good practise, we will create a context which our components can access. React context provides the following benifits.
-
-- Only need to create one authpack listener.
-- Keeps all our data in sync.
-- Prevents app from refreshing unnecessarily down dom tree.
-
-```ts
-export const AuthpackContext = React.createContext(authpack.current())
-```
-
-## Step 3
-
-Create a component which will give the Authpack data to the context we just created.
+Wrap your app component in the `Authpack.Provider` component.
 
 ```tsx
-export const AuthpackProvider = () => {
-  const [value, valueChange] = React.useState(authpack.current())
-  React.useEffect(() => {
-    return authpack.listen(value => valueChange(value))
-  }, [authpack])
-  return <AuthpackContext.Provider value={value} />
-}
-```
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
+import * as Authpack from '@authpack/react'
+import { App } from './components/App'
 
-Then wrap you root app component in the `AuthpackProvider` component.
-
-```tsx
-const Root = () => {
+const Root: React.FC = () => {
   return (
-    <AuthpackProvider>
+    <Authpack.Provider value={{ key: 'wga-client-key-...' }}>
       <App />
-    </AuthpackProvider>
+    </Authpack.Provider>
+  )
+}
+
+ReactDOM.render(<Root />, document.getElementById('root'))
+```
+
+The `value` property will be used to construct the Authpack [gadgets](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/sdk.md).
+
+## 3. Authpack Gadgets
+
+Access the your Authpack gadgets via the `useGadgets()` hook.
+
+```tsx
+import * as React from 'react'
+import { useGadgets } from '@authpack/react'
+
+export const Login: React.FC = () => {
+  const gadgets = useGadgets()
+  return (
+    <div>
+      <h1>Login</h1>
+      <p>Please sign in to your account.</p>
+      <button onClick={() => gadgets.show()}>Login</button>
+    </div>
   )
 }
 ```
 
-## Step 4
+You can see the full set of gadgets methods [here](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/sdk.md).
 
-Create a hook which allow you to listen to the authpack state.
+## 4. Authpack State
 
-```ts
-export const useAuthpack = () => {
-  return React.useContext(AuthpackContext)
-}
-```
-
-## Step 5
-
-Use the Authpack hook where ever you wish to access the authpack state.
+Use the `useAuthpack()` hook where ever you wish to access the authpack state.
 
 ```tsx
-const App = () => {
-  const { ready, user } = useAuthpack()
+import * as React from 'react'
+import { useGadgets, useAuthpack } from '@authpack/react'
+import { Login } from './Login'
+
+export const App: React.FC = () => {
+  const gadgets = useGadgets()
+  const { ready, bearer, user } = useAuthpack()
   if (!ready) {
-    return <div>Loading</div>
+    return <div>Loading...</div>
   }
-  if (!user) {
-    return <div onClick={() => authpack.show()}>Login</div>
+  if (!bearer) {
+    return <Login />
   }
-  return <div>Current user email: {user.email}</div>
+  return (
+    <div>
+      <h1>Welcome {user.email}</h1>
+      <p>Your bearer token is: {bearer}</p>
+      <button onClick={() => gadgets.show()}>View Account</button>
+      <button onClick={() => gadgets.exit()}>Logout</button>
+    </div>
+  )
 }
 ```
+
+The authpack full authpack state can be seen [here](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/state.md).
 
 ## Links
 
-- [Quickstart](https://github.com/jackrobertscott/authpack)
-- [Authpack Website](https://authpack.io)
-- [Authpack Dashboard](https://v1.authpack.io)
+- [Home](https://github.com/jackrobertscott/authpack)
+- [Website](https://authpack.io)
+- [Dashboard](https://v1.authpack.io)

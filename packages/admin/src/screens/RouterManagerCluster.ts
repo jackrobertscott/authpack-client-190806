@@ -76,6 +76,12 @@ export const RouterManagerCluster: FC<{
           click: () => router.change('/inspect'),
         },
         {
+          icon: 'key',
+          label: 'API Keys',
+          focused: !!router.current && router.current.key === '/key',
+          click: () => router.change('/key'),
+        },
+        {
           icon: 'sliders-h',
           label: 'Update',
           focused: !!router.current && router.current.key === '/update',

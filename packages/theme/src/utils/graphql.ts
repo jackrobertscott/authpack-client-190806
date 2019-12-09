@@ -41,7 +41,7 @@ export const graphql = async <T>({
       })
     }
     return Promise.reject({
-      code: 503,
+      code: 500,
       status: 'Error',
       message: 'We were unable to process the request',
       icon: 'bug',
