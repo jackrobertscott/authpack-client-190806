@@ -26,7 +26,7 @@ export const Provider: FC<{
   if (!instance) instance = new Gadgets(value)
   const gadgets = useRef(instance)
   const [current, currentChange] = useState<IGadgets>(gadgets.current.current())
-  useEffect(() => gadgets.current.listen(currentChange), [])
+  useEffect(() => gadgets.current.listen(update => currentChange(update)), [])
   const data = useMemo(() => {
     return {
       gadgets: gadgets.current,

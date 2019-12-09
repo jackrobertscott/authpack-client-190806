@@ -23,6 +23,7 @@ import Vue from 'vue'
 import * as Authpack from '@authpack/vue'
 import App from './App.vue'
 
+Vue.config.productionTip = false
 Vue.use(Authpack.Plugin, { key: "wga-client-key-..." })
 
 new Vue({
@@ -46,12 +47,12 @@ Access the your Authpack gadgets via the `$authpack.gadgets` variable.
 </template>
 <script>
 export default {
-  name: "login",
+  name: 'login',
   methods: {
     login() {
-      this.$authpack.gadgets.show();
-    },
-  },
+      this.$authpack.gadgets.show()
+    }
+  }
 }
 </script>
 ```
@@ -68,6 +69,9 @@ Use the `$authpack.current` variable where ever you wish to access the authpack 
     <div v-if="!$authpack.current.ready">
       <p>Loading</p>
     </div>
+    <div v-else-if="!$authpack.current.user">
+      <Login/>
+    </div>
     <div v-else>
       <h1>Welcome {{ $authpack.current.user.email }}</h1>
       <p>Your bearer token is: {{ $authpack.current.bearer }}</p>
@@ -77,16 +81,20 @@ Use the `$authpack.current` variable where ever you wish to access the authpack 
   </div>
 </template>
 <script>
+import Login from './components/Login.vue'
 export default {
-  name: "app",
+  name: 'app',
+  components: {
+    Login
+  },
   methods: {
     viewAccount() {
-      this.$authpack.gadgets.viewAccount();
+      this.$authpack.gadgets.show()
     },
     logout() {
-      this.$authpack.gadgets.logout();
-    },
-  },
+      this.$authpack.gadgets.logout()
+    }
+  }
 }
 </script>
 ```

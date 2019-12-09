@@ -24,9 +24,10 @@ import * as ReactDOM from 'react-dom'
 import * as Authpack from '@authpack/react'
 import { App } from './components/App'
 
-const Root: React.FC = () => {
+const Root = () => {
   return (
-    <Authpack.Provider value={{ key: 'wga-client-key-...' }}>
+    <Authpack.Provider
+      value={{ key: 'wga-client-key-0ef07c825de20cc322d839819' }}>
       <App />
     </Authpack.Provider>
   )
@@ -45,7 +46,7 @@ Access the your Authpack gadgets via the `useGadgets()` hook.
 import * as React from 'react'
 import { useGadgets } from '@authpack/react'
 
-export const Login: React.FC = () => {
+export const Login = () => {
   const gadgets = useGadgets()
   return (
     <div>
@@ -68,13 +69,13 @@ import * as React from 'react'
 import { useGadgets, useAuthpack } from '@authpack/react'
 import { Login } from './Login'
 
-export const App: React.FC = () => {
+export const App = () => {
   const gadgets = useGadgets()
   const { ready, bearer, user } = useAuthpack()
   if (!ready) {
     return <div>Loading...</div>
   }
-  if (!bearer) {
+  if (!user) {
     return <Login />
   }
   return (

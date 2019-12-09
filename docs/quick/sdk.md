@@ -56,23 +56,7 @@ Authpack stores the current gadget state inside a single object, making it easy 
 
 The state includes the current user, team, bearer token, ready state and more. See the full state object [here](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/state.md).
 
-### 4.2. Listen
-
-Add an event listener to observe the gadgets state as it updates.
-
-```ts
-gadgets.listen((state) => {
-  if (state.ready) {
-    if (state.user) {
-      console.log(`User email: ${state.user.email}`)
-    } else {
-      console.log(`No user is currently authenticated`)
-    }
-  }
-})
-```
-
-### 4.3. Show
+### 4.2. Show
 
 Show the gadgets as modal over the top of your app.
 
@@ -80,7 +64,7 @@ Show the gadgets as modal over the top of your app.
 gadgets.show()
 ```
 
-### 4.4. Hide
+### 4.3. Hide
 
 Manually hide the gadgets from the current user.
 
@@ -89,6 +73,22 @@ gadgets.hide()
 ```
 
 **Note:** the user also has the ability to close the gadgets themselves.
+
+### 4.4. Listen
+
+Add an event listener to observe the gadgets state as it updates.
+
+```ts
+gadgets.listen((state) => {
+  if (state.ready) {
+    if (state.user) {
+      console.log(state.user)
+    } else if (!state.open) {
+      gadgets.show()
+    }
+  }
+})
+```
 
 ### 4.5. Logout
 
