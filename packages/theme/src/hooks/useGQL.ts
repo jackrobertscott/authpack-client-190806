@@ -66,11 +66,15 @@ export const useGQL = <T>({
               errorChange(e)
               loadingChange(false)
             }
-            toaster.add({
-              icon: e.icon || 'bell',
-              label: e.status || 'Error',
-              helper: e.message,
-            })
+            if (e.code === 503) {
+              console.warn('Error connecting to server')
+            } else {
+              toaster.add({
+                icon: e.icon || 'bell',
+                label: e.status || 'Error',
+                helper: e.message,
+              })
+            }
             return Promise.reject(e)
           })
           .finally(() => stop && stop())

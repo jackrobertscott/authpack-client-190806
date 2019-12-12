@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@authpack/react": "^0.5.7",
-    "@authpack/theme": "^0.6.2",
+    "@authpack/theme": "^0.6.3",
     "@fortawesome/fontawesome-free": "^5.11.2",
     "@sentry/browser": "^5.7.1",
     "@types/faker": "^4.1.7",

@@ -45,6 +45,7 @@ export const UpdatePayment: FC<{
                 token: token.id,
                 email: value.email,
                 name: value.name,
+                coupon: value.coupon,
               },
             })
             .then(({ cluster }) => {
@@ -91,7 +92,7 @@ export const UpdatePayment: FC<{
           key: 'payment',
           icon: 'bolt',
           label: 'Monthly',
-          helper: '$19 usd per set of 1,000 users',
+          helper: '$9 usd per 1,000 users',
         }),
       create(Layout, {
         key: 'layout',
