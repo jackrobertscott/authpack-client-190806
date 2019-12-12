@@ -7,12 +7,20 @@ import { RouterModalOnauthed } from './RouterModalOnauthed'
 import { SettingsStore } from '../utils/settings'
 import { NoKey } from './NoKey'
 import { Loading } from './Loading'
+import { config } from '../config'
+import { NoPayment } from './NoPayment'
 
 export const Gadgets: FC = () => {
   useSetup()
   const settings = useSettings()
   const close = useRef(() => SettingsStore.update({ open: false }))
   if (!settings.cluster) return null
+  const allowed = settings.cluster.subscribed
+    ? true
+    : settings.domain
+    ? settings.domain.startsWith('http://localhost') ||
+      settings.domain.startsWith(config.admin)
+    : false
   return create(Root, {
     theme: settings.cluster.theme_preference,
     children: create(Modal, {
@@ -24,6 +32,10 @@ export const Gadgets: FC = () => {
         : !settings.client
         ? create(NoKey, {
             key: 'nokey',
+          })
+        : !allowed
+        ? create(NoPayment, {
+            key: 'nopayment',
           })
         : settings.bearer && settings.user
         ? create(RouterModalOnauthed, {

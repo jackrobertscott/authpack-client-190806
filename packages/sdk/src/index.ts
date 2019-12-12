@@ -60,6 +60,7 @@ export class Gadgets {
     store.update({
       bearer: localStorage.getItem('authpack.bearer') || undefined,
       client: this.key,
+      domain: window.location.origin,
       options: {
         ...store.current.options,
         ...this.options,
@@ -118,11 +119,6 @@ export class Gadgets {
   }
 }
 
-export interface IOptions {
-  enable_teams?: boolean
-  prompt_teams?: boolean
-}
-
 export interface IConstructor {
   key: string
   id?: string
@@ -136,6 +132,7 @@ export interface IGadgets {
   ready: boolean
   client?: string
   bearer?: string
+  domain?: string
   options: IOptions
   cluster?: {
     id: string
@@ -168,6 +165,11 @@ export interface IGadgets {
     tag: string
     description?: string
   }>
+}
+
+export interface IOptions {
+  enable_teams?: boolean
+  prompt_teams?: boolean
 }
 
 const createStore = (data: Partial<IGadgets> = {}) => {

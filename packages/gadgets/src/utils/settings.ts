@@ -5,6 +5,8 @@ export type ISettings = {
   ready: boolean
   client?: string
   bearer?: string
+  domain?: string
+  options: IOptions
   cluster?: {
     id: string
     name: string
@@ -36,10 +38,11 @@ export type ISettings = {
     tag: string
     description?: string
   }>
-  options: {
-    enable_teams: boolean
-    prompt_teams: boolean
-  }
+}
+
+export interface IOptions {
+  enable_teams?: boolean
+  prompt_teams?: boolean
 }
 
 export const defaults: ISettings = {

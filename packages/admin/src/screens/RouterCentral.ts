@@ -3,13 +3,11 @@ import { IconBar, useRouter } from '@authpack/theme'
 import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterManagerCluster } from './RouterManagerCluster'
 import { Explorer } from './Explorer'
-import { useUniversal } from '../hooks/useUniversal'
 import { usePreferences } from '../utils/preferences'
 import { useGadgets } from '@authpack/react'
 
 export const RouterCentral: FC = () => {
   const gadgets = useGadgets()
-  const universal = useUniversal()
   const preferences = usePreferences()
   const [apper, apperChange] = useState<boolean>(false)
   const router = useRouter({
@@ -74,13 +72,6 @@ export const RouterCentral: FC = () => {
               window.open('https://github.com/jackrobertscott/authpack/issues'),
           },
         ],
-      },
-      !universal.subscribed && {
-        icon: 'exclamation-circle',
-        label: 'Limited Usage',
-        helper:
-          'Limited to a maximum of 50 users - add payment card to remove all limits',
-        click: () => apperChange(!apper),
       },
       {
         icon: preferences.theme === 'snow_storm' ? 'toggle-off' : 'toggle-on',

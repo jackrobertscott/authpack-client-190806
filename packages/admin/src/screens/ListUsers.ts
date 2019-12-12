@@ -83,7 +83,7 @@ export const ListUsers: FC = () => {
           children: create(Button, {
             key: 'Regular',
             icon: 'book',
-            label: 'See Documents',
+            label: 'Install',
             click: () =>
               window.open(
                 'https://github.com/jackrobertscott/authpack/blob/master/readme.md'
