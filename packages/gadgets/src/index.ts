@@ -1,4 +1,5 @@
 import '@fortawesome/fontawesome-free/css/all.min.css'
+import './index.css'
 import * as Sentry from '@sentry/browser'
 import * as serviceWorker from './serviceWorker'
 import { createElement as element } from 'react'
