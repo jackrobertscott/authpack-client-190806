@@ -1,5 +1,5 @@
 import {
-  createElement as create,
+  createElement as element,
   FC,
   useEffect,
   Fragment,
@@ -37,28 +37,28 @@ export const ListProviders: FC<{
     }
     // eslint-disable-next-line
   }, [oauthCode.code])
-  return create(Page, {
+  return element(Page, {
     title: 'Apps',
     subtitle: settings.cluster && settings.cluster.name,
     children:
       !gqlListProviders.data || !gqlListCredentials.data
         ? null
         : !gqlListProviders.data.providers.length
-        ? create(Poster, {
+        ? element(Poster, {
             icon: 'share-alt',
             label: '3rd Party Logins',
             helper: 'There are no authentication providers currently available',
           })
-        : create(Fragment, {
+        : element(Fragment, {
             children: [
-              create(Layout, {
+              element(Layout, {
                 key: 'layout',
                 column: true,
                 children: gqlListProviders.data.providers.map(provider => {
                   const credential = gqlListCredentials.data!.credentials.find(
                     ({ provider_id }) => provider_id === provider.id
                   )
-                  return create(Snippet, {
+                  return element(Snippet, {
                     key: provider.id,
                     icon: provider.preset,
                     label: provider.name || provider.preset,

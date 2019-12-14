@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useEffect, useState } from 'react'
+import { createElement as element, FC, useEffect, useState } from 'react'
 import {
   useSchema,
   Layout,
@@ -60,15 +60,15 @@ export const SignupUser: FC = () => {
     }
     // eslint-disable-next-line
   }, [oauthCode.code])
-  return create(Page, {
+  return element(Page, {
     title: 'Signup',
     subtitle: settings.cluster && settings.cluster.name,
     children: current
-      ? create(Focus, {
+      ? element(Focus, {
           icon: 'sync-alt',
           label: 'Pending',
           helper: 'Waiting for login with external app',
-          children: create(Button, {
+          children: element(Button, {
             icon: 'times-circle',
             label: 'Cancel',
             click: () => currentChange(undefined),
@@ -78,14 +78,14 @@ export const SignupUser: FC = () => {
       ? null
       : [
           !!gqlListProviders.data.providers.length &&
-            create(Layout, {
+            element(Layout, {
               key: 'oauth',
               column: true,
               padding: true,
               divide: true,
               styled: true,
               children: gqlListProviders.data.providers.map(provider => {
-                return create(Button, {
+                return element(Button, {
                   key: provider.id,
                   icon: provider.preset,
                   label: provider.name || provider.preset,
@@ -98,32 +98,32 @@ export const SignupUser: FC = () => {
                 })
               }),
             }),
-          create(Layout, {
+          element(Layout, {
             key: 'form',
             column: true,
             padding: true,
             divide: true,
             children: [
-              create(Layout, {
+              element(Layout, {
                 key: 'name',
                 divide: true,
                 media: true,
                 children: [
-                  create(Control, {
+                  element(Control, {
                     key: 'name_given',
                     label: 'First Name',
                     error: schema.error('name_given'),
-                    children: create(InputString, {
+                    children: element(InputString, {
                       value: schema.value('name_given'),
                       change: schema.change('name_given'),
                       placeholder: 'Fred',
                     }),
                   }),
-                  create(Control, {
+                  element(Control, {
                     key: 'name_family',
                     label: 'Last Name',
                     error: schema.error('name_family'),
-                    children: create(InputString, {
+                    children: element(InputString, {
                       value: schema.value('name_family'),
                       change: schema.change('name_family'),
                       placeholder: 'Blogs',
@@ -131,39 +131,39 @@ export const SignupUser: FC = () => {
                   }),
                 ],
               }),
-              create(Control, {
+              element(Control, {
                 key: 'username',
                 label: 'Username',
                 helper: 'Claim a unique username',
                 error: schema.error('username'),
-                children: create(InputString, {
+                children: element(InputString, {
                   value: schema.value('username'),
                   change: schema.change('username'),
                   placeholder: 'example_username_123',
                 }),
               }),
-              create(Control, {
+              element(Control, {
                 key: 'email',
                 label: 'Email',
                 error: schema.error('email'),
-                children: create(InputString, {
+                children: element(InputString, {
                   value: schema.value('email'),
                   change: schema.change('email'),
                   placeholder: 'example@email.com',
                 }),
               }),
-              create(Control, {
+              element(Control, {
                 key: 'password',
                 label: 'Password',
                 error: schema.error('password'),
-                children: create(InputString, {
+                children: element(InputString, {
                   value: schema.value('password'),
                   change: schema.change('password'),
                   placeholder: '* * * * * * * *',
                   password: true,
                 }),
               }),
-              create(Button, {
+              element(Button, {
                 key: 'submit',
                 label: 'Submit',
                 loading: gqlSignupUser.loading || gqlSignupUserOauth.loading,

@@ -1,5 +1,5 @@
 import faker from 'faker'
-import { createElement as create, FC, useState, useEffect, useRef } from 'react'
+import { createElement as element, FC, useState, useEffect, useRef } from 'react'
 import { Page, Table, Empty, Button, drip } from '@authpack/theme'
 import { format } from 'date-fns'
 import { RouterManagerPermission } from './RouterManagerPermission'
@@ -26,7 +26,7 @@ export const ListPermissions: FC = () => {
         Boolean(gqlListPermissions.data && !gqlListPermissions.data.permissions)
       ? []
       : FakePermissions
-  return create(Page, {
+  return element(Page, {
     title: 'Permissions',
     subtitle: 'Restrict team member abilities',
     hidden: !gqlListPermissions.data || !gqlListPermissions.data.count,
@@ -38,7 +38,7 @@ export const ListPermissions: FC = () => {
         setTimeout(() => idcurrentChange(undefined), 200) // animation
       },
     },
-    noscroll: create(TemplateSearchBar, {
+    noscroll: element(TemplateSearchBar, {
       count: gqlListPermissions.data && gqlListPermissions.data.count,
       current:
         gqlListPermissions.data && gqlListPermissions.data.permissions.length,
@@ -51,7 +51,7 @@ export const ListPermissions: FC = () => {
       },
     }),
     children: [
-      create(RouterManagerPermission, {
+      element(RouterManagerPermission, {
         key: 'router',
         id: idcurrent,
         visible: build,
@@ -71,12 +71,12 @@ export const ListPermissions: FC = () => {
       }),
       gqlListPermissions.data &&
         !gqlListPermissions.data.count &&
-        create(Empty, {
+        element(Empty, {
           key: 'empty',
           icon: 'user-shield',
           label: 'Permissions',
           helper: 'Create a permission manually or by using the Authpack API',
-          children: create(Button, {
+          children: element(Button, {
             key: 'Regular',
             icon: 'book',
             label: 'Install',
@@ -87,7 +87,7 @@ export const ListPermissions: FC = () => {
           }),
         }),
       gqlListPermissions.data &&
-        create(Table, {
+        element(Table, {
           key: 'table',
           header: [
             { key: 'name', label: 'Name' },

@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import { Focus, Button, useMedia, Root } from '@authpack/theme'
 import { useAuthpack, useGadgets } from '@authpack/react'
 import { useUniversal } from '../hooks/useUniversal'
@@ -14,16 +14,16 @@ export const Admin: FC = () => {
   const universal = useUniversal()
   const preferences = usePreferences()
   const media = useMedia()
-  return create(Root, {
+  return element(Root, {
     theme: preferences.theme,
     children: !Boolean(authpack.ready && universal.ready)
-      ? create(Loading)
+      ? element(Loading)
       : !Boolean(authpack.bearer && authpack.user)
-      ? create(Focus, {
+      ? element(Focus, {
           icon: 'unlock',
           label: 'Welcome',
           helper: 'Supercharge your app with Authpack',
-          children: create(Button, {
+          children: element(Button, {
             key: 'login',
             icon: 'bolt',
             label: 'Start',
@@ -31,29 +31,29 @@ export const Admin: FC = () => {
           }),
         })
       : !Boolean(authpack.team)
-      ? create(Focus, {
+      ? element(Focus, {
           icon: 'users',
           label: 'Team Required',
           helper: 'Please create a team to get started',
-          children: create(Button, {
+          children: element(Button, {
             key: 'team',
             label: 'Continue',
             click: () => gadgets.show(),
           }),
         })
       : !Boolean(universal.cluster_id && universal.cluster_key_client)
-      ? create(Loading)
+      ? element(Loading)
       : media.width < 1120
-      ? create(Focus, {
+      ? element(Focus, {
           icon: 'expand-arrows-alt',
           label: 'Dashboard',
           helper: 'Use a wider screen to see dashboard',
-          children: create(Button, {
+          children: element(Button, {
             label: 'Okay',
             click: () => gadgets.show(),
           }),
         })
-      : create(RouterCentral, {
+      : element(RouterCentral, {
           key: 'router',
         }),
   })

@@ -1,5 +1,5 @@
 import faker from 'faker'
-import { createElement as create, FC, useState, useEffect, useRef } from 'react'
+import { createElement as element, FC, useState, useEffect, useRef } from 'react'
 import { Page, Table, Empty, drip } from '@authpack/theme'
 import { format } from 'date-fns'
 import { RouterManagerMembership } from './RouterManagerMembership'
@@ -28,7 +28,7 @@ export const ListMemberships: FC<{
       : Boolean(gqlListMemberships.data && !gqlListMemberships.data.memberships)
       ? []
       : FakeMemberships
-  return create(Page, {
+  return element(Page, {
     title: 'Memberships',
     subtitle: 'Team',
     hidden: !gqlListMemberships.data || !gqlListMemberships.data.count,
@@ -40,7 +40,7 @@ export const ListMemberships: FC<{
         setTimeout(() => idcurrentChange(undefined), 200) // animation
       },
     },
-    noscroll: create(TemplateSearchBar, {
+    noscroll: element(TemplateSearchBar, {
       count: gqlListMemberships.data && gqlListMemberships.data.count,
       current:
         gqlListMemberships.data && gqlListMemberships.data.memberships.length,
@@ -52,7 +52,7 @@ export const ListMemberships: FC<{
         }),
     }),
     children: [
-      create(RouterManagerMembership, {
+      element(RouterManagerMembership, {
         key: 'router',
         id: idcurrent,
         visible: build,
@@ -74,7 +74,7 @@ export const ListMemberships: FC<{
       }),
       gqlListMemberships.data &&
         !gqlListMemberships.data.count &&
-        create(Empty, {
+        element(Empty, {
           key: 'empty',
           icon: 'user-tag',
           label: 'Memberships',
@@ -82,7 +82,7 @@ export const ListMemberships: FC<{
             'Memberships are created when a user becomes a member of a team',
         }),
       gqlListMemberships.data &&
-        create(Table, {
+        element(Table, {
           key: 'table',
           header: (user_id
             ? [

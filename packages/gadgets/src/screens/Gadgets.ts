@@ -1,4 +1,4 @@
-import { createElement as create, FC, useRef } from 'react'
+import { createElement as element, FC, useRef } from 'react'
 import { Modal, Root } from '@authpack/theme'
 import { useSetup } from '../hooks/useSetup'
 import { useSettings } from '../hooks/useSettings'
@@ -21,28 +21,28 @@ export const Gadgets: FC = () => {
     ? settings.domain.startsWith('http://localhost') ||
       settings.domain.startsWith(config.admin)
     : false
-  return create(Root, {
+  return element(Root, {
     theme: settings.cluster.theme_preference,
-    children: create(Modal, {
+    children: element(Modal, {
       close: close.current,
       visible: Boolean(settings.ready && settings.open),
       large: Boolean(settings.client && settings.bearer && settings.user),
       children: !settings.ready
-        ? create(Loading)
+        ? element(Loading)
         : !settings.client
-        ? create(NoKey, {
+        ? element(NoKey, {
             key: 'nokey',
           })
         : !allowed
-        ? create(NoPayment, {
+        ? element(NoPayment, {
             key: 'nopayment',
           })
         : settings.bearer && settings.user
-        ? create(RouterModalOnauthed, {
+        ? element(RouterModalOnauthed, {
             key: 'onauthed',
             close: close.current,
           })
-        : create(RouterModalUnauthed, {
+        : element(RouterModalUnauthed, {
             key: 'unauthed',
             close: close.current,
           }),

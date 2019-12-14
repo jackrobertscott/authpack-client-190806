@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as element, FC, useEffect } from 'react'
 import {
   useSchema,
   Layout,
@@ -28,36 +28,36 @@ export const UpdateUser: FC<{
     gqlGetUser.fetch({ id }).then(({ user }) => schema.set(user))
     // eslint-disable-next-line
   }, [id])
-  return create(Page, {
+  return element(Page, {
     title: 'Update',
     subtitle: 'User',
-    children: create(Layout, {
+    children: element(Layout, {
       column: true,
       padding: true,
       divide: true,
       children: !gqlGetUser.data
         ? null
         : [
-            create(Layout, {
+            element(Layout, {
               key: 'name',
               divide: true,
               media: true,
               children: [
-                create(Control, {
+                element(Control, {
                   key: 'name_given',
                   label: 'First Name',
                   error: schema.error('name_given'),
-                  children: create(InputString, {
+                  children: element(InputString, {
                     value: schema.value('name_given'),
                     change: schema.change('name_given'),
                     placeholder: 'Fred',
                   }),
                 }),
-                create(Control, {
+                element(Control, {
                   key: 'name_family',
                   label: 'Last Name',
                   error: schema.error('name_family'),
-                  children: create(InputString, {
+                  children: element(InputString, {
                     value: schema.value('name_family'),
                     change: schema.change('name_family'),
                     placeholder: 'Blogs',
@@ -65,11 +65,11 @@ export const UpdateUser: FC<{
                 }),
               ],
             }),
-            create(Control, {
+            element(Control, {
               key: 'username',
               label: 'Username',
               error: schema.error('username'),
-              children: create(InputString, {
+              children: element(InputString, {
                 value: schema.value('username'),
                 change: schema.change('username'),
                 placeholder: 'example_username_123',

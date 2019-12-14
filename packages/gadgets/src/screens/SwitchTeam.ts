@@ -1,4 +1,4 @@
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as element, FC, useEffect } from 'react'
 import { Layout, Poster, Snippet, Page } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
@@ -15,7 +15,7 @@ export const SwitchTeam: FC<{
     gqlListTeams.fetch()
     // eslint-disable-next-line
   }, [])
-  return create(Page, {
+  return element(Page, {
     title: 'Switch',
     subtitle: settings.cluster && settings.cluster.name,
     corner: {
@@ -23,10 +23,10 @@ export const SwitchTeam: FC<{
       label: 'New Team',
       click: add,
     },
-    children: create(Layout, {
+    children: element(Layout, {
       column: true,
       children: [
-        create(Poster, {
+        element(Poster, {
           key: 'poster',
           icon: 'users',
           label: 'Team',
@@ -34,7 +34,7 @@ export const SwitchTeam: FC<{
         }),
         gqlListTeams.data &&
           gqlListTeams.data.teams.map(({ id, name, description }) => {
-            return create(Snippet, {
+            return element(Snippet, {
               key: id,
               icon:
                 settings.team && settings.team.id === id

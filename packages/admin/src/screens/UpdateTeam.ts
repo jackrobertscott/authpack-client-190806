@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as element, FC, useEffect } from 'react'
 import {
   useSchema,
   Layout,
@@ -28,42 +28,42 @@ export const UpdateTeam: FC<{
     gqlGetTeam.fetch({ id }).then(({ team }) => schema.set(team))
     // eslint-disable-next-line
   }, [id])
-  return create(Page, {
+  return element(Page, {
     title: 'Update',
     subtitle: 'Team',
-    children: create(Layout, {
+    children: element(Layout, {
       column: true,
       padding: true,
       divide: true,
       children: !gqlGetTeam.data
         ? null
         : [
-            create(Control, {
+            element(Control, {
               key: 'name',
               label: 'Name',
               error: schema.error('name'),
-              children: create(InputString, {
+              children: element(InputString, {
                 value: schema.value('name'),
                 change: schema.change('name'),
                 placeholder: 'Awesome People',
               }),
             }),
-            create(Control, {
+            element(Control, {
               key: 'tag',
               label: 'Tag',
               helper: 'A unique identifier for the team',
               error: schema.error('tag'),
-              children: create(InputString, {
+              children: element(InputString, {
                 value: schema.value('tag'),
                 change: schema.change('tag'),
                 placeholder: 'awesome_people',
               }),
             }),
-            create(Control, {
+            element(Control, {
               key: 'description',
               label: 'Description',
               error: schema.error('description'),
-              children: create(InputString, {
+              children: element(InputString, {
                 value: schema.value('description'),
                 change: schema.change('description'),
                 placeholder: 'We do...',

@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useState } from 'react'
+import { createElement as element, FC, useState } from 'react'
 import {
   useSchema,
   Control,
@@ -21,35 +21,35 @@ export const RemoveUser: FC<{
   const gqlRemoveUser = useRemoveUser()
   const schema = useSchema({ schema: SchemaPassword })
   const [confirm, confirmChange] = useState<boolean>(false)
-  return create(Page, {
+  return element(Page, {
     title: 'Danger',
     subtitle: settings.cluster && settings.cluster.name,
     children: [
-      create(Poster, {
+      element(Poster, {
         key: 'poster',
         icon: 'trash-alt',
         label: 'Remove',
         helper: 'Remove your account',
       }),
-      create(Layout, {
+      element(Layout, {
         key: 'layout',
         column: true,
         padding: true,
         divide: true,
         children: [
-          create(Control, {
+          element(Control, {
             key: 'password',
             label: 'Current Password',
             helper: 'Please provide your password',
             error: schema.error('password'),
-            children: create(InputString, {
+            children: element(InputString, {
               value: schema.value('password'),
               change: schema.change('password'),
               placeholder: '* * * * * * * *',
               password: true,
             }),
           }),
-          create(Button, {
+          element(Button, {
             key: 'submit',
             label: 'Remove',
             disabled: !schema.valid,
@@ -57,17 +57,17 @@ export const RemoveUser: FC<{
           }),
         ],
       }),
-      create(Focus, {
+      element(Focus, {
         key: 'focus',
         icon: 'exclamation-triangle',
         label: 'Are you sure?',
         helper: 'Please confirm the removal of this user',
         visible: confirm,
-        children: create(Layout, {
+        children: element(Layout, {
           divide: true,
           media: true,
           children: [
-            create(Button, {
+            element(Button, {
               key: 'confirm',
               icon: 'check',
               label: 'Confirm',
@@ -78,7 +78,7 @@ export const RemoveUser: FC<{
                   if (change) change()
                 }),
             }),
-            create(Button, {
+            element(Button, {
               key: 'cancel',
               minor: true,
               icon: 'times',

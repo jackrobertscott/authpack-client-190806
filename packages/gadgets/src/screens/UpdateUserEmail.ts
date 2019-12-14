@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import {
   useSchema,
   Poster,
@@ -41,33 +41,33 @@ export const UpdateUserEmail: FC<{
       })
     },
   })
-  return create(Page, {
+  return element(Page, {
     title: 'Email',
     subtitle: settings.cluster && settings.cluster.name,
     children: [
-      create(Poster, {
+      element(Poster, {
         key: 'poster',
         icon: 'at',
         label: 'Update Email',
         helper: 'You will need to reverify your account',
       }),
-      create(Layout, {
+      element(Layout, {
         key: 'layout',
         column: true,
         padding: true,
         divide: true,
         children: [
-          create(Control, {
+          element(Control, {
             key: 'email',
             label: 'Email',
             error: schema.error('email'),
-            children: create(InputString, {
+            children: element(InputString, {
               value: schema.value('email'),
               change: schema.change('email'),
               placeholder: 'email@example.com',
             }),
           }),
-          create(Button, {
+          element(Button, {
             key: 'submit',
             label: 'Update',
             loading: gqlUpdateEmail.loading,

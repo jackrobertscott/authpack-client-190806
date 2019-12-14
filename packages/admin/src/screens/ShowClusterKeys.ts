@@ -1,4 +1,4 @@
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as element, FC, useEffect } from 'react'
 import { Layout, Snippet, Page } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { useUniversal } from '../hooks/useUniversal'
@@ -11,7 +11,7 @@ export const ShowClusterKeys: FC<{ back: () => void }> = ({ back }) => {
     // eslint-disable-next-line
   }, [universal.cluster_id])
   const cluster = gqlGetCluster.data ? gqlGetCluster.data.cluster : undefined
-  return create(Page, {
+  return element(Page, {
     title: 'API Keys',
     subtitle: 'Cluster',
     corner: {
@@ -21,16 +21,16 @@ export const ShowClusterKeys: FC<{ back: () => void }> = ({ back }) => {
     },
     children: !cluster
       ? null
-      : create(Layout, {
+      : element(Layout, {
           column: true,
           children: [
-            create(Snippet, {
+            element(Snippet, {
               key: 'key_client',
               icon: 'key',
               label: 'Client Key',
               value: cluster.key_client,
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'name',
               icon: 'key',
               label: 'Secret Key - Private',

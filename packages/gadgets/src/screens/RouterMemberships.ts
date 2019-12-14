@@ -1,4 +1,4 @@
-import { createElement as create, FC, useState } from 'react'
+import { createElement as element, FC, useState } from 'react'
 import { RemoveMembership } from './RemoveMembership'
 import { UpdateMembership } from './UpdateMembership'
 import { ListMemberships } from './ListMemberships'
@@ -16,24 +16,24 @@ export const RouterMemberships: FC = () => {
   if (action)
     switch (action) {
       case 'add':
-        return create(CreateMembership, {
+        return element(CreateMembership, {
           close,
         })
       case 'update':
         if (!staged) break
-        return create(UpdateMembership, {
+        return element(UpdateMembership, {
           id: staged,
           close,
         })
       case 'remove':
         if (!staged) break
-        return create(RemoveMembership, {
+        return element(RemoveMembership, {
           id: staged,
           change: close,
           close,
         })
     }
-  return create(ListMemberships, {
+  return element(ListMemberships, {
     add: () => {
       stagedChange(undefined)
       actionChange('add')

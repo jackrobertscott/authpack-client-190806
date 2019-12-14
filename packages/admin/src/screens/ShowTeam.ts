@@ -1,4 +1,4 @@
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as element, FC, useEffect } from 'react'
 import { Layout, Snippet, Page } from '@authpack/theme'
 import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
@@ -12,39 +12,39 @@ export const ShowTeam: FC<{
     // eslint-disable-next-line
   }, [id])
   const team = gqlGetTeam.data ? gqlGetTeam.data.team : undefined
-  return create(Page, {
+  return element(Page, {
     title: 'Inspect',
     subtitle: 'Team',
     children: !team
       ? null
-      : create(Layout, {
+      : element(Layout, {
           column: true,
           children: [
-            create(Snippet, {
+            element(Snippet, {
               key: 'id',
               icon: 'fingerprint',
               label: 'Id',
               value: team.id,
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'name',
               icon: 'users',
               label: 'Name',
               value: team.name,
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'tag',
               icon: 'tags',
               label: 'Tag',
               value: team.tag,
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'description',
               icon: 'book',
               label: 'Description',
               value: team.description || '...',
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'created',
               icon: 'clock',
               label: 'Created',
@@ -52,7 +52,7 @@ export const ShowTeam: FC<{
                 team.created &&
                 format(new Date(team.created), 'dd LLL yyyy @ h:mm a'),
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'updated',
               icon: 'clock',
               label: 'Updated',

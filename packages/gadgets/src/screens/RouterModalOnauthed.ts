@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import { useLocalRouter, IconBar } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { RouterSideBarUser } from './RouterSideBarUser'
@@ -26,28 +26,28 @@ export const RouterModalOnauthed: FC<{
       : [
           {
             key: '/users',
-            children: create(RouterSideBarUser),
+            children: element(RouterSideBarUser),
           },
           {
             key: '/teams',
-            children: create(RouterSideBarTeam),
+            children: element(RouterSideBarTeam),
           },
           {
             key: '/logout',
             nosave: true,
-            children: create(LogoutUser),
+            children: element(LogoutUser),
           },
           {
             key: '/verify',
             nosave: true,
-            children: create(ReconcileUser, {
+            children: element(ReconcileUser, {
               email: settings.user.email,
             }),
           },
         ],
   })
   if (!settings.bearer || !settings.user) return null
-  return create(IconBar, {
+  return element(IconBar, {
     children: router.current && router.current.children,
     icons: [
       {

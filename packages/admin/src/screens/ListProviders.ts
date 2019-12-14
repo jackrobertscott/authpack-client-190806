@@ -1,5 +1,5 @@
 import faker from 'faker'
-import { createElement as create, FC, useState, useEffect, useRef } from 'react'
+import { createElement as element, FC, useState, useEffect, useRef } from 'react'
 import { Page, Table, Empty, Button, drip } from '@authpack/theme'
 import { format } from 'date-fns'
 import { RouterManagerProvider } from './RouterManagerProvider'
@@ -26,7 +26,7 @@ export const ListProviders: FC = () => {
         Boolean(gqlListProviders.data && !gqlListProviders.data.providers)
       ? []
       : FakeProviders
-  return create(Page, {
+  return element(Page, {
     title: 'Providers',
     subtitle: 'Login with Facebook, Google, GitHub and more',
     hidden: !gqlListProviders.data || !gqlListProviders.data.count,
@@ -38,7 +38,7 @@ export const ListProviders: FC = () => {
         setTimeout(() => idcurrentChange(undefined), 200) // animation
       },
     },
-    noscroll: create(TemplateSearchBar, {
+    noscroll: element(TemplateSearchBar, {
       count: gqlListProviders.data && gqlListProviders.data.count,
       current: gqlListProviders.data && gqlListProviders.data.providers.length,
       change: (phrase, limit, skip) => {
@@ -50,7 +50,7 @@ export const ListProviders: FC = () => {
       },
     }),
     children: [
-      create(RouterManagerProvider, {
+      element(RouterManagerProvider, {
         key: 'router',
         id: idcurrent,
         visible: build,
@@ -70,14 +70,14 @@ export const ListProviders: FC = () => {
       }),
       gqlListProviders.data &&
         !gqlListProviders.data.count &&
-        create(Empty, {
+        element(Empty, {
           key: 'empty',
           icon: 'facebook',
           prefix: 'fab',
           label: 'Providers',
           helper:
             'Authentication providers allow you to login your users with OAuth',
-          children: create(Button, {
+          children: element(Button, {
             key: 'Regular',
             icon: 'book',
             label: 'Install',
@@ -88,7 +88,7 @@ export const ListProviders: FC = () => {
           }),
         }),
       gqlListProviders.data &&
-        create(Table, {
+        element(Table, {
           key: 'table',
           header: [
             { key: 'preset', label: 'Preset' },

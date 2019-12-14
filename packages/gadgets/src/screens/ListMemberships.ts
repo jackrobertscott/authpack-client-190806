@@ -1,4 +1,4 @@
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as element, FC, useEffect } from 'react'
 import { Snippet, Page } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
@@ -14,7 +14,7 @@ export const ListMemberships: FC<{
     gqlListMemberships.fetch()
     // eslint-disable-next-line
   }, [])
-  return create(Page, {
+  return element(Page, {
     title: 'Members',
     subtitle: settings.cluster && settings.cluster.name,
     corner: {
@@ -26,7 +26,7 @@ export const ListMemberships: FC<{
       ? null
       : gqlListMemberships.data.memberships.map(membership => {
           const suffix = membership.admin ? ' (admin)' : ''
-          return create(Snippet, {
+          return element(Snippet, {
             key: membership.id,
             icon: 'user-circle',
             label: membership.user

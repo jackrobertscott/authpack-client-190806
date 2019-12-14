@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import { useLocalRouter, SideBar } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { CreateTeam } from './CreateTeam'
@@ -15,33 +15,33 @@ export const RouterSideBarTeam: FC = () => {
     nomatch: current ? '/team/update' : '/team/create',
     options: current
       ? [
-          { key: '/team/update', children: create(UpdateTeam) },
+          { key: '/team/update', children: element(UpdateTeam) },
           {
             key: '/team/switch',
-            children: create(SwitchTeam, {
+            children: element(SwitchTeam, {
               add: () => router.change('/team/create'),
             }),
           },
           {
             key: '/team/create',
-            children: create(CreateTeam, {
+            children: element(CreateTeam, {
               change: () => router.change('/team/update'),
             }),
           },
-          { key: '/team/members', children: create(RouterMemberships) },
-          { key: '/team/danger', children: create(RemoveTeam), nosave: true },
+          { key: '/team/members', children: element(RouterMemberships) },
+          { key: '/team/danger', children: element(RemoveTeam), nosave: true },
         ]
       : [
           {
             key: '/team/create',
-            children: create(CreateTeam, {
+            children: element(CreateTeam, {
               change: () => setTimeout(() => router.change('/team/update')),
             }),
           },
         ],
   })
   if (!settings.bearer) return null
-  return create(SideBar, {
+  return element(SideBar, {
     key: 'sideBar',
     title: 'Team',
     footer: current && current.name,

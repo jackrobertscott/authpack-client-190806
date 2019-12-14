@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import { useLocalRouter, Modal, IconBar } from '@authpack/theme'
 import { CreateUser } from './CreateUser'
 import { UpdateUser } from './UpdateUser'
@@ -20,36 +20,36 @@ export const RouterManagerUser: FC<{
     nomatch: id ? '/inspect' : '/create',
     options: id
       ? [
-          { key: '/inspect', children: create(ShowUser, { id }) },
-          { key: '/update', children: create(UpdateUser, { id, change }) },
-          { key: '/remove', children: create(RemoveUser, { id, change }) },
+          { key: '/inspect', children: element(ShowUser, { id }) },
+          { key: '/update', children: element(UpdateUser, { id, change }) },
+          { key: '/remove', children: element(RemoveUser, { id, change }) },
           {
             key: '/update/password',
-            children: create(UpdateUserPassword, { id, change }),
+            children: element(UpdateUserPassword, { id, change }),
           },
           {
             key: '/update/email',
-            children: create(UpdateUserEmail, { id, change }),
+            children: element(UpdateUserEmail, { id, change }),
           },
           {
             key: '/memberships',
-            children: create(ListMemberships, { user_id: id }),
+            children: element(ListMemberships, { user_id: id }),
           },
           {
             key: '/sessions',
-            children: create(ListSessions, { user_id: id }),
+            children: element(ListSessions, { user_id: id }),
           },
           {
             key: '/credentials',
-            children: create(ListCredentials, { user_id: id }),
+            children: element(ListCredentials, { user_id: id }),
           },
         ]
-      : [{ key: '/create', children: create(CreateUser, { change }) }],
+      : [{ key: '/create', children: element(CreateUser, { change }) }],
   })
-  return create(Modal, {
+  return element(Modal, {
     close,
     visible,
-    children: create(IconBar, {
+    children: element(IconBar, {
       children: router.current && router.current.children,
       icons: id
         ? [

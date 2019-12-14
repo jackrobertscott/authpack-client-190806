@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import { useLocalRouter, Modal, IconBar } from '@authpack/theme'
 import { UpdateCluster } from './UpdateCluster'
 import { UpdatePayment } from './UpdatePayment'
@@ -19,48 +19,48 @@ export const RouterManagerCluster: FC<{
     options: [
       {
         key: '/inspect',
-        children: create(ShowCluster, {
+        children: element(ShowCluster, {
           keys: () => router.change('/keys'),
         }),
       },
       {
         key: '/keys',
-        children: create(ShowClusterKeys, {
+        children: element(ShowClusterKeys, {
           back: () => router.change('/inspect'),
         }),
       },
-      { key: '/update', children: create(UpdateCluster) },
+      { key: '/update', children: element(UpdateCluster) },
       {
         key: '/switch',
-        children: create(SwitchCluster, {
+        children: element(SwitchCluster, {
           add: () => router.change('/create'),
         }),
       },
       {
         key: '/create',
-        children: create(CreateCluster, {
+        children: element(CreateCluster, {
           change: () => router.change('/inspect'),
         }),
       },
       {
         key: '/payment',
-        children: create(UpdatePayment, {
+        children: element(UpdatePayment, {
           change: () => router.change('/inspect'),
           cancel: () => router.change('/cancel'),
         }),
       },
       {
         key: '/cancel',
-        children: create(RemovePayment, {
+        children: element(RemovePayment, {
           change: () => router.change('/inspect'),
         }),
       },
     ],
   })
-  return create(Modal, {
+  return element(Modal, {
     close,
     visible,
-    children: create(IconBar, {
+    children: element(IconBar, {
       children: router.current && router.current.children,
       icons: [
         !universal.subscribed && {

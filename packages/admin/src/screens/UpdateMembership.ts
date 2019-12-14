@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as element, FC, useEffect } from 'react'
 import {
   useSchema,
   Control,
@@ -32,33 +32,33 @@ export const UpdateMembership: FC<{
       .then(({ membership }) => schema.set(membership))
     // eslint-disable-next-line
   }, [id])
-  return create(Page, {
+  return element(Page, {
     title: 'Update',
     subtitle: 'Membership',
-    children: create(Layout, {
+    children: element(Layout, {
       column: true,
       padding: true,
       divide: true,
       children: !gqlListPermissions.data
         ? null
         : [
-            create(Control, {
+            element(Control, {
               key: 'admin',
               label: 'Admin',
               helper: 'Is this user an admin of the team',
               error: schema.error('admin'),
-              children: create(InputBoolean, {
+              children: element(InputBoolean, {
                 value: schema.value('admin'),
                 change: schema.change('admin'),
               }),
             }),
             !!gqlListPermissions.data.permissions.length &&
-              create(Control, {
+              element(Control, {
                 key: 'permission_ids',
                 label: 'Permissions',
                 helper: 'Determine what the member can access',
                 error: schema.error('permission_ids'),
-                children: create(InputSelectMany, {
+                children: element(InputSelectMany, {
                   value: schema.value('permission_ids'),
                   change: schema.change('permission_ids'),
                   options: gqlListPermissions.data.permissions.map(

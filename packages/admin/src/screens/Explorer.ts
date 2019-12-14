@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import { useAuthpack } from '@authpack/react'
 import { graphql, useTheme } from '@authpack/theme'
 import { css } from 'emotion'
@@ -24,8 +24,8 @@ export const Explorer: FC = () => {
   const theme = useTheme()
   const authpack = useAuthpack()
   const universal = useUniversal()
-  return create('div', {
-    children: create(GraphiQL, {
+  return element('div', {
+    children: element(GraphiQL, {
       defaultQuery: startingQuery,
       fetcher: async (graphQLParams: any) => {
         try {

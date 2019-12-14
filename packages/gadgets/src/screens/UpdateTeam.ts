@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as element, FC, useEffect } from 'react'
 import {
   useSchema,
   Layout,
@@ -29,38 +29,38 @@ export const UpdateTeam: FC<{
     gqlGetTeam.fetch().then(({ team }) => schema.set(team))
     // eslint-disable-next-line
   }, [])
-  return create(Page, {
+  return element(Page, {
     title: 'Update',
     subtitle: settings.cluster && settings.cluster.name,
-    children: create(Layout, {
+    children: element(Layout, {
       column: true,
       padding: true,
       divide: true,
       children: !gqlGetTeam.data
         ? null
         : [
-            create(Layout, {
+            element(Layout, {
               key: 'name',
               divide: true,
               media: true,
               children: [
-                create(Control, {
+                element(Control, {
                   key: 'name',
                   label: 'Name',
                   helper: "Your team's name",
                   error: schema.error('name'),
-                  children: create(InputString, {
+                  children: element(InputString, {
                     value: schema.value('name'),
                     change: schema.change('name'),
                     placeholder: 'My Team',
                   }),
                 }),
-                create(Control, {
+                element(Control, {
                   key: 'tag',
                   label: 'Tag',
                   helper: "Claim your team's unique id tag",
                   error: schema.error('tag'),
-                  children: create(InputString, {
+                  children: element(InputString, {
                     value: schema.value('tag'),
                     change: schema.change('tag'),
                     placeholder: 'my_team_123',
@@ -68,12 +68,12 @@ export const UpdateTeam: FC<{
                 }),
               ],
             }),
-            create(Control, {
+            element(Control, {
               key: 'description',
               label: 'Description',
               helper: 'Optionally describe what your team does',
               error: schema.error('description'),
-              children: create(InputString, {
+              children: element(InputString, {
                 value: schema.value('description'),
                 change: schema.change('description'),
                 placeholder: 'We do...',

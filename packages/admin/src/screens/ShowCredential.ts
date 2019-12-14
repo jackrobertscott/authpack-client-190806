@@ -1,4 +1,4 @@
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as element, FC, useEffect } from 'react'
 import { Layout, Snippet, Page } from '@authpack/theme'
 import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
@@ -14,52 +14,52 @@ export const ShowCredential: FC<{
   const credential = gqlGetCredential.data
     ? gqlGetCredential.data.credential
     : undefined
-  return create(Page, {
+  return element(Page, {
     title: 'Inspect',
     subtitle: 'Credential',
     children: !credential
       ? null
-      : create(Layout, {
+      : element(Layout, {
           column: true,
           children: [
-            create(Snippet, {
+            element(Snippet, {
               key: 'id',
               icon: 'fingerprint',
               label: 'Id',
               value: credential.id,
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'user',
               icon: 'user',
               label: 'User',
               value: !credential.user ? '...' : credential.user.summary,
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'provider',
               icon: 'share-alt',
               label: 'Provider',
               value: !credential.provider ? '...' : credential.provider.name,
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'scopes',
               icon: 'user-shield',
               label: 'Scopes',
               value:
                 (credential.scopes && credential.scopes.join(', ')) || '...',
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'tags',
               icon: 'at',
               label: 'Token',
               value: credential.access_token,
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'id_external',
               icon: 'at',
               label: 'External Id',
               value: credential.id_external,
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'created',
               icon: 'clock',
               label: 'Created',
@@ -67,7 +67,7 @@ export const ShowCredential: FC<{
                 credential.created &&
                 format(new Date(credential.created), 'dd LLL yyyy @ h:mm a'),
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'updated',
               icon: 'clock',
               label: 'Updated',

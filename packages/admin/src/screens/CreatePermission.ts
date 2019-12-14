@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import {
   useSchema,
   Button,
@@ -23,46 +23,46 @@ export const CreatePermission: FC<{
         .then(({ permission }) => change && change(permission.id))
     },
   })
-  return create(Page, {
+  return element(Page, {
     title: 'New',
     subtitle: 'Permission',
-    children: create(Layout, {
+    children: element(Layout, {
       column: true,
       padding: true,
       divide: true,
       children: [
-        create(Control, {
+        element(Control, {
           key: 'name',
           label: 'Name',
           error: schema.error('name'),
-          children: create(InputString, {
+          children: element(InputString, {
             value: schema.value('name'),
             change: schema.change('name'),
             placeholder: 'Admin Editor',
           }),
         }),
-        create(Control, {
+        element(Control, {
           key: 'tag',
           label: 'Tag',
           helper: 'A unique identifier for the permission',
           error: schema.error('tag'),
-          children: create(InputString, {
+          children: element(InputString, {
             value: schema.value('tag'),
             change: schema.change('tag'),
             placeholder: 'admin_editor',
           }),
         }),
-        create(Control, {
+        element(Control, {
           key: 'description',
           label: 'Description',
           error: schema.error('description'),
-          children: create(InputString, {
+          children: element(InputString, {
             value: schema.value('description'),
             change: schema.change('description'),
             placeholder: 'User can...',
           }),
         }),
-        create(Button, {
+        element(Button, {
           key: 'submit',
           label: 'Create',
           loading: gqlCreatePermission.loading,

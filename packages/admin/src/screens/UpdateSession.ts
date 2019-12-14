@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as element, FC, useEffect } from 'react'
 import { useSchema, Layout, Control, InputBoolean, Page } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
@@ -21,22 +21,22 @@ export const UpdateSession: FC<{
     gqlGetSession.fetch({ id }).then(({ session }) => schema.set(session))
     // eslint-disable-next-line
   }, [id])
-  return create(Page, {
+  return element(Page, {
     title: 'Update',
     subtitle: 'Session',
-    children: create(Layout, {
+    children: element(Layout, {
       column: true,
       padding: true,
       divide: true,
       children: !gqlGetSession.data
         ? null
         : [
-            create(Control, {
+            element(Control, {
               key: 'disabled',
               label: 'Disabled',
               helper: 'Prevent session from authenticating api requests',
               error: schema.error('disabled'),
-              children: create(InputBoolean, {
+              children: element(InputBoolean, {
                 value: schema.value('disabled'),
                 change: schema.change('disabled'),
               }),

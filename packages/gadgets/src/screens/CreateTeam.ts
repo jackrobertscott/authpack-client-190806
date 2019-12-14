@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import {
   useSchema,
   Layout,
@@ -31,38 +31,38 @@ export const CreateTeam: FC<{
         })
     },
   })
-  return create(Page, {
+  return element(Page, {
     title: 'Create',
     subtitle: settings.cluster && settings.cluster.name,
     children: [
-      create(Layout, {
+      element(Layout, {
         key: 'layout',
         column: true,
         padding: true,
         divide: true,
         children: [
-          create(Layout, {
+          element(Layout, {
             key: 'name',
             divide: true,
             media: true,
             children: [
-              create(Control, {
+              element(Control, {
                 key: 'name',
                 label: 'Name',
                 helper: "Your team's name",
                 error: schema.error('name'),
-                children: create(InputString, {
+                children: element(InputString, {
                   value: schema.value('name'),
                   change: schema.change('name'),
                   placeholder: 'My Team',
                 }),
               }),
-              create(Control, {
+              element(Control, {
                 key: 'tag',
                 label: 'Tag',
                 helper: "Claim your team's unique id tag",
                 error: schema.error('tag'),
-                children: create(InputString, {
+                children: element(InputString, {
                   value: schema.value('tag'),
                   change: schema.change('tag'),
                   placeholder: 'my_team_123',
@@ -70,18 +70,18 @@ export const CreateTeam: FC<{
               }),
             ],
           }),
-          create(Control, {
+          element(Control, {
             key: 'description',
             label: 'Description',
             helper: 'Optionally describe what your team does',
             error: schema.error('description'),
-            children: create(InputString, {
+            children: element(InputString, {
               value: schema.value('description'),
               change: schema.change('description'),
               placeholder: 'We do...',
             }),
           }),
-          create(Button, {
+          element(Button, {
             key: 'submit',
             label: 'Create',
             loading: gqlCreateTeam.loading || gqlSwitchTeam.loading,

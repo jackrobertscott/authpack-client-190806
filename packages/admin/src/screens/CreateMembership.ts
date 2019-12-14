@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useEffect, useRef } from 'react'
+import { createElement as element, FC, useEffect, useRef } from 'react'
 import {
   useSchema,
   Button,
@@ -48,10 +48,10 @@ export const CreateMembership: FC<{
     })
     // eslint-disable-next-line
   }, [user_id, team_id])
-  return create(Page, {
+  return element(Page, {
     title: 'New',
     subtitle: 'Membership',
-    children: create(Layout, {
+    children: element(Layout, {
       column: true,
       padding: true,
       divide: true,
@@ -59,11 +59,11 @@ export const CreateMembership: FC<{
         ? null
         : [
             !user_id &&
-              create(Control, {
+              element(Control, {
                 key: 'user_id',
                 label: 'User',
                 error: schema.error('user_id'),
-                children: create(InputSelect, {
+                children: element(InputSelect, {
                   value: schema.value('user_id'),
                   change: schema.change('user_id'),
                   placeholder: 'Select user...',
@@ -81,12 +81,12 @@ export const CreateMembership: FC<{
                 }),
               }),
             !team_id &&
-              create(Control, {
+              element(Control, {
                 key: 'team_id',
                 label: 'Team',
                 helper: 'Optionally select a team to be added to membership',
                 error: schema.error('team_id'),
-                children: create(InputSelect, {
+                children: element(InputSelect, {
                   value: schema.value('team_id'),
                   change: schema.change('team_id'),
                   placeholder: 'Select team...',
@@ -100,23 +100,23 @@ export const CreateMembership: FC<{
                       })),
                 }),
               }),
-            create(Control, {
+            element(Control, {
               key: 'admin',
               label: 'Admin',
               helper: 'Is this user an admin of the team',
               error: schema.error('admin'),
-              children: create(InputBoolean, {
+              children: element(InputBoolean, {
                 value: schema.value('admin'),
                 change: schema.change('admin'),
               }),
             }),
             !!gqlListPermissions.data.permissions.length &&
-              create(Control, {
+              element(Control, {
                 key: 'permission_ids',
                 label: 'Permissions',
                 helper: 'Determine what the member can access',
                 error: schema.error('permission_ids'),
-                children: create(InputSelectMany, {
+                children: element(InputSelectMany, {
                   value: schema.value('permission_ids'),
                   change: schema.change('permission_ids'),
                   options: gqlListPermissions.data.permissions.map(
@@ -131,7 +131,7 @@ export const CreateMembership: FC<{
                   ),
                 }),
               }),
-            create(Button, {
+            element(Button, {
               key: 'submit',
               label: 'Create',
               loading: gqlCreateMembership.loading,

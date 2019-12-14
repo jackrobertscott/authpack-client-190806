@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import {
   useSchema,
   Poster,
@@ -33,46 +33,46 @@ export const UpdateUserPassword: FC<{
       })
     },
   })
-  return create(Page, {
+  return element(Page, {
     title: 'Password',
     subtitle: settings.cluster && settings.cluster.name,
     children: [
-      create(Poster, {
+      element(Poster, {
         key: 'poster',
         icon: 'unlock',
         label: 'Change Password',
         helper: 'Passwords are encrypted',
       }),
-      create(Layout, {
+      element(Layout, {
         key: 'layout',
         column: true,
         padding: true,
         divide: true,
         children: [
-          create(Control, {
+          element(Control, {
             key: 'password_current',
             label: 'Current Password',
             error: schema.error('password_current'),
-            children: create(InputString, {
+            children: element(InputString, {
               value: schema.value('password_current'),
               change: schema.change('password_current'),
               placeholder: '* * * * * * * *',
               password: true,
             }),
           }),
-          create(Control, {
+          element(Control, {
             key: 'password_new',
             label: 'New Password',
             helper: 'Please use more than 6 characters',
             error: schema.error('password_new'),
-            children: create(InputString, {
+            children: element(InputString, {
               value: schema.value('password_new'),
               change: schema.change('password_new'),
               placeholder: '* * * * * * * *',
               password: true,
             }),
           }),
-          create(Button, {
+          element(Button, {
             key: 'submit',
             label: 'Update',
             loading: gqlUpdatePassword.loading,

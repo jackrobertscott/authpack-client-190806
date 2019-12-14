@@ -1,4 +1,4 @@
-import { createElement as create, Component, ReactNode } from 'react'
+import { createElement as element, Component, ReactNode } from 'react'
 import { Focus, Button } from '@authpack/theme'
 import * as Sentry from '@sentry/browser'
 
@@ -21,11 +21,11 @@ export class ErrorBoundary extends Component<
     const { error } = this.state
     const { children } = this.props
     if (error) {
-      return create(Focus, {
+      return element(Focus, {
         icon: 'bug',
         label: 'Error',
         helper: error.message || 'There was a bug in our code...',
-        children: create(Button, {
+        children: element(Button, {
           icon: 'redo-alt',
           label: 'Reload App',
           click: () => document.location.reload(),

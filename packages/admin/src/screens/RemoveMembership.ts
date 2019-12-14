@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import { Page } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { ConfirmRemove } from '../templates/ConfirmRemove'
@@ -8,10 +8,10 @@ export const RemoveMembership: FC<{
   change?: (id?: string) => void
 }> = ({ id, change }) => {
   const gqlRemoveMembership = useRemoveMembership()
-  return create(Page, {
+  return element(Page, {
     title: 'Remove',
     subtitle: 'Membership',
-    children: create(ConfirmRemove, {
+    children: element(ConfirmRemove, {
       helper: 'Remove this membership',
       alert: 'Please confirm the removal of this membership',
       loading: gqlRemoveMembership.loading,

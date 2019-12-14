@@ -1,4 +1,4 @@
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as element, FC, useEffect } from 'react'
 import { Layout, Snippet, Page } from '@authpack/theme'
 import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
@@ -12,7 +12,7 @@ export const ShowCluster: FC<{ keys: () => void }> = ({ keys }) => {
     // eslint-disable-next-line
   }, [universal.cluster_id])
   const cluster = gqlGetCluster.data ? gqlGetCluster.data.cluster : undefined
-  return create(Page, {
+  return element(Page, {
     title: 'Inspect',
     subtitle: 'Cluster',
     corner: {
@@ -22,34 +22,34 @@ export const ShowCluster: FC<{ keys: () => void }> = ({ keys }) => {
     },
     children: !cluster
       ? null
-      : create(Layout, {
+      : element(Layout, {
           column: true,
           children: [
-            create(Snippet, {
+            element(Snippet, {
               key: 'id',
               icon: 'fingerprint',
               label: 'Id',
               value: cluster.id,
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'name',
               icon: 'tags',
               label: 'Name',
               value: cluster.name,
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'theme',
               icon: 'magic',
               label: 'Preferenced Theme',
               value: cluster.theme_preference || 'default',
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'subscribed',
               icon: 'wallet',
               label: 'Subscribed',
               value: String(cluster.subscribed),
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'created',
               icon: 'clock',
               label: 'Created',
@@ -57,7 +57,7 @@ export const ShowCluster: FC<{ keys: () => void }> = ({ keys }) => {
                 cluster.created &&
                 format(new Date(cluster.created), 'dd LLL yyyy @ h:mm a'),
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'updated',
               icon: 'clock',
               label: 'Updated',

@@ -1,5 +1,5 @@
 import faker from 'faker'
-import { createElement as create, FC, useState, useEffect, useRef } from 'react'
+import { createElement as element, FC, useState, useEffect, useRef } from 'react'
 import { Page, Table, Empty, drip } from '@authpack/theme'
 import { format } from 'date-fns'
 import { RouterManagerSession } from './RouterManagerSession'
@@ -25,11 +25,11 @@ export const ListSessions: FC<{ user_id?: string }> = ({ user_id }) => {
       : Boolean(gqlListSessions.data && !gqlListSessions.data.sessions)
       ? []
       : FakeSessions
-  return create(Page, {
+  return element(Page, {
     title: 'Sessions',
     subtitle: 'User',
     hidden: !gqlListSessions.data || !gqlListSessions.data.count,
-    noscroll: create(TemplateSearchBar, {
+    noscroll: element(TemplateSearchBar, {
       input: false,
       count: gqlListSessions.data && gqlListSessions.data.count,
       current: gqlListSessions.data && gqlListSessions.data.sessions.length,
@@ -40,7 +40,7 @@ export const ListSessions: FC<{ user_id?: string }> = ({ user_id }) => {
         }),
     }),
     children: [
-      create(RouterManagerSession, {
+      element(RouterManagerSession, {
         key: 'router',
         id: idcurrent,
         visible: build,
@@ -60,14 +60,14 @@ export const ListSessions: FC<{ user_id?: string }> = ({ user_id }) => {
       }),
       gqlListSessions.data &&
         !gqlListSessions.data.count &&
-        create(Empty, {
+        element(Empty, {
           key: 'empty',
           icon: 'history',
           label: 'Sessions',
           helper: 'Sessions are created when a user logs into your app',
         }),
       gqlListSessions.data &&
-        create(Table, {
+        element(Table, {
           key: 'table',
           header: [
             { key: 'team_id', label: 'Team' },

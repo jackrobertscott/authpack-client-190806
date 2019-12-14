@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as element, FC, useEffect } from 'react'
 import {
   useSchema,
   Layout,
@@ -36,43 +36,43 @@ export const UpdateCluster: FC<{
       .then(({ cluster }) => schema.set(cluster))
     // eslint-disable-next-line
   }, [universal.cluster_id])
-  return create(Page, {
+  return element(Page, {
     title: 'Update',
     subtitle: 'Cluster',
-    children: create(Layout, {
+    children: element(Layout, {
       column: true,
       padding: true,
       divide: true,
       children: !gqlGetCluster.data
         ? null
         : [
-            create(Control, {
+            element(Control, {
               key: 'name',
               label: 'Name',
               error: schema.error('name'),
-              children: create(InputString, {
+              children: element(InputString, {
                 value: schema.value('name'),
                 change: schema.change('name'),
                 placeholder: 'Cluster',
               }),
             }),
-            create(Control, {
+            element(Control, {
               key: 'domains',
               label: 'Whitelisted Domains',
               helper: 'Domains allowed to make authorized requests',
               error: schema.error('domains'),
-              children: create(InputStringArray, {
+              children: element(InputStringArray, {
                 value: schema.value('domains'),
                 change: schema.change('domains'),
                 placeholder: '...',
               }),
             }),
-            create(Control, {
+            element(Control, {
               key: 'theme_preference',
               label: 'Theme',
               helper: 'Choose the color of your login gadgets',
               error: schema.error('theme_preference'),
-              children: create(InputSelect, {
+              children: element(InputSelect, {
                 value: schema.value('theme_preference'),
                 change: schema.change('theme_preference'),
                 options: [

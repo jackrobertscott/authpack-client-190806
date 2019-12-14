@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import { Page } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { ConfirmRemove } from '../templates/ConfirmRemove'
@@ -10,10 +10,10 @@ export const RemovePayment: FC<{
 }> = ({ change }) => {
   const universal = useUniversal()
   const gqlRemovePayment = useRemovePayment()
-  return create(Page, {
+  return element(Page, {
     title: 'Danger',
     subtitle: 'Stop payments & disable gadgets',
-    children: create(ConfirmRemove, {
+    children: element(ConfirmRemove, {
       keyword: 'Terminate',
       helper: 'Cancel subscription and invoice now',
       alert: 'User limits will be reapplied',

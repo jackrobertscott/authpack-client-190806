@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useState, useEffect, useRef } from 'react'
+import { createElement as element, FC, useState, useEffect, useRef } from 'react'
 import { useAuthpack } from '@authpack/react'
 import {
   useSchema,
@@ -76,7 +76,7 @@ export const UpdatePayment: FC<{
       })
     // eslint-disable-next-line
   }, [])
-  return create(Page, {
+  return element(Page, {
     title: 'Payment',
     subtitle: 'Cluster',
     corner: !universal.subscribed
@@ -88,52 +88,52 @@ export const UpdatePayment: FC<{
         },
     children: [
       !universal.subscribed &&
-        create(Poster, {
+        element(Poster, {
           key: 'payment',
           icon: 'bolt',
           label: 'Monthly',
           helper: '$9 usd per 1,000 users',
         }),
-      create(Layout, {
+      element(Layout, {
         key: 'layout',
         column: true,
         padding: true,
         divide: true,
         children: [
-          create(Control, {
+          element(Control, {
             key: 'card',
             label: 'Card',
             helper: 'Powered by Stripe',
             error: schema.error('card'),
-            children: create(InputStripe, {
+            children: element(InputStripe, {
               stripe,
               change: value => {
                 if (mounted.current) stripeCard.current = value
               },
             }),
           }),
-          create(Layout, {
+          element(Layout, {
             key: 'top',
             divide: true,
             children: [
-              create(Control, {
+              element(Control, {
                 key: 'name',
                 label: 'Name',
                 helper: 'Found on card',
                 error: schema.error('name'),
-                children: create(InputString, {
+                children: element(InputString, {
                   value: schema.value('name'),
                   change: schema.change('name'),
                   placeholder: 'Fred Blogs',
                 }),
               }),
               !universal.subscribed &&
-                create(Control, {
+                element(Control, {
                   key: 'coupon',
                   label: 'Code',
                   helper: 'Optional payment code',
                   error: schema.error('coupon'),
-                  children: create(InputString, {
+                  children: element(InputString, {
                     value: schema.value('coupon'),
                     change: schema.change('coupon'),
                     placeholder: '...',
@@ -141,18 +141,18 @@ export const UpdatePayment: FC<{
                 }),
             ],
           }),
-          create(Control, {
+          element(Control, {
             key: 'email',
             label: 'Billing Email',
             helper: 'This email will receive payment invoices',
             error: schema.error('email'),
-            children: create(InputString, {
+            children: element(InputString, {
               value: schema.value('email'),
               change: schema.change('email'),
               placeholder: 'fred@example.com',
             }),
           }),
-          create(Button, {
+          element(Button, {
             key: 'submit',
             label: universal.subscribed ? 'Update Payment' : 'Submit',
             disabled: !schema.valid,

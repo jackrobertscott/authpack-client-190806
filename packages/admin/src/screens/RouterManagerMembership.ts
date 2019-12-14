@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import { useLocalRouter, Modal, IconBar } from '@authpack/theme'
 import { CreateMembership } from './CreateMembership'
 import { UpdateMembership } from './UpdateMembership'
@@ -17,20 +17,20 @@ export const RouterManagerMembership: FC<{
     nomatch: id ? '/update' : '/create',
     options: id
       ? [
-          { key: '/inspect', children: create(ShowMembership, { id }) },
+          { key: '/inspect', children: element(ShowMembership, { id }) },
           {
             key: '/update',
-            children: create(UpdateMembership, { id, change }),
+            children: element(UpdateMembership, { id, change }),
           },
           {
             key: '/remove',
-            children: create(RemoveMembership, { id, change }),
+            children: element(RemoveMembership, { id, change }),
           },
         ]
       : [
           {
             key: '/create',
-            children: create(CreateMembership, {
+            children: element(CreateMembership, {
               user_id,
               team_id,
               change,
@@ -38,10 +38,10 @@ export const RouterManagerMembership: FC<{
           },
         ],
   })
-  return create(Modal, {
+  return element(Modal, {
     close,
     visible,
-    children: create(IconBar, {
+    children: element(IconBar, {
       children: router.current && router.current.children,
       icons: id
         ? [

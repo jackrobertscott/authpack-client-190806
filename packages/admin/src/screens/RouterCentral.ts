@@ -1,4 +1,4 @@
-import { createElement as create, FC, Fragment, useState } from 'react'
+import { createElement as element, FC, Fragment, useState } from 'react'
 import { IconBar, useRouter } from '@authpack/theme'
 import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterManagerCluster } from './RouterManagerCluster'
@@ -13,19 +13,19 @@ export const RouterCentral: FC = () => {
   const router = useRouter({
     nomatch: '/app',
     options: [
-      { path: '/app', children: create(RouterSideBarHome) },
-      { path: '/developers', children: create(Explorer) },
+      { path: '/app', children: element(RouterSideBarHome) },
+      { path: '/developers', children: element(Explorer) },
     ],
   })
-  return create(IconBar, {
+  return element(IconBar, {
     children: [
-      create(RouterManagerCluster, {
+      element(RouterManagerCluster, {
         key: 'cluster',
         visible: apper,
         close: () => apperChange(false),
       }),
       router.current &&
-        create(Fragment, {
+        element(Fragment, {
           key: 'children',
           children: router.current.children,
         }),
