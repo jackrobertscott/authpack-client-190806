@@ -1,4 +1,4 @@
-import { createElement as create, FC, ReactNode, Fragment } from 'react'
+import { createElement as element, FC, ReactNode, Fragment } from 'react'
 import { useTheme } from '../hooks/useTheme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
@@ -19,7 +19,7 @@ export const Page: FC<{
   }
 }> = ({ title, subtitle, children, noscroll = null, hidden, corner }) => {
   const theme = useTheme()
-  return create('div', {
+  return element('div', {
     className: css({
       all: 'unset',
       display: 'flex',
@@ -32,24 +32,24 @@ export const Page: FC<{
       background: theme.page.background,
     }),
     children: [
-      create(Scroller, {
+      element(Scroller, {
         key: 'scroller',
         disable: hidden,
         children: [
-          create(Header, {
+          element(Header, {
             key: 'header',
             title,
             subtitle,
             corner,
           }),
-          create('div', {
+          element('div', {
             key: 'children',
             children: [
-              create(Fragment, {
+              element(Fragment, {
                 key: 'children',
                 children,
               }),
-              create(Branding, {
+              element(Branding, {
                 key: 'branding',
                 url: 'https://authpack.io',
                 text: `Authpack`,
@@ -64,7 +64,7 @@ export const Page: FC<{
           }),
         ],
       }),
-      create('div', {
+      element('div', {
         key: 'noscroll',
         children: noscroll,
         className: css({
@@ -88,7 +88,7 @@ const Header: FC<{
 }> = ({ title, subtitle, corner }) => {
   const theme = useTheme()
   const spinner = useSpinner()
-  return create('div', {
+  return element('div', {
     className: css({
       all: 'unset',
       display: 'flex',
@@ -97,7 +97,7 @@ const Header: FC<{
       borderBottom: theme.page.border,
     }),
     children: [
-      create('div', {
+      element('div', {
         key: 'text',
         className: css({
           all: 'unset',
@@ -106,7 +106,7 @@ const Header: FC<{
           padding: '25px 25px 20px',
         }),
         children: [
-          create('div', {
+          element('div', {
             key: 'title',
             className: css({
               all: 'unset',
@@ -115,7 +115,7 @@ const Header: FC<{
               color: theme.page.title,
             }),
             children: [
-              create('div', {
+              element('div', {
                 key: 'title',
                 children: title,
                 className: css({
@@ -123,14 +123,14 @@ const Header: FC<{
                   lineHeight: '1em',
                 }),
               }),
-              create('div', {
+              element('div', {
                 key: 'icon',
                 className: css({
                   transition: '500ms',
                   opacity: spinner.loading ? 0.5 : 0,
                   marginLeft: 10,
                 }),
-                children: create(Icon, {
+                children: element(Icon, {
                   icon: 'sync-alt',
                   spin: true,
                 }),
@@ -138,7 +138,7 @@ const Header: FC<{
             ],
           }),
           subtitle &&
-            create('div', {
+            element('div', {
               key: 'subtitle',
               children: subtitle,
               className: css({
@@ -149,7 +149,7 @@ const Header: FC<{
         ],
       }),
       corner &&
-        create(Corner, {
+        element(Corner, {
           key: 'corner',
           ...corner,
         }),
@@ -164,7 +164,7 @@ const Corner: FC<{
   click: () => void
 }> = ({ icon, prefix, label, click }) => {
   const theme = useTheme()
-  return create('div', {
+  return element('div', {
     onClick: click,
     className: css({
       all: 'unset',
@@ -182,13 +182,13 @@ const Corner: FC<{
       },
     }),
     children: [
-      create(Icon, {
+      element(Icon, {
         key: 'icon',
         icon,
         prefix,
         size: 25,
       }),
-      create('div', {
+      element('div', {
         key: 'label',
         children: label,
         className: css({
@@ -204,7 +204,7 @@ const Branding: FC<{
   text: string
 }> = ({ url, text }) => {
   const theme = useTheme()
-  return create('div', {
+  return element('div', {
     className: css({
       all: 'unset',
       display: 'flex',
@@ -212,7 +212,7 @@ const Branding: FC<{
       padding: '20px 25px 25px',
       marginTop: 'auto',
     }),
-    children: create('a', {
+    children: element('a', {
       href: url,
       target: '_blank',
       children: text,

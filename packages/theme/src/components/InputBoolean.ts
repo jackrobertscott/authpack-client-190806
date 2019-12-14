@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import { css } from 'emotion'
 import { InputContainer } from './Input'
 import { Icon } from './Icon'
@@ -9,7 +9,7 @@ export const InputBoolean: FC<{
   change?: (value: boolean) => void
   disabled?: boolean
 }> = ({ value = false, change, disabled }) => {
-  return create('div', {
+  return element('div', {
     onClick: () => change && !disabled && change(!value),
     className: css({
       all: 'unset',
@@ -19,9 +19,9 @@ export const InputBoolean: FC<{
       width: 100,
       maxWidth: 100,
     }),
-    children: create(InputContainer, {
+    children: element(InputContainer, {
       disabled,
-      children: create('div', {
+      children: element('div', {
         className: css({
           all: 'unset',
           display: 'flex',
@@ -29,7 +29,7 @@ export const InputBoolean: FC<{
           justifyContent: 'flex-end',
           flexGrow: value ? 1 : 0,
         }),
-        children: create(Knob, {
+        children: element(Knob, {
           value,
         }),
       }),
@@ -41,7 +41,7 @@ const Knob: FC<{
   value: boolean
 }> = ({ value }) => {
   const theme = useTheme()
-  return create('div', {
+  return element('div', {
     className: css({
       all: 'unset',
       display: 'flex',
@@ -55,7 +55,7 @@ const Knob: FC<{
       color: value ? theme.input.valueHover : theme.input.value,
       background: value ? theme.input.on : theme.input.off,
     }),
-    children: create(Icon, {
+    children: element(Icon, {
       icon: value ? 'check' : 'times',
     }),
   })

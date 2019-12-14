@@ -1,4 +1,4 @@
-import { createElement as create, FC, ReactNode } from 'react'
+import { createElement as element, FC, ReactNode } from 'react'
 import { useTheme } from '../hooks/useTheme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
@@ -11,7 +11,7 @@ export const Empty: FC<{
   children?: ReactNode
 }> = ({ icon, prefix, label, helper, children }) => {
   const theme = useTheme()
-  return create('div', {
+  return element('div', {
     className: css({
       all: 'unset',
       display: 'flex',
@@ -26,7 +26,7 @@ export const Empty: FC<{
       transition: '200ms',
       background: theme.empty.cover,
     }),
-    children: create('div', {
+    children: element('div', {
       className: css({
         display: 'flex',
         flexDirection: 'column',
@@ -42,13 +42,13 @@ export const Empty: FC<{
         borderRadius: theme.global.radius,
       }),
       children: [
-        create(Icon, {
+        element(Icon, {
           key: 'icon',
           icon,
           prefix,
           size: 25,
         }),
-        create('div', {
+        element('div', {
           key: 'label',
           children: label,
           className: css({
@@ -59,7 +59,7 @@ export const Empty: FC<{
           }),
         }),
         helper &&
-          create('div', {
+          element('div', {
             key: 'helper',
             children: helper,
             className: css({
@@ -69,7 +69,7 @@ export const Empty: FC<{
             }),
           }),
         children &&
-          create('div', {
+          element('div', {
             key: 'children',
             children,
             className: css({

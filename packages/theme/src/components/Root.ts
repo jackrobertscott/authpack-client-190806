@@ -1,4 +1,4 @@
-import { createElement as create, FC, ReactNode, Fragment } from 'react'
+import { createElement as element, FC, ReactNode, Fragment } from 'react'
 import { css } from 'emotion'
 import { ThemeContext } from '../contexts/Theme'
 import { NightSky } from '../themes/NightSky'
@@ -25,10 +25,10 @@ export const Root: FC<{
       value = NightSky
       break
   }
-  return create(Spinner, {
-    children: create(ThemeContext.Provider, {
+  return element(Spinner, {
+    children: element(ThemeContext.Provider, {
       value,
-      children: create('div', {
+      children: element('div', {
         className: css({
           all: 'unset',
           display: 'flex',
@@ -39,11 +39,11 @@ export const Root: FC<{
           },
         }),
         children: [
-          create(Fragment, {
+          element(Fragment, {
             key: 'children',
             children,
           }),
-          create('div', {
+          element('div', {
             key: 'portals',
             id: 'portals',
           }),

@@ -1,5 +1,5 @@
 import {
-  createElement as create,
+  createElement as element,
   FC,
   ReactNode,
   useState,
@@ -32,7 +32,7 @@ export const Spinner: FC<{
       begin,
     }
   }, [loading])
-  return create(SpinnerContext.Provider, {
+  return element(SpinnerContext.Provider, {
     value,
     children,
   })

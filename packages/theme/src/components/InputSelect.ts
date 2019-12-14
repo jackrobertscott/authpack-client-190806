@@ -1,4 +1,4 @@
-import { createElement as create, FC, useState, useEffect } from 'react'
+import { createElement as element, FC, useState, useEffect } from 'react'
 import { css } from 'emotion'
 import { InputContainer, InputPopover, InputOption } from './Input'
 
@@ -18,9 +18,9 @@ export const InputSelect: FC<{
   useEffect(() => {
     if (change && current && current.value !== value) change(current.value)
   }, [value])
-  return create(InputContainer, {
+  return element(InputContainer, {
     nofocus: true,
-    children: create('div', {
+    children: element('div', {
       onClick: () => openChange(true),
       className: css({
         all: 'unset',
@@ -30,7 +30,7 @@ export const InputSelect: FC<{
         padding: 15,
       }),
       children: [
-        create('div', {
+        element('div', {
           key: 'value',
           children: current ? current.label : placeholder || 'Select...',
           className: css({
@@ -38,18 +38,18 @@ export const InputSelect: FC<{
           }),
         }),
         open &&
-          create(InputPopover, {
+          element(InputPopover, {
             key: 'popover',
             close: () => openChange(false),
             children: [
               filter &&
-                create(Search, {
+                element(Search, {
                   key: 'search',
                   filter,
                   placeholder: 'Search...',
                 }),
               value &&
-                create(InputOption, {
+                element(InputOption, {
                   key: 'clear',
                   icon: 'times',
                   label: 'Clear',
@@ -57,7 +57,7 @@ export const InputSelect: FC<{
                   reverse: true,
                 }),
               options.map(option => {
-                return create(InputOption, {
+                return element(InputOption, {
                   key: option.value,
                   icon:
                     current && current.value === option.value
@@ -85,7 +85,7 @@ const Search: FC<{
   useEffect(() => {
     filter(phrase)
   }, [phrase])
-  return create('input', {
+  return element('input', {
     value: phrase,
     placeholder,
     onChange: event => phraseChange(event.target.value),

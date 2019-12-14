@@ -1,4 +1,4 @@
-import { createElement as create, FC, ReactNode, useState } from 'react'
+import { createElement as element, FC, ReactNode, useState } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../hooks/useTheme'
 import { Icon } from './Icon'
@@ -31,7 +31,7 @@ export const IconBar: FC<{
 }> = ({ icons, children }) => {
   const theme = useTheme()
   const bp = `@media (max-width: ${515 + 50}px)`
-  return create('div', {
+  return element('div', {
     className: css({
       all: 'unset',
       display: 'flex',
@@ -42,7 +42,7 @@ export const IconBar: FC<{
       },
     }),
     children: [
-      create('div', {
+      element('div', {
         key: 'iconBar',
         className: css({
           all: 'unset',
@@ -61,10 +61,10 @@ export const IconBar: FC<{
             borderRight: 'none',
           },
         }),
-        children: create(IconSpacer, {
+        children: element(IconSpacer, {
           bp,
           children: icons.filter(Boolean).map((data: any, index) => {
-            return create(IconPointer, {
+            return element(IconPointer, {
               key: `icon-${index}`,
               bp,
               ...data,
@@ -72,7 +72,7 @@ export const IconBar: FC<{
           }),
         }),
       }),
-      create('div', {
+      element('div', {
         key: 'children',
         children,
         className: css({
@@ -92,7 +92,7 @@ const IconSpacer: FC<{
   bp: string
   children: ReactNode
 }> = ({ children, bp }) => {
-  return create('div', {
+  return element('div', {
     children,
     className: css({
       all: 'unset',
@@ -146,7 +146,7 @@ const IconPointer: FC<{
   const theme = useTheme()
   const mounted = useMounted()
   const [open, openChange] = useState<boolean>(false)
-  return create('div', {
+  return element('div', {
     onClick: () => options.length && !open && openChange(true),
     className: css({
       all: 'unset',
@@ -165,7 +165,7 @@ const IconPointer: FC<{
       },
     }),
     children: [
-      create('div', {
+      element('div', {
         key: 'icon',
         onClick: click,
         className: css({
@@ -182,14 +182,14 @@ const IconPointer: FC<{
             background: theme.page.background,
           },
         }),
-        children: create(Icon, {
+        children: element(Icon, {
           icon,
           size: 22,
           padding: 8,
           prefix,
         }),
       }),
-      create('div', {
+      element('div', {
         key: 'pointer',
         className: css({
           all: 'unset',
@@ -207,10 +207,10 @@ const IconPointer: FC<{
             display: 'none',
           },
         }).concat(' toggle'),
-        children: create(ClickOutside, {
+        children: element(ClickOutside, {
           disabled: !open,
           click: () => openChange(false),
-          children: create(Pointer, {
+          children: element(Pointer, {
             icon,
             label,
             helper,
@@ -218,7 +218,7 @@ const IconPointer: FC<{
             children:
               open &&
               !!options.length &&
-              create(Menu, {
+              element(Menu, {
                 key: 'menu',
                 options: options.map(option => ({
                   ...option,

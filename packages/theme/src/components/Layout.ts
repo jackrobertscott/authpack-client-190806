@@ -1,4 +1,4 @@
-import { createElement as create, FC, ReactNode } from 'react'
+import { createElement as element, FC, ReactNode } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../hooks/useTheme'
 
@@ -27,7 +27,7 @@ export const Layout: FC<{
 }) => {
   const theme = useTheme()
   const bp = `@media (max-width: ${breakpoint + 50}px)`
-  return create('div', {
+  return element('div', {
     children,
     className: css({
       all: 'unset',

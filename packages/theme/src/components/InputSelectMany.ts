@@ -1,4 +1,4 @@
-import { createElement as create, FC, ReactNode } from 'react'
+import { createElement as element, FC, ReactNode } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../hooks/useTheme'
 import { Icon } from './Icon'
@@ -22,8 +22,8 @@ export const InputSelectMany: FC<{
       change(update)
     }
   }
-  return create(Container, {
-    children: create('div', {
+  return element(Container, {
+    children: element('div', {
       className: css({
         all: 'unset',
         display: 'flex',
@@ -31,7 +31,7 @@ export const InputSelectMany: FC<{
         flexGrow: 1,
       }),
       children: options.map(option => {
-        return create(Option, {
+        return element(Option, {
           key: option.value,
           click: () => toggle(option.value),
           state: value.includes(option.value),
@@ -51,7 +51,7 @@ const Option: FC<{
   click?: () => void
 }> = ({ icon, prefix, label, helper, state, click }) => {
   const theme = useTheme()
-  return create('div', {
+  return element('div', {
     key: label,
     onClick: click,
     className: css({
@@ -71,7 +71,7 @@ const Option: FC<{
       },
     }),
     children: [
-      create('div', {
+      element('div', {
         key: 'toggle',
         className: css({
           all: 'unset',
@@ -85,12 +85,12 @@ const Option: FC<{
           color: state ? theme.input.valueHover : theme.input.value,
           background: state ? theme.input.on : theme.input.off,
         }),
-        children: create(Icon, {
+        children: element(Icon, {
           icon: state ? 'check' : 'times',
           size: 10,
         }),
       }),
-      create('div', {
+      element('div', {
         key: 'text',
         className: css({
           display: 'flex',
@@ -100,12 +100,12 @@ const Option: FC<{
           marginRight: icon ? 10 : 0,
         }),
         children: [
-          create('div', {
+          element('div', {
             key: 'label',
             children: label,
           }),
           helper &&
-            create('div', {
+            element('div', {
               key: 'helper',
               children: helper,
               className: css({
@@ -117,7 +117,7 @@ const Option: FC<{
         ],
       }),
       icon &&
-        create(Icon, {
+        element(Icon, {
           key: 'icon',
           icon,
           prefix,
@@ -130,7 +130,7 @@ export const Container: FC<{
   children: ReactNode
 }> = ({ children }) => {
   const theme = useTheme()
-  return create('div', {
+  return element('div', {
     children,
     className: css({
       all: 'unset',

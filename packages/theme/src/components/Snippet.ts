@@ -1,4 +1,4 @@
-import { createElement as create, FC, useState } from 'react'
+import { createElement as element, FC, useState } from 'react'
 import { useTheme } from '../hooks/useTheme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
@@ -23,7 +23,7 @@ export const Snippet: FC<{
   const theme = useTheme()
   const mounted = useMounted()
   const [open, openChange] = useState<boolean>(false)
-  return create('div', {
+  return element('div', {
     onClick: click,
     className: css({
       all: 'unset',
@@ -41,12 +41,12 @@ export const Snippet: FC<{
       },
     }),
     children: [
-      create(Icon, {
+      element(Icon, {
         key: 'icon',
         icon,
         prefix,
       }),
-      create('div', {
+      element('div', {
         key: 'text',
         className: css({
           display: 'flex',
@@ -56,12 +56,12 @@ export const Snippet: FC<{
           marginRight: 10,
         }),
         children: [
-          create('div', {
+          element('div', {
             key: 'label',
             children: label,
           }),
           value &&
-            create('div', {
+            element('div', {
               key: 'helper',
               children: value,
               className: css({
@@ -73,7 +73,7 @@ export const Snippet: FC<{
         ],
       }),
       Boolean(options.length || click) &&
-        create('div', {
+        element('div', {
           key: 'arrow',
           onClick: () => options.length && openChange(true),
           className: css({
@@ -93,11 +93,11 @@ export const Snippet: FC<{
           children: !options.length
             ? null
             : [
-                create(Icon, {
+                element(Icon, {
                   key: 'icon',
                   icon: options.length ? 'bars' : 'minus',
                 }),
-                create(Dropdown, {
+                element(Dropdown, {
                   key: 'dropdown',
                   options,
                   close: () => mounted.current && openChange(false),
@@ -120,7 +120,7 @@ export const Dropdown: FC<{
     click?: () => void
   }>
 }> = ({ open, close, options }) => {
-  return create('div', {
+  return element('div', {
     className: css({
       all: 'unset',
       display: 'flex',
@@ -136,10 +136,10 @@ export const Dropdown: FC<{
         flexGrow: 1,
       },
     }),
-    children: create(ClickOutside, {
+    children: element(ClickOutside, {
       click: close,
       disabled: !open,
-      children: create(Menu, {
+      children: element(Menu, {
         isolated: true,
         options: options.map(option => ({
           ...option,

@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import { useTheme } from '../hooks/useTheme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
@@ -20,7 +20,7 @@ export const Table: FC<{
     }>
   }>
 }> = ({ header, rows }) => {
-  return create('table', {
+  return element('table', {
     className: css({
       all: 'unset',
       display: 'table',
@@ -28,24 +28,24 @@ export const Table: FC<{
       flexGrow: 1,
     }),
     children: [
-      create('thead', {
+      element('thead', {
         key: 'header',
         className: css({
           all: 'unset',
           display: 'table-header-group',
         }),
-        children: create(Header, {
+        children: element(Header, {
           header,
         }),
       }),
-      create('tbody', {
+      element('tbody', {
         key: 'body',
         className: css({
           all: 'unset',
           display: 'table-row-group',
         }),
         children: rows.map(({ id, click, cells }) => {
-          return create(Row, {
+          return element(Row, {
             key: id,
             click,
             cells,
@@ -65,14 +65,14 @@ const Header: FC<{
   }>
 }> = ({ header }) => {
   const theme = useTheme()
-  return create('tr', {
+  return element('tr', {
     className: css({
       all: 'unset',
       display: 'table-row',
       background: theme.table.header,
     }),
     children: header.map(({ label, icon, prefix, click }, index) => {
-      return create('th', {
+      return element('th', {
         key: `header-${index}`,
         onClick: click,
         className: css({
@@ -87,7 +87,7 @@ const Header: FC<{
             background: theme.table.headerHover,
           },
         }),
-        children: create('div', {
+        children: element('div', {
           className: css({
             all: 'unset',
             display: 'flex',
@@ -95,18 +95,18 @@ const Header: FC<{
           }),
           children: [
             icon &&
-              create('div', {
+              element('div', {
                 key: 'icon',
                 className: css({
                   marginTop: 1,
                   marginRight: 10,
                 }),
-                children: create(Icon, {
+                children: element(Icon, {
                   icon,
                   prefix,
                 }),
               }),
-            create('div', {
+            element('div', {
               key: 'label',
               children: label,
             }),
@@ -126,7 +126,7 @@ const Row: FC<{
   }>
 }> = ({ click, cells }) => {
   const theme = useTheme()
-  return create('tr', {
+  return element('tr', {
     onClick: click,
     className: css({
       all: 'unset',
@@ -142,7 +142,7 @@ const Row: FC<{
       },
     }),
     children: cells.map((cell, index) => {
-      return create(Cell, {
+      return element(Cell, {
         key: `cell-${index}`,
         ...cell,
       })
@@ -156,14 +156,14 @@ const Cell: FC<{
   prefix?: string
 }> = ({ value, icon, prefix }) => {
   const theme = useTheme()
-  return create('td', {
+  return element('td', {
     className: css({
       all: 'unset',
       display: 'table-cell',
       padding: '20px 25px',
       borderBottom: theme.table.border,
     }),
-    children: create('div', {
+    children: element('div', {
       className: css({
         all: 'unset',
         display: 'flex',
@@ -171,18 +171,18 @@ const Cell: FC<{
       }),
       children: [
         icon &&
-          create('div', {
+          element('div', {
             key: 'icon',
             className: css({
               marginTop: 1,
               marginRight: 10,
             }),
-            children: create(Icon, {
+            children: element(Icon, {
               icon,
               prefix,
             }),
           }),
-        create('div', {
+        element('div', {
           key: 'value',
           children: value,
         }),

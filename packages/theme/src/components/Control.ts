@@ -1,4 +1,4 @@
-import { createElement as create, FC, ReactNode, useState } from 'react'
+import { createElement as element, FC, ReactNode, useState } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../hooks/useTheme'
 import { Icon } from './Icon'
@@ -13,7 +13,7 @@ export const Control: FC<{
   error?: Error
 }> = ({ icon, prefix, label, helper, children, error }) => {
   const theme = useTheme()
-  return create('div', {
+  return element('div', {
     className: css({
       all: 'unset',
       display: 'flex',
@@ -23,7 +23,7 @@ export const Control: FC<{
       color: theme.input.label,
     }),
     children: [
-      create('div', {
+      element('div', {
         key: 'label',
         className: css({
           all: 'unset',
@@ -31,7 +31,7 @@ export const Control: FC<{
           color: theme.input.label,
         }),
         children: [
-          create('div', {
+          element('div', {
             key: 'label',
             children: label,
             className: css({
@@ -39,7 +39,7 @@ export const Control: FC<{
             }),
           }),
           error &&
-            create(Alert, {
+            element(Alert, {
               key: 'error',
               icon,
               prefix,
@@ -47,7 +47,7 @@ export const Control: FC<{
             }),
         ],
       }),
-      create('div', {
+      element('div', {
         key: 'helper',
         children: helper,
         className: css({
@@ -56,7 +56,7 @@ export const Control: FC<{
           fontWeight: theme.global.thin,
         }),
       }),
-      create('div', {
+      element('div', {
         key: 'input',
         children,
         className: css({
@@ -74,7 +74,7 @@ const Alert: FC<{
 }> = ({ icon = 'flag', prefix, error }) => {
   const bp = `@media (max-width: ${525 + 50}px)`
   const [open, openChange] = useState<boolean>(false)
-  return create('div', {
+  return element('div', {
     className: css({
       all: 'unset',
       display: 'flex',
@@ -88,19 +88,19 @@ const Alert: FC<{
       },
     }),
     children: [
-      create('div', {
+      element('div', {
         key: 'icon',
         onClick: () => openChange(!open),
         className: css({
           padding: 5,
           margin: -5,
         }),
-        children: create(Icon, {
+        children: element(Icon, {
           icon,
           prefix,
         }),
       }),
-      create('div', {
+      element('div', {
         key: 'pointer',
         className: css({
           all: 'unset',
@@ -119,7 +119,7 @@ const Alert: FC<{
             transform: 'translateY(-100%)',
           },
         }).concat(' alert'),
-        children: create(Pointer, {
+        children: element(Pointer, {
           icon,
           prefix,
           label: 'Error',

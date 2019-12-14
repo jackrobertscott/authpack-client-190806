@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../hooks/useTheme'
 import { Icon } from './Icon'
@@ -15,7 +15,7 @@ export const Menu: FC<{
   }>
 }> = ({ isolated, options }) => {
   const theme = useTheme()
-  return create('div', {
+  return element('div', {
     className: css({
       overflow: 'hidden',
       borderRadius: isolated ? theme.global.radius : undefined,
@@ -23,10 +23,10 @@ export const Menu: FC<{
       boxShadow: isolated ? theme.menu.shadow : undefined,
       borderTop: theme.menu.border,
     }),
-    children: create(Scroller, {
+    children: element(Scroller, {
       maxheight: 320,
       children: options.map(({ label, helper, icon, prefix, click }) => {
-        return create('div', {
+        return element('div', {
           key: label,
           onClick: click,
           className: css({
@@ -46,12 +46,12 @@ export const Menu: FC<{
             },
           }),
           children: [
-            create(Icon, {
+            element(Icon, {
               key: 'icon',
               icon,
               prefix,
             }),
-            create('div', {
+            element('div', {
               key: 'text',
               className: css({
                 display: 'flex',
@@ -60,12 +60,12 @@ export const Menu: FC<{
                 marginLeft: 10,
               }),
               children: [
-                create('div', {
+                element('div', {
                   key: 'label',
                   children: label,
                 }),
                 helper &&
-                  create('div', {
+                  element('div', {
                     key: 'helper',
                     children: helper,
                     className: css({

@@ -1,5 +1,5 @@
 import {
-  createElement as create,
+  createElement as element,
   FC,
   ReactNode,
   Fragment,
@@ -29,7 +29,7 @@ export const SideBar: FC<{
   const theme = useTheme()
   const [open, openChange] = useState<boolean>(true)
   const bp = `@media (max-width: ${1035 + 50}px)`
-  return create('div', {
+  return element('div', {
     className: css({
       all: 'unset',
       display: 'flex',
@@ -38,7 +38,7 @@ export const SideBar: FC<{
       overflow: 'hidden',
     }),
     children: [
-      create('div', {
+      element('div', {
         key: 'sideBar',
         className: css({
           all: 'unset',
@@ -63,13 +63,13 @@ export const SideBar: FC<{
             bottom: 0,
           },
         }),
-        children: create(Scroller, {
+        children: element(Scroller, {
           children: [
-            create(Title, {
+            element(Title, {
               key: 'title',
               title,
             }),
-            create(Options, {
+            element(Options, {
               key: 'options',
               options: options.filter(Boolean).map((data: any) => ({
                 ...data,
@@ -81,14 +81,14 @@ export const SideBar: FC<{
               bp,
             }),
             footer &&
-              create(Footer, {
+              element(Footer, {
                 key: 'footer',
                 footer,
               }),
           ],
         }),
       }),
-      create('div', {
+      element('div', {
         key: 'children',
         className: css({
           all: 'unset',
@@ -97,7 +97,7 @@ export const SideBar: FC<{
           flexGrow: 1,
         }),
         children: [
-          create('div', {
+          element('div', {
             key: 'back',
             className: css({
               all: 'unset',
@@ -108,13 +108,13 @@ export const SideBar: FC<{
                 display: 'flex',
               },
             }),
-            children: create(Snippet, {
+            children: element(Snippet, {
               icon: 'angle-left',
               label: 'Back',
               click: () => openChange(true),
             }),
           }),
-          create(Fragment, {
+          element(Fragment, {
             key: 'children',
             children,
           }),
@@ -128,7 +128,7 @@ const Title: FC<{
   title: string
 }> = ({ title }) => {
   const theme = useTheme()
-  return create('div', {
+  return element('div', {
     children: title,
     className: css({
       lineHeight: '1em',
@@ -144,7 +144,7 @@ const Footer: FC<{
   footer: string
 }> = ({ footer }) => {
   const theme = useTheme()
-  return create('div', {
+  return element('div', {
     children: footer,
     className: css({
       whiteSpace: 'pre',
@@ -167,7 +167,7 @@ const Options: FC<{
   }>
 }> = ({ bp, options }) => {
   const theme = useTheme()
-  return create('div', {
+  return element('div', {
     className: css({
       all: 'unset',
       display: 'flex',
@@ -175,7 +175,7 @@ const Options: FC<{
       marginBottom: 40,
     }),
     children: options.map(({ label, icon, prefix, click, focused }, index) => {
-      return create('div', {
+      return element('div', {
         key: `option-${index}`,
         onClick: click,
         className: css({
@@ -193,19 +193,19 @@ const Options: FC<{
           },
         }),
         children: [
-          create(Icon, {
+          element(Icon, {
             key: 'icon',
             icon,
             prefix,
           }),
-          create('div', {
+          element('div', {
             key: 'label',
             children: label,
             className: css({
               marginLeft: 10,
             }),
           }),
-          create('div', {
+          element('div', {
             key: 'right',
             className: css({
               all: 'unset',
@@ -215,7 +215,7 @@ const Options: FC<{
                 display: 'flex',
               },
             }),
-            children: create(Icon, {
+            children: element(Icon, {
               key: 'icon',
               icon: 'angle-right',
             }),

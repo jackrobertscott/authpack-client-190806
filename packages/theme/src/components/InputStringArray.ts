@@ -1,4 +1,4 @@
-import { createElement as create, FC, useState } from 'react'
+import { createElement as element, FC, useState } from 'react'
 import { css } from 'emotion'
 import { InputContainer, InputPopover, InputOption } from './Input'
 
@@ -18,9 +18,9 @@ export const InputStringArray: FC<{
   const remove = (option: string) => {
     if (change) change(value.filter(i => i !== option))
   }
-  return create(InputContainer, {
+  return element(InputContainer, {
     nofocus: true,
-    children: create('div', {
+    children: element('div', {
       onClick: () => openChange(true),
       className: css({
         all: 'unset',
@@ -30,7 +30,7 @@ export const InputStringArray: FC<{
         padding: 15,
       }),
       children: [
-        create('div', {
+        element('div', {
           key: 'value',
           children:
             value
@@ -45,11 +45,11 @@ export const InputStringArray: FC<{
           }),
         }),
         open &&
-          create(InputPopover, {
+          element(InputPopover, {
             key: 'popover',
             close: () => openChange(false),
             children: [
-              create('input', {
+              element('input', {
                 key: 'input',
                 value: current,
                 placeholder,
@@ -64,7 +64,7 @@ export const InputStringArray: FC<{
                   padding: 15,
                 }),
               }),
-              create(InputOption, {
+              element(InputOption, {
                 key: 'add',
                 icon: 'plus',
                 label: 'Press enter to add',
@@ -72,7 +72,7 @@ export const InputStringArray: FC<{
                 reverse: true,
               }),
               value.map(option => {
-                return create(InputOption, {
+                return element(InputOption, {
                   key: option,
                   icon: 'times',
                   label: option,

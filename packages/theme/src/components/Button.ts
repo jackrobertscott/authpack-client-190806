@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../hooks/useTheme'
 import { Icon } from './Icon'
@@ -14,7 +14,7 @@ export const Button: FC<{
   style?: any
 }> = ({ label, click, icon, prefix, minor, disabled, loading, style = {} }) => {
   const theme = useTheme()
-  return create('div', {
+  return element('div', {
     onClick: disabled || loading ? () => {} : click,
     className: `${disabled || loading ? 'disabled' : ''} ${css({
       all: 'unset',
@@ -47,14 +47,14 @@ export const Button: FC<{
       ...style,
     })}`,
     children: [
-      create('div', {
+      element('div', {
         key: 'label',
         children: label,
         className: css({
           marginRight: 10,
         }),
       }),
-      create(Icon, {
+      element(Icon, {
         key: 'icon',
         spin: loading,
         icon: loading

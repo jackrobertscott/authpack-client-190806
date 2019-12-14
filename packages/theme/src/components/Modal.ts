@@ -1,4 +1,4 @@
-import { createElement as create, FC, ReactNode, useRef } from 'react'
+import { createElement as element, FC, ReactNode, useRef } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../hooks/useTheme'
 import { Portal } from './Portal'
@@ -19,10 +19,10 @@ export const Modal: FC<{
     (max-height: ${height + 50}px)`
   const theme = useTheme()
   const unfocused = useRef<boolean>(!document.querySelector(':focus-within'))
-  return create(Portal, {
+  return element(Portal, {
     id,
-    children: create(Spinner, {
-      children: create('div', {
+    children: element(Spinner, {
+      children: element('div', {
         onClick: (event: any) => {
           const matching = event.target === event.currentTarget
           if (close && matching && unfocused.current) close()
@@ -44,10 +44,10 @@ export const Modal: FC<{
           opacity: visible ? 1 : 0,
           background: theme.modal.cover,
         }),
-        children: create('div', {
+        children: element('div', {
           children: !visible
             ? null
-            : create(Toaster, {
+            : element(Toaster, {
                 children,
               }),
           className: css({

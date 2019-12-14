@@ -1,4 +1,4 @@
-import { createElement as create, FC, ReactNode, Fragment } from 'react'
+import { createElement as element, FC, ReactNode, Fragment } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../hooks/useTheme'
 import { Icon } from './Icon'
@@ -11,7 +11,7 @@ export const Pointer: FC<{
   children?: ReactNode
 }> = ({ icon, prefix, label, helper, children }) => {
   const theme = useTheme()
-  return create('div', {
+  return element('div', {
     className: css({
       all: 'unset',
       display: 'flex',
@@ -29,7 +29,7 @@ export const Pointer: FC<{
       color: theme.pointer.label,
     }),
     children: [
-      create(Header, {
+      element(Header, {
         key: 'header',
         icon,
         prefix,
@@ -37,7 +37,7 @@ export const Pointer: FC<{
         helper,
       }),
       children &&
-        create(Fragment, {
+        element(Fragment, {
           key: 'children',
           children,
         }),
@@ -52,7 +52,7 @@ const Header: FC<{
   helper?: string
 }> = ({ icon, prefix, label, helper }) => {
   const theme = useTheme()
-  return create('div', {
+  return element('div', {
     key: 'header',
     className: css({
       all: 'unset',
@@ -62,7 +62,7 @@ const Header: FC<{
       flexGrow: 1,
     }),
     children: [
-      create('div', {
+      element('div', {
         key: 'text',
         className: css({
           display: 'flex',
@@ -71,12 +71,12 @@ const Header: FC<{
           marginRight: 10,
         }),
         children: [
-          create('div', {
+          element('div', {
             key: 'label',
             children: label,
           }),
           helper &&
-            create('div', {
+            element('div', {
               key: 'helper',
               children: helper,
               className: css({
@@ -87,7 +87,7 @@ const Header: FC<{
             }),
         ],
       }),
-      create(Icon, {
+      element(Icon, {
         key: 'icon',
         icon,
         prefix,

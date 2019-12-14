@@ -1,4 +1,10 @@
-import { createElement as create, FC, useRef, ReactNode, Fragment } from 'react'
+import {
+  createElement as element,
+  FC,
+  useRef,
+  ReactNode,
+  Fragment,
+} from 'react'
 import { useTheme } from '../hooks/useTheme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
@@ -21,7 +27,7 @@ export const SearchBar: FC<{
   }>
 }> = ({ value, change, placeholder, options = [] }) => {
   const theme = useTheme()
-  return create('div', {
+  return element('div', {
     className: css({
       all: 'unset',
       display: 'flex',
@@ -33,7 +39,7 @@ export const SearchBar: FC<{
     }),
     children: [
       change &&
-        create(Searcher, {
+        element(Searcher, {
           key: 'searcher',
           value,
           change,
@@ -41,7 +47,7 @@ export const SearchBar: FC<{
         }),
       !!options.length &&
         options.map((option, index) => {
-          return create(Option, {
+          return element(Option, {
             key: `option-${index}`,
             ...option,
           })
@@ -56,12 +62,12 @@ const Searcher: FC<{
   placeholder?: string
 }> = ({ value = '', change, placeholder = 'Search...' }) => {
   const theme = useTheme()
-  const element = useRef()
-  return create('div', {
-    ref: element,
+  const node = useRef()
+  return element('div', {
+    ref: node,
     onClick: () => {
       const input: any =
-        element.current && (element.current as any).querySelector('input')
+        node.current && (node.current as any).querySelector('input')
       if (input) input.focus()
     },
     className: css({
@@ -83,11 +89,11 @@ const Searcher: FC<{
       },
     }),
     children: [
-      create(Icon, {
+      element(Icon, {
         key: 'icon',
         icon: 'search',
       }),
-      create('input', {
+      element('input', {
         key: 'input',
         value,
         onChange: event => change && change(event.target.value),
@@ -115,7 +121,7 @@ const Option: FC<{
   }
 }> = ({ icon, prefix, label, click, disabled, pointer }) => {
   const theme = useTheme()
-  const children = create('div', {
+  const children = element('div', {
     onClick: disabled ? undefined : click,
     className: css({
       all: 'unset',
@@ -138,12 +144,12 @@ const Option: FC<{
       },
     }),
     children: [
-      create(Icon, {
+      element(Icon, {
         key: 'icon',
         icon,
         prefix,
       }),
-      create('div', {
+      element('div', {
         key: 'label',
         children: label,
         className: css({
@@ -155,7 +161,7 @@ const Option: FC<{
   })
   return !pointer
     ? children
-    : create(OptionPointer, {
+    : element(OptionPointer, {
         icon,
         children,
         ...pointer,
@@ -169,7 +175,7 @@ const OptionPointer: FC<{
   helper: string
   children: ReactNode
 }> = ({ icon, prefix, label, helper, children }) => {
-  return create('div', {
+  return element('div', {
     className: css({
       all: 'unset',
       display: 'flex',
@@ -181,11 +187,11 @@ const OptionPointer: FC<{
       },
     }),
     children: [
-      create(Fragment, {
+      element(Fragment, {
         key: 'children',
         children,
       }),
-      create('div', {
+      element('div', {
         key: 'pointer',
         className: css({
           all: 'unset',
@@ -200,7 +206,7 @@ const OptionPointer: FC<{
           zIndex: 200,
           transform: 'translateY(-100%)',
         }).concat(' pointer'),
-        children: create(Pointer, {
+        children: element(Pointer, {
           icon,
           prefix,
           label,

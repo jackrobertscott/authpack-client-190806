@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import { css } from 'emotion'
 import { spinning } from '../utils/animation'
 
@@ -10,7 +10,7 @@ export const Icon: FC<{
   color?: string
   spin?: boolean
 }> = ({ icon, size, padding = 0, prefix = 'fas', color, spin }) => {
-  return create('div', {
+  return element('div', {
     className: css({
       all: 'unset',
       display: 'flex',
@@ -26,7 +26,7 @@ export const Icon: FC<{
           ? `${spinning} 3s linear infinite`
           : undefined,
     }),
-    children: create('div', {
+    children: element('div', {
       className: `${prefix} fa-${icon} ${css({
         textAlign: 'center',
       })}`,

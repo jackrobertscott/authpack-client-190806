@@ -1,4 +1,4 @@
-import { createElement as create, FC, ReactNode } from 'react'
+import { createElement as element, FC, ReactNode } from 'react'
 import { useTheme } from '../hooks/useTheme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
@@ -14,7 +14,7 @@ export const Focus: FC<{
   children?: ReactNode
 }> = ({ icon, prefix, label, helper, visible = true, portal, children }) => {
   const theme = useTheme()
-  const nodes = create('div', {
+  const nodes = element('div', {
     className: css({
       all: 'unset',
       display: 'flex',
@@ -32,7 +32,7 @@ export const Focus: FC<{
       background: theme.focus.background,
       color: theme.focus.label,
     }),
-    children: create('div', {
+    children: element('div', {
       className: css({
         display: 'flex',
         flexDirection: 'column',
@@ -41,7 +41,7 @@ export const Focus: FC<{
         maxWidth: '100%',
       }),
       children: [
-        create('div', {
+        element('div', {
           key: 'centered',
           className: css({
             display: 'flex',
@@ -50,13 +50,13 @@ export const Focus: FC<{
             textAlign: 'center',
           }),
           children: [
-            create(Icon, {
+            element(Icon, {
               key: 'icon',
               icon,
               prefix,
               size: 25,
             }),
-            create('div', {
+            element('div', {
               key: 'label',
               children: label,
               className: css({
@@ -67,7 +67,7 @@ export const Focus: FC<{
               }),
             }),
             helper &&
-              create('div', {
+              element('div', {
                 key: 'helper',
                 children: helper,
                 className: css({
@@ -79,7 +79,7 @@ export const Focus: FC<{
           ],
         }),
         children &&
-          create('div', {
+          element('div', {
             key: 'children',
             children,
             className: css({
@@ -91,7 +91,7 @@ export const Focus: FC<{
     }),
   })
   return portal
-    ? create(Portal, {
+    ? element(Portal, {
         children: nodes,
       })
     : nodes

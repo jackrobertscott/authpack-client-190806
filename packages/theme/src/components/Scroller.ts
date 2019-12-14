@@ -1,4 +1,4 @@
-import { createElement as create, ReactNode, FC } from 'react'
+import { createElement as element, ReactNode, FC } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../hooks/useTheme'
 
@@ -9,8 +9,8 @@ export const Scroller: FC<{
   always?: boolean
 }> = ({ children, disable, maxheight, always }) => {
   const theme = useTheme()
-  return create('div', {
-    children: create('div', {
+  return element('div', {
+    children: element('div', {
       children,
       className: css({
         all: 'unset',

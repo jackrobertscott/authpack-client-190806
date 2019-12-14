@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import { css } from 'emotion'
 import { InputContainer } from './Input'
 
@@ -9,9 +9,9 @@ export const InputString: FC<{
   disabled?: boolean
   password?: boolean
 }> = ({ value, change, placeholder, disabled, password }) => {
-  return create(InputContainer, {
+  return element(InputContainer, {
     disabled,
-    children: create('input', {
+    children: element('input', {
       value: value || '',
       type: password ? 'password' : 'text',
       placeholder,

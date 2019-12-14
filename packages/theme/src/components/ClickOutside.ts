@@ -1,5 +1,5 @@
 import {
-  createElement as create,
+  createElement as element,
   FC,
   useRef,
   ReactNode,
@@ -27,7 +27,7 @@ export const ClickOutside: FC<{
     document.addEventListener('mouseup', handler, false)
     return () => document.removeEventListener('mouseup', handler, false)
   }, [click, disabled])
-  return create('div', {
+  return element('div', {
     ref,
     children,
     className: css({

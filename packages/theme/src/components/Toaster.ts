@@ -1,5 +1,5 @@
 import {
-  createElement as create,
+  createElement as element,
   FC,
   ReactNode,
   useState,
@@ -42,14 +42,14 @@ export const Toaster: FC<{
       remove,
     }
   }, [current])
-  return create(ToasterContext.Provider, {
+  return element(ToasterContext.Provider, {
     value,
     children: [
-      create(Fragment, {
+      element(Fragment, {
         key: 'children',
         children,
       }),
-      create(ToasterAlerts, {
+      element(ToasterAlerts, {
         key: 'toaster',
         current,
         width,
@@ -64,7 +64,7 @@ export const ToasterAlerts: FC<{
 }> = ({ current, width = 300 }) => {
   const theme = useTheme()
   const bp = `@media (max-width: ${525 + 50}px)`
-  return create('div', {
+  return element('div', {
     className: css({
       all: 'unset',
       display: 'flex',
@@ -81,7 +81,7 @@ export const ToasterAlerts: FC<{
       },
     }),
     children: current.map(({ id, icon, prefix, label, helper, close }) => {
-      return create('div', {
+      return element('div', {
         key: id,
         className: css({
           all: 'unset',
@@ -102,12 +102,12 @@ export const ToasterAlerts: FC<{
           },
         }),
         children: [
-          create(Icon, {
+          element(Icon, {
             key: 'icon',
             icon: icon || 'bell',
             prefix,
           }),
-          create('div', {
+          element('div', {
             key: 'text',
             className: css({
               display: 'flex',
@@ -117,12 +117,12 @@ export const ToasterAlerts: FC<{
               marginRight: 10,
             }),
             children: [
-              create('div', {
+              element('div', {
                 key: 'label',
                 children: label,
               }),
               helper &&
-                create('div', {
+                element('div', {
                   key: 'helper',
                   children: helper,
                   className: css({
@@ -133,7 +133,7 @@ export const ToasterAlerts: FC<{
                 }),
             ],
           }),
-          create('div', {
+          element('div', {
             key: 'close',
             onClick: close,
             className: css({
@@ -148,7 +148,7 @@ export const ToasterAlerts: FC<{
                 background: theme.toaster.backgroundHover,
               },
             }),
-            children: create(Icon, {
+            children: element(Icon, {
               icon: 'times-circle',
               prefix: 'far',
             }),

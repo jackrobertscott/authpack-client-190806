@@ -1,5 +1,5 @@
 import {
-  createElement as create,
+  createElement as element,
   FC,
   ReactNode,
   useRef,
@@ -16,14 +16,14 @@ export const InputContainer: FC<{
   nofocus?: boolean
 }> = ({ children, disabled, nofocus = false }) => {
   const theme = useTheme()
-  return create('div', {
+  return element('div', {
     className: css({
       all: 'unset',
       display: 'flex',
       position: 'relative',
       flexGrow: 1,
     }),
-    children: create('div', {
+    children: element('div', {
       children,
       className: css({
         all: 'unset',
@@ -61,17 +61,17 @@ export const InputPopover: FC<{
   children: ReactNode
 }> = ({ close, children }) => {
   const theme = useTheme()
-  const element = useRef()
+  const node = useRef()
   useEffect(() => {
     const input: any =
-      element.current && (element.current as any).querySelector('input')
+      node.current && (node.current as any).querySelector('input')
     if (input) input.focus()
   }, [])
-  return create(ClickOutside, {
+  return element(ClickOutside, {
     click: close,
-    children: create('div', {
+    children: element('div', {
       children,
-      ref: element,
+      ref: node,
       className: css({
         all: 'unset',
         display: 'flex',
@@ -102,7 +102,7 @@ export const InputOption: FC<{
   reverse?: boolean
 }> = ({ icon, prefix, label, helper, click, reverse }) => {
   const theme = useTheme()
-  return create('div', {
+  return element('div', {
     onClick: click,
     className: css({
       all: 'unset',
@@ -124,7 +124,7 @@ export const InputOption: FC<{
       },
     }),
     children: [
-      create('div', {
+      element('div', {
         key: 'text',
         className: css({
           display: 'flex',
@@ -134,12 +134,12 @@ export const InputOption: FC<{
           marginLeft: reverse ? 10 : 0,
         }),
         children: [
-          create('div', {
+          element('div', {
             key: 'label',
             children: label,
           }),
           helper &&
-            create('div', {
+            element('div', {
               key: 'helper',
               children: helper,
               className: css({
@@ -150,7 +150,7 @@ export const InputOption: FC<{
             }),
         ],
       }),
-      create(Icon, {
+      element(Icon, {
         key: 'icon',
         icon,
         prefix,

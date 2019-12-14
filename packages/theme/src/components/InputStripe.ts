@@ -1,4 +1,4 @@
-import { createElement as create, FC, useRef, useEffect } from 'react'
+import { createElement as element, FC, useRef, useEffect } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../hooks/useTheme'
 import { InputContainer } from './Input'
@@ -15,7 +15,7 @@ export const InputStripe: FC<{
       const cssSrc =
         'https://fonts.googleapis.com/css?family=Rubik:500&display=swap'
       const elements = stripe.elements({ fonts: [{ cssSrc }] })
-      const cardStripe = elements.create('card', {
+      const cardStripe = elements.element('card', {
         hidePostalCode: true,
         style: {
           base: {
@@ -33,8 +33,8 @@ export const InputStripe: FC<{
       return () => cardStripe.removeEventListener('change', handleError)
     }
   }, [stripe])
-  return create(InputContainer, {
-    children: create('div', {
+  return element(InputContainer, {
+    children: element('div', {
       ref: input,
       className: css({
         all: 'unset',
