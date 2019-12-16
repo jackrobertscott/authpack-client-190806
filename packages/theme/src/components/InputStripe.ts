@@ -15,7 +15,7 @@ export const InputStripe: FC<{
       const cssSrc =
         'https://fonts.googleapis.com/css?family=Rubik:500&display=swap'
       const elements = stripe.elements({ fonts: [{ cssSrc }] })
-      const cardStripe = elements.element('card', {
+      const cardStripe = elements.create('card', {
         hidePostalCode: true,
         style: {
           base: {
