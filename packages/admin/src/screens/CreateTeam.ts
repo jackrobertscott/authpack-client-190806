@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useEffect, useRef } from 'react'
+import { createElement as element, FC, useEffect, useRef } from 'react'
 import {
   useSchema,
   Button,
@@ -10,7 +10,7 @@ import {
   drip,
   testAlphanumeric,
   Page,
-} from 'wga-theme'
+} from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
 export const CreateTeam: FC<{
@@ -31,50 +31,50 @@ export const CreateTeam: FC<{
     queryListUsers.current()
     // eslint-disable-next-line
   }, [])
-  return create(Page, {
+  return element(Page, {
     title: 'New',
     subtitle: 'Team',
-    children: create(Layout, {
+    children: element(Layout, {
       column: true,
       padding: true,
       divide: true,
       children: [
-        create(Control, {
+        element(Control, {
           key: 'name',
           label: 'Name',
           error: schema.error('name'),
-          children: create(InputString, {
+          children: element(InputString, {
             value: schema.value('name'),
             change: schema.change('name'),
             placeholder: 'Awesome People',
           }),
         }),
-        create(Control, {
+        element(Control, {
           key: 'tag',
           label: 'Tag',
           helper: 'A unique identifier for the team',
           error: schema.error('tag'),
-          children: create(InputString, {
+          children: element(InputString, {
             value: schema.value('tag'),
             change: schema.change('tag'),
             placeholder: 'awesome_people',
           }),
         }),
-        create(Control, {
+        element(Control, {
           key: 'description',
           label: 'Description',
           error: schema.error('description'),
-          children: create(InputString, {
+          children: element(InputString, {
             value: schema.value('description'),
             change: schema.change('description'),
             placeholder: 'We do...',
           }),
         }),
-        create(Control, {
+        element(Control, {
           key: 'user_id',
           label: 'Admin User',
           error: schema.error('user_id'),
-          children: create(InputSelect, {
+          children: element(InputSelect, {
             value: schema.value('user_id'),
             change: schema.change('user_id'),
             placeholder: 'Select user...',
@@ -91,7 +91,7 @@ export const CreateTeam: FC<{
                 })),
           }),
         }),
-        create(Button, {
+        element(Button, {
           key: 'submit',
           label: 'Create',
           loading: gqlCreateTeam.loading,

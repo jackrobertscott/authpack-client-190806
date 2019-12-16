@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useState } from 'react'
+import { createElement as element, FC, useState } from 'react'
 import {
   useSchema,
   Layout,
@@ -7,7 +7,7 @@ import {
   InputString,
   Button,
   Page,
-} from 'wga-theme'
+} from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 import { ReconcileUserPassword } from './ReconcileUserPassword'
@@ -24,29 +24,29 @@ export const RecoverUserPassword: FC = () => {
       })
     },
   })
-  return create(Page, {
+  return element(Page, {
     title: 'Recovery',
     subtitle: settings.cluster && settings.cluster.name,
     children: email
-      ? create(ReconcileUserPassword, {
+      ? element(ReconcileUserPassword, {
           email,
         })
-      : create(Layout, {
+      : element(Layout, {
           column: true,
           padding: true,
           divide: true,
           children: [
-            create(Control, {
+            element(Control, {
               key: 'email',
               label: 'Email',
               error: schema.error('email'),
-              children: create(InputString, {
+              children: element(InputString, {
                 value: schema.value('email'),
                 change: schema.change('email'),
                 placeholder: 'example@email.com',
               }),
             }),
-            create(Button, {
+            element(Button, {
               key: 'submit',
               label: 'Recover Account',
               loading: gqlRecoverUser.loading,

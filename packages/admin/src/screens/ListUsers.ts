@@ -1,6 +1,6 @@
 import faker from 'faker'
-import { createElement as create, FC, useState, useEffect, useRef } from 'react'
-import { Page, Table, Empty, Button, drip } from 'wga-theme'
+import { createElement as element, FC, useState, useEffect, useRef } from 'react'
+import { Page, Table, Empty, Button, drip } from '@authpack/theme'
 import { format } from 'date-fns'
 import { RouterManagerUser } from './RouterManagerUser'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'
@@ -20,7 +20,7 @@ export const ListUsers: FC = () => {
   })
   const queryListUsers = useRef(drip(1000, gqlListUsers.fetch))
   useEffect(() => {
-    if (variables) queryListUsers.current(variables)
+    if (variables.options.limit) queryListUsers.current(variables)
     // eslint-disable-next-line
   }, [variables])
   const list =
@@ -30,7 +30,7 @@ export const ListUsers: FC = () => {
         Boolean(gqlListUsers.data && !gqlListUsers.data.users)
       ? []
       : FakeUsers
-  return create(Page, {
+  return element(Page, {
     title: 'Users',
     subtitle: `Accounts created on ${universal.cluster_name}`,
     hidden: !gqlListUsers.data || !gqlListUsers.data.count,
@@ -42,7 +42,7 @@ export const ListUsers: FC = () => {
         setTimeout(() => idcurrentChange(undefined), 200) // animation
       },
     },
-    noscroll: create(TemplateSearchBar, {
+    noscroll: element(TemplateSearchBar, {
       count: gqlListUsers.data && gqlListUsers.data.count,
       current: gqlListUsers.data && gqlListUsers.data.users.length,
       change: (phrase, limit, skip) => {
@@ -54,12 +54,12 @@ export const ListUsers: FC = () => {
       },
     }),
     children: [
-      create(RouterManagerUser, {
+      element(RouterManagerUser, {
         key: 'router',
         id: idcurrent,
         visible: build,
         change: id => {
-          variablesChange({ ...variables })
+          queryListUsers.current(variables)
           if (id) {
             idcurrentChange(id)
           } else {
@@ -74,16 +74,16 @@ export const ListUsers: FC = () => {
       }),
       gqlListUsers.data &&
         !gqlListUsers.data.count &&
-        create(Empty, {
+        element(Empty, {
           key: 'empty',
           icon: 'user',
           label: 'Users',
           helper:
             'Create a user manually, with our gadgets, or by using our API',
-          children: create(Button, {
+          children: element(Button, {
             key: 'Regular',
             icon: 'book',
-            label: 'See Documents',
+            label: 'Install',
             click: () =>
               window.open(
                 'https://github.com/jackrobertscott/authpack/blob/master/readme.md'
@@ -91,7 +91,7 @@ export const ListUsers: FC = () => {
           }),
         }),
       gqlListUsers.data &&
-        create(Table, {
+        element(Table, {
           key: 'table',
           header: [
             { key: 'email', label: 'Email' },

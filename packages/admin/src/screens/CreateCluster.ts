@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import {
   useSchema,
   Button,
@@ -8,7 +8,7 @@ import {
   InputString,
   Page,
   InputStringArray,
-} from 'wga-theme'
+} from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { UniversalStore } from '../utils/universal'
 
@@ -20,41 +20,41 @@ export const CreateCluster: FC<{
     schema: SchemaCreateCluster,
     submit: input => {
       gqlCreateCluster.fetch({ input }).then(({ cluster }) => {
-        UniversalStore.update({ cluster_id: cluster.id })
+        UniversalStore.recreate({ cluster_id: cluster.id })
         if (change) change(cluster.id)
       })
     },
   })
-  return create(Page, {
+  return element(Page, {
     title: 'New',
     subtitle: 'Cluster',
-    children: create(Layout, {
+    children: element(Layout, {
       column: true,
       padding: true,
       divide: true,
       children: [
-        create(Control, {
+        element(Control, {
           key: 'name',
           label: 'Name',
           error: schema.error('name'),
-          children: create(InputString, {
+          children: element(InputString, {
             value: schema.value('name'),
             change: schema.change('name'),
             placeholder: '...',
           }),
         }),
-        create(Control, {
+        element(Control, {
           key: 'domains',
           label: 'Whitelisted Domains',
           helper: 'Domains allowed to make authorized requests',
           error: schema.error('domains'),
-          children: create(InputStringArray, {
+          children: element(InputStringArray, {
             value: schema.value('domains'),
             change: schema.change('domains'),
             placeholder: '...',
           }),
         }),
-        create(Button, {
+        element(Button, {
           key: 'submit',
           label: 'Create',
           loading: gqlCreateCluster.loading,

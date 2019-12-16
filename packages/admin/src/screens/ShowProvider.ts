@@ -1,5 +1,5 @@
-import { createElement as create, FC, useEffect } from 'react'
-import { Layout, Snippet, Page } from 'wga-theme'
+import { createElement as element, FC, useEffect } from 'react'
+import { Layout, Snippet, Page } from '@authpack/theme'
 import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
 
@@ -10,49 +10,49 @@ export const ShowProvider: FC<{
   useEffect(() => {
     gqlGetProvider.fetch({ id })
     // eslint-disable-next-line
-  }, [])
+  }, [id])
   const provider = gqlGetProvider.data
     ? gqlGetProvider.data.provider
     : undefined
-  return create(Page, {
+  return element(Page, {
     title: 'Inspect',
     subtitle: 'Provider',
     children: !provider
       ? null
-      : create(Layout, {
+      : element(Layout, {
           column: true,
           children: [
-            create(Snippet, {
+            element(Snippet, {
               key: 'id',
               icon: 'fingerprint',
               label: 'Id',
               value: provider.id,
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'preset',
               icon: 'share-alt',
               label: 'Preset',
               value: provider.preset,
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'client',
               icon: 'key',
               label: 'Client Id',
               value: provider.client,
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'redirect_uri',
               icon: 'compass',
               label: 'Advanced - Redirect URI',
               value: provider.redirect_uri || '...',
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'scopes',
               icon: 'user-shield',
               label: 'Scopes',
               value: (provider.scopes && provider.scopes.join(', ')) || '...',
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'created',
               icon: 'clock',
               label: 'Created',
@@ -60,7 +60,7 @@ export const ShowProvider: FC<{
                 provider.created &&
                 format(new Date(provider.created), 'dd LLL yyyy @ h:mm a'),
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'updated',
               icon: 'clock',
               label: 'Updated',

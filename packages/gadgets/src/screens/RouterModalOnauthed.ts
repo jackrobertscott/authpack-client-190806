@@ -1,5 +1,5 @@
-import { createElement as create, FC } from 'react'
-import { useLocalRouter, IconBar } from 'wga-theme'
+import { createElement as element, FC } from 'react'
+import { useLocalRouter, IconBar } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { RouterSideBarUser } from './RouterSideBarUser'
 import { RouterSideBarTeam } from './RouterSideBarTeam'
@@ -13,7 +13,9 @@ export const RouterModalOnauthed: FC<{
   const nomatch =
     !settings.user || !settings.user.verified
       ? '/verify'
-      : settings.enable_teams && settings.prompt_teams && !settings.team
+      : settings.options.enable_teams &&
+        settings.options.prompt_teams &&
+        !settings.team
       ? '/teams'
       : '/users'
   const router = useLocalRouter({
@@ -24,28 +26,28 @@ export const RouterModalOnauthed: FC<{
       : [
           {
             key: '/users',
-            children: create(RouterSideBarUser),
+            children: element(RouterSideBarUser),
           },
           {
             key: '/teams',
-            children: create(RouterSideBarTeam),
+            children: element(RouterSideBarTeam),
           },
           {
             key: '/logout',
             nosave: true,
-            children: create(LogoutUser),
+            children: element(LogoutUser),
           },
           {
             key: '/verify',
             nosave: true,
-            children: create(ReconcileUser, {
+            children: element(ReconcileUser, {
               email: settings.user.email,
             }),
           },
         ],
   })
   if (!settings.bearer || !settings.user) return null
-  return create(IconBar, {
+  return element(IconBar, {
     children: router.current && router.current.children,
     icons: [
       {
@@ -54,7 +56,7 @@ export const RouterModalOnauthed: FC<{
         focused: router.current && router.current.key.startsWith('/users'),
         click: () => router.change('/users'),
       },
-      settings.enable_teams && {
+      !!settings.options.enable_teams && {
         icon: 'users',
         label: 'Team',
         focused: router.current && router.current.key.startsWith('/teams'),

@@ -1,5 +1,5 @@
-import { createElement as create, FC, useEffect } from 'react'
-import { Layout, Snippet, Page } from 'wga-theme'
+import { createElement as element, FC, useEffect } from 'react'
+import { Layout, Snippet, Page } from '@authpack/theme'
 import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
 
@@ -10,43 +10,43 @@ export const ShowPermission: FC<{
   useEffect(() => {
     gqlGetPermission.fetch({ id })
     // eslint-disable-next-line
-  }, [])
+  }, [id])
   const permission = gqlGetPermission.data
     ? gqlGetPermission.data.permission
     : undefined
-  return create(Page, {
+  return element(Page, {
     title: 'Inspect',
     subtitle: 'Permission',
     children: !permission
       ? null
-      : create(Layout, {
+      : element(Layout, {
           column: true,
           children: [
-            create(Snippet, {
+            element(Snippet, {
               key: 'id',
               icon: 'fingerprint',
               label: 'Id',
               value: permission.id,
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'name',
               icon: 'users',
               label: 'Name',
               value: permission.name,
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'tag',
               icon: 'tags',
               label: 'Tag',
               value: permission.tag,
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'description',
               icon: 'book',
               label: 'Description',
               value: permission.description || '...',
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'created',
               icon: 'clock',
               label: 'Created',
@@ -54,7 +54,7 @@ export const ShowPermission: FC<{
                 permission.created &&
                 format(new Date(permission.created), 'dd LLL yyyy @ h:mm a'),
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'updated',
               icon: 'clock',
               label: 'Updated',

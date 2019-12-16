@@ -1,5 +1,5 @@
-import { createElement as create, FC, useEffect } from 'react'
-import { Layout, Poster, Snippet, Page } from 'wga-theme'
+import { createElement as element, FC, useEffect } from 'react'
+import { Layout, Poster, Snippet, Page } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { useUniversal } from '../hooks/useUniversal'
 import { UniversalStore } from '../utils/universal'
@@ -14,7 +14,7 @@ export const SwitchCluster: FC<{
     gqlListClusters.fetch()
     // eslint-disable-next-line
   }, [])
-  return create(Page, {
+  return element(Page, {
     title: 'Switch',
     subtitle: 'Cluster',
     corner: {
@@ -22,10 +22,10 @@ export const SwitchCluster: FC<{
       label: 'New Cluster',
       click: add,
     },
-    children: create(Layout, {
+    children: element(Layout, {
       column: true,
       children: [
-        create(Poster, {
+        element(Poster, {
           key: 'poster',
           icon: 'users',
           label: 'Cluster',
@@ -33,7 +33,7 @@ export const SwitchCluster: FC<{
         }),
         gqlListClusters.data &&
           gqlListClusters.data.clusters.map(({ id, name }) => {
-            return create(Snippet, {
+            return element(Snippet, {
               key: id,
               icon: universal.cluster_id === id ? 'dot-circle' : 'circle',
               prefix: 'far',

@@ -1,5 +1,5 @@
-import { createElement as create, FC, useState, Fragment } from 'react'
-import { useLocalRouter, IconBar } from 'wga-theme'
+import { createElement as element, FC, useState, Fragment } from 'react'
+import { useLocalRouter, IconBar } from '@authpack/theme'
 import { LoginUser } from './LoginUser'
 import { SignupUser } from './SignupUser'
 import { RecoverUserPassword } from './RecoverUserPassword'
@@ -12,24 +12,24 @@ export const RouterModalUnauthed: FC<{
   const router = useLocalRouter({
     nomatch: '/login',
     options: [
-      { key: '/login', children: create(LoginUser) },
-      { key: '/signup', children: create(SignupUser) },
-      { key: '/forgot', children: create(RecoverUserPassword) },
+      { key: '/login', children: element(LoginUser) },
+      { key: '/signup', children: element(SignupUser) },
+      { key: '/forgot', children: element(RecoverUserPassword) },
     ],
   })
   const clicker = (screen: string) => () => {
     startupChange(false)
     router.change(screen)
   }
-  return create(IconBar, {
+  return element(IconBar, {
     children: startup
-      ? create(GetStarted, {
+      ? element(GetStarted, {
           key: 'started',
           login: clicker('/login'),
           signup: clicker('/signup'),
         })
       : router.current &&
-        create(Fragment, {
+        element(Fragment, {
           key: 'children',
           children: router.current.children,
         }),
@@ -47,6 +47,7 @@ export const RouterModalUnauthed: FC<{
         click: clicker('/signup'),
       },
       {
+        prefix: 'far',
         icon: 'question-circle',
         label: 'Recovery',
         focused: router.current && router.current.key === '/forgot',

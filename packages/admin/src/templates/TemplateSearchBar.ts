@@ -1,5 +1,5 @@
 import { createElement as create, FC, useState, useEffect } from 'react'
-import { SearchBar, usePaginator } from 'wga-theme'
+import { SearchBar, usePaginator } from '@authpack/theme'
 
 export const TemplateSearchBar: FC<{
   count?: number

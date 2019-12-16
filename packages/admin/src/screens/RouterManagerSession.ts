@@ -1,5 +1,5 @@
-import { createElement as create, FC } from 'react'
-import { useLocalRouter, Modal, IconBar } from 'wga-theme'
+import { createElement as element, FC } from 'react'
+import { useLocalRouter, Modal, IconBar } from '@authpack/theme'
 import { UpdateSession } from './UpdateSession'
 import { RemoveSession } from './RemoveSession'
 import { ShowSession } from './ShowSession'
@@ -14,16 +14,16 @@ export const RouterManagerSession: FC<{
     nomatch: '/inspect',
     options: id
       ? [
-          { key: '/inspect', children: create(ShowSession, { id }) },
-          { key: '/update', children: create(UpdateSession, { id, change }) },
-          { key: '/remove', children: create(RemoveSession, { id, change }) },
+          { key: '/inspect', children: element(ShowSession, { id }) },
+          { key: '/update', children: element(UpdateSession, { id, change }) },
+          { key: '/remove', children: element(RemoveSession, { id, change }) },
         ]
       : [],
   })
-  return create(Modal, {
+  return element(Modal, {
     close,
     visible,
-    children: create(IconBar, {
+    children: element(IconBar, {
       children: router.current && router.current.children,
       icons: [
         {

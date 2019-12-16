@@ -1,5 +1,5 @@
-import { createElement as create, FC } from 'react'
-import { useLocalRouter, Modal, IconBar } from 'wga-theme'
+import { createElement as element, FC } from 'react'
+import { useLocalRouter, Modal, IconBar } from '@authpack/theme'
 import { CreateProvider } from './CreateProvider'
 import { UpdateProvider } from './UpdateProvider'
 import { RemoveProvider } from './RemoveProvider'
@@ -15,16 +15,16 @@ export const RouterManagerProvider: FC<{
     nomatch: id ? '/inspect' : '/create',
     options: id
       ? [
-          { key: '/inspect', children: create(ShowProvider, { id }) },
-          { key: '/update', children: create(UpdateProvider, { id, change }) },
-          { key: '/remove', children: create(RemoveProvider, { id, change }) },
+          { key: '/inspect', children: element(ShowProvider, { id }) },
+          { key: '/update', children: element(UpdateProvider, { id, change }) },
+          { key: '/remove', children: element(RemoveProvider, { id, change }) },
         ]
-      : [{ key: '/create', children: create(CreateProvider, { change }) }],
+      : [{ key: '/create', children: element(CreateProvider, { change }) }],
   })
-  return create(Modal, {
+  return element(Modal, {
     close,
     visible,
-    children: create(IconBar, {
+    children: element(IconBar, {
       children: router.current && router.current.children,
       icons: id
         ? [

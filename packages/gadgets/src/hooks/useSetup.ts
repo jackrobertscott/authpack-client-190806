@@ -9,6 +9,7 @@ export const useSetup = () => {
   const settings = useSettings()
   const gqlGetCluster = useGetCluster()
   const gqlGetSession = useGetSession()
+  const gqlLogoutUser = useLogoutUser()
   useEffect(() => {
     if (settings.client) {
       gqlGetCluster.fetch().then(({ cluster }) => {
@@ -67,8 +68,7 @@ export const useSetup = () => {
   useEffect(() => {
     return radio.listen(({ name, payload = {} }) => {
       if (!name.startsWith('plugin:')) return
-      if (config.debug)
-        console.log(`Gadget received: ${name} @ ${Date.now() % 86400000}`)
+      if (config.debug) console.log(`${name} @ ${Date.now() % 86400000}`)
       switch (name) {
         case 'plugin:current':
           SettingsStore.update({ ...payload })
@@ -80,14 +80,17 @@ export const useSetup = () => {
           SettingsStore.update({ open: false })
           break
         case 'plugin:exit':
-          SettingsStore.update({ bearer: undefined })
+          if (settings.bearer)
+            gqlLogoutUser
+              .fetch()
+              .finally(() => SettingsStore.update({ bearer: undefined }))
           break
         default:
           throw new Error(`Failed to process radio message: ${name}`)
       }
     })
     // eslint-disable-next-line
-  }, [])
+  }, [settings.client, settings.bearer])
 }
 
 const useGetCluster = createUseServer<{
@@ -163,6 +166,20 @@ const useGetSession = createUseServer<{
           tag
           description
         }
+      }
+    }
+  `,
+})
+
+const useLogoutUser = createUseServer<{
+  session: {
+    id: string
+  }
+}>({
+  query: `
+    mutation LogoutUserClient {
+      session: LogoutUserClient {
+        id
       }
     }
   `,

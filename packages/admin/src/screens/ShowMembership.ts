@@ -1,5 +1,5 @@
-import { createElement as create, FC, useEffect } from 'react'
-import { Layout, Snippet, Page } from 'wga-theme'
+import { createElement as element, FC, useEffect } from 'react'
+import { Layout, Snippet, Page } from '@authpack/theme'
 import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
 
@@ -10,31 +10,31 @@ export const ShowMembership: FC<{
   useEffect(() => {
     gqlGetMembership.fetch({ id })
     // eslint-disable-next-line
-  }, [])
+  }, [id])
   const membership = gqlGetMembership.data
     ? gqlGetMembership.data.membership
     : undefined
-  return create(Page, {
+  return element(Page, {
     title: 'Inspect',
     subtitle: 'Membership',
     children: !membership
       ? null
-      : create(Layout, {
+      : element(Layout, {
           column: true,
           children: [
-            create(Snippet, {
+            element(Snippet, {
               key: 'id',
               icon: 'fingerprint',
               label: 'Id',
               value: membership.id,
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'admin',
               icon: 'star',
               label: 'Admin',
               value: String(membership.admin),
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'user',
               icon: 'user',
               label: 'User',
@@ -44,13 +44,13 @@ export const ShowMembership: FC<{
                   : '...'
                 : membership.user.summary,
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'team',
               icon: 'users',
               label: 'Team',
               value: !membership.team ? '...' : membership.team.summary,
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'created',
               icon: 'clock',
               label: 'Created',
@@ -58,7 +58,7 @@ export const ShowMembership: FC<{
                 membership.created &&
                 format(new Date(membership.created), 'dd LLL yyyy @ h:mm a'),
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'updated',
               icon: 'clock',
               label: 'Updated',

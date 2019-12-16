@@ -1,5 +1,5 @@
-import { createElement as create, FC } from 'react'
-import { useLocalRouter, Modal, IconBar } from 'wga-theme'
+import { createElement as element, FC } from 'react'
+import { useLocalRouter, Modal, IconBar } from '@authpack/theme'
 import { CreatePermission } from './CreatePermission'
 import { UpdatePermission } from './UpdatePermission'
 import { RemovePermission } from './RemovePermission'
@@ -15,22 +15,22 @@ export const RouterManagerPermission: FC<{
     nomatch: id ? '/inspect' : '/create',
     options: id
       ? [
-          { key: '/inspect', children: create(ShowPermission, { id }) },
+          { key: '/inspect', children: element(ShowPermission, { id }) },
           {
             key: '/update',
-            children: create(UpdatePermission, { id, change }),
+            children: element(UpdatePermission, { id, change }),
           },
           {
             key: '/remove',
-            children: create(RemovePermission, { id, change }),
+            children: element(RemovePermission, { id, change }),
           },
         ]
-      : [{ key: '/create', children: create(CreatePermission, { change }) }],
+      : [{ key: '/create', children: element(CreatePermission, { change }) }],
   })
-  return create(Modal, {
+  return element(Modal, {
     close,
     visible,
-    children: create(IconBar, {
+    children: element(IconBar, {
       children: router.current && router.current.children,
       icons: id
         ? [

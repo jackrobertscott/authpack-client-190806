@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react'
-import { useToaster, useMounted } from 'wga-theme'
+import { useToaster, useMounted } from '@authpack/theme'
 
 export const useOauthCode = () => {
   const toaster = useToaster()
@@ -21,12 +21,12 @@ export const useOauthCode = () => {
             })
           return
         }
-        const data = localStorage.getItem('wga.code')
+        const data = localStorage.getItem('authpack.code')
         if (!data) return // continue polling
         if (tab) tab.close()
         if (interval) clearTimeout(interval)
         tabChange(undefined)
-        localStorage.removeItem('wga.code')
+        localStorage.removeItem('authpack.code')
         const parsed = JSON.parse(data)
         const minuteAgo = Date.now() - 1000 * 60
         if (parsed.created < minuteAgo) {

@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as element, FC, useEffect } from 'react'
 import {
   useSchema,
   Layout,
@@ -7,7 +7,7 @@ import {
   InputString,
   testAlphanumeric,
   Page,
-} from 'wga-theme'
+} from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
 export const UpdatePermission: FC<{
@@ -30,42 +30,42 @@ export const UpdatePermission: FC<{
       .then(({ permission }) => schema.set(permission))
     // eslint-disable-next-line
   }, [id])
-  return create(Page, {
+  return element(Page, {
     title: 'Update',
     subtitle: 'Permission',
-    children: create(Layout, {
+    children: element(Layout, {
       column: true,
       padding: true,
       divide: true,
       children: !gqlGetPermission.data
         ? null
         : [
-            create(Control, {
+            element(Control, {
               key: 'name',
               label: 'Name',
               error: schema.error('name'),
-              children: create(InputString, {
+              children: element(InputString, {
                 value: schema.value('name'),
                 change: schema.change('name'),
                 placeholder: 'Admin Editor',
               }),
             }),
-            create(Control, {
+            element(Control, {
               key: 'tag',
               label: 'Tag',
               helper: 'A unique identifier for the permission',
               error: schema.error('tag'),
-              children: create(InputString, {
+              children: element(InputString, {
                 value: schema.value('tag'),
                 change: schema.change('tag'),
                 placeholder: 'admin_editor',
               }),
             }),
-            create(Control, {
+            element(Control, {
               key: 'description',
               label: 'Description',
               error: schema.error('description'),
-              children: create(InputString, {
+              children: element(InputString, {
                 value: schema.value('description'),
                 change: schema.change('description'),
                 placeholder: 'User can...',

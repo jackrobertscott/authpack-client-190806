@@ -1,5 +1,5 @@
-import { createElement as create, FC } from 'react'
-import { Page } from 'wga-theme'
+import { createElement as element, FC } from 'react'
+import { Page } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { ConfirmRemove } from '../templates/ConfirmRemove'
 
@@ -8,10 +8,10 @@ export const RemovePermission: FC<{
   change?: (id?: string) => void
 }> = ({ id, change }) => {
   const gqlRemovePermission = useRemovePermission()
-  return create(Page, {
+  return element(Page, {
     title: 'Remove',
     subtitle: 'Permission',
-    children: create(ConfirmRemove, {
+    children: element(ConfirmRemove, {
       helper: 'Remove this permission',
       alert: 'Please confirm the removal of this permission',
       loading: gqlRemovePermission.loading,

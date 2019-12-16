@@ -1,4 +1,4 @@
-import { useGQL } from 'wga-theme'
+import { useGQL } from '@authpack/theme'
 import { useSettings } from './useSettings'
 import { config } from '../config'
 
@@ -14,9 +14,12 @@ export const useServer = <T>(options: {
   query: string
 }) => {
   const settings = useSettings()
+  const authorization = [settings.client, settings.bearer]
+    .filter(Boolean)
+    .join(',')
   return useGQL<T>({
     ...options,
     url: config.api,
-    authorization: [settings.client, settings.bearer].filter(Boolean).join(','),
+    authorization,
   })
 }

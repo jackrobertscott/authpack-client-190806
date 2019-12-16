@@ -1,4 +1,5 @@
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as element, FC, useEffect } from 'react'
+import { Root } from '@authpack/theme'
 import { Loading } from './Loading'
 
 export const Oauth: FC<{
@@ -6,10 +7,12 @@ export const Oauth: FC<{
 }> = ({ code }) => {
   useEffect(() => {
     const data = JSON.stringify({ code, created: Date.now() })
-    localStorage.setItem('wga.code', data)
-    setTimeout(() => localStorage.removeItem('wga.code'), 60 * 1000)
+    localStorage.setItem('authpack.code', data)
+    setTimeout(() => localStorage.removeItem('authpack.code'), 60 * 1000)
   }, [code])
-  return create(Loading, {
-    key: 'Window will close automatically',
+  return element(Root, {
+    children: element(Loading, {
+      key: 'Window will close automatically',
+    }),
   })
 }

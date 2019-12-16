@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import {
   useSchema,
   Button,
@@ -9,7 +9,7 @@ import {
   InputSelect,
   InputStringArray,
   Page,
-} from 'wga-theme'
+} from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
 export const CreateProvider: FC<{
@@ -24,19 +24,19 @@ export const CreateProvider: FC<{
         .then(({ provider }) => change && change(provider.id))
     },
   })
-  return create(Page, {
+  return element(Page, {
     title: 'New',
     subtitle: 'Provider',
-    children: create(Layout, {
+    children: element(Layout, {
       column: true,
       padding: true,
       divide: true,
       children: [
-        create(Control, {
+        element(Control, {
           key: 'preset',
           label: 'Preset',
           error: schema.error('preset'),
-          children: create(InputSelect, {
+          children: element(InputSelect, {
             value: schema.value('preset'),
             change: schema.change('preset'),
             options: [
@@ -47,54 +47,54 @@ export const CreateProvider: FC<{
             ],
           }),
         }),
-        create(Control, {
+        element(Control, {
           key: 'client',
           label: 'Client Id',
           helper: `The oauth client id provided by ${schema.value('preset') ||
             'the app'}`,
           error: schema.error('client'),
-          children: create(InputString, {
+          children: element(InputString, {
             value: schema.value('client'),
             change: schema.change('client'),
             placeholder: '...',
           }),
         }),
-        create(Control, {
+        element(Control, {
           key: 'secret',
           label: 'Secret',
           helper: `The oauth secret provided by ${schema.value('preset') ||
             'the app'}`,
           error: schema.error('secret'),
-          children: create(InputString, {
+          children: element(InputString, {
             value: schema.value('secret'),
             change: schema.change('secret'),
             placeholder: '...',
           }),
         }),
-        create(Control, {
+        element(Control, {
           key: 'scopes',
           label: 'Scopes',
           helper: 'A set of oauth permission scopes',
           error: schema.error('scopes'),
-          children: create(InputStringArray, {
+          children: element(InputStringArray, {
             value: schema.value('scopes'),
             change: schema.change('scopes'),
             placeholder: '...',
           }),
         }),
-        create(Control, {
+        element(Control, {
           key: 'redirect_uri',
           label: 'Advanced - Redirect Uri',
           helper:
             'Leave this empty unless you are creating your own login system',
           error: schema.error('redirect_uri'),
-          children: create(InputString, {
+          children: element(InputString, {
             value: schema.value('redirect_uri'),
             change: schema.change('redirect_uri'),
-            placeholder: 'https://oauth.v1.authpack.io',
+            placeholder: 'https://gadgets.v1.authpack.io',
           }),
         }),
-        create(Button, {
+        element(Button, {
           key: 'submit',
           label: 'Create',
           loading: gqlCreateProvider.loading,

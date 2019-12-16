@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as element, FC, useEffect } from 'react'
 import {
   useSchema,
   Button,
@@ -9,7 +9,7 @@ import {
   InputSelectMany,
   Page,
   Snippet,
-} from 'wga-theme'
+} from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 
@@ -33,18 +33,18 @@ export const CreateMembership: FC<{
     gqlListPermissions.fetch()
     // eslint-disable-next-line
   }, [])
-  return create(Page, {
+  return element(Page, {
     title: 'Add Member',
     subtitle: settings.cluster && settings.cluster.name,
     children: [
-      create(Snippet, {
+      element(Snippet, {
         key: 'snippet',
         icon: 'arrow-alt-circle-left',
         prefix: 'far',
         label: 'Cancel',
         click: close,
       }),
-      create(Layout, {
+      element(Layout, {
         key: 'layout',
         column: true,
         padding: true,
@@ -52,23 +52,23 @@ export const CreateMembership: FC<{
         children: !gqlListPermissions.data
           ? null
           : [
-              create(Control, {
+              element(Control, {
                 key: 'email',
                 label: 'Email',
                 error: schema.error('email'),
-                children: create(InputString, {
+                children: element(InputString, {
                   value: schema.value('email'),
                   change: schema.change('email'),
                   placeholder: 'example@email.com',
                 }),
               }),
               !!gqlListPermissions.data.permissions.length &&
-                create(Control, {
+                element(Control, {
                   key: 'permission_ids',
                   label: 'Permissions',
                   helper: 'Determine what the member can access',
                   error: schema.error('permission_ids'),
-                  children: create(InputSelectMany, {
+                  children: element(InputSelectMany, {
                     value: schema.value('permission_ids'),
                     change: schema.change('permission_ids'),
                     options: gqlListPermissions.data.permissions.map(
@@ -83,7 +83,7 @@ export const CreateMembership: FC<{
                     ),
                   }),
                 }),
-              create(Button, {
+              element(Button, {
                 key: 'submit',
                 label: 'Add',
                 loading: gqlCreateMembership.loading,

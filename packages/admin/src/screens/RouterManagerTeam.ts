@@ -1,5 +1,5 @@
-import { createElement as create, FC } from 'react'
-import { useLocalRouter, Modal, IconBar } from 'wga-theme'
+import { createElement as element, FC } from 'react'
+import { useLocalRouter, Modal, IconBar } from '@authpack/theme'
 import { CreateTeam } from './CreateTeam'
 import { UpdateTeam } from './UpdateTeam'
 import { RemoveTeam } from './RemoveTeam'
@@ -16,20 +16,20 @@ export const RouterManagerTeam: FC<{
     nomatch: id ? '/inspect' : '/create',
     options: id
       ? [
-          { key: '/inspect', children: create(ShowTeam, { id }) },
-          { key: '/update', children: create(UpdateTeam, { id, change }) },
-          { key: '/remove', children: create(RemoveTeam, { id, change }) },
+          { key: '/inspect', children: element(ShowTeam, { id }) },
+          { key: '/update', children: element(UpdateTeam, { id, change }) },
+          { key: '/remove', children: element(RemoveTeam, { id, change }) },
           {
             key: '/memberships',
-            children: create(ListMemberships, { team_id: id }),
+            children: element(ListMemberships, { team_id: id }),
           },
         ]
-      : [{ key: '/create', children: create(CreateTeam, { change }) }],
+      : [{ key: '/create', children: element(CreateTeam, { change }) }],
   })
-  return create(Modal, {
+  return element(Modal, {
     close,
     visible,
-    children: create(IconBar, {
+    children: element(IconBar, {
       children: router.current && router.current.children,
 
       icons: id

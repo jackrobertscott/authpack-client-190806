@@ -1,5 +1,5 @@
-import { createElement as create, FC } from 'react'
-import { Page } from 'wga-theme'
+import { createElement as element, FC } from 'react'
+import { Page } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { ConfirmRemove } from '../templates/ConfirmRemove'
 import { useUniversal } from '../hooks/useUniversal'
@@ -10,10 +10,10 @@ export const RemovePayment: FC<{
 }> = ({ change }) => {
   const universal = useUniversal()
   const gqlRemovePayment = useRemovePayment()
-  return create(Page, {
+  return element(Page, {
     title: 'Danger',
     subtitle: 'Stop payments & disable gadgets',
-    children: create(ConfirmRemove, {
+    children: element(ConfirmRemove, {
       keyword: 'Terminate',
       helper: 'Cancel subscription and invoice now',
       alert: 'User limits will be reapplied',
@@ -22,9 +22,7 @@ export const RemovePayment: FC<{
         gqlRemovePayment
           .fetch({ id: universal.cluster_id })
           .then(({ cluster }) => {
-            UniversalStore.update({
-              subscribed: cluster.subscribed,
-            })
+            UniversalStore.update({ subscribed: cluster.subscribed })
             if (change) change(cluster.id)
           }),
     }),

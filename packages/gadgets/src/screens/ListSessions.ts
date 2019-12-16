@@ -1,5 +1,5 @@
-import { createElement as create, FC, useEffect } from 'react'
-import { Snippet, Page } from 'wga-theme'
+import { createElement as element, FC, useEffect } from 'react'
+import { Snippet, Page } from '@authpack/theme'
 import { format, differenceInMinutes } from 'date-fns'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
@@ -11,7 +11,7 @@ export const ListSessions: FC = () => {
     gqlListSessions.fetch()
     // eslint-disable-next-line
   }, [])
-  return create(Page, {
+  return element(Page, {
     title: 'Sessions',
     subtitle: settings.cluster && settings.cluster.name,
     children: !gqlListSessions.data
@@ -23,7 +23,7 @@ export const ListSessions: FC = () => {
               .toString()
               .concat(' mins')
           const creation = format(new Date(created), 'dd LLL yyyy @ h:mm a')
-          return create(Snippet, {
+          return element(Snippet, {
             key: id,
             icon: 'history',
             label: difference ? `${creation} - ${difference}` : creation,

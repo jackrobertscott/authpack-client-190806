@@ -1,0 +1,35 @@
+{
+  "name": "@authpack/react",
+  "private": false,
+  "version": "0.5.7",
+  "description": "Authpack's official integration for React",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "source": "src/index.ts",
+  "author": {
+    "name": "Jack R. Scott",
+    "email": "jack.rob.scott@gmail.com"
+  },
+  "files": [
+    "lib",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "nodemon",
+    "prepublishOnly": "yarn build",
+    "test": "mocha -r ts-node/register src/**/*.test.ts",
+    "build": "yarn run clean && yarn run compile",
+    "clean": "rm -rf lib",
+    "compile": "tsc"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.7.2"
+  },
+  "dependencies": {
+    "@authpack/sdk": "^0.7.2",
+    "react": ">=16.8.0"
+  }
+}

@@ -1,11 +1,11 @@
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
+import { useAuthpack } from '@authpack/react'
+import { graphql, useTheme } from '@authpack/theme'
 import { css } from 'emotion'
-import { graphql, useTheme } from 'wga-theme'
 import GraphiQL from 'graphiql'
 import 'graphiql/graphiql.css'
 import { config } from '../config'
 import { useUniversal } from '../hooks/useUniversal'
-import { wga } from '../utils/wga'
 
 const startingQuery = `
 query First10Users {
@@ -22,16 +22,17 @@ query First10Users {
 
 export const Explorer: FC = () => {
   const theme = useTheme()
+  const authpack = useAuthpack()
   const universal = useUniversal()
-  return create('div', {
-    children: create(GraphiQL, {
+  return element('div', {
+    children: element(GraphiQL, {
       defaultQuery: startingQuery,
       fetcher: async (graphQLParams: any) => {
         try {
           const data = await graphql<any>({
             ...graphQLParams,
             url: config.api,
-            authorization: [universal.cluster_key_client, wga.current.bearer]
+            authorization: [universal.cluster_key_client, authpack.bearer]
               .filter(Boolean)
               .join(','),
           })

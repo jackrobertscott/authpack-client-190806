@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useEffect, useState } from 'react'
+import { createElement as element, FC, useEffect, useState } from 'react'
 import {
   useSchema,
   Layout,
@@ -9,7 +9,7 @@ import {
   useMounted,
   Page,
   Focus,
-} from 'wga-theme'
+} from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { SettingsStore } from '../utils/settings'
 import { createUseServer } from '../hooks/useServer'
@@ -28,7 +28,6 @@ export const LoginUser: FC = () => {
     schema: SchemaLoginUser,
     submit: value => {
       gqlLoginUser.fetch(value).then(({ session }) => {
-        schema.change('password')('')
         SettingsStore.update({
           bearer: `Bearer ${session.token}`,
         })
@@ -48,7 +47,6 @@ export const LoginUser: FC = () => {
         })
         .then(({ session }) => {
           SettingsStore.update({
-            open: false,
             bearer: `Bearer ${session.token}`,
           })
         })
@@ -60,15 +58,15 @@ export const LoginUser: FC = () => {
     }
     // eslint-disable-next-line
   }, [oauthCode.code])
-  return create(Page, {
+  return element(Page, {
     title: 'Login',
     subtitle: settings.cluster && settings.cluster.name,
     children: current
-      ? create(Focus, {
+      ? element(Focus, {
           icon: 'sync-alt',
           label: 'Pending',
           helper: 'Waiting for login with external app',
-          children: create(Button, {
+          children: element(Button, {
             icon: 'times-circle',
             label: 'Cancel',
             click: () => currentChange(undefined),
@@ -78,14 +76,14 @@ export const LoginUser: FC = () => {
       ? null
       : [
           !!gqlListProviders.data.providers.length &&
-            create(Layout, {
+            element(Layout, {
               key: 'oauth',
               column: true,
               padding: true,
               divide: true,
               styled: true,
               children: gqlListProviders.data.providers.map(provider => {
-                return create(Button, {
+                return element(Button, {
                   key: provider.id,
                   icon: provider.preset,
                   label: provider.name || provider.preset,
@@ -98,34 +96,34 @@ export const LoginUser: FC = () => {
                 })
               }),
             }),
-          create(Layout, {
+          element(Layout, {
             key: 'form',
             column: true,
             padding: true,
             divide: true,
             children: [
-              create(Control, {
+              element(Control, {
                 key: 'email',
                 label: 'Email',
                 error: schema.error('email'),
-                children: create(InputString, {
+                children: element(InputString, {
                   value: schema.value('email'),
                   change: schema.change('email'),
                   placeholder: 'example@email.com',
                 }),
               }),
-              create(Control, {
+              element(Control, {
                 key: 'password',
                 label: 'Password',
                 error: schema.error('password'),
-                children: create(InputString, {
+                children: element(InputString, {
                   value: schema.value('password'),
                   change: schema.change('password'),
                   placeholder: '* * * * * * * *',
                   password: true,
                 }),
               }),
-              create(Button, {
+              element(Button, {
                 key: 'submit',
                 label: 'Login',
                 loading: gqlLoginUser.loading || gqlLoginUserOauth.loading,

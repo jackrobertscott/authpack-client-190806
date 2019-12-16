@@ -23,7 +23,7 @@ export const PreferencesContext = createContext<IPreferencesContext>({
 })
 
 export const Preferences: FC<{ children: ReactNode }> = ({ children }) => {
-  const local = 'wga.preferences'
+  const local = 'authpack.preferences'
   let initial: IPreferences = {
     theme: 'snow_storm',
   }

@@ -1,6 +1,6 @@
 import * as yup from 'yup'
-import { createElement as create, FC } from 'react'
-import { Layout, useSchema, InputString, Button, Focus } from 'wga-theme'
+import { createElement as element, FC } from 'react'
+import { Layout, useSchema, InputString, Button, Focus } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { SettingsStore } from '../utils/settings'
 
@@ -19,36 +19,36 @@ export const ReconcileUser: FC<{
       })
     },
   })
-  return create(Layout, {
+  return element(Layout, {
     grow: true,
     children: [
-      create(Focus, {
+      element(Focus, {
         key: 'poster',
         icon: 'unlock',
         label: 'Verify Email',
         helper: 'A code was sent to your email',
-        children: create(Layout, {
+        children: element(Layout, {
           column: true,
           divide: true,
           children: [
-            create(InputString, {
+            element(InputString, {
               key: 'code',
               value: schema.value('code'),
               change: schema.change('code'),
               placeholder: 'Code...',
             }),
-            create(Layout, {
+            element(Layout, {
               key: 'layout',
               divide: true,
               children: [
-                create(Button, {
+                element(Button, {
                   key: 'submit',
                   label: 'Verify',
                   loading: gqlReconcileUser.loading,
                   disabled: !schema.valid,
                   click: schema.submit,
                 }),
-                create(Button, {
+                element(Button, {
                   key: 'resend',
                   icon: 'paper-plane',
                   label: 'Resend',

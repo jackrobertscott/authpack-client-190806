@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useEffect } from 'react'
+import { createElement as element, FC, useEffect } from 'react'
 import {
   useSchema,
   Control,
@@ -7,7 +7,7 @@ import {
   InputSelectMany,
   Snippet,
   Page,
-} from 'wga-theme'
+} from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 
@@ -35,18 +35,18 @@ export const UpdateMembership: FC<{
       .then(({ membership }) => schema.set(membership))
     // eslint-disable-next-line
   }, [id])
-  return create(Page, {
+  return element(Page, {
     title: 'Update Member',
     subtitle: settings.cluster && settings.cluster.name,
     children: [
-      create(Snippet, {
+      element(Snippet, {
         key: 'snippet',
         icon: 'arrow-alt-circle-left',
         prefix: 'far',
-        label: 'Back',
+        label: 'See Members',
         click: close,
       }),
-      create(Layout, {
+      element(Layout, {
         key: 'layout',
         column: true,
         padding: true,
@@ -55,12 +55,12 @@ export const UpdateMembership: FC<{
           ? null
           : [
               !!gqlListPermissions.data.permissions.length &&
-                create(Control, {
+                element(Control, {
                   key: 'permission_ids',
                   label: 'Permissions',
                   helper: 'Determine what the member can access',
                   error: schema.error('permission_ids'),
-                  children: create(InputSelectMany, {
+                  children: element(InputSelectMany, {
                     value: schema.value('permission_ids'),
                     change: schema.change('permission_ids'),
                     options: gqlListPermissions.data.permissions.map(

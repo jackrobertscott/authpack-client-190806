@@ -1,13 +1,14 @@
-import { createElement as create, FC } from 'react'
-import { Focus, Button } from 'wga-theme'
+import { createElement as element, FC } from 'react'
+import { Focus, Button } from '@authpack/theme'
 
 export const NoKey: FC = () => {
-  return create(Focus, {
+  return element(Focus, {
     icon: 'user-lock',
     label: 'Authpack',
     helper: "Please provide your cluster's client key",
-    children: create(Button, {
-      icon: 'question',
+    children: element(Button, {
+      prefix: 'far',
+      icon: 'question-circle',
       label: 'Learn More',
       click: () =>
         window.open(

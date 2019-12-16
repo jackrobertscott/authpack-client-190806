@@ -1,6 +1,6 @@
 import faker from 'faker'
-import { createElement as create, FC, useState, useEffect, useRef } from 'react'
-import { Page, Table, Empty, drip } from 'wga-theme'
+import { createElement as element, FC, useState, useEffect, useRef } from 'react'
+import { Page, Table, Empty, drip } from '@authpack/theme'
 import { format } from 'date-fns'
 import { RouterManagerCredential } from './RouterManagerCredential'
 import { createUseServer } from '../hooks/useServer'
@@ -25,11 +25,11 @@ export const ListCredentials: FC<{ user_id?: string }> = ({ user_id }) => {
       : Boolean(gqlListCredentials.data && !gqlListCredentials.data.credentials)
       ? []
       : FakeCredentials
-  return create(Page, {
+  return element(Page, {
     title: 'Credentials',
     subtitle: 'User',
     hidden: !gqlListCredentials.data || !gqlListCredentials.data.count,
-    noscroll: create(TemplateSearchBar, {
+    noscroll: element(TemplateSearchBar, {
       input: false,
       count: gqlListCredentials.data && gqlListCredentials.data.count,
       current:
@@ -41,12 +41,12 @@ export const ListCredentials: FC<{ user_id?: string }> = ({ user_id }) => {
         }),
     }),
     children: [
-      create(RouterManagerCredential, {
+      element(RouterManagerCredential, {
         key: 'router',
         id: idcurrent,
         visible: build,
         change: id => {
-          variablesChange({ ...variables })
+          queryListCredentials.current(variables)
           if (id) {
             idcurrentChange(id)
           } else {
@@ -61,7 +61,7 @@ export const ListCredentials: FC<{ user_id?: string }> = ({ user_id }) => {
       }),
       gqlListCredentials.data &&
         !gqlListCredentials.data.count &&
-        create(Empty, {
+        element(Empty, {
           key: 'empty',
           icon: 'history',
           label: 'Credentials',
@@ -69,7 +69,7 @@ export const ListCredentials: FC<{ user_id?: string }> = ({ user_id }) => {
             'Credentials are created when a user logins in with a oauth provider',
         }),
       gqlListCredentials.data &&
-        create(Table, {
+        element(Table, {
           key: 'table',
           header: [
             { key: 'provider_id', label: 'Provider' },

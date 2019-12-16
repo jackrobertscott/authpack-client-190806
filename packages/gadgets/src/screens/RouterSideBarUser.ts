@@ -1,5 +1,5 @@
-import { createElement as create, FC } from 'react'
-import { useLocalRouter, SideBar } from 'wga-theme'
+import { createElement as element, FC } from 'react'
+import { useLocalRouter, SideBar } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { UpdateUser } from './UpdateUser'
 import { ListProviders } from './ListProviders'
@@ -14,16 +14,16 @@ export const RouterSideBarUser: FC = () => {
     name: 'user',
     nomatch: '/user/update',
     options: [
-      { key: '/user/update', children: create(UpdateUser) },
-      { key: '/user/email', children: create(UpdateUserEmail) },
-      { key: '/user/password', children: create(UpdateUserPassword) },
-      { key: '/user/apps', children: create(ListProviders) },
-      { key: '/user/sessions', children: create(ListSessions) },
-      { key: '/user/danger', children: create(RemoveUser), nosave: true },
+      { key: '/user/update', children: element(UpdateUser) },
+      { key: '/user/email', children: element(UpdateUserEmail) },
+      { key: '/user/password', children: element(UpdateUserPassword) },
+      { key: '/user/apps', children: element(ListProviders) },
+      { key: '/user/sessions', children: element(ListSessions) },
+      { key: '/user/danger', children: element(RemoveUser), nosave: true },
     ],
   })
   if (!settings.bearer) return null
-  return create(SideBar, {
+  return element(SideBar, {
     key: 'sideBar',
     title: 'User',
     footer: settings.user && settings.user.name,

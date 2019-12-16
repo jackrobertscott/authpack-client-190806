@@ -1,5 +1,5 @@
-import { createElement as create, FC } from 'react'
-import { useRouter, SideBar } from 'wga-theme'
+import { createElement as element, FC } from 'react'
+import { useRouter, SideBar } from '@authpack/theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { ListUsers } from './ListUsers'
 import { ListProviders } from './ListProviders'
@@ -12,13 +12,13 @@ export const RouterSideBarHome: FC = () => {
     base: '/app',
     nomatch: '/users',
     options: [
-      { path: '/users', children: create(ListUsers) },
-      { path: '/teams', children: create(ListTeams) },
-      { path: '/permissions', children: create(ListPermissions) },
-      { path: '/providers', children: create(ListProviders) },
+      { path: '/users', children: element(ListUsers) },
+      { path: '/teams', children: element(ListTeams) },
+      { path: '/permissions', children: element(ListPermissions) },
+      { path: '/providers', children: element(ListProviders) },
     ],
   })
-  return create(SideBar, {
+  return element(SideBar, {
     key: 'sideBar',
     title: 'Home',
     footer: universal.cluster_name,

@@ -1,5 +1,5 @@
-import { createElement as create, FC, useEffect } from 'react'
-import { Layout, Snippet, Page } from 'wga-theme'
+import { createElement as element, FC, useEffect } from 'react'
+import { Layout, Snippet, Page } from '@authpack/theme'
 import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
 
@@ -10,43 +10,56 @@ export const ShowCredential: FC<{
   useEffect(() => {
     gqlGetCredential.fetch({ id })
     // eslint-disable-next-line
-  }, [])
+  }, [id])
   const credential = gqlGetCredential.data
     ? gqlGetCredential.data.credential
     : undefined
-  return create(Page, {
+  return element(Page, {
     title: 'Inspect',
     subtitle: 'Credential',
     children: !credential
       ? null
-      : create(Layout, {
+      : element(Layout, {
           column: true,
           children: [
-            create(Snippet, {
+            element(Snippet, {
               key: 'id',
               icon: 'fingerprint',
               label: 'Id',
               value: credential.id,
             }),
-            create(Snippet, {
-              key: 'disabled',
-              icon: 'battery-three-quarters',
-              label: 'Disabled',
-              value: String(credential.disabled),
-            }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'user',
               icon: 'user',
               label: 'User',
               value: !credential.user ? '...' : credential.user.summary,
             }),
-            create(Snippet, {
-              key: 'team',
-              icon: 'users',
-              label: 'Team',
-              value: !credential.team ? '...' : credential.team.summary,
+            element(Snippet, {
+              key: 'provider',
+              icon: 'share-alt',
+              label: 'Provider',
+              value: !credential.provider ? '...' : credential.provider.name,
             }),
-            create(Snippet, {
+            element(Snippet, {
+              key: 'scopes',
+              icon: 'user-shield',
+              label: 'Scopes',
+              value:
+                (credential.scopes && credential.scopes.join(', ')) || '...',
+            }),
+            element(Snippet, {
+              key: 'tags',
+              icon: 'at',
+              label: 'Token',
+              value: credential.access_token,
+            }),
+            element(Snippet, {
+              key: 'id_external',
+              icon: 'at',
+              label: 'External Id',
+              value: credential.id_external,
+            }),
+            element(Snippet, {
               key: 'created',
               icon: 'clock',
               label: 'Created',
@@ -54,7 +67,7 @@ export const ShowCredential: FC<{
                 credential.created &&
                 format(new Date(credential.created), 'dd LLL yyyy @ h:mm a'),
             }),
-            create(Snippet, {
+            element(Snippet, {
               key: 'updated',
               icon: 'clock',
               label: 'Updated',
@@ -70,16 +83,18 @@ export const ShowCredential: FC<{
 const useGetCredential = createUseServer<{
   credential: {
     id: string
-    disabled: boolean
     created: string
     updated: string
+    access_token: string
+    id_external: string
+    scopes: string[]
     user: {
       id: string
       summary: string
     }
-    team?: {
+    provider?: {
       id: string
-      summary: string
+      name: string
     }
   }
 }>({
@@ -89,12 +104,14 @@ const useGetCredential = createUseServer<{
         id
         created
         updated
-        disabled
-        user {
+        access_token
+        id_external
+        scopes
+        provider {
           id
-          summary
+          name
         }
-        team {
+        user {
           id
           summary
         }

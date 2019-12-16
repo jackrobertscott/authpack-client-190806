@@ -1,5 +1,5 @@
-import { createElement as create, FC } from 'react'
-import { useLocalRouter, Modal, IconBar } from 'wga-theme'
+import { createElement as element, FC } from 'react'
+import { useLocalRouter, Modal, IconBar } from '@authpack/theme'
 import { RemoveCredential } from './RemoveCredential'
 import { ShowCredential } from './ShowCredential'
 
@@ -13,18 +13,18 @@ export const RouterManagerCredential: FC<{
     nomatch: '/inspect',
     options: id
       ? [
-          { key: '/inspect', children: create(ShowCredential, { id }) },
+          { key: '/inspect', children: element(ShowCredential, { id }) },
           {
             key: '/remove',
-            children: create(RemoveCredential, { id, change }),
+            children: element(RemoveCredential, { id, change }),
           },
         ]
       : [],
   })
-  return create(Modal, {
+  return element(Modal, {
     close,
     visible,
-    children: create(IconBar, {
+    children: element(IconBar, {
       key: 'iconBar',
       children: router.current && router.current.children,
       icons: [

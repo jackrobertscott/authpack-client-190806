@@ -1,32 +1,31 @@
-import { createElement as create, FC, Fragment, useState } from 'react'
-import { IconBar, useRouter } from 'wga-theme'
-import { wga } from '../utils/wga'
+import { createElement as element, FC, Fragment, useState } from 'react'
+import { IconBar, useRouter } from '@authpack/theme'
 import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterManagerCluster } from './RouterManagerCluster'
 import { Explorer } from './Explorer'
-import { useUniversal } from '../hooks/useUniversal'
 import { usePreferences } from '../utils/preferences'
+import { useGadgets } from '@authpack/react'
 
 export const RouterCentral: FC = () => {
-  const universal = useUniversal()
+  const gadgets = useGadgets()
   const preferences = usePreferences()
   const [apper, apperChange] = useState<boolean>(false)
   const router = useRouter({
     nomatch: '/app',
     options: [
-      { path: '/app', children: create(RouterSideBarHome) },
-      { path: '/developers', children: create(Explorer) },
+      { path: '/app', children: element(RouterSideBarHome) },
+      { path: '/developers', children: element(Explorer) },
     ],
   })
-  return create(IconBar, {
+  return element(IconBar, {
     children: [
-      create(RouterManagerCluster, {
+      element(RouterManagerCluster, {
         key: 'cluster',
         visible: apper,
         close: () => apperChange(false),
       }),
       router.current &&
-        create(Fragment, {
+        element(Fragment, {
           key: 'children',
           children: router.current.children,
         }),
@@ -74,13 +73,6 @@ export const RouterCentral: FC = () => {
           },
         ],
       },
-      !universal.subscribed && {
-        icon: 'exclamation-circle',
-        label: 'Limited Usage',
-        helper:
-          'Limited to a maximum of 50 users - add payment card to remove all limits',
-        click: () => apperChange(!apper),
-      },
       {
         icon: preferences.theme === 'snow_storm' ? 'toggle-off' : 'toggle-on',
         label: 'Dark Mode',
@@ -99,7 +91,7 @@ export const RouterCentral: FC = () => {
       {
         icon: 'user-circle',
         label: 'Account',
-        click: () => wga.show(),
+        click: () => gadgets.show(),
       },
     ],
   })

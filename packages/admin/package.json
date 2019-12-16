@@ -13,6 +13,9 @@
     "ship": "now --prod"
   },
   "dependencies": {
+    "@authpack/react": "^0.5.7",
+    "@authpack/sdk": "^0.7.4",
+    "@authpack/theme": "^0.6.4",
     "@fortawesome/fontawesome-free": "^5.11.2",
     "@sentry/browser": "^5.7.1",
     "@types/faker": "^4.1.7",
@@ -31,8 +34,6 @@
     "react-dom": "^16.11.0",
     "react-scripts": "^3.2.0",
     "typescript": "^3.7.2",
-    "wga-plugin": "^0.4.6",
-    "wga-theme": "^0.4.7",
     "yup": "^0.27.0"
   },
   "devDependencies": {

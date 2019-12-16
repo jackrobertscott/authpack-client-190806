@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import {
   useSchema,
   Button,
@@ -9,7 +9,7 @@ import {
   Poster,
   Page,
   useToaster,
-} from 'wga-theme'
+} from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
 export const UpdateUserPassword: FC<{
@@ -32,35 +32,35 @@ export const UpdateUserPassword: FC<{
       })
     },
   })
-  return create(Page, {
+  return element(Page, {
     title: 'Password',
     subtitle: 'User',
     children: [
-      create(Poster, {
+      element(Poster, {
         key: 'poster',
         icon: 'unlock',
         label: 'Change Password',
         helper: 'Passwords are encrypted',
       }),
-      create(Layout, {
+      element(Layout, {
         key: 'layout',
         column: true,
         padding: true,
         divide: true,
         children: [
-          create(Control, {
+          element(Control, {
             key: 'password',
             label: 'Password',
             helper: 'Please use more than 6 characters',
             error: schema.error('password'),
-            children: create(InputString, {
+            children: element(InputString, {
               value: schema.value('password'),
               change: schema.change('password'),
               placeholder: '* * * * * * * *',
               password: true,
             }),
           }),
-          create(Button, {
+          element(Button, {
             key: 'submit',
             label: 'Update',
             loading: gqlUpdateUser.loading,

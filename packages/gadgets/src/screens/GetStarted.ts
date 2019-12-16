@@ -1,5 +1,5 @@
-import { createElement as create, FC } from 'react'
-import { Layout, Button, Focus } from 'wga-theme'
+import { createElement as element, FC } from 'react'
+import { Layout, Button, Focus } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 
 export const GetStarted: FC<{
@@ -7,25 +7,25 @@ export const GetStarted: FC<{
   signup: () => void
 }> = ({ login, signup }) => {
   const settings = useSettings()
-  return create(Layout, {
+  return element(Layout, {
     grow: true,
-    children: create(Focus, {
+    children: element(Focus, {
       key: 'unlock',
       icon: 'unlock',
       label: settings.cluster ? settings.cluster.name : '',
       helper: 'Create an account or login',
-      children: create(Layout, {
+      children: element(Layout, {
         column: true,
         divide: true,
         media: true,
         children: [
-          create(Button, {
+          element(Button, {
             key: 'login',
             icon: 'unlock',
             label: 'Login',
             click: login,
           }),
-          create(Button, {
+          element(Button, {
             key: 'signup',
             icon: 'plus',
             label: 'Signup',

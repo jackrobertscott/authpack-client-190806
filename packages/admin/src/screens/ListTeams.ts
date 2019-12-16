@@ -1,6 +1,6 @@
 import faker from 'faker'
-import { createElement as create, FC, useState, useEffect, useRef } from 'react'
-import { Page, Table, Empty, Button, drip } from 'wga-theme'
+import { createElement as element, FC, useState, useEffect, useRef } from 'react'
+import { Page, Table, Empty, Button, drip } from '@authpack/theme'
 import { format } from 'date-fns'
 import { RouterManagerTeam } from './RouterManagerTeam'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'
@@ -18,7 +18,7 @@ export const ListTeams: FC = () => {
   })
   const queryListTeams = useRef(drip(1000, gqlListTeams.fetch))
   useEffect(() => {
-    if (variables) queryListTeams.current(variables)
+    if (variables.options.limit) queryListTeams.current(variables)
     // eslint-disable-next-line
   }, [variables])
   const list =
@@ -28,7 +28,7 @@ export const ListTeams: FC = () => {
         Boolean(gqlListTeams.data && !gqlListTeams.data.teams)
       ? []
       : FakeTeams
-  return create(Page, {
+  return element(Page, {
     title: 'Teams',
     subtitle: 'Groups of users',
     hidden: !gqlListTeams.data || !gqlListTeams.data.count,
@@ -40,7 +40,7 @@ export const ListTeams: FC = () => {
         setTimeout(() => idcurrentChange(undefined), 200) // animation
       },
     },
-    noscroll: create(TemplateSearchBar, {
+    noscroll: element(TemplateSearchBar, {
       count: gqlListTeams.data && gqlListTeams.data.count,
       current: gqlListTeams.data && gqlListTeams.data.teams.length,
       change: (phrase, limit, skip) => {
@@ -52,12 +52,12 @@ export const ListTeams: FC = () => {
       },
     }),
     children: [
-      create(RouterManagerTeam, {
+      element(RouterManagerTeam, {
         key: 'router',
         id: idcurrent,
         visible: build,
         change: id => {
-          variablesChange({ ...variables })
+          queryListTeams.current(variables)
           if (id) {
             idcurrentChange(id)
           } else {
@@ -72,16 +72,16 @@ export const ListTeams: FC = () => {
       }),
       gqlListTeams.data &&
         !gqlListTeams.data.count &&
-        create(Empty, {
+        element(Empty, {
           key: 'empty',
           icon: 'users',
           label: 'Teams',
           helper:
             'Create a team manually, with our gadgets, or by using our API',
-          children: create(Button, {
+          children: element(Button, {
             key: 'Regular',
             icon: 'book',
-            label: 'See Documents',
+            label: 'Install',
             click: () =>
               window.open(
                 'https://github.com/jackrobertscott/authpack/blob/master/readme.md'
@@ -89,7 +89,7 @@ export const ListTeams: FC = () => {
           }),
         }),
       gqlListTeams.data &&
-        create(Table, {
+        element(Table, {
           key: 'table',
           header: [
             { key: 'name', label: 'Name' },

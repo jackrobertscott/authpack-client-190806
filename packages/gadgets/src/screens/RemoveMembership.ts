@@ -1,6 +1,6 @@
-import { createElement as create, FC, useState } from 'react'
+import { createElement as element, FC, useState } from 'react'
 import { createUseServer } from '../hooks/useServer'
-import { Button, Layout, Focus, Poster, Page } from 'wga-theme'
+import { Button, Layout, Focus, Poster, Page } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 
 export const RemoveMembership: FC<{
@@ -11,48 +11,48 @@ export const RemoveMembership: FC<{
   const settings = useSettings()
   const gqlRemoveMembership = useRemoveMembership()
   const [confirm, confirmChange] = useState<boolean>(false)
-  return create(Page, {
+  return element(Page, {
     title: 'Remove Member',
     subtitle: settings.cluster && settings.cluster.name,
     children: [
-      create(Poster, {
+      element(Poster, {
         key: 'poster',
         icon: 'trash-alt',
         label: 'Remove',
         helper: 'Remove this team member',
       }),
-      create(Layout, {
+      element(Layout, {
         key: 'layout',
         padding: true,
         divide: true,
         media: true,
         children: [
-          create(Button, {
+          element(Button, {
             key: 'remove',
             label: 'Remove',
             click: () => confirmChange(true),
           }),
-          create(Button, {
+          element(Button, {
             key: 'cancel',
             icon: 'arrow-alt-circle-left',
             prefix: 'far',
-            label: 'Remove',
+            label: 'Cancel',
             click: close,
             minor: true,
           }),
         ],
       }),
-      create(Focus, {
+      element(Focus, {
         key: 'focus',
         icon: 'exclamation-triangle',
         label: 'Are you sure?',
         helper: 'Please confirm the removal of this team member',
         visible: confirm,
-        children: create(Layout, {
+        children: element(Layout, {
           divide: true,
           media: true,
           children: [
-            create(Button, {
+            element(Button, {
               key: 'confirm',
               icon: 'check',
               label: 'Confirm',
@@ -62,7 +62,7 @@ export const RemoveMembership: FC<{
                   .fetch({ id })
                   .then(() => change && change()),
             }),
-            create(Button, {
+            element(Button, {
               key: 'cancel',
               minor: true,
               icon: 'times',

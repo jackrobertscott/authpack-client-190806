@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as create, FC, Fragment } from 'react'
+import { createElement as element, FC, Fragment } from 'react'
 import {
   Layout,
   Control,
@@ -7,7 +7,7 @@ import {
   InputString,
   Button,
   Poster,
-} from 'wga-theme'
+} from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { SettingsStore } from '../utils/settings'
 
@@ -27,41 +27,41 @@ export const ReconcileUserPassword: FC<{
       })
     },
   })
-  return create(Fragment, {
+  return element(Fragment, {
     children: [
-      create(Poster, {
+      element(Poster, {
         key: 'poster',
         icon: 'unlock',
         label: 'Update Password',
         helper: 'A code was sent to your email',
       }),
-      create(Layout, {
+      element(Layout, {
         column: true,
         padding: true,
         divide: true,
         children: [
-          create(Control, {
+          element(Control, {
             key: 'code',
             label: 'Code',
             error: schema.error('code'),
-            children: create(InputString, {
+            children: element(InputString, {
               value: schema.value('code'),
               change: schema.change('code'),
               placeholder: '1234567890',
             }),
           }),
-          create(Control, {
+          element(Control, {
             key: 'password',
             label: 'New Password',
             error: schema.error('password'),
-            children: create(InputString, {
+            children: element(InputString, {
               value: schema.value('password'),
               change: schema.change('password'),
               placeholder: '* * * * * * * *',
               password: true,
             }),
           }),
-          create(Button, {
+          element(Button, {
             key: 'submit',
             label: 'Update Password',
             loading: gqlReconcileUser.loading,

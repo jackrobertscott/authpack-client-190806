@@ -1,5 +1,6 @@
 import * as yup from 'yup'
-import { createElement as create, FC, useState, useEffect, useRef } from 'react'
+import { createElement as element, FC, useState, useEffect, useRef } from 'react'
+import { useAuthpack } from '@authpack/react'
 import {
   useSchema,
   Layout,
@@ -12,12 +13,11 @@ import {
   Page,
   Poster,
   useMounted,
-} from 'wga-theme'
+} from '@authpack/theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 import { UniversalStore } from '../utils/universal'
 import { stripe } from '../utils/stripe'
-import { useGadgets } from '../hooks/useGadgets'
 
 export const UpdatePayment: FC<{
   change?: (id?: string) => void
@@ -25,7 +25,7 @@ export const UpdatePayment: FC<{
 }> = ({ change, cancel }) => {
   const toaster = useToaster()
   const universal = useUniversal()
-  const gadgets = useGadgets()
+  const authpack = useAuthpack()
   const mounted = useMounted()
   const stripeCard = useRef<any>()
   const [loading, loadingChange] = useState<boolean>(false)
@@ -45,12 +45,11 @@ export const UpdatePayment: FC<{
                 token: token.id,
                 email: value.email,
                 name: value.name,
+                coupon: value.coupon,
               },
             })
             .then(({ cluster }) => {
-              UniversalStore.update({
-                subscribed: cluster.subscribed,
-              })
+              UniversalStore.update({ subscribed: cluster.subscribed })
               toaster.add({
                 icon: 'credit-card',
                 label: 'Success',
@@ -70,14 +69,14 @@ export const UpdatePayment: FC<{
     },
   })
   useEffect(() => {
-    if (gadgets.user)
+    if (authpack.user)
       schema.set({
-        name: gadgets.user.name,
-        email: gadgets.user.email,
+        name: authpack.user.name,
+        email: authpack.user.email,
       })
     // eslint-disable-next-line
   }, [])
-  return create(Page, {
+  return element(Page, {
     title: 'Payment',
     subtitle: 'Cluster',
     corner: !universal.subscribed
@@ -89,52 +88,52 @@ export const UpdatePayment: FC<{
         },
     children: [
       !universal.subscribed &&
-        create(Poster, {
+        element(Poster, {
           key: 'payment',
           icon: 'bolt',
           label: 'Monthly',
-          helper: '$19 usd per set of 1,000 users',
+          helper: '$9 usd per 1,000 users',
         }),
-      create(Layout, {
+      element(Layout, {
         key: 'layout',
         column: true,
         padding: true,
         divide: true,
         children: [
-          create(Control, {
+          element(Control, {
             key: 'card',
             label: 'Card',
             helper: 'Powered by Stripe',
             error: schema.error('card'),
-            children: create(InputStripe, {
+            children: element(InputStripe, {
               stripe,
               change: value => {
                 if (mounted.current) stripeCard.current = value
               },
             }),
           }),
-          create(Layout, {
+          element(Layout, {
             key: 'top',
             divide: true,
             children: [
-              create(Control, {
+              element(Control, {
                 key: 'name',
                 label: 'Name',
                 helper: 'Found on card',
                 error: schema.error('name'),
-                children: create(InputString, {
+                children: element(InputString, {
                   value: schema.value('name'),
                   change: schema.change('name'),
                   placeholder: 'Fred Blogs',
                 }),
               }),
               !universal.subscribed &&
-                create(Control, {
+                element(Control, {
                   key: 'coupon',
                   label: 'Code',
                   helper: 'Optional payment code',
                   error: schema.error('coupon'),
-                  children: create(InputString, {
+                  children: element(InputString, {
                     value: schema.value('coupon'),
                     change: schema.change('coupon'),
                     placeholder: '...',
@@ -142,18 +141,18 @@ export const UpdatePayment: FC<{
                 }),
             ],
           }),
-          create(Control, {
+          element(Control, {
             key: 'email',
             label: 'Billing Email',
             helper: 'This email will receive payment invoices',
             error: schema.error('email'),
-            children: create(InputString, {
+            children: element(InputString, {
               value: schema.value('email'),
               change: schema.change('email'),
               placeholder: 'fred@example.com',
             }),
           }),
-          create(Button, {
+          element(Button, {
             key: 'submit',
             label: universal.subscribed ? 'Update Payment' : 'Submit',
             disabled: !schema.valid,

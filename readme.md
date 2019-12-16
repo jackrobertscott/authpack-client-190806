@@ -1,20 +1,68 @@
-# 🏇 Authpack
+![Authpack](https://raw.githubusercontent.com/jackrobertscott/authpack/master/docs/assets/banner.png)
 
-> Simple user and team management API for your app
+![npm](https://img.shields.io/npm/v/@authpack/sdk) ![language](https://img.shields.io/badge/language-typescript-blue) ![build](https://img.shields.io/badge/build-passing-green)
 
-This repository contains example code to help you get started with Authpack.
+## Features
 
-## Table of Contents
+[Authpack](https://authpack.io) is a complete user and team management system for your app.
 
-- [Gadgets](#gadgets)
-- [API](#api)
+- 🔥 Fast render speeds.
+- 🛠 Less than 8 lines of code.
+- ⚛️ Complete GraphQL API.
+- 🎉 SDKs for JS, React, and Vue.
+- 😻 One-click social login.
+- 🔒 Encrypted passwords.
+- 💻 All screen sizes.
+- 👨‍💻 TypeScript property hinting.
+- 👩‍👧‍👦 Team membership support.
+- ✌️ More coming soon...
 
-## Gadgets
+**Note:** we have open sourced our client side code in this repository. Feel free to explore our code and learn how we built Authpack's dashboard and gadgets. The Authpack API and backend logic will *remain private* and is not included in this repository.
 
-The Authpack Gadgets provide you with a premade login system.
+## Quick Starts
 
-Install.
+- [JavaScript](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/sdk.md)
+- [React](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/react.md)
+- [Vue](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/vue.md)
+- [API](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/api.md)
+- [State](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/state.md)
+- [Security](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/security.md)
 
-```shell
-npm i --save wga-plugin
+## Example
+
+This is a simple example of how Authpack's [SDK](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/sdk.md) works.
+
+```ts
+import * as Authpack from '@authpack/sdk'
 ```
+
+Create the gadgets used to authenticate users.
+
+```ts
+const gadgets = new Authpack.Gadgets({
+  key: 'wga-client-key-...',
+})
+```
+
+Add an event listener which will observe the current user state.
+
+```ts
+gadgets.listen(({ ready, bearer, user, team }) => {
+  if (ready && user) {
+    console.log(user)
+  }
+})
+```
+
+Show the gadgets to the current user to log them in.
+
+```ts
+gadgets.show()
+```
+
+Authpack was designed to be simple, fast, and beautiful.
+
+## Links
+
+- [Website](https://authpack.io)
+- [Dashboard](https://v1.authpack.io)
