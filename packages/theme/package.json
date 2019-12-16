@@ -1,7 +1,7 @@
 {
   "name": "@authpack/theme",
   "private": false,
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "Theme for Authpack.",
   "license": "MIT",
   "main": "lib/index.js",
