@@ -13,7 +13,7 @@ const slate = (
 export const NightSky: ITheme = {
   global: {
     radius: 3,
-    thick: 500,
+    thick: 600,
     thin: 500,
   },
   /**
