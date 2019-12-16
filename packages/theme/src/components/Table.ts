@@ -168,6 +168,9 @@ const Cell: FC<{
         all: 'unset',
         display: 'flex',
         alignItems: 'flex-start',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
       }),
       children: [
         icon &&
