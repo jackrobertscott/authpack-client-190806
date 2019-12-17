@@ -7,8 +7,8 @@ import { RouterModalOnauthed } from './RouterModalOnauthed'
 import { SettingsStore } from '../utils/settings'
 import { NoKey } from './NoKey'
 import { Loading } from './Loading'
-import { config } from '../config'
 import { NoPayment } from './NoPayment'
+import { config } from '../config'
 
 export const Gadgets: FC = () => {
   useSetup()
@@ -33,7 +33,7 @@ export const Gadgets: FC = () => {
         ? element(NoKey, {
             key: 'nokey',
           })
-        : !allowed
+        : !allowed && false
         ? element(NoPayment, {
             key: 'nopayment',
           })

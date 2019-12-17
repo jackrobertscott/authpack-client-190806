@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useAuthpack } from '@authpack/react'
+import { useAuthpack } from '../utils/authpack'
 import { createUseServer } from './useServer'
 import { UniversalStore } from '../utils/universal'
 import { useUniversal } from './useUniversal'

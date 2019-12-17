@@ -1,4 +1,3 @@
-import * as Authpack from '@authpack/react'
 import { createElement as create, FC } from 'react'
 import { Spinner, Toaster } from '@authpack/theme'
 import { Universal } from './utils/universal'
@@ -6,6 +5,7 @@ import { ErrorBoundary } from './screens/ErrorBoundary'
 import { Admin } from './screens/Admin'
 import { Preferences } from './utils/preferences'
 import { config } from './config'
+import * as Authpack from './utils/authpack'
 
 export const App: FC = () => {
   return create(ErrorBoundary, {

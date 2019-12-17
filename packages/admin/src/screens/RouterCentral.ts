@@ -4,7 +4,7 @@ import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterManagerCluster } from './RouterManagerCluster'
 import { Explorer } from './Explorer'
 import { usePreferences } from '../utils/preferences'
-import { useGadgets } from '@authpack/react'
+import { useGadgets } from '../utils/authpack'
 
 export const RouterCentral: FC = () => {
   const gadgets = useGadgets()
