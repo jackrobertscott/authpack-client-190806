@@ -1,11 +1,11 @@
+import 'graphiql/graphiql.css'
+import GraphiQL from 'graphiql'
 import { createElement as element, FC } from 'react'
-import { useAuthpack } from '@authpack/react'
 import { graphql, useTheme } from '@authpack/theme'
 import { css } from 'emotion'
-import GraphiQL from 'graphiql'
-import 'graphiql/graphiql.css'
 import { config } from '../config'
 import { useUniversal } from '../hooks/useUniversal'
+import { useAuthpack } from '../utils/authpack'
 
 const startingQuery = `
 query First10Users {

@@ -22,8 +22,6 @@
 ## Quick Starts
 
 - [JavaScript](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/sdk.md)
-- [React](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/react.md)
-- [Vue](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/vue.md)
 - [API](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/api.md)
 - [State](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/state.md)
 - [Security](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/security.md)

@@ -1,6 +1,6 @@
 import { createElement as element, FC } from 'react'
 import { Focus, Button, useMedia, Root } from '@authpack/theme'
-import { useAuthpack, useGadgets } from '@authpack/react'
+import { useAuthpack, useGadgets } from '../utils/authpack'
 import { useUniversal } from '../hooks/useUniversal'
 import { useSetup } from '../hooks/useSetup'
 import { RouterCentral } from './RouterCentral'

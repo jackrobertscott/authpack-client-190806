@@ -12,8 +12,6 @@ Install using npm or yarn.
 npm i --save @authpack/sdk
 ```
 
-The `@authpack/react` and `@authpack/vue` libraries use this sdk library under the hood.
-
 ## 2. Setup
 
 Create a new `Gadgets` instance which will control the modal used to authenticate your users.

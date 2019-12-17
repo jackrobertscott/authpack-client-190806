@@ -1,6 +1,11 @@
 import * as yup from 'yup'
-import { createElement as element, FC, useState, useEffect, useRef } from 'react'
-import { useAuthpack } from '@authpack/react'
+import {
+  createElement as element,
+  FC,
+  useState,
+  useEffect,
+  useRef,
+} from 'react'
 import {
   useSchema,
   Layout,
@@ -14,6 +19,7 @@ import {
   Poster,
   useMounted,
 } from '@authpack/theme'
+import { useAuthpack } from '../utils/authpack'
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 import { UniversalStore } from '../utils/universal'
