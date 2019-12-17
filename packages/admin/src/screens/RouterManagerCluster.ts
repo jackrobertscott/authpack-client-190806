@@ -63,12 +63,6 @@ export const RouterManagerCluster: FC<{
     children: element(IconBar, {
       children: router.current && router.current.children,
       icons: [
-        !universal.subscribed && {
-          icon: 'bolt',
-          label: 'Payment',
-          focused: !!router.current && router.current.key === '/payment',
-          click: () => router.change('/payment'),
-        },
         {
           icon: 'glasses',
           label: 'Inspect',
@@ -93,7 +87,7 @@ export const RouterManagerCluster: FC<{
           focused: !!router.current && router.current.key === '/switch',
           click: () => router.change('/switch'),
         },
-        !!universal.subscribed && {
+        false && {
           icon: 'wallet',
           label: 'Payment',
           focused: !!router.current && router.current.key === '/payment',
