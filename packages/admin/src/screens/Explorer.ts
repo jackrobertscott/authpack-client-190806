@@ -18,7 +18,7 @@ query First10Users {
     updated
   }
 }
-`
+`.trim()
 
 export const Explorer: FC = () => {
   const theme = useTheme()
@@ -54,8 +54,8 @@ export const Explorer: FC = () => {
           '*': {
             fontSize: '1rem',
             lineHeight: '1.25rem',
-            fontFamily: 'Rubik',
-            fontWeight: '500' as any,
+            fontFamily: 'Inter',
+            fontWeight: 600,
             outline: 'none',
             letterSpacing: 'normal',
             WebkitTextFillColor: 'initial',
