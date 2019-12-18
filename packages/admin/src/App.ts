@@ -1,5 +1,5 @@
 import * as Authpack from '@authpack/react'
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import { Spinner, Toaster } from '@authpack/theme'
 import { Universal } from './utils/universal'
 import { ErrorBoundary } from './screens/ErrorBoundary'
@@ -8,13 +8,13 @@ import { Preferences } from './utils/preferences'
 import { config } from './config'
 
 export const App: FC = () => {
-  return create(ErrorBoundary, {
-    children: create(Preferences, {
-      children: create(Universal, {
-        children: create(Toaster, {
-          children: create(Spinner, {
-            children: create(Authpack.Provider, {
-              children: create(Admin),
+  return element(ErrorBoundary, {
+    children: element(Preferences, {
+      children: element(Universal, {
+        children: element(Toaster, {
+          children: element(Spinner, {
+            children: element(Authpack.Provider, {
+              children: element(Admin),
               value: {
                 debug: true,
                 key: config.gadgets_key_client,
