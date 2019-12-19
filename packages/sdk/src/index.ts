@@ -8,22 +8,22 @@ export class Gadgets {
   private queue: Array<{ name: string; payload?: any }>
   private radio: Radio<{ name: string; payload?: any }>
   private loaded: boolean
-  private id: string = 'authpack'
+  private id: string
   private key: string
-  private url: string = 'https://gadgets.v1.authpack.io'
-  private debug: boolean = false
+  private url: string
+  private debug: boolean
   constructor({ key, id, url, debug, options = {} }: IConstructor) {
     if (!key || !key.includes('wga-client-key')) {
       const message = 'Please provide your client key i.e. "wga-client-key-..."'
       throw new Error(message)
     }
-    this.key = key
+    this.id = this.key = key
     this.queue = []
     this.loaded = false
     this.options = options
-    if (typeof id === 'string') this.id = id
-    if (typeof url === 'string') this.url = url
-    if (typeof debug === 'boolean') this.debug = debug
+    this.id = typeof id === 'string' ? id : 'authpack'
+    this.url = typeof url === 'string' ? url : 'https://gadgets.v1.authpack.io'
+    this.debug = typeof debug === 'boolean' ? debug : false
     this.store = this.createStore()
     this.iframe = this.createIFrame()
     this.radio = this.createRadio(this.iframe)
@@ -46,15 +46,16 @@ export class Gadgets {
   public listen(callback: (current: IGadgets) => void) {
     return this.store.listen(callback)
   }
-  public assert(current: IGadgets, tags: string[]) {
-    const state = Array.isArray(current.permissions)
-      ? current.permissions.filter(({ tag }) => tags.includes(tag))
-      : []
-    return state.length >= tags.length
-  }
   /**
    * Private...
    */
+  private sendMessage(name: string, payload?: any) {
+    if (!this.radio)
+      throw new Error('Failed to send message as radio does not exist')
+    const message = { name, payload }
+    if (!this.loaded) this.queue = [...this.queue, message]
+    else this.radio.message(message)
+  }
   private createStore() {
     const store = createStore()
     store.update({
@@ -109,13 +110,6 @@ export class Gadgets {
       }
     })
     return radio
-  }
-  private sendMessage(name: string, payload?: any) {
-    if (!this.radio)
-      throw new Error('Failed to send message as radio does not exist')
-    const message = { name, payload }
-    if (!this.loaded) this.queue = [...this.queue, message]
-    else this.radio.message(message)
   }
 }
 

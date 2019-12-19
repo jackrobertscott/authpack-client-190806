@@ -1,4 +1,4 @@
-# JavaScript SDK Quickstart
+# Unstable 🚧 JavaScript SDK Quickstart
 
 > [Authpack](https://authpack.io) 🔒 A complete user and team management system
 
