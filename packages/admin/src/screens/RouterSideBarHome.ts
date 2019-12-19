@@ -5,6 +5,7 @@ import { ListUsers } from './ListUsers'
 import { ListProviders } from './ListProviders'
 import { ListPermissions } from './ListPermissions'
 import { ListTeams } from './ListTeams'
+import { ListWebhooks } from './ListWebhooks'
 
 export const RouterSideBarHome: FC = () => {
   const universal = useUniversal()
@@ -16,6 +17,7 @@ export const RouterSideBarHome: FC = () => {
       { path: '/teams', children: element(ListTeams) },
       { path: '/permissions', children: element(ListPermissions) },
       { path: '/providers', children: element(ListProviders) },
+      { path: '/webhooks', children: element(ListWebhooks) },
     ],
   })
   return element(SideBar, {
@@ -47,6 +49,12 @@ export const RouterSideBarHome: FC = () => {
         label: 'Providers',
         focused: !!router.current && router.current.path === '/providers',
         click: () => router.change('/providers'),
+      },
+      {
+        icon: 'project-diagram',
+        label: 'Webhooks',
+        focused: !!router.current && router.current.path === '/webhooks',
+        click: () => router.change('/webhooks'),
       },
     ],
   })
