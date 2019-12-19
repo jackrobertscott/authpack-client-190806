@@ -1,25 +1,29 @@
 import { useEffect, useState, useMemo } from 'react'
-import { useToaster, useMounted } from '@authpack/theme'
+import { useToaster } from './useToaster'
+import { useMounted } from './useMounted'
 
 export const useOauthCode = () => {
   const toaster = useToaster()
   const mounted = useMounted()
-  const [code, codeChange] = useState<string | undefined>()
   const [tab, tabChange] = useState<Window | null | undefined>()
+  const [code, codeChange] = useState<string | undefined>()
+  const [current, currentChange] = useState<string | undefined>()
   useEffect(() => {
     if (tab) {
       let count = 0
       const interval = setInterval(() => {
+        if (!mounted.current) {
+          if (interval) clearTimeout(interval)
+          return
+        }
         count = count + 1
         if (count > 10 * 60) {
-          clearTimeout(interval)
-          if (mounted.current)
-            toaster.add({
-              icon: 'flag',
-              label: 'Error',
-              helper: 'OAuth time limit expired, please try again',
-            })
-          return
+          if (interval) clearTimeout(interval)
+          toaster.add({
+            icon: 'flag',
+            label: 'Error',
+            helper: 'OAuth time limit expired, please try again',
+          })
         }
         const data = localStorage.getItem('authpack.code')
         if (!data) return // continue polling
@@ -43,17 +47,24 @@ export const useOauthCode = () => {
     }
     // eslint-disable-next-line
   }, [tab])
-  const openUrl = (url: string) => {
-    setTimeout(() => tabChange(window.open(url)))
+  const open = (id: string, url: string) => {
+    localStorage.removeItem('authpack.code')
+    if (!mounted.current) return
+    currentChange(id)
+    setTimeout(() => mounted.current && tabChange(window.open(url)))
   }
-  const clearCode = () => {
+  const clear = () => {
+    if (!mounted.current) return
     codeChange(undefined)
+    currentChange(undefined)
   }
   return useMemo(() => {
     return {
       code,
-      openUrl,
-      clearCode,
+      current,
+      open,
+      clear,
     }
-  }, [code])
+    // eslint-disable-next-line
+  }, [code, current])
 }

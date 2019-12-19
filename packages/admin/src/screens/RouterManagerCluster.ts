@@ -8,6 +8,7 @@ import { ShowCluster } from './ShowCluster'
 import { SwitchCluster } from './SwitchCluster'
 import { ShowClusterKeys } from './ShowClusterKeys'
 import { CreateCluster } from './CreateCluster'
+import { UpdateClusterStripe } from './UpdateClusterStripe'
 
 export const RouterManagerCluster: FC<{
   visible?: boolean
@@ -41,6 +42,10 @@ export const RouterManagerCluster: FC<{
         children: element(CreateCluster, {
           change: () => router.change('/inspect'),
         }),
+      },
+      {
+        key: '/stripe',
+        children: element(UpdateClusterStripe),
       },
       {
         key: '/payment',
@@ -86,6 +91,12 @@ export const RouterManagerCluster: FC<{
           label: 'Switch',
           focused: !!router.current && router.current.key === '/switch',
           click: () => router.change('/switch'),
+        },
+        {
+          icon: 'credit-card',
+          label: 'Accept Payments',
+          focused: !!router.current && router.current.key === '/stripe',
+          click: () => router.change('/stripe'),
         },
         false && {
           icon: 'wallet',

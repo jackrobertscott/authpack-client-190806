@@ -170,7 +170,7 @@ const Cell: FC<{
         alignItems: 'flex-start',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
+        minWidth: 140,
       }),
       children: [
         icon &&

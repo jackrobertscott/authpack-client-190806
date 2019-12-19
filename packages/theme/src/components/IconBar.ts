@@ -37,6 +37,7 @@ export const IconBar: FC<{
       display: 'flex',
       flexGrow: 1,
       flexDirection: 'row',
+      overflow: 'hidden',
       [bp]: {
         flexDirection: 'column-reverse',
       },

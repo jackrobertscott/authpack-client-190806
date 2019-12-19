@@ -26,7 +26,7 @@ export const Admin: FC = () => {
           children: element(Button, {
             key: 'login',
             icon: 'bolt',
-            label: 'Start',
+            label: 'Continue',
             click: () => gadgets.show(),
           }),
         })

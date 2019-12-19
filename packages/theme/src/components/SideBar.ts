@@ -95,6 +95,7 @@ export const SideBar: FC<{
           display: 'flex',
           flexDirection: 'column',
           flexGrow: 1,
+          overflow: 'hidden',
         }),
         children: [
           element('div', {
