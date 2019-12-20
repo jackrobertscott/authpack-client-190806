@@ -34,7 +34,7 @@ export const ListUpgrades: FC = () => {
       : FakeUpgrades
   return element(Page, {
     title: 'Upgrades',
-    subtitle: 'Restrict areas of your project to paying users',
+    subtitle: 'Accept payment from your users',
     hidden: !gqlListUpgrades.data || !gqlListUpgrades.data.count,
     corner: {
       icon: 'plus',
