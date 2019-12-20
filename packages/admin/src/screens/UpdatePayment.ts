@@ -55,13 +55,13 @@ export const UpdatePayment: FC<{
               },
             })
             .then(({ cluster }) => {
+              if (change) change(cluster.id)
               UniversalStore.update({ subscribed: cluster.subscribed })
               toaster.add({
                 icon: 'credit-card',
                 label: 'Success',
                 helper: 'Payment method was successfully accepted',
               })
-              if (change) change(cluster.id)
             })
         })
         .catch(error => {
@@ -160,7 +160,7 @@ export const UpdatePayment: FC<{
           }),
           element(Button, {
             key: 'submit',
-            label: universal.subscribed ? 'Update Payment' : 'Submit',
+            label: universal.subscribed ? 'Update' : 'Submit',
             disabled: !schema.valid,
             click: schema.submit,
             loading,

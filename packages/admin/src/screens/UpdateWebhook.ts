@@ -7,6 +7,8 @@ import {
   InputString,
   Page,
   InputSelect,
+  Button,
+  useToaster,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { WEBHOOKEVENTS } from '../utils/webhooks'
@@ -16,14 +18,16 @@ export const UpdateWebhook: FC<{
   change?: (id?: string) => void
 }> = ({ id, change }) => {
   const [filter, filterChange] = useState<string>('')
+  const toaster = useToaster()
   const gqlGetWebhook = useGetWebhook()
   const gqlUpdateWebhook = useUpdateWebhook()
   const schema = useSchema({
     schema: SchemaUpdateWebhook,
-    poller: value => {
-      gqlUpdateWebhook
-        .fetch({ id, value })
-        .then(({ webhook }) => change && change(webhook.id))
+    submit: value => {
+      gqlUpdateWebhook.fetch({ id, value }).then(({ webhook }) => {
+        if (change) change(webhook.id)
+        toaster.add({ icon: 'check-circle', label: 'Success' })
+      })
     },
   })
   useEffect(() => {
@@ -64,6 +68,13 @@ export const UpdateWebhook: FC<{
                 change: schema.change('url'),
                 placeholder: 'https://exmaple.com/webhooks',
               }),
+            }),
+            element(Button, {
+              key: 'submit',
+              label: 'Save',
+              loading: gqlGetWebhook.loading || gqlUpdateWebhook.loading,
+              disabled: !schema.valid,
+              click: schema.submit,
             }),
           ],
     }),

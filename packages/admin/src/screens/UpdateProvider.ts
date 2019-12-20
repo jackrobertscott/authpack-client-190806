@@ -8,6 +8,8 @@ import {
   InputStringArray,
   Poster,
   Page,
+  Button,
+  useToaster,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
@@ -15,6 +17,7 @@ export const UpdateProvider: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
+  const toaster = useToaster()
   const gqlGetProvider = useGetProvider()
   const gqlUpdateProvider = useUpdateProvider()
   const [details, detailsChange] = useState<
@@ -22,10 +25,11 @@ export const UpdateProvider: FC<{
   >()
   const schema = useSchema({
     schema: SchemaUpdateProvider,
-    poller: value => {
-      gqlUpdateProvider
-        .fetch({ id, value })
-        .then(({ provider }) => change && change(provider.id))
+    submit: value => {
+      gqlUpdateProvider.fetch({ id, value }).then(({ provider }) => {
+        if (change) change(provider.id)
+        toaster.add({ icon: 'check-circle', label: 'Success' })
+      })
     },
   })
   useEffect(() => {
@@ -94,7 +98,7 @@ export const UpdateProvider: FC<{
               }),
               element(Control, {
                 key: 'redirect_uri',
-                label: 'Advanced - Redirect URI',
+                label: 'Advanced Redirect URI',
                 helper:
                   'Leave this empty unless you are creating your own login system',
                 error: schema.error('redirect_uri'),
@@ -103,6 +107,13 @@ export const UpdateProvider: FC<{
                   change: schema.change('redirect_uri'),
                   placeholder: 'https://gadgets.v1.authpack.io',
                 }),
+              }),
+              element(Button, {
+                key: 'submit',
+                label: 'Save',
+                loading: gqlGetProvider.loading || gqlUpdateProvider.loading,
+                disabled: !schema.valid,
+                click: schema.submit,
               }),
             ],
       }),

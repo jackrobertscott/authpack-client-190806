@@ -7,6 +7,8 @@ import {
   InputString,
   testAlphanumeric,
   Page,
+  Button,
+  useToaster,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
@@ -14,14 +16,16 @@ export const UpdateUpgrade: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
+  const toaster = useToaster()
   const gqlGetUpgrade = useGetUpgrade()
   const gqlUpdateUpgrade = useUpdateUpgrade()
   const schema = useSchema({
     schema: SchemaUpdateUpgrade,
-    poller: value => {
-      gqlUpdateUpgrade
-        .fetch({ id, value })
-        .then(({ upgrade }) => change && change(upgrade.id))
+    submit: value => {
+      gqlUpdateUpgrade.fetch({ id, value }).then(({ upgrade }) => {
+        if (change) change(upgrade.id)
+        toaster.add({ icon: 'check-circle', label: 'Success' })
+      })
     },
   })
   useEffect(() => {
@@ -68,6 +72,13 @@ export const UpdateUpgrade: FC<{
                 change: schema.change('description'),
                 placeholder: 'User can...',
               }),
+            }),
+            element(Button, {
+              key: 'submit',
+              label: 'Save',
+              loading: gqlGetUpgrade.loading || gqlUpdateUpgrade.loading,
+              disabled: !schema.valid,
+              click: schema.submit,
             }),
           ],
     }),

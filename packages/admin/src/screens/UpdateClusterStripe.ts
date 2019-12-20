@@ -7,6 +7,7 @@ import {
   Focus,
   Poster,
   useMounted,
+  useToaster,
 } from '@authpack/theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
@@ -14,6 +15,7 @@ import { createUseServer } from '../hooks/useServer'
 export const UpdateClusterStripe: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
+  const toaster = useToaster()
   const mounted = useMounted()
   const oauthCode = useOauthCode()
   const universal = useUniversal()
@@ -33,6 +35,11 @@ export const UpdateClusterStripe: FC<{
         .then(({ cluster }) => {
           if (change) change(cluster.id)
           gqlGetCluster.fetch({ id: universal.cluster_id })
+          toaster.add({
+            icon: 'check-circle',
+            label: 'Success',
+            helper: 'You can now accept payments',
+          })
         })
         .finally(() => {
           if (!mounted.current) return
@@ -74,7 +81,7 @@ export const UpdateClusterStripe: FC<{
                 ? element(Button, {
                     key: 'dashboard',
                     icon: 'external-link-alt',
-                    label: 'Stripe Dashboard',
+                    label: 'Manage',
                     loading: gqlUpsertClusterStripe.loading,
                     click: () =>
                       gqlGetCluster.data &&
@@ -85,7 +92,7 @@ export const UpdateClusterStripe: FC<{
                 : element(Button, {
                     key: 'submit',
                     icon: 'external-link-alt',
-                    label: 'Connect Stripe',
+                    label: 'Setup',
                     loading: gqlUpsertClusterStripe.loading,
                     click: () =>
                       gqlGetCluster.data &&

@@ -7,6 +7,8 @@ import {
   InputString,
   testAlphanumeric,
   Page,
+  Button,
+  useToaster,
 } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
@@ -14,15 +16,17 @@ import { createUseServer } from '../hooks/useServer'
 export const UpdateUser: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
+  const toaster = useToaster()
   const settings = useSettings()
   const gqlGetUser = useGetUser()
   const gqlUpdateUser = useUpdateUser()
   const schema = useSchema({
     schema: SchemaUpdateUser,
-    poller: input => {
-      gqlUpdateUser
-        .fetch({ input })
-        .then(({ user }) => change && change(user.id))
+    submit: input => {
+      gqlUpdateUser.fetch({ input }).then(({ user }) => {
+        if (change) change(user.id)
+        toaster.add({ icon: 'check-circle', label: 'Success' })
+      })
     },
   })
   useEffect(() => {
@@ -75,6 +79,13 @@ export const UpdateUser: FC<{
                 change: schema.change('username'),
                 placeholder: 'example_username_123',
               }),
+            }),
+            element(Button, {
+              key: 'submit',
+              label: 'Save',
+              loading: gqlGetUser.loading || gqlUpdateUser.loading,
+              disabled: !schema.valid,
+              click: schema.submit,
             }),
           ],
     }),

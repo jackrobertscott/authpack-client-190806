@@ -33,7 +33,7 @@ export const Toaster: FC<{
     const { timer, ...toast } = options
     set.current = [...set.current, { ...toast, id, close: () => remove(id) }]
     lastChange(Date.now())
-    setTimeout(() => remove(id), timer || 8000)
+    setTimeout(() => remove(id), timer || toast.helper ? 8000 : 2000)
   }
   const remove = (id: string) => {
     set.current = set.current.filter((i: any) => i.id !== id)

@@ -100,7 +100,7 @@ export const UpdateCluster: FC<{
             }),
             element(Button, {
               key: 'submit',
-              label: 'Update',
+              label: 'Save',
               loading: gqlGetCluster.loading || gqlUpdateCluster.loading,
               disabled: !schema.valid,
               click: schema.submit,

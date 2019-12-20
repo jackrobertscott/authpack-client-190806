@@ -7,6 +7,8 @@ import {
   InputSelectMany,
   Page,
   InputBoolean,
+  Button,
+  useToaster,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
@@ -14,15 +16,17 @@ export const UpdateMembership: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
+  const toaster = useToaster()
   const gqlGetMembership = useGetMembership()
   const gqlUpdateMembership = useUpdateMembership()
   const gqlListPermissions = useListPermissions()
   const schema = useSchema({
     schema: SchemaUpdateMembership,
-    poller: value => {
-      gqlUpdateMembership
-        .fetch({ id, value })
-        .then(({ membership }) => change && change(membership.id))
+    submit: value => {
+      gqlUpdateMembership.fetch({ id, value }).then(({ membership }) => {
+        if (change) change(membership.id)
+        toaster.add({ icon: 'check-circle', label: 'Success' })
+      })
     },
   })
   useEffect(() => {
@@ -73,6 +77,13 @@ export const UpdateMembership: FC<{
                   ),
                 }),
               }),
+            element(Button, {
+              key: 'submit',
+              label: 'Save',
+              loading: gqlGetMembership.loading || gqlUpdateMembership.loading,
+              disabled: !schema.valid,
+              click: schema.submit,
+            }),
           ],
     }),
   })
