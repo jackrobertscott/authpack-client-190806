@@ -6,6 +6,7 @@ import { ListProviders } from './ListProviders'
 import { ListPermissions } from './ListPermissions'
 import { ListTeams } from './ListTeams'
 import { ListWebhooks } from './ListWebhooks'
+import { ListUpgrades } from './ListUpgrade'
 
 export const RouterSideBarHome: FC = () => {
   const universal = useUniversal()
@@ -15,6 +16,7 @@ export const RouterSideBarHome: FC = () => {
     options: [
       { path: '/users', children: element(ListUsers) },
       { path: '/teams', children: element(ListTeams) },
+      { path: '/upgrades', children: element(ListUpgrades) },
       { path: '/permissions', children: element(ListPermissions) },
       { path: '/providers', children: element(ListProviders) },
       { path: '/webhooks', children: element(ListWebhooks) },
@@ -33,6 +35,18 @@ export const RouterSideBarHome: FC = () => {
         click: () => router.change('/users'),
       },
       {
+        icon: 'donate',
+        label: 'Upgrades',
+        focused: !!router.current && router.current.path === '/upgrades',
+        click: () => router.change('/upgrades'),
+      },
+      {
+        icon: 'plug',
+        label: 'Providers',
+        focused: !!router.current && router.current.path === '/providers',
+        click: () => router.change('/providers'),
+      },
+      {
         icon: 'users',
         label: 'Teams',
         focused: !!router.current && router.current.path === '/teams',
@@ -45,13 +59,7 @@ export const RouterSideBarHome: FC = () => {
         click: () => router.change('/permissions'),
       },
       {
-        icon: 'plug',
-        label: 'Providers',
-        focused: !!router.current && router.current.path === '/providers',
-        click: () => router.change('/providers'),
-      },
-      {
-        icon: 'project-diagram',
+        icon: 'sitemap',
         label: 'Webhooks',
         focused: !!router.current && router.current.path === '/webhooks',
         click: () => router.change('/webhooks'),
