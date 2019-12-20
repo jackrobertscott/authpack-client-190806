@@ -44,26 +44,34 @@ export const UpdatePermission: FC<{
       children: !gqlGetPermission.data
         ? null
         : [
-            element(Control, {
+            element(Layout, {
               key: 'name',
-              label: 'Name',
-              error: schema.error('name'),
-              children: element(InputString, {
-                value: schema.value('name'),
-                change: schema.change('name'),
-                placeholder: 'Admin Editor',
-              }),
-            }),
-            element(Control, {
-              key: 'tag',
-              label: 'Tag',
-              helper: 'A unique identifier for the permission',
-              error: schema.error('tag'),
-              children: element(InputString, {
-                value: schema.value('tag'),
-                change: schema.change('tag'),
-                placeholder: 'admin_editor',
-              }),
+              divide: true,
+              media: true,
+              children: [
+                element(Control, {
+                  key: 'name',
+                  label: 'Name',
+                  helper: 'Human friendly name',
+                  error: schema.error('name'),
+                  children: element(InputString, {
+                    value: schema.value('name'),
+                    change: schema.change('name'),
+                    placeholder: 'Editor',
+                  }),
+                }),
+                element(Control, {
+                  key: 'tag',
+                  label: 'Tag',
+                  helper: 'Unique identifier',
+                  error: schema.error('tag'),
+                  children: element(InputString, {
+                    value: schema.value('tag'),
+                    change: schema.change('tag'),
+                    placeholder: 'editor',
+                  }),
+                }),
+              ],
             }),
             element(Control, {
               key: 'description',
@@ -72,7 +80,7 @@ export const UpdatePermission: FC<{
               children: element(InputString, {
                 value: schema.value('description'),
                 change: schema.change('description'),
-                placeholder: 'User can...',
+                placeholder: 'User can edit...',
               }),
             }),
             element(Button, {

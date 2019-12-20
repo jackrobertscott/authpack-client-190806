@@ -42,26 +42,34 @@ export const UpdateUpgrade: FC<{
       children: !gqlGetUpgrade.data
         ? null
         : [
-            element(Control, {
+            element(Layout, {
               key: 'name',
-              label: 'Name',
-              error: schema.error('name'),
-              children: element(InputString, {
-                value: schema.value('name'),
-                change: schema.change('name'),
-                placeholder: 'Admin Editor',
-              }),
-            }),
-            element(Control, {
-              key: 'tag',
-              label: 'Tag',
-              helper: 'A unique identifier for the upgrade',
-              error: schema.error('tag'),
-              children: element(InputString, {
-                value: schema.value('tag'),
-                change: schema.change('tag'),
-                placeholder: 'admin_editor',
-              }),
+              divide: true,
+              media: true,
+              children: [
+                element(Control, {
+                  key: 'name',
+                  label: 'Name',
+                  helper: 'Human friendly name',
+                  error: schema.error('name'),
+                  children: element(InputString, {
+                    value: schema.value('name'),
+                    change: schema.change('name'),
+                    placeholder: 'Premium',
+                  }),
+                }),
+                element(Control, {
+                  key: 'tag',
+                  label: 'Tag',
+                  helper: 'Unique identifier',
+                  error: schema.error('tag'),
+                  children: element(InputString, {
+                    value: schema.value('tag'),
+                    change: schema.change('tag'),
+                    placeholder: 'premium',
+                  }),
+                }),
+              ],
             }),
             element(Control, {
               key: 'description',
@@ -70,7 +78,7 @@ export const UpdateUpgrade: FC<{
               children: element(InputString, {
                 value: schema.value('description'),
                 change: schema.change('description'),
-                placeholder: 'User can...',
+                placeholder: 'Users gains access to...',
               }),
             }),
             element(Button, {

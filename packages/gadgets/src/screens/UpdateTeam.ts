@@ -51,12 +51,12 @@ export const UpdateTeam: FC<{
                 element(Control, {
                   key: 'name',
                   label: 'Name',
-                  helper: "Your team's name",
+                  helper: 'Human friendly name',
                   error: schema.error('name'),
                   children: element(InputString, {
                     value: schema.value('name'),
                     change: schema.change('name'),
-                    placeholder: 'My Team',
+                    placeholder: 'Super Squad',
                   }),
                 }),
                 element(Control, {
@@ -67,7 +67,7 @@ export const UpdateTeam: FC<{
                   children: element(InputString, {
                     value: schema.value('tag'),
                     change: schema.change('tag'),
-                    placeholder: 'my_team_123',
+                    placeholder: 'super_squad',
                   }),
                 }),
               ],

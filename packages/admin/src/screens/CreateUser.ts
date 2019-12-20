@@ -58,25 +58,32 @@ export const CreateUser: FC<{
             }),
           ],
         }),
-        element(Control, {
-          key: 'username',
-          label: 'Username',
-          error: schema.error('username'),
-          children: element(InputString, {
-            value: schema.value('username'),
-            change: schema.change('username'),
-            placeholder: 'example_username_123',
-          }),
-        }),
-        element(Control, {
+        element(Layout, {
           key: 'email',
-          label: 'Email',
-          error: schema.error('email'),
-          children: element(InputString, {
-            value: schema.value('email'),
-            change: schema.change('email'),
-            placeholder: 'example@email.com',
-          }),
+          divide: true,
+          media: true,
+          children: [
+            element(Control, {
+              key: 'email',
+              label: 'Email',
+              error: schema.error('email'),
+              children: element(InputString, {
+                value: schema.value('email'),
+                change: schema.change('email'),
+                placeholder: 'example@email.com',
+              }),
+            }),
+            element(Control, {
+              key: 'username',
+              label: 'Username',
+              error: schema.error('username'),
+              children: element(InputString, {
+                value: schema.value('username'),
+                change: schema.change('username'),
+                placeholder: 'example_username_123',
+              }),
+            }),
+          ],
         }),
         element(Control, {
           key: 'password',

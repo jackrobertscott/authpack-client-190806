@@ -61,29 +61,36 @@ export const UpdateProvider: FC<{
         children: !gqlGetProvider.data
           ? null
           : [
-              element(Control, {
-                key: 'client',
-                label: 'Client Id',
-                helper: `The oauth client id provided by ${schema.value(
-                  'preset'
-                ) || 'the app'}`,
-                error: schema.error('client'),
-                children: element(InputString, {
-                  value: schema.value('client'),
-                  change: schema.change('client'),
-                  placeholder: '...',
-                }),
-              }),
-              element(Control, {
-                key: 'secret',
-                label: 'Secret',
-                helper: `This value has been hidden`,
-                error: schema.error('secret'),
-                children: element(InputString, {
-                  value: schema.value('secret'),
-                  change: schema.change('secret'),
-                  placeholder: '...',
-                }),
+              element(Layout, {
+                key: 'ids',
+                divide: true,
+                media: true,
+                children: [
+                  element(Control, {
+                    key: 'client',
+                    label: 'Client Id',
+                    helper: `The oauth client id provided by ${schema.value(
+                      'preset'
+                    ) || 'the app'}`,
+                    error: schema.error('client'),
+                    children: element(InputString, {
+                      value: schema.value('client'),
+                      change: schema.change('client'),
+                      placeholder: '...',
+                    }),
+                  }),
+                  element(Control, {
+                    key: 'secret',
+                    label: 'Secret',
+                    helper: `This value has been hidden`,
+                    error: schema.error('secret'),
+                    children: element(InputString, {
+                      value: schema.value('secret'),
+                      change: schema.change('secret'),
+                      placeholder: '...',
+                    }),
+                  }),
+                ],
               }),
               element(Control, {
                 key: 'scopes',
