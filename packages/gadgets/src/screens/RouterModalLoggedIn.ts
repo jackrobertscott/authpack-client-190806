@@ -5,8 +5,9 @@ import { RouterSideBarUser } from './RouterSideBarUser'
 import { RouterSideBarTeam } from './RouterSideBarTeam'
 import { LogoutUser } from './LogoutUser'
 import { ReconcileUser } from './ReconcileUser'
+import { RouterSideBarPayments } from './RouterSideBarPayments'
 
-export const RouterModalOnauthed: FC<{
+export const RouterModalLoggedIn: FC<{
   close: () => void
 }> = ({ close }) => {
   const settings = useSettings()
@@ -31,6 +32,10 @@ export const RouterModalOnauthed: FC<{
           {
             key: '/teams',
             children: element(RouterSideBarTeam),
+          },
+          {
+            key: '/payments',
+            children: element(RouterSideBarPayments),
           },
           {
             key: '/logout',
@@ -61,6 +66,12 @@ export const RouterModalOnauthed: FC<{
         label: 'Team',
         focused: router.current && router.current.key.startsWith('/teams'),
         click: () => router.change('/teams'),
+      },
+      {
+        icon: 'trophy',
+        label: 'Subscription',
+        focused: router.current && router.current.key.startsWith('/payments'),
+        click: () => router.change('/payments'),
       },
       {
         icon: 'power-off',

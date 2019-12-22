@@ -5,7 +5,7 @@ import { SignupUser } from './SignupUser'
 import { RecoverUserPassword } from './RecoverUserPassword'
 import { GetStarted } from './GetStarted'
 
-export const RouterModalUnauthed: FC<{
+export const RouterModalLoggedOut: FC<{
   close: () => void
 }> = ({ close }) => {
   const [startup, startupChange] = useState<boolean>(true)

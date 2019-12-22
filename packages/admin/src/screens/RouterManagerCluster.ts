@@ -2,7 +2,6 @@ import { createElement as element, FC } from 'react'
 import { useLocalRouter, Modal, IconBar } from '@authpack/theme'
 import { UpdateCluster } from './UpdateCluster'
 import { UpdatePayment } from './UpdatePayment'
-import { useUniversal } from '../hooks/useUniversal'
 import { RemovePayment } from './RemovePayment'
 import { ShowCluster } from './ShowCluster'
 import { SwitchCluster } from './SwitchCluster'
@@ -14,9 +13,8 @@ export const RouterManagerCluster: FC<{
   visible?: boolean
   close: () => void
 }> = ({ close, visible }) => {
-  const universal = useUniversal()
   const router = useLocalRouter({
-    nomatch: !universal.subscribed ? '/payment' : '/inspect',
+    nomatch: '/inspect',
     options: [
       {
         key: '/inspect',

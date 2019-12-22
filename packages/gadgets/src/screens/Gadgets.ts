@@ -2,8 +2,8 @@ import { createElement as element, FC, useRef } from 'react'
 import { Modal, Root } from '@authpack/theme'
 import { useSetup } from '../hooks/useSetup'
 import { useSettings } from '../hooks/useSettings'
-import { RouterModalUnauthed } from './RouterModalUnauthed'
-import { RouterModalOnauthed } from './RouterModalOnauthed'
+import { RouterModalLoggedOut } from './RouterModalLoggedOut'
+import { RouterModalLoggedIn } from './RouterModalLoggedIn'
 import { SettingsStore } from '../utils/settings'
 import { NoKey } from './NoKey'
 import { Loading } from './Loading'
@@ -38,11 +38,11 @@ export const Gadgets: FC = () => {
             key: 'nopayment',
           })
         : settings.bearer && settings.user
-        ? element(RouterModalOnauthed, {
+        ? element(RouterModalLoggedIn, {
             key: 'onauthed',
             close: close.current,
           })
-        : element(RouterModalUnauthed, {
+        : element(RouterModalLoggedOut, {
             key: 'unauthed',
             close: close.current,
           }),
