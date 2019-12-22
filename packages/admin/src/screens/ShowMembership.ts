@@ -29,12 +29,6 @@ export const ShowMembership: FC<{
               value: membership.id,
             }),
             element(Snippet, {
-              key: 'admin',
-              icon: 'star',
-              label: 'Admin',
-              value: String(membership.admin),
-            }),
-            element(Snippet, {
               key: 'user',
               icon: 'user',
               label: 'User',
@@ -76,7 +70,6 @@ const useGetMembership = createUseServer<{
     id: string
     created: string
     updated: string
-    admin: boolean
     user_email?: string
     user?: {
       id: string
@@ -94,7 +87,6 @@ const useGetMembership = createUseServer<{
         id
         created
         updated
-        admin
         user_email
         user {
           id

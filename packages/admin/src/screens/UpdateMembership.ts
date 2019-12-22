@@ -6,7 +6,6 @@ import {
   Layout,
   InputSelectMany,
   Page,
-  InputBoolean,
   Button,
   useToaster,
 } from '@authpack/theme'
@@ -46,16 +45,6 @@ export const UpdateMembership: FC<{
       children: !gqlListPermissions.data
         ? null
         : [
-            element(Control, {
-              key: 'admin',
-              label: 'Admin',
-              helper: 'Is this user an admin of the team',
-              error: schema.error('admin'),
-              children: element(InputBoolean, {
-                value: schema.value('admin'),
-                change: schema.change('admin'),
-              }),
-            }),
             !!gqlListPermissions.data.permissions.length &&
               element(Control, {
                 key: 'permission_ids',
@@ -90,7 +79,6 @@ export const UpdateMembership: FC<{
 }
 
 const SchemaUpdateMembership = yup.object().shape({
-  admin: yup.boolean(),
   permission_ids: yup
     .array()
     .of(yup.string().required())
@@ -99,14 +87,12 @@ const SchemaUpdateMembership = yup.object().shape({
 
 const useGetMembership = createUseServer<{
   membership: {
-    admin: boolean
     permission_ids: string
   }
 }>({
   query: `
     query GetMembership($id: String!) {
       membership: GetMembership(id: $id) {
-        admin
         permission_ids
       }
     }

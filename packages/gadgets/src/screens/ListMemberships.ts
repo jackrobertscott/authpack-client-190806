@@ -25,12 +25,11 @@ export const ListMemberships: FC<{
     children: !gqlListMemberships.data
       ? null
       : gqlListMemberships.data.memberships.map(membership => {
-          const suffix = membership.admin ? ' (admin)' : ''
           return element(Snippet, {
             key: membership.id,
             icon: 'user-circle',
             label: membership.user
-              ? `${membership.user.summary}${suffix}`
+              ? membership.user.summary
               : membership.user_email || 'User Unknown',
             value: membership.permissions.map(({ name }) => name).join(', '),
             options: [
@@ -55,7 +54,6 @@ export const ListMemberships: FC<{
 const useListMemberships = createUseServer<{
   memberships: Array<{
     id: string
-    admin: boolean
     user_email?: string
     user?: {
       summary: string
@@ -69,7 +67,6 @@ const useListMemberships = createUseServer<{
     query ListMembershipsClient {
       memberships: ListMembershipsClient {
         id
-        admin
         user_email
         user {
           summary

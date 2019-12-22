@@ -80,7 +80,7 @@ export const CreateTeam: FC<{
         }),
         element(Control, {
           key: 'user_id',
-          label: 'Admin User',
+          label: 'User',
           error: schema.error('user_id'),
           children: element(InputSelect, {
             value: schema.value('user_id'),
@@ -122,7 +122,7 @@ const SchemaCreateTeam = yup.object().shape({
     )
     .required('Please provide the team tag'),
   description: yup.string(),
-  user_id: yup.string().required('Please select an admin user'),
+  user_id: yup.string().required('Please select a user'),
 })
 
 const useCreateTeam = createUseServer<{

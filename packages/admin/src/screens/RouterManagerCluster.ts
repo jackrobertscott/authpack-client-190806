@@ -75,28 +75,28 @@ export const RouterManagerCluster: FC<{
           click: () => router.change('/inspect'),
         },
         {
-          icon: 'key',
-          label: 'API Keys',
-          focused: !!router.current && router.current.key === '/keys',
-          click: () => router.change('/keys'),
-        },
-        {
           icon: 'sliders-h',
           label: 'Update',
           focused: !!router.current && router.current.key === '/update',
           click: () => router.change('/update'),
         },
         {
+          icon: 'key',
+          label: 'API Keys',
+          focused: !!router.current && router.current.key === '/keys',
+          click: () => router.change('/keys'),
+        },
+        {
+          icon: 'piggy-bank',
+          label: 'Accept Payments',
+          focused: !!router.current && router.current.key === '/stripe',
+          click: () => router.change('/stripe'),
+        },
+        {
           icon: 'random',
           label: 'Switch',
           focused: !!router.current && router.current.key === '/switch',
           click: () => router.change('/switch'),
-        },
-        {
-          icon: 'credit-card',
-          label: 'Accept Payments',
-          focused: !!router.current && router.current.key === '/stripe',
-          click: () => router.change('/stripe'),
         },
         false && {
           icon: 'wallet',

@@ -9,7 +9,6 @@ import {
   drip,
   Page,
   InputSelectMany,
-  InputBoolean,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
@@ -100,16 +99,6 @@ export const CreateMembership: FC<{
                       })),
                 }),
               }),
-            element(Control, {
-              key: 'admin',
-              label: 'Admin',
-              helper: 'Is this user an admin of the team',
-              error: schema.error('admin'),
-              children: element(InputBoolean, {
-                value: schema.value('admin'),
-                change: schema.change('admin'),
-              }),
-            }),
             !!gqlListPermissions.data.permissions.length &&
               element(Control, {
                 key: 'permission_ids',
@@ -146,10 +135,6 @@ export const CreateMembership: FC<{
 const SchemaCreateMembership = yup.object().shape({
   user_id: yup.string().required('Please provide a user'),
   team_id: yup.string().required('Please provide a team'),
-  admin: yup
-    .boolean()
-    .default(false)
-    .required('Please determine if the user is an admin'),
   permission_ids: yup
     .array()
     .of(yup.string().required())
