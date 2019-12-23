@@ -19,7 +19,6 @@ export const CreateMembership: FC<{
   const gqlCreateMembership = useCreateMembership()
   const gqlListUsers = useListUsers()
   const gqlListTeams = useListTeams()
-  const gqlListRoles = useListRoles()
   const queryListUsers = useRef(drip(1000, gqlListUsers.fetch))
   const queryListTeams = useRef(drip(1000, gqlListTeams.fetch))
   const schema = useSchema({
@@ -33,7 +32,6 @@ export const CreateMembership: FC<{
   useEffect(() => {
     queryListUsers.current()
     queryListTeams.current()
-    gqlListRoles.fetch()
     // eslint-disable-next-line
   }, [])
   useEffect(() => {
@@ -53,78 +51,57 @@ export const CreateMembership: FC<{
       column: true,
       padding: true,
       divide: true,
-      children: !gqlListRoles.data
-        ? null
-        : [
-            !user_id &&
-              element(Control, {
-                key: 'user_id',
-                label: 'User',
-                error: schema.error('user_id'),
-                children: element(InputSelect, {
-                  value: schema.value('user_id'),
-                  change: schema.change('user_id'),
-                  placeholder: 'Select user...',
-                  filter: phrase => queryListUsers.current({ phrase }),
-                  options: !gqlListUsers.data
-                    ? []
-                    : gqlListUsers.data.users.map(user => ({
-                        value: user.id,
-                        label:
-                          user.name && user.username
-                            ? `${user.name} - ${user.username}`
-                            : user.name || user.username,
-                        helper: user.email,
-                      })),
-                }),
-              }),
-            !team_id &&
-              element(Control, {
-                key: 'team_id',
-                label: 'Team',
-                helper: 'Optionally select a team to be added to membership',
-                error: schema.error('team_id'),
-                children: element(InputSelect, {
-                  value: schema.value('team_id'),
-                  change: schema.change('team_id'),
-                  placeholder: 'Select team...',
-                  filter: phrase => queryListTeams.current({ phrase }),
-                  options: !gqlListTeams.data
-                    ? []
-                    : gqlListTeams.data.teams.map(team => ({
-                        value: team.id,
-                        label: `${team.name} (${team.tag})`,
-                        helper: team.description,
-                      })),
-                }),
-              }),
-            !!gqlListRoles.data.roles.length &&
-              element(Control, {
-                key: 'role_id',
-                label: 'Role',
-                helper: 'Determine what the member can access',
-                error: schema.error('role_id'),
-                children: element(InputSelect, {
-                  value: schema.value('role_id'),
-                  change: schema.change('role_id'),
-                  options: gqlListRoles.data.roles.map(role => {
-                    return {
-                      value: role.id,
-                      icon: 'user-sheild',
-                      label: role.name,
-                      helper: role.description,
-                    }
-                  }),
-                }),
-              }),
-            element(Button, {
-              key: 'submit',
-              label: 'Create',
-              loading: gqlCreateMembership.loading,
-              disabled: !schema.valid,
-              click: schema.submit,
+      children: [
+        !user_id &&
+          element(Control, {
+            key: 'user_id',
+            label: 'User',
+            error: schema.error('user_id'),
+            children: element(InputSelect, {
+              value: schema.value('user_id'),
+              change: schema.change('user_id'),
+              placeholder: 'Select user...',
+              filter: phrase => queryListUsers.current({ phrase }),
+              options: !gqlListUsers.data
+                ? []
+                : gqlListUsers.data.users.map(user => ({
+                    value: user.id,
+                    label:
+                      user.name && user.username
+                        ? `${user.name} - ${user.username}`
+                        : user.name || user.username,
+                    helper: user.email,
+                  })),
             }),
-          ],
+          }),
+        !team_id &&
+          element(Control, {
+            key: 'team_id',
+            label: 'Team',
+            helper: 'Optionally select a team to be added to membership',
+            error: schema.error('team_id'),
+            children: element(InputSelect, {
+              value: schema.value('team_id'),
+              change: schema.change('team_id'),
+              placeholder: 'Select team...',
+              filter: phrase => queryListTeams.current({ phrase }),
+              options: !gqlListTeams.data
+                ? []
+                : gqlListTeams.data.teams.map(team => ({
+                    value: team.id,
+                    label: `${team.name} (${team.tag})`,
+                    helper: team.description,
+                  })),
+            }),
+          }),
+        element(Button, {
+          key: 'submit',
+          label: 'Create',
+          loading: gqlCreateMembership.loading,
+          disabled: !schema.valid,
+          click: schema.submit,
+        }),
+      ],
     }),
   })
 }
@@ -132,7 +109,6 @@ export const CreateMembership: FC<{
 const SchemaCreateMembership = yup.object().shape({
   user_id: yup.string().required('Please provide a user'),
   team_id: yup.string().required('Please provide a team'),
-  role_id: yup.string(),
 })
 
 const useCreateMembership = createUseServer<{
@@ -183,24 +159,6 @@ const useListTeams = createUseServer<{
         id
         name
         tag
-        description
-      }
-    }
-  `,
-})
-
-const useListRoles = createUseServer<{
-  roles: Array<{
-    id: string
-    name: string
-    description: string
-  }>
-}>({
-  query: `
-    query ListRolesClient {
-      roles: ListRolesClient {
-        id
-        name
         description
       }
     }

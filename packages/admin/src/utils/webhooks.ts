@@ -2,7 +2,6 @@ export const WEBHOOKEVENTS = [
   'credentials',
   'memberships',
   'providers',
-  'roles',
   'sessions',
   'teams',
   'users',

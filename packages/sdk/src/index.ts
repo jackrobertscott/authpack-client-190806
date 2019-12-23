@@ -153,12 +153,6 @@ export interface IGadgets {
     id: string
     token: string
   }
-  role?: Array<{
-    id: string
-    name: string
-    tag: string
-    description?: string
-  }>
 }
 
 export interface IOptions {
