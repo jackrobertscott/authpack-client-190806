@@ -105,7 +105,7 @@ export const UpdateProvider: FC<{
               }),
               element(Control, {
                 key: 'redirect_uri',
-                label: 'Advanced Redirect URI',
+                label: 'Advanced Redirect Uri',
                 helper:
                   'Leave this empty unless you are creating your own login system',
                 error: schema.error('redirect_uri'),
