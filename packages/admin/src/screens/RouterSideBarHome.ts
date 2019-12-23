@@ -33,6 +33,12 @@ export const RouterSideBarHome: FC = () => {
         click: () => router.change('/users'),
       },
       {
+        icon: 'users',
+        label: 'Teams',
+        focused: !!router.current && router.current.path === '/teams',
+        click: () => router.change('/teams'),
+      },
+      {
         icon: 'donate',
         label: 'Upgrades',
         focused: !!router.current && router.current.path === '/upgrades',
@@ -43,12 +49,6 @@ export const RouterSideBarHome: FC = () => {
         label: 'Providers',
         focused: !!router.current && router.current.path === '/providers',
         click: () => router.change('/providers'),
-      },
-      {
-        icon: 'users',
-        label: 'Teams',
-        focused: !!router.current && router.current.path === '/teams',
-        click: () => router.change('/teams'),
       },
       {
         icon: 'sitemap',
