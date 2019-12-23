@@ -8,7 +8,6 @@ import {
   InputSelect,
   drip,
   Page,
-  InputSelectMany,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 

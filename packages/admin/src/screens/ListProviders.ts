@@ -1,5 +1,11 @@
 import faker from 'faker'
-import { createElement as element, FC, useState, useEffect, useRef } from 'react'
+import {
+  createElement as element,
+  FC,
+  useState,
+  useEffect,
+  useRef,
+} from 'react'
 import { Page, Table, Empty, Button, drip } from '@authpack/theme'
 import { format } from 'date-fns'
 import { RouterManagerProvider } from './RouterManagerProvider'
@@ -19,6 +25,10 @@ export const ListProviders: FC = () => {
     if (variables.options.limit) queryListProviders.current(variables)
     // eslint-disable-next-line
   }, [variables])
+  const newProvider = () => {
+    buildChange(true)
+    setTimeout(() => idcurrentChange(undefined), 200) // animation
+  }
   const list =
     gqlListProviders.data && gqlListProviders.data.count
       ? gqlListProviders.data.providers
@@ -33,10 +43,7 @@ export const ListProviders: FC = () => {
     corner: {
       icon: 'plus',
       label: 'New Provider',
-      click: () => {
-        buildChange(true)
-        setTimeout(() => idcurrentChange(undefined), 200) // animation
-      },
+      click: newProvider,
     },
     noscroll: element(TemplateSearchBar, {
       count: gqlListProviders.data && gqlListProviders.data.count,
@@ -75,16 +82,12 @@ export const ListProviders: FC = () => {
           icon: 'facebook',
           prefix: 'fab',
           label: 'Providers',
-          helper:
-            'Authentication providers allow you to login your users with OAuth',
+          helper: 'Would you like to create a provider?',
           children: element(Button, {
             key: 'Regular',
-            icon: 'book',
-            label: 'Install',
-            click: () =>
-              window.open(
-                'https://github.com/jackrobertscott/authpack/blob/master/readme.md'
-              ),
+            icon: 'plus',
+            label: 'New Provider',
+            click: newProvider,
           }),
         }),
       gqlListProviders.data &&

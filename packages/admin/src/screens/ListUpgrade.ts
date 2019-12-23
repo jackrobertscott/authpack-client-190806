@@ -25,6 +25,10 @@ export const ListUpgrades: FC = () => {
     if (variables.options.limit) queryListUpgrades.current(variables)
     // eslint-disable-next-line
   }, [variables])
+  const newUpgrade = () => {
+    buildChange(true)
+    setTimeout(() => idcurrentChange(undefined), 200) // animation
+  }
   const list =
     gqlListUpgrades.data && gqlListUpgrades.data.count
       ? gqlListUpgrades.data.upgrades
@@ -39,10 +43,7 @@ export const ListUpgrades: FC = () => {
     corner: {
       icon: 'plus',
       label: 'New Upgrade',
-      click: () => {
-        buildChange(true)
-        setTimeout(() => idcurrentChange(undefined), 200) // animation
-      },
+      click: newUpgrade,
     },
     noscroll: element(TemplateSearchBar, {
       count: gqlListUpgrades.data && gqlListUpgrades.data.count,
@@ -78,17 +79,14 @@ export const ListUpgrades: FC = () => {
         !gqlListUpgrades.data.count &&
         element(Empty, {
           key: 'empty',
-          icon: 'user-shield',
+          icon: 'donate',
           label: 'Upgrades',
-          helper: 'Create a upgrade manually or by using the Authpack API',
+          helper: 'Would you like to create an upgrade?',
           children: element(Button, {
             key: 'Regular',
-            icon: 'book',
-            label: 'Install',
-            click: () =>
-              window.open(
-                'https://github.com/jackrobertscott/authpack/blob/master/readme.md'
-              ),
+            icon: 'plus',
+            label: 'New Upgrade',
+            click: newUpgrade,
           }),
         }),
       gqlListUpgrades.data &&

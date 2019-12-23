@@ -48,7 +48,7 @@ export const UpdateMembership: FC<{
             !!gqlListRoles.data.roles.length &&
               element(Control, {
                 key: 'role_id',
-                label: 'Roles',
+                label: 'Role',
                 helper: 'Determine what the member can access',
                 error: schema.error('role_id'),
                 children: element(InputSelect, {

@@ -26,6 +26,10 @@ export const ListWebhooks: FC = () => {
     if (variables.options.limit) queryListWebhooks.current(variables)
     // eslint-disable-next-line
   }, [variables])
+  const newWebhook = () => {
+    buildChange(true)
+    setTimeout(() => idcurrentChange(undefined), 200) // animation
+  }
   const list =
     gqlListWebhooks.data && gqlListWebhooks.data.count
       ? gqlListWebhooks.data.webhooks
@@ -40,10 +44,7 @@ export const ListWebhooks: FC = () => {
     corner: {
       icon: 'plus',
       label: 'New Webhook',
-      click: () => {
-        buildChange(true)
-        setTimeout(() => idcurrentChange(undefined), 200) // animation
-      },
+      click: newWebhook,
     },
     noscroll: element(TemplateSearchBar, {
       count: gqlListWebhooks.data && gqlListWebhooks.data.count,
@@ -79,17 +80,14 @@ export const ListWebhooks: FC = () => {
         !gqlListWebhooks.data.count &&
         element(Empty, {
           key: 'empty',
-          icon: 'user-shield',
+          icon: 'sitemap',
           label: 'Webhooks',
-          helper: 'Create a webhook manually or by using the Authpack API',
+          helper: 'Would you like to create a webhook?',
           children: element(Button, {
             key: 'Regular',
-            icon: 'book',
-            label: 'Install',
-            click: () =>
-              window.open(
-                'https://github.com/jackrobertscott/authpack/blob/master/readme.md'
-              ),
+            icon: 'plus',
+            label: 'New Webhook',
+            click: newWebhook,
           }),
         }),
       gqlListWebhooks.data &&

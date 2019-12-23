@@ -25,6 +25,10 @@ export const ListRoles: FC = () => {
     if (variables.options.limit) queryListRoles.current(variables)
     // eslint-disable-next-line
   }, [variables])
+  const newRole = () => {
+    buildChange(true)
+    setTimeout(() => idcurrentChange(undefined), 200) // animation
+  }
   const list =
     gqlListRoles.data && gqlListRoles.data.count
       ? gqlListRoles.data.roles
@@ -39,10 +43,7 @@ export const ListRoles: FC = () => {
     corner: {
       icon: 'plus',
       label: 'New Role',
-      click: () => {
-        buildChange(true)
-        setTimeout(() => idcurrentChange(undefined), 200) // animation
-      },
+      click: newRole,
     },
     noscroll: element(TemplateSearchBar, {
       count: gqlListRoles.data && gqlListRoles.data.count,
@@ -80,15 +81,12 @@ export const ListRoles: FC = () => {
           key: 'empty',
           icon: 'user-shield',
           label: 'Roles',
-          helper: 'Create a role manually or by using the Authpack API',
+          helper: 'Would you like to create a role?',
           children: element(Button, {
             key: 'Regular',
-            icon: 'book',
-            label: 'Install',
-            click: () =>
-              window.open(
-                'https://github.com/jackrobertscott/authpack/blob/master/readme.md'
-              ),
+            icon: 'plus',
+            label: 'New Role',
+            click: newRole,
           }),
         }),
       gqlListRoles.data &&

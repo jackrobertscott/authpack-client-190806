@@ -53,7 +53,7 @@ export const RouterSideBarHome: FC = () => {
         click: () => router.change('/teams'),
       },
       {
-        icon: 'shield-alt',
+        icon: 'user-shield',
         label: 'Roles',
         focused: !!router.current && router.current.path === '/roles',
         click: () => router.change('/roles'),

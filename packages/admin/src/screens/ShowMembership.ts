@@ -45,6 +45,12 @@ export const ShowMembership: FC<{
               value: !membership.team ? '...' : membership.team.summary,
             }),
             element(Snippet, {
+              key: 'role',
+              icon: 'user-shield',
+              label: 'Role',
+              value: !membership.role ? '...' : membership.role.name,
+            }),
+            element(Snippet, {
               key: 'created',
               icon: 'clock',
               label: 'Created',
@@ -79,6 +85,10 @@ const useGetMembership = createUseServer<{
       id: string
       summary: string
     }
+    role?: {
+      id: string
+      name: string
+    }
   }
 }>({
   query: `
@@ -95,6 +105,10 @@ const useGetMembership = createUseServer<{
         team {
           id
           summary
+        }
+        role {
+          id
+          name
         }
       }
     }
