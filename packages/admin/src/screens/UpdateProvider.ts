@@ -95,7 +95,7 @@ export const UpdateProvider: FC<{
               element(Control, {
                 key: 'scopes',
                 label: 'Scopes',
-                helper: 'A set of oauth permission scopes',
+                helper: 'A set of oauth access scopes',
                 error: schema.error('scopes'),
                 children: element(InputStringArray, {
                   value: schema.value('scopes'),

@@ -1,47 +1,52 @@
 import faker from 'faker'
-import { createElement as element, FC, useState, useEffect, useRef } from 'react'
+import {
+  createElement as element,
+  FC,
+  useState,
+  useEffect,
+  useRef,
+} from 'react'
 import { Page, Table, Empty, Button, drip } from '@authpack/theme'
 import { format } from 'date-fns'
-import { RouterManagerPermission } from './RouterManagerPermission'
+import { RouterManagerRole } from './RouterManagerRole'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'
 import { createUseServer } from '../hooks/useServer'
 
-export const ListPermissions: FC = () => {
-  const gqlListPermissions = useListPermissions()
+export const ListRoles: FC = () => {
+  const gqlListRoles = useListRoles()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [variables, variablesChange] = useState<{
     options: { [key: string]: any }
     phrase?: string
   }>({ options: { sort: 'created' } })
-  const queryListPermissions = useRef(drip(1000, gqlListPermissions.fetch))
+  const queryListRoles = useRef(drip(1000, gqlListRoles.fetch))
   useEffect(() => {
-    if (variables.options.limit) queryListPermissions.current(variables)
+    if (variables.options.limit) queryListRoles.current(variables)
     // eslint-disable-next-line
   }, [variables])
   const list =
-    gqlListPermissions.data && gqlListPermissions.data.count
-      ? gqlListPermissions.data.permissions
+    gqlListRoles.data && gqlListRoles.data.count
+      ? gqlListRoles.data.roles
       : variables.phrase ||
-        Boolean(gqlListPermissions.data && !gqlListPermissions.data.permissions)
+        Boolean(gqlListRoles.data && !gqlListRoles.data.roles)
       ? []
-      : FakePermissions
+      : FakeRoles
   return element(Page, {
-    title: 'Permissions',
+    title: 'Roles',
     subtitle: 'Restrict team member abilities',
-    hidden: !gqlListPermissions.data || !gqlListPermissions.data.count,
+    hidden: !gqlListRoles.data || !gqlListRoles.data.count,
     corner: {
       icon: 'plus',
-      label: 'New Permission',
+      label: 'New Role',
       click: () => {
         buildChange(true)
         setTimeout(() => idcurrentChange(undefined), 200) // animation
       },
     },
     noscroll: element(TemplateSearchBar, {
-      count: gqlListPermissions.data && gqlListPermissions.data.count,
-      current:
-        gqlListPermissions.data && gqlListPermissions.data.permissions.length,
+      count: gqlListRoles.data && gqlListRoles.data.count,
+      current: gqlListRoles.data && gqlListRoles.data.roles.length,
       change: (phrase, limit, skip) => {
         variablesChange({
           ...variables,
@@ -51,12 +56,12 @@ export const ListPermissions: FC = () => {
       },
     }),
     children: [
-      element(RouterManagerPermission, {
+      element(RouterManagerRole, {
         key: 'router',
         id: idcurrent,
         visible: build,
         change: id => {
-          queryListPermissions.current(variables)
+          queryListRoles.current(variables)
           if (id) {
             idcurrentChange(id)
           } else {
@@ -69,13 +74,13 @@ export const ListPermissions: FC = () => {
           setTimeout(() => idcurrentChange(undefined), 200) // animation
         },
       }),
-      gqlListPermissions.data &&
-        !gqlListPermissions.data.count &&
+      gqlListRoles.data &&
+        !gqlListRoles.data.count &&
         element(Empty, {
           key: 'empty',
           icon: 'user-shield',
-          label: 'Permissions',
-          helper: 'Create a permission manually or by using the Authpack API',
+          label: 'Roles',
+          helper: 'Create a role manually or by using the Authpack API',
           children: element(Button, {
             key: 'Regular',
             icon: 'book',
@@ -86,7 +91,7 @@ export const ListPermissions: FC = () => {
               ),
           }),
         }),
-      gqlListPermissions.data &&
+      gqlListRoles.data &&
         element(Table, {
           key: 'table',
           header: [
@@ -133,9 +138,9 @@ export const ListPermissions: FC = () => {
   })
 }
 
-const useListPermissions = createUseServer<{
+const useListRoles = createUseServer<{
   count: number
-  permissions: Array<{
+  roles: Array<{
     id: string
     updated: string
     name: string
@@ -144,9 +149,9 @@ const useListPermissions = createUseServer<{
   }>
 }>({
   query: `
-    query ListPermissions($phrase: String, $options: WhereOptions) {
-      count: CountPermissions(phrase: $phrase)
-      permissions: ListPermissions(phrase: $phrase, options: $options) {
+    query ListRoles($phrase: String, $options: WhereOptions) {
+      count: CountRoles(phrase: $phrase)
+      roles: ListRoles(phrase: $phrase, options: $options) {
         id
         updated
         name
@@ -157,7 +162,7 @@ const useListPermissions = createUseServer<{
   `,
 })
 
-const FakePermissions: Array<{
+const FakeRoles: Array<{
   id: string
   updated: string
   name: string

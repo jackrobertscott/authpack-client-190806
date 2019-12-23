@@ -1,11 +1,11 @@
 import { createElement as element, FC } from 'react'
 import { useLocalRouter, Modal, IconBar } from '@authpack/theme'
-import { CreatePermission } from './CreatePermission'
-import { UpdatePermission } from './UpdatePermission'
-import { RemovePermission } from './RemovePermission'
-import { ShowPermission } from './ShowPermission'
+import { CreateRole } from './CreateRole'
+import { UpdateRole } from './UpdateRole'
+import { RemoveRole } from './RemoveRole'
+import { ShowRole } from './ShowRole'
 
-export const RouterManagerPermission: FC<{
+export const RouterManagerRole: FC<{
   id?: string
   change?: (id?: string) => void
   visible?: boolean
@@ -15,17 +15,17 @@ export const RouterManagerPermission: FC<{
     nomatch: id ? '/inspect' : '/create',
     options: id
       ? [
-          { key: '/inspect', children: element(ShowPermission, { id }) },
+          { key: '/inspect', children: element(ShowRole, { id }) },
           {
             key: '/update',
-            children: element(UpdatePermission, { id, change }),
+            children: element(UpdateRole, { id, change }),
           },
           {
             key: '/remove',
-            children: element(RemovePermission, { id, change }),
+            children: element(RemoveRole, { id, change }),
           },
         ]
-      : [{ key: '/create', children: element(CreatePermission, { change }) }],
+      : [{ key: '/create', children: element(CreateRole, { change }) }],
   })
   return element(Modal, {
     close,

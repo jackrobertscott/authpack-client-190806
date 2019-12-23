@@ -32,7 +32,7 @@ export type ISettings = {
     id: string
     token: string
   }
-  permissions?: Array<{
+  role?: Array<{
     id: string
     name: string
     tag: string

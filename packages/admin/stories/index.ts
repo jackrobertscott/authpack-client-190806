@@ -4,7 +4,7 @@ import { RouterCentral } from '../src/routers/RouterCentral'
 import { RouterManagerUsers } from '../src/routers/RouterManagerUsers'
 import { RouterManagerWorkspaces } from '../src/routers/RouterManagerWorkspaces'
 import { RouterManagerMemberships } from '../src/routers/RouterManagerMemberships'
-import { RouterManagerPermissions } from '../src/routers/RouterManagerPermissions'
+import { RouterManagerRoles } from '../src/routers/RouterManagerRoles'
 import { RouterManagerSessions } from '../src/routers/RouterManagerSessions'
 
 console.clear()
@@ -29,8 +29,8 @@ storiesGadgetsRouters.add('Memberships Manager', () => {
   return create(RouterManagerMemberships)
 })
 
-storiesGadgetsRouters.add('Permissions Manager', () => {
-  return create(RouterManagerPermissions)
+storiesGadgetsRouters.add('Roles Manager', () => {
+  return create(RouterManagerRoles)
 })
 
 storiesGadgetsRouters.add('Sessions Manager', () => {

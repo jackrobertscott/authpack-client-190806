@@ -20,7 +20,7 @@ export const CreateMembership: FC<{
   const gqlCreateMembership = useCreateMembership()
   const gqlListUsers = useListUsers()
   const gqlListTeams = useListTeams()
-  const gqlListPermissions = useListPermissions()
+  const gqlListRoles = useListRoles()
   const queryListUsers = useRef(drip(1000, gqlListUsers.fetch))
   const queryListTeams = useRef(drip(1000, gqlListTeams.fetch))
   const schema = useSchema({
@@ -34,7 +34,7 @@ export const CreateMembership: FC<{
   useEffect(() => {
     queryListUsers.current()
     queryListTeams.current()
-    gqlListPermissions.fetch()
+    gqlListRoles.fetch()
     // eslint-disable-next-line
   }, [])
   useEffect(() => {
@@ -54,7 +54,7 @@ export const CreateMembership: FC<{
       column: true,
       padding: true,
       divide: true,
-      children: !gqlListPermissions.data
+      children: !gqlListRoles.data
         ? null
         : [
             !user_id &&
@@ -99,25 +99,23 @@ export const CreateMembership: FC<{
                       })),
                 }),
               }),
-            !!gqlListPermissions.data.permissions.length &&
+            !!gqlListRoles.data.roles.length &&
               element(Control, {
-                key: 'permission_ids',
-                label: 'Permissions',
+                key: 'role_id',
+                label: 'Role',
                 helper: 'Determine what the member can access',
-                error: schema.error('permission_ids'),
-                children: element(InputSelectMany, {
-                  value: schema.value('permission_ids'),
-                  change: schema.change('permission_ids'),
-                  options: gqlListPermissions.data.permissions.map(
-                    permission => {
-                      return {
-                        value: permission.id,
-                        icon: 'user-sheild',
-                        label: permission.name,
-                        helper: permission.description,
-                      }
+                error: schema.error('role_id'),
+                children: element(InputSelect, {
+                  value: schema.value('role_id'),
+                  change: schema.change('role_id'),
+                  options: gqlListRoles.data.roles.map(role => {
+                    return {
+                      value: role.id,
+                      icon: 'user-sheild',
+                      label: role.name,
+                      helper: role.description,
                     }
-                  ),
+                  }),
                 }),
               }),
             element(Button, {
@@ -135,10 +133,7 @@ export const CreateMembership: FC<{
 const SchemaCreateMembership = yup.object().shape({
   user_id: yup.string().required('Please provide a user'),
   team_id: yup.string().required('Please provide a team'),
-  permission_ids: yup
-    .array()
-    .of(yup.string().required())
-    .default([]),
+  role_id: yup.string(),
 })
 
 const useCreateMembership = createUseServer<{
@@ -195,16 +190,16 @@ const useListTeams = createUseServer<{
   `,
 })
 
-const useListPermissions = createUseServer<{
-  permissions: Array<{
+const useListRoles = createUseServer<{
+  roles: Array<{
     id: string
     name: string
     description: string
   }>
 }>({
   query: `
-    query ListPermissionsClient {
-      permissions: ListPermissionsClient {
+    query ListRolesClient {
+      roles: ListRolesClient {
         id
         name
         description

@@ -3,7 +3,7 @@ import { useRouter, SideBar } from '@authpack/theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { ListUsers } from './ListUsers'
 import { ListProviders } from './ListProviders'
-import { ListPermissions } from './ListPermissions'
+import { ListRoles } from './ListRoles'
 import { ListTeams } from './ListTeams'
 import { ListWebhooks } from './ListWebhooks'
 import { ListUpgrades } from './ListUpgrade'
@@ -17,7 +17,7 @@ export const RouterSideBarHome: FC = () => {
       { path: '/users', children: element(ListUsers) },
       { path: '/teams', children: element(ListTeams) },
       { path: '/upgrades', children: element(ListUpgrades) },
-      { path: '/permissions', children: element(ListPermissions) },
+      { path: '/roles', children: element(ListRoles) },
       { path: '/providers', children: element(ListProviders) },
       { path: '/webhooks', children: element(ListWebhooks) },
     ],
@@ -54,9 +54,9 @@ export const RouterSideBarHome: FC = () => {
       },
       {
         icon: 'shield-alt',
-        label: 'Permissions',
-        focused: !!router.current && router.current.path === '/permissions',
-        click: () => router.change('/permissions'),
+        label: 'Roles',
+        focused: !!router.current && router.current.path === '/roles',
+        click: () => router.change('/roles'),
       },
       {
         icon: 'sitemap',

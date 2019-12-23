@@ -27,11 +27,11 @@ This document contains the state schema of the Authpack [gadgets](https://github
   - `name: string` human readable name of team.
   - `tag: string` unique id tag of team.
   - `description?: string` description of team.
-- `permissions?: Array<object>` the permissions assigned to the user for the given team.
-  - `id: string` id of permissions.
-  - `name: string` human readable name of permission.
+- `role?: Array<object>` the role assigned to the user for the given team.
+  - `id: string` id of the role.
+  - `name: string` human readable name of role.
   - `tag: string` unique id tag of team.
-  - `description?: string` description of permission.
+  - `description?: string` description of role.
 - `session?: object` the current session of the authenticated user.
   - `id: string` id of the session.
   - `token: string` token used to identify session and create bearer token.

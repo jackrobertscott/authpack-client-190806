@@ -153,7 +153,7 @@ export interface IGadgets {
     id: string
     token: string
   }
-  permissions?: Array<{
+  role?: Array<{
     id: string
     name: string
     tag: string

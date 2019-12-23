@@ -30,13 +30,13 @@ export const ListMemberships: FC<{
             icon: 'user-circle',
             label: membership.user
               ? membership.user.summary
-              : membership.user_email || 'User Unknown',
-            value: membership.permissions.map(({ name }) => name).join(', '),
+              : membership.user_email || 'User unknown',
+            value: membership.role ? membership.role.name : 'No role assigned',
             options: [
               {
                 icon: 'sliders-h',
                 label: 'Update',
-                helper: 'Change member permissions',
+                helper: 'Change member role',
                 click: () => update(membership.id),
               },
               {
@@ -58,9 +58,9 @@ const useListMemberships = createUseServer<{
     user?: {
       summary: string
     }
-    permissions: Array<{
+    role?: {
       name: string
-    }>
+    }
   }>
 }>({
   query: `
@@ -71,7 +71,7 @@ const useListMemberships = createUseServer<{
         user {
           summary
         }
-        permissions {
+        role {
           name
         }
       }

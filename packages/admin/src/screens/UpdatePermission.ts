@@ -12,36 +12,34 @@ import {
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
-export const UpdatePermission: FC<{
+export const UpdateRole: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
   const toaster = useToaster()
-  const gqlGetPermission = useGetPermission()
-  const gqlUpdatePermission = useUpdatePermission()
+  const gqlGetRole = useGetRole()
+  const gqlUpdateRole = useUpdateRole()
   const schema = useSchema({
-    schema: SchemaUpdatePermission,
+    schema: SchemaUpdateRole,
     submit: value => {
-      gqlUpdatePermission.fetch({ id, value }).then(({ permission }) => {
-        if (change) change(permission.id)
+      gqlUpdateRole.fetch({ id, value }).then(({ role }) => {
+        if (change) change(role.id)
         toaster.add({ icon: 'check-circle', label: 'Success' })
       })
     },
   })
   useEffect(() => {
-    gqlGetPermission
-      .fetch({ id })
-      .then(({ permission }) => schema.set(permission))
+    gqlGetRole.fetch({ id }).then(({ role }) => schema.set(role))
     // eslint-disable-next-line
   }, [id])
   return element(Page, {
     title: 'Update',
-    subtitle: 'Permission',
+    subtitle: 'Role',
     children: element(Layout, {
       column: true,
       padding: true,
       divide: true,
-      children: !gqlGetPermission.data
+      children: !gqlGetRole.data
         ? null
         : [
             element(Layout, {
@@ -86,7 +84,7 @@ export const UpdatePermission: FC<{
             element(Button, {
               key: 'submit',
               label: 'Save',
-              loading: gqlGetPermission.loading || gqlUpdatePermission.loading,
+              loading: gqlGetRole.loading || gqlUpdateRole.loading,
               disabled: !schema.valid,
               click: schema.submit,
             }),
@@ -95,8 +93,8 @@ export const UpdatePermission: FC<{
   })
 }
 
-const SchemaUpdatePermission = yup.object().shape({
-  name: yup.string().required('Please provide the permission name'),
+const SchemaUpdateRole = yup.object().shape({
+  name: yup.string().required('Please provide the role name'),
   tag: yup
     .string()
     .test(
@@ -104,20 +102,20 @@ const SchemaUpdatePermission = yup.object().shape({
       'Please use only numbers, letters and underscores',
       testAlphanumeric
     )
-    .required('Please provide the permission tag'),
+    .required('Please provide the role tag'),
   description: yup.string(),
 })
 
-const useGetPermission = createUseServer<{
-  permission: {
+const useGetRole = createUseServer<{
+  role: {
     name: string
     tag: string
     description?: string
   }
 }>({
   query: `
-    query GetPermission($id: String!) {
-      permission: GetPermission(id: $id) {
+    query GetRole($id: String!) {
+      role: GetRole(id: $id) {
         name
         tag
         description
@@ -126,14 +124,14 @@ const useGetPermission = createUseServer<{
   `,
 })
 
-const useUpdatePermission = createUseServer<{
-  permission: {
+const useUpdateRole = createUseServer<{
+  role: {
     id: string
   }
 }>({
   query: `
-    mutation UpdatePermission($id: String!, $value: UpdatePermissionValue!) {
-      permission: UpdatePermission(id: $id, value: $value) {
+    mutation UpdateRole($id: String!, $value: UpdateRoleValue!) {
+      role: UpdateRole(id: $id, value: $value) {
         id
       }
     }

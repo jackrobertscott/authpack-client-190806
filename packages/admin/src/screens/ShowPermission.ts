@@ -3,21 +3,19 @@ import { Layout, Snippet, Page } from '@authpack/theme'
 import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
 
-export const ShowPermission: FC<{
+export const ShowRole: FC<{
   id: string
 }> = ({ id }) => {
-  const gqlGetPermission = useGetPermission()
+  const gqlGetRole = useGetRole()
   useEffect(() => {
-    gqlGetPermission.fetch({ id })
+    gqlGetRole.fetch({ id })
     // eslint-disable-next-line
   }, [id])
-  const permission = gqlGetPermission.data
-    ? gqlGetPermission.data.permission
-    : undefined
+  const role = gqlGetRole.data ? gqlGetRole.data.role : undefined
   return element(Page, {
     title: 'Inspect',
-    subtitle: 'Permission',
-    children: !permission
+    subtitle: 'Role',
+    children: !role
       ? null
       : element(Layout, {
           column: true,
@@ -26,49 +24,49 @@ export const ShowPermission: FC<{
               key: 'id',
               icon: 'fingerprint',
               label: 'Id',
-              value: permission.id,
+              value: role.id,
             }),
             element(Snippet, {
               key: 'name',
               icon: 'users',
               label: 'Name',
-              value: permission.name,
+              value: role.name,
             }),
             element(Snippet, {
               key: 'tag',
               icon: 'tags',
               label: 'Tag',
-              value: permission.tag,
+              value: role.tag,
             }),
             element(Snippet, {
               key: 'description',
               icon: 'book',
               label: 'Description',
-              value: permission.description || '...',
+              value: role.description || '...',
             }),
             element(Snippet, {
               key: 'created',
               icon: 'clock',
               label: 'Created',
               value:
-                permission.created &&
-                format(new Date(permission.created), 'dd LLL yyyy @ h:mm a'),
+                role.created &&
+                format(new Date(role.created), 'dd LLL yyyy @ h:mm a'),
             }),
             element(Snippet, {
               key: 'updated',
               icon: 'clock',
               label: 'Updated',
               value:
-                permission.updated &&
-                format(new Date(permission.updated), 'dd LLL yyyy @ h:mm a'),
+                role.updated &&
+                format(new Date(role.updated), 'dd LLL yyyy @ h:mm a'),
             }),
           ],
         }),
   })
 }
 
-const useGetPermission = createUseServer<{
-  permission: {
+const useGetRole = createUseServer<{
+  role: {
     id: string
     created: string
     updated: string
@@ -78,8 +76,8 @@ const useGetPermission = createUseServer<{
   }
 }>({
   query: `
-    query GetPermission($id: String!) {
-      permission: GetPermission(id: $id) {
+    query GetRole($id: String!) {
+      role: GetRole(id: $id) {
         id
         created
         updated

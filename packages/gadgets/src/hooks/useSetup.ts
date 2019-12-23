@@ -24,19 +24,19 @@ export const useSetup = () => {
       user: undefined,
       team: undefined,
       session: undefined,
-      permissions: undefined,
+      role: undefined,
     })
     if (settings.bearer && settings.client) {
       gqlGetSession
         .fetch()
-        .then(({ session: { user, team, permissions, ...session } }) => {
+        .then(({ session: { user, team, role, ...session } }) => {
           SettingsStore.update({
             ready: true,
             bearer: `Bearer ${session.token}`,
             user,
             team,
             session,
-            permissions,
+            role,
           })
         })
         .catch(() => {
@@ -132,7 +132,7 @@ const useGetSession = createUseServer<{
       tag: string
       description?: string
     }
-    permissions?: Array<{
+    role?: Array<{
       id: string
       name: string
       tag: string
@@ -160,7 +160,7 @@ const useGetSession = createUseServer<{
           tag
           description
         }
-        permissions {
+        role {
           id
           name
           tag

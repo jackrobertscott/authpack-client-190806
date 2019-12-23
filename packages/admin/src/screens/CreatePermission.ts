@@ -11,21 +11,21 @@ import {
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
-export const CreatePermission: FC<{
+export const CreateRole: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
-  const gqlCreatePermission = useCreatePermission()
+  const gqlCreateRole = useCreateRole()
   const schema = useSchema({
-    schema: SchemaCreatePermission,
+    schema: SchemaCreateRole,
     submit: value => {
-      gqlCreatePermission
+      gqlCreateRole
         .fetch({ value })
-        .then(({ permission }) => change && change(permission.id))
+        .then(({ role }) => change && change(role.id))
     },
   })
   return element(Page, {
     title: 'New',
-    subtitle: 'Permission',
+    subtitle: 'Role',
     children: element(Layout, {
       column: true,
       padding: true,
@@ -73,7 +73,7 @@ export const CreatePermission: FC<{
         element(Button, {
           key: 'submit',
           label: 'Create',
-          loading: gqlCreatePermission.loading,
+          loading: gqlCreateRole.loading,
           disabled: !schema.valid,
           click: schema.submit,
         }),
@@ -82,8 +82,8 @@ export const CreatePermission: FC<{
   })
 }
 
-const SchemaCreatePermission = yup.object().shape({
-  name: yup.string().required('Please provide the permission name'),
+const SchemaCreateRole = yup.object().shape({
+  name: yup.string().required('Please provide the role name'),
   tag: yup
     .string()
     .test(
@@ -91,18 +91,18 @@ const SchemaCreatePermission = yup.object().shape({
       'Please use only numbers, letters and underscores',
       testAlphanumeric
     )
-    .required('Please provide the permission tag'),
+    .required('Please provide the role tag'),
   description: yup.string(),
 })
 
-const useCreatePermission = createUseServer<{
-  permission: {
+const useCreateRole = createUseServer<{
+  role: {
     id: string
   }
 }>({
   query: `
-    mutation CreatePermission($value: CreatePermissionValue!) {
-      permission: CreatePermission(value: $value) {
+    mutation CreateRole($value: CreateRoleValue!) {
+      role: CreateRole(value: $value) {
         id
       }
     }
