@@ -1,5 +1,5 @@
 import {
-  createElement as create,
+  createElement as element,
   createContext,
   ReactNode,
   useState,
@@ -28,7 +28,7 @@ export const UniversalContext = createContext(UniversalStore.current)
 export const Universal: FC<{ children: ReactNode }> = ({ children }) => {
   const [universal, universalChange] = useState(UniversalStore.current)
   useEffect(() => UniversalStore.listen(universalChange), [])
-  return create(UniversalContext.Provider, {
+  return element(UniversalContext.Provider, {
     value: universal,
     children,
   })

@@ -56,10 +56,12 @@ export const useSetup = () => {
       name: 'gadgets:loaded',
     })
     return SettingsStore.listen(data => {
-      radio.message({
-        name: 'gadgets:update',
-        payload: data,
-      })
+      if ((data.bearer && data.user) || !data.bearer) {
+        radio.message({
+          name: 'gadgets:update',
+          payload: data,
+        })
+      }
     })
     // eslint-disable-next-line
   }, [])

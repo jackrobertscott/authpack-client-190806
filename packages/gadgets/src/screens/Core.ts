@@ -1,13 +1,9 @@
-import { createElement as element, FC, useState, useEffect } from 'react'
+import { createElement as element, FC } from 'react'
 import { Gadgets } from './Gadgets'
-import { SettingsContext } from '../contexts/Settings'
-import { SettingsStore } from '../utils/settings'
+import { Settings } from '../utils/settings'
 
 export const Core: FC = () => {
-  const [settings, settingsChange] = useState(SettingsStore.current)
-  useEffect(() => SettingsStore.listen(settingsChange), [])
-  return element(SettingsContext.Provider, {
+  return element(Settings, {
     children: element(Gadgets),
-    value: settings,
   })
 }

@@ -1,4 +1,12 @@
 import { KeyStore } from 'events-and-things'
+import {
+  createElement as element,
+  createContext,
+  useState,
+  useEffect,
+  ReactNode,
+  FC,
+} from 'react'
 
 export type ISettings = {
   open: boolean
@@ -49,3 +57,14 @@ export const defaults: ISettings = {
 }
 
 export const SettingsStore = new KeyStore<ISettings>(defaults)
+
+export const SettingsContext = createContext(SettingsStore.current)
+
+export const Settings: FC<{ children: ReactNode }> = ({ children }) => {
+  const [settings, settingsChange] = useState(SettingsStore.current)
+  useEffect(() => SettingsStore.listen(settingsChange), [])
+  return element(SettingsContext.Provider, {
+    value: settings,
+    children,
+  })
+}
