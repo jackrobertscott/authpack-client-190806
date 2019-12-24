@@ -12,34 +12,34 @@ import {
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
-export const UpdateUpgrade: FC<{
+export const UpdatePlan: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
   const toaster = useToaster()
-  const gqlGetUpgrade = useGetUpgrade()
-  const gqlUpdateUpgrade = useUpdateUpgrade()
+  const gqlGetPlan = useGetPlan()
+  const gqlUpdatePlan = useUpdatePlan()
   const schema = useSchema({
-    schema: SchemaUpdateUpgrade,
+    schema: SchemaUpdatePlan,
     submit: value => {
-      gqlUpdateUpgrade.fetch({ id, value }).then(({ upgrade }) => {
-        if (change) change(upgrade.id)
+      gqlUpdatePlan.fetch({ id, value }).then(({ plan }) => {
+        if (change) change(plan.id)
         toaster.add({ icon: 'check-circle', label: 'Success' })
       })
     },
   })
   useEffect(() => {
-    gqlGetUpgrade.fetch({ id }).then(({ upgrade }) => schema.set(upgrade))
+    gqlGetPlan.fetch({ id }).then(({ plan }) => schema.set(plan))
     // eslint-disable-next-line
   }, [id])
   return element(Page, {
     title: 'Update',
-    subtitle: 'Upgrade',
+    subtitle: 'Plan',
     children: element(Layout, {
       column: true,
       padding: true,
       divide: true,
-      children: !gqlGetUpgrade.data
+      children: !gqlGetPlan.data
         ? null
         : [
             element(Layout, {
@@ -84,7 +84,7 @@ export const UpdateUpgrade: FC<{
             element(Button, {
               key: 'submit',
               label: 'Save',
-              loading: gqlGetUpgrade.loading || gqlUpdateUpgrade.loading,
+              loading: gqlGetPlan.loading || gqlUpdatePlan.loading,
               disabled: !schema.valid,
               click: schema.submit,
             }),
@@ -93,8 +93,8 @@ export const UpdateUpgrade: FC<{
   })
 }
 
-const SchemaUpdateUpgrade = yup.object().shape({
-  name: yup.string().required('Please provide the upgrade name'),
+const SchemaUpdatePlan = yup.object().shape({
+  name: yup.string().required('Please provide the plan name'),
   tag: yup
     .string()
     .test(
@@ -102,20 +102,20 @@ const SchemaUpdateUpgrade = yup.object().shape({
       'Please use only numbers, letters and underscores',
       testAlphanumeric
     )
-    .required('Please provide the upgrade tag'),
+    .required('Please provide the plan tag'),
   description: yup.string(),
 })
 
-const useGetUpgrade = createUseServer<{
-  upgrade: {
+const useGetPlan = createUseServer<{
+  plan: {
     name: string
     tag: string
     description?: string
   }
 }>({
   query: `
-    query GetUpgrade($id: String!) {
-      upgrade: GetUpgrade(id: $id) {
+    query GetPlan($id: String!) {
+      plan: GetPlan(id: $id) {
         name
         tag
         description
@@ -124,14 +124,14 @@ const useGetUpgrade = createUseServer<{
   `,
 })
 
-const useUpdateUpgrade = createUseServer<{
-  upgrade: {
+const useUpdatePlan = createUseServer<{
+  plan: {
     id: string
   }
 }>({
   query: `
-    mutation UpdateUpgrade($id: String!, $value: UpdateUpgradeValue!) {
-      upgrade: UpdateUpgrade(id: $id, value: $value) {
+    mutation UpdatePlan($id: String!, $value: UpdatePlanValue!) {
+      plan: UpdatePlan(id: $id, value: $value) {
         id
       }
     }

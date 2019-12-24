@@ -6,6 +6,7 @@ import { Pointer } from './Pointer'
 import { Menu } from './Menu'
 import { ClickOutside } from './ClickOutside'
 import { useMounted } from '../hooks/useMounted'
+import { useMedia } from '../hooks/useMedia'
 
 export const IconBar: FC<{
   children: ReactNode
@@ -17,6 +18,7 @@ export const IconBar: FC<{
         prefix?: string
         focused?: boolean
         seperated?: boolean
+        hidesmall?: boolean
         click?: () => void
         options?: Array<{
           label: string
@@ -30,6 +32,7 @@ export const IconBar: FC<{
   >
 }> = ({ icons, children }) => {
   const theme = useTheme()
+  const media = useMedia()
   const bp = `@media (max-width: ${515 + 50}px)`
   return element('div', {
     className: css({
@@ -64,13 +67,18 @@ export const IconBar: FC<{
         }),
         children: element(IconSpacer, {
           bp,
-          children: icons.filter(Boolean).map((data: any, index) => {
-            return element(IconPointer, {
-              key: `icon-${index}`,
-              bp,
-              ...data,
+          children: icons
+            .filter((data: any) => {
+              return media.width >= 515 + 50 ? true : !data.hidesmall
             })
-          }),
+            .filter(Boolean)
+            .map((data: any, index) => {
+              return element(IconPointer, {
+                key: `icon-${index}`,
+                bp,
+                ...data,
+              })
+            }),
         }),
       }),
       element('div', {
@@ -125,6 +133,7 @@ const IconPointer: FC<{
   prefix?: string
   focused?: boolean
   seperated?: boolean
+  hidesmall?: boolean
   click?: () => void
   options?: Array<{
     label: string

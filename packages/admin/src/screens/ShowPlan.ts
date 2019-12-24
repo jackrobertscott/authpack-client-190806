@@ -3,19 +3,19 @@ import { Layout, Snippet, Page } from '@authpack/theme'
 import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
 
-export const ShowUpgrade: FC<{
+export const ShowPlan: FC<{
   id: string
 }> = ({ id }) => {
-  const gqlGetUpgrade = useGetUpgrade()
+  const gqlGetPlan = useGetPlan()
   useEffect(() => {
-    gqlGetUpgrade.fetch({ id })
+    gqlGetPlan.fetch({ id })
     // eslint-disable-next-line
   }, [id])
-  const upgrade = gqlGetUpgrade.data ? gqlGetUpgrade.data.upgrade : undefined
+  const plan = gqlGetPlan.data ? gqlGetPlan.data.plan : undefined
   return element(Page, {
     title: 'Inspect',
-    subtitle: 'Upgrade',
-    children: !upgrade
+    subtitle: 'Plan',
+    children: !plan
       ? null
       : element(Layout, {
           column: true,
@@ -24,49 +24,49 @@ export const ShowUpgrade: FC<{
               key: 'id',
               icon: 'fingerprint',
               label: 'Id',
-              value: upgrade.id,
+              value: plan.id,
             }),
             element(Snippet, {
               key: 'name',
               icon: 'users',
               label: 'Name',
-              value: upgrade.name,
+              value: plan.name,
             }),
             element(Snippet, {
               key: 'tag',
               icon: 'tags',
               label: 'Tag',
-              value: upgrade.tag,
+              value: plan.tag,
             }),
             element(Snippet, {
               key: 'description',
               icon: 'book',
               label: 'Description',
-              value: upgrade.description || '...',
+              value: plan.description || '...',
             }),
             element(Snippet, {
               key: 'created',
               icon: 'clock',
               label: 'Created',
               value:
-                upgrade.created &&
-                format(new Date(upgrade.created), 'dd LLL yyyy @ h:mm a'),
+                plan.created &&
+                format(new Date(plan.created), 'dd LLL yyyy @ h:mm a'),
             }),
             element(Snippet, {
               key: 'updated',
               icon: 'clock',
               label: 'Updated',
               value:
-                upgrade.updated &&
-                format(new Date(upgrade.updated), 'dd LLL yyyy @ h:mm a'),
+                plan.updated &&
+                format(new Date(plan.updated), 'dd LLL yyyy @ h:mm a'),
             }),
           ],
         }),
   })
 }
 
-const useGetUpgrade = createUseServer<{
-  upgrade: {
+const useGetPlan = createUseServer<{
+  plan: {
     id: string
     created: string
     updated: string
@@ -76,8 +76,8 @@ const useGetUpgrade = createUseServer<{
   }
 }>({
   query: `
-    query GetUpgrade($id: String!) {
-      upgrade: GetUpgrade(id: $id) {
+    query GetPlan($id: String!) {
+      plan: GetPlan(id: $id) {
         id
         created
         updated

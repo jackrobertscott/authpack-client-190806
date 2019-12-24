@@ -5,7 +5,7 @@ import { ListUsers } from './ListUsers'
 import { ListProviders } from './ListProviders'
 import { ListTeams } from './ListTeams'
 import { ListWebhooks } from './ListWebhooks'
-import { ListUpgrades } from './ListUpgrade'
+import { ListPlans } from './ListPlan'
 
 export const RouterSideBarHome: FC = () => {
   const universal = useUniversal()
@@ -15,7 +15,7 @@ export const RouterSideBarHome: FC = () => {
     options: [
       { path: '/users', children: element(ListUsers) },
       { path: '/teams', children: element(ListTeams) },
-      { path: '/upgrades', children: element(ListUpgrades) },
+      { path: '/plans', children: element(ListPlans) },
       { path: '/providers', children: element(ListProviders) },
       { path: '/webhooks', children: element(ListWebhooks) },
     ],
@@ -40,9 +40,9 @@ export const RouterSideBarHome: FC = () => {
       },
       {
         icon: 'donate',
-        label: 'Upgrades',
-        focused: !!router.current && router.current.path === '/upgrades',
-        click: () => router.change('/upgrades'),
+        label: 'Plans',
+        focused: !!router.current && router.current.path === '/plans',
+        click: () => router.change('/plans'),
       },
       {
         icon: 'plug',

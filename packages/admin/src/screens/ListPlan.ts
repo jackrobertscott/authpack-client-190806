@@ -8,46 +8,46 @@ import {
 } from 'react'
 import { Page, Table, Empty, Button, drip } from '@authpack/theme'
 import { format } from 'date-fns'
-import { RouterManagerUpgrade } from './RouterManagerUpgrade'
+import { RouterManagerPlan } from './RouterManagerPlan'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'
 import { createUseServer } from '../hooks/useServer'
 
-export const ListUpgrades: FC = () => {
-  const gqlListUpgrades = useListUpgrades()
+export const ListPlans: FC = () => {
+  const gqlListPlans = useListPlans()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [variables, variablesChange] = useState<{
     options: { [key: string]: any }
     phrase?: string
   }>({ options: { sort: 'created' } })
-  const queryListUpgrades = useRef(drip(1000, gqlListUpgrades.fetch))
+  const queryListPlans = useRef(drip(1000, gqlListPlans.fetch))
   useEffect(() => {
-    if (variables.options.limit) queryListUpgrades.current(variables)
+    if (variables.options.limit) queryListPlans.current(variables)
     // eslint-disable-next-line
   }, [variables])
-  const newUpgrade = () => {
+  const newPlan = () => {
     buildChange(true)
     setTimeout(() => idcurrentChange(undefined), 200) // animation
   }
   const list =
-    gqlListUpgrades.data && gqlListUpgrades.data.count
-      ? gqlListUpgrades.data.upgrades
+    gqlListPlans.data && gqlListPlans.data.count
+      ? gqlListPlans.data.plans
       : variables.phrase ||
-        Boolean(gqlListUpgrades.data && !gqlListUpgrades.data.upgrades)
+        Boolean(gqlListPlans.data && !gqlListPlans.data.plans)
       ? []
-      : FakeUpgrades
+      : FakePlans
   return element(Page, {
-    title: 'Upgrades',
+    title: 'Plans',
     subtitle: 'Accept payment from your users',
-    hidden: !gqlListUpgrades.data || !gqlListUpgrades.data.count,
+    hidden: !gqlListPlans.data || !gqlListPlans.data.count,
     corner: {
       icon: 'plus',
-      label: 'New Upgrade',
-      click: newUpgrade,
+      label: 'New Plan',
+      click: newPlan,
     },
     noscroll: element(TemplateSearchBar, {
-      count: gqlListUpgrades.data && gqlListUpgrades.data.count,
-      current: gqlListUpgrades.data && gqlListUpgrades.data.upgrades.length,
+      count: gqlListPlans.data && gqlListPlans.data.count,
+      current: gqlListPlans.data && gqlListPlans.data.plans.length,
       change: (phrase, limit, skip) => {
         variablesChange({
           ...variables,
@@ -57,12 +57,12 @@ export const ListUpgrades: FC = () => {
       },
     }),
     children: [
-      element(RouterManagerUpgrade, {
+      element(RouterManagerPlan, {
         key: 'router',
         id: idcurrent,
         visible: build,
         change: id => {
-          queryListUpgrades.current(variables)
+          queryListPlans.current(variables)
           if (id) {
             idcurrentChange(id)
           } else {
@@ -75,21 +75,21 @@ export const ListUpgrades: FC = () => {
           setTimeout(() => idcurrentChange(undefined), 200) // animation
         },
       }),
-      gqlListUpgrades.data &&
-        !gqlListUpgrades.data.count &&
+      gqlListPlans.data &&
+        !gqlListPlans.data.count &&
         element(Empty, {
           key: 'empty',
           icon: 'donate',
-          label: 'Upgrades',
-          helper: 'Would you like to create an upgrade?',
+          label: 'Plans',
+          helper: 'Would you like to create an plan?',
           children: element(Button, {
             key: 'Regular',
             icon: 'plus',
-            label: 'New Upgrade',
-            click: newUpgrade,
+            label: 'New Plan',
+            click: newPlan,
           }),
         }),
-      gqlListUpgrades.data &&
+      gqlListPlans.data &&
         element(Table, {
           key: 'table',
           header: [
@@ -136,9 +136,9 @@ export const ListUpgrades: FC = () => {
   })
 }
 
-const useListUpgrades = createUseServer<{
+const useListPlans = createUseServer<{
   count: number
-  upgrades: Array<{
+  plans: Array<{
     id: string
     updated: string
     name: string
@@ -147,9 +147,9 @@ const useListUpgrades = createUseServer<{
   }>
 }>({
   query: `
-    query ListUpgrades($phrase: String, $options: WhereOptions) {
-      count: CountUpgrades(phrase: $phrase)
-      upgrades: ListUpgrades(phrase: $phrase, options: $options) {
+    query ListPlans($phrase: String, $options: WhereOptions) {
+      count: CountPlans(phrase: $phrase)
+      plans: ListPlans(phrase: $phrase, options: $options) {
         id
         updated
         name
@@ -160,7 +160,7 @@ const useListUpgrades = createUseServer<{
   `,
 })
 
-const FakeUpgrades: Array<{
+const FakePlans: Array<{
   id: string
   updated: string
   name: string

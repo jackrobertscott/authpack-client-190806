@@ -11,21 +11,21 @@ import {
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
-export const CreateUpgrade: FC<{
+export const CreatePlan: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
-  const gqlCreateUpgrade = useCreateUpgrade()
+  const gqlCreatePlan = useCreatePlan()
   const schema = useSchema({
-    schema: SchemaCreateUpgrade,
+    schema: SchemaCreatePlan,
     submit: value => {
-      gqlCreateUpgrade
+      gqlCreatePlan
         .fetch({ value })
-        .then(({ upgrade }) => change && change(upgrade.id))
+        .then(({ plan }) => change && change(plan.id))
     },
   })
   return element(Page, {
     title: 'New',
-    subtitle: 'Upgrade',
+    subtitle: 'Plan',
     children: element(Layout, {
       column: true,
       padding: true,
@@ -73,7 +73,7 @@ export const CreateUpgrade: FC<{
         element(Button, {
           key: 'submit',
           label: 'Create',
-          loading: gqlCreateUpgrade.loading,
+          loading: gqlCreatePlan.loading,
           disabled: !schema.valid,
           click: schema.submit,
         }),
@@ -82,8 +82,8 @@ export const CreateUpgrade: FC<{
   })
 }
 
-const SchemaCreateUpgrade = yup.object().shape({
-  name: yup.string().required('Please provide the upgrade name'),
+const SchemaCreatePlan = yup.object().shape({
+  name: yup.string().required('Please provide the plan name'),
   tag: yup
     .string()
     .test(
@@ -91,18 +91,18 @@ const SchemaCreateUpgrade = yup.object().shape({
       'Please use only numbers, letters and underscores',
       testAlphanumeric
     )
-    .required('Please provide the upgrade tag'),
+    .required('Please provide the plan tag'),
   description: yup.string(),
 })
 
-const useCreateUpgrade = createUseServer<{
-  upgrade: {
+const useCreatePlan = createUseServer<{
+  plan: {
     id: string
   }
 }>({
   query: `
-    mutation CreateUpgrade($value: CreateUpgradeValue!) {
-      upgrade: CreateUpgrade(value: $value) {
+    mutation CreatePlan($value: CreatePlanValue!) {
+      plan: CreatePlan(value: $value) {
         id
       }
     }

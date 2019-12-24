@@ -1,11 +1,11 @@
 import { createElement as element, FC } from 'react'
 import { useLocalRouter, Modal, IconBar } from '@authpack/theme'
-import { CreateUpgrade } from './CreateUpgrade'
-import { UpdateUpgrade } from './UpdateUpgrade'
-import { RemoveUpgrade } from './RemoveUpgrade'
-import { ShowUpgrade } from './ShowUpgrade'
+import { CreatePlan } from './CreatePlan'
+import { UpdatePlan } from './UpdatePlan'
+import { RemovePlan } from './RemovePlan'
+import { ShowPlan } from './ShowPlan'
 
-export const RouterManagerUpgrade: FC<{
+export const RouterManagerPlan: FC<{
   id?: string
   change?: (id?: string) => void
   visible?: boolean
@@ -15,17 +15,17 @@ export const RouterManagerUpgrade: FC<{
     nomatch: id ? '/inspect' : '/create',
     options: id
       ? [
-          { key: '/inspect', children: element(ShowUpgrade, { id }) },
+          { key: '/inspect', children: element(ShowPlan, { id }) },
           {
             key: '/update',
-            children: element(UpdateUpgrade, { id, change }),
+            children: element(UpdatePlan, { id, change }),
           },
           {
             key: '/remove',
-            children: element(RemoveUpgrade, { id, change }),
+            children: element(RemovePlan, { id, change }),
           },
         ]
-      : [{ key: '/create', children: element(CreateUpgrade, { change }) }],
+      : [{ key: '/create', children: element(CreatePlan, { change }) }],
   })
   return element(Modal, {
     close,

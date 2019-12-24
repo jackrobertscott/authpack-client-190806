@@ -10,6 +10,7 @@ export const Root: FC<{
   theme?: string
   children: ReactNode
 }> = ({ theme, children }) => {
+  const bp = `@media (max-width: ${515 + 50}px)`
   let value
   switch (theme) {
     case 'night_sky':
@@ -32,6 +33,7 @@ export const Root: FC<{
         className: css({
           all: 'unset',
           display: 'flex',
+          overflow: 'hidden',
           flexGrow: 1,
           fontWeight: value.global.thick,
           '*': {

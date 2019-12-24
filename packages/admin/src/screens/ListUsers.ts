@@ -100,6 +100,7 @@ export const ListUsers: FC = () => {
             { key: 'email', label: 'Email' },
             { key: 'name_given', label: 'Name' },
             { key: 'username', label: 'Username' },
+            { key: 'created', label: 'Created' },
             { key: 'updated', label: 'Updated' },
           ].map(({ key, label }) => ({
             label,
@@ -131,6 +132,10 @@ export const ListUsers: FC = () => {
               { icon: 'tags', value: data.username || '...' },
               {
                 icon: 'clock',
+                value: format(new Date(data.created), 'dd LLL yyyy @ h:mm a'),
+              },
+              {
+                icon: 'clock',
                 value: format(new Date(data.updated), 'dd LLL yyyy @ h:mm a'),
               },
             ],
@@ -144,6 +149,7 @@ const useListUsers = createUseServer<{
   count: number
   users: Array<{
     id: string
+    created: string
     updated: string
     email: string
     username?: string
@@ -155,6 +161,7 @@ const useListUsers = createUseServer<{
       count: CountUsers(phrase: $phrase)
       users: ListUsers(phrase: $phrase, options: $options) {
         id
+        created
         updated
         email
         username
@@ -166,12 +173,14 @@ const useListUsers = createUseServer<{
 
 const FakeUsers: Array<{
   id: string
+  created: string
   updated: string
   email: string
   username?: string
   name?: string
 }> = Array.from(Array(8).keys()).map(() => ({
   id: faker.random.uuid(),
+  created: faker.date.recent(100).toDateString(),
   updated: faker.date.recent(100).toDateString(),
   email: faker.internet.email(),
   username: faker.internet.userName(),

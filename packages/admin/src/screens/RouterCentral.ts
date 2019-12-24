@@ -42,11 +42,13 @@ export const RouterCentral: FC = () => {
         label: 'Developers',
         focused: !!router.current && router.current.path === '/developers',
         click: () => router.change('/developers'),
+        hidesmall: true,
       },
       {
         prefix: 'far',
         icon: 'question-circle',
         label: 'Help & Feedback',
+        hidesmall: true,
         options: [
           {
             icon: 'book',

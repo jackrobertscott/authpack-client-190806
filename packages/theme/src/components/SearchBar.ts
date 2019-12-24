@@ -9,6 +9,7 @@ import { useTheme } from '../hooks/useTheme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
 import { Pointer } from './Pointer'
+import { Scroller } from './Scroller'
 
 export const SearchBar: FC<{
   value?: string
@@ -27,32 +28,35 @@ export const SearchBar: FC<{
   }>
 }> = ({ value, change, placeholder, options = [] }) => {
   const theme = useTheme()
-  return element('div', {
-    className: css({
-      all: 'unset',
-      display: 'flex',
-      justifyContent: 'flex-end',
-      width: '100%',
-      position: 'relative',
-      background: theme.searchBar.background,
-      borderTop: theme.searchBar.border,
+  return element(Scroller, {
+    children: element('div', {
+      className: css({
+        all: 'unset',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        width: '100%',
+        position: 'relative',
+        minWidth: '660px',
+        background: theme.searchBar.background,
+        borderTop: theme.searchBar.border,
+      }),
+      children: [
+        change &&
+          element(Searcher, {
+            key: 'searcher',
+            value,
+            change,
+            placeholder,
+          }),
+        !!options.length &&
+          options.map((option, index) => {
+            return element(Option, {
+              key: `option-${index}`,
+              ...option,
+            })
+          }),
+      ],
     }),
-    children: [
-      change &&
-        element(Searcher, {
-          key: 'searcher',
-          value,
-          change,
-          placeholder,
-        }),
-      !!options.length &&
-        options.map((option, index) => {
-          return element(Option, {
-            key: `option-${index}`,
-            ...option,
-          })
-        }),
-    ],
   })
 }
 

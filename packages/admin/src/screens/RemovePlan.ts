@@ -3,32 +3,32 @@ import { Page } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { ConfirmRemove } from '../templates/ConfirmRemove'
 
-export const RemoveUpgrade: FC<{
+export const RemovePlan: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
-  const gqlRemoveUpgrade = useRemoveUpgrade()
+  const gqlRemovePlan = useRemovePlan()
   return element(Page, {
     title: 'Remove',
-    subtitle: 'Upgrade',
+    subtitle: 'Plan',
     children: element(ConfirmRemove, {
-      helper: 'Remove this upgrade',
-      alert: 'Please confirm the removal of this upgrade',
-      loading: gqlRemoveUpgrade.loading,
+      helper: 'Remove this plan',
+      alert: 'Please confirm the removal of this plan',
+      loading: gqlRemovePlan.loading,
       change: () =>
-        gqlRemoveUpgrade.fetch({ id }).then(() => change && change()),
+        gqlRemovePlan.fetch({ id }).then(() => change && change()),
     }),
   })
 }
 
-const useRemoveUpgrade = createUseServer<{
-  upgrade: {
+const useRemovePlan = createUseServer<{
+  plan: {
     id: string
   }
 }>({
   query: `
-    mutation RemoveUpgrade($id: String!) {
-      upgrade: RemoveUpgrade(id: $id) {
+    mutation RemovePlan($id: String!) {
+      plan: RemovePlan(id: $id) {
         id
       }
     }
