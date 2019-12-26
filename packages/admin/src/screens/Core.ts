@@ -1,4 +1,4 @@
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import { Spinner } from '@authpack/theme'
 import { Preferences } from '../utils/preferences'
 import { Universal } from '../utils/universal'
@@ -7,11 +7,11 @@ import { config } from '../config'
 import * as Authpack from '../utils/authpack'
 
 export const Core: FC = () => {
-  return create(Preferences, {
-    children: create(Universal, {
-      children: create(Spinner, {
-        children: create(Authpack.Provider, {
-          children: create(Admin),
+  return element(Preferences, {
+    children: element(Universal, {
+      children: element(Spinner, {
+        children: element(Authpack.Provider, {
+          children: element(Admin),
           value: {
             debug: true,
             key: config.gadgets_key_client,
