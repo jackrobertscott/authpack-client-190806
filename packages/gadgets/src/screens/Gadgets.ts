@@ -2,22 +2,20 @@ import { createElement as element, FC, useRef } from 'react'
 import { Modal, Root } from '@authpack/theme'
 import { useSetup } from '../hooks/useSetup'
 import { useSettings } from '../hooks/useSettings'
-import { RouterModalUnauthed } from './RouterModalUnauthed'
-import { RouterModalOnauthed } from './RouterModalOnauthed'
+import { RouterModalLoggedOut } from './RouterModalLoggedOut'
+import { RouterModalLoggedIn } from './RouterModalLoggedIn'
 import { SettingsStore } from '../utils/settings'
 import { NoKey } from './NoKey'
 import { Loading } from './Loading'
-import { config } from '../config'
 import { NoPayment } from './NoPayment'
+import { config } from '../config'
 
 export const Gadgets: FC = () => {
   useSetup()
   const settings = useSettings()
   const close = useRef(() => SettingsStore.update({ open: false }))
   if (!settings.cluster) return null
-  const allowed = settings.cluster.subscribed
-    ? true
-    : settings.domain
+  const allowed = settings.domain
     ? settings.domain.startsWith('http://localhost') ||
       settings.domain.startsWith(config.admin)
     : false
@@ -33,16 +31,16 @@ export const Gadgets: FC = () => {
         ? element(NoKey, {
             key: 'nokey',
           })
-        : !allowed
+        : !allowed && false
         ? element(NoPayment, {
             key: 'nopayment',
           })
         : settings.bearer && settings.user
-        ? element(RouterModalOnauthed, {
+        ? element(RouterModalLoggedIn, {
             key: 'onauthed',
             close: close.current,
           })
-        : element(RouterModalUnauthed, {
+        : element(RouterModalLoggedOut, {
             key: 'unauthed',
             close: close.current,
           }),

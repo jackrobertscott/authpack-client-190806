@@ -1,71 +1,65 @@
 import * as yup from 'yup'
-import { createElement as element, FC } from 'react'
+import { createElement as element, FC, useState } from 'react'
 import {
   useSchema,
   Button,
   Layout,
   Control,
   InputString,
-  testAlphanumeric,
   Page,
+  InputSelect,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
+import { WEBHOOKEVENTS } from '../utils/webhooks'
 
-export const CreatePermission: FC<{
+export const CreateWebhook: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
-  const gqlCreatePermission = useCreatePermission()
+  const [filter, filterChange] = useState<string>('')
+  const gqlCreateWebhook = useCreateWebhook()
   const schema = useSchema({
-    schema: SchemaCreatePermission,
+    schema: SchemaCreateWebhook,
     submit: value => {
-      gqlCreatePermission
+      gqlCreateWebhook
         .fetch({ value })
-        .then(({ permission }) => change && change(permission.id))
+        .then(({ webhook }) => change && change(webhook.id))
     },
   })
   return element(Page, {
     title: 'New',
-    subtitle: 'Permission',
+    subtitle: 'Webhook',
     children: element(Layout, {
       column: true,
       padding: true,
       divide: true,
       children: [
         element(Control, {
-          key: 'name',
-          label: 'Name',
-          error: schema.error('name'),
-          children: element(InputString, {
-            value: schema.value('name'),
-            change: schema.change('name'),
-            placeholder: 'Admin Editor',
+          key: 'event',
+          label: 'Event',
+          helper: 'The event which will trigger the url to be called',
+          error: schema.error('event'),
+          children: element(InputSelect, {
+            value: schema.value('event'),
+            change: schema.change('event'),
+            filter: filterChange,
+            options: EventOptions.filter(event => event.label.includes(filter)),
           }),
         }),
         element(Control, {
-          key: 'tag',
-          label: 'Tag',
-          helper: 'A unique identifier for the permission',
-          error: schema.error('tag'),
+          key: 'url',
+          label: 'Url',
+          helper: 'This will be sent the id of the changed item',
+          error: schema.error('url'),
           children: element(InputString, {
-            value: schema.value('tag'),
-            change: schema.change('tag'),
-            placeholder: 'admin_editor',
-          }),
-        }),
-        element(Control, {
-          key: 'description',
-          label: 'Description',
-          error: schema.error('description'),
-          children: element(InputString, {
-            value: schema.value('description'),
-            change: schema.change('description'),
-            placeholder: 'User can...',
+            value: schema.value('url'),
+            change: schema.change('url'),
+            placeholder: 'https://exmaple.com/webhooks',
           }),
         }),
         element(Button, {
           key: 'submit',
           label: 'Create',
-          loading: gqlCreatePermission.loading,
+          loading: gqlCreateWebhook.loading,
           disabled: !schema.valid,
           click: schema.submit,
         }),
@@ -74,29 +68,29 @@ export const CreatePermission: FC<{
   })
 }
 
-const SchemaCreatePermission = yup.object().shape({
-  name: yup.string().required('Please provide the permission name'),
-  tag: yup
+const SchemaCreateWebhook = yup.object().shape({
+  event: yup
     .string()
-    .test(
-      'alphamun',
-      'Please use only numbers, letters and underscores',
-      testAlphanumeric
-    )
-    .required('Please provide the permission tag'),
-  description: yup.string(),
+    .oneOf(WEBHOOKEVENTS)
+    .required('Please provide a preset'),
+  url: yup.string().required('Please ensure you include a url'),
 })
 
-const useCreatePermission = createUseServer<{
-  permission: {
+const useCreateWebhook = createUseServer<{
+  webhook: {
     id: string
   }
 }>({
   query: `
-    mutation CreatePermission($value: CreatePermissionValue!) {
-      permission: CreatePermission(value: $value) {
+    mutation CreateWebhook($value: CreateWebhookValue!) {
+      webhook: CreateWebhook(value: $value) {
         id
       }
     }
   `,
 })
+
+const EventOptions = WEBHOOKEVENTS.map(event => ({
+  value: event,
+  label: event,
+}))

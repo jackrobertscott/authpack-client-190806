@@ -1,20 +1,19 @@
 import * as yup from 'yup'
-import { createElement as element, FC, useEffect, useState } from 'react'
+import { createElement as element, FC, useEffect } from 'react'
 import {
   useSchema,
   Layout,
   Control,
   InputString,
   Button,
-  testAlphanumeric,
   useMounted,
   Page,
   Focus,
+  useOauthCode,
 } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { SettingsStore } from '../utils/settings'
 import { createUseServer } from '../hooks/useServer'
-import { useOauthCode } from '../hooks/useOauthCode'
 import { presetColors } from '../utils/presets'
 
 export const SignupUser: FC = () => {
@@ -24,7 +23,6 @@ export const SignupUser: FC = () => {
   const gqlSignupUser = useSignupUser()
   const gqlListProviders = useListProviders()
   const gqlSignupUserOauth = useSignupUserOauth()
-  const [current, currentChange] = useState<string | undefined>()
   const schema = useSchema({
     schema: SchemaSignupUser,
     submit: input => {
@@ -40,10 +38,10 @@ export const SignupUser: FC = () => {
     // eslint-disable-next-line
   }, [])
   useEffect(() => {
-    if (current && oauthCode.code) {
+    if (oauthCode.current && oauthCode.code) {
       gqlSignupUserOauth
         .fetch({
-          provider_id: current,
+          provider_id: oauthCode.current,
           code: oauthCode.code,
         })
         .then(({ session }) => {
@@ -54,16 +52,15 @@ export const SignupUser: FC = () => {
         })
         .finally(() => {
           if (!mounted.current) return
-          currentChange(undefined)
-          oauthCode.clearCode()
+          oauthCode.clear()
         })
     }
     // eslint-disable-next-line
-  }, [oauthCode.code])
+  }, [oauthCode.current, oauthCode.code])
   return element(Page, {
     title: 'Signup',
     subtitle: settings.cluster && settings.cluster.name,
-    children: current
+    children: oauthCode.current
       ? element(Focus, {
           icon: 'sync-alt',
           label: 'Pending',
@@ -71,7 +68,7 @@ export const SignupUser: FC = () => {
           children: element(Button, {
             icon: 'times-circle',
             label: 'Cancel',
-            click: () => currentChange(undefined),
+            click: () => oauthCode.clear(),
           }),
         })
       : !gqlListProviders.data
@@ -91,10 +88,7 @@ export const SignupUser: FC = () => {
                   label: provider.name || provider.preset,
                   prefix: 'fab',
                   style: presetColors(provider.preset),
-                  click: () => {
-                    currentChange(provider.id)
-                    oauthCode.openUrl(provider.url)
-                  },
+                  click: () => oauthCode.open(provider.id, provider.url),
                 })
               }),
             }),
@@ -130,17 +124,6 @@ export const SignupUser: FC = () => {
                     }),
                   }),
                 ],
-              }),
-              element(Control, {
-                key: 'username',
-                label: 'Username',
-                helper: 'Claim a unique username',
-                error: schema.error('username'),
-                children: element(InputString, {
-                  value: schema.value('username'),
-                  change: schema.change('username'),
-                  placeholder: 'example_username_123',
-                }),
               }),
               element(Control, {
                 key: 'email',
@@ -179,14 +162,6 @@ export const SignupUser: FC = () => {
 const SchemaSignupUser = yup.object().shape({
   name_given: yup.string(),
   name_family: yup.string(),
-  username: yup
-    .string()
-    .test(
-      'alphamun',
-      'Please use only numbers, letters and underscores',
-      testAlphanumeric
-    )
-    .required('Please provide your username'),
   email: yup
     .string()
     .email('Please make sure you have used a valid email address')

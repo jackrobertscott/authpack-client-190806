@@ -25,8 +25,7 @@ export const Scroller: FC<{
       display: 'flex',
       position: 'relative',
       flexDirection: 'column',
-      overflowY: always ? 'scroll' : disable ? 'hidden' : 'auto',
-      overflowX: 'hidden',
+      overflow: always ? 'scroll' : disable ? 'hidden' : 'auto',
       flexGrow: 1,
       maxHeight: maxheight,
       '&::-webkit-scrollbar': {
@@ -37,13 +36,11 @@ export const Scroller: FC<{
       },
       '&::-webkit-scrollbar-track': {
         backgroundColor: 'hsla(0, 0, 0, 0)',
-        borderLeft: theme.scroller.border,
         background: theme.scroller.underneath,
       },
       '&::-webkit-scrollbar-thumb': {
         cursor: 'pointer',
         transition: '200ms',
-        borderLeft: theme.scroller.border,
         background: theme.scroller.background,
       },
       '&::-webkit-scrollbar-thumb:hover': {

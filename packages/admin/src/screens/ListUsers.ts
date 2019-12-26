@@ -1,5 +1,11 @@
 import faker from 'faker'
-import { createElement as element, FC, useState, useEffect, useRef } from 'react'
+import {
+  createElement as element,
+  FC,
+  useState,
+  useEffect,
+  useRef,
+} from 'react'
 import { Page, Table, Empty, Button, drip } from '@authpack/theme'
 import { format } from 'date-fns'
 import { RouterManagerUser } from './RouterManagerUser'
@@ -23,6 +29,10 @@ export const ListUsers: FC = () => {
     if (variables.options.limit) queryListUsers.current(variables)
     // eslint-disable-next-line
   }, [variables])
+  const newUser = () => {
+    buildChange(true)
+    setTimeout(() => idcurrentChange(undefined), 200) // animation
+  }
   const list =
     gqlListUsers.data && gqlListUsers.data.count
       ? gqlListUsers.data.users
@@ -37,10 +47,7 @@ export const ListUsers: FC = () => {
     corner: {
       icon: 'plus',
       label: 'New User',
-      click: () => {
-        buildChange(true)
-        setTimeout(() => idcurrentChange(undefined), 200) // animation
-      },
+      click: newUser,
     },
     noscroll: element(TemplateSearchBar, {
       count: gqlListUsers.data && gqlListUsers.data.count,
@@ -78,16 +85,12 @@ export const ListUsers: FC = () => {
           key: 'empty',
           icon: 'user',
           label: 'Users',
-          helper:
-            'Create a user manually, with our gadgets, or by using our API',
+          helper: 'Would you like to create a user?',
           children: element(Button, {
             key: 'Regular',
-            icon: 'book',
-            label: 'Install',
-            click: () =>
-              window.open(
-                'https://github.com/jackrobertscott/authpack/blob/master/readme.md'
-              ),
+            icon: 'plus',
+            label: 'New User',
+            click: newUser,
           }),
         }),
       gqlListUsers.data &&
@@ -97,6 +100,7 @@ export const ListUsers: FC = () => {
             { key: 'email', label: 'Email' },
             { key: 'name_given', label: 'Name' },
             { key: 'username', label: 'Username' },
+            { key: 'created', label: 'Created' },
             { key: 'updated', label: 'Updated' },
           ].map(({ key, label }) => ({
             label,
@@ -128,6 +132,10 @@ export const ListUsers: FC = () => {
               { icon: 'tags', value: data.username || '...' },
               {
                 icon: 'clock',
+                value: format(new Date(data.created), 'dd LLL yyyy @ h:mm a'),
+              },
+              {
+                icon: 'clock',
                 value: format(new Date(data.updated), 'dd LLL yyyy @ h:mm a'),
               },
             ],
@@ -141,6 +149,7 @@ const useListUsers = createUseServer<{
   count: number
   users: Array<{
     id: string
+    created: string
     updated: string
     email: string
     username?: string
@@ -152,6 +161,7 @@ const useListUsers = createUseServer<{
       count: CountUsers(phrase: $phrase)
       users: ListUsers(phrase: $phrase, options: $options) {
         id
+        created
         updated
         email
         username
@@ -163,12 +173,14 @@ const useListUsers = createUseServer<{
 
 const FakeUsers: Array<{
   id: string
+  created: string
   updated: string
   email: string
   username?: string
   name?: string
 }> = Array.from(Array(8).keys()).map(() => ({
   id: faker.random.uuid(),
+  created: faker.date.recent(100).toDateString(),
   updated: faker.date.recent(100).toDateString(),
   email: faker.internet.email(),
   username: faker.internet.userName(),

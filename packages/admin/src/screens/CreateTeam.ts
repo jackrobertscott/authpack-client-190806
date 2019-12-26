@@ -39,26 +39,34 @@ export const CreateTeam: FC<{
       padding: true,
       divide: true,
       children: [
-        element(Control, {
+        element(Layout, {
           key: 'name',
-          label: 'Name',
-          error: schema.error('name'),
-          children: element(InputString, {
-            value: schema.value('name'),
-            change: schema.change('name'),
-            placeholder: 'Awesome People',
-          }),
-        }),
-        element(Control, {
-          key: 'tag',
-          label: 'Tag',
-          helper: 'A unique identifier for the team',
-          error: schema.error('tag'),
-          children: element(InputString, {
-            value: schema.value('tag'),
-            change: schema.change('tag'),
-            placeholder: 'awesome_people',
-          }),
+          divide: true,
+          media: true,
+          children: [
+            element(Control, {
+              key: 'name',
+              label: 'Name',
+              helper: 'Human friendly name',
+              error: schema.error('name'),
+              children: element(InputString, {
+                value: schema.value('name'),
+                change: schema.change('name'),
+                placeholder: 'Super Squad',
+              }),
+            }),
+            element(Control, {
+              key: 'tag',
+              label: 'Tag',
+              helper: 'Unique identifier',
+              error: schema.error('tag'),
+              children: element(InputString, {
+                value: schema.value('tag'),
+                change: schema.change('tag'),
+                placeholder: 'super_squad',
+              }),
+            }),
+          ],
         }),
         element(Control, {
           key: 'description',
@@ -72,7 +80,7 @@ export const CreateTeam: FC<{
         }),
         element(Control, {
           key: 'user_id',
-          label: 'Admin User',
+          label: 'User',
           error: schema.error('user_id'),
           children: element(InputSelect, {
             value: schema.value('user_id'),
@@ -114,7 +122,7 @@ const SchemaCreateTeam = yup.object().shape({
     )
     .required('Please provide the team tag'),
   description: yup.string(),
-  user_id: yup.string().required('Please select an admin user'),
+  user_id: yup.string().required('Please select a user'),
 })
 
 const useCreateTeam = createUseServer<{

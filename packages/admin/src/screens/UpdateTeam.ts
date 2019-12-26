@@ -7,6 +7,8 @@ import {
   InputString,
   testAlphanumeric,
   Page,
+  Button,
+  useToaster,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
@@ -14,14 +16,16 @@ export const UpdateTeam: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
+  const toaster = useToaster()
   const gqlGetTeam = useGetTeam()
   const gqlUpdateTeam = useUpdateTeam()
   const schema = useSchema({
     schema: SchemaUpdateTeam,
-    poller: value => {
-      gqlUpdateTeam
-        .fetch({ id, value })
-        .then(({ team }) => change && change(team.id))
+    submit: value => {
+      gqlUpdateTeam.fetch({ id, value }).then(({ team }) => {
+        if (change) change(team.id)
+        toaster.add({ icon: 'check-circle', label: 'Success' })
+      })
     },
   })
   useEffect(() => {
@@ -38,26 +42,34 @@ export const UpdateTeam: FC<{
       children: !gqlGetTeam.data
         ? null
         : [
-            element(Control, {
+            element(Layout, {
               key: 'name',
-              label: 'Name',
-              error: schema.error('name'),
-              children: element(InputString, {
-                value: schema.value('name'),
-                change: schema.change('name'),
-                placeholder: 'Awesome People',
-              }),
-            }),
-            element(Control, {
-              key: 'tag',
-              label: 'Tag',
-              helper: 'A unique identifier for the team',
-              error: schema.error('tag'),
-              children: element(InputString, {
-                value: schema.value('tag'),
-                change: schema.change('tag'),
-                placeholder: 'awesome_people',
-              }),
+              divide: true,
+              media: true,
+              children: [
+                element(Control, {
+                  key: 'name',
+                  label: 'Name',
+                  helper: 'Human friendly name',
+                  error: schema.error('name'),
+                  children: element(InputString, {
+                    value: schema.value('name'),
+                    change: schema.change('name'),
+                    placeholder: 'Super Squad',
+                  }),
+                }),
+                element(Control, {
+                  key: 'tag',
+                  label: 'Tag',
+                  helper: 'Unique identifier',
+                  error: schema.error('tag'),
+                  children: element(InputString, {
+                    value: schema.value('tag'),
+                    change: schema.change('tag'),
+                    placeholder: 'super_squad',
+                  }),
+                }),
+              ],
             }),
             element(Control, {
               key: 'description',
@@ -68,6 +80,13 @@ export const UpdateTeam: FC<{
                 change: schema.change('description'),
                 placeholder: 'We do...',
               }),
+            }),
+            element(Button, {
+              key: 'submit',
+              label: 'Save',
+              loading: gqlGetTeam.loading || gqlUpdateTeam.loading,
+              disabled: !schema.valid,
+              click: schema.submit,
             }),
           ],
     }),

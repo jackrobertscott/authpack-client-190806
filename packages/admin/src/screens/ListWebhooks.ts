@@ -1,47 +1,54 @@
 import faker from 'faker'
-import { createElement as element, FC, useState, useEffect, useRef } from 'react'
+import {
+  createElement as element,
+  FC,
+  useState,
+  useEffect,
+  useRef,
+} from 'react'
 import { Page, Table, Empty, Button, drip } from '@authpack/theme'
 import { format } from 'date-fns'
-import { RouterManagerPermission } from './RouterManagerPermission'
+import { RouterManagerWebhook } from './RouterManagerWebhook'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'
 import { createUseServer } from '../hooks/useServer'
+import { WEBHOOKEVENTS } from '../utils/webhooks'
 
-export const ListPermissions: FC = () => {
-  const gqlListPermissions = useListPermissions()
+export const ListWebhooks: FC = () => {
+  const gqlListWebhooks = useListWebhooks()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
   const [variables, variablesChange] = useState<{
     options: { [key: string]: any }
     phrase?: string
   }>({ options: { sort: 'created' } })
-  const queryListPermissions = useRef(drip(1000, gqlListPermissions.fetch))
+  const queryListWebhooks = useRef(drip(1000, gqlListWebhooks.fetch))
   useEffect(() => {
-    if (variables.options.limit) queryListPermissions.current(variables)
+    if (variables.options.limit) queryListWebhooks.current(variables)
     // eslint-disable-next-line
   }, [variables])
+  const newWebhook = () => {
+    buildChange(true)
+    setTimeout(() => idcurrentChange(undefined), 200) // animation
+  }
   const list =
-    gqlListPermissions.data && gqlListPermissions.data.count
-      ? gqlListPermissions.data.permissions
+    gqlListWebhooks.data && gqlListWebhooks.data.count
+      ? gqlListWebhooks.data.webhooks
       : variables.phrase ||
-        Boolean(gqlListPermissions.data && !gqlListPermissions.data.permissions)
+        Boolean(gqlListWebhooks.data && !gqlListWebhooks.data.webhooks)
       ? []
-      : FakePermissions
+      : FakeWebhooks
   return element(Page, {
-    title: 'Permissions',
-    subtitle: 'Restrict team member abilities',
-    hidden: !gqlListPermissions.data || !gqlListPermissions.data.count,
+    title: 'Webhooks',
+    subtitle: 'Trigger urls to be called when an event occurs',
+    hidden: !gqlListWebhooks.data || !gqlListWebhooks.data.count,
     corner: {
       icon: 'plus',
-      label: 'New Permission',
-      click: () => {
-        buildChange(true)
-        setTimeout(() => idcurrentChange(undefined), 200) // animation
-      },
+      label: 'New Webhook',
+      click: newWebhook,
     },
     noscroll: element(TemplateSearchBar, {
-      count: gqlListPermissions.data && gqlListPermissions.data.count,
-      current:
-        gqlListPermissions.data && gqlListPermissions.data.permissions.length,
+      count: gqlListWebhooks.data && gqlListWebhooks.data.count,
+      current: gqlListWebhooks.data && gqlListWebhooks.data.webhooks.length,
       change: (phrase, limit, skip) => {
         variablesChange({
           ...variables,
@@ -51,12 +58,12 @@ export const ListPermissions: FC = () => {
       },
     }),
     children: [
-      element(RouterManagerPermission, {
+      element(RouterManagerWebhook, {
         key: 'router',
         id: idcurrent,
         visible: build,
         change: id => {
-          queryListPermissions.current(variables)
+          queryListWebhooks.current(variables)
           if (id) {
             idcurrentChange(id)
           } else {
@@ -69,30 +76,26 @@ export const ListPermissions: FC = () => {
           setTimeout(() => idcurrentChange(undefined), 200) // animation
         },
       }),
-      gqlListPermissions.data &&
-        !gqlListPermissions.data.count &&
+      gqlListWebhooks.data &&
+        !gqlListWebhooks.data.count &&
         element(Empty, {
           key: 'empty',
-          icon: 'user-shield',
-          label: 'Permissions',
-          helper: 'Create a permission manually or by using the Authpack API',
+          icon: 'sitemap',
+          label: 'Webhooks',
+          helper: 'Would you like to create a webhook?',
           children: element(Button, {
             key: 'Regular',
-            icon: 'book',
-            label: 'Install',
-            click: () =>
-              window.open(
-                'https://github.com/jackrobertscott/authpack/blob/master/readme.md'
-              ),
+            icon: 'plus',
+            label: 'New Webhook',
+            click: newWebhook,
           }),
         }),
-      gqlListPermissions.data &&
+      gqlListWebhooks.data &&
         element(Table, {
           key: 'table',
           header: [
-            { key: 'name', label: 'Name' },
-            { key: 'tag', label: 'Tag' },
-            { key: 'description', label: 'Description' },
+            { key: 'event', label: 'Event' },
+            { key: 'url', label: 'Url' },
             { key: 'updated', label: 'Updated' },
           ].map(({ key, label }) => ({
             label,
@@ -119,9 +122,8 @@ export const ListPermissions: FC = () => {
               buildChange(true)
             },
             cells: [
-              { icon: 'users', value: data.name },
-              { icon: 'fingerprint', value: data.tag || '...' },
-              { icon: 'book', value: data.description || '...' },
+              { icon: 'hashtag', value: data.event },
+              { icon: 'wifi', value: data.url },
               {
                 icon: 'clock',
                 value: format(new Date(data.updated), 'dd LLL yyyy @ h:mm a'),
@@ -133,40 +135,36 @@ export const ListPermissions: FC = () => {
   })
 }
 
-const useListPermissions = createUseServer<{
+const useListWebhooks = createUseServer<{
   count: number
-  permissions: Array<{
+  webhooks: Array<{
     id: string
     updated: string
-    name: string
-    tag: string
-    description?: string
+    event: string
+    url: string
   }>
 }>({
   query: `
-    query ListPermissions($phrase: String, $options: WhereOptions) {
-      count: CountPermissions(phrase: $phrase)
-      permissions: ListPermissions(phrase: $phrase, options: $options) {
+    query ListWebhooks($phrase: String, $options: WhereOptions) {
+      count: CountWebhooks(phrase: $phrase)
+      webhooks: ListWebhooks(phrase: $phrase, options: $options) {
         id
         updated
-        name
-        tag
-        description
+        event
+        url
       }
     }
   `,
 })
 
-const FakePermissions: Array<{
+const FakeWebhooks: Array<{
   id: string
   updated: string
-  name: string
-  tag: string
-  description?: string
+  event: string
+  url: string
 }> = Array.from(Array(8).keys()).map(() => ({
   id: faker.random.uuid(),
   updated: faker.date.recent(100).toDateString(),
-  name: faker.random.words(2),
-  tag: faker.internet.userName(),
-  description: faker.random.words(5),
+  event: WEBHOOKEVENTS[Math.floor(Math.random() * WEBHOOKEVENTS.length)],
+  url: faker.internet.url(),
 }))

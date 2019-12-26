@@ -1,4 +1,12 @@
 import { KeyStore } from 'events-and-things'
+import {
+  createElement as element,
+  createContext,
+  useState,
+  useEffect,
+  ReactNode,
+  FC,
+} from 'react'
 
 export type ISettings = {
   open: boolean
@@ -11,16 +19,21 @@ export type ISettings = {
     id: string
     name: string
     theme_preference: string
-    subscribed: boolean
+    stripe_publishable_key: string
   }
   user?: {
     id: string
     email: string
     verified: boolean
+    subscribed: boolean
     username: string
     name?: string
     name_given?: string
     name_family?: string
+  }
+  session?: {
+    id: string
+    token: string
   }
   team?: {
     id: string
@@ -28,16 +41,10 @@ export type ISettings = {
     tag: string
     description?: string
   }
-  session?: {
+  membership?: {
     id: string
-    token: string
+    admin: boolean
   }
-  permissions?: Array<{
-    id: string
-    name: string
-    tag: string
-    description?: string
-  }>
 }
 
 export interface IOptions {
@@ -55,3 +62,14 @@ export const defaults: ISettings = {
 }
 
 export const SettingsStore = new KeyStore<ISettings>(defaults)
+
+export const SettingsContext = createContext(SettingsStore.current)
+
+export const Settings: FC<{ children: ReactNode }> = ({ children }) => {
+  const [settings, settingsChange] = useState(SettingsStore.current)
+  useEffect(() => SettingsStore.listen(settingsChange), [])
+  return element(SettingsContext.Provider, {
+    value: settings,
+    children,
+  })
+}

@@ -1,5 +1,11 @@
 import faker from 'faker'
-import { createElement as element, FC, useState, useEffect, useRef } from 'react'
+import {
+  createElement as element,
+  FC,
+  useState,
+  useEffect,
+  useRef,
+} from 'react'
 import { Page, Table, Empty, Button, drip } from '@authpack/theme'
 import { format } from 'date-fns'
 import { RouterManagerTeam } from './RouterManagerTeam'
@@ -21,6 +27,10 @@ export const ListTeams: FC = () => {
     if (variables.options.limit) queryListTeams.current(variables)
     // eslint-disable-next-line
   }, [variables])
+  const newTeam = () => {
+    buildChange(true)
+    setTimeout(() => idcurrentChange(undefined), 200) // animation
+  }
   const list =
     gqlListTeams.data && gqlListTeams.data.count
       ? gqlListTeams.data.teams
@@ -35,10 +45,7 @@ export const ListTeams: FC = () => {
     corner: {
       icon: 'plus',
       label: 'New Team',
-      click: () => {
-        buildChange(true)
-        setTimeout(() => idcurrentChange(undefined), 200) // animation
-      },
+      click: newTeam,
     },
     noscroll: element(TemplateSearchBar, {
       count: gqlListTeams.data && gqlListTeams.data.count,
@@ -76,16 +83,12 @@ export const ListTeams: FC = () => {
           key: 'empty',
           icon: 'users',
           label: 'Teams',
-          helper:
-            'Create a team manually, with our gadgets, or by using our API',
+          helper: 'Would you like to create a team?',
           children: element(Button, {
             key: 'Regular',
-            icon: 'book',
-            label: 'Install',
-            click: () =>
-              window.open(
-                'https://github.com/jackrobertscott/authpack/blob/master/readme.md'
-              ),
+            icon: 'plus',
+            label: 'New Team',
+            click: newTeam,
           }),
         }),
       gqlListTeams.data &&

@@ -1,4 +1,4 @@
-# State Quick Start
+# Unstable 🚧 State Quick Start
 
 > [Authpack](https://authpack.io) 🔒 A complete user and team management system
 
@@ -13,7 +13,6 @@ This document contains the state schema of the Authpack [gadgets](https://github
   - `id: string` id of cluster.
   - `name: string` name of cluster.
   - `theme_preference: string` preferred theme of gadgets.
-  - `subscribed: boolean` is the current cluster subscribed with payment.
 - `user?: object` populated once a user is authenticated.
   - `id: string` id of user.
   - `email: string` email of user.
@@ -22,16 +21,13 @@ This document contains the state schema of the Authpack [gadgets](https://github
   - `name?: string` full name of user.
   - `name_given?: string` first name of user.
   - `name_family?: string` last name of user.
+  - `subscribed: boolean` is the user subscribed.
 - `team?: object` populated once a user is authenticated and is a member of a team.
   - `id: string` id of team.
   - `name: string` human readable name of team.
   - `tag: string` unique id tag of team.
   - `description?: string` description of team.
-- `permissions?: Array<object>` the permissions assigned to the user for the given team.
-  - `id: string` id of permissions.
-  - `name: string` human readable name of permission.
-  - `tag: string` unique id tag of team.
-  - `description?: string` description of permission.
+  - `subscribed: boolean` is the team subscribed.
 - `session?: object` the current session of the authenticated user.
   - `id: string` id of the session.
   - `token: string` token used to identify session and create bearer token.

@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as element, FC, useEffect, useState } from 'react'
+import { createElement as element, FC, useEffect } from 'react'
 import {
   useSchema,
   Layout,
@@ -9,11 +9,11 @@ import {
   useMounted,
   Page,
   Focus,
+  useOauthCode,
 } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { SettingsStore } from '../utils/settings'
 import { createUseServer } from '../hooks/useServer'
-import { useOauthCode } from '../hooks/useOauthCode'
 import { presetColors } from '../utils/presets'
 
 export const LoginUser: FC = () => {
@@ -23,7 +23,6 @@ export const LoginUser: FC = () => {
   const gqlLoginUser = useLoginUser()
   const gqlListProviders = useListProviders()
   const gqlLoginUserOauth = useLoginUserOauth()
-  const [current, currentChange] = useState<string | undefined>()
   const schema = useSchema({
     schema: SchemaLoginUser,
     submit: value => {
@@ -39,10 +38,10 @@ export const LoginUser: FC = () => {
     // eslint-disable-next-line
   }, [])
   useEffect(() => {
-    if (current && oauthCode.code) {
+    if (oauthCode.current && oauthCode.code) {
       gqlLoginUserOauth
         .fetch({
-          provider_id: current,
+          provider_id: oauthCode.current,
           code: oauthCode.code,
         })
         .then(({ session }) => {
@@ -52,16 +51,15 @@ export const LoginUser: FC = () => {
         })
         .finally(() => {
           if (!mounted.current) return
-          currentChange(undefined)
-          oauthCode.clearCode()
+          oauthCode.clear()
         })
     }
     // eslint-disable-next-line
-  }, [oauthCode.code])
+  }, [oauthCode.current, oauthCode.code])
   return element(Page, {
     title: 'Login',
     subtitle: settings.cluster && settings.cluster.name,
-    children: current
+    children: oauthCode.current
       ? element(Focus, {
           icon: 'sync-alt',
           label: 'Pending',
@@ -69,7 +67,7 @@ export const LoginUser: FC = () => {
           children: element(Button, {
             icon: 'times-circle',
             label: 'Cancel',
-            click: () => currentChange(undefined),
+            click: () => oauthCode.clear(),
           }),
         })
       : !gqlListProviders.data
@@ -89,10 +87,7 @@ export const LoginUser: FC = () => {
                   label: provider.name || provider.preset,
                   prefix: 'fab',
                   style: presetColors(provider.preset),
-                  click: () => {
-                    currentChange(provider.id)
-                    oauthCode.openUrl(provider.url)
-                  },
+                  click: () => oauthCode.open(provider.id, provider.url),
                 })
               }),
             }),

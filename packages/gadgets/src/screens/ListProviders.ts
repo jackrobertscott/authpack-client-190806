@@ -1,14 +1,7 @@
-import {
-  createElement as element,
-  FC,
-  useEffect,
-  Fragment,
-  useState,
-} from 'react'
-import { Layout, Poster, Snippet, Page } from '@authpack/theme'
+import { createElement as element, FC, useEffect, Fragment } from 'react'
+import { Layout, Poster, Snippet, Page, useOauthCode } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
-import { useOauthCode } from '../hooks/useOauthCode'
 
 export const ListProviders: FC<{
   change?: (id?: string) => void
@@ -19,24 +12,25 @@ export const ListProviders: FC<{
   const gqlListCredentials = useListCredentials()
   const gqlUpsertCredential = useUpsertCredential()
   const gqlRemoveCredential = useRemoveCredential()
-  const [current, currentChange] = useState<string | undefined>()
   useEffect(() => {
     gqlListProviders.fetch()
     gqlListCredentials.fetch()
     // eslint-disable-next-line
   }, [])
   useEffect(() => {
-    if (current && oauthCode.code) {
+    if (oauthCode.current && oauthCode.code) {
       gqlUpsertCredential
-        .fetch({ input: { provider_id: current, code: oauthCode.code } })
-        .then(() => gqlListCredentials.fetch())
-        .finally(() => {
-          currentChange(undefined)
-          oauthCode.clearCode()
+        .fetch({
+          input: {
+            provider_id: oauthCode.current,
+            code: oauthCode.code,
+          },
         })
+        .then(() => gqlListCredentials.fetch())
+        .finally(() => oauthCode.clear())
     }
     // eslint-disable-next-line
-  }, [oauthCode.code])
+  }, [oauthCode.current, oauthCode.code])
   return element(Page, {
     title: 'Apps',
     subtitle: settings.cluster && settings.cluster.name,
@@ -70,10 +64,8 @@ export const ListProviders: FC<{
                             icon: 'plus',
                             label: 'Connect',
                             helper: `Add ${provider.name} OAuth`,
-                            click: () => {
-                              currentChange(provider.id)
-                              oauthCode.openUrl(provider.url)
-                            },
+                            click: () =>
+                              oauthCode.open(provider.id, provider.url),
                           },
                         ]
                       : [
@@ -81,10 +73,8 @@ export const ListProviders: FC<{
                             icon: 'redo-alt',
                             label: 'Refresh',
                             helper: `Update your ${provider.name} OAuth`,
-                            click: () => {
-                              currentChange(provider.id)
-                              oauthCode.openUrl(provider.url)
-                            },
+                            click: () =>
+                              oauthCode.open(provider.id, provider.url),
                           },
                           {
                             icon: 'trash-alt',

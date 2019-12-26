@@ -1,6 +1,6 @@
 import { createElement as element, FC, useEffect } from 'react'
-import { Root } from '@authpack/theme'
-import { Loading } from './Loading'
+import { Root } from './Root'
+import { Focus } from './Focus'
 
 export const Oauth: FC<{
   code: string
@@ -11,8 +11,10 @@ export const Oauth: FC<{
     setTimeout(() => localStorage.removeItem('authpack.code'), 60 * 1000)
   }, [code])
   return element(Root, {
-    children: element(Loading, {
-      key: 'Window will close automatically',
+    children: element(Focus, {
+      icon: 'sync-alt',
+      label: 'Loading',
+      helper: 'Window will close automatically',
     }),
   })
 }

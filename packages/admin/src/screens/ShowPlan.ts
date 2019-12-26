@@ -3,21 +3,19 @@ import { Layout, Snippet, Page } from '@authpack/theme'
 import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
 
-export const ShowPermission: FC<{
+export const ShowPlan: FC<{
   id: string
 }> = ({ id }) => {
-  const gqlGetPermission = useGetPermission()
+  const gqlGetPlan = useGetPlan()
   useEffect(() => {
-    gqlGetPermission.fetch({ id })
+    gqlGetPlan.fetch({ id })
     // eslint-disable-next-line
   }, [id])
-  const permission = gqlGetPermission.data
-    ? gqlGetPermission.data.permission
-    : undefined
+  const plan = gqlGetPlan.data ? gqlGetPlan.data.plan : undefined
   return element(Page, {
     title: 'Inspect',
-    subtitle: 'Permission',
-    children: !permission
+    subtitle: 'Plan',
+    children: !plan
       ? null
       : element(Layout, {
           column: true,
@@ -26,49 +24,49 @@ export const ShowPermission: FC<{
               key: 'id',
               icon: 'fingerprint',
               label: 'Id',
-              value: permission.id,
+              value: plan.id,
             }),
             element(Snippet, {
               key: 'name',
               icon: 'users',
               label: 'Name',
-              value: permission.name,
+              value: plan.name,
             }),
             element(Snippet, {
               key: 'tag',
               icon: 'tags',
               label: 'Tag',
-              value: permission.tag,
+              value: plan.tag,
             }),
             element(Snippet, {
               key: 'description',
               icon: 'book',
               label: 'Description',
-              value: permission.description || '...',
+              value: plan.description || '...',
             }),
             element(Snippet, {
               key: 'created',
               icon: 'clock',
               label: 'Created',
               value:
-                permission.created &&
-                format(new Date(permission.created), 'dd LLL yyyy @ h:mm a'),
+                plan.created &&
+                format(new Date(plan.created), 'dd LLL yyyy @ h:mm a'),
             }),
             element(Snippet, {
               key: 'updated',
               icon: 'clock',
               label: 'Updated',
               value:
-                permission.updated &&
-                format(new Date(permission.updated), 'dd LLL yyyy @ h:mm a'),
+                plan.updated &&
+                format(new Date(plan.updated), 'dd LLL yyyy @ h:mm a'),
             }),
           ],
         }),
   })
 }
 
-const useGetPermission = createUseServer<{
-  permission: {
+const useGetPlan = createUseServer<{
+  plan: {
     id: string
     created: string
     updated: string
@@ -78,8 +76,8 @@ const useGetPermission = createUseServer<{
   }
 }>({
   query: `
-    query GetPermission($id: String!) {
-      permission: GetPermission(id: $id) {
+    query GetPlan($id: String!) {
+      plan: GetPlan(id: $id) {
         id
         created
         updated

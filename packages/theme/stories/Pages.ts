@@ -1,6 +1,6 @@
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import faker from 'faker'
-import { createElement as create, FC, useState, ReactNode } from 'react'
+import { createElement as element, FC, useState, ReactNode } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
 import {
@@ -16,9 +16,9 @@ import {
 console.clear()
 
 const stories = storiesOf('Pages', module).addDecorator(data => {
-  return create(Root, {
+  return element(Root, {
     theme: 'night_sky',
-    children: create('div', {
+    children: element('div', {
       children: data(),
       className: css({
         display: 'flex',
@@ -29,12 +29,12 @@ const stories = storiesOf('Pages', module).addDecorator(data => {
 })
 
 stories.add('Table', () => {
-  return create(Layout, {
+  return element(Layout, {
     grow: true,
     children: [
-      create(SimpleIconBar, {
-        children: create(SimpleSidebar, {
-          children: create(SimpleScreen),
+      element(SimpleIconBar, {
+        children: element(SimpleSidebar, {
+          children: element(SimpleScreen),
         }),
       }),
     ],
@@ -42,7 +42,7 @@ stories.add('Table', () => {
 })
 
 const SimpleIconBar: FC<{ children: ReactNode }> = ({ children }) => {
-  return create(IconBar, {
+  return element(IconBar, {
     children,
     icons: [
       {
@@ -73,7 +73,7 @@ const SimpleIconBar: FC<{ children: ReactNode }> = ({ children }) => {
 }
 
 const SimpleSidebar: FC<{ children: ReactNode }> = ({ children }) => {
-  return create(SideBar, {
+  return element(SideBar, {
     title: 'Home',
     footer: 'Authpack',
     children,
@@ -96,11 +96,11 @@ const SimpleSidebar: FC<{ children: ReactNode }> = ({ children }) => {
 }
 
 const SimpleScreen: FC = () => {
-  return create(Page, {
+  return element(Page, {
     title: 'Users',
     subtitle: 'All accounts registered on your app',
-    noscroll: create(SimpleSearchBar),
-    children: create(SimpleTable),
+    noscroll: element(SimpleSearchBar),
+    children: element(SimpleTable),
     corner: {
       icon: 'plus',
       label: 'New User',
@@ -111,7 +111,7 @@ const SimpleScreen: FC = () => {
 
 const SimpleSearchBar: FC = () => {
   const [value, valueChange] = useState<string>('')
-  return create(SearchBar, {
+  return element(SearchBar, {
     value,
     change: valueChange,
     options: [
@@ -135,7 +135,7 @@ const SimpleSearchBar: FC = () => {
 }
 
 const SimpleTable: FC = () => {
-  return create(Table, {
+  return element(Table, {
     header: [
       {
         icon: 'bars',

@@ -1,4 +1,4 @@
-# JavaScript SDK Quickstart
+# Unstable 🚧 JavaScript SDK Quickstart
 
 > [Authpack](https://authpack.io) 🔒 A complete user and team management system
 
@@ -11,8 +11,6 @@ Install using npm or yarn.
 ```shell
 npm i --save @authpack/sdk
 ```
-
-The `@authpack/react` and `@authpack/vue` libraries use this sdk library under the hood.
 
 ## 2. Setup
 

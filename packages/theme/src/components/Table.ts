@@ -25,6 +25,7 @@ export const Table: FC<{
       all: 'unset',
       display: 'table',
       width: '100%',
+      whiteSpace: 'nowrap',
       flexGrow: 1,
     }),
     children: [
@@ -133,9 +134,11 @@ const Row: FC<{
       display: 'table-row',
       color: theme.table.value,
       fontWeight: theme.global.thin,
-      background: theme.table.background,
-      transition: '200ms',
-      '&:hover': click && {
+      '& > td': {
+        transition: '200ms',
+        background: theme.table.background,
+      },
+      '&:hover > td': click && {
         cursor: 'pointer',
         color: theme.table.valueHover,
         background: theme.table.backgroundHover,
@@ -170,7 +173,7 @@ const Cell: FC<{
         alignItems: 'flex-start',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
+        minWidth: 140,
       }),
       children: [
         icon &&

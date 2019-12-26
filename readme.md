@@ -19,27 +19,12 @@
 
 **Note:** we have open sourced our client side code in this repository. Feel free to explore our code and learn how we built Authpack's dashboard and gadgets. The Authpack API and backend logic will *remain private* and is not included in this repository.
 
-## Quick Starts
-
-- [JavaScript](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/sdk.md)
-- [React](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/react.md)
-- [Vue](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/vue.md)
-- [API](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/api.md)
-- [State](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/state.md)
-- [Security](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/security.md)
-
 ## Example
-
-This is a simple example of how Authpack's [SDK](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/sdk.md) works.
-
-```ts
-import * as Authpack from '@authpack/sdk'
-```
 
 Create the gadgets used to authenticate users.
 
 ```ts
-const gadgets = new Authpack.Gadgets({
+const authpack = new window.Authpack({
   key: 'wga-client-key-...',
 })
 ```
@@ -47,7 +32,7 @@ const gadgets = new Authpack.Gadgets({
 Add an event listener which will observe the current user state.
 
 ```ts
-gadgets.listen(({ ready, bearer, user, team }) => {
+authpack.gadgets.listen(({ ready, bearer, user, team }) => {
   if (ready && user) {
     console.log(user)
   }
@@ -57,7 +42,7 @@ gadgets.listen(({ ready, bearer, user, team }) => {
 Show the gadgets to the current user to log them in.
 
 ```ts
-gadgets.show()
+authpack.gadgets.show()
 ```
 
 Authpack was designed to be simple, fast, and beautiful.

@@ -6,20 +6,18 @@ export type ToasterArray = Array<{
   icon?: string
   prefix?: string
   label: string
-  helper: string
+  helper?: string
 }>
 
 export interface IToasterContext {
   current: ToasterArray
-  add: (
-    toast: {
-      icon?: string
-      prefix?: string
-      label: string
-      helper: string
-    },
+  add: (toast: {
+    icon?: string
+    prefix?: string
+    label: string
+    helper?: string
     timer?: number
-  ) => void
+  }) => void
   remove: (id: string) => void
 }
 

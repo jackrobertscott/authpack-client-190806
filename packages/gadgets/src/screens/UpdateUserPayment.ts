@@ -1,6 +1,11 @@
 import * as yup from 'yup'
-import { createElement as element, FC, useState, useEffect, useRef } from 'react'
-import { useAuthpack } from '@authpack/react'
+import {
+  createElement as element,
+  FC,
+  useState,
+  useEffect,
+  useRef,
+} from 'react'
 import {
   useSchema,
   Layout,
@@ -11,25 +16,23 @@ import {
   InputStripe,
   useToaster,
   Page,
-  Poster,
   useMounted,
 } from '@authpack/theme'
-import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
-import { UniversalStore } from '../utils/universal'
-import { stripe } from '../utils/stripe'
+import { useSettings } from '../hooks/useSettings'
+import { createStripe } from '../utils/stripe'
 
-export const UpdatePayment: FC<{
+export const UpdateUserPayment: FC<{
   change?: (id?: string) => void
   cancel: () => void
 }> = ({ change, cancel }) => {
   const toaster = useToaster()
-  const universal = useUniversal()
-  const authpack = useAuthpack()
   const mounted = useMounted()
+  const settings = useSettings()
   const stripeCard = useRef<any>()
+  const [stripe, stripeChange] = useState()
   const [loading, loadingChange] = useState<boolean>(false)
-  const gqlUpdatePayment = useUpdatePayment()
+  const gqlUpsertPayment = useUpsertUserPayment()
   const payment = useStripe(stripe)
   const schema = useSchema({
     schema: SchemaUpdatePayment,
@@ -38,9 +41,8 @@ export const UpdatePayment: FC<{
       payment
         .tokenize(stripeCard.current)
         .then(token => {
-          return gqlUpdatePayment
+          return gqlUpsertPayment
             .fetch({
-              id: universal.cluster_id,
               input: {
                 token: token.id,
                 email: value.email,
@@ -48,14 +50,13 @@ export const UpdatePayment: FC<{
                 coupon: value.coupon,
               },
             })
-            .then(({ cluster }) => {
-              UniversalStore.update({ subscribed: cluster.subscribed })
+            .then(({ user }) => {
+              if (change) change(user.id)
               toaster.add({
                 icon: 'credit-card',
                 label: 'Success',
                 helper: 'Payment method was successfully accepted',
               })
-              if (change) change(cluster.id)
             })
         })
         .catch(error => {
@@ -69,17 +70,17 @@ export const UpdatePayment: FC<{
     },
   })
   useEffect(() => {
-    if (authpack.user)
-      schema.set({
-        name: authpack.user.name,
-        email: authpack.user.email,
-      })
+    if (settings.cluster && settings.cluster.stripe_publishable_key)
+      stripeChange(createStripe(settings.cluster.stripe_publishable_key))
+    if (settings.user)
+      schema.set({ name: settings.user.name, email: settings.user.email })
     // eslint-disable-next-line
   }, [])
+  const subscribed = settings.user && settings.user.subscribed
   return element(Page, {
     title: 'Payment',
     subtitle: 'Cluster',
-    corner: !universal.subscribed
+    corner: !subscribed
       ? undefined
       : {
           icon: 'ban',
@@ -87,13 +88,6 @@ export const UpdatePayment: FC<{
           click: cancel,
         },
     children: [
-      !universal.subscribed &&
-        element(Poster, {
-          key: 'payment',
-          icon: 'bolt',
-          label: 'Monthly',
-          helper: '$9 usd per 1,000 users',
-        }),
       element(Layout, {
         key: 'layout',
         column: true,
@@ -127,7 +121,7 @@ export const UpdatePayment: FC<{
                   placeholder: 'Fred Blogs',
                 }),
               }),
-              !universal.subscribed &&
+              !subscribed &&
                 element(Control, {
                   key: 'coupon',
                   label: 'Code',
@@ -154,7 +148,7 @@ export const UpdatePayment: FC<{
           }),
           element(Button, {
             key: 'submit',
-            label: universal.subscribed ? 'Update Payment' : 'Submit',
+            label: subscribed ? 'Update' : 'Submit',
             disabled: !schema.valid,
             click: schema.submit,
             loading,
@@ -174,17 +168,15 @@ const SchemaUpdatePayment = yup.object().shape({
     .required('Please provide a billing email'),
 })
 
-const useUpdatePayment = createUseServer<{
-  cluster: {
+const useUpsertUserPayment = createUseServer<{
+  user: {
     id: string
-    subscribed: boolean
   }
 }>({
   query: `
-    mutation UpdatePaymentClient($id: String!, $input: UpdatePaymentInput!) {
-      cluster: UpdatePaymentClient(id: $id, input: $input) {
+    mutation UpsertUserPaymentClient($input: UpdateUserPaymentInput!) {
+      cluster: UpsertUserPaymentClient(input: $input) {
         id
-        subscribed
       }
     }
   `,

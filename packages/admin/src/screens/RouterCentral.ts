@@ -4,7 +4,7 @@ import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterManagerCluster } from './RouterManagerCluster'
 import { Explorer } from './Explorer'
 import { usePreferences } from '../utils/preferences'
-import { useGadgets } from '@authpack/react'
+import { useGadgets } from '../utils/authpack'
 
 export const RouterCentral: FC = () => {
   const gadgets = useGadgets()
@@ -42,11 +42,13 @@ export const RouterCentral: FC = () => {
         label: 'Developers',
         focused: !!router.current && router.current.path === '/developers',
         click: () => router.change('/developers'),
+        hidesmall: true,
       },
       {
         prefix: 'far',
         icon: 'question-circle',
         label: 'Help & Feedback',
+        hidesmall: true,
         options: [
           {
             icon: 'book',

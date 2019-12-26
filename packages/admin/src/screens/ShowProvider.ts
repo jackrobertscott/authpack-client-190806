@@ -43,7 +43,7 @@ export const ShowProvider: FC<{
             element(Snippet, {
               key: 'redirect_uri',
               icon: 'compass',
-              label: 'Advanced - Redirect URI',
+              label: 'Advanced Redirect Uri',
               value: provider.redirect_uri || '...',
             }),
             element(Snippet, {

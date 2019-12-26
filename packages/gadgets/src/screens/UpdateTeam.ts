@@ -7,6 +7,8 @@ import {
   InputString,
   testAlphanumeric,
   Page,
+  Button,
+  useToaster,
 } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
@@ -14,15 +16,17 @@ import { createUseServer } from '../hooks/useServer'
 export const UpdateTeam: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
+  const toaster = useToaster()
   const settings = useSettings()
   const gqlGetTeam = useGetTeam()
   const gqlUpdateTeam = useUpdateTeam()
   const schema = useSchema({
     schema: SchemaUpdateTeam,
-    poller: input => {
-      gqlUpdateTeam
-        .fetch({ input })
-        .then(({ team }) => change && change(team.id))
+    submit: input => {
+      gqlUpdateTeam.fetch({ input }).then(({ team }) => {
+        if (change) change(team.id)
+        toaster.add({ icon: 'check-circle', label: 'Success' })
+      })
     },
   })
   useEffect(() => {
@@ -47,12 +51,12 @@ export const UpdateTeam: FC<{
                 element(Control, {
                   key: 'name',
                   label: 'Name',
-                  helper: "Your team's name",
+                  helper: 'Human friendly name',
                   error: schema.error('name'),
                   children: element(InputString, {
                     value: schema.value('name'),
                     change: schema.change('name'),
-                    placeholder: 'My Team',
+                    placeholder: 'Super Squad',
                   }),
                 }),
                 element(Control, {
@@ -63,7 +67,7 @@ export const UpdateTeam: FC<{
                   children: element(InputString, {
                     value: schema.value('tag'),
                     change: schema.change('tag'),
-                    placeholder: 'my_team_123',
+                    placeholder: 'super_squad',
                   }),
                 }),
               ],
@@ -78,6 +82,13 @@ export const UpdateTeam: FC<{
                 change: schema.change('description'),
                 placeholder: 'We do...',
               }),
+            }),
+            element(Button, {
+              key: 'submit',
+              label: 'Save',
+              loading: gqlGetTeam.loading || gqlUpdateTeam.loading,
+              disabled: !schema.valid,
+              click: schema.submit,
             }),
           ],
     }),
