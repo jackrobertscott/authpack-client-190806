@@ -22,19 +22,21 @@ export const useSetup = () => {
     SettingsStore.update({
       ready: false,
       user: undefined,
-      team: undefined,
       session: undefined,
+      team: undefined,
+      membership: undefined,
     })
     if (settings.bearer && settings.client) {
       gqlGetSession
         .fetch()
-        .then(({ session: { user, team, ...session } }) => {
+        .then(({ session: { user, team, membership, ...session } }) => {
           SettingsStore.update({
             ready: true,
             bearer: `Bearer ${session.token}`,
             user,
-            team,
             session,
+            team,
+            membership,
           })
         })
         .catch(() => {
@@ -98,7 +100,7 @@ const useGetCluster = createUseServer<{
     id: string
     name: string
     theme_preference: string
-    subscribed: boolean
+    stripe_publishable_key: string
   }
 }>({
   query: `
@@ -107,7 +109,7 @@ const useGetCluster = createUseServer<{
         id
         name
         theme_preference
-        subscribed
+        stripe_publishable_key
       }
     }
   `,
@@ -121,6 +123,7 @@ const useGetSession = createUseServer<{
       id: string
       email: string
       verified: boolean
+      subscribed: boolean
       username: string
       name?: string
       name_given?: string
@@ -131,6 +134,11 @@ const useGetSession = createUseServer<{
       name: string
       tag: string
       description?: string
+      subscribed: boolean
+    }
+    membership?: {
+      id: string
+      admin: boolean
     }
   }
 }>({
@@ -144,6 +152,7 @@ const useGetSession = createUseServer<{
           email
           verified
           username
+          subscribed
           name
           name_given
           name_family
@@ -153,6 +162,11 @@ const useGetSession = createUseServer<{
           name
           tag
           description
+          subscribed
+        }
+        membership {
+          id
+          admin
         }
       }
     }

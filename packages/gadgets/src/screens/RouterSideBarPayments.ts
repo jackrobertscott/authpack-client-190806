@@ -1,8 +1,8 @@
 import { createElement as element, FC } from 'react'
 import { useLocalRouter, SideBar } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
-import { UpdateUserCustomer } from './UpdateUserCustomer'
-import { RemoveUserSubscription } from './RemoveUserSubscription'
+import { UpdateUserPayment } from './UpdateUserPayment'
+import { RemoveUserPayment } from './RemoveUserPayment'
 
 export const RouterSideBarPayments: FC = () => {
   const settings = useSettings()
@@ -10,10 +10,10 @@ export const RouterSideBarPayments: FC = () => {
     name: 'payments',
     nomatch: '/payments/update',
     options: [
-      { key: '/payments/update', children: element(UpdateUserCustomer) },
+      { key: '/payments/update', children: element(UpdateUserPayment) },
       {
         key: '/payments/danger',
-        children: element(RemoveUserSubscription),
+        children: element(RemoveUserPayment),
         nosave: true,
       },
     ],

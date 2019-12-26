@@ -15,9 +15,7 @@ export const Gadgets: FC = () => {
   const settings = useSettings()
   const close = useRef(() => SettingsStore.update({ open: false }))
   if (!settings.cluster) return null
-  const allowed = settings.cluster.subscribed
-    ? true
-    : settings.domain
+  const allowed = settings.domain
     ? settings.domain.startsWith('http://localhost') ||
       settings.domain.startsWith(config.admin)
     : false

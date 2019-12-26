@@ -31,7 +31,6 @@ export const useSetup = () => {
             cluster_id: cluster.id,
             cluster_name: cluster.name,
             cluster_key_client: cluster.key_client,
-            subscribed: cluster.subscribed,
           })
         })
         .catch(() => {
@@ -56,7 +55,6 @@ const useGetCluster = createUseServer<{
     key_client: string
     name: string
     theme_preference: string
-    subscribed: boolean
   }
 }>({
   query: `
@@ -66,7 +64,6 @@ const useGetCluster = createUseServer<{
         key_client
         name
         theme_preference
-        subscribed
       }
     }
   `,

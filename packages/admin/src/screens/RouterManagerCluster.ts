@@ -1,8 +1,6 @@
 import { createElement as element, FC } from 'react'
 import { useLocalRouter, Modal, IconBar } from '@authpack/theme'
 import { UpdateCluster } from './UpdateCluster'
-import { UpdatePayment } from './UpdatePayment'
-import { RemovePayment } from './RemovePayment'
 import { ShowCluster } from './ShowCluster'
 import { SwitchCluster } from './SwitchCluster'
 import { ShowClusterKeys } from './ShowClusterKeys'
@@ -45,19 +43,6 @@ export const RouterManagerCluster: FC<{
         key: '/stripe',
         children: element(UpdateClusterStripe),
       },
-      {
-        key: '/payment',
-        children: element(UpdatePayment, {
-          change: () => router.change('/inspect'),
-          cancel: () => router.change('/cancel'),
-        }),
-      },
-      {
-        key: '/cancel',
-        children: element(RemovePayment, {
-          change: () => router.change('/inspect'),
-        }),
-      },
     ],
   })
   return element(Modal, {
@@ -95,12 +80,6 @@ export const RouterManagerCluster: FC<{
           label: 'Switch',
           focused: !!router.current && router.current.key === '/switch',
           click: () => router.change('/switch'),
-        },
-        false && {
-          icon: 'wallet',
-          label: 'Payment',
-          focused: !!router.current && router.current.key === '/payment',
-          click: () => router.change('/payment'),
         },
         {
           icon: 'times-circle',

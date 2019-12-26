@@ -44,12 +44,6 @@ export const ShowCluster: FC<{ keys: () => void }> = ({ keys }) => {
               value: cluster.theme_preference || 'default',
             }),
             element(Snippet, {
-              key: 'subscribed',
-              icon: 'wallet',
-              label: 'Subscribed',
-              value: String(cluster.subscribed),
-            }),
-            element(Snippet, {
               key: 'created',
               icon: 'clock',
               label: 'Created',
@@ -77,7 +71,6 @@ const useGetCluster = createUseServer<{
     updated: string
     name: string
     theme_preference: string
-    subscribed: boolean
   }
 }>({
   query: `
@@ -88,7 +81,6 @@ const useGetCluster = createUseServer<{
         updated
         name
         theme_preference
-        subscribed
       }
     }
   `,

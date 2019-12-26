@@ -13,12 +13,10 @@ export interface IUniversalStore {
   cluster_id?: string
   cluster_key_client?: string
   cluster_name?: string
-  subscribed: boolean
 }
 
 const defaults: IUniversalStore = {
   ready: false,
-  subscribed: false,
 }
 
 export const UniversalStore = new KeyStore<IUniversalStore>(defaults)

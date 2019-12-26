@@ -8,6 +8,7 @@ import {
   InputSelect,
   drip,
   Page,
+  InputBoolean,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
@@ -94,6 +95,16 @@ export const CreateMembership: FC<{
                   })),
             }),
           }),
+        element(Control, {
+          key: 'admin',
+          label: 'Admin',
+          helper: 'User will be have full control of team and members',
+          error: schema.error('admin'),
+          children: element(InputBoolean, {
+            value: schema.value('admin'),
+            change: schema.change('admin'),
+          }),
+        }),
         element(Button, {
           key: 'submit',
           label: 'Create',
@@ -109,6 +120,7 @@ export const CreateMembership: FC<{
 const SchemaCreateMembership = yup.object().shape({
   user_id: yup.string().required('Please provide a user'),
   team_id: yup.string().required('Please provide a team'),
+  admin: yup.boolean(),
 })
 
 const useCreateMembership = createUseServer<{

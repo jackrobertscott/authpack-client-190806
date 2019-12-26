@@ -4,11 +4,11 @@ import {
   useSchema,
   Control,
   Layout,
-  InputSelectMany,
   Snippet,
   Page,
   Button,
   useToaster,
+  InputBoolean,
 } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
@@ -22,7 +22,6 @@ export const UpdateMembership: FC<{
   const settings = useSettings()
   const gqlGetMembership = useGetMembership()
   const gqlUpdateMembership = useUpdateMembership()
-  const gqlListRoles = useListRoles()
   const schema = useSchema({
     schema: SchemaUpdateMembership,
     submit: input => {
@@ -33,7 +32,6 @@ export const UpdateMembership: FC<{
     },
   })
   useEffect(() => {
-    gqlListRoles.fetch()
     gqlGetMembership
       .fetch({ id })
       .then(({ membership }) => schema.set(membership))
@@ -55,55 +53,45 @@ export const UpdateMembership: FC<{
         column: true,
         padding: true,
         divide: true,
-        children: !gqlListRoles.data
-          ? null
-          : [
-              !!gqlListRoles.data.roles.length &&
-                element(Control, {
-                  key: 'role_id',
-                  label: 'Role',
-                  helper: 'Determine what the member can access',
-                  error: schema.error('role_id'),
-                  children: element(InputSelectMany, {
-                    value: schema.value('role_id'),
-                    change: schema.change('role_id'),
-                    options: gqlListRoles.data.roles.map(role => {
-                      return {
-                        value: role.id,
-                        icon: 'user-sheild',
-                        label: role.name,
-                        helper: role.description,
-                      }
-                    }),
-                  }),
-                }),
-              element(Button, {
-                key: 'submit',
-                label: 'Save',
-                loading:
-                  gqlGetMembership.loading || gqlUpdateMembership.loading,
-                disabled: !schema.valid,
-                click: schema.submit,
+        children: [
+          settings.membership &&
+            settings.membership.admin &&
+            element(Control, {
+              key: 'admin',
+              label: 'Admin',
+              helper: 'User will be have full control of team and members',
+              error: schema.error('admin'),
+              children: element(InputBoolean, {
+                value: schema.value('admin'),
+                change: schema.change('admin'),
               }),
-            ],
+            }),
+          element(Button, {
+            key: 'submit',
+            label: 'Save',
+            loading: gqlGetMembership.loading || gqlUpdateMembership.loading,
+            disabled: !schema.valid,
+            click: schema.submit,
+          }),
+        ],
       }),
     ],
   })
 }
 
 const SchemaUpdateMembership = yup.object().shape({
-  role_id: yup.string(),
+  admin: yup.boolean(),
 })
 
 const useGetMembership = createUseServer<{
   membership: {
-    role_id: string
+    admin: boolean
   }
 }>({
   query: `
     query GetMembershipClient($id: String!) {
       membership: GetMembershipClient(id: $id) {
-        role_id
+        admin
       }
     }
   `,
@@ -118,24 +106,6 @@ const useUpdateMembership = createUseServer<{
     mutation UpdateMembershipClient($id: String!, $input: UpdateMembershipInput!) {
       membership: UpdateMembershipClient(id: $id, input: $input) {
         id
-      }
-    }
-  `,
-})
-
-const useListRoles = createUseServer<{
-  roles: Array<{
-    id: string
-    name: string
-    description: string
-  }>
-}>({
-  query: `
-    query ListRolesClient {
-      roles: ListRolesClient {
-        id
-        name
-        description
       }
     }
   `,

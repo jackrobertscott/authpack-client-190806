@@ -8,6 +8,7 @@ import {
   InputString,
   Page,
   Snippet,
+  InputBoolean,
 } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
@@ -54,6 +55,18 @@ export const CreateMembership: FC<{
               placeholder: 'example@email.com',
             }),
           }),
+          settings.membership &&
+            settings.membership.admin &&
+            element(Control, {
+              key: 'admin',
+              label: 'Admin',
+              helper: 'User will be have full control of team and members',
+              error: schema.error('admin'),
+              children: element(InputBoolean, {
+                value: schema.value('admin'),
+                change: schema.change('admin'),
+              }),
+            }),
           element(Button, {
             key: 'submit',
             label: 'Add',
@@ -69,6 +82,7 @@ export const CreateMembership: FC<{
 
 const SchemaCreateMembership = yup.object().shape({
   email: yup.string().email('Please use a valid email'),
+  admin: yup.boolean(),
 })
 
 const useCreateMembership = createUseServer<{

@@ -19,16 +19,21 @@ export type ISettings = {
     id: string
     name: string
     theme_preference: string
-    subscribed: boolean
+    stripe_publishable_key: string
   }
   user?: {
     id: string
     email: string
     verified: boolean
+    subscribed: boolean
     username: string
     name?: string
     name_given?: string
     name_family?: string
+  }
+  session?: {
+    id: string
+    token: string
   }
   team?: {
     id: string
@@ -36,9 +41,9 @@ export type ISettings = {
     tag: string
     description?: string
   }
-  session?: {
+  membership?: {
     id: string
-    token: string
+    admin: boolean
   }
 }
 

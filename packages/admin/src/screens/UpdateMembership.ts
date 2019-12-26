@@ -1,6 +1,14 @@
 import * as yup from 'yup'
 import { createElement as element, FC, useEffect } from 'react'
-import { useSchema, Layout, Page, Button, useToaster } from '@authpack/theme'
+import {
+  useSchema,
+  Layout,
+  Page,
+  Button,
+  useToaster,
+  Control,
+  InputBoolean,
+} from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
 export const UpdateMembership: FC<{
@@ -33,6 +41,16 @@ export const UpdateMembership: FC<{
       padding: true,
       divide: true,
       children: [
+        element(Control, {
+          key: 'admin',
+          label: 'Admin',
+          helper: 'User will be have full control of team and members',
+          error: schema.error('admin'),
+          children: element(InputBoolean, {
+            value: schema.value('admin'),
+            change: schema.change('admin'),
+          }),
+        }),
         element(Button, {
           key: 'submit',
           label: 'Save',
@@ -45,14 +63,20 @@ export const UpdateMembership: FC<{
   })
 }
 
-const SchemaUpdateMembership = yup.object().shape({})
+const SchemaUpdateMembership = yup.object().shape({
+  admin: yup.boolean(),
+})
 
 const useGetMembership = createUseServer<{
-  membership: {}
+  membership: {
+    admin: boolean
+  }
 }>({
   query: `
     query GetMembership($id: String!) {
-      membership: GetMembership(id: $id) {}
+      membership: GetMembership(id: $id) {
+        admin
+      }
     }
   `,
 })

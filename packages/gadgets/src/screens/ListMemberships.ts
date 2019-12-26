@@ -31,12 +31,12 @@ export const ListMemberships: FC<{
             label: membership.user
               ? membership.user.summary
               : membership.user_email || 'User unknown',
-            value: membership.role ? membership.role.name : 'No role assigned',
+            value: membership.admin ? 'Admin' : 'Member',
             options: [
               {
                 icon: 'sliders-h',
                 label: 'Update',
-                helper: 'Change member role',
+                helper: 'Update member',
                 click: () => update(membership.id),
               },
               {
@@ -54,12 +54,10 @@ export const ListMemberships: FC<{
 const useListMemberships = createUseServer<{
   memberships: Array<{
     id: string
+    admin: boolean
     user_email?: string
     user?: {
       summary: string
-    }
-    role?: {
-      name: string
     }
   }>
 }>({
@@ -67,12 +65,10 @@ const useListMemberships = createUseServer<{
     query ListMembershipsClient {
       memberships: ListMembershipsClient {
         id
+        admin
         user_email
         user {
           summary
-        }
-        role {
-          name
         }
       }
     }

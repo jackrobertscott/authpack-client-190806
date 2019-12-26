@@ -67,12 +67,13 @@ export const RouterModalLoggedIn: FC<{
         focused: router.current && router.current.key.startsWith('/teams'),
         click: () => router.change('/teams'),
       },
-      {
-        icon: 'trophy',
-        label: 'Subscription',
-        focused: router.current && router.current.key.startsWith('/payments'),
-        click: () => router.change('/payments'),
-      },
+      !!settings.cluster &&
+        !!settings.cluster.stripe_publishable_key && {
+          icon: 'trophy',
+          label: 'Subscription',
+          focused: router.current && router.current.key.startsWith('/payments'),
+          click: () => router.change('/payments'),
+        },
       {
         icon: 'power-off',
         label: 'Logout',
