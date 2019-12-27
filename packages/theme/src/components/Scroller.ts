@@ -37,11 +37,15 @@ export const Scroller: FC<{
       '&::-webkit-scrollbar-track': {
         backgroundColor: 'hsla(0, 0, 0, 0)',
         background: theme.scroller.underneath,
+        borderLeft: theme.scroller.border,
+        borderTop: theme.scroller.border,
       },
       '&::-webkit-scrollbar-thumb': {
         cursor: 'pointer',
         transition: '200ms',
         background: theme.scroller.background,
+        borderLeft: theme.scroller.border,
+        borderTop: theme.scroller.border,
       },
       '&::-webkit-scrollbar-thumb:hover': {
         background: theme.scroller.backgroundHover,

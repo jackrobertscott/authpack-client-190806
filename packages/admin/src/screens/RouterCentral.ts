@@ -34,8 +34,8 @@ export const RouterCentral: FC = () => {
       {
         icon: 'home',
         label: 'Home',
-        focused: !!router.current && router.current.path === '/users',
-        click: () => router.change('/users'),
+        focused: !!router.current && router.current.path.startsWith('/app'),
+        click: () => router.change('/app'),
       },
       {
         icon: 'code',

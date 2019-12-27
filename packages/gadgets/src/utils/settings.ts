@@ -21,6 +21,10 @@ export type ISettings = {
     theme_preference: string
     stripe_publishable_key: string
   }
+  session?: {
+    id: string
+    token: string
+  }
   user?: {
     id: string
     email: string
@@ -31,9 +35,16 @@ export type ISettings = {
     name_given?: string
     name_family?: string
   }
-  session?: {
+  plan?: {
     id: string
-    token: string
+    name: string
+    tag: string
+    description?: string
+    statement?: string
+    amount: number
+    currency: string
+    interval: string
+    interval_seperator: number
   }
   team?: {
     id: string
@@ -50,6 +61,7 @@ export type ISettings = {
 export interface IOptions {
   enable_teams?: boolean
   prompt_teams?: boolean
+  theme_preset?: string
 }
 
 export const defaults: ISettings = {

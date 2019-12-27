@@ -21,20 +21,22 @@ export const useSetup = () => {
   useEffect(() => {
     SettingsStore.update({
       ready: false,
-      user: undefined,
       session: undefined,
+      user: undefined,
+      plan: undefined,
       team: undefined,
       membership: undefined,
     })
     if (settings.bearer && settings.client) {
       gqlGetSession
         .fetch()
-        .then(({ session: { user, team, membership, ...session } }) => {
+        .then(({ session: { user, plan, team, membership, ...session } }) => {
           SettingsStore.update({
             ready: true,
             bearer: `Bearer ${session.token}`,
-            user,
             session,
+            user,
+            plan,
             team,
             membership,
           })
@@ -129,6 +131,17 @@ const useGetSession = createUseServer<{
       name_given?: string
       name_family?: string
     }
+    plan?: {
+      id: string
+      name: string
+      tag: string
+      description?: string
+      statement?: string
+      amount: number
+      currency: string
+      interval: string
+      interval_seperator: number
+    }
     team?: {
       id: string
       name: string
@@ -156,6 +169,17 @@ const useGetSession = createUseServer<{
           name
           name_given
           name_family
+        }
+        plan {
+          id
+          name
+          tag
+          description
+          statement
+          amount
+          currency
+          interval
+          interval_separator
         }
         team {
           id

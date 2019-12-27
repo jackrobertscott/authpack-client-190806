@@ -20,7 +20,7 @@ export const Gadgets: FC = () => {
       settings.domain.startsWith(config.admin)
     : false
   return element(Root, {
-    theme: settings.cluster.theme_preference,
+    theme: settings.options.theme_preset || settings.cluster.theme_preference,
     children: element(Modal, {
       close: close.current,
       visible: Boolean(settings.ready && settings.open),
