@@ -17,6 +17,7 @@ import {
   useToaster,
   Page,
   useMounted,
+  InputSelect,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { useSettings } from '../hooks/useSettings'
@@ -33,6 +34,7 @@ export const UpdateUserPayment: FC<{
   const [stripe, stripeChange] = useState()
   const [loading, loadingChange] = useState<boolean>(false)
   const gqlUpsertPayment = useUpsertUserPayment()
+  const gqlListPlans = useListPlans()
   const payment = useStripe(stripe)
   const schema = useSchema({
     schema: SchemaUpdatePayment,
@@ -45,9 +47,10 @@ export const UpdateUserPayment: FC<{
             .fetch({
               input: {
                 token: token.id,
-                email: value.email,
+                plan_id: value.plan_id,
                 name: value.name,
                 coupon: value.coupon,
+                email: value.email,
               },
             })
             .then(({ user }) => {
@@ -70,6 +73,7 @@ export const UpdateUserPayment: FC<{
     },
   })
   useEffect(() => {
+    gqlListPlans.fetch()
     if (settings.cluster && settings.cluster.stripe_publishable_key)
       stripeChange(createStripe(settings.cluster.stripe_publishable_key))
     if (settings.user)
@@ -94,6 +98,27 @@ export const UpdateUserPayment: FC<{
         padding: true,
         divide: true,
         children: [
+          element(Control, {
+            key: 'plan_id',
+            label: 'Plan',
+            helper: 'Which subscription would you like?',
+            error: schema.error('plan_id'),
+            children: element(InputSelect, {
+              value: schema.value('plan_id'),
+              change: schema.change('plan_id'),
+              options: !gqlListPlans.data
+                ? []
+                : gqlListPlans.data.plans.map(plan => ({
+                    value: plan.id,
+                    label: plan.name,
+                    helper: `$${plan.amount / 100} ${plan.currency} every ${
+                      plan.interval_separator
+                    } ${plan.interval}${
+                      plan.interval_separator === 1 ? '' : 's'
+                    }`,
+                  })),
+            }),
+          }),
           element(Control, {
             key: 'card',
             label: 'Card',
@@ -160,6 +185,7 @@ export const UpdateUserPayment: FC<{
 }
 
 const SchemaUpdatePayment = yup.object().shape({
+  plan_id: yup.string().required('Please select a plan'),
   name: yup.string().required('Please provide the name on the card'),
   coupon: yup.string(),
   email: yup
@@ -175,8 +201,36 @@ const useUpsertUserPayment = createUseServer<{
 }>({
   query: `
     mutation UpsertUserPaymentClient($input: UpdateUserPaymentInput!) {
-      cluster: UpsertUserPaymentClient(input: $input) {
+      user: UpsertUserPaymentClient(input: $input) {
         id
+      }
+    }
+  `,
+})
+
+const useListPlans = createUseServer<{
+  plans: Array<{
+    id: string
+    name: string
+    tag: string
+    description?: string
+    amount: number
+    currency: string
+    interval: string
+    interval_separator: number
+  }>
+}>({
+  query: `
+    query ListPlansClient {
+      plans: ListPlansClient {
+        id
+        name
+        tag
+        description
+        amount
+        currency
+        interval
+        interval_separator
       }
     }
   `,
