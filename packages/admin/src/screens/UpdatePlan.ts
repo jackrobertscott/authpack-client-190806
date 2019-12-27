@@ -81,6 +81,17 @@ export const UpdatePlan: FC<{
                 placeholder: 'Users gains access to...',
               }),
             }),
+            element(Control, {
+              key: 'statement',
+              label: 'Statement',
+              helper: 'The bank statement descriptor',
+              error: schema.error('statement'),
+              children: element(InputString, {
+                value: schema.value('statement'),
+                change: schema.change('statement'),
+                placeholder: 'PREMIUM',
+              }),
+            }),
             element(Button, {
               key: 'submit',
               label: 'Save',
@@ -104,6 +115,9 @@ const SchemaUpdatePlan = yup.object().shape({
     )
     .required('Please provide the plan tag'),
   description: yup.string(),
+  statement: yup
+    .string()
+    .max(22, 'Statement must be a maximum of 22 characters'),
 })
 
 const useGetPlan = createUseServer<{
@@ -111,6 +125,7 @@ const useGetPlan = createUseServer<{
     name: string
     tag: string
     description?: string
+    statement?: string
   }
 }>({
   query: `
@@ -119,6 +134,7 @@ const useGetPlan = createUseServer<{
         name
         tag
         description
+        statement
       }
     }
   `,
