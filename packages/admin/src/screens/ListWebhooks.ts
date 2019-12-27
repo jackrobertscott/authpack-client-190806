@@ -97,6 +97,7 @@ export const ListWebhooks: FC = () => {
             { key: 'event', label: 'Event' },
             { key: 'url', label: 'Url' },
             { key: 'updated', label: 'Updated' },
+            { key: 'created', label: 'Created' },
           ].map(({ key, label }) => ({
             label,
             icon:
@@ -126,7 +127,11 @@ export const ListWebhooks: FC = () => {
               { icon: 'wifi', value: data.url },
               {
                 icon: 'clock',
-                value: format(new Date(data.updated), 'dd LLL yyyy @ h:mm a'),
+                value: format(new Date(data.updated), 'dd LLL h:mm a'),
+              },
+              {
+                icon: 'clock',
+                value: format(new Date(data.created), 'dd LLL h:mm a'),
               },
             ],
           })),
@@ -139,6 +144,7 @@ const useListWebhooks = createUseServer<{
   count: number
   webhooks: Array<{
     id: string
+    created: string
     updated: string
     event: string
     url: string
@@ -149,6 +155,7 @@ const useListWebhooks = createUseServer<{
       count: CountWebhooks(phrase: $phrase)
       webhooks: ListWebhooks(phrase: $phrase, options: $options) {
         id
+        created
         updated
         event
         url
@@ -159,11 +166,13 @@ const useListWebhooks = createUseServer<{
 
 const FakeWebhooks: Array<{
   id: string
+  created: string
   updated: string
   event: string
   url: string
 }> = Array.from(Array(8).keys()).map(() => ({
   id: faker.random.uuid(),
+  created: faker.date.recent(100).toDateString(),
   updated: faker.date.recent(100).toDateString(),
   event: WEBHOOKEVENTS[Math.floor(Math.random() * WEBHOOKEVENTS.length)],
   url: faker.internet.url(),

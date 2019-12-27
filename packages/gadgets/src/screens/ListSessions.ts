@@ -22,7 +22,7 @@ export const ListSessions: FC = () => {
             differenceInMinutes(new Date(ended), new Date(created))
               .toString()
               .concat(' mins')
-          const creation = format(new Date(created), 'dd LLL yyyy @ h:mm a')
+          const creation = format(new Date(created), 'dd LLL h:mm a')
           return element(Snippet, {
             key: id,
             icon: 'history',

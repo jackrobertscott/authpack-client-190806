@@ -99,6 +99,7 @@ export const ListTeams: FC = () => {
             { key: 'tag', label: 'Tag' },
             { key: 'description', label: 'Description' },
             { key: 'updated', label: 'Updated' },
+            { key: 'created', label: 'Created' },
           ].map(({ key, label }) => ({
             label,
             icon:
@@ -129,7 +130,11 @@ export const ListTeams: FC = () => {
               { icon: 'book', value: data.description || '...' },
               {
                 icon: 'clock',
-                value: format(new Date(data.updated), 'dd LLL yyyy @ h:mm a'),
+                value: format(new Date(data.updated), 'dd LLL h:mm a'),
+              },
+              {
+                icon: 'clock',
+                value: format(new Date(data.created), 'dd LLL h:mm a'),
               },
             ],
           })),
@@ -142,6 +147,7 @@ const useListTeams = createUseServer<{
   count: number
   teams: Array<{
     id: string
+    created: string
     updated: string
     name: string
     tag: string
@@ -153,6 +159,7 @@ const useListTeams = createUseServer<{
       count: CountTeams(phrase: $phrase)
       teams: ListTeams(phrase: $phrase, options: $options) {
         id
+        created
         updated
         name
         tag
@@ -164,12 +171,14 @@ const useListTeams = createUseServer<{
 
 const FakeTeams: Array<{
   id: string
+  created: string
   updated: string
   name: string
   tag: string
   description?: string
 }> = Array.from(Array(8).keys()).map(() => ({
   id: faker.random.uuid(),
+  created: faker.date.recent(100).toDateString(),
   updated: faker.date.recent(100).toDateString(),
   name: faker.random.words(2),
   tag: faker.internet.userName(),

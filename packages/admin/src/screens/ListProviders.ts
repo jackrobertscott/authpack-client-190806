@@ -97,6 +97,7 @@ export const ListProviders: FC = () => {
             { key: 'preset', label: 'Preset' },
             { key: 'scopes', label: 'Scopes' },
             { key: 'updated', label: 'Updated' },
+            { key: 'created', label: 'Created' },
           ].map(({ key, label }) => ({
             label,
             icon:
@@ -126,7 +127,11 @@ export const ListProviders: FC = () => {
               { icon: 'user-shield', value: data.scopes.join(', ') || '...' },
               {
                 icon: 'clock',
-                value: format(new Date(data.updated), 'dd LLL yyyy @ h:mm a'),
+                value: format(new Date(data.updated), 'dd LLL h:mm a'),
+              },
+              {
+                icon: 'clock',
+                value: format(new Date(data.created), 'dd LLL h:mm a'),
               },
             ],
           })),
@@ -139,6 +144,7 @@ const useListProviders = createUseServer<{
   count: number
   providers: Array<{
     id: string
+    created: string
     updated: string
     preset: string
     scopes: string[]
@@ -149,6 +155,7 @@ const useListProviders = createUseServer<{
       count: CountProviders(phrase: $phrase)
       providers: ListProviders(phrase: $phrase, options: $options) {
         id
+        created
         updated
         preset
         scopes
@@ -159,11 +166,13 @@ const useListProviders = createUseServer<{
 
 const FakeProviders: Array<{
   id: string
+  created: string
   updated: string
   preset: string
   scopes: string[]
 }> = Array.from(Array(4).keys()).map(() => ({
   id: faker.random.uuid(),
+  created: faker.date.recent(100).toDateString(),
   updated: faker.date.recent(100).toDateString(),
   preset: faker.random.words(2),
   scopes: faker.random.words(3).split(' '),

@@ -95,8 +95,9 @@ export const ListPlans: FC = () => {
           header: [
             { key: 'name', label: 'Name' },
             { key: 'tag', label: 'Tag' },
-            { key: 'description', label: 'Description' },
+            { key: 'amount', label: 'Price' },
             { key: 'updated', label: 'Updated' },
+            { key: 'created', label: 'Created' },
           ].map(({ key, label }) => ({
             label,
             icon:
@@ -124,10 +125,17 @@ export const ListPlans: FC = () => {
             cells: [
               { icon: 'users', value: data.name },
               { icon: 'fingerprint', value: data.tag || '...' },
-              { icon: 'book', value: data.description || '...' },
+              {
+                icon: 'dollar-sign',
+                value: `${data.amount / 100} ${data.currency}` || '...',
+              },
               {
                 icon: 'clock',
-                value: format(new Date(data.updated), 'dd LLL yyyy @ h:mm a'),
+                value: format(new Date(data.updated), 'dd LLL h:mm a'),
+              },
+              {
+                icon: 'clock',
+                value: format(new Date(data.created), 'dd LLL h:mm a'),
               },
             ],
           })),
@@ -140,10 +148,12 @@ const useListPlans = createUseServer<{
   count: number
   plans: Array<{
     id: string
+    created: string
     updated: string
     name: string
     tag: string
-    description?: string
+    amount: number
+    currency: string
   }>
 }>({
   query: `
@@ -151,10 +161,12 @@ const useListPlans = createUseServer<{
       count: CountPlans(phrase: $phrase)
       plans: ListPlans(phrase: $phrase, options: $options) {
         id
+        created
         updated
         name
         tag
-        description
+        amount
+        currency
       }
     }
   `,
@@ -162,14 +174,18 @@ const useListPlans = createUseServer<{
 
 const FakePlans: Array<{
   id: string
+  created: string
   updated: string
   name: string
   tag: string
-  description?: string
+  amount: number
+  currency: string
 }> = Array.from(Array(8).keys()).map(() => ({
   id: faker.random.uuid(),
+  created: faker.date.recent(100).toDateString(),
   updated: faker.date.recent(100).toDateString(),
   name: faker.random.words(2),
   tag: faker.internet.userName(),
-  description: faker.random.words(5),
+  amount: faker.random.number(100000),
+  currency: 'usd',
 }))
