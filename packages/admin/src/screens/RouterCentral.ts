@@ -4,10 +4,9 @@ import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterManagerCluster } from './RouterManagerCluster'
 import { Explorer } from './Explorer'
 import { usePreferences } from '../utils/preferences'
-import { useGadgets } from '../utils/authpack'
+import { authpack } from '../utils/authpack'
 
 export const RouterCentral: FC = () => {
-  const gadgets = useGadgets()
   const preferences = usePreferences()
   const [apper, apperChange] = useState<boolean>(false)
   const router = useRouter({
@@ -93,7 +92,7 @@ export const RouterCentral: FC = () => {
       {
         icon: 'user-circle',
         label: 'Account',
-        click: () => gadgets.show(),
+        click: () => authpack.plugin.show(),
       },
     ],
   })

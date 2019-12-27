@@ -1,11 +1,11 @@
 import 'graphiql/graphiql.css'
 import GraphiQL from 'graphiql'
 import { createElement as element, FC } from 'react'
-import { graphql, useTheme } from '@authpack/theme'
+import { useTheme } from '@authpack/theme'
 import { css } from 'emotion'
 import { config } from '../config'
 import { useUniversal } from '../hooks/useUniversal'
-import { useAuthpack } from '../utils/authpack'
+import { useAuthpackCurrent, authpack } from '../utils/authpack'
 
 const startingQuery = `
 query First10Users {
@@ -22,19 +22,18 @@ query First10Users {
 
 export const Explorer: FC = () => {
   const theme = useTheme()
-  const authpack = useAuthpack()
   const universal = useUniversal()
+  const auth = useAuthpackCurrent()
   return element('div', {
     children: element(GraphiQL, {
       defaultQuery: startingQuery,
       fetcher: async (graphQLParams: any) => {
         try {
-          const data = await graphql<any>({
-            ...graphQLParams,
+          const data = await authpack.api.graphql<any>({
             url: config.api,
-            authorization: [universal.cluster_key_client, authpack.bearer]
-              .filter(Boolean)
-              .join(','),
+            key: universal.cluster_key_client,
+            bearer: auth.bearer,
+            ...graphQLParams,
           })
           return data.__schema ? { data } : data
         } catch (error) {

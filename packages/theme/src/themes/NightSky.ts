@@ -113,7 +113,7 @@ export const NightSky: ITheme = {
     background: slate(12.5),
     backgroundHover: slate(17.5),
     backgroundDisabled: slate(10),
-    shadow: `0 0 23px -3px ${slate(2.5, 0.75)}`,
+    shadow: `0 0 23px -3px ${slate(2.5, 0.5)}`,
     border: `1px solid ${slate(5)}`,
     borderFocused: `1px solid ${slate(55)}`,
     on: slate(32.5),

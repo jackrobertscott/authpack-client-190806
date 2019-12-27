@@ -24,6 +24,7 @@
     "compile": "tsc"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "events-and-things": "^0.7.3"
   },
   "devDependencies": {
