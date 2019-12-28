@@ -72,13 +72,18 @@ export const UpdateClusterStripe: FC<{
                 label: 'Pending',
                 helper: 'More verification documents required',
               })
+            : gqlGetCluster.data.cluster.stripe_dashboard_url
+            ? element(Poster, {
+                key: 'poster',
+                icon: 'piggy-bank',
+                label: 'Connected',
+                helper: 'Account ready to accept payments',
+              })
             : element(Poster, {
                 key: 'poster',
                 icon: 'piggy-bank',
                 label: 'Payments',
-                helper: gqlGetCluster.data.cluster.stripe_dashboard_url
-                  ? 'Stripe account connected'
-                  : 'Start accepting payments',
+                helper: 'Start accepting payments',
               }),
           element(Layout, {
             key: 'layout',
