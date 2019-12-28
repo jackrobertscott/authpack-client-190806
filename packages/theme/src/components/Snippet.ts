@@ -10,7 +10,7 @@ export const Snippet: FC<{
   icon: string
   prefix?: string
   label: string
-  value?: string
+  value?: number | string
   click?: () => void
   options?: Array<{
     label: string
@@ -33,6 +33,8 @@ export const Snippet: FC<{
       transition: '200ms',
       cursor: click && 'pointer',
       padding: '20px 25px',
+      flexGrow: 1,
+      flexBasis: 0,
       color: theme.snippet.label,
       background: theme.snippet.background,
       borderBottom: theme.snippet.border,
@@ -51,6 +53,7 @@ export const Snippet: FC<{
         className: css({
           display: 'flex',
           flexDirection: 'column',
+          overflow: 'auto',
           flexGrow: 1,
           marginLeft: 10,
           marginRight: 10,

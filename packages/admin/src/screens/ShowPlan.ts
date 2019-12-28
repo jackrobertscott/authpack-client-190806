@@ -26,39 +26,104 @@ export const ShowPlan: FC<{
               label: 'Id',
               value: plan.id,
             }),
-            element(Snippet, {
+            element(Layout, {
               key: 'name',
-              icon: 'users',
-              label: 'Name',
-              value: plan.name,
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'name',
+                  icon: 'users',
+                  label: 'Name',
+                  value: plan.name,
+                }),
+                element(Snippet, {
+                  key: 'tag',
+                  icon: 'tags',
+                  label: 'Tag',
+                  value: plan.tag,
+                }),
+              ],
             }),
-            element(Snippet, {
-              key: 'tag',
-              icon: 'tags',
-              label: 'Tag',
-              value: plan.tag,
-            }),
-            element(Snippet, {
+            element(Layout, {
               key: 'description',
-              icon: 'book',
-              label: 'Description',
-              value: plan.description || '...',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'description',
+                  icon: 'book',
+                  label: 'Description',
+                  value: plan.description || '...',
+                }),
+                element(Snippet, {
+                  key: 'statement',
+                  icon: 'credit-card',
+                  label: 'Statement',
+                  value: plan.statement || '...',
+                }),
+              ],
             }),
-            element(Snippet, {
-              key: 'created',
-              icon: 'clock',
-              label: 'Created',
-              value:
-                plan.created &&
-                format(new Date(plan.created), 'dd LLL yyyy @ h:mm a'),
+            element(Layout, {
+              key: 'amount',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'amount',
+                  icon: 'dollar-sign',
+                  label: 'Amount',
+                  value: plan.amount / 100,
+                }),
+                element(Snippet, {
+                  key: 'currency',
+                  icon: 'coins',
+                  label: 'Currency',
+                  value: plan.currency,
+                }),
+              ],
             }),
-            element(Snippet, {
-              key: 'updated',
-              icon: 'clock',
-              label: 'Updated',
-              value:
-                plan.updated &&
-                format(new Date(plan.updated), 'dd LLL yyyy @ h:mm a'),
+            element(Layout, {
+              key: 'interval',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'interval',
+                  icon: 'calendar',
+                  label: 'Interval',
+                  value: plan.interval,
+                }),
+                element(Snippet, {
+                  key: 'interval_separator',
+                  icon: 'pause-circle',
+                  label: 'Separator',
+                  value: plan.interval_separator,
+                }),
+              ],
+            }),
+            element(Layout, {
+              key: 'dates',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'created',
+                  icon: 'clock',
+                  label: 'Created',
+                  value:
+                    plan.created &&
+                    format(new Date(plan.created), 'dd LLL yyyy @ h:mm a'),
+                }),
+                element(Snippet, {
+                  key: 'updated',
+                  icon: 'clock',
+                  label: 'Updated',
+                  value:
+                    plan.updated &&
+                    format(new Date(plan.updated), 'dd LLL yyyy @ h:mm a'),
+                }),
+              ],
             }),
           ],
         }),
@@ -72,7 +137,12 @@ const useGetPlan = createUseServer<{
     updated: string
     name: string
     tag: string
-    description: string
+    description?: string
+    statement?: string
+    amount: number
+    currency: string
+    interval: string
+    interval_separator: number
   }
 }>({
   query: `
@@ -84,6 +154,11 @@ const useGetPlan = createUseServer<{
         name
         tag
         description
+        statement
+        amount
+        currency
+        interval
+        interval_separator
       }
     }
   `,

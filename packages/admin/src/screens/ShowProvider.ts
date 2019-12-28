@@ -52,21 +52,28 @@ export const ShowProvider: FC<{
               label: 'Scopes',
               value: (provider.scopes && provider.scopes.join(', ')) || '...',
             }),
-            element(Snippet, {
-              key: 'created',
-              icon: 'clock',
-              label: 'Created',
-              value:
-                provider.created &&
-                format(new Date(provider.created), 'dd LLL yyyy @ h:mm a'),
-            }),
-            element(Snippet, {
-              key: 'updated',
-              icon: 'clock',
-              label: 'Updated',
-              value:
-                provider.updated &&
-                format(new Date(provider.updated), 'dd LLL yyyy @ h:mm a'),
+            element(Layout, {
+              key: 'dates',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'created',
+                  icon: 'clock',
+                  label: 'Created',
+                  value:
+                    provider.created &&
+                    format(new Date(provider.created), 'dd LLL yyyy @ h:mm a'),
+                }),
+                element(Snippet, {
+                  key: 'updated',
+                  icon: 'clock',
+                  label: 'Updated',
+                  value:
+                    provider.updated &&
+                    format(new Date(provider.updated), 'dd LLL yyyy @ h:mm a'),
+                }),
+              ],
             }),
           ],
         }),

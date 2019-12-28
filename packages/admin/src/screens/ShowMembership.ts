@@ -44,21 +44,34 @@ export const ShowMembership: FC<{
               label: 'Team',
               value: !membership.team ? '...' : membership.team.summary,
             }),
-            element(Snippet, {
-              key: 'created',
-              icon: 'clock',
-              label: 'Created',
-              value:
-                membership.created &&
-                format(new Date(membership.created), 'dd LLL yyyy @ h:mm a'),
-            }),
-            element(Snippet, {
-              key: 'updated',
-              icon: 'clock',
-              label: 'Updated',
-              value:
-                membership.updated &&
-                format(new Date(membership.updated), 'dd LLL yyyy @ h:mm a'),
+            element(Layout, {
+              key: 'dates',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'created',
+                  icon: 'clock',
+                  label: 'Created',
+                  value:
+                    membership.created &&
+                    format(
+                      new Date(membership.created),
+                      'dd LLL yyyy @ h:mm a'
+                    ),
+                }),
+                element(Snippet, {
+                  key: 'updated',
+                  icon: 'clock',
+                  label: 'Updated',
+                  value:
+                    membership.updated &&
+                    format(
+                      new Date(membership.updated),
+                      'dd LLL yyyy @ h:mm a'
+                    ),
+                }),
+              ],
             }),
           ],
         }),

@@ -31,33 +31,47 @@ export const ShowCluster: FC<{ keys: () => void }> = ({ keys }) => {
               label: 'Id',
               value: cluster.id,
             }),
-            element(Snippet, {
+            element(Layout, {
               key: 'name',
-              icon: 'tags',
-              label: 'Name',
-              value: cluster.name,
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'name',
+                  icon: 'tags',
+                  label: 'Name',
+                  value: cluster.name,
+                }),
+                element(Snippet, {
+                  key: 'theme',
+                  icon: 'magic',
+                  label: 'Preferenced Theme',
+                  value: cluster.theme_preference || 'default',
+                }),
+              ],
             }),
-            element(Snippet, {
-              key: 'theme',
-              icon: 'magic',
-              label: 'Preferenced Theme',
-              value: cluster.theme_preference || 'default',
-            }),
-            element(Snippet, {
-              key: 'created',
-              icon: 'clock',
-              label: 'Created',
-              value:
-                cluster.created &&
-                format(new Date(cluster.created), 'dd LLL yyyy @ h:mm a'),
-            }),
-            element(Snippet, {
-              key: 'updated',
-              icon: 'clock',
-              label: 'Updated',
-              value:
-                cluster.updated &&
-                format(new Date(cluster.updated), 'dd LLL yyyy @ h:mm a'),
+            element(Layout, {
+              key: 'dates',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'created',
+                  icon: 'clock',
+                  label: 'Created',
+                  value:
+                    cluster.created &&
+                    format(new Date(cluster.created), 'dd LLL yyyy @ h:mm a'),
+                }),
+                element(Snippet, {
+                  key: 'updated',
+                  icon: 'clock',
+                  label: 'Updated',
+                  value:
+                    cluster.updated &&
+                    format(new Date(cluster.updated), 'dd LLL yyyy @ h:mm a'),
+                }),
+              ],
             }),
           ],
         }),

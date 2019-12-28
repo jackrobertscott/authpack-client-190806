@@ -28,24 +28,47 @@ export const ShowCredential: FC<{
               label: 'Id',
               value: credential.id,
             }),
-            element(Snippet, {
-              key: 'user',
-              icon: 'user',
-              label: 'User',
-              value: !credential.user ? '...' : credential.user.summary,
-            }),
-            element(Snippet, {
-              key: 'provider',
-              icon: 'share-alt',
-              label: 'Provider',
-              value: !credential.provider ? '...' : credential.provider.name,
-            }),
-            element(Snippet, {
+            element(Layout, {
               key: 'scopes',
-              icon: 'user-shield',
-              label: 'Scopes',
-              value:
-                (credential.scopes && credential.scopes.join(', ')) || '...',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'provider',
+                  icon: 'share-alt',
+                  label: 'Provider',
+                  value: !credential.provider
+                    ? '...'
+                    : credential.provider.name,
+                }),
+                element(Snippet, {
+                  key: 'scopes',
+                  icon: 'user-shield',
+                  label: 'Scopes',
+                  value:
+                    (credential.scopes && credential.scopes.join(', ')) ||
+                    '...',
+                }),
+              ],
+            }),
+            element(Layout, {
+              key: 'access',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'user',
+                  icon: 'user',
+                  label: 'User',
+                  value: !credential.user ? '...' : credential.user.summary,
+                }),
+                element(Snippet, {
+                  key: 'id_external',
+                  icon: 'at',
+                  label: 'External Id',
+                  value: credential.id_external,
+                }),
+              ],
             }),
             element(Snippet, {
               key: 'tags',
@@ -53,27 +76,34 @@ export const ShowCredential: FC<{
               label: 'Token',
               value: credential.access_token,
             }),
-            element(Snippet, {
-              key: 'id_external',
-              icon: 'at',
-              label: 'External Id',
-              value: credential.id_external,
-            }),
-            element(Snippet, {
-              key: 'created',
-              icon: 'clock',
-              label: 'Created',
-              value:
-                credential.created &&
-                format(new Date(credential.created), 'dd LLL yyyy @ h:mm a'),
-            }),
-            element(Snippet, {
-              key: 'updated',
-              icon: 'clock',
-              label: 'Updated',
-              value:
-                credential.updated &&
-                format(new Date(credential.updated), 'dd LLL yyyy @ h:mm a'),
+            element(Layout, {
+              key: 'dates',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'created',
+                  icon: 'clock',
+                  label: 'Created',
+                  value:
+                    credential.created &&
+                    format(
+                      new Date(credential.created),
+                      'dd LLL yyyy @ h:mm a'
+                    ),
+                }),
+                element(Snippet, {
+                  key: 'updated',
+                  icon: 'clock',
+                  label: 'Updated',
+                  value:
+                    credential.updated &&
+                    format(
+                      new Date(credential.updated),
+                      'dd LLL yyyy @ h:mm a'
+                    ),
+                }),
+              ],
             }),
           ],
         }),

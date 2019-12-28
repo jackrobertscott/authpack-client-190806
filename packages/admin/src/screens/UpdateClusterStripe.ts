@@ -49,7 +49,7 @@ export const UpdateClusterStripe: FC<{
     // eslint-disable-next-line
   }, [oauthCode.current, oauthCode.code])
   return element(Page, {
-    title: 'Accept Payments',
+    title: 'Payments',
     subtitle: 'Cluster',
     children: oauthCode.current
       ? element(Focus, {
@@ -65,12 +65,21 @@ export const UpdateClusterStripe: FC<{
       : !gqlGetCluster.data
       ? null
       : [
-          element(Poster, {
-            key: 'poster',
-            icon: 'piggy-bank',
-            label: 'Payments',
-            helper: 'Start accepting payments',
-          }),
+          gqlGetCluster.data.cluster.stripe_pending
+            ? element(Poster, {
+                key: 'poster',
+                icon: 'pause-circle',
+                label: 'Pending',
+                helper: 'More verification documents required',
+              })
+            : element(Poster, {
+                key: 'poster',
+                icon: 'piggy-bank',
+                label: 'Payments',
+                helper: gqlGetCluster.data.cluster.stripe_dashboard_url
+                  ? 'Stripe account connected'
+                  : 'Start accepting payments',
+              }),
           element(Layout, {
             key: 'layout',
             column: true,
@@ -112,6 +121,7 @@ const useGetCluster = createUseServer<{
     id: string
     stripe_express_url: string
     stripe_dashboard_url: string
+    stripe_pending: boolean
   }
 }>({
   query: `
@@ -120,6 +130,7 @@ const useGetCluster = createUseServer<{
         id
         stripe_express_url
         stripe_dashboard_url
+        stripe_pending
       }
     }
   `,

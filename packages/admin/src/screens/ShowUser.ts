@@ -32,33 +32,47 @@ export const ShowUser: FC<{
               label: 'Email',
               value: user.email,
             }),
-            element(Snippet, {
+            element(Layout, {
               key: 'name',
-              icon: 'user',
-              label: 'Name',
-              value: user.name || '...',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'name',
+                  icon: 'user',
+                  label: 'Name',
+                  value: user.name || '...',
+                }),
+                element(Snippet, {
+                  key: 'username',
+                  icon: 'tags',
+                  label: 'Username',
+                  value: user.username || '...',
+                }),
+              ],
             }),
-            element(Snippet, {
-              key: 'username',
-              icon: 'tags',
-              label: 'Username',
-              value: user.username || '...',
-            }),
-            element(Snippet, {
-              key: 'created',
-              icon: 'clock',
-              label: 'Created',
-              value:
-                user.created &&
-                format(new Date(user.created), 'dd LLL yyyy @ h:mm a'),
-            }),
-            element(Snippet, {
-              key: 'updated',
-              icon: 'clock',
-              label: 'Updated',
-              value:
-                user.updated &&
-                format(new Date(user.updated), 'dd LLL yyyy @ h:mm a'),
+            element(Layout, {
+              key: 'dates',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'created',
+                  icon: 'clock',
+                  label: 'Created',
+                  value:
+                    user.created &&
+                    format(new Date(user.created), 'dd LLL yyyy @ h:mm a'),
+                }),
+                element(Snippet, {
+                  key: 'updated',
+                  icon: 'clock',
+                  label: 'Updated',
+                  value:
+                    user.updated &&
+                    format(new Date(user.updated), 'dd LLL yyyy @ h:mm a'),
+                }),
+              ],
             }),
           ],
         }),

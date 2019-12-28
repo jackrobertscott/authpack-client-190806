@@ -38,21 +38,28 @@ export const ShowWebhook: FC<{
               label: 'Url',
               value: webhook.url,
             }),
-            element(Snippet, {
-              key: 'created',
-              icon: 'clock',
-              label: 'Created',
-              value:
-                webhook.created &&
-                format(new Date(webhook.created), 'dd LLL yyyy @ h:mm a'),
-            }),
-            element(Snippet, {
-              key: 'updated',
-              icon: 'clock',
-              label: 'Updated',
-              value:
-                webhook.updated &&
-                format(new Date(webhook.updated), 'dd LLL yyyy @ h:mm a'),
+            element(Layout, {
+              key: 'dates',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'created',
+                  icon: 'clock',
+                  label: 'Created',
+                  value:
+                    webhook.created &&
+                    format(new Date(webhook.created), 'dd LLL yyyy @ h:mm a'),
+                }),
+                element(Snippet, {
+                  key: 'updated',
+                  icon: 'clock',
+                  label: 'Updated',
+                  value:
+                    webhook.updated &&
+                    format(new Date(webhook.updated), 'dd LLL yyyy @ h:mm a'),
+                }),
+              ],
             }),
           ],
         }),

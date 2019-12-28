@@ -63,11 +63,14 @@ export const UpdateUserPayment: FC<{
             })
         })
         .catch(error => {
-          toaster.add({
-            icon: 'credit-card',
-            label: 'Card Error',
-            helper: error.message || 'There was a problem processing the card',
-          })
+          if (!error.handled) {
+            toaster.add({
+              icon: 'credit-card',
+              label: 'Card Error',
+              helper:
+                error.message || 'There was a problem processing the card',
+            })
+          }
         })
         .finally(() => loadingChange(false))
     },
