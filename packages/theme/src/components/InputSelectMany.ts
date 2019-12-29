@@ -111,6 +111,7 @@ const Option: FC<{
               className: css({
                 marginTop: 5,
                 fontWeight: theme.global.thin,
+                lineHeight: '1.5em',
                 color: theme.input.helper,
               }),
             }),

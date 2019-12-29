@@ -65,7 +65,7 @@ export const Toaster: FC<{
 export const ToasterAlerts: FC<{
   current: ToasterArray
   width?: number
-}> = ({ current, width = 300 }) => {
+}> = ({ current, width = 360 }) => {
   const theme = useTheme()
   const bp = `@media (max-width: ${525 + 50}px)`
   return element('div', {
@@ -133,6 +133,7 @@ export const ToasterAlerts: FC<{
                   className: css({
                     marginTop: 5,
                     fontWeight: theme.global.thin,
+                    lineHeight: '1.5em',
                     color: theme.toaster.helper,
                   }),
                 }),

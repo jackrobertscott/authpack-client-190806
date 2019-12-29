@@ -7,6 +7,8 @@ import { RemoveUser } from './RemoveUser'
 import { UpdateUserPassword } from './UpdateUserPassword'
 import { ListSessions } from './ListSessions'
 import { UpdateUserEmail } from './UpdateUserEmail'
+import { UpdateUserPayment } from './UpdateUserPayment'
+import { RemoveUserPayment } from './RemoveUserPayment'
 
 export const RouterSideBarUser: FC = () => {
   const settings = useSettings()
@@ -20,6 +22,17 @@ export const RouterSideBarUser: FC = () => {
       { key: '/user/apps', children: element(ListProviders) },
       { key: '/user/sessions', children: element(ListSessions) },
       { key: '/user/danger', children: element(RemoveUser), nosave: true },
+      {
+        key: '/user/payments',
+        children: element(UpdateUserPayment, {
+          cancel: () => router.change('/user/payments/danger'),
+        }),
+      },
+      {
+        key: '/user/payments/danger',
+        children: element(RemoveUserPayment),
+        nosave: true,
+      },
     ],
   })
   if (!settings.bearer) return null
@@ -47,6 +60,13 @@ export const RouterSideBarUser: FC = () => {
         focused: router.current && router.current.key === '/user/password',
         click: () => router.change('/user/password'),
       },
+      !!settings.cluster &&
+        !!settings.cluster.stripe_publishable_key && {
+          icon: 'credit-card',
+          label: 'Billing',
+          focused: router.current && router.current.key === '/user/payments',
+          click: () => router.change('/user/payments'),
+        },
       {
         icon: 'share-alt',
         label: 'Apps',

@@ -67,6 +67,7 @@ export const Empty: FC<{
             className: css({
               color: theme.empty.helper,
               fontWeight: theme.global.thin,
+              lineHeight: '1.5em',
               marginTop: 10,
             }),
           }),

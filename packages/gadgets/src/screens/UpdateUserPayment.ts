@@ -33,8 +33,9 @@ export const UpdateUserPayment: FC<{
   const stripeCard = useRef<any>()
   const [stripe, stripeChange] = useState()
   const [loading, loadingChange] = useState<boolean>(false)
-  const gqlUpsertPayment = useUpsertUserPayment()
+  const gqlGetUser = useGetUser()
   const gqlListPlans = useListPlans()
+  const gqlUpsertPayment = useUpsertUserPayment()
   const payment = useStripe(stripe)
   const schema = useSchema({
     schema: SchemaUpdatePayment,
@@ -55,6 +56,7 @@ export const UpdateUserPayment: FC<{
             })
             .then(({ user }) => {
               if (change) change(user.id)
+              gqlGetUser.fetch()
               toaster.add({
                 icon: 'credit-card',
                 label: 'Success',
@@ -76,14 +78,22 @@ export const UpdateUserPayment: FC<{
     },
   })
   useEffect(() => {
+    gqlGetUser.fetch()
     gqlListPlans.fetch()
     if (settings.cluster && settings.cluster.stripe_publishable_key)
       stripeChange(createStripe(settings.cluster.stripe_publishable_key))
-    if (settings.user)
-      schema.set({ name: settings.user.name, email: settings.user.email })
     // eslint-disable-next-line
   }, [])
-  const subscribed = settings.user && settings.user.subscribed
+  useEffect(() => {
+    const unplanned = !schema.state.plan_id
+    if (gqlGetUser.data && gqlGetUser.data.user.plan_id && unplanned) {
+      const user = gqlGetUser.data.user
+      if (user.plan_id) schema.set({ ...schema.state, plan_id: user.plan_id })
+      else schema.set({ ...schema.state, name: user.name, email: user.email })
+    }
+    // eslint-disable-next-line
+  }, [gqlGetUser.data])
+  const subscribed = gqlGetUser.data && gqlGetUser.data.user.subscribed
   return element(Page, {
     title: 'Payment',
     subtitle: 'Cluster',
@@ -94,62 +104,40 @@ export const UpdateUserPayment: FC<{
           label: 'Cancel Subscription',
           click: cancel,
         },
-    children: [
-      element(Layout, {
-        key: 'layout',
-        column: true,
-        padding: true,
-        divide: true,
-        children: [
-          element(Control, {
-            key: 'plan_id',
-            label: 'Plan',
-            helper: 'Which subscription would you like?',
-            error: schema.error('plan_id'),
-            children: element(InputSelect, {
-              value: schema.value('plan_id'),
-              change: schema.change('plan_id'),
-              options: !gqlListPlans.data
-                ? []
-                : gqlListPlans.data.plans.map(plan => ({
-                    value: plan.id,
-                    label: plan.name,
-                    helper: `$${plan.amount / 100} ${plan.currency} every ${
-                      plan.interval_separator
-                    } ${plan.interval}${
-                      plan.interval_separator === 1 ? '' : 's'
-                    }`,
-                  })),
-            }),
-          }),
-          element(Control, {
-            key: 'card',
-            label: 'Card',
-            helper: 'Powered by Stripe',
-            error: schema.error('card'),
-            children: element(InputStripe, {
-              stripe,
-              change: value => {
-                if (mounted.current) stripeCard.current = value
-              },
-            }),
-          }),
-          element(Layout, {
-            key: 'top',
-            divide: true,
-            children: [
-              element(Control, {
-                key: 'name',
-                label: 'Name',
-                helper: 'Found on card',
-                error: schema.error('name'),
-                children: element(InputString, {
-                  value: schema.value('name'),
-                  change: schema.change('name'),
-                  placeholder: 'Fred Blogs',
+    children: !gqlGetUser.data
+      ? null
+      : element(Layout, {
+          key: 'layout',
+          column: true,
+          padding: true,
+          divide: true,
+          children: [
+            element(Layout, {
+              key: 'plan',
+              divide: true,
+              media: true,
+              children: [
+                element(Control, {
+                  key: 'plan_id',
+                  label: 'Plan',
+                  helper: 'Which subscription would you like?',
+                  error: schema.error('plan_id'),
+                  children: element(InputSelect, {
+                    value: schema.value('plan_id'),
+                    change: schema.change('plan_id'),
+                    options: !gqlListPlans.data
+                      ? []
+                      : gqlListPlans.data.plans.map(plan => ({
+                          value: plan.id,
+                          label: plan.name,
+                          helper: `$${plan.amount / 100} ${
+                            plan.currency
+                          } every ${plan.interval_separator} ${plan.interval}${
+                            plan.interval_separator === 1 ? '' : 's'
+                          }`,
+                        })),
+                  }),
                 }),
-              }),
-              !subscribed &&
                 element(Control, {
                   key: 'coupon',
                   label: 'Code',
@@ -161,29 +149,58 @@ export const UpdateUserPayment: FC<{
                     placeholder: '...',
                   }),
                 }),
-            ],
-          }),
-          element(Control, {
-            key: 'email',
-            label: 'Billing Email',
-            helper: 'This email will receive payment invoices',
-            error: schema.error('email'),
-            children: element(InputString, {
-              value: schema.value('email'),
-              change: schema.change('email'),
-              placeholder: 'fred@example.com',
+              ],
             }),
-          }),
-          element(Button, {
-            key: 'submit',
-            label: subscribed ? 'Update' : 'Submit',
-            disabled: !schema.valid,
-            click: schema.submit,
-            loading,
-          }),
-        ],
-      }),
-    ],
+            element(Control, {
+              key: 'card',
+              label: 'Card',
+              helper: 'Powered by Stripe',
+              error: schema.error('card'),
+              children: element(InputStripe, {
+                stripe,
+                change: value => {
+                  if (mounted.current) stripeCard.current = value
+                },
+              }),
+            }),
+            element(Layout, {
+              key: 'top',
+              divide: true,
+              media: true,
+              children: [
+                element(Control, {
+                  key: 'name',
+                  label: 'Name',
+                  helper: 'Found on card',
+                  error: schema.error('name'),
+                  children: element(InputString, {
+                    value: schema.value('name'),
+                    change: schema.change('name'),
+                    placeholder: 'Fred Blogs',
+                  }),
+                }),
+                element(Control, {
+                  key: 'email',
+                  label: 'Billing Email',
+                  helper: 'Payment invoices will be sent here',
+                  error: schema.error('email'),
+                  children: element(InputString, {
+                    value: schema.value('email'),
+                    change: schema.change('email'),
+                    placeholder: 'fred@example.com',
+                  }),
+                }),
+              ],
+            }),
+            element(Button, {
+              key: 'submit',
+              label: subscribed ? 'Update' : 'Submit',
+              disabled: !schema.valid,
+              click: schema.submit,
+              loading,
+            }),
+          ],
+        }),
   })
 }
 
@@ -206,6 +223,26 @@ const useUpsertUserPayment = createUseServer<{
     mutation UpsertUserPaymentClient($input: UpdateUserPaymentInput!) {
       user: UpsertUserPaymentClient(input: $input) {
         id
+      }
+    }
+  `,
+})
+
+const useGetUser = createUseServer<{
+  user: {
+    name: string
+    email: string
+    plan_id: string
+    subscribed: string
+  }
+}>({
+  query: `
+    query GetUserClient {
+      user: GetUserClient {
+        name
+        email
+        plan_id
+        subscribed
       }
     }
   `,

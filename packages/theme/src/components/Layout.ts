@@ -44,6 +44,9 @@ export const Layout: FC<{
       '& > div:not(:last-child)': divide && {
         margin: column ? `0 0 20px 0` : `0 20px 0 0`,
       },
+      '& > div': !column && {
+        flexGrow: 1,
+      },
       [bp]: media && {
         flexDirection: 'column',
         justifyContent: 'stretch',

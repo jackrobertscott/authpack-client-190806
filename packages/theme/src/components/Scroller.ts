@@ -7,7 +7,9 @@ export const Scroller: FC<{
   disable?: boolean
   maxheight?: number
   always?: boolean
-}> = ({ children, disable, maxheight, always }) => {
+  xaxis?: boolean
+  yaxis?: boolean
+}> = ({ children, disable, maxheight, always, xaxis, yaxis = true }) => {
   const theme = useTheme()
   return element('div', {
     children: element('div', {
@@ -25,7 +27,20 @@ export const Scroller: FC<{
       display: 'flex',
       position: 'relative',
       flexDirection: 'column',
-      overflow: always ? 'scroll' : disable ? 'hidden' : 'auto',
+      overflowY: !yaxis
+        ? 'hidden'
+        : always
+        ? 'scroll'
+        : disable
+        ? 'hidden'
+        : 'auto',
+      overflowX: !xaxis
+        ? 'hidden'
+        : always
+        ? 'scroll'
+        : disable
+        ? 'hidden'
+        : 'auto',
       flexGrow: 1,
       maxHeight: maxheight,
       '&::-webkit-scrollbar': {
@@ -49,6 +64,9 @@ export const Scroller: FC<{
       },
       '&::-webkit-scrollbar-thumb:hover': {
         background: theme.scroller.backgroundHover,
+      },
+      '&::-webkit-scrollbar-corner': {
+        background: theme.scroller.underneath,
       },
     }),
   })

@@ -54,6 +54,7 @@ export const Control: FC<{
           marginTop: 3,
           color: theme.input.helper,
           fontWeight: theme.global.thin,
+          lineHeight: '1.5em',
         }),
       }),
       element('div', {
@@ -78,13 +79,10 @@ const Alert: FC<{
     className: css({
       all: 'unset',
       display: 'flex',
-      position: 'relative',
+      position: 'initial',
       cursor: 'pointer',
       '&:hover > .alert': {
         opacity: 1,
-      },
-      [bp]: {
-        position: 'initial',
       },
     }),
     children: [
@@ -107,17 +105,11 @@ const Alert: FC<{
           display: 'flex',
           position: 'absolute',
           zIndex: 150,
-          top: -15,
-          right: -10,
-          transform: 'translateX(100%)',
+          top: 25,
+          right: 0,
+          left: -10,
           pointerEvents: 'none',
           opacity: open ? 1 : 0,
-          [bp]: {
-            top: -10,
-            right: 0,
-            left: 0,
-            transform: 'translateY(-100%)',
-          },
         }).concat(' alert'),
         children: element(Pointer, {
           icon,

@@ -83,6 +83,7 @@ const Header: FC<{
                 marginTop: 5,
                 color: theme.pointer.helper,
                 fontWeight: theme.global.thin,
+                lineHeight: '1.5em',
               }),
             }),
         ],

@@ -47,6 +47,8 @@ export const Page: FC<{
             children: element(Scroller, {
               key: 'scroller',
               disable: hidden,
+              xaxis: true,
+              yaxis: false,
               children: [
                 element(Fragment, {
                   key: 'children',

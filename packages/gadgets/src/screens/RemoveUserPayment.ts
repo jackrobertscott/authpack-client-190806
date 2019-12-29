@@ -34,7 +34,7 @@ export const RemoveUserPayment: FC<{
         key: 'focus',
         icon: 'exclamation-triangle',
         label: 'Are you sure?',
-        helper: 'Please confirm the cancellation of your subscription',
+        helper: 'Subscription will end after the current payment period',
         visible: confirm,
         children: element(Layout, {
           divide: true,

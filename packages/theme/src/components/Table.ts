@@ -134,6 +134,7 @@ const Row: FC<{
       display: 'table-row',
       color: theme.table.value,
       fontWeight: theme.global.thin,
+      lineHeight: '1.5em',
       '& > td': {
         transition: '200ms',
         background: theme.table.background,
