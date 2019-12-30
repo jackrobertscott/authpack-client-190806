@@ -25,19 +25,18 @@ export const ListMemberships: FC<{
     children: !gqlListMemberships.data
       ? null
       : gqlListMemberships.data.memberships.map(membership => {
-          const suffix = membership.admin ? ' (admin)' : ''
           return element(Snippet, {
             key: membership.id,
             icon: 'user-circle',
             label: membership.user
-              ? `${membership.user.summary}${suffix}`
-              : membership.user_email || 'User Unknown',
-            value: membership.permissions.map(({ name }) => name).join(', '),
+              ? membership.user.summary
+              : membership.user_email || 'User unknown',
+            value: membership.admin ? 'Admin' : 'Member',
             options: [
               {
                 icon: 'sliders-h',
                 label: 'Update',
-                helper: 'Change member permissions',
+                helper: 'Update member',
                 click: () => update(membership.id),
               },
               {
@@ -60,9 +59,6 @@ const useListMemberships = createUseServer<{
     user?: {
       summary: string
     }
-    permissions: Array<{
-      name: string
-    }>
   }>
 }>({
   query: `
@@ -73,9 +69,6 @@ const useListMemberships = createUseServer<{
         user_email
         user {
           summary
-        }
-        permissions {
-          name
         }
       }
     }

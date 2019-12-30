@@ -74,6 +74,7 @@ export const useGQL = <T>({
                 label: e.status || 'Error',
                 helper: e.message,
               })
+              e.handled = true
             }
             return Promise.reject(e)
           })

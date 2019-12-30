@@ -1,4 +1,4 @@
-import { createElement as create, FC, useState, useEffect } from 'react'
+import { createElement as element, FC, useState, useEffect } from 'react'
 import { SearchBar, usePaginator } from '@authpack/theme'
 
 export const TemplateSearchBar: FC<{
@@ -13,7 +13,7 @@ export const TemplateSearchBar: FC<{
     if (change) change(search, paginator.limit, paginator.skip)
     // eslint-disable-next-line
   }, [search, paginator.limit, paginator.skip])
-  return create(SearchBar, {
+  return element(SearchBar, {
     value: search,
     change: input ? searchChange : undefined,
     options: [

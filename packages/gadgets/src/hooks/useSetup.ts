@@ -21,22 +21,24 @@ export const useSetup = () => {
   useEffect(() => {
     SettingsStore.update({
       ready: false,
-      user: undefined,
-      team: undefined,
       session: undefined,
-      permissions: undefined,
+      user: undefined,
+      plan: undefined,
+      team: undefined,
+      membership: undefined,
     })
     if (settings.bearer && settings.client) {
       gqlGetSession
         .fetch()
-        .then(({ session: { user, team, permissions, ...session } }) => {
+        .then(({ session: { user, plan, team, membership, ...session } }) => {
           SettingsStore.update({
             ready: true,
             bearer: `Bearer ${session.token}`,
-            user,
-            team,
             session,
-            permissions,
+            user,
+            plan,
+            team,
+            membership,
           })
         })
         .catch(() => {
@@ -58,10 +60,12 @@ export const useSetup = () => {
       name: 'gadgets:loaded',
     })
     return SettingsStore.listen(data => {
-      radio.message({
-        name: 'gadgets:update',
-        payload: data,
-      })
+      if ((data.bearer && data.user) || !data.bearer) {
+        radio.message({
+          name: 'gadgets:update',
+          payload: data,
+        })
+      }
     })
     // eslint-disable-next-line
   }, [])
@@ -98,7 +102,7 @@ const useGetCluster = createUseServer<{
     id: string
     name: string
     theme_preference: string
-    subscribed: boolean
+    stripe_publishable_key: string
   }
 }>({
   query: `
@@ -107,7 +111,7 @@ const useGetCluster = createUseServer<{
         id
         name
         theme_preference
-        subscribed
+        stripe_publishable_key
       }
     }
   `,
@@ -121,23 +125,34 @@ const useGetSession = createUseServer<{
       id: string
       email: string
       verified: boolean
+      subscribed: boolean
       username: string
       name?: string
       name_given?: string
       name_family?: string
+    }
+    plan?: {
+      id: string
+      name: string
+      tag: string
+      description?: string
+      statement?: string
+      amount: number
+      currency: string
+      interval: string
+      interval_seperator: number
     }
     team?: {
       id: string
       name: string
       tag: string
       description?: string
+      subscribed: boolean
     }
-    permissions?: Array<{
+    membership?: {
       id: string
-      name: string
-      tag: string
-      description?: string
-    }>
+      admin: boolean
+    }
   }
 }>({
   query: `
@@ -150,21 +165,32 @@ const useGetSession = createUseServer<{
           email
           verified
           username
+          subscribed
           name
           name_given
           name_family
+        }
+        plan {
+          id
+          name
+          tag
+          description
+          statement
+          amount
+          currency
+          interval
+          interval_separator
         }
         team {
           id
           name
           tag
           description
+          subscribed
         }
-        permissions {
+        membership {
           id
-          name
-          tag
-          description
+          admin
         }
       }
     }

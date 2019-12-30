@@ -62,7 +62,7 @@ export const UpdateUserPassword: FC<{
           }),
           element(Button, {
             key: 'submit',
-            label: 'Update',
+            label: 'Submit',
             loading: gqlUpdateUser.loading,
             disabled: !schema.valid,
             click: schema.submit,

@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import { createElement as create, FC, useState, ReactNode } from 'react'
+import { createElement as element, FC, useState, ReactNode } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
 import {
@@ -26,9 +26,9 @@ import {
 console.clear()
 
 const stories = storiesOf('Modals', module).addDecorator(data => {
-  return create(Root, {
+  return element(Root, {
     theme: 'night_sky',
-    children: create('div', {
+    children: element('div', {
       children: data(),
       className: css({
         display: 'flex',
@@ -39,14 +39,14 @@ const stories = storiesOf('Modals', module).addDecorator(data => {
 })
 
 stories.add('Form', () => {
-  return create(Modal, {
-    children: create(Layout, {
+  return element(Modal, {
+    children: element(Layout, {
       grow: true,
-      children: create(SimpleIconBar, {
-        children: create(Page, {
+      children: element(SimpleIconBar, {
+        children: element(Page, {
           title: 'Create',
           subtitle: 'Authpack',
-          children: create(SimpleForm),
+          children: element(SimpleForm),
         }),
       }),
     }),
@@ -54,15 +54,15 @@ stories.add('Form', () => {
 })
 
 stories.add('Buttons & Poster', () => {
-  return create(Modal, {
-    children: create(Layout, {
+  return element(Modal, {
+    children: element(Layout, {
       grow: true,
-      children: create(SimpleIconBar, {
-        children: create(Page, {
+      children: element(SimpleIconBar, {
+        children: element(Page, {
           key: 'Gadgets',
           title: 'Buttons',
           subtitle: 'Authpack',
-          children: create(SimpleButtons),
+          children: element(SimpleButtons),
         }),
       }),
     }),
@@ -70,16 +70,16 @@ stories.add('Buttons & Poster', () => {
 })
 
 stories.add('Snippets', () => {
-  return create(Modal, {
-    children: create(Layout, {
+  return element(Modal, {
+    children: element(Layout, {
       grow: true,
-      children: create(SimpleIconBar, {
-        children: create(SimpleSideBar, {
-          children: create(Page, {
+      children: element(SimpleIconBar, {
+        children: element(SimpleSideBar, {
+          children: element(Page, {
             key: 'Gadgets',
             title: 'Users',
             subtitle: 'Authpack',
-            children: create(SimpleSnippets),
+            children: element(SimpleSnippets),
           }),
         }),
       }),
@@ -88,7 +88,7 @@ stories.add('Snippets', () => {
 })
 
 const SimpleIconBar: FC<{ children: ReactNode }> = ({ children }) => {
-  return create(IconBar, {
+  return element(IconBar, {
     children,
     icons: [
       {
@@ -157,60 +157,60 @@ const SimpleForm: FC = () => {
         .of(yup.string().email('Please verify your emails are valid')),
     }),
   })
-  return create(Layout, {
+  return element(Layout, {
     column: true,
     padding: true,
     divide: true,
     children: [
-      create(Control, {
+      element(Control, {
         key: 'name',
         label: 'Name',
         helper: 'Please use your full name',
         error: schema.error('name'),
-        children: create(InputString, {
+        children: element(InputString, {
           value: schema.value('name'),
           change: schema.change('name'),
           placeholder: 'E.g. Fred Blogs',
         }),
       }),
-      create(Control, {
+      element(Control, {
         key: 'age',
         label: 'Age',
         helper: 'Please present your age',
         error: schema.error('age'),
-        children: create(InputNumber, {
+        children: element(InputNumber, {
           value: schema.value('age'),
           change: schema.change('age'),
           placeholder: 'E.g. 33',
           integer: true,
         }),
       }),
-      create(Control, {
+      element(Control, {
         key: 'dogs',
         label: 'Dogs vs Cats',
         helper: 'Do you prefer dogs over cats',
         error: schema.error('dogs'),
-        children: create(InputBoolean, {
+        children: element(InputBoolean, {
           value: schema.value('dogs'),
           change: schema.change('dogs'),
         }),
       }),
-      create(Control, {
+      element(Control, {
         key: 'select',
         label: 'Favourite Food',
         error: schema.error('food'),
-        children: create(InputSelect, {
+        children: element(InputSelect, {
           value: schema.value('food'),
           change: schema.change('food'),
           filter: changeFoodFilter,
           options: Foods.filter(food => food.label.includes(foodFilter)),
         }),
       }),
-      create(Control, {
+      element(Control, {
         key: 'extras',
         label: 'Extras',
         error: schema.error('extras'),
-        children: create(InputSelectMany, {
+        children: element(InputSelectMany, {
           value: schema.value('extras'),
           change: schema.change('extras'),
           options: [
@@ -231,17 +231,17 @@ const SimpleForm: FC = () => {
           ],
         }),
       }),
-      create(Control, {
+      element(Control, {
         key: 'array',
         label: 'Emails',
         error: schema.error('emails'),
-        children: create(InputStringArray, {
+        children: element(InputStringArray, {
           value: schema.value('emails'),
           change: schema.change('emails'),
           placeholder: 'Add email...',
         }),
       }),
-      create(Button, {
+      element(Button, {
         key: 'Regular',
         label: 'Regular',
         disabled: !schema.valid,
@@ -252,35 +252,35 @@ const SimpleForm: FC = () => {
 }
 
 const SimpleButtons: FC = () => {
-  return create(Layout, {
+  return element(Layout, {
     column: true,
     children: [
-      create(Poster, {
+      element(Poster, {
         key: 'Poster',
         icon: 'magic',
         label: 'Buttons',
         helper:
           'Lots of pretty buttons and this is a really long sentence to see what it looks like',
       }),
-      create(Layout, {
+      element(Layout, {
         key: 'Layout',
         column: true,
         padding: true,
         divide: true,
         children: [
-          create(Button, {
+          element(Button, {
             key: 'Regular',
             label: 'Regular',
             click: () => console.log('Regular'),
           }),
-          create(Button, {
+          element(Button, {
             key: 'Minor',
             label: 'Minor',
             click: () => console.log('Minor'),
             icon: 'bolt',
             minor: true,
           }),
-          create(Button, {
+          element(Button, {
             key: 'Disabled',
             label: 'Disabled',
             click: () => console.log('Disabled'),
@@ -293,10 +293,10 @@ const SimpleButtons: FC = () => {
 }
 
 const SimpleSnippets: FC = () => {
-  return create(Layout, {
+  return element(Layout, {
     column: true,
     children: [
-      create(Snippet, {
+      element(Snippet, {
         key: 'Awesome',
         icon: 'bookmark',
         label: 'Awesome Team',
@@ -306,14 +306,14 @@ const SimpleSnippets: FC = () => {
           { icon: 'trash-alt', label: 'Remove', helper: 'Get rid of them!' },
         ],
       }),
-      create(Snippet, {
+      element(Snippet, {
         key: 'Pancake',
         icon: 'bookmark',
         label: 'Pancake Team',
         value: 'This is a nice value',
         click: () => console.log('Pancake'),
       }),
-      create(Snippet, {
+      element(Snippet, {
         key: 'Seagul',
         icon: 'bookmark',
         label: 'Seagul Team',
@@ -324,7 +324,7 @@ const SimpleSnippets: FC = () => {
 }
 
 const SimpleSideBar: FC<{ children: ReactNode }> = ({ children }) => {
-  return create(SideBar, {
+  return element(SideBar, {
     title: 'Hello',
     footer: 'Jack Scott',
     children,

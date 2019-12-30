@@ -1,4 +1,4 @@
-import { createElement as create, FC, useState, Fragment } from 'react'
+import { createElement as element, FC, useState, Fragment } from 'react'
 import { Poster, Layout, Button, Focus } from '@authpack/theme'
 
 export const ConfirmRemove: FC<{
@@ -9,42 +9,42 @@ export const ConfirmRemove: FC<{
   change: () => void
 }> = ({ helper, alert, keyword = 'Remove', change, loading }) => {
   const [confirm, confirmChange] = useState<boolean>(false)
-  return create(Fragment, {
+  return element(Fragment, {
     children: [
-      create(Poster, {
+      element(Poster, {
         key: 'poster',
         icon: 'trash-alt',
         label: keyword,
         helper,
       }),
-      create(Layout, {
+      element(Layout, {
         key: 'layout',
         column: true,
         padding: true,
         divide: true,
-        children: create(Button, {
+        children: element(Button, {
           label: keyword,
           click: () => confirmChange(true),
         }),
       }),
-      create(Focus, {
+      element(Focus, {
         key: 'focus',
         icon: 'exclamation-triangle',
         label: 'Are you sure?',
         helper: alert,
         visible: confirm,
-        children: create(Layout, {
+        children: element(Layout, {
           divide: true,
           media: true,
           children: [
-            create(Button, {
+            element(Button, {
               key: 'confirm',
               icon: 'check',
               label: 'Confirm',
               click: change,
               loading,
             }),
-            create(Button, {
+            element(Button, {
               key: 'cancel',
               minor: true,
               icon: 'times',

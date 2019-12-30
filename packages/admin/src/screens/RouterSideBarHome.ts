@@ -3,8 +3,9 @@ import { useRouter, SideBar } from '@authpack/theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { ListUsers } from './ListUsers'
 import { ListProviders } from './ListProviders'
-import { ListPermissions } from './ListPermissions'
 import { ListTeams } from './ListTeams'
+import { ListWebhooks } from './ListWebhooks'
+import { ListPlans } from './ListPlan'
 
 export const RouterSideBarHome: FC = () => {
   const universal = useUniversal()
@@ -14,8 +15,9 @@ export const RouterSideBarHome: FC = () => {
     options: [
       { path: '/users', children: element(ListUsers) },
       { path: '/teams', children: element(ListTeams) },
-      { path: '/permissions', children: element(ListPermissions) },
+      { path: '/plans', children: element(ListPlans) },
       { path: '/providers', children: element(ListProviders) },
+      { path: '/webhooks', children: element(ListWebhooks) },
     ],
   })
   return element(SideBar, {
@@ -37,16 +39,22 @@ export const RouterSideBarHome: FC = () => {
         click: () => router.change('/teams'),
       },
       {
-        icon: 'shield-alt',
-        label: 'Permissions',
-        focused: !!router.current && router.current.path === '/permissions',
-        click: () => router.change('/permissions'),
+        icon: 'donate',
+        label: 'Plans',
+        focused: !!router.current && router.current.path === '/plans',
+        click: () => router.change('/plans'),
       },
       {
         icon: 'plug',
         label: 'Providers',
         focused: !!router.current && router.current.path === '/providers',
         click: () => router.change('/providers'),
+      },
+      {
+        icon: 'sitemap',
+        label: 'Webhooks',
+        focused: !!router.current && router.current.path === '/webhooks',
+        click: () => router.change('/webhooks'),
       },
     ],
   })

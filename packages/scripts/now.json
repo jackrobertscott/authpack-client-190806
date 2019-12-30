@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "name": "wga-prod-scripts",
+  "alias": "scripts.v1.authpack.io",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/static-build",
+      "config": { "distDir": "build" }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "/$1"
+    }
+  ]
+}

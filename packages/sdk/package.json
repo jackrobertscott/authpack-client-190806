@@ -1,7 +1,7 @@
 {
   "name": "@authpack/sdk",
+  "version": "0.8.1",
   "private": false,
-  "version": "0.7.4",
   "description": "Plugin for Authpack.",
   "license": "MIT",
   "main": "lib/index.js",
@@ -24,6 +24,7 @@
     "compile": "tsc"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "events-and-things": "^0.7.3"
   },
   "devDependencies": {

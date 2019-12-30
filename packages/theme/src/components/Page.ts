@@ -44,17 +44,23 @@ export const Page: FC<{
           }),
           element('div', {
             key: 'children',
-            children: [
-              element(Fragment, {
-                key: 'children',
-                children,
-              }),
-              element(Branding, {
-                key: 'branding',
-                url: 'https://authpack.io',
-                text: `Authpack`,
-              }),
-            ],
+            children: element(Scroller, {
+              key: 'scroller',
+              disable: hidden,
+              xaxis: true,
+              yaxis: false,
+              children: [
+                element(Fragment, {
+                  key: 'children',
+                  children,
+                }),
+                element(Branding, {
+                  key: 'branding',
+                  url: 'https://authpack.io',
+                  text: `Authpack`,
+                }),
+              ],
+            }),
             className: css({
               display: 'flex',
               flexDirection: 'column',
@@ -174,6 +180,7 @@ const Corner: FC<{
       padding: '25px 25px 20px',
       cursor: 'pointer',
       transition: '200ms',
+      textAlign: 'right',
       color: theme.page.label,
       background: theme.page.header,
       '&:hover': {

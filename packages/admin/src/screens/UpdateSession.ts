@@ -1,20 +1,30 @@
 import * as yup from 'yup'
 import { createElement as element, FC, useEffect } from 'react'
-import { useSchema, Layout, Control, InputBoolean, Page } from '@authpack/theme'
+import {
+  useSchema,
+  Layout,
+  Control,
+  InputBoolean,
+  Page,
+  Button,
+  useToaster,
+} from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
 export const UpdateSession: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
+  const toaster = useToaster()
   const gqlGetSession = useGetSession()
   const gqlUpdateSession = useUpdateSession()
   const schema = useSchema({
     schema: SchemaUpdateSession,
-    poller: value => {
-      gqlUpdateSession
-        .fetch({ id, value })
-        .then(({ session }) => change && change(session.id))
+    submit: value => {
+      gqlUpdateSession.fetch({ id, value }).then(({ session }) => {
+        if (change) change(session.id)
+        toaster.add({ icon: 'check-circle', label: 'Success' })
+      })
     },
   })
   useEffect(() => {
@@ -40,6 +50,13 @@ export const UpdateSession: FC<{
                 value: schema.value('disabled'),
                 change: schema.change('disabled'),
               }),
+            }),
+            element(Button, {
+              key: 'submit',
+              label: 'Save',
+              loading: gqlGetSession.loading || gqlUpdateSession.loading,
+              disabled: !schema.valid,
+              click: schema.submit,
             }),
           ],
     }),

@@ -56,7 +56,7 @@ export const SideBar: FC<{
             minWidth: '100%',
             borderRight: 'none',
             position: 'absolute',
-            zIndex: 150,
+            zIndex: 1000,
             left: 0,
             top: 0,
             right: 0,
@@ -95,6 +95,7 @@ export const SideBar: FC<{
           display: 'flex',
           flexDirection: 'column',
           flexGrow: 1,
+          overflow: 'hidden',
         }),
         children: [
           element('div', {

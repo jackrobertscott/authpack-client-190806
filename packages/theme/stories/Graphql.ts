@@ -1,7 +1,7 @@
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import GraphiQL from 'graphiql'
 import 'graphiql/graphiql.css'
-import { createElement as create, FC } from 'react'
+import { createElement as element, FC } from 'react'
 import { storiesOf } from '@storybook/react'
 import { css } from 'emotion'
 import { Root, graphql, useTheme } from '../src/index'
@@ -9,9 +9,9 @@ import { Root, graphql, useTheme } from '../src/index'
 console.clear()
 
 const stories = storiesOf('Pages', module).addDecorator(data => {
-  return create(Root, {
+  return element(Root, {
     theme: 'night_sky',
-    children: create('div', {
+    children: element('div', {
       children: data(),
       className: css({
         display: 'flex',
@@ -22,13 +22,13 @@ const stories = storiesOf('Pages', module).addDecorator(data => {
 })
 
 stories.add('Explorer', () => {
-  return create(Explorer)
+  return element(Explorer)
 })
 
 const Explorer: FC = () => {
   const theme = useTheme()
-  return create('div', {
-    children: create(GraphiQL, {
+  return element('div', {
+    children: element(GraphiQL, {
       fetcher: async (graphQLParams: any) => {
         try {
           const data = await graphql<any>({

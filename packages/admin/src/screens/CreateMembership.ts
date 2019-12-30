@@ -8,7 +8,6 @@ import {
   InputSelect,
   drip,
   Page,
-  InputSelectMany,
   InputBoolean,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
@@ -21,7 +20,6 @@ export const CreateMembership: FC<{
   const gqlCreateMembership = useCreateMembership()
   const gqlListUsers = useListUsers()
   const gqlListTeams = useListTeams()
-  const gqlListPermissions = useListPermissions()
   const queryListUsers = useRef(drip(1000, gqlListUsers.fetch))
   const queryListTeams = useRef(drip(1000, gqlListTeams.fetch))
   const schema = useSchema({
@@ -35,7 +33,6 @@ export const CreateMembership: FC<{
   useEffect(() => {
     queryListUsers.current()
     queryListTeams.current()
-    gqlListPermissions.fetch()
     // eslint-disable-next-line
   }, [])
   useEffect(() => {
@@ -55,90 +52,67 @@ export const CreateMembership: FC<{
       column: true,
       padding: true,
       divide: true,
-      children: !gqlListPermissions.data
-        ? null
-        : [
-            !user_id &&
-              element(Control, {
-                key: 'user_id',
-                label: 'User',
-                error: schema.error('user_id'),
-                children: element(InputSelect, {
-                  value: schema.value('user_id'),
-                  change: schema.change('user_id'),
-                  placeholder: 'Select user...',
-                  filter: phrase => queryListUsers.current({ phrase }),
-                  options: !gqlListUsers.data
-                    ? []
-                    : gqlListUsers.data.users.map(user => ({
-                        value: user.id,
-                        label:
-                          user.name && user.username
-                            ? `${user.name} - ${user.username}`
-                            : user.name || user.username,
-                        helper: user.email,
-                      })),
-                }),
-              }),
-            !team_id &&
-              element(Control, {
-                key: 'team_id',
-                label: 'Team',
-                helper: 'Optionally select a team to be added to membership',
-                error: schema.error('team_id'),
-                children: element(InputSelect, {
-                  value: schema.value('team_id'),
-                  change: schema.change('team_id'),
-                  placeholder: 'Select team...',
-                  filter: phrase => queryListTeams.current({ phrase }),
-                  options: !gqlListTeams.data
-                    ? []
-                    : gqlListTeams.data.teams.map(team => ({
-                        value: team.id,
-                        label: `${team.name} (${team.tag})`,
-                        helper: team.description,
-                      })),
-                }),
-              }),
-            element(Control, {
-              key: 'admin',
-              label: 'Admin',
-              helper: 'Is this user an admin of the team',
-              error: schema.error('admin'),
-              children: element(InputBoolean, {
-                value: schema.value('admin'),
-                change: schema.change('admin'),
-              }),
+      children: [
+        !user_id &&
+          element(Control, {
+            key: 'user_id',
+            label: 'User',
+            error: schema.error('user_id'),
+            children: element(InputSelect, {
+              value: schema.value('user_id'),
+              change: schema.change('user_id'),
+              placeholder: 'Select user...',
+              filter: phrase => queryListUsers.current({ phrase }),
+              options: !gqlListUsers.data
+                ? []
+                : gqlListUsers.data.users.map(user => ({
+                    value: user.id,
+                    label:
+                      user.name && user.username
+                        ? `${user.name} - ${user.username}`
+                        : user.name || user.username,
+                    helper: user.email,
+                  })),
             }),
-            !!gqlListPermissions.data.permissions.length &&
-              element(Control, {
-                key: 'permission_ids',
-                label: 'Permissions',
-                helper: 'Determine what the member can access',
-                error: schema.error('permission_ids'),
-                children: element(InputSelectMany, {
-                  value: schema.value('permission_ids'),
-                  change: schema.change('permission_ids'),
-                  options: gqlListPermissions.data.permissions.map(
-                    permission => {
-                      return {
-                        value: permission.id,
-                        icon: 'user-sheild',
-                        label: permission.name,
-                        helper: permission.description,
-                      }
-                    }
-                  ),
-                }),
-              }),
-            element(Button, {
-              key: 'submit',
-              label: 'Create',
-              loading: gqlCreateMembership.loading,
-              disabled: !schema.valid,
-              click: schema.submit,
+          }),
+        !team_id &&
+          element(Control, {
+            key: 'team_id',
+            label: 'Team',
+            helper: 'Optionally select a team to be added to membership',
+            error: schema.error('team_id'),
+            children: element(InputSelect, {
+              value: schema.value('team_id'),
+              change: schema.change('team_id'),
+              placeholder: 'Select team...',
+              filter: phrase => queryListTeams.current({ phrase }),
+              options: !gqlListTeams.data
+                ? []
+                : gqlListTeams.data.teams.map(team => ({
+                    value: team.id,
+                    label: `${team.name} (${team.tag})`,
+                    helper: team.description,
+                  })),
             }),
-          ],
+          }),
+        element(Control, {
+          key: 'admin',
+          label: 'Admin',
+          helper: 'User will be have full control of team and members',
+          error: schema.error('admin'),
+          children: element(InputBoolean, {
+            value: schema.value('admin'),
+            change: schema.change('admin'),
+          }),
+        }),
+        element(Button, {
+          key: 'submit',
+          label: 'Create',
+          loading: gqlCreateMembership.loading,
+          disabled: !schema.valid,
+          click: schema.submit,
+        }),
+      ],
     }),
   })
 }
@@ -146,14 +120,7 @@ export const CreateMembership: FC<{
 const SchemaCreateMembership = yup.object().shape({
   user_id: yup.string().required('Please provide a user'),
   team_id: yup.string().required('Please provide a team'),
-  admin: yup
-    .boolean()
-    .default(false)
-    .required('Please determine if the user is an admin'),
-  permission_ids: yup
-    .array()
-    .of(yup.string().required())
-    .default([]),
+  admin: yup.boolean(),
 })
 
 const useCreateMembership = createUseServer<{
@@ -204,24 +171,6 @@ const useListTeams = createUseServer<{
         id
         name
         tag
-        description
-      }
-    }
-  `,
-})
-
-const useListPermissions = createUseServer<{
-  permissions: Array<{
-    id: string
-    name: string
-    description: string
-  }>
-}>({
-  query: `
-    query ListPermissionsClient {
-      permissions: ListPermissionsClient {
-        id
-        name
         description
       }
     }

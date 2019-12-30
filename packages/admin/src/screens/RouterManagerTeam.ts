@@ -31,7 +31,6 @@ export const RouterManagerTeam: FC<{
     visible,
     children: element(IconBar, {
       children: router.current && router.current.children,
-
       icons: id
         ? [
             {

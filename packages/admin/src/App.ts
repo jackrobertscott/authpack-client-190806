@@ -1,35 +1,20 @@
-import { createElement as create, FC } from 'react'
-import { Spinner, Toaster } from '@authpack/theme'
-import { Universal } from './utils/universal'
+import queryString from 'query-string'
+import { createElement as element, FC, useRef } from 'react'
+import { Toaster, Oauth } from '@authpack/theme'
 import { ErrorBoundary } from './screens/ErrorBoundary'
-import { Admin } from './screens/Admin'
-import { Preferences } from './utils/preferences'
-import { config } from './config'
-import * as Authpack from './utils/authpack'
+import { Core } from './screens/Core'
 
 export const App: FC = () => {
-  return create(ErrorBoundary, {
-    children: create(Preferences, {
-      children: create(Universal, {
-        children: create(Toaster, {
-          children: create(Spinner, {
-            children: create(Authpack.Provider, {
-              children: create(Admin),
-              value: {
-                debug: true,
-                key: config.gadgets_key_client,
-                url: document.location.hostname.includes('localhost')
-                  ? 'http://localhost:3100'
-                  : undefined,
-                options: {
-                  enable_teams: true,
-                  prompt_teams: true,
-                },
-              },
-            }),
-          }),
-        }),
-      }),
+  const query = useRef(queryString.parse(document.location.search))
+  return element(ErrorBoundary, {
+    children: element(Toaster, {
+      children: query.current.code
+        ? element(Oauth, {
+            code: Array.isArray(query.current.code)
+              ? query.current.code[0]
+              : query.current.code,
+          })
+        : element(Core),
     }),
   })
 }

@@ -26,6 +26,7 @@ export const useLocalRouter = ({
       : parsedOptions[0] && parsedOptions[0].key
   const [key, keyChange] = useState<undefined | string>(start)
   const [current] = parsedOptions.filter(option => key && key === option.key)
+  const optionkeys = parsedOptions.map(option => option.key).join()
   const change = (next: string) => {
     if (!mounted.current) return
     const matching = parsedOptions.filter(option => option.key === next)
@@ -36,11 +37,11 @@ export const useLocalRouter = ({
     if (!current) return start ? keyChange(start) : undefined
     if (!current.nosave && name)
       localStorage.setItem(`authpack.router.${name}`, current.key)
-  }, [key, parsedOptions.map(option => option.key).join()])
+  }, [key, optionkeys])
   return useMemo(() => {
     return {
       current,
       change,
     }
-  }, [key])
+  }, [key, optionkeys])
 }

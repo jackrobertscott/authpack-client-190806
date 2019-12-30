@@ -23,6 +23,7 @@ export const Empty: FC<{
       top: 0,
       bottom: 0,
       zIndex: 150,
+      maxWidth: '100vw',
       transition: '200ms',
       background: theme.empty.cover,
     }),
@@ -34,6 +35,7 @@ export const Empty: FC<{
         textAlign: 'center',
         width: 300,
         padding: 35,
+        margin: 15,
         maxWidth: '100%',
         color: theme.empty.label,
         border: theme.empty.border,
@@ -65,6 +67,7 @@ export const Empty: FC<{
             className: css({
               color: theme.empty.helper,
               fontWeight: theme.global.thin,
+              lineHeight: '1.5em',
               marginTop: 10,
             }),
           }),

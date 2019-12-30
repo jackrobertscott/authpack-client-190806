@@ -4,10 +4,9 @@ import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterManagerCluster } from './RouterManagerCluster'
 import { Explorer } from './Explorer'
 import { usePreferences } from '../utils/preferences'
-import { useGadgets } from '../utils/authpack'
+import { authpack } from '../utils/authpack'
 
 export const RouterCentral: FC = () => {
-  const gadgets = useGadgets()
   const preferences = usePreferences()
   const [apper, apperChange] = useState<boolean>(false)
   const router = useRouter({
@@ -34,19 +33,21 @@ export const RouterCentral: FC = () => {
       {
         icon: 'home',
         label: 'Home',
-        focused: !!router.current && router.current.path === '/users',
-        click: () => router.change('/users'),
+        focused: !!router.current && router.current.path.startsWith('/app'),
+        click: () => router.change('/app'),
       },
       {
         icon: 'code',
         label: 'Developers',
         focused: !!router.current && router.current.path === '/developers',
         click: () => router.change('/developers'),
+        hidesmall: true,
       },
       {
         prefix: 'far',
         icon: 'question-circle',
         label: 'Help & Feedback',
+        hidesmall: true,
         options: [
           {
             icon: 'book',
@@ -91,7 +92,7 @@ export const RouterCentral: FC = () => {
       {
         icon: 'user-circle',
         label: 'Account',
-        click: () => gadgets.show(),
+        click: () => authpack.plugin.show(),
       },
     ],
   })

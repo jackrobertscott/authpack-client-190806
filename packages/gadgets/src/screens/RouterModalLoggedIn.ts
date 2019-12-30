@@ -6,7 +6,7 @@ import { RouterSideBarTeam } from './RouterSideBarTeam'
 import { LogoutUser } from './LogoutUser'
 import { ReconcileUser } from './ReconcileUser'
 
-export const RouterModalOnauthed: FC<{
+export const RouterModalLoggedIn: FC<{
   close: () => void
 }> = ({ close }) => {
   const settings = useSettings()

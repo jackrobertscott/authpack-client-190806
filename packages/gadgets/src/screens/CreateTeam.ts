@@ -54,7 +54,7 @@ export const CreateTeam: FC<{
                 children: element(InputString, {
                   value: schema.value('name'),
                   change: schema.change('name'),
-                  placeholder: 'My Team',
+                  placeholder: 'Super Squad',
                 }),
               }),
               element(Control, {
@@ -65,7 +65,7 @@ export const CreateTeam: FC<{
                 children: element(InputString, {
                   value: schema.value('tag'),
                   change: schema.change('tag'),
-                  placeholder: 'my_team_123',
+                  placeholder: 'super_squad',
                 }),
               }),
             ],

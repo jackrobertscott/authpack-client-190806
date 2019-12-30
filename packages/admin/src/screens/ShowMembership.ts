@@ -29,12 +29,6 @@ export const ShowMembership: FC<{
               value: membership.id,
             }),
             element(Snippet, {
-              key: 'admin',
-              icon: 'star',
-              label: 'Admin',
-              value: String(membership.admin),
-            }),
-            element(Snippet, {
               key: 'user',
               icon: 'user',
               label: 'User',
@@ -50,21 +44,34 @@ export const ShowMembership: FC<{
               label: 'Team',
               value: !membership.team ? '...' : membership.team.summary,
             }),
-            element(Snippet, {
-              key: 'created',
-              icon: 'clock',
-              label: 'Created',
-              value:
-                membership.created &&
-                format(new Date(membership.created), 'dd LLL yyyy @ h:mm a'),
-            }),
-            element(Snippet, {
-              key: 'updated',
-              icon: 'clock',
-              label: 'Updated',
-              value:
-                membership.updated &&
-                format(new Date(membership.updated), 'dd LLL yyyy @ h:mm a'),
+            element(Layout, {
+              key: 'dates',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'created',
+                  icon: 'clock',
+                  label: 'Created',
+                  value:
+                    membership.created &&
+                    format(
+                      new Date(membership.created),
+                      'dd LLL yyyy @ h:mm a'
+                    ),
+                }),
+                element(Snippet, {
+                  key: 'updated',
+                  icon: 'clock',
+                  label: 'Updated',
+                  value:
+                    membership.updated &&
+                    format(
+                      new Date(membership.updated),
+                      'dd LLL yyyy @ h:mm a'
+                    ),
+                }),
+              ],
             }),
           ],
         }),
@@ -76,7 +83,6 @@ const useGetMembership = createUseServer<{
     id: string
     created: string
     updated: string
-    admin: boolean
     user_email?: string
     user?: {
       id: string
@@ -94,7 +100,6 @@ const useGetMembership = createUseServer<{
         id
         created
         updated
-        admin
         user_email
         user {
           id

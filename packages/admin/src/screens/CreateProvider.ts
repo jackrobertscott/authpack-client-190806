@@ -47,34 +47,42 @@ export const CreateProvider: FC<{
             ],
           }),
         }),
-        element(Control, {
-          key: 'client',
-          label: 'Client Id',
-          helper: `The oauth client id provided by ${schema.value('preset') ||
-            'the app'}`,
-          error: schema.error('client'),
-          children: element(InputString, {
-            value: schema.value('client'),
-            change: schema.change('client'),
-            placeholder: '...',
-          }),
-        }),
-        element(Control, {
-          key: 'secret',
-          label: 'Secret',
-          helper: `The oauth secret provided by ${schema.value('preset') ||
-            'the app'}`,
-          error: schema.error('secret'),
-          children: element(InputString, {
-            value: schema.value('secret'),
-            change: schema.change('secret'),
-            placeholder: '...',
-          }),
+        element(Layout, {
+          key: 'ids',
+          divide: true,
+          media: true,
+          children: [
+            element(Control, {
+              key: 'client',
+              label: 'Client Id',
+              helper: `The oauth client id provided by ${schema.value(
+                'preset'
+              ) || 'the app'}`,
+              error: schema.error('client'),
+              children: element(InputString, {
+                value: schema.value('client'),
+                change: schema.change('client'),
+                placeholder: '...',
+              }),
+            }),
+            element(Control, {
+              key: 'secret',
+              label: 'Secret',
+              helper: `The oauth secret provided by ${schema.value('preset') ||
+                'the app'}`,
+              error: schema.error('secret'),
+              children: element(InputString, {
+                value: schema.value('secret'),
+                change: schema.change('secret'),
+                placeholder: '...',
+              }),
+            }),
+          ],
         }),
         element(Control, {
           key: 'scopes',
           label: 'Scopes',
-          helper: 'A set of oauth permission scopes',
+          helper: 'A set of oauth access scopes',
           error: schema.error('scopes'),
           children: element(InputStringArray, {
             value: schema.value('scopes'),
@@ -84,9 +92,8 @@ export const CreateProvider: FC<{
         }),
         element(Control, {
           key: 'redirect_uri',
-          label: 'Advanced - Redirect Uri',
-          helper:
-            'Leave this empty unless you are creating your own login system',
+          label: 'Advanced Redirect Uri',
+          helper: 'Leave this empty unless creating a custom login system',
           error: schema.error('redirect_uri'),
           children: element(InputString, {
             value: schema.value('redirect_uri'),

@@ -1,12 +1,20 @@
 import * as yup from 'yup'
 import { createElement as element, FC } from 'react'
-import { Layout, useSchema, InputString, Button, Focus } from '@authpack/theme'
+import {
+  Layout,
+  useSchema,
+  InputString,
+  Button,
+  Focus,
+  useToaster,
+} from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { SettingsStore } from '../utils/settings'
 
 export const ReconcileUser: FC<{
   email: string
 }> = ({ email }) => {
+  const toaster = useToaster()
   const gqlRecoverUser = useRecoverUser()
   const gqlReconcileUser = useReconcileUser()
   const schema = useSchema({
@@ -53,7 +61,13 @@ export const ReconcileUser: FC<{
                   icon: 'paper-plane',
                   label: 'Resend',
                   loading: gqlRecoverUser.loading,
-                  click: () => gqlRecoverUser.fetch({ email }),
+                  click: () =>
+                    gqlRecoverUser.fetch({ email }).then(() => {
+                      toaster.add({
+                        label: 'Success',
+                        helper: `Email sent to ${email}`,
+                      })
+                    }),
                 }),
               ],
             }),

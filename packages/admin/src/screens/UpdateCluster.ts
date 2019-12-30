@@ -8,6 +8,8 @@ import {
   InputStringArray,
   InputSelect,
   Page,
+  Button,
+  useToaster,
 } from '@authpack/theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
@@ -16,17 +18,19 @@ import { UniversalStore } from '../utils/universal'
 export const UpdateCluster: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
+  const toaster = useToaster()
   const universal = useUniversal()
   const gqlGetCluster = useGetCluster()
   const gqlUpdateCluster = useUpdateCluster()
   const schema = useSchema({
     schema: SchemaUpdateCluster,
-    poller: input => {
+    submit: input => {
       gqlUpdateCluster
         .fetch({ input, id: universal.cluster_id })
         .then(({ cluster }) => {
           if (change) change(cluster.id)
           UniversalStore.update({ cluster_name: cluster.name })
+          toaster.add({ icon: 'check-circle', label: 'Success' })
         })
     },
   })
@@ -93,6 +97,13 @@ export const UpdateCluster: FC<{
                   },
                 ],
               }),
+            }),
+            element(Button, {
+              key: 'submit',
+              label: 'Save',
+              loading: gqlGetCluster.loading || gqlUpdateCluster.loading,
+              disabled: !schema.valid,
+              click: schema.submit,
             }),
           ],
     }),

@@ -71,6 +71,7 @@ export const Menu: FC<{
                     className: css({
                       marginTop: 5,
                       fontWeight: theme.global.thin,
+                      lineHeight: '1.5em',
                       color: theme.menu.helper,
                     }),
                   }),

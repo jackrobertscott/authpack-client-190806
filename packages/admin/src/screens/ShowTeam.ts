@@ -26,17 +26,24 @@ export const ShowTeam: FC<{
               label: 'Id',
               value: team.id,
             }),
-            element(Snippet, {
+            element(Layout, {
               key: 'name',
-              icon: 'users',
-              label: 'Name',
-              value: team.name,
-            }),
-            element(Snippet, {
-              key: 'tag',
-              icon: 'tags',
-              label: 'Tag',
-              value: team.tag,
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'name',
+                  icon: 'users',
+                  label: 'Name',
+                  value: team.name,
+                }),
+                element(Snippet, {
+                  key: 'tag',
+                  icon: 'tags',
+                  label: 'Tag',
+                  value: team.tag,
+                }),
+              ],
             }),
             element(Snippet, {
               key: 'description',
@@ -44,21 +51,28 @@ export const ShowTeam: FC<{
               label: 'Description',
               value: team.description || '...',
             }),
-            element(Snippet, {
-              key: 'created',
-              icon: 'clock',
-              label: 'Created',
-              value:
-                team.created &&
-                format(new Date(team.created), 'dd LLL yyyy @ h:mm a'),
-            }),
-            element(Snippet, {
-              key: 'updated',
-              icon: 'clock',
-              label: 'Updated',
-              value:
-                team.updated &&
-                format(new Date(team.updated), 'dd LLL yyyy @ h:mm a'),
+            element(Layout, {
+              key: 'dates',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'created',
+                  icon: 'clock',
+                  label: 'Created',
+                  value:
+                    team.created &&
+                    format(new Date(team.created), 'dd LLL yyyy @ h:mm a'),
+                }),
+                element(Snippet, {
+                  key: 'updated',
+                  icon: 'clock',
+                  label: 'Updated',
+                  value:
+                    team.updated &&
+                    format(new Date(team.updated), 'dd LLL yyyy @ h:mm a'),
+                }),
+              ],
             }),
           ],
         }),

@@ -1,5 +1,5 @@
 import {
-  createElement as create,
+  createElement as element,
   createContext,
   useContext,
   FC,
@@ -49,7 +49,7 @@ export const Preferences: FC<{ children: ReactNode }> = ({ children }) => {
         stateChange({ ...state, ...data }),
     }
   }, [state])
-  return create(PreferencesContext.Provider, {
+  return element(PreferencesContext.Provider, {
     value,
     children,
   })

@@ -27,12 +27,6 @@ export const ShowSession: FC<{
               value: session.id,
             }),
             element(Snippet, {
-              key: 'disabled',
-              icon: 'battery-three-quarters',
-              label: 'Disabled',
-              value: String(session.disabled),
-            }),
-            element(Snippet, {
               key: 'user',
               icon: 'user',
               label: 'User',
@@ -44,21 +38,49 @@ export const ShowSession: FC<{
               label: 'Team',
               value: !session.team ? '...' : session.team.summary,
             }),
-            element(Snippet, {
-              key: 'created',
-              icon: 'clock',
-              label: 'Created',
-              value:
-                session.created &&
-                format(new Date(session.created), 'dd LLL yyyy @ h:mm a'),
+            element(Layout, {
+              key: 'ended',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'disabled',
+                  icon: 'battery-three-quarters',
+                  label: 'Disabled',
+                  value: String(session.disabled),
+                }),
+                element(Snippet, {
+                  key: 'ended',
+                  icon: 'clock',
+                  label: 'Ended',
+                  value: session.ended
+                    ? format(new Date(session.ended), 'dd LLL yyyy @ h:mm a')
+                    : '...',
+                }),
+              ],
             }),
-            element(Snippet, {
-              key: 'updated',
-              icon: 'clock',
-              label: 'Updated',
-              value:
-                session.updated &&
-                format(new Date(session.updated), 'dd LLL yyyy @ h:mm a'),
+            element(Layout, {
+              key: 'dates',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'created',
+                  icon: 'clock',
+                  label: 'Created',
+                  value:
+                    session.created &&
+                    format(new Date(session.created), 'dd LLL yyyy @ h:mm a'),
+                }),
+                element(Snippet, {
+                  key: 'updated',
+                  icon: 'clock',
+                  label: 'Updated',
+                  value:
+                    session.updated &&
+                    format(new Date(session.updated), 'dd LLL yyyy @ h:mm a'),
+                }),
+              ],
             }),
           ],
         }),
@@ -68,9 +90,10 @@ export const ShowSession: FC<{
 const useGetSession = createUseServer<{
   session: {
     id: string
-    disabled: boolean
     created: string
     updated: string
+    ended: string
+    disabled: boolean
     user: {
       id: string
       summary: string
@@ -87,6 +110,7 @@ const useGetSession = createUseServer<{
         id
         created
         updated
+        ended
         disabled
         user {
           id

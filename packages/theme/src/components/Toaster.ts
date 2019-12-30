@@ -5,43 +5,47 @@ import {
   useState,
   useMemo,
   Fragment,
+  useRef,
 } from 'react'
 import { css } from 'emotion'
 import { Icon } from './Icon'
 import { useTheme } from '../hooks/useTheme'
 import { ToasterArray, ToasterContext } from '../contexts/Toaster'
+import { fadeup } from '../utils/animation'
 
 export const Toaster: FC<{
   children: ReactNode
   initial?: ToasterArray
   width?: number
 }> = ({ children, initial = [], width }) => {
-  const [current, setCurrent] = useState<ToasterArray>(initial)
-  const add = (
-    toast: {
-      icon?: string
-      prefix?: string
-      label: string
-      helper: string
-    },
-    timer: number = 8000
-  ) => {
+  const set = useRef<ToasterArray>(initial)
+  const [last, lastChange] = useState<number>(Date.now())
+  const add = (options: {
+    icon?: string
+    prefix?: string
+    label: string
+    helper?: string
+    timer?: number
+  }) => {
     const id = Math.random()
       .toString(36)
       .substring(6)
-    setCurrent([...current, { ...toast, id, close: () => remove(id) }])
-    setTimeout(() => remove(id), timer)
+    const { timer, ...toast } = options
+    set.current = [...set.current, { ...toast, id, close: () => remove(id) }]
+    lastChange(Date.now())
+    setTimeout(() => remove(id), timer || toast.helper ? 8000 : 2000)
   }
   const remove = (id: string) => {
-    setCurrent(current.filter((i: any) => i.id !== id))
+    set.current = set.current.filter((i: any) => i.id !== id)
+    lastChange(Date.now())
   }
   const value = useMemo(() => {
     return {
-      current,
+      current: set.current,
       add,
       remove,
     }
-  }, [current])
+  }, [last])
   return element(ToasterContext.Provider, {
     value,
     children: [
@@ -51,7 +55,7 @@ export const Toaster: FC<{
       }),
       element(ToasterAlerts, {
         key: 'toaster',
-        current,
+        current: set.current,
         width,
       }),
     ],
@@ -61,7 +65,7 @@ export const Toaster: FC<{
 export const ToasterAlerts: FC<{
   current: ToasterArray
   width?: number
-}> = ({ current, width = 300 }) => {
+}> = ({ current, width = 360 }) => {
   const theme = useTheme()
   const bp = `@media (max-width: ${525 + 50}px)`
   return element('div', {
@@ -74,7 +78,7 @@ export const ToasterAlerts: FC<{
       right: 0,
       bottom: 0,
       zIndex: 1250,
-      margin: '20px 50px 25px 25px',
+      margin: '25px',
       [bp]: {
         left: 0,
         margin: '25px',
@@ -96,6 +100,7 @@ export const ToasterAlerts: FC<{
           background: theme.toaster.background,
           border: theme.toaster.border,
           color: theme.toaster.label,
+          animation: `${fadeup} 200ms linear`,
           [bp]: {
             width: 'auto',
             flexGrow: 1,
@@ -128,6 +133,7 @@ export const ToasterAlerts: FC<{
                   className: css({
                     marginTop: 5,
                     fontWeight: theme.global.thin,
+                    lineHeight: '1.5em',
                     color: theme.toaster.helper,
                   }),
                 }),

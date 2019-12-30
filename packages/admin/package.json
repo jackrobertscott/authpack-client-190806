@@ -13,8 +13,8 @@
     "ship": "now --prod"
   },
   "dependencies": {
-    "@authpack/sdk": "^0.7.4",
-    "@authpack/theme": "^0.6.6",
+    "@authpack/sdk": "^0.8.1",
+    "@authpack/theme": "^0.6.7",
     "@fortawesome/fontawesome-free": "^5.11.2",
     "@sentry/browser": "^5.7.1",
     "@types/faker": "^4.1.7",
@@ -27,8 +27,9 @@
     "emotion": "^10.0.17",
     "events-and-things": "^0.7.3",
     "faker": "^4.1.0",
-    "graphiql": "^0.17.0",
+    "graphiql": "^0.17.5",
     "graphql": "^14.5.8",
+    "query-string": "^6.9.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-scripts": "^3.2.0",
