@@ -20,6 +20,7 @@
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
-    "@authpack/sdk": "^0.7.4"
+    "@authpack/sdk": "^0.8.1",
+    "html-webpack-plugin": "^3.2.0"
   }
 }

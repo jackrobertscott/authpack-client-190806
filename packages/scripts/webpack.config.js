@@ -1,6 +1,7 @@
 const path = require('path')
 const TerserPlugin = require('terser-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const env = {
   development: process.env.NODE_ENV !== 'production',
@@ -14,7 +15,7 @@ const config = {
     modules: false,
   },
   entry: {
-    gadgets: path.resolve(__dirname, 'src/index.ts'),
+    index: path.resolve(__dirname, 'src/index.ts'),
   },
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -57,7 +58,20 @@ const config = {
       }),
     ],
   },
-  plugins: [new CleanWebpackPlugin()],
+  plugins: [
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      inject: false,
+      template: 'src/index.html',
+      title: 'Index',
+    }),
+    new HtmlWebpackPlugin({
+      inject: false,
+      filename: 'home.html',
+      template: 'src/home.html',
+      title: 'Home',
+    }),
+  ],
 }
 
 module.exports = config
