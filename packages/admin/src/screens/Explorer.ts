@@ -328,7 +328,7 @@ export const Explorer: FC = () => {
           padding: 0,
           color: theme.page.label,
           background: theme.page.background,
-          '& > span': {
+          '& > span, & > .type-name': {
             display: 'flex',
             padding: 15,
           },
