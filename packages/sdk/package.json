@@ -1,6 +1,6 @@
 {
   "name": "@authpack/sdk",
-  "version": "0.7.4",
+  "version": "0.8.1",
   "private": false,
   "description": "Plugin for Authpack.",
   "license": "MIT",
