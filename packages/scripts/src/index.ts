@@ -24,7 +24,7 @@ window.addEventListener('load', () => {
  * Locate the authpack script tag and initialise the authpack instance.
  */
 const load = () => {
-  const filename = 'index.js'
+  const filename = 'https://scripts.v1.authpack.io/index.js'
   const selector = `script[src="${filename}"]`
   const node: HTMLScriptElement = document.querySelector(selector)
   if (!node) {

@@ -6,7 +6,7 @@
     "dev": "webpack-dev-server",
     "build": "webpack",
     "now-build": "NODE_ENV=production webpack",
-    "ship": "now --target production"
+    "ship": "now --prod"
   },
   "devDependencies": {
     "@babel/core": "^7.7.5",

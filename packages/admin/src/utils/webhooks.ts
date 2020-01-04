@@ -1,9 +1,11 @@
 export const WEBHOOKEVENTS = [
+  'coupons',
   'credentials',
   'memberships',
   'plans',
   'providers',
   'sessions',
+  'subscriptions',
   'teams',
   'users',
   'webhooks',
