@@ -4,9 +4,10 @@ import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterManagerClusterClient } from './RouterManagerClusterClient'
 import { Explorer } from './Explorer'
 import { usePreferences } from '../utils/preferences'
-import { authpack } from '../utils/authpack'
+import { authpack, useAuthpackCurrent } from '../utils/authpack'
 
 export const RouterCentral: FC = () => {
+  const current = useAuthpackCurrent()
   const preferences = usePreferences()
   const [apper, apperChange] = useState<boolean>(false)
   const router = useRouter({
@@ -36,13 +37,14 @@ export const RouterCentral: FC = () => {
         focused: !!router.current && router.current.path.startsWith('/app'),
         click: () => router.change('/app'),
       },
-      {
-        icon: 'code',
-        label: 'Developers',
-        focused: !!router.current && router.current.path === '/developers',
-        click: () => router.change('/developers'),
-        hidesmall: true,
-      },
+      !!current.membership &&
+        !!current.membership.superadmin && {
+          icon: 'code',
+          label: 'Developers',
+          focused: !!router.current && router.current.path === '/developers',
+          click: () => router.change('/developers'),
+          hidesmall: true,
+        },
       {
         prefix: 'far',
         icon: 'question-circle',
