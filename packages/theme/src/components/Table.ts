@@ -2,6 +2,7 @@ import { createElement as element, FC } from 'react'
 import { useTheme } from '../hooks/useTheme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
+import { Scroller } from './Scroller'
 
 export const Table: FC<{
   header: Array<{
@@ -20,40 +21,45 @@ export const Table: FC<{
     }>
   }>
 }> = ({ header, rows }) => {
-  return element('table', {
-    className: css({
-      all: 'unset',
-      display: 'table',
-      width: '100%',
-      whiteSpace: 'nowrap',
-      flexGrow: 1,
+  return element(Scroller, {
+    key: 'scroller',
+    xaxis: true,
+    yaxis: false,
+    children: element('table', {
+      className: css({
+        all: 'unset',
+        display: 'table',
+        width: '100%',
+        whiteSpace: 'nowrap',
+        flexGrow: 1,
+      }),
+      children: [
+        element('thead', {
+          key: 'header',
+          className: css({
+            all: 'unset',
+            display: 'table-header-group',
+          }),
+          children: element(Header, {
+            header,
+          }),
+        }),
+        element('tbody', {
+          key: 'body',
+          className: css({
+            all: 'unset',
+            display: 'table-row-group',
+          }),
+          children: rows.map(({ id, click, cells }) => {
+            return element(Row, {
+              key: id,
+              click,
+              cells,
+            })
+          }),
+        }),
+      ],
     }),
-    children: [
-      element('thead', {
-        key: 'header',
-        className: css({
-          all: 'unset',
-          display: 'table-header-group',
-        }),
-        children: element(Header, {
-          header,
-        }),
-      }),
-      element('tbody', {
-        key: 'body',
-        className: css({
-          all: 'unset',
-          display: 'table-row-group',
-        }),
-        children: rows.map(({ id, click, cells }) => {
-          return element(Row, {
-            key: id,
-            click,
-            cells,
-          })
-        }),
-      }),
-    ],
   })
 }
 
@@ -171,8 +177,7 @@ const Cell: FC<{
       className: css({
         all: 'unset',
         display: 'flex',
-        alignItems: 'flex-start',
-        overflow: 'hidden',
+        alignItems: 'center',
         textOverflow: 'ellipsis',
         minWidth: 140,
       }),

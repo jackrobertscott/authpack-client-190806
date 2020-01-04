@@ -30,6 +30,7 @@ export const SearchBar: FC<{
   const theme = useTheme()
   return element(Scroller, {
     xaxis: true,
+    bordertop: true,
     children: element('div', {
       className: css({
         all: 'unset',

@@ -1,7 +1,7 @@
 import { createElement as element, FC, Fragment, useState } from 'react'
 import { IconBar, useRouter } from '@authpack/theme'
 import { RouterSideBarHome } from './RouterSideBarHome'
-import { RouterManagerCluster } from './RouterManagerCluster'
+import { RouterManagerClusterClient } from './RouterManagerClusterClient'
 import { Explorer } from './Explorer'
 import { usePreferences } from '../utils/preferences'
 import { authpack } from '../utils/authpack'
@@ -18,7 +18,7 @@ export const RouterCentral: FC = () => {
   })
   return element(IconBar, {
     children: [
-      element(RouterManagerCluster, {
+      element(RouterManagerClusterClient, {
         key: 'cluster',
         visible: apper,
         close: () => apperChange(false),

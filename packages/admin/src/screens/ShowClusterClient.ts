@@ -4,7 +4,7 @@ import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
 import { useUniversal } from '../hooks/useUniversal'
 
-export const ShowCluster: FC<{ keys: () => void }> = ({ keys }) => {
+export const ShowClusterClient: FC<{ keys: () => void }> = ({ keys }) => {
   const universal = useUniversal()
   const gqlGetCluster = useGetCluster()
   useEffect(() => {

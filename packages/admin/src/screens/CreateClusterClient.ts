@@ -12,7 +12,7 @@ import {
 import { createUseServer } from '../hooks/useServer'
 import { UniversalStore } from '../utils/universal'
 
-export const CreateCluster: FC<{
+export const CreateClusterClient: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
   const gqlCreateCluster = useCreateCluster()

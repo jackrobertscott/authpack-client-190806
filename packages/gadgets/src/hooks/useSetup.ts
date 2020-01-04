@@ -41,10 +41,13 @@ export const useSetup = () => {
             membership,
           })
         })
-        .catch(() => {
+        .catch(error => {
           SettingsStore.update({
             ready: true,
-            bearer: undefined,
+            bearer:
+              !error.code || error.code === 401
+                ? undefined
+                : SettingsStore.current.bearer,
           })
         })
     } else {
@@ -147,11 +150,11 @@ const useGetSession = createUseServer<{
       name: string
       tag: string
       description?: string
-      subscribed: boolean
     }
     membership?: {
       id: string
       admin: boolean
+      superadmin: boolean
     }
   }
 }>({
@@ -186,11 +189,11 @@ const useGetSession = createUseServer<{
           name
           tag
           description
-          subscribed
         }
         membership {
           id
           admin
+          superadmin
         }
       }
     }

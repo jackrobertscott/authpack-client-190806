@@ -3,7 +3,7 @@ import { Layout, Snippet, Page } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { useUniversal } from '../hooks/useUniversal'
 
-export const ShowClusterKeys: FC<{ back: () => void }> = ({ back }) => {
+export const ShowClusterKeysClient: FC<{ back: () => void }> = ({ back }) => {
   const universal = useUniversal()
   const gqlGetCluster = useGetCluster()
   useEffect(() => {

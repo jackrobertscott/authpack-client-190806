@@ -167,6 +167,7 @@ export interface IPlugin {
   membership?: {
     id: string
     admin: boolean
+    superadmin: boolean
   }
 }
 
