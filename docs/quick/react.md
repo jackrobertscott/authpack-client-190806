@@ -36,7 +36,7 @@ const Root = () => {
 ReactDOM.render(<Root />, document.getElementById('root'))
 ```
 
-The `value` property will be used to construct the Authpack [gadgets](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/sdk.md).
+The `value` property will be used to construct the Authpack [gadgets](https://github.com/jackrobertscott/authpack-client/blob/master/docs/quick/sdk.md).
 
 ## 3. Authpack Gadgets
 
@@ -58,7 +58,7 @@ export const Login = () => {
 }
 ```
 
-You can see the full set of gadgets methods [here](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/sdk.md).
+You can see the full set of gadgets methods [here](https://github.com/jackrobertscott/authpack-client/blob/master/docs/quick/sdk.md).
 
 ## 4. Authpack State
 
@@ -89,10 +89,10 @@ export const App = () => {
 }
 ```
 
-The authpack full authpack state can be seen [here](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/state.md).
+The authpack full authpack state can be seen [here](https://github.com/jackrobertscott/authpack-client/blob/master/docs/quick/state.md).
 
 ## Links
 
-- [Home](https://github.com/jackrobertscott/authpack)
+- [Home](https://github.com/jackrobertscott/authpack-client)
 - [Website](https://authpack.io)
 - [Dashboard](https://v1.authpack.io)

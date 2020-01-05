@@ -57,7 +57,7 @@ export const RouterCentral: FC = () => {
             helper: 'See installation instructions',
             click: () =>
               window.open(
-                'https://github.com/jackrobertscott/authpack/blob/master/readme.md'
+                'https://github.com/jackrobertscott/authpack-client/wiki'
               ),
           },
           {
@@ -65,14 +65,18 @@ export const RouterCentral: FC = () => {
             label: 'Bug',
             helper: 'Report an problem',
             click: () =>
-              window.open('https://github.com/jackrobertscott/authpack/issues'),
+              window.open(
+                'https://github.com/jackrobertscott/authpack-client/issues'
+              ),
           },
           {
             icon: 'magic',
             label: 'Feedback',
             helper: 'Request a new feature',
             click: () =>
-              window.open('https://github.com/jackrobertscott/authpack/issues'),
+              window.open(
+                'https://github.com/jackrobertscott/authpack-client/issues'
+              ),
           },
         ],
       },

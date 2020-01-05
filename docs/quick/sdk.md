@@ -52,7 +52,7 @@ Authpack stores the current gadget state inside a single object, making it easy 
 
 ### 4.1. State
 
-The state includes the current user, team, bearer token, ready state and more. See the full state object [here](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/state.md).
+The state includes the current user, team, bearer token, ready state and more. See the full state object [here](https://github.com/jackrobertscott/authpack-client/blob/master/docs/quick/state.md).
 
 ### 4.2. Show
 
@@ -110,6 +110,6 @@ const state = gadgets.current()
 
 ## Links
 
-- [Home](https://github.com/jackrobertscott/authpack)
+- [Home](https://github.com/jackrobertscott/authpack-client)
 - [Website](https://authpack.io)
 - [Dashboard](https://v1.authpack.io)

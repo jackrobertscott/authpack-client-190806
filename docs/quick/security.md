@@ -28,6 +28,6 @@ We highly recommend you store both your client and secret keys as an environment
 
 ## Links
 
-- [Home](https://github.com/jackrobertscott/authpack)
+- [Home](https://github.com/jackrobertscott/authpack-client)
 - [Website](https://authpack.io)
 - [Dashboard](https://v1.authpack.io)

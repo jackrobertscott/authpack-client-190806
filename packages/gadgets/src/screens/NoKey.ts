@@ -11,9 +11,7 @@ export const NoKey: FC = () => {
       icon: 'question-circle',
       label: 'Learn More',
       click: () =>
-        window.open(
-          'https://github.com/jackrobertscott/authpack/blob/master/readme.md'
-        ),
+        window.open('https://github.com/jackrobertscott/authpack-client/wiki'),
     }),
   })
 }

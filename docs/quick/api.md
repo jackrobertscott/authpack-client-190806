@@ -61,7 +61,7 @@ Some of the `*Client` routes also require a bearer token to identify the current
 
 - `Bearer ...`
 
-You can see more details about Authpack's security [here](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/security.md).
+You can see more details about Authpack's security [here](https://github.com/jackrobertscott/authpack-client/blob/master/docs/quick/security.md).
 
 ## Axios
 
@@ -99,6 +99,6 @@ You will also need to add the origin of the request to whitelisted domains in th
 
 ## Links
 
-- [Home](https://github.com/jackrobertscott/authpack)
+- [Home](https://github.com/jackrobertscott/authpack-client)
 - [Website](https://authpack.io)
 - [Dashboard](https://v1.authpack.io)

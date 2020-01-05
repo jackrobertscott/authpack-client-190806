@@ -2,7 +2,7 @@
 
 > [Authpack](https://authpack.io) 🔒 A complete user and team management system
 
-This document contains the state schema of the Authpack [gadgets](https://github.com/jackrobertscott/authpack/blob/master/docs/quick/sdk.md).
+This document contains the state schema of the Authpack [gadgets](https://github.com/jackrobertscott/authpack-client/blob/master/docs/quick/sdk.md).
 
 - `open: boolean` is the gadgets modal currently open.
 - `ready: boolean` have the gadgets finished loading.
@@ -34,6 +34,6 @@ This document contains the state schema of the Authpack [gadgets](https://github
 
 ## Links
 
-- [Home](https://github.com/jackrobertscott/authpack)
+- [Home](https://github.com/jackrobertscott/authpack-client)
 - [Website](https://authpack.io)
 - [Dashboard](https://v1.authpack.io)
