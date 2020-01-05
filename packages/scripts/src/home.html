@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <button data-authpack="plugin">Login</button>
-    <a href="/index.html">Go to index</a>
+    <!-- inject authpack -->
     <script
       src="index.js"
       data-key="wga-client-key-85068bfcfc17da6c9ff1d5f66"
@@ -16,5 +13,13 @@
       data-gql="http://localhost:4000"
       data-debug="true"
     ></script>
+  </head>
+  <body>
+    <h1>Home</h1>
+    <a href="/index.html">Index</a>
+    <br />
+    <br />
+    <!-- login and access account -->
+    <button data-authpack="plugin">Login</button>
   </body>
 </html>

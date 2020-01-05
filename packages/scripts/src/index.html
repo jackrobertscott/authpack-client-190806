@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
+    <!-- inject authpack -->
     <script
       src="index.js"
       data-key="wga-client-key-85068bfcfc17da6c9ff1d5f66"
@@ -14,13 +13,21 @@
       data-gql="http://localhost:4000"
       data-debug="true"
     ></script>
-    <!-- the following opens the plugin -->
-    <div
-      data-authpack="guard"
-      data-required="true"
-      data-redirect="/home.html"
-    ></div>
-    <!-- the following populates text inside node -->
-    <div data-authpack="replace" data-value="user.name">Loading...</div>
+  </head>
+  <body>
+    <h1>Index</h1>
+    <a href="/home.html">Home</a>
+    <br />
+    <br />
+    <!-- redirect unauthenticated users -->
+    <div data-authpack="guard" data-redirect="/home.html"></div>
+    <!-- replace text with state data -->
+    <div data-authpack="replace" data-value="user.name"></div>
+    <!-- show an item once logged in -->
+    <div data-authpack="show" data-user="true">User is authenticated</div>
+    <div data-authpack="show" data-team="true">User has a team</div>
+    <!-- hide an item with conditions -->
+    <div data-authpack="hide" data-user="true">User is authenticated</div>
+    <div data-authpack="hide" data-team="true">User has a team</div>
   </body>
 </html>

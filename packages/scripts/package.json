@@ -13,6 +13,7 @@
     "@babel/preset-typescript": "^7.7.4",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
+    "html-webpack-plugin": "^3.2.0",
     "terser-webpack-plugin": "^2.3.0",
     "typescript": "^3.7.2",
     "webpack": "^4.41.3",
@@ -20,7 +21,6 @@
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
-    "@authpack/sdk": "^0.8.1",
-    "html-webpack-plugin": "^3.2.0"
+    "@authpack/sdk": "^0.8.2"
   }
 }

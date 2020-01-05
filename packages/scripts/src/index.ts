@@ -11,13 +11,17 @@ interface IContext {
 /**
  * Run initial events once the page has loaded.
  */
+setTimeout(() => preready())
 window.addEventListener('load', () => {
   const authpack = load()
   const dispatch = (context: IContext) =>
     [guard, plugin, replace, show, hide].map(dispatcher => {
       return dispatcher(context)
     })
-  dispatch({ authpack, state: authpack.plugin.current() })
+  dispatch({
+    authpack,
+    state: authpack.plugin.current(),
+  })
   authpack.plugin.listen(state => dispatch({ authpack, state }))
 })
 /**
@@ -25,8 +29,9 @@ window.addEventListener('load', () => {
  */
 const load = () => {
   const filename = 'https://scripts.v1.authpack.io/index.js'
-  const selector = `script[src="${filename}"]`
-  const node: HTMLScriptElement = document.querySelector(selector)
+  const node: HTMLScriptElement =
+    document.querySelector(`script[src="${filename}"]`) ||
+    document.querySelector('script[src="index.js"][data-key]')
   if (!node) {
     const message = `Authpack script tag not found i.e.:\n\n<script\n\tsrc="${filename}"\n\tdata-key="wga-client-key-..."\n></script>`
     console.warn(message)
@@ -41,11 +46,29 @@ const load = () => {
   return new Authpack(config)
 }
 /**
+ * Hide contents of page until ready.
+ */
+const preready = () => {
+  if (document.body.dataset.ready !== 'true') {
+    document.body.style.display = 'none'
+  }
+}
+/**
+ * Show contents of page once is ready.
+ */
+const postready = (context: IContext) => {
+  if (context.state.ready && document.body.dataset.ready !== 'true') {
+    document.body.dataset.ready = 'true'
+    document.body.style.display = 'initial'
+  }
+}
+/**
  * Redirect unauthenticated users from protected pages.
  */
 const guard = (context: IContext) => {
   const node: HTMLElement = document.querySelector(`[data-authpack="guard"]`)
   if (!node) {
+    setTimeout(() => postready(context))
     return
   }
   if (!node.dataset.redirect) {
@@ -55,7 +78,9 @@ const guard = (context: IContext) => {
   }
   if (context.state.ready && !context.state.user) {
     window.location.assign(node.dataset.redirect)
+    return
   }
+  setTimeout(() => postready(context))
 }
 /**
  * Open the gadgets when item is clicked.
@@ -91,7 +116,8 @@ const replace = (context: IContext) => {
       }
       const steps = node.dataset.value.split('.').map(i => i.trim())
       const value = steps.reduce((accum, next) => accum[next], context.state)
-      node.textContent = value
+      node.textContent =
+        typeof value === 'object' ? JSON.stringify(value, null, 2) : value
     })
   }
 }
@@ -104,15 +130,18 @@ const show = (context: IContext) => {
   if (!nodes.length) {
     return
   }
-  if (context.state.ready && context.state.user) {
+  if (context.state.ready) {
     nodes.forEach(node => {
       const assertions = [
+        !node.dataset.user ||
+          Boolean(node.dataset.user === 'true' && !!context.state.user),
+        !node.dataset.team ||
+          Boolean(node.dataset.team === 'true' && !!context.state.team),
         !node.dataset.plan ||
           node.dataset.plan
             .split(',')
             .map(plan => plan.trim())
             .includes(context.state.plan.tag),
-        // todo: more conditions
       ]
       node.dataset.display = node.dataset.display || node.style.display
       node.style.display = assertions.includes(false)
