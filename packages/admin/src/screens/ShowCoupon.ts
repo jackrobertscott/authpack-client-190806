@@ -81,7 +81,7 @@ export const ShowCoupon: FC<{
                   icon: 'hand-holding-heart',
                   label: 'Discount',
                   value:
-                    coupon.discount_type === 'percentage'
+                    coupon.discount === 'percentage'
                       ? `${coupon.discount_percentage}%`
                       : `$${coupon.discount_amount / 100}`,
                 }),
@@ -131,7 +131,7 @@ const useGetCoupon = createUseServer<{
     description: string
     duration: string
     duration_months?: number
-    discount_type: string
+    discount: string
     discount_percentage: number
     discount_amount: number
     max_redemptions?: number
@@ -148,7 +148,7 @@ const useGetCoupon = createUseServer<{
         description
         duration
         duration_months
-        discount_type
+        discount
         discount_percentage
         discount_amount
         max_redemptions

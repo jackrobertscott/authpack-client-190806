@@ -3,11 +3,11 @@ import { Button, Poster, Layout, Focus, Page } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 
-export const RemoveUserPayment: FC<{
+export const RemoveSubscription: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
   const settings = useSettings()
-  const gqlRemoveUserPayment = useRemoveUserPayment()
+  const gqlRemoveSubscription = useRemoveSubscription()
   const [confirm, confirmChange] = useState<boolean>(false)
   return element(Page, {
     title: 'Danger',
@@ -44,9 +44,9 @@ export const RemoveUserPayment: FC<{
               key: 'confirm',
               icon: 'check',
               label: 'Confirm',
-              loading: gqlRemoveUserPayment.loading,
+              loading: gqlRemoveSubscription.loading,
               click: () =>
-                gqlRemoveUserPayment.fetch().then(() => {
+                gqlRemoveSubscription.fetch().then(() => {
                   if (change) change()
                 }),
             }),
@@ -64,14 +64,14 @@ export const RemoveUserPayment: FC<{
   })
 }
 
-const useRemoveUserPayment = createUseServer<{
+const useRemoveSubscription = createUseServer<{
   user: {
     id: string
   }
 }>({
   query: `
-    mutation RemoveUserPaymentClient {
-      user: RemoveUserPaymentClient {
+    mutation RemoveSubscriptionClient {
+      user: RemoveSubscriptionClient {
         id
       }
     }

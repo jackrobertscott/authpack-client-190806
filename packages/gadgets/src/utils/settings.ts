@@ -29,7 +29,6 @@ export type ISettings = {
     id: string
     email: string
     verified: boolean
-    subscribed: boolean
     username: string
     name?: string
     name_given?: string

@@ -8,7 +8,8 @@ import { UpdateUserPassword } from './UpdateUserPassword'
 import { ListSessions } from './ListSessions'
 import { UpdateUserEmail } from './UpdateUserEmail'
 import { UpdateUserPayment } from './UpdateUserPayment'
-import { RemoveUserPayment } from './RemoveUserPayment'
+import { RemoveSubscription } from './RemoveSubscription'
+import { UpdateSubscription } from './UpdateSubscription'
 
 export const RouterSideBarUser: FC = () => {
   const settings = useSettings()
@@ -26,11 +27,17 @@ export const RouterSideBarUser: FC = () => {
         key: '/user/payments',
         children: element(UpdateUserPayment, {
           cancel: () => router.change('/user/payments/danger'),
+          update: () => router.change('/user/payments/update'),
         }),
       },
       {
+        key: '/user/payments/update',
+        children: element(UpdateSubscription),
+        nosave: true,
+      },
+      {
         key: '/user/payments/danger',
-        children: element(RemoveUserPayment),
+        children: element(RemoveSubscription),
         nosave: true,
       },
     ],
@@ -64,7 +71,8 @@ export const RouterSideBarUser: FC = () => {
         !!settings.cluster.stripe_publishable_key && {
           icon: 'credit-card',
           label: 'Billing',
-          focused: router.current && router.current.key === '/user/payments',
+          focused:
+            router.current && router.current.key.startsWith('/user/payments'),
           click: () => router.change('/user/payments'),
         },
       {

@@ -42,7 +42,7 @@ export const ShowSubscription: FC<{
                 element(Snippet, {
                   key: 'tag',
                   icon: 'tags',
-                  label: 'User Id',
+                  label: 'Id',
                   value: subscription.user ? subscription.user.id : '...',
                 }),
               ],
@@ -61,7 +61,7 @@ export const ShowSubscription: FC<{
                 element(Snippet, {
                   key: 'tag',
                   icon: 'tags',
-                  label: 'Plan Id',
+                  label: 'Id',
                   value: subscription.plan ? subscription.plan.id : '...',
                 }),
               ],
@@ -82,7 +82,7 @@ export const ShowSubscription: FC<{
                 element(Snippet, {
                   key: 'tag',
                   icon: 'tags',
-                  label: 'Coupon Id',
+                  label: 'Id',
                   value: subscription.coupon ? subscription.coupon.id : '...',
                 }),
               ],

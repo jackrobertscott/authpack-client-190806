@@ -75,39 +75,44 @@ export const Snippet: FC<{
             }),
         ],
       }),
-      Boolean(options.length || click) &&
-        element('div', {
-          key: 'arrow',
-          onClick: () => options.length && openChange(true),
-          className: css({
-            padding: 7.5,
-            margin: -7.5,
-            position: 'relative',
-            color: theme.snippet.arrow,
-            borderRadius: theme.global.radius,
-            cursor: options.length ? 'pointer' : undefined,
-            '&:hover:not(:active)': options.length && {
-              background: theme.snippet.backgroundHover,
-            },
-            '&:hover .toggle': {
-              opacity: 1,
-            },
+      !!options.length
+        ? element('div', {
+            key: 'arrow',
+            onClick: () => options.length && openChange(true),
+            className: css({
+              padding: 7.5,
+              margin: -7.5,
+              position: 'relative',
+              color: theme.snippet.arrow,
+              borderRadius: theme.global.radius,
+              cursor: options.length ? 'pointer' : undefined,
+              '&:hover:not(:active)': options.length && {
+                background: theme.snippet.backgroundHover,
+              },
+              '&:hover .toggle': {
+                opacity: 1,
+              },
+            }),
+            children: !options.length
+              ? null
+              : [
+                  element(Icon, {
+                    key: 'icon',
+                    icon: options.length ? 'bars' : 'minus',
+                  }),
+                  element(Dropdown, {
+                    key: 'dropdown',
+                    options,
+                    close: () => mounted.current && openChange(false),
+                    open,
+                  }),
+                ],
+          })
+        : click &&
+          element(Icon, {
+            key: 'click',
+            icon: 'angle-right',
           }),
-          children: !options.length
-            ? null
-            : [
-                element(Icon, {
-                  key: 'icon',
-                  icon: options.length ? 'bars' : 'minus',
-                }),
-                element(Dropdown, {
-                  key: 'dropdown',
-                  options,
-                  close: () => mounted.current && openChange(false),
-                  open,
-                }),
-              ],
-        }),
     ],
   })
 }

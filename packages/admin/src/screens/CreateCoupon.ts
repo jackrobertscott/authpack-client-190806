@@ -126,13 +126,13 @@ export const CreateCoupon: FC<{
           media: true,
           children: [
             element(Control, {
-              key: 'discount_type',
+              key: 'discount',
               label: 'Type',
               helper: 'How the discount is applied',
-              error: schema.error('discount_type'),
+              error: schema.error('discount'),
               children: element(InputSelect, {
-                value: schema.value('discount_type'),
-                change: schema.change('discount_type'),
+                value: schema.value('discount'),
+                change: schema.change('discount'),
                 placeholder: 'Select option...',
                 options: [
                   {
@@ -148,7 +148,7 @@ export const CreateCoupon: FC<{
                 ],
               }),
             }),
-            schema.value('discount_type') === 'percentage' &&
+            schema.value('discount') === 'percentage' &&
               element(Control, {
                 key: 'discount_percentage',
                 label: 'Percentage',
@@ -161,7 +161,7 @@ export const CreateCoupon: FC<{
                   placeholder: '...',
                 }),
               }),
-            schema.value('discount_type') === 'amount' &&
+            schema.value('discount') === 'amount' &&
               element(Control, {
                 key: 'discount_amount',
                 label: 'Amount (cents)',
@@ -223,11 +223,11 @@ const SchemaCreateCoupon = yup.object().shape({
       .min(1, 'Duration must be more than 1 month')
       .required('Please provide the duration months'),
   }),
-  discount_type: yup
+  discount: yup
     .string()
     .oneOf(['percentage', 'amount'])
     .required('Please select the type of discount'),
-  discount_percentage: yup.number().when('discount_type', {
+  discount_percentage: yup.number().when('discount', {
     is: 'percentage',
     then: yup
       .number()
@@ -235,7 +235,7 @@ const SchemaCreateCoupon = yup.object().shape({
       .max(100, 'Discount must be less than 100')
       .required('Please provide the discount percentage'),
   }),
-  discount_amount: yup.number().when('discount_type', {
+  discount_amount: yup.number().when('discount', {
     is: 'amount',
     then: yup
       .number()

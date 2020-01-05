@@ -128,7 +128,6 @@ const useGetSession = createUseServer<{
       id: string
       email: string
       verified: boolean
-      subscribed: boolean
       username: string
       name?: string
       name_given?: string
@@ -168,7 +167,6 @@ const useGetSession = createUseServer<{
           email
           verified
           username
-          subscribed
           name
           name_given
           name_family
