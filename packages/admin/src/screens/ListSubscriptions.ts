@@ -99,7 +99,7 @@ export const ListSubscriptions: FC = () => {
           header: [
             { key: 'user', label: 'User' },
             { key: 'plan', label: 'Plan' },
-            { key: 'cancellation_requested', label: 'Ending' },
+            { key: 'cancellation_requested', label: 'Cancelling' },
             { key: 'cancelled', label: 'Cancelled' },
             { key: 'updated', label: 'Updated' },
             { key: 'created', label: 'Created' },

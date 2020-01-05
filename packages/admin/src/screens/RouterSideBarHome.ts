@@ -40,12 +40,13 @@ export const RouterSideBarHome: FC = () => {
     footer: universal.cluster_name,
     children: router.current && router.current.children,
     options: [
-      {
-        icon: 'server',
-        label: 'Clusters',
-        focused: !!router.current && router.current.path === '/clusters',
-        click: () => router.change('/clusters'),
-      },
+      !!current.membership &&
+        !!current.membership.superadmin && {
+          icon: 'server',
+          label: 'Clusters',
+          focused: !!router.current && router.current.path === '/clusters',
+          click: () => router.change('/clusters'),
+        },
       {
         icon: 'user-circle',
         label: 'Users',
