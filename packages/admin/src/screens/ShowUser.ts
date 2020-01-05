@@ -26,11 +26,24 @@ export const ShowUser: FC<{
               label: 'Id',
               value: user.id,
             }),
-            element(Snippet, {
-              key: 'email',
-              icon: 'at',
-              label: 'Email',
-              value: user.email,
+            element(Layout, {
+              key: 'verified',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'email',
+                  icon: 'at',
+                  label: 'Email',
+                  value: user.email,
+                }),
+                element(Snippet, {
+                  key: 'verified',
+                  icon: 'flag-checkered',
+                  label: 'Verified',
+                  value: String(user.verified),
+                }),
+              ],
             }),
             element(Layout, {
               key: 'name',
@@ -48,6 +61,25 @@ export const ShowUser: FC<{
                   icon: 'tags',
                   label: 'Username',
                   value: user.username || '...',
+                }),
+              ],
+            }),
+            element(Layout, {
+              key: 'plan',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'name',
+                  icon: 'donate',
+                  label: 'Plan',
+                  value: user.plan ? user.plan.summary : '...',
+                }),
+                element(Snippet, {
+                  key: 'tag',
+                  icon: 'tags',
+                  label: 'Id',
+                  value: user.plan ? user.plan.id : '...',
                 }),
               ],
             }),
@@ -87,6 +119,11 @@ const useGetUser = createUseServer<{
     email: string
     name?: string
     username?: string
+    verified: string
+    plan?: {
+      id: string
+      summary: string
+    }
   }
 }>({
   query: `
@@ -98,6 +135,11 @@ const useGetUser = createUseServer<{
         email
         name
         username
+        verified
+        plan {
+          id
+          summary
+        }
       }
     }
   `,

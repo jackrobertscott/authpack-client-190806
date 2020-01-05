@@ -4,7 +4,7 @@ import { createUseServer } from '../hooks/useServer'
 import { useUniversal } from '../hooks/useUniversal'
 import { UniversalStore } from '../utils/universal'
 
-export const SwitchCluster: FC<{
+export const SwitchClusterClient: FC<{
   change?: (id?: string) => void
   add: () => void
 }> = ({ change, add }) => {

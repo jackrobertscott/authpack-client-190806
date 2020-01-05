@@ -37,6 +37,7 @@ export const InputContainer: FC<{
           : theme.input.background,
         border: theme.input.border,
         color: theme.input.value,
+        pointerEvents: disabled ? 'none' : 'initial',
         'input::placeholder': {
           color: theme.input.placeholder,
         },

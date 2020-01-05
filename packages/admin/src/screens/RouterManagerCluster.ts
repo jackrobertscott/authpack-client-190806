@@ -1,94 +1,43 @@
 import { createElement as element, FC } from 'react'
 import { useLocalRouter, Modal, IconBar } from '@authpack/theme'
-import { UpdateCluster } from './UpdateCluster'
-import { ShowCluster } from './ShowCluster'
-import { SwitchCluster } from './SwitchCluster'
-import { ShowClusterKeys } from './ShowClusterKeys'
-import { CreateCluster } from './CreateCluster'
-import { UpdateClusterStripe } from './UpdateClusterStripe'
+// import { CreateCluster } from './CreateCluster'
+// import { UpdateCluster } from './UpdateCluster'
+// import { RemoveCluster } from './RemoveCluster'
+// import { ShowCluster } from './ShowCluster'
 
 export const RouterManagerCluster: FC<{
+  id?: string
+  change?: (id?: string) => void
   visible?: boolean
   close: () => void
-}> = ({ close, visible }) => {
+}> = ({ id, change, close, visible }) => {
   const router = useLocalRouter({
-    nomatch: '/inspect',
-    options: [
-      {
-        key: '/inspect',
-        children: element(ShowCluster, {
-          keys: () => router.change('/keys'),
-        }),
-      },
-      {
-        key: '/keys',
-        children: element(ShowClusterKeys, {
-          back: () => router.change('/inspect'),
-        }),
-      },
-      { key: '/update', children: element(UpdateCluster) },
-      {
-        key: '/switch',
-        children: element(SwitchCluster, {
-          add: () => router.change('/create'),
-        }),
-      },
-      {
-        key: '/create',
-        children: element(CreateCluster, {
-          change: () => router.change('/inspect'),
-        }),
-      },
-      {
-        key: '/stripe',
-        children: element(UpdateClusterStripe),
-      },
-    ],
+    options: [],
   })
   return element(Modal, {
     close,
     visible,
     children: element(IconBar, {
       children: router.current && router.current.children,
-      icons: [
-        {
-          icon: 'glasses',
-          label: 'Inspect',
-          focused: !!router.current && router.current.key === '/inspect',
-          click: () => router.change('/inspect'),
-        },
-        {
-          icon: 'sliders-h',
-          label: 'Update',
-          focused: !!router.current && router.current.key === '/update',
-          click: () => router.change('/update'),
-        },
-        {
-          icon: 'key',
-          label: 'API Keys',
-          focused: !!router.current && router.current.key === '/keys',
-          click: () => router.change('/keys'),
-        },
-        {
-          icon: 'piggy-bank',
-          label: 'Accept Payments',
-          focused: !!router.current && router.current.key === '/stripe',
-          click: () => router.change('/stripe'),
-        },
-        {
-          icon: 'random',
-          label: 'Switch',
-          focused: !!router.current && router.current.key === '/switch',
-          click: () => router.change('/switch'),
-        },
-        {
-          icon: 'times-circle',
-          label: 'Close',
-          click: close,
-          prefix: 'far',
-          seperated: true,
-        },
-      ],
+      icons: id
+        ? [
+            {
+              icon: 'times-circle',
+              label: 'Close',
+              click: close,
+              prefix: 'far',
+              seperated: true,
+            },
+          ]
+        : [
+            {
+              icon: 'times-circle',
+              label: 'Close',
+              click: close,
+              prefix: 'far',
+              seperated: true,
+            },
+          ],
     }),
   })
 }

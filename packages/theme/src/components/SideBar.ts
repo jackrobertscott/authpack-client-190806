@@ -64,6 +64,7 @@ export const SideBar: FC<{
           },
         }),
         children: element(Scroller, {
+          borderleft: true,
           children: [
             element(Title, {
               key: 'title',

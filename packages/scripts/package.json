@@ -6,7 +6,7 @@
     "dev": "webpack-dev-server",
     "build": "webpack",
     "now-build": "NODE_ENV=production webpack",
-    "ship": "now --target production"
+    "ship": "now --prod"
   },
   "devDependencies": {
     "@babel/core": "^7.7.5",
@@ -20,6 +20,7 @@
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
-    "@authpack/sdk": "^0.7.4"
+    "@authpack/sdk": "^0.8.1",
+    "html-webpack-plugin": "^3.2.0"
   }
 }

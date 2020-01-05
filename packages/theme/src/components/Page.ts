@@ -35,6 +35,7 @@ export const Page: FC<{
       element(Scroller, {
         key: 'scroller',
         disable: hidden,
+        borderleft: true,
         children: [
           element(Header, {
             key: 'header',
@@ -44,23 +45,17 @@ export const Page: FC<{
           }),
           element('div', {
             key: 'children',
-            children: element(Scroller, {
-              key: 'scroller',
-              disable: hidden,
-              xaxis: true,
-              yaxis: false,
-              children: [
-                element(Fragment, {
-                  key: 'children',
-                  children,
-                }),
-                element(Branding, {
-                  key: 'branding',
-                  url: 'https://authpack.io',
-                  text: `Authpack`,
-                }),
-              ],
-            }),
+            children: [
+              element(Fragment, {
+                key: 'children',
+                children,
+              }),
+              element(Branding, {
+                key: 'branding',
+                url: 'https://authpack.io',
+                text: `Authpack`,
+              }),
+            ],
             className: css({
               display: 'flex',
               flexDirection: 'column',

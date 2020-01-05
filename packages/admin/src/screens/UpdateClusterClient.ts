@@ -15,7 +15,7 @@ import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 import { UniversalStore } from '../utils/universal'
 
-export const UpdateCluster: FC<{
+export const UpdateClusterClient: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
   const toaster = useToaster()

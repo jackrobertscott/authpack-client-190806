@@ -49,12 +49,16 @@ export class Plugin {
   /**
    * Private...
    */
-  private sendMessage(name: string, payload?: any) {
+  private sendMessage(name: string, payload?: any, before?: boolean) {
+    const message = { name, payload }
     if (!this.radio)
       throw new Error('Failed to send message as radio does not exist')
-    const message = { name, payload }
-    if (!this.loaded) this.queue = [...this.queue, message]
-    else this.radio.message(message)
+    this.queue = before ? [message, ...this.queue] : [...this.queue, message]
+    if (this.loaded) {
+      const stack = this.queue.slice()
+      for (const next of stack) this.radio.message(next)
+      this.queue = []
+    }
   }
   private createStore() {
     const store = createStore()
@@ -94,13 +98,8 @@ export class Plugin {
       if (this.debug) console.log(`${name} @ ${Date.now() % 86400000}`)
       switch (name) {
         case 'gadgets:loaded':
-          this.sendMessage('plugin:current', this.store.current)
           this.loaded = true
-          const stack = [...this.queue]
-          for (const message of stack) {
-            if (message) this.sendMessage(message.name, message.payload)
-          }
-          this.queue = []
+          this.sendMessage('plugin:current', this.store.current, true)
           break
         case 'gadgets:update':
           this.store.update({ ...payload })
@@ -142,7 +141,6 @@ export interface IPlugin {
     id: string
     email: string
     verified: boolean
-    subscribed: boolean
     username: string
     name?: string
     name_given?: string
@@ -168,6 +166,7 @@ export interface IPlugin {
   membership?: {
     id: string
     admin: boolean
+    superadmin: boolean
   }
 }
 

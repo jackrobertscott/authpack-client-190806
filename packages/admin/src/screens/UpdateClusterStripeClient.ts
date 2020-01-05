@@ -12,7 +12,7 @@ import {
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 
-export const UpdateClusterStripe: FC<{
+export const UpdateClusterStripeClient: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
   const toaster = useToaster()
