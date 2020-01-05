@@ -1,4 +1,4 @@
-![Authpack](https://raw.githubusercontent.com/jackrobertscott/authpack/master/docs/assets/repobanner.png)
+![Authpack](https://raw.githubusercontent.com/jackrobertscott/authpack/master/docs/assets/readmebanner.png)
 
 ![npm](https://img.shields.io/npm/v/@authpack/sdk) ![language](https://img.shields.io/badge/language-typescript-blue) ![build](https://img.shields.io/badge/build-passing-green)
 
