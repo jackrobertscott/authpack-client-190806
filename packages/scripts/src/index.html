@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- <meta
+      data-authpack="guard"
+      data-redirect="/home.html"
+      data-property="user"
+      data-validate="present"
+    /> -->
     <title><%= htmlWebpackPlugin.options.title %></title>
     <!-- inject authpack -->
     <script
@@ -13,21 +19,31 @@
       data-gql="http://localhost:4000"
       data-debug="true"
     ></script>
+    <!-- redirect unauthenticated users -->
   </head>
   <body>
     <h1>Index</h1>
     <a href="/home.html">Home</a>
     <br />
     <br />
-    <!-- redirect unauthenticated users -->
-    <div data-authpack="guard" data-redirect="/home.html"></div>
+    <button data-authpack="plugin">Account</button>
+    <br />
+    <br />
     <!-- replace text with state data -->
-    <div data-authpack="replace" data-value="user.name"></div>
+    <div data-authpack="replace" data-property="user.name"></div>
     <!-- show an item once logged in -->
-    <div data-authpack="show" data-user="true">User is authenticated</div>
-    <div data-authpack="show" data-team="true">User has a team</div>
+    <div data-authpack="show" data-property="user" data-validate="present">
+      User is authenticated
+    </div>
+    <div data-authpack="show" data-property="team" data-validate="present">
+      User has a team
+    </div>
     <!-- hide an item with conditions -->
-    <div data-authpack="hide" data-user="true">User is authenticated</div>
-    <div data-authpack="hide" data-team="true">User has a team</div>
+    <div data-authpack="hide" data-property="user" data-validate="present">
+      User is not present
+    </div>
+    <div data-authpack="hide" data-property="team" data-validate="present">
+      User does not have a team
+    </div>
   </body>
 </html>
