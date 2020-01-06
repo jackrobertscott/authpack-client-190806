@@ -8,7 +8,7 @@ export const LogoutUser: FC = () => {
   const logout = () =>
     gqlLogoutUser
       .fetch()
-      .finally(() => SettingsStore.update({ bearer: undefined }))
+      .finally(() => SettingsStore.update({ bearer: undefined, open: false }))
   return element(Layout, {
     grow: true,
     children: [
