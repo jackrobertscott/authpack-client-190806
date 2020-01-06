@@ -66,7 +66,7 @@ const load = () => {
  * Open the gadgets when item is clicked.
  */
 const plugin = (context: IContext) => {
-  const data = document.querySelectorAll(`[data-authpack="plugin"]`)
+  const data = document.querySelectorAll(`[data-authpack="open"]`)
   const nodes = [...data] as HTMLElement[]
   if (!nodes.length) {
     return
