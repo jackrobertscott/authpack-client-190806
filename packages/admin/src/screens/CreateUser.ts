@@ -8,6 +8,7 @@ import {
   InputString,
   testAlphanumeric,
   Page,
+  InputBoolean,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
@@ -74,6 +75,22 @@ export const CreateUser: FC<{
               }),
             }),
             element(Control, {
+              key: 'verified',
+              label: 'Verified',
+              error: schema.error('verified'),
+              children: element(InputBoolean, {
+                value: schema.value('verified'),
+                change: schema.change('verified'),
+              }),
+            }),
+          ],
+        }),
+        element(Layout, {
+          key: 'username',
+          divide: true,
+          media: true,
+          children: [
+            element(Control, {
               key: 'username',
               label: 'Username',
               error: schema.error('username'),
@@ -83,18 +100,18 @@ export const CreateUser: FC<{
                 placeholder: 'example_username_123',
               }),
             }),
+            element(Control, {
+              key: 'password',
+              label: 'Password',
+              error: schema.error('password'),
+              children: element(InputString, {
+                value: schema.value('password'),
+                change: schema.change('password'),
+                placeholder: '* * * * * * * *',
+                password: true,
+              }),
+            }),
           ],
-        }),
-        element(Control, {
-          key: 'password',
-          label: 'Password',
-          error: schema.error('password'),
-          children: element(InputString, {
-            value: schema.value('password'),
-            change: schema.change('password'),
-            placeholder: '* * * * * * * *',
-            password: true,
-          }),
         }),
         element(Button, {
           key: 'submit',
@@ -126,6 +143,7 @@ const SchemaCreateUser = yup.object().shape({
     .string()
     .min(6, 'Password must be more than 6 characters')
     .required('Please provide your password'),
+  verified: yup.boolean(),
 })
 
 const useCreateUser = createUseServer<{
