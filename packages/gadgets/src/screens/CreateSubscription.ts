@@ -116,76 +116,40 @@ export const CreateSubscription: FC<{
                   : gqlListPlans.data.plans.map(plan => ({
                       value: plan.id,
                       label: plan.name,
-                      helper: `$${plan.amount / 100} ${plan.currency} every ${
-                        plan.interval_separator
-                      } ${plan.interval}${
-                        plan.interval_separator === 1 ? '' : 's'
-                      }`,
+                      helper: `$${plan.amount / 100} ${
+                        plan.currency
+                      } billed every ${plan.interval_separator} ${
+                        plan.interval
+                      }${plan.interval_separator === 1 ? '' : 's'}`,
                     })),
               }),
             }),
-            element(Layout, {
+            element(Control, {
               key: 'card',
-              divide: true,
-              media: true,
-              children: [
-                element(Control, {
-                  key: 'card',
-                  label: 'Card',
-                  helper: 'Powered by Stripe',
-                  error: schema.error('card'),
-                  children: element(InputStripe, {
-                    stripe,
-                    change: value => {
-                      if (mounted.current) stripeCard.current = value
-                    },
-                  }),
-                }),
-                element(Control, {
-                  key: 'coupon',
-                  label: 'Code',
-                  helper: 'Optional payment code',
-                  error: schema.error('coupon'),
-                  children: element(InputString, {
-                    value: schema.value('coupon'),
-                    change: schema.change('coupon'),
-                    placeholder: '...',
-                  }),
-                }),
-              ],
+              label: 'Card',
+              helper: 'Powered by Stripe',
+              error: schema.error('card'),
+              children: element(InputStripe, {
+                stripe,
+                change: value => {
+                  if (mounted.current) stripeCard.current = value
+                },
+              }),
             }),
-            element(Layout, {
-              key: 'top',
-              divide: true,
-              media: true,
-              children: [
-                element(Control, {
-                  key: 'name',
-                  label: 'Name',
-                  helper: 'Found on card',
-                  error: schema.error('name'),
-                  children: element(InputString, {
-                    value: schema.value('name'),
-                    change: schema.change('name'),
-                    placeholder: 'Fred Blogs',
-                  }),
-                }),
-                element(Control, {
-                  key: 'email',
-                  label: 'Billing Email',
-                  helper: 'Payment invoices will be sent here',
-                  error: schema.error('email'),
-                  children: element(InputString, {
-                    value: schema.value('email'),
-                    change: schema.change('email'),
-                    placeholder: 'fred@example.com',
-                  }),
-                }),
-              ],
+            element(Control, {
+              key: 'coupon',
+              label: 'Coupon',
+              helper: 'Optional payment code',
+              error: schema.error('coupon'),
+              children: element(InputString, {
+                value: schema.value('coupon'),
+                change: schema.change('coupon'),
+                placeholder: '...',
+              }),
             }),
             element(Button, {
               key: 'submit',
-              label: 'Update',
+              label: 'Subscribe',
               disabled: !schema.valid,
               click: schema.submit,
               loading,
@@ -197,12 +161,7 @@ export const CreateSubscription: FC<{
 
 const SchemaUpdatePayment = yup.object().shape({
   plan_id: yup.string().required('Please select a plan'),
-  name: yup.string().required('Please provide the name on the card'),
   coupon: yup.string(),
-  email: yup
-    .string()
-    .email('Please use a valid email')
-    .required('Please provide a billing email'),
 })
 
 const useUpsertUserPayment = createUseServer<{

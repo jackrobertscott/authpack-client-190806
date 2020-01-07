@@ -35,16 +35,8 @@ import * as Authpack from '@authpack/sdk'
 
 export const gadgets = new Authpack.Gadgets({
   key: 'wga-client-key-...',
-  options: {
-    enable_teams: true,
-    prompt_teams: true,
-  }
 })
 ```
-
-- `options?: object`: values used to configure your gadgets.
-  - `enable_teams?: boolean`: enable the teams tab once the user has authenticated.
-  - `prompt_teams?: boolean`: prompt your users to create a team.
 
 ## 4. Usage
 

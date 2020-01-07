@@ -19,12 +19,17 @@ export const Gadgets: FC = () => {
     ? settings.domain.startsWith('http://localhost') ||
       settings.domain.startsWith(config.admin)
     : false
+  const largeGadgets =
+    settings.client &&
+    settings.bearer &&
+    settings.user &&
+    !settings.options.prompt_plan
   return element(Root, {
     theme: settings.options.theme_preset || settings.cluster.theme_preference,
     children: element(Modal, {
       close: close.current,
       visible: Boolean(settings.ready && settings.open),
-      large: Boolean(settings.client && settings.bearer && settings.user),
+      large: Boolean(largeGadgets),
       children: !settings.ready
         ? element(Loading)
         : !settings.client

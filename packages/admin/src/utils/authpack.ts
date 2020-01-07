@@ -16,10 +16,6 @@ export const authpack = new Authpack({
   url: document.location.hostname.includes('localhost')
     ? 'http://localhost:3100'
     : undefined,
-  options: {
-    enable_teams: true,
-    prompt_teams: true,
-  },
 })
 
 export const AuthpackContext = createContext<IPlugin>(undefined as any)

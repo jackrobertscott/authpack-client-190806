@@ -8,6 +8,7 @@ import {
   InputString,
   Page,
   InputStringArray,
+  InputBoolean,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { UniversalStore } from '../utils/universal'
@@ -54,6 +55,33 @@ export const CreateClusterClient: FC<{
             placeholder: '...',
           }),
         }),
+        element(Layout, {
+          key: 'teams',
+          divide: true,
+          media: true,
+          children: [
+            element(Control, {
+              key: 'enable_team',
+              label: 'Enable Teams',
+              helper: "User's will be able to create a team once logged in",
+              error: schema.error('enable_team'),
+              children: element(InputBoolean, {
+                value: schema.value('enable_team'),
+                change: schema.change('enable_team'),
+              }),
+            }),
+            element(Control, {
+              key: 'prompt_team',
+              label: 'Prompt Teams',
+              helper: 'User will be asked to create a team when they login',
+              error: schema.error('prompt_team'),
+              children: element(InputBoolean, {
+                value: schema.value('prompt_team'),
+                change: schema.change('prompt_team'),
+              }),
+            }),
+          ],
+        }),
         element(Button, {
           key: 'submit',
           label: 'Create',
@@ -72,6 +100,8 @@ const SchemaCreateCluster = yup.object().shape({
     .array()
     .of(yup.string().required())
     .default([]),
+  enable_team: yup.boolean(),
+  prompt_team: yup.boolean(),
 })
 
 const useCreateCluster = createUseServer<{

@@ -32,20 +32,23 @@ export const ListMemberships: FC<{
               ? membership.user.summary
               : membership.user_email || 'User unknown',
             value: membership.admin ? 'Admin' : 'Member',
-            options: [
-              {
-                icon: 'sliders-h',
-                label: 'Update',
-                helper: 'Update member',
-                click: () => update(membership.id),
-              },
-              {
-                icon: 'trash-alt',
-                label: 'Remove',
-                helper: 'Delete member from team',
-                click: () => remove(membership.id),
-              },
-            ],
+            options:
+              settings.membership && settings.membership.admin
+                ? [
+                    {
+                      icon: 'sliders-h',
+                      label: 'Update',
+                      helper: 'Update member',
+                      click: () => update(membership.id),
+                    },
+                    {
+                      icon: 'trash-alt',
+                      label: 'Remove',
+                      helper: 'Delete member from team',
+                      click: () => remove(membership.id),
+                    },
+                  ]
+                : undefined,
           })
         }),
   })

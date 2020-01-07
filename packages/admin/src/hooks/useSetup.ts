@@ -1,14 +1,26 @@
 import { useEffect, useRef } from 'react'
-import { useAuthpackCurrent } from '../utils/authpack'
+import { useAuthpackCurrent, authpack } from '../utils/authpack'
 import { createUseServer } from './useServer'
 import { UniversalStore } from '../utils/universal'
 import { useUniversal } from './useUniversal'
+import { usePreferences } from '../utils/preferences'
 
 export const useSetup = () => {
   const universal = useUniversal()
+  const preferences = usePreferences()
   const gqlGetCluster = useGetCluster()
   const auth = useAuthpackCurrent()
   const ids = useRef<{ cluster?: string; team?: string }>({})
+  useEffect(() => {
+    authpack.plugin.update({
+      theme_preset: preferences.theme,
+    })
+    setTimeout(() => {
+      authpack.plugin.update({
+        prompt_plan: 'premium',
+      })
+    }, 3000)
+  }, [preferences.theme])
   useEffect(() => {
     if (auth.team && auth.team.id) {
       // when the team changes, we want to ignore the currently saved cluster id

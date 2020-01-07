@@ -10,23 +10,7 @@ export const useSetup = () => {
   const gqlGetCluster = useGetCluster()
   const gqlGetSession = useGetSession()
   const gqlLogoutUser = useLogoutUser()
-  useEffect(() => {
-    if (settings.client) {
-      gqlGetCluster.fetch().then(({ cluster }) => {
-        SettingsStore.update({ cluster })
-      })
-    }
-    // eslint-disable-next-line
-  }, [settings.client, settings.open])
-  useEffect(() => {
-    SettingsStore.update({
-      ready: false,
-      session: undefined,
-      user: undefined,
-      plan: undefined,
-      team: undefined,
-      membership: undefined,
-    })
+  const updateSession = () => {
     if (settings.bearer && settings.client) {
       gqlGetSession
         .fetch()
@@ -42,12 +26,13 @@ export const useSetup = () => {
           })
         })
         .catch(error => {
+          const bearer =
+            !error.code || error.code === 401
+              ? undefined
+              : SettingsStore.current.bearer
           SettingsStore.update({
             ready: true,
-            bearer:
-              !error.code || error.code === 401
-                ? undefined
-                : SettingsStore.current.bearer,
+            bearer,
           })
         })
     } else {
@@ -56,6 +41,26 @@ export const useSetup = () => {
         bearer: undefined,
       })
     }
+  }
+  useEffect(() => {
+    if (settings.client) {
+      gqlGetCluster
+        .fetch()
+        .then(({ cluster }) => SettingsStore.update({ cluster }))
+        .then(() => updateSession())
+    }
+    // eslint-disable-next-line
+  }, [settings.client, settings.open])
+  useEffect(() => {
+    SettingsStore.update({
+      ready: false,
+      session: undefined,
+      user: undefined,
+      plan: undefined,
+      team: undefined,
+      membership: undefined,
+    })
+    updateSession()
     // eslint-disable-next-line
   }, [settings.client, settings.bearer])
   useEffect(() => {
@@ -86,6 +91,14 @@ export const useSetup = () => {
         case 'plugin:hide':
           SettingsStore.update({ open: false })
           break
+        case 'plugin:options':
+          SettingsStore.update({
+            options: {
+              ...SettingsStore.current.options,
+              ...payload,
+            },
+          })
+          break
         case 'plugin:exit':
           if (settings.bearer)
             gqlLogoutUser
@@ -103,18 +116,22 @@ export const useSetup = () => {
 const useGetCluster = createUseServer<{
   cluster: {
     id: string
+    stripe_publishable_key: string
     name: string
     theme_preference: string
-    stripe_publishable_key: string
+    enable_team: boolean
+    prompt_team: boolean
   }
 }>({
   query: `
     query GetClusterCurrentClient {
       cluster: GetClusterCurrentClient {
         id
+        stripe_publishable_key
         name
         theme_preference
-        stripe_publishable_key
+        enable_team
+        prompt_team
       }
     }
   `,
