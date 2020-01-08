@@ -39,7 +39,9 @@ export const Code: FC<{ value: string }> = ({ value }) => {
       background: theme.input.background,
       border: theme.input.border,
       color: theme.input.value,
-      '&:hover': {
+      '&:hover:not(:active)': {
+        background: theme.input.backgroundHover,
+        boxShadow: theme.input.shadow,
         color: theme.input.valueHover,
       },
       '&:hover .copy': {
@@ -71,12 +73,6 @@ export const Code: FC<{ value: string }> = ({ value }) => {
           opacity: 0,
           right: 15,
           top: 15,
-          padding: 15,
-          border: theme.input.border,
-          borderRadius: theme.global.radius,
-          background: theme.input.backgroundHover,
-          boxShadow: theme.input.shadow,
-          color: theme.input.valueHover,
         })}`,
       }),
     ],

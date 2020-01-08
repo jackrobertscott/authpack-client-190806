@@ -1,4 +1,4 @@
-import { createElement as element, FC, useState } from 'react'
+import { createElement as element, FC, useState, ReactNode } from 'react'
 import { useTheme } from '../hooks/useTheme'
 import { css } from 'emotion'
 import { Icon } from './Icon'
@@ -11,6 +11,7 @@ export const Snippet: FC<{
   prefix?: string
   label: string
   value?: number | string
+  children?: ReactNode
   click?: () => void
   options?: Array<{
     label: string
@@ -19,7 +20,7 @@ export const Snippet: FC<{
     prefix?: string
     click?: () => void
   }>
-}> = ({ icon, prefix, label, value, click, options = [] }) => {
+}> = ({ icon, prefix, label, value, children, click, options = [] }) => {
   const theme = useTheme()
   const mounted = useMounted()
   const [open, openChange] = useState<boolean>(false)
@@ -67,10 +68,18 @@ export const Snippet: FC<{
               key: 'helper',
               children: value,
               className: css({
-                marginTop: 5,
+                marginTop: 3,
                 color: theme.snippet.value,
                 fontWeight: theme.global.thin,
                 lineHeight: '1.5em',
+              }),
+            }),
+          children &&
+            element('div', {
+              key: 'children',
+              children,
+              className: css({
+                marginTop: 7,
               }),
             }),
         ],

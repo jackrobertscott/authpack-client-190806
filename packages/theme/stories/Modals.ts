@@ -270,9 +270,21 @@ const SimpleButtons: FC = () => {
         padding: true,
         divide: true,
         styled: true,
-        children: element(Markdown, {
-          key: 'marked',
-          value: `By click any of the buttons below; you agree to our [terms of service](https://authpack.io)`,
+        children: [
+          element(Markdown, {
+            key: 'marked',
+            value: `By click any of the buttons below; you agree to our [terms of service](https://authpack.io)`,
+          }),
+        ],
+      }),
+      element(Snippet, {
+        key: 'key',
+        icon: 'key',
+        label: 'Client key',
+        value: 'You can use this publically',
+        children: element(Code, {
+          key: 'code',
+          value: `wga-client-key-12459097654321`,
         }),
       }),
       element(Layout, {
@@ -281,16 +293,6 @@ const SimpleButtons: FC = () => {
         padding: true,
         divide: true,
         children: [
-          element(Code, {
-            key: 'code',
-            value: `
-element(Button, {
-  key: 'Regular',
-  label: 'Regular',
-  click: () => console.log('Regular'),
-})`.trim(),
-          }),
-
           element(Button, {
             key: 'Regular',
             label: 'Regular',
