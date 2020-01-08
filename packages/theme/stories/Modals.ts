@@ -21,6 +21,7 @@ import {
   Root,
   Page,
   SideBar,
+  Code,
 } from '../src/index'
 
 console.clear()
@@ -268,6 +269,14 @@ const SimpleButtons: FC = () => {
         padding: true,
         divide: true,
         children: [
+          element(Code, {
+            value: `
+element(Button, {
+  key: 'Regular',
+  label: 'Regular',
+  click: () => console.log('Regular'),
+})`.trim(),
+          }),
           element(Button, {
             key: 'Regular',
             label: 'Regular',

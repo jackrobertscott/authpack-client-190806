@@ -2,6 +2,8 @@
  * Components
  */
 export * from './components/Button'
+export * from './components/ClickOutside'
+export * from './components/Code'
 export * from './components/Control'
 export * from './components/Empty'
 export * from './components/Focus'
@@ -16,6 +18,7 @@ export * from './components/InputString'
 export * from './components/InputStringArray'
 export * from './components/InputStripe'
 export * from './components/Layout'
+export * from './components/Markdown'
 export * from './components/Menu'
 export * from './components/Modal'
 export * from './components/Oauth'
