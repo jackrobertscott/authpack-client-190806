@@ -31,6 +31,7 @@ export const SnowStorm: ITheme = {
   sideBar: {
     title: slate(25),
     footer: slate(60),
+    heading: slate(30),
     options: slate(60),
     optionsHover: slate(25),
     optionsFocused: slate(25),

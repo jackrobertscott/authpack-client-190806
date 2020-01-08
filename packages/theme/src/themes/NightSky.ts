@@ -31,6 +31,7 @@ export const NightSky: ITheme = {
   sideBar: {
     title: slate(95),
     footer: slate(65),
+    heading: slate(45),
     options: slate(65),
     optionsHover: slate(95),
     optionsFocused: slate(95),

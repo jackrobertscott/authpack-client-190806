@@ -33,6 +33,7 @@ export const BlueHarvester: ITheme = {
   sideBar: {
     title: color(95),
     footer: color(65),
+    heading: color(55),
     options: color(65),
     optionsHover: color(95),
     optionsFocused: color(95),
