@@ -7,6 +7,7 @@ interface IKeys {
 
 export interface ITheme extends IKeys {
   global: {
+    text: string
     radius: number
     thick: number
     thin: number

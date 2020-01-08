@@ -22,6 +22,7 @@ import {
   Page,
   SideBar,
   Code,
+  Markdown,
 } from '../src/index'
 
 console.clear()
@@ -264,12 +265,24 @@ const SimpleButtons: FC = () => {
           'Lots of pretty buttons and this is a really long sentence to see what it looks like',
       }),
       element(Layout, {
+        key: 'marked',
+        column: true,
+        padding: true,
+        divide: true,
+        styled: true,
+        children: element(Markdown, {
+          key: 'marked',
+          value: `By click any of the buttons below; you agree to our [terms of service](https://authpack.io)`,
+        }),
+      }),
+      element(Layout, {
         key: 'Layout',
         column: true,
         padding: true,
         divide: true,
         children: [
           element(Code, {
+            key: 'code',
             value: `
 element(Button, {
   key: 'Regular',
@@ -277,6 +290,7 @@ element(Button, {
   click: () => console.log('Regular'),
 })`.trim(),
           }),
+
           element(Button, {
             key: 'Regular',
             label: 'Regular',

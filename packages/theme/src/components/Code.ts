@@ -19,7 +19,10 @@ export const Code: FC<{ value: string }> = ({ value }) => {
           selection.addRange(range)
           document.execCommand('copy')
           selection.removeAllRanges()
-          toaster.add({ icon: 'copy', label: 'Copied to Clipboard' })
+          toaster.add({
+            icon: 'copy',
+            label: 'Copied to Clipboard',
+          })
         }
       }
     },
@@ -37,9 +40,10 @@ export const Code: FC<{ value: string }> = ({ value }) => {
       border: theme.input.border,
       color: theme.input.value,
       '&:hover': {
-        background: theme.input.backgroundHover,
-        boxShadow: theme.input.shadow,
         color: theme.input.valueHover,
+      },
+      '&:hover .copy': {
+        opacity: 1,
       },
     }),
     children: [
@@ -60,17 +64,20 @@ export const Code: FC<{ value: string }> = ({ value }) => {
         children: element(Icon, {
           icon: 'copy',
         }),
-        className: css({
+        className: `copy ${css({
           all: 'unset',
           position: 'absolute',
+          transition: '200ms',
+          opacity: 0,
           right: 15,
           top: 15,
           padding: 15,
           border: theme.input.border,
           borderRadius: theme.global.radius,
           background: theme.input.backgroundHover,
+          boxShadow: theme.input.shadow,
           color: theme.input.valueHover,
-        }),
+        })}`,
       }),
     ],
   })
