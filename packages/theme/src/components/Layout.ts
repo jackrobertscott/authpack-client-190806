@@ -13,6 +13,7 @@ export const Layout: FC<{
   media?: boolean
   breakpoint?: number
   styled?: boolean
+  topborder?: boolean
 }> = ({
   children,
   column,
@@ -24,6 +25,7 @@ export const Layout: FC<{
   media,
   breakpoint = 810,
   styled,
+  topborder,
 }) => {
   const theme = useTheme()
   const bp = `@media (max-width: ${breakpoint + 50}px)`
@@ -41,6 +43,7 @@ export const Layout: FC<{
       padding: padding ? '20px 25px' : 0,
       background: styled ? theme.layout.background : undefined,
       borderBottom: styled ? theme.layout.border : undefined,
+      borderTop: styled && topborder ? theme.layout.border : undefined,
       '& > div:not(:last-child)': divide && {
         margin: column ? `0 0 20px 0` : `0 20px 0 0`,
       },

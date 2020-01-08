@@ -29,7 +29,7 @@ export const LoginUser: FC = () => {
       gqlLoginUser.fetch(value).then(({ session }) => {
         SettingsStore.update({
           bearer: `Bearer ${session.token}`,
-          open: false,
+          open: settings.options.prompt_plan ? true : false,
         })
       })
     },
@@ -48,7 +48,7 @@ export const LoginUser: FC = () => {
         .then(({ session }) => {
           SettingsStore.update({
             bearer: `Bearer ${session.token}`,
-            open: false,
+            open: settings.options.prompt_plan ? true : false,
           })
         })
         .finally(() => {

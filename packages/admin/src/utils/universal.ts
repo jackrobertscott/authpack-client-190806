@@ -13,6 +13,7 @@ export interface IUniversalStore {
   cluster_id?: string
   cluster_key_client?: string
   cluster_name?: string
+  cluster_stripe_pending?: boolean
 }
 
 const defaults: IUniversalStore = {

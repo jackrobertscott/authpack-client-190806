@@ -12,18 +12,19 @@ import { Authpack, IPlugin } from '@authpack/sdk'
    * Hide contents of page until ready.
    */
   const preready = () => {
-    if (document.body.dataset.ready !== 'true') {
+    if (document.body.dataset.ready === 'true') return
+    document.body.style.display = 'none'
+    document.body.style.opacity = '0'
+    setTimeout(() => {
+      if (document.body.dataset.ready === 'true') return
       document.body.style.display = 'none'
       document.body.style.opacity = '0'
       setTimeout(() => {
+        if (document.body.dataset.ready === 'true') return
         document.body.style.display = 'none'
         document.body.style.opacity = '0'
-        setTimeout(() => {
-          document.body.style.display = 'none'
-          document.body.style.opacity = '0'
-        })
       })
-    }
+    })
   }
   /**
    * Show contents of page once is ready.
@@ -42,14 +43,50 @@ import { Authpack, IPlugin } from '@authpack/sdk'
   window.addEventListener('load', () => {
     const authpack = load()
     const dispatch = (context: IContext) =>
-      [plugin, replace, show, hide, guard].map(dispatcher => {
+      [open, replace, show, hide, guard].map(dispatcher => {
         return dispatcher(context)
       })
+    const observer = new MutationObserver(mutationsList => {
+      for (const mutation of mutationsList) {
+        let shouldUpdate = false
+        if (mutation.type === 'attributes') {
+          const isAuthpack =
+            mutation.target instanceof HTMLElement &&
+            !!mutation.target.dataset.authpack
+          if (isAuthpack) shouldUpdate = true
+        }
+        if (mutation.type === 'childList') {
+          const all = [...mutation.addedNodes.values()].filter(node => {
+            if (node instanceof HTMLElement) return !!node.dataset.authpack
+          })
+          if (all.length) shouldUpdate = true
+        }
+        if (shouldUpdate) {
+          dispatch({
+            authpack,
+            state: authpack.plugin.current(),
+          })
+        }
+      }
+    })
+    observer.observe(document, {
+      subtree: true,
+      childList: true,
+      attributes: true,
+      attributeFilter: [
+        'data-authpack',
+        'data-redirect',
+        'data-value',
+        'data-trigger',
+      ],
+    })
     dispatch({
       authpack,
       state: authpack.plugin.current(),
     })
-    authpack.plugin.listen(state => dispatch({ authpack, state }))
+    authpack.plugin.listen(state => {
+      dispatch({ authpack, state })
+    })
   })
   /**
    * Locate the authpack script tag and initialise the authpack instance.
@@ -75,7 +112,7 @@ import { Authpack, IPlugin } from '@authpack/sdk'
   /**
    * Open the gadgets when item is clicked.
    */
-  const plugin = (context: IContext) => {
+  const open = (context: IContext) => {
     if (!context.state.ready) {
       return
     }
@@ -89,6 +126,15 @@ import { Authpack, IPlugin } from '@authpack/sdk'
         node.dataset.listening = 'true'
         node.addEventListener('click', event => {
           context.authpack.plugin.show()
+          const prompt =
+            event.target instanceof HTMLElement
+              ? event.target.dataset.prompt
+              : undefined
+          if (prompt) {
+            context.authpack.plugin.update({
+              prompt_plan: prompt,
+            })
+          }
           event.preventDefault()
         })
       }
@@ -107,12 +153,12 @@ import { Authpack, IPlugin } from '@authpack/sdk'
       return
     }
     nodes.forEach(node => {
-      if (!node.dataset.property) {
-        const message = `Authpack replace tag missing "data-property" attribute i.e.:\n\n<div\n\tdata-authpack="replace"\n\tdata-property="user.name"\n></div>`
+      if (!node.dataset.value) {
+        const message = `Authpack replace tag missing "data-value" attribute i.e.:\n\n<div\n\tdata-authpack="replace"\n\tdata-value="user.name"\n></div>`
         console.warn(message)
         return
       }
-      const steps = node.dataset.property.split('.').map(i => i.trim())
+      const steps = node.dataset.value.split('.').map(i => i.trim())
       const value = steps.reduce(
         (accum, next) => accum && accum[next],
         context.state
@@ -140,26 +186,26 @@ import { Authpack, IPlugin } from '@authpack/sdk'
         console.warn(message)
         return
       }
-      if (node.dataset.property) {
-        if (!node.dataset.validate) {
-          const message = `Authpack guard tag missing "data-validate" attribute i.e.:\n\n<div\n\tdata-authpack="guard"\n\tdata-redirect="/home"\n\tdata-property="user"\n\tdata-validate="present"\n></div>`
+      if (node.dataset.value) {
+        if (!node.dataset.trigger) {
+          const message = `Authpack guard tag missing "data-trigger" attribute i.e.:\n\n<div\n\tdata-authpack="guard"\n\tdata-redirect="/home"\n\tdata-value="user"\n\tdata-trigger="present"\n></div>`
           console.warn(message)
           return
         }
-        const steps = node.dataset.property.split('.').map(i => i.trim())
+        const steps = node.dataset.value.split('.').map(i => i.trim())
         const value = steps.reduce(
           (accum, next) => accum && accum[next],
           context.state
         )
-        switch (node.dataset.validate) {
+        switch (node.dataset.trigger) {
           case 'present':
-            if (!!value) return
-            break
-          case 'missing':
             if (!value) return
             break
+          case 'missing':
+            if (!!value) return
+            break
           default:
-            const message = `Authpack "data-validate" attribute is incorrect: ${node.dataset.validate}`
+            const message = `Authpack "data-trigger" attribute is incorrect: ${node.dataset.trigger}`
             console.warn(message)
             return
         }
@@ -188,25 +234,25 @@ import { Authpack, IPlugin } from '@authpack/sdk'
       return
     }
     nodes.forEach(node => {
-      if (!node.dataset.property) {
-        const message = `Authpack ${name} tag missing "data-property" attribute i.e.:\n\n<div\n\tdata-authpack="${name}"\n\tdata-property="user"\n\tdata-validate="present"\n></div>`
+      if (!node.dataset.value) {
+        const message = `Authpack ${name} tag missing "data-value" attribute i.e.:\n\n<div\n\tdata-authpack="${name}"\n\tdata-value="user"\n\tdata-trigger="present"\n></div>`
         console.warn(message)
         return
       }
-      if (!node.dataset.validate) {
-        const message = `Authpack ${name} tag missing "data-validate" attribute i.e.:\n\n<div\n\tdata-authpack="${name}"\n\tdata-property="user"\n\tdata-validate="present"\n></div>`
+      if (!node.dataset.trigger) {
+        const message = `Authpack ${name} tag missing "data-trigger" attribute i.e.:\n\n<div\n\tdata-authpack="${name}"\n\tdata-value="user"\n\tdata-trigger="present"\n></div>`
         console.warn(message)
         return
       }
       let valid = false
       node.dataset.display =
         node.dataset.display || node.style.display || 'initial'
-      const steps = node.dataset.property.split('.').map(i => i.trim())
+      const steps = node.dataset.value.split('.').map(i => i.trim())
       const value = steps.reduce(
         (accum, next) => accum && accum[next],
         context.state
       )
-      switch (node.dataset.validate) {
+      switch (node.dataset.trigger) {
         case 'present':
           if (!!value) valid = true
           break
@@ -214,7 +260,7 @@ import { Authpack, IPlugin } from '@authpack/sdk'
           if (!value) valid = true
           break
         default:
-          const message = `Authpack "data-validate" attribute is incorrect: ${node.dataset.validate}`
+          const message = `Authpack "data-trigger" attribute is incorrect: ${node.dataset.trigger}`
           console.warn(message)
           return
       }

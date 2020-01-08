@@ -15,11 +15,6 @@ export const useSetup = () => {
     authpack.plugin.update({
       theme_preset: preferences.theme,
     })
-    setTimeout(() => {
-      authpack.plugin.update({
-        prompt_plan: 'premium',
-      })
-    }, 3000)
   }, [preferences.theme])
   useEffect(() => {
     if (auth.team && auth.team.id) {
@@ -43,6 +38,7 @@ export const useSetup = () => {
             cluster_id: cluster.id,
             cluster_name: cluster.name,
             cluster_key_client: cluster.key_client,
+            cluster_stripe_pending: cluster.stripe_pending,
           })
         })
         .catch(() => {
@@ -67,6 +63,7 @@ const useGetCluster = createUseServer<{
     key_client: string
     name: string
     theme_preference: string
+    stripe_pending: boolean
   }
 }>({
   query: `
@@ -76,6 +73,7 @@ const useGetCluster = createUseServer<{
         key_client
         name
         theme_preference
+        stripe_pending
       }
     }
   `,

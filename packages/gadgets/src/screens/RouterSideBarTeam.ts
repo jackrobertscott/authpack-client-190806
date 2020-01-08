@@ -44,6 +44,7 @@ export const RouterSideBarTeam: FC = () => {
   return element(SideBar, {
     key: 'sideBar',
     title: 'Team',
+    space: true,
     footer: current && current.name,
     children: router.current && router.current.children,
     options: current

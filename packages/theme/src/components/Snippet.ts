@@ -7,7 +7,7 @@ import { Menu } from './Menu'
 import { useMounted } from '../hooks/useMounted'
 
 export const Snippet: FC<{
-  icon: string
+  icon?: string
   prefix?: string
   label: string
   value?: number | string
@@ -43,11 +43,12 @@ export const Snippet: FC<{
       },
     }),
     children: [
-      element(Icon, {
-        key: 'icon',
-        icon,
-        prefix,
-      }),
+      icon &&
+        element(Icon, {
+          key: 'icon',
+          icon,
+          prefix,
+        }),
       element('div', {
         key: 'text',
         className: css({
@@ -55,7 +56,7 @@ export const Snippet: FC<{
           flexDirection: 'column',
           overflow: 'auto',
           flexGrow: 1,
-          marginLeft: 10,
+          marginLeft: icon ? 10 : undefined,
           marginRight: 10,
         }),
         children: [

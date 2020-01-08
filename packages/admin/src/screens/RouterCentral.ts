@@ -9,11 +9,20 @@ import { authpack, useAuthpackCurrent } from '../utils/authpack'
 export const RouterCentral: FC = () => {
   const current = useAuthpackCurrent()
   const preferences = usePreferences()
-  const [apper, apperChange] = useState<boolean>(false)
+  const [appear, appearChange] = useState<boolean>(false)
+  const [goto, gotoChange] = useState<string | undefined>()
   const router = useRouter({
     nomatch: '/app',
     options: [
-      { path: '/app', children: element(RouterSideBarHome) },
+      {
+        path: '/app',
+        children: element(RouterSideBarHome, {
+          openSettings: key => {
+            gotoChange(key)
+            appearChange(true)
+          },
+        }),
+      },
       { path: '/developers', children: element(Explorer) },
     ],
   })
@@ -21,8 +30,9 @@ export const RouterCentral: FC = () => {
     children: [
       element(RouterManagerClusterClient, {
         key: 'cluster',
-        visible: apper,
-        close: () => apperChange(false),
+        visible: appear,
+        close: () => appearChange(false),
+        goto,
       }),
       router.current &&
         element(Fragment, {
@@ -93,7 +103,7 @@ export const RouterCentral: FC = () => {
       {
         icon: 'cog',
         label: 'Settings',
-        click: () => apperChange(!apper),
+        click: () => appearChange(!appear),
       },
       {
         icon: 'user-circle',

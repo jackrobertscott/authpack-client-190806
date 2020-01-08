@@ -7,8 +7,8 @@
     <!-- <meta
       data-authpack="guard"
       data-redirect="/home.html"
-      data-property="user"
-      data-validate="present"
+      data-value="user"
+      data-trigger="present"
     /> -->
     <title><%= htmlWebpackPlugin.options.title %></title>
     <!-- inject authpack -->
@@ -26,23 +26,23 @@
     <a href="/home.html">Home</a>
     <br />
     <br />
-    <button data-authpack="open">Account</button>
+    <button data-authpack="open" data-prompt="premium">Account</button>
     <br />
     <br />
     <!-- replace text with state data -->
-    <div data-authpack="replace" data-property="user.name"></div>
+    <div data-authpack="replace" data-value="user.name"></div>
     <!-- show an item once logged in -->
-    <div data-authpack="show" data-property="user" data-validate="present">
+    <div data-authpack="show" data-value="user" data-trigger="present">
       User is authenticated
     </div>
-    <div data-authpack="show" data-property="team" data-validate="present">
+    <div data-authpack="show" data-value="team" data-trigger="present">
       User has a team
     </div>
     <!-- hide an item with conditions -->
-    <div data-authpack="hide" data-property="user" data-validate="present">
+    <div data-authpack="hide" data-value="user" data-trigger="present">
       User is not present
     </div>
-    <div data-authpack="hide" data-property="team" data-validate="present">
+    <div data-authpack="hide" data-value="team" data-trigger="present">
       User does not have a team
     </div>
   </body>

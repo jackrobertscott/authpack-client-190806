@@ -1,5 +1,5 @@
 import { createElement as element, FC, useEffect } from 'react'
-import { Layout, Snippet, Page } from '@authpack/theme'
+import { Layout, Snippet, Page, Code } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { useUniversal } from '../hooks/useUniversal'
 
@@ -28,13 +28,19 @@ export const ShowClusterKeysClient: FC<{ back: () => void }> = ({ back }) => {
               key: 'key_client',
               icon: 'key',
               label: 'Client Key',
-              value: cluster.key_client,
+              value: 'Used in public',
+              children: element(Code, {
+                value: cluster.key_client,
+              }),
             }),
             element(Snippet, {
               key: 'name',
               icon: 'key',
-              label: 'Secret Key - Private',
-              value: cluster.key_secret,
+              label: 'Secret Key',
+              value: 'Keep this secret and private',
+              children: element(Code, {
+                value: cluster.key_secret,
+              }),
             }),
           ],
         }),

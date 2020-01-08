@@ -46,6 +46,7 @@ export const RouterSideBarUser: FC = () => {
   return element(SideBar, {
     key: 'sideBar',
     title: 'User',
+    space: true,
     footer: settings.user && settings.user.name,
     children: router.current && router.current.children,
     options: [

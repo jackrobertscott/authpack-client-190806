@@ -18,6 +18,7 @@ import {
   Page,
   useMounted,
   Snippet,
+  Markdown,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { useSettings } from '../hooks/useSettings'
@@ -103,7 +104,6 @@ export const UpdateUserPayment: FC<{
             gqlGetUser.data.user.plan
               ? element(Snippet, {
                   key: 'subscription',
-                  icon: 'donate',
                   label: gqlGetUser.data.user.plan.name,
                   value: `$${gqlGetUser.data.user.plan.amount / 100} ${
                     gqlGetUser.data.user.plan.currency
@@ -125,13 +125,20 @@ export const UpdateUserPayment: FC<{
                     },
                   ],
                 })
-              : gqlGetUser.data.user.billable &&
-                element(Snippet, {
+              : gqlGetUser.data.user.billable
+              ? element(Snippet, {
                   key: 'subscription',
-                  icon: 'donate',
                   label: 'Subscription',
                   value: 'Add a payment plan',
                   click: update,
+                })
+              : element(Layout, {
+                  key: 'subscription',
+                  padding: true,
+                  styled: true,
+                  children: element(Markdown, {
+                    value: 'Please add a payment card',
+                  }),
                 }),
             element(Layout, {
               key: 'layout',
@@ -182,7 +189,7 @@ export const UpdateUserPayment: FC<{
                 }),
                 element(Button, {
                   key: 'submit',
-                  label: 'Update',
+                  label: gqlGetUser.data.user.billable ? 'Update' : 'Add',
                   disabled: !schema.valid,
                   click: schema.submit,
                   loading,

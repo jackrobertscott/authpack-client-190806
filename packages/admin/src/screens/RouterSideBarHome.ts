@@ -11,7 +11,9 @@ import { ListCoupons } from './ListCoupons'
 import { ListClusters } from './ListClusters'
 import { useAuthpackCurrent } from '../utils/authpack'
 
-export const RouterSideBarHome: FC = () => {
+export const RouterSideBarHome: FC<{
+  openSettings: (key: string) => void
+}> = ({ openSettings }) => {
   const current = useAuthpackCurrent()
   const universal = useUniversal()
   const router = useRouter({
@@ -40,6 +42,10 @@ export const RouterSideBarHome: FC = () => {
     footer: universal.cluster_name,
     children: router.current && router.current.children,
     options: [
+      {
+        label: 'Menu',
+        heading: true,
+      },
       !!current.membership &&
         !!current.membership.superadmin && {
           icon: 'server',
@@ -60,6 +66,12 @@ export const RouterSideBarHome: FC = () => {
         click: () => router.change('/teams'),
       },
       {
+        icon: universal.cluster_stripe_pending ? 'plus' : 'sliders-h',
+        label: 'Payments',
+        heading: true,
+        click: () => openSettings('/stripe'),
+      },
+      {
         icon: 'donate',
         label: 'Plans',
         focused: !!router.current && router.current.path === '/plans',
@@ -78,16 +90,27 @@ export const RouterSideBarHome: FC = () => {
         click: () => router.change('/coupons'),
       },
       {
-        icon: 'plug',
-        label: 'Providers',
-        focused: !!router.current && router.current.path === '/providers',
-        click: () => router.change('/providers'),
+        icon: 'cog',
+        label: 'Settings',
+        heading: true,
+        click: () => openSettings('/update'),
+      },
+      {
+        icon: 'key',
+        label: 'API Keys',
+        click: () => openSettings('/keys'),
       },
       {
         icon: 'sitemap',
         label: 'Webhooks',
         focused: !!router.current && router.current.path === '/webhooks',
         click: () => router.change('/webhooks'),
+      },
+      {
+        icon: 'plug',
+        label: 'Providers',
+        focused: !!router.current && router.current.path === '/providers',
+        click: () => router.change('/providers'),
       },
     ],
   })

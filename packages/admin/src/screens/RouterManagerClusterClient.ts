@@ -1,4 +1,4 @@
-import { createElement as element, FC } from 'react'
+import { createElement as element, FC, useEffect } from 'react'
 import { useLocalRouter, Modal, IconBar } from '@authpack/theme'
 import { UpdateClusterClient } from './UpdateClusterClient'
 import { ShowClusterClient } from './ShowClusterClient'
@@ -10,7 +10,8 @@ import { UpdateClusterStripeClient } from './UpdateClusterStripeClient'
 export const RouterManagerClusterClient: FC<{
   visible?: boolean
   close: () => void
-}> = ({ close, visible }) => {
+  goto?: string
+}> = ({ close, visible, goto }) => {
   const router = useLocalRouter({
     nomatch: '/inspect',
     options: [
@@ -45,6 +46,13 @@ export const RouterManagerClusterClient: FC<{
       },
     ],
   })
+  useEffect(() => {
+    if (goto) {
+      console.log(goto)
+      router.change(goto)
+    }
+    // eslint-disable-next-line
+  }, [goto])
   return element(Modal, {
     close,
     visible,

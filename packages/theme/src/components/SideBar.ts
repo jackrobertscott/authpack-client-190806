@@ -15,6 +15,7 @@ export const SideBar: FC<{
   title: string
   footer?: string
   children: ReactNode
+  space?: boolean
   options: Array<
     | {
         label: string
@@ -26,7 +27,7 @@ export const SideBar: FC<{
       }
     | false
   >
-}> = ({ title, footer, children, options }) => {
+}> = ({ title, footer, space, children, options }) => {
   const theme = useTheme()
   const [open, openChange] = useState<boolean>(true)
   const bp = `@media (max-width: ${1035 + 50}px)`
@@ -70,6 +71,7 @@ export const SideBar: FC<{
             element(Title, {
               key: 'title',
               title,
+              space,
             }),
             element(Options, {
               key: 'options',
@@ -129,7 +131,8 @@ export const SideBar: FC<{
 
 const Title: FC<{
   title: string
-}> = ({ title }) => {
+  space?: boolean
+}> = ({ title, space }) => {
   const theme = useTheme()
   return element('div', {
     children: title,
@@ -138,6 +141,7 @@ const Title: FC<{
       fontSize: '1.5rem',
       padding: '25px 25px 20px',
       color: theme.sideBar.title,
+      marginBottom: space ? 35 : undefined,
     }),
   })
 }
@@ -182,7 +186,6 @@ const Options: FC<{
         if (heading) {
           return element('div', {
             key: `option-${index}`,
-            onClick: click,
             className: css({
               all: 'unset',
               display: 'flex',

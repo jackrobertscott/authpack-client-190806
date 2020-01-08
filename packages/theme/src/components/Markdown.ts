@@ -1,8 +1,10 @@
 import { createElement as element, FC, useEffect, useState } from 'react'
 import { css } from 'emotion'
 import * as marked from 'marked'
+import { useTheme } from '../hooks/useTheme'
 
 export const Markdown: FC<{ value: string }> = ({ value = '' }) => {
+  const theme = useTheme()
   const [render, renderChange] = useState<{ __html: string }>({ __html: '' })
   useEffect(() => {
     const renderer = new marked.Renderer()
@@ -22,6 +24,9 @@ export const Markdown: FC<{ value: string }> = ({ value = '' }) => {
     className: css({
       a: {
         color: 'inherit',
+      },
+      p: {
+        fontWeight: theme.global.thin,
       },
       '& > *': {
         margin: '0 0 15px 0',
