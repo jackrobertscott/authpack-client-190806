@@ -14,13 +14,12 @@ export const useSetup = () => {
     if (settings.bearer && settings.client) {
       gqlGetSession
         .fetch()
-        .then(({ session: { user, plan, team, membership, ...session } }) => {
+        .then(({ session: { user, team, membership, ...session } }) => {
           SettingsStore.update({
             ready: true,
             bearer: `Bearer ${session.token}`,
             session,
             user,
-            plan,
             team,
             membership,
           })
@@ -56,7 +55,6 @@ export const useSetup = () => {
       ready: false,
       session: undefined,
       user: undefined,
-      plan: undefined,
       team: undefined,
       membership: undefined,
     })
@@ -141,7 +139,12 @@ const useGetSession = createUseServer<{
   session: {
     id: string
     token: string
-    user: {
+    membership?: {
+      id: string
+      admin: boolean
+      superadmin: boolean
+    }
+    user?: {
       id: string
       email: string
       verified: boolean
@@ -149,28 +152,44 @@ const useGetSession = createUseServer<{
       name?: string
       name_given?: string
       name_family?: string
-    }
-    plan?: {
-      id: string
-      name: string
-      tag: string
-      description?: string
-      statement?: string
-      amount: number
-      currency: string
-      interval: string
-      interval_seperator: number
+      plan?: {
+        id: string
+        name: string
+        tag: string
+        description?: string
+        statement?: string
+        amount: number
+        currency: string
+        interval: string
+        interval_seperator: number
+      }
+      subscription?: {
+        id: string
+        cancellation_requested: boolean
+        cancelled: boolean
+      }
     }
     team?: {
       id: string
       name: string
       tag: string
       description?: string
-    }
-    membership?: {
-      id: string
-      admin: boolean
-      superadmin: boolean
+      plan?: {
+        id: string
+        name: string
+        tag: string
+        description?: string
+        statement?: string
+        amount: number
+        currency: string
+        interval: string
+        interval_seperator: number
+      }
+      subscription?: {
+        id: string
+        cancellation_requested: boolean
+        cancelled: boolean
+      }
     }
   }
 }>({
@@ -179,6 +198,11 @@ const useGetSession = createUseServer<{
       session: GetSessionClient {
         id
         token
+        membership {
+          id
+          admin
+          superadmin
+        }
         user {
           id
           email
@@ -187,28 +211,44 @@ const useGetSession = createUseServer<{
           name
           name_given
           name_family
-        }
-        plan {
-          id
-          name
-          tag
-          description
-          statement
-          amount
-          currency
-          interval
-          interval_separator
+          plan {
+            id
+            name
+            tag
+            description
+            statement
+            amount
+            currency
+            interval
+            interval_seperator
+          }
+          subscription {
+            id
+            cancellation_requested
+            cancelled
+          }
         }
         team {
           id
           name
           tag
           description
-        }
-        membership {
-          id
-          admin
-          superadmin
+          plan {
+            id
+            name
+            tag
+            description
+            statement
+            amount
+            currency
+            interval
+            interval_seperator
+          }
+          subscription {
+            id
+            cancellation_requested
+            cancelled
+          }
         }
       }
     }

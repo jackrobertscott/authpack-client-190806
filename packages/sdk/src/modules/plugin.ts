@@ -142,6 +142,11 @@ export interface IPlugin {
     id: string
     token: string
   }
+  membership?: {
+    id: string
+    admin: boolean
+    superadmin: boolean
+  }
   user?: {
     id: string
     email: string
@@ -150,28 +155,44 @@ export interface IPlugin {
     name?: string
     name_given?: string
     name_family?: string
-  }
-  plan?: {
-    id: string
-    name: string
-    tag: string
-    description?: string
-    statement?: string
-    amount: number
-    currency: string
-    interval: string
-    interval_seperator: number
+    plan?: {
+      id: string
+      name: string
+      tag: string
+      description?: string
+      statement?: string
+      amount: number
+      currency: string
+      interval: string
+      interval_seperator: number
+    }
+    subscription?: {
+      id: string
+      cancellation_requested: boolean
+      cancelled: boolean
+    }
   }
   team?: {
     id: string
     name: string
     tag: string
     description?: string
-  }
-  membership?: {
-    id: string
-    admin: boolean
-    superadmin: boolean
+    plan?: {
+      id: string
+      name: string
+      tag: string
+      description?: string
+      statement?: string
+      amount: number
+      currency: string
+      interval: string
+      interval_seperator: number
+    }
+    subscription?: {
+      id: string
+      cancellation_requested: boolean
+      cancelled: boolean
+    }
   }
 }
 

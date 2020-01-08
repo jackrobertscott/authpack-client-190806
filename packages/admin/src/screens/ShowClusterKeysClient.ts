@@ -2,8 +2,10 @@ import { createElement as element, FC, useEffect } from 'react'
 import { Layout, Snippet, Page, Code } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { useUniversal } from '../hooks/useUniversal'
+import { useAuthpackCurrent } from '../utils/authpack'
 
 export const ShowClusterKeysClient: FC<{ back: () => void }> = ({ back }) => {
+  const current = useAuthpackCurrent()
   const universal = useUniversal()
   const gqlGetCluster = useGetCluster()
   useEffect(() => {
@@ -25,23 +27,40 @@ export const ShowClusterKeysClient: FC<{ back: () => void }> = ({ back }) => {
           column: true,
           children: [
             element(Snippet, {
+              key: 'head',
+              icon: 'code',
+              label: 'Script',
+              value:
+                'Paste this code into the <head></head> tags of your website',
+              children: element(Code, {
+                value: `
+<script
+  src="https://scripts.v1.authpack.io/index.js"
+  data-key="${cluster.key_client}"
+></script>
+                `.trim(),
+              }),
+            }),
+            element(Snippet, {
               key: 'key_client',
               icon: 'key',
               label: 'Client Key',
-              value: 'Used in public',
+              value: 'Your public key',
               children: element(Code, {
                 value: cluster.key_client,
               }),
             }),
-            element(Snippet, {
-              key: 'name',
-              icon: 'key',
-              label: 'Secret Key',
-              value: 'Keep this secret and private',
-              children: element(Code, {
-                value: cluster.key_secret,
+            current.membership &&
+              current.membership.admin &&
+              element(Snippet, {
+                key: 'name',
+                icon: 'key',
+                label: 'Secret Key',
+                value: 'Keep this private - never use inside a web browser',
+                children: element(Code, {
+                  value: cluster.key_secret,
+                }),
               }),
-            }),
           ],
         }),
   })
