@@ -112,7 +112,7 @@ export const UpdateClusterStripeClient: FC<{
                       gqlGetCluster.data &&
                       oauthCode.open(
                         gqlGetCluster.data.cluster.id,
-                        gqlGetCluster.data.cluster.stripe_express_url
+                        gqlGetCluster.data.cluster.stripe_oauth_url
                       ),
                   }),
             ],
@@ -124,7 +124,7 @@ export const UpdateClusterStripeClient: FC<{
 const useGetCluster = createUseServer<{
   cluster: {
     id: string
-    stripe_express_url: string
+    stripe_oauth_url: string
     stripe_dashboard_url: string
     stripe_pending: boolean
   }
@@ -133,7 +133,7 @@ const useGetCluster = createUseServer<{
     query GetClusterClient($id: String!) {
       cluster: GetClusterClient(id: $id) {
         id
-        stripe_express_url
+        stripe_oauth_url
         stripe_dashboard_url
         stripe_pending
       }
