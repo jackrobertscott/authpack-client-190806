@@ -53,8 +53,8 @@ export const Explorer: FC = () => {
           '*': {
             fontSize: '1rem',
             lineHeight: '1.25rem',
-            fontFamily: 'Inter',
-            fontWeight: 600,
+            fontFamily: 'sans-serif',
+            fontWeight: 500,
             outline: 'none',
             letterSpacing: 'normal',
             WebkitTextFillColor: 'initial',
@@ -410,7 +410,7 @@ export const Explorer: FC = () => {
           background: theme.input.background,
           '.CodeMirror-code': {
             '*': {
-              fontWeight: 600,
+              fontWeight: 500,
               fontFamily: 'Inconsolata',
             },
           },
