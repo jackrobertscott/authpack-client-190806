@@ -242,6 +242,7 @@ const useListPlans = createUseServer<{
     currency: string
     interval: string
     interval_separator: number
+    target: 'user' | 'team'
   }>
 }>({
   query: `
@@ -255,6 +256,7 @@ const useListPlans = createUseServer<{
         currency
         interval
         interval_separator
+        target
       }
     }
   `,
