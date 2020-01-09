@@ -53,7 +53,7 @@ export const Explorer: FC = () => {
           '*': {
             fontSize: '1rem',
             lineHeight: '1.25rem',
-            fontFamily: 'sans-serif',
+            fontFamily: `'-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'sans-serif'`,
             fontWeight: 500,
             outline: 'none',
             letterSpacing: 'normal',

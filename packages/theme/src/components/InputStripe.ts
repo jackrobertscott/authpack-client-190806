@@ -17,7 +17,7 @@ export const InputStripe: FC<{
         hidePostalCode: true,
         style: {
           base: {
-            fontFamily: 'sans-serif',
+            fontFamily: `'-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans'`,
             fontWeight: 500,
             color: theme.input.payment,
             iconColor: theme.input.payment,
