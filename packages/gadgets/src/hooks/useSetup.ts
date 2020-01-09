@@ -161,7 +161,7 @@ const useGetSession = createUseServer<{
         amount: number
         currency: string
         interval: string
-        interval_seperator: number
+        interval_separator: number
       }
       subscription?: {
         id: string
@@ -183,7 +183,7 @@ const useGetSession = createUseServer<{
         amount: number
         currency: string
         interval: string
-        interval_seperator: number
+        interval_separator: number
       }
       subscription?: {
         id: string
@@ -220,7 +220,7 @@ const useGetSession = createUseServer<{
             amount
             currency
             interval
-            interval_seperator
+            interval_separator
           }
           subscription {
             id
@@ -242,7 +242,7 @@ const useGetSession = createUseServer<{
             amount
             currency
             interval
-            interval_seperator
+            interval_separator
           }
           subscription {
             id

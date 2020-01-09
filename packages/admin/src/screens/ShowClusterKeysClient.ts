@@ -50,17 +50,21 @@ export const ShowClusterKeysClient: FC<{ back: () => void }> = ({ back }) => {
                 value: cluster.key_client,
               }),
             }),
-            current.membership &&
-              current.membership.admin &&
-              element(Snippet, {
-                key: 'name',
-                icon: 'key',
-                label: 'Secret Key',
-                value: 'Keep this private - never use inside a web browser',
-                children: element(Code, {
+            element(Snippet, {
+              key: 'name',
+              icon: 'key',
+              label: 'Secret Key',
+              value:
+                current.membership && current.membership.admin
+                  ? 'Keep this private - never use inside a web browser'
+                  : 'Only team admin can see the secret key',
+              children:
+                current.membership &&
+                current.membership.admin &&
+                element(Code, {
                   value: cluster.key_secret,
                 }),
-              }),
+            }),
           ],
         }),
   })

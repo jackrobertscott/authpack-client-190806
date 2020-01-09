@@ -51,18 +51,24 @@ export const ShowPlan: FC<{
               media: true,
               children: [
                 element(Snippet, {
-                  key: 'description',
-                  icon: 'book',
-                  label: 'Description',
-                  value: plan.description || '...',
-                }),
-                element(Snippet, {
                   key: 'statement',
                   icon: 'credit-card',
                   label: 'Statement',
                   value: plan.statement || '...',
                 }),
+                element(Snippet, {
+                  key: 'target',
+                  icon: 'bullseye',
+                  label: 'Target',
+                  value: plan.target,
+                }),
               ],
+            }),
+            element(Snippet, {
+              key: 'description',
+              icon: 'book',
+              label: 'Description',
+              value: plan.description || '...',
             }),
             element(Layout, {
               key: 'amount',
@@ -135,6 +141,7 @@ const useGetPlan = createUseServer<{
     id: string
     created: string
     updated: string
+    target: string
     name: string
     tag: string
     description?: string
@@ -151,6 +158,7 @@ const useGetPlan = createUseServer<{
         id
         created
         updated
+        target
         name
         tag
         description

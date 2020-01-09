@@ -164,7 +164,7 @@ export interface IPlugin {
       amount: number
       currency: string
       interval: string
-      interval_seperator: number
+      interval_separator: number
     }
     subscription?: {
       id: string
@@ -186,7 +186,7 @@ export interface IPlugin {
       amount: number
       currency: string
       interval: string
-      interval_seperator: number
+      interval_separator: number
     }
     subscription?: {
       id: string

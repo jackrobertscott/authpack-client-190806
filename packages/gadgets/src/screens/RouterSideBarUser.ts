@@ -8,7 +8,7 @@ import { UpdateUserPassword } from './UpdateUserPassword'
 import { ListSessions } from './ListSessions'
 import { UpdateUserEmail } from './UpdateUserEmail'
 import { UpdateUserPayment } from './UpdateUserPayment'
-import { RemoveSubscription } from './RemoveSubscription'
+import { RemoveUserSubscription } from './RemoveUserSubscription'
 import { UpdateSubscription } from './UpdateSubscription'
 
 export const RouterSideBarUser: FC = () => {
@@ -37,7 +37,7 @@ export const RouterSideBarUser: FC = () => {
       },
       {
         key: '/user/payments/danger',
-        children: element(RemoveSubscription),
+        children: element(RemoveUserSubscription),
         nosave: true,
       },
     ],

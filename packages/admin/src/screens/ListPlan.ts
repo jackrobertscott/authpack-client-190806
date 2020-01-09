@@ -96,6 +96,7 @@ export const ListPlans: FC = () => {
             { key: 'name', label: 'Name' },
             { key: 'tag', label: 'Tag' },
             { key: 'amount', label: 'Price' },
+            { key: 'target', label: 'Target' },
             { key: 'updated', label: 'Updated' },
             { key: 'created', label: 'Created' },
           ].map(({ key, label }) => ({
@@ -130,6 +131,10 @@ export const ListPlans: FC = () => {
                 value: `${data.amount / 100} ${data.currency}` || '...',
               },
               {
+                icon: 'bullseye',
+                value: data.target || '...',
+              },
+              {
                 icon: 'clock',
                 value: format(new Date(data.updated), 'dd LLL h:mm a'),
               },
@@ -150,6 +155,7 @@ const useListPlans = createUseServer<{
     id: string
     created: string
     updated: string
+    target: string
     name: string
     tag: string
     amount: number
@@ -163,6 +169,7 @@ const useListPlans = createUseServer<{
         id
         created
         updated
+        target
         name
         tag
         amount
@@ -176,6 +183,7 @@ const FakePlans: Array<{
   id: string
   created: string
   updated: string
+  target: string
   name: string
   tag: string
   amount: number
@@ -184,6 +192,7 @@ const FakePlans: Array<{
   id: faker.random.uuid(),
   created: faker.date.recent(100).toDateString(),
   updated: faker.date.recent(100).toDateString(),
+  target: Math.random() > 0.5 ? 'user' : 'team',
   name: faker.random.words(2),
   tag: faker.internet.userName(),
   amount: faker.random.number(100000),

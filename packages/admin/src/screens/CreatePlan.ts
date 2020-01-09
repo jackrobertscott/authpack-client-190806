@@ -63,6 +63,49 @@ export const CreatePlan: FC<{
           ],
         }),
         element(Layout, {
+          key: 'interval',
+          divide: true,
+          media: true,
+          children: [
+            element(Control, {
+              key: 'statement',
+              label: 'Statement',
+              helper: 'The bank statement descriptor',
+              error: schema.error('statement'),
+              children: element(InputString, {
+                value: schema.value('statement'),
+                change: schema.change('statement'),
+                placeholder: 'PREMIUM',
+              }),
+            }),
+            element(Control, {
+              key: 'target',
+              label: 'Target',
+              helper: 'Who is the plan for?',
+              error: schema.error('target'),
+              children: element(InputSelect, {
+                value: schema.value('target'),
+                change: schema.change('target'),
+                options: [
+                  { value: 'user', label: 'Users' },
+                  { value: 'team', label: 'Teams' },
+                ],
+              }),
+            }),
+          ],
+        }),
+        element(Control, {
+          key: 'description',
+          label: 'Description',
+          helper: 'What are users are buying?',
+          error: schema.error('description'),
+          children: element(InputString, {
+            value: schema.value('description'),
+            change: schema.change('description'),
+            placeholder: 'Users gains access to...',
+          }),
+        }),
+        element(Layout, {
           key: 'amount',
           divide: true,
           media: true,
@@ -95,17 +138,6 @@ export const CreatePlan: FC<{
               }),
             }),
           ],
-        }),
-        element(Control, {
-          key: 'description',
-          label: 'Description',
-          helper: 'What are users are buying?',
-          error: schema.error('description'),
-          children: element(InputString, {
-            value: schema.value('description'),
-            change: schema.change('description'),
-            placeholder: 'Users gains access to...',
-          }),
         }),
         element(Layout, {
           key: 'interval',
@@ -142,17 +174,6 @@ export const CreatePlan: FC<{
             }),
           ],
         }),
-        element(Control, {
-          key: 'statement',
-          label: 'Statement',
-          helper: 'The bank statement descriptor',
-          error: schema.error('statement'),
-          children: element(InputString, {
-            value: schema.value('statement'),
-            change: schema.change('statement'),
-            placeholder: 'PREMIUM',
-          }),
-        }),
         element(Button, {
           key: 'submit',
           label: 'Create',
@@ -166,6 +187,10 @@ export const CreatePlan: FC<{
 }
 
 const SchemaCreatePlan = yup.object().shape({
+  target: yup
+    .string()
+    .required('Please provide the target value')
+    .default('user'),
   name: yup.string().required('Please provide the plan name'),
   tag: yup
     .string()
