@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { createElement as element, FC, useEffect } from 'react'
+import { createElement as element, FC, useEffect, useState } from 'react'
 import {
   useSchema,
   Layout,
@@ -12,6 +12,7 @@ import {
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { useSettings } from '../hooks/useSettings'
+import { COUNTRIES } from '../utils/countries'
 
 export const UpdateSubscription: FC<{
   change?: (id?: string) => void
@@ -21,6 +22,7 @@ export const UpdateSubscription: FC<{
   const gqlGetUser = useGetUser()
   const gqlListPlans = useListPlans()
   const gqlUpsertSubscription = useUpsertSubscription()
+  const [filter, filterChange] = useState<string>('')
   const schema = useSchema({
     schema: SchemaUpdatePayment,
     submit: value => {
@@ -94,6 +96,39 @@ export const UpdateSubscription: FC<{
                 change: schema.change('coupon'),
                 placeholder: '...',
               }),
+            }),
+            element(Layout, {
+              key: 'country',
+              divide: true,
+              media: true,
+              children: [
+                element(Control, {
+                  key: 'country',
+                  label: 'Country',
+                  error: schema.error('country'),
+                  children: element(InputSelect, {
+                    value: schema.value('country'),
+                    change: schema.change('country'),
+                    filter: writing => filterChange(writing),
+                    options: COUNTRIES.filter(country =>
+                      country.toLowerCase().includes(filter)
+                    ).map(country => ({
+                      value: country,
+                      label: country,
+                    })),
+                  }),
+                }),
+                element(Control, {
+                  key: 'zip_code',
+                  label: 'Zip Code',
+                  error: schema.error('zip_code'),
+                  children: element(InputString, {
+                    value: schema.value('zip_code'),
+                    change: schema.change('zip_code'),
+                    placeholder: '...',
+                  }),
+                }),
+              ],
             }),
             element(Button, {
               key: 'submit',

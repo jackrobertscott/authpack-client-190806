@@ -22,6 +22,7 @@ import {
 import { createUseServer } from '../hooks/useServer'
 import { useSettings } from '../hooks/useSettings'
 import { createStripe } from '../utils/stripe'
+import { COUNTRIES } from '../utils/countries'
 
 export const CreateSubscription: FC<{
   change?: (id?: string) => void
@@ -32,6 +33,7 @@ export const CreateSubscription: FC<{
   const stripeCard = useRef<any>()
   const [stripe, stripeChange] = useState()
   const [loading, loadingChange] = useState<boolean>(false)
+  const [filter, filterChange] = useState<string>('')
   const gqlGetUser = useGetUser()
   const gqlListPlans = useListPlans()
   const gqlUpsertPayment = useUpsertUserPayment()
@@ -48,9 +50,9 @@ export const CreateSubscription: FC<{
               input: {
                 token: token.id,
                 plan_id: value.plan_id,
-                name: value.name,
                 coupon: value.coupon,
-                email: value.email,
+                country: value.country,
+                zip_code: value.zip_code,
               },
             })
             .then(({ user }) => {
@@ -151,6 +153,32 @@ export const CreateSubscription: FC<{
                     placeholder: '...',
                   }),
                 }),
+                element(Control, {
+                  key: 'country',
+                  label: 'Country',
+                  error: schema.error('country'),
+                  children: element(InputSelect, {
+                    value: schema.value('country'),
+                    change: schema.change('country'),
+                    filter: writing => filterChange(writing),
+                    options: COUNTRIES.filter(country =>
+                      country.toLowerCase().includes(filter)
+                    ).map(country => ({
+                      value: country,
+                      label: country,
+                    })),
+                  }),
+                }),
+                element(Control, {
+                  key: 'zip_code',
+                  label: 'Zip Code',
+                  error: schema.error('zip_code'),
+                  children: element(InputString, {
+                    value: schema.value('zip_code'),
+                    change: schema.change('zip_code'),
+                    placeholder: '...',
+                  }),
+                }),
                 element(Button, {
                   key: 'submit',
                   label: 'Subscribe',
@@ -167,6 +195,8 @@ export const CreateSubscription: FC<{
 
 const SchemaUpdatePayment = yup.object().shape({
   plan_id: yup.string().required('Please select a plan'),
+  country: yup.string().required('Please select your country'),
+  zip_code: yup.string().required('Please select your zip code'),
   coupon: yup.string(),
 })
 
