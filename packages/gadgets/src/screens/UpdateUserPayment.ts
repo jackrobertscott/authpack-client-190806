@@ -101,14 +101,14 @@ export const UpdateUserPayment: FC<{
       : element(Layout, {
           column: true,
           children: [
-            gqlGetUser.data.user.plan
+            gqlGetUser.data.user.stripe_plan
               ? element(Snippet, {
                   key: 'subscription',
-                  label: gqlGetUser.data.user.plan.name,
-                  value: `$${gqlGetUser.data.user.plan.amount / 100} ${
-                    gqlGetUser.data.user.plan.currency
-                  } every ${gqlGetUser.data.user.plan.interval_separator} ${
-                    gqlGetUser.data.user.plan.interval
+                  label: gqlGetUser.data.user.stripe_plan.name || 'Unnamed',
+                  value: `$${gqlGetUser.data.user.stripe_plan.amount / 100} ${
+                    gqlGetUser.data.user.stripe_plan.currency
+                  } every ${gqlGetUser.data.user.stripe_plan.interval_count} ${
+                    gqlGetUser.data.user.stripe_plan.interval
                   }`,
                   options: [
                     {
@@ -231,14 +231,14 @@ const useGetUser = createUseServer<{
     billable: boolean
     billing_name: string
     billing_email: string
-    plan?: {
+    stripe_plan?: {
       id: string
-      name: string
-      tag: string
+      name?: string
+      description?: string
       amount: number
       currency: string
       interval: string
-      interval_separator: number
+      interval_count: number
     }
   }
 }>({
@@ -250,14 +250,14 @@ const useGetUser = createUseServer<{
         billable
         billing_name
         billing_email
-        plan {
+        stripe_plan {
           id
           name
-          tag
+          description
           amount
           currency
           interval
-          interval_separator
+          interval_count
         }
       }
     }

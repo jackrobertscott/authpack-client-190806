@@ -5,9 +5,6 @@ import { ListUsers } from './ListUsers'
 import { ListProviders } from './ListProviders'
 import { ListTeams } from './ListTeams'
 import { ListWebhooks } from './ListWebhooks'
-import { ListPlans } from './ListPlan'
-import { ListSubscriptions } from './ListSubscriptions'
-import { ListCoupons } from './ListCoupons'
 import { ListClusters } from './ListClusters'
 import { useAuthpackCurrent } from '../utils/authpack'
 
@@ -29,9 +26,6 @@ export const RouterSideBarHome: FC<{
       },
       { path: '/users', children: element(ListUsers) },
       { path: '/teams', children: element(ListTeams) },
-      { path: '/plans', children: element(ListPlans) },
-      { path: '/subscriptions', children: element(ListSubscriptions) },
-      { path: '/coupons', children: element(ListCoupons) },
       { path: '/providers', children: element(ListProviders) },
       { path: '/webhooks', children: element(ListWebhooks) },
     ],
@@ -66,31 +60,7 @@ export const RouterSideBarHome: FC<{
         click: () => router.change('/teams'),
       },
       {
-        icon: universal.cluster_stripe_pending ? 'plus' : 'sliders-h',
-        label: 'Payments',
-        heading: true,
-        click: () => openSettings('/stripe'),
-      },
-      {
-        icon: 'donate',
-        label: 'Plans',
-        focused: !!router.current && router.current.path === '/plans',
-        click: () => router.change('/plans'),
-      },
-      {
-        icon: 'user-tag',
-        label: 'Subscriptions',
-        focused: !!router.current && router.current.path === '/subscriptions',
-        click: () => router.change('/subscriptions'),
-      },
-      {
-        icon: 'tags',
-        label: 'Coupons',
-        focused: !!router.current && router.current.path === '/coupons',
-        click: () => router.change('/coupons'),
-      },
-      {
-        icon: 'cog',
+        icon: 'sliders-h',
         label: 'Settings',
         heading: true,
         click: () => openSettings('/update'),
@@ -99,6 +69,11 @@ export const RouterSideBarHome: FC<{
         icon: 'key',
         label: 'API Keys',
         click: () => openSettings('/keys'),
+      },
+      {
+        icon: universal.cluster_stripe_pending ? 'plus' : 'donate',
+        label: 'Payments',
+        click: () => openSettings('/stripe'),
       },
       {
         icon: 'sitemap',

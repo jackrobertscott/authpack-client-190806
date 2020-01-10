@@ -155,21 +155,14 @@ export interface IPlugin {
     name?: string
     name_given?: string
     name_family?: string
-    plan?: {
+    stripe_plan?: {
       id: string
-      name: string
-      tag: string
+      name?: string
       description?: string
-      statement?: string
       amount: number
       currency: string
       interval: string
-      interval_separator: number
-    }
-    subscription?: {
-      id: string
-      cancellation_requested: boolean
-      cancelled: boolean
+      interval_count: number
     }
   }
   team?: {
@@ -177,21 +170,14 @@ export interface IPlugin {
     name: string
     tag: string
     description?: string
-    plan?: {
+    stripe_plan?: {
       id: string
-      name: string
-      tag: string
+      name?: string
       description?: string
-      statement?: string
       amount: number
       currency: string
       interval: string
-      interval_separator: number
-    }
-    subscription?: {
-      id: string
-      cancellation_requested: boolean
-      cancelled: boolean
+      interval_count: number
     }
   }
 }

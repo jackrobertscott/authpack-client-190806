@@ -50,8 +50,11 @@ export const UpdateSubscription: FC<{
     // eslint-disable-next-line
   }, [])
   useEffect(() => {
-    if (gqlGetUser.data && gqlGetUser.data.user.plan)
-      schema.set({ ...schema.state, plan_id: gqlGetUser.data.user.plan.id })
+    if (gqlGetUser.data && gqlGetUser.data.user.stripe_plan)
+      schema.set({
+        ...schema.state,
+        plan_id: gqlGetUser.data.user.stripe_plan.id,
+      })
     // eslint-disable-next-line
   }, [gqlGetUser.data])
   return element(Page, {
@@ -165,8 +168,14 @@ const useGetUser = createUseServer<{
   user: {
     name: string
     email: string
-    plan?: {
+    stripe_plan?: {
       id: string
+      name?: string
+      description?: string
+      amount: number
+      currency: string
+      interval: string
+      interval_count: number
     }
   }
 }>({
@@ -175,8 +184,14 @@ const useGetUser = createUseServer<{
       user: GetUserClient {
         name
         email
-        plan {
+        stripe_plan {
           id
+          name
+          description
+          amount
+          currency
+          interval
+          interval_count
         }
       }
     }

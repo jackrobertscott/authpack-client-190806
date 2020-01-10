@@ -65,25 +65,6 @@ export const ShowUser: FC<{
               ],
             }),
             element(Layout, {
-              key: 'plan',
-              grow: true,
-              media: true,
-              children: [
-                element(Snippet, {
-                  key: 'name',
-                  icon: 'donate',
-                  label: 'Plan',
-                  value: user.plan ? user.plan.summary : '...',
-                }),
-                element(Snippet, {
-                  key: 'tag',
-                  icon: 'tags',
-                  label: 'Id',
-                  value: user.plan ? user.plan.id : '...',
-                }),
-              ],
-            }),
-            element(Layout, {
               key: 'dates',
               grow: true,
               media: true,
@@ -120,10 +101,6 @@ const useGetUser = createUseServer<{
     name?: string
     username?: string
     verified: string
-    plan?: {
-      id: string
-      summary: string
-    }
   }
 }>({
   query: `
@@ -136,10 +113,6 @@ const useGetUser = createUseServer<{
         name
         username
         verified
-        plan {
-          id
-          summary
-        }
       }
     }
   `,
