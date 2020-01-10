@@ -81,10 +81,10 @@ export const UpdateSubscription: FC<{
                   : gqlListPlans.data.plans.map(plan => ({
                       value: plan.id,
                       label: plan.name,
-                      helper: `$${plan.amount / 100} ${plan.currency} every ${
-                        plan.interval_separator
-                      } ${plan.interval}${
-                        plan.interval_separator === 1 ? '' : 's'
+                      helper: `$${(plan.amount / 100).toFixed(2)} ${
+                        plan.currency
+                      } every ${plan.interval_count} ${plan.interval}${
+                        plan.interval_count === 1 ? '' : 's'
                       }`,
                     })),
               }),
@@ -207,7 +207,7 @@ const useListPlans = createUseServer<{
     amount: number
     currency: string
     interval: string
-    interval_separator: number
+    interval_count: number
   }>
 }>({
   query: `
@@ -220,7 +220,7 @@ const useListPlans = createUseServer<{
         amount
         currency
         interval
-        interval_separator
+        interval_count
       }
     }
   `,

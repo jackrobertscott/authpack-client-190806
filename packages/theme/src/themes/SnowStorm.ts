@@ -116,7 +116,7 @@ export const SnowStorm: ITheme = {
     backgroundHover: slate(100),
     backgroundDisabled: slate(95),
     shadow: `0 0 13px -3px ${slate(80, 0.5)}`,
-    border: `1px solid ${slate(90)}`,
+    border: `1px solid ${slate(85)}`,
     borderFocused: `1px solid ${slate(60)}`,
     on: slate(65, 1, 80, 125),
     off: slate(87.5),
@@ -131,7 +131,7 @@ export const SnowStorm: ITheme = {
     backgroundDisabled: slate(92.5),
     backgroundHover: slate(100),
     shadow: `0 0 13px -3px ${slate(80, 0.5)}`,
-    border: `1px solid ${slate(90)}`,
+    border: `1px solid ${slate(85)}`,
   },
   /**
    * Helpers.

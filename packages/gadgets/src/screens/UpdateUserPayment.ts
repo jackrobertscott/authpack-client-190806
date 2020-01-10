@@ -105,7 +105,9 @@ export const UpdateUserPayment: FC<{
               ? element(Snippet, {
                   key: 'subscription',
                   label: gqlGetUser.data.user.stripe_plan.name || 'Unnamed',
-                  value: `$${gqlGetUser.data.user.stripe_plan.amount / 100} ${
+                  value: `$${(
+                    gqlGetUser.data.user.stripe_plan.amount / 100
+                  ).toFixed(2)} ${
                     gqlGetUser.data.user.stripe_plan.currency
                   } every ${gqlGetUser.data.user.stripe_plan.interval_count} ${
                     gqlGetUser.data.user.stripe_plan.interval

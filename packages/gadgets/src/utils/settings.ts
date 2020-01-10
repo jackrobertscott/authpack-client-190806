@@ -49,7 +49,7 @@ export type ISettings = {
       amount: number
       currency: string
       interval: string
-      interval_separator: number
+      interval_count: number
     }
     subscription?: {
       id: string
@@ -71,7 +71,7 @@ export type ISettings = {
       amount: number
       currency: string
       interval: string
-      interval_separator: number
+      interval_count: number
     }
     subscription?: {
       id: string

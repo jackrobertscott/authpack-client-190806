@@ -5,14 +5,13 @@ import {
   Layout,
   Control,
   InputString,
-  testAlphanumeric,
   Page,
   Button,
   useToaster,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
-export const UpdatePlan: FC<{
+export const UpdateStripePlan: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
@@ -22,7 +21,7 @@ export const UpdatePlan: FC<{
   const schema = useSchema({
     schema: SchemaUpdatePlan,
     submit: value => {
-      gqlUpdatePlan.fetch({ id, value }).then(({ plan }) => {
+      gqlUpdatePlan.fetch({ id, input: value }).then(({ plan }) => {
         if (change) change(plan.id)
         toaster.add({ icon: 'check-circle', label: 'Success' })
       })
@@ -42,34 +41,16 @@ export const UpdatePlan: FC<{
       children: !gqlGetPlan.data
         ? null
         : [
-            element(Layout, {
+            element(Control, {
               key: 'name',
-              divide: true,
-              media: true,
-              children: [
-                element(Control, {
-                  key: 'name',
-                  label: 'Name',
-                  helper: 'Human friendly name',
-                  error: schema.error('name'),
-                  children: element(InputString, {
-                    value: schema.value('name'),
-                    change: schema.change('name'),
-                    placeholder: 'Premium',
-                  }),
-                }),
-                element(Control, {
-                  key: 'tag',
-                  label: 'Tag',
-                  helper: 'Unique identifier',
-                  error: schema.error('tag'),
-                  children: element(InputString, {
-                    value: schema.value('tag'),
-                    change: schema.change('tag'),
-                    placeholder: 'premium',
-                  }),
-                }),
-              ],
+              label: 'Name',
+              helper: 'Human friendly name',
+              error: schema.error('name'),
+              children: element(InputString, {
+                value: schema.value('name'),
+                change: schema.change('name'),
+                placeholder: 'Premium',
+              }),
             }),
             element(Control, {
               key: 'description',
@@ -79,17 +60,6 @@ export const UpdatePlan: FC<{
                 value: schema.value('description'),
                 change: schema.change('description'),
                 placeholder: 'Users gains access to...',
-              }),
-            }),
-            element(Control, {
-              key: 'statement',
-              label: 'Statement',
-              helper: 'The bank statement descriptor',
-              error: schema.error('statement'),
-              children: element(InputString, {
-                value: schema.value('statement'),
-                change: schema.change('statement'),
-                placeholder: 'PREMIUM',
               }),
             }),
             element(Button, {
@@ -106,35 +76,20 @@ export const UpdatePlan: FC<{
 
 const SchemaUpdatePlan = yup.object().shape({
   name: yup.string().required('Please provide the plan name'),
-  tag: yup
-    .string()
-    .test(
-      'alphamun',
-      'Please use only numbers, letters and underscores',
-      testAlphanumeric
-    )
-    .required('Please provide the plan tag'),
   description: yup.string(),
-  statement: yup
-    .string()
-    .max(22, 'Statement must be a maximum of 22 characters'),
 })
 
 const useGetPlan = createUseServer<{
   plan: {
-    name: string
-    tag: string
+    name?: string
     description?: string
-    statement?: string
   }
 }>({
   query: `
-    query GetPlan($id: String!) {
-      plan: GetPlan(id: $id) {
+    query GetStripePlanClient($id: String!) {
+      plan: GetStripePlanClient(stripe_plan_id: $id) {
         name
-        tag
         description
-        statement
       }
     }
   `,
@@ -146,8 +101,8 @@ const useUpdatePlan = createUseServer<{
   }
 }>({
   query: `
-    mutation UpdatePlan($id: String!, $value: UpdatePlanValue!) {
-      plan: UpdatePlan(id: $id, value: $value) {
+    mutation UpdateClusterStripePlanClient($id: String!, $input: UpdateClusterStripePlanInput!) {
+      plan: UpdateClusterStripePlanClient(id: $id, input: $input) {
         id
       }
     }
