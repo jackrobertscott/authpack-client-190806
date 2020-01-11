@@ -121,6 +121,7 @@ export const NightSky: ITheme = {
     on: slate(32.5),
     off: slate(7.5),
     payment: '#ffffff',
+    error: '#00b4ff',
   },
   button: {
     label: slate(65),

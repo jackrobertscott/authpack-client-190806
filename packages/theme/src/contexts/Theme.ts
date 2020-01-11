@@ -115,6 +115,7 @@ export interface ITheme extends IKeys {
     borderFocused: string
     on: string
     off: string
+    error: string
     payment: string
   }
   button: {

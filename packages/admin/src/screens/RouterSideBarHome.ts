@@ -40,13 +40,6 @@ export const RouterSideBarHome: FC<{
         label: 'Menu',
         heading: true,
       },
-      !!current.membership &&
-        !!current.membership.superadmin && {
-          icon: 'server',
-          label: 'Clusters',
-          focused: !!router.current && router.current.path === '/clusters',
-          click: () => router.change('/clusters'),
-        },
       {
         icon: 'user-circle',
         label: 'Users',
@@ -59,6 +52,13 @@ export const RouterSideBarHome: FC<{
         focused: !!router.current && router.current.path === '/teams',
         click: () => router.change('/teams'),
       },
+      !!current.membership &&
+        !!current.membership.superadmin && {
+          icon: 'server',
+          label: 'Clusters',
+          focused: !!router.current && router.current.path === '/clusters',
+          click: () => router.change('/clusters'),
+        },
       {
         icon: 'sliders-h',
         label: 'Settings',

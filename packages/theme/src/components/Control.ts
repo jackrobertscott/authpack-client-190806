@@ -76,6 +76,7 @@ const Alert: FC<{
   error: Error
 }> = ({ icon = 'flag', prefix, error }) => {
   const bp = `@media (max-width: ${525 + 50}px)`
+  const theme = useTheme()
   const [open, openChange] = useState<boolean>(false)
   return element('div', {
     className: css({
@@ -94,6 +95,7 @@ const Alert: FC<{
         className: css({
           padding: 5,
           margin: -5,
+          color: theme.input.error,
         }),
         children: element(Icon, {
           icon,
