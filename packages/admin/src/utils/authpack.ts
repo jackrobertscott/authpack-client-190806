@@ -23,8 +23,8 @@ export const AuthpackContext = createContext<IPlugin>(undefined as any)
 export const AuthpackProvider: FC<{
   children: ReactNode
 }> = ({ children }) => {
-  const [current, currentChange] = useState<IPlugin>(authpack.plugin.current())
-  useEffect(() => authpack.plugin.listen(update => currentChange(update)), [])
+  const [current, currentChange] = useState<IPlugin>(authpack.current())
+  useEffect(() => authpack.listen(update => currentChange(update)), [])
   return createElement(AuthpackContext.Provider, {
     value: current,
     children,

@@ -117,6 +117,7 @@ export const SideBar: FC<{
               icon: 'angle-left',
               label: 'Back',
               click: () => openChange(true),
+              noicon: true,
             }),
           }),
           element(Fragment, {

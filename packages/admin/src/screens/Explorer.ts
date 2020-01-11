@@ -29,7 +29,7 @@ export const Explorer: FC = () => {
       defaultQuery: startingQuery,
       fetcher: async (graphQLParams: any) => {
         try {
-          const data = await authpack.api.graphql<any>({
+          const data = await authpack.graphql<any>({
             url: config.api,
             key: universal.cluster_key_client,
             bearer: auth.bearer,
@@ -53,8 +53,8 @@ export const Explorer: FC = () => {
           '*': {
             fontSize: '1rem',
             lineHeight: '1.25rem',
-            fontFamily: 'Inter',
-            fontWeight: 600,
+            fontFamily: `'-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'sans-serif'`,
+            fontWeight: 500,
             outline: 'none',
             letterSpacing: 'normal',
             WebkitTextFillColor: 'initial',
@@ -410,7 +410,7 @@ export const Explorer: FC = () => {
           background: theme.input.background,
           '.CodeMirror-code': {
             '*': {
-              fontWeight: 600,
+              fontWeight: 500,
               fontFamily: 'Inconsolata',
             },
           },

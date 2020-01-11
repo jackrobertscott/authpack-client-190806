@@ -3,7 +3,7 @@ import { ITheme } from '../contexts/Theme'
 const slate = (
   lightness: number = 0,
   opacity: number = 1,
-  saturation: number = 10,
+  saturation: number = 0,
   hue: number = 210
 ) =>
   opacity === 1
@@ -14,8 +14,8 @@ export const SnowStorm: ITheme = {
   global: {
     text: slate(40),
     radius: 3,
-    thick: 600,
-    thin: 500,
+    thick: 500,
+    thin: 400,
   },
   /**
    * Navigation.
@@ -48,13 +48,13 @@ export const SnowStorm: ITheme = {
     title: slate(25),
     subtitle: slate(60),
     branding: slate(80),
-    brandingHover: slate(60),
+    brandingHover: slate(50),
     label: slate(60),
     labelHover: slate(25),
-    header: slate(95),
-    headerHover: slate(100),
-    border: `1px solid ${slate(90)}`,
-    background: slate(95),
+    header: slate(92.5),
+    headerHover: slate(97.5),
+    border: 'none',
+    background: slate(92.5),
   },
   layout: {
     background: slate(97.5),
@@ -116,7 +116,7 @@ export const SnowStorm: ITheme = {
     backgroundHover: slate(100),
     backgroundDisabled: slate(95),
     shadow: `0 0 13px -3px ${slate(80, 0.5)}`,
-    border: `1px solid ${slate(90)}`,
+    border: `1px solid ${slate(85)}`,
     borderFocused: `1px solid ${slate(60)}`,
     on: slate(65, 1, 80, 125),
     off: slate(87.5),
@@ -131,7 +131,7 @@ export const SnowStorm: ITheme = {
     backgroundDisabled: slate(92.5),
     backgroundHover: slate(100),
     shadow: `0 0 13px -3px ${slate(80, 0.5)}`,
-    border: `1px solid ${slate(90)}`,
+    border: `1px solid ${slate(85)}`,
   },
   /**
    * Helpers.

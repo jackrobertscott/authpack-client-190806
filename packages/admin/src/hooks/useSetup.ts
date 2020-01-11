@@ -12,7 +12,7 @@ export const useSetup = () => {
   const auth = useAuthpackCurrent()
   const ids = useRef<{ cluster?: string; team?: string }>({})
   useEffect(() => {
-    authpack.plugin.update({
+    authpack.update({
       theme_preset: preferences.theme,
     })
   }, [preferences.theme])

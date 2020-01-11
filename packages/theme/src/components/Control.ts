@@ -7,7 +7,7 @@ import { Pointer } from './Pointer'
 export const Control: FC<{
   icon?: string
   prefix?: string
-  label: string
+  label?: string
   helper?: string
   children: ReactNode
   error?: Error
@@ -23,40 +23,42 @@ export const Control: FC<{
       color: theme.input.label,
     }),
     children: [
-      element('div', {
-        key: 'label',
-        className: css({
-          all: 'unset',
-          display: 'flex',
-          color: theme.input.label,
-        }),
-        children: [
-          element('div', {
-            key: 'label',
-            children: label,
-            className: css({
-              marginRight: 10,
-            }),
+      label &&
+        element('div', {
+          key: 'label',
+          className: css({
+            all: 'unset',
+            display: 'flex',
+            color: theme.input.label,
           }),
-          error &&
-            element(Alert, {
-              key: 'error',
-              icon,
-              prefix,
-              error,
+          children: [
+            element('div', {
+              key: 'label',
+              children: label,
+              className: css({
+                marginRight: 10,
+              }),
             }),
-        ],
-      }),
-      element('div', {
-        key: 'helper',
-        children: helper,
-        className: css({
-          marginTop: 3,
-          color: theme.input.helper,
-          fontWeight: theme.global.thin,
-          lineHeight: '1.5em',
+            error &&
+              element(Alert, {
+                key: 'error',
+                icon,
+                prefix,
+                error,
+              }),
+          ],
         }),
-      }),
+      helper &&
+        element('div', {
+          key: 'helper',
+          children: helper,
+          className: css({
+            marginTop: 3,
+            color: theme.input.helper,
+            fontWeight: theme.global.thin,
+            lineHeight: '1.5em',
+          }),
+        }),
       element('div', {
         key: 'input',
         children,

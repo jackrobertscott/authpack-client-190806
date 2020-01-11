@@ -38,7 +38,22 @@ export const RouterModalLoggedIn: FC<{
           {
             key: '/subscription',
             nosave: true,
-            children: element(CreateSubscription),
+            children: !settings.options.prompt_plan
+              ? null
+              : element(CreateSubscription, {
+                  stripe_plan_id: settings.options.prompt_plan,
+                  change: () => {
+                    router.change('/user')
+                    if (SettingsStore.current.options.prompt_plan) {
+                      SettingsStore.update({
+                        options: {
+                          ...SettingsStore.current.options,
+                          prompt_plan: undefined,
+                        },
+                      })
+                    }
+                  },
+                }),
           },
           {
             key: '/logout',
@@ -55,8 +70,11 @@ export const RouterModalLoggedIn: FC<{
         ],
   })
   useEffect(() => {
-    const okay = router.current.key === '/subscription'
-    if (settings.options.prompt_plan && !okay) {
+    const matching = router.current.key === '/subscription'
+    if (matching && !settings.options.prompt_plan) {
+      router.change('/user')
+    }
+    if (!matching && settings.options.prompt_plan) {
       router.change('/subscription')
     }
     // eslint-disable-next-line

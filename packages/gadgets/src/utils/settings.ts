@@ -18,6 +18,8 @@ export type ISettings = {
   cluster?: {
     id: string
     stripe_publishable_key: string
+    stripe_user_product_id: string
+    stripe_team_product_id: string
     name: string
     theme_preference: string
     enable_team: boolean
@@ -49,7 +51,7 @@ export type ISettings = {
       amount: number
       currency: string
       interval: string
-      interval_separator: number
+      interval_count: number
     }
     subscription?: {
       id: string
@@ -71,7 +73,7 @@ export type ISettings = {
       amount: number
       currency: string
       interval: string
-      interval_separator: number
+      interval_count: number
     }
     subscription?: {
       id: string

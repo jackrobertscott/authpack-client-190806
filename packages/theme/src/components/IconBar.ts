@@ -209,7 +209,7 @@ const IconPointer: FC<{
           transition: '200ms',
           pointerEvents: 'none',
           opacity: 0,
-          zIndex: 300,
+          zIndex: 1100,
           left: '100%',
           top: -5,
           paddingLeft: 7.5,

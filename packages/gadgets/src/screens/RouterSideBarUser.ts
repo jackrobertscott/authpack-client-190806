@@ -7,9 +7,9 @@ import { RemoveUser } from './RemoveUser'
 import { UpdateUserPassword } from './UpdateUserPassword'
 import { ListSessions } from './ListSessions'
 import { UpdateUserEmail } from './UpdateUserEmail'
-import { UpdateUserPayment } from './UpdateUserPayment'
+import { UpdateUserCustomer } from './UpdateUserCustomer'
 import { RemoveUserSubscription } from './RemoveUserSubscription'
-import { UpdateSubscription } from './UpdateSubscription'
+import { UpdateUserSubscription } from './UpdateUserSubscription'
 
 export const RouterSideBarUser: FC = () => {
   const settings = useSettings()
@@ -25,19 +25,23 @@ export const RouterSideBarUser: FC = () => {
       { key: '/user/danger', children: element(RemoveUser), nosave: true },
       {
         key: '/user/payments',
-        children: element(UpdateUserPayment, {
+        children: element(UpdateUserCustomer, {
           cancel: () => router.change('/user/payments/danger'),
           update: () => router.change('/user/payments/update'),
         }),
       },
       {
         key: '/user/payments/update',
-        children: element(UpdateSubscription),
+        children: element(UpdateUserSubscription, {
+          change: () => router.change('/user/payments'),
+        }),
         nosave: true,
       },
       {
         key: '/user/payments/danger',
-        children: element(RemoveUserSubscription),
+        children: element(RemoveUserSubscription, {
+          change: () => router.change('/user/payments'),
+        }),
         nosave: true,
       },
     ],
@@ -57,16 +61,16 @@ export const RouterSideBarUser: FC = () => {
         click: () => router.change('/user/update'),
       },
       {
-        icon: 'at',
-        label: 'Email',
-        focused: router.current && router.current.key === '/user/email',
-        click: () => router.change('/user/email'),
-      },
-      {
         icon: 'key',
         label: 'Password',
         focused: router.current && router.current.key === '/user/password',
         click: () => router.change('/user/password'),
+      },
+      {
+        icon: 'at',
+        label: 'Email',
+        focused: router.current && router.current.key === '/user/email',
+        click: () => router.change('/user/email'),
       },
       !!settings.cluster &&
         !!settings.cluster.stripe_publishable_key && {

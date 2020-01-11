@@ -13,6 +13,7 @@ export const Snippet: FC<{
   value?: number | string
   children?: ReactNode
   click?: () => void
+  noicon?: boolean
   options?: Array<{
     label: string
     helper?: string
@@ -20,7 +21,16 @@ export const Snippet: FC<{
     prefix?: string
     click?: () => void
   }>
-}> = ({ icon, prefix, label, value, children, click, options = [] }) => {
+}> = ({
+  icon,
+  prefix,
+  label,
+  value,
+  children,
+  click,
+  options = [],
+  noicon,
+}) => {
   const theme = useTheme()
   const mounted = useMounted()
   const [open, openChange] = useState<boolean>(false)
@@ -119,6 +129,7 @@ export const Snippet: FC<{
                 ],
           })
         : click &&
+          !noicon &&
           element(Icon, {
             key: 'click',
             icon: 'angle-right',

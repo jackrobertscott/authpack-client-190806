@@ -108,7 +108,7 @@ export const RouterCentral: FC = () => {
       {
         icon: 'user-circle',
         label: 'Account',
-        click: () => authpack.plugin.show(),
+        click: () => authpack.open(),
       },
     ],
   })

@@ -8,13 +8,15 @@ import {
   Poster,
   useMounted,
   useToaster,
+  Snippet,
 } from '@authpack/theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
 
 export const UpdateClusterStripeClient: FC<{
   change?: (id?: string) => void
-}> = ({ change }) => {
+  chooseProduct?: (id: string, name?: string) => void
+}> = ({ change, chooseProduct }) => {
   const toaster = useToaster()
   const mounted = useMounted()
   const oauthCode = useOauthCode()
@@ -85,6 +87,32 @@ export const UpdateClusterStripeClient: FC<{
                 label: 'Payments',
                 helper: 'Start accepting payments',
               }),
+          gqlGetCluster.data.cluster.stripe_user_product_id &&
+            element(Snippet, {
+              key: 'user_product',
+              label: 'User Plans',
+              click: () =>
+                gqlGetCluster.data &&
+                gqlGetCluster.data.cluster.stripe_user_product_id &&
+                chooseProduct &&
+                chooseProduct(
+                  gqlGetCluster.data.cluster.stripe_user_product_id,
+                  'User'
+                ),
+            }),
+          gqlGetCluster.data.cluster.stripe_team_product_id &&
+            element(Snippet, {
+              key: 'team_product',
+              label: 'Team Plans',
+              click: () =>
+                gqlGetCluster.data &&
+                gqlGetCluster.data.cluster.stripe_team_product_id &&
+                chooseProduct &&
+                chooseProduct(
+                  gqlGetCluster.data.cluster.stripe_team_product_id,
+                  'Team'
+                ),
+            }),
           element(Layout, {
             key: 'layout',
             column: true,
@@ -95,7 +123,7 @@ export const UpdateClusterStripeClient: FC<{
                 ? element(Button, {
                     key: 'dashboard',
                     icon: 'external-link-alt',
-                    label: 'Manage',
+                    label: 'Dashboard',
                     loading: gqlUpsertClusterStripe.loading,
                     click: () =>
                       gqlGetCluster.data &&
@@ -127,6 +155,8 @@ const useGetCluster = createUseServer<{
     stripe_oauth_url: string
     stripe_dashboard_url: string
     stripe_pending: boolean
+    stripe_user_product_id?: string
+    stripe_team_product_id?: string
   }
 }>({
   query: `
@@ -136,6 +166,8 @@ const useGetCluster = createUseServer<{
         stripe_oauth_url
         stripe_dashboard_url
         stripe_pending
+        stripe_user_product_id
+        stripe_team_product_id
       }
     }
   `,

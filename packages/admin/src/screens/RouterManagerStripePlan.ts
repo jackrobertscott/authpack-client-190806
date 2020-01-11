@@ -1,31 +1,40 @@
 import { createElement as element, FC } from 'react'
 import { useLocalRouter, Modal, IconBar } from '@authpack/theme'
-import { CreatePlan } from './CreatePlan'
-import { UpdatePlan } from './UpdatePlan'
-import { RemovePlan } from './RemovePlan'
-import { ShowPlan } from './ShowPlan'
+import { CreateStripePlan } from './CreateStripePlan'
+import { UpdateStripePlan } from './UpdateStripePlan'
+import { RemoveStripePlan } from './RemoveStripePlan'
+import { ShowStripePlan } from './ShowStripePlan'
 
-export const RouterManagerPlan: FC<{
+export const RouterManagerStripePlan: FC<{
   id?: string
   change?: (id?: string) => void
   visible?: boolean
   close: () => void
-}> = ({ id, change, close, visible }) => {
+  stripe_product_id: string
+}> = ({ id, change, close, visible, stripe_product_id }) => {
   const router = useLocalRouter({
     nomatch: id ? '/inspect' : '/create',
     options: id
       ? [
-          { key: '/inspect', children: element(ShowPlan, { id }) },
+          { key: '/inspect', children: element(ShowStripePlan, { id }) },
           {
             key: '/update',
-            children: element(UpdatePlan, { id, change }),
+            children: element(UpdateStripePlan, { id, change }),
           },
           {
             key: '/remove',
-            children: element(RemovePlan, { id, change }),
+            children: element(RemoveStripePlan, { id, change }),
           },
         ]
-      : [{ key: '/create', children: element(CreatePlan, { change }) }],
+      : [
+          {
+            key: '/create',
+            children: element(CreateStripePlan, {
+              stripe_product_id,
+              change,
+            }),
+          },
+        ],
   })
   return element(Modal, {
     close,

@@ -18,14 +18,7 @@ export class API {
     bearer,
     key,
     url,
-  }: {
-    query: string
-    variables?: { [key: string]: any }
-    operationName?: string
-    bearer?: string
-    key?: string
-    url?: string
-  }) {
+  }: IAPIGraphql) {
     return graphql<T>({
       url: url || this.gql,
       authorization: [key || this.key, bearer].filter(Boolean).join(','),
@@ -43,4 +36,13 @@ export interface IAPIConstructor {
 
 export interface IAPIMeta {
   [key: string]: string | number | boolean | IAPIMeta
+}
+
+export interface IAPIGraphql {
+  query: string
+  variables?: { [key: string]: any }
+  operationName?: string
+  bearer?: string
+  key?: string
+  url?: string
 }

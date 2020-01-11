@@ -64,7 +64,7 @@ import { Authpack, IPlugin } from '@authpack/sdk'
         if (shouldUpdate) {
           dispatch({
             authpack,
-            state: authpack.plugin.current(),
+            state: authpack.current(),
           })
         }
       }
@@ -82,9 +82,9 @@ import { Authpack, IPlugin } from '@authpack/sdk'
     })
     dispatch({
       authpack,
-      state: authpack.plugin.current(),
+      state: authpack.current(),
     })
-    authpack.plugin.listen(state => {
+    authpack.listen(state => {
       dispatch({ authpack, state })
     })
   })
@@ -125,13 +125,13 @@ import { Authpack, IPlugin } from '@authpack/sdk'
       if (node.dataset.listening !== 'true') {
         node.dataset.listening = 'true'
         node.addEventListener('click', event => {
-          context.authpack.plugin.show()
+          context.authpack.open()
           const prompt =
             event.target instanceof HTMLElement
               ? event.target.dataset.prompt
               : undefined
           if (prompt) {
-            context.authpack.plugin.update({
+            context.authpack.update({
               prompt_plan: prompt,
             })
           }

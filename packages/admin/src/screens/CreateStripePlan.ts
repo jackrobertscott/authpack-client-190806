@@ -6,22 +6,27 @@ import {
   Layout,
   Control,
   InputString,
-  testAlphanumeric,
   Page,
   InputNumber,
   InputSelect,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
+import { useUniversal } from '../hooks/useUniversal'
 
-export const CreatePlan: FC<{
+export const CreateStripePlan: FC<{
+  stripe_product_id: string
   change?: (id?: string) => void
-}> = ({ change }) => {
+}> = ({ stripe_product_id, change }) => {
+  const universal = useUniversal()
   const gqlCreatePlan = useCreatePlan()
   const schema = useSchema({
     schema: SchemaCreatePlan,
     submit: value => {
       gqlCreatePlan
-        .fetch({ value })
+        .fetch({
+          id: universal.cluster_id,
+          input: { ...value, stripe_product_id },
+        })
         .then(({ plan }) => change && change(plan.id))
     },
   })
@@ -33,66 +38,16 @@ export const CreatePlan: FC<{
       padding: true,
       divide: true,
       children: [
-        element(Layout, {
+        element(Control, {
           key: 'name',
-          divide: true,
-          media: true,
-          children: [
-            element(Control, {
-              key: 'name',
-              label: 'Name',
-              helper: 'Human friendly name',
-              error: schema.error('name'),
-              children: element(InputString, {
-                value: schema.value('name'),
-                change: schema.change('name'),
-                placeholder: 'Premium',
-              }),
-            }),
-            element(Control, {
-              key: 'tag',
-              label: 'Tag',
-              helper: 'Unique identifier',
-              error: schema.error('tag'),
-              children: element(InputString, {
-                value: schema.value('tag'),
-                change: schema.change('tag'),
-                placeholder: 'premium',
-              }),
-            }),
-          ],
-        }),
-        element(Layout, {
-          key: 'interval',
-          divide: true,
-          media: true,
-          children: [
-            element(Control, {
-              key: 'statement',
-              label: 'Statement',
-              helper: 'The bank statement descriptor',
-              error: schema.error('statement'),
-              children: element(InputString, {
-                value: schema.value('statement'),
-                change: schema.change('statement'),
-                placeholder: 'PREMIUM',
-              }),
-            }),
-            element(Control, {
-              key: 'target',
-              label: 'Target',
-              helper: 'Who is the plan for?',
-              error: schema.error('target'),
-              children: element(InputSelect, {
-                value: schema.value('target'),
-                change: schema.change('target'),
-                options: [
-                  { value: 'user', label: 'Users' },
-                  { value: 'team', label: 'Teams' },
-                ],
-              }),
-            }),
-          ],
+          label: 'Name',
+          helper: 'Human friendly name',
+          error: schema.error('name'),
+          children: element(InputString, {
+            value: schema.value('name'),
+            change: schema.change('name'),
+            placeholder: 'Premium',
+          }),
         }),
         element(Control, {
           key: 'description',
@@ -102,7 +57,7 @@ export const CreatePlan: FC<{
           children: element(InputString, {
             value: schema.value('description'),
             change: schema.change('description'),
-            placeholder: 'Users gains access to...',
+            placeholder: 'Upgrade and get access to...',
           }),
         }),
         element(Layout, {
@@ -161,14 +116,14 @@ export const CreatePlan: FC<{
               }),
             }),
             element(Control, {
-              key: 'interval_separator',
+              key: 'interval_count',
               label: 'Interval Seperator',
               helper: 'Number of intervals between payments',
-              error: schema.error('interval_separator'),
+              error: schema.error('interval_count'),
               children: element(InputNumber, {
                 integer: true,
-                value: schema.value('interval_separator'),
-                change: schema.change('interval_separator'),
+                value: schema.value('interval_count'),
+                change: schema.change('interval_count'),
                 placeholder: '1',
               }),
             }),
@@ -187,23 +142,8 @@ export const CreatePlan: FC<{
 }
 
 const SchemaCreatePlan = yup.object().shape({
-  target: yup
-    .string()
-    .required('Please provide the target value')
-    .default('user'),
   name: yup.string().required('Please provide the plan name'),
-  tag: yup
-    .string()
-    .test(
-      'alphamun',
-      'Please use only numbers, letters and underscores',
-      testAlphanumeric
-    )
-    .required('Please provide the plan tag'),
   description: yup.string(),
-  statement: yup
-    .string()
-    .max(22, 'Statement must be a maximum of 22 characters'),
   amount: yup
     .number()
     .min(50, 'Amount must be more than $0.50')
@@ -220,7 +160,7 @@ const SchemaCreatePlan = yup.object().shape({
     .lowercase()
     .oneOf(['day', 'week', 'month', 'year'])
     .default('month'),
-  interval_separator: yup
+  interval_count: yup
     .number()
     .min(1)
     .default(1)
@@ -245,8 +185,8 @@ const useCreatePlan = createUseServer<{
   }
 }>({
   query: `
-    mutation CreatePlan($value: CreatePlanValue!) {
-      plan: CreatePlan(value: $value) {
+    mutation CreateClusterStripePlanClient($id: String!, $input: CreateClusterStripePlanInput!) {
+      plan: CreateClusterStripePlanClient(id: $id, input: $input) {
         id
       }
     }

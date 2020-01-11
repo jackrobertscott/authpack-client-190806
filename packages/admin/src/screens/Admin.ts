@@ -25,7 +25,7 @@ export const Admin: FC = () => {
             key: 'login',
             icon: 'bolt',
             label: 'Continue',
-            click: () => authpack.plugin.show(),
+            click: () => authpack.open(),
           }),
         })
       : !Boolean(auth.team)
@@ -36,7 +36,7 @@ export const Admin: FC = () => {
           children: element(Button, {
             key: 'team',
             label: 'Continue',
-            click: () => authpack.plugin.show(),
+            click: () => authpack.open(),
           }),
         })
       : !Boolean(universal.cluster_id && universal.cluster_key_client)
