@@ -13,7 +13,13 @@ export const RouterManagerClusterClient: FC<{
   close: () => void
   goto?: string
 }> = ({ close, visible, goto }) => {
-  const [stripeProduct, stripeProductChange] = useState<string | undefined>()
+  const [stripeProduct, stripeProductChange] = useState<
+    | {
+        id: string
+        name?: string
+      }
+    | undefined
+  >()
   const router = useLocalRouter({
     nomatch: '/inspect',
     options: [
@@ -45,14 +51,15 @@ export const RouterManagerClusterClient: FC<{
       {
         key: '/stripe',
         children: element(UpdateClusterStripeClient, {
-          chooseProduct: id => stripeProductChange(id),
+          chooseProduct: (id, name) => stripeProductChange({ id, name }),
         }),
       },
       {
         key: '/stripe/plans',
         children: stripeProduct
           ? element(ListStripePlans, {
-              stripe_product_id: stripeProduct,
+              stripe_product_id: stripeProduct.id,
+              name: stripeProduct.name,
             })
           : null,
       },

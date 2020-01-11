@@ -15,7 +15,7 @@ import { createUseServer } from '../hooks/useServer'
 
 export const UpdateClusterStripeClient: FC<{
   change?: (id?: string) => void
-  chooseProduct?: (id?: string) => void
+  chooseProduct?: (id: string, name?: string) => void
 }> = ({ change, chooseProduct }) => {
   const toaster = useToaster()
   const mounted = useMounted()
@@ -93,9 +93,11 @@ export const UpdateClusterStripeClient: FC<{
               label: 'User Plans',
               click: () =>
                 gqlGetCluster.data &&
+                gqlGetCluster.data.cluster.stripe_user_product_id &&
                 chooseProduct &&
                 chooseProduct(
-                  gqlGetCluster.data.cluster.stripe_user_product_id
+                  gqlGetCluster.data.cluster.stripe_user_product_id,
+                  'User'
                 ),
             }),
           gqlGetCluster.data.cluster.stripe_team_product_id &&
@@ -104,9 +106,11 @@ export const UpdateClusterStripeClient: FC<{
               label: 'Team Plans',
               click: () =>
                 gqlGetCluster.data &&
+                gqlGetCluster.data.cluster.stripe_team_product_id &&
                 chooseProduct &&
                 chooseProduct(
-                  gqlGetCluster.data.cluster.stripe_team_product_id
+                  gqlGetCluster.data.cluster.stripe_team_product_id,
+                  'Team'
                 ),
             }),
           element(Layout, {

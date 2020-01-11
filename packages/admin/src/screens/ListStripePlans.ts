@@ -10,9 +10,10 @@ import { Page, Table, Empty, Button, drip } from '@authpack/theme'
 import { RouterManagerStripePlan } from './RouterManagerStripePlan'
 import { createUseServer } from '../hooks/useServer'
 
-export const ListStripePlans: FC<{ stripe_product_id: string }> = ({
-  stripe_product_id,
-}) => {
+export const ListStripePlans: FC<{
+  stripe_product_id: string
+  name?: string
+}> = ({ stripe_product_id, name }) => {
   const gqlListPlans = useListPlans()
   const [build, buildChange] = useState<boolean>(false)
   const [idcurrent, idcurrentChange] = useState<string | undefined>()
@@ -30,7 +31,7 @@ export const ListStripePlans: FC<{ stripe_product_id: string }> = ({
       ? gqlListPlans.data.stripe_plans
       : FakePlans
   return element(Page, {
-    title: 'Plans',
+    title: `${name} Plans`,
     subtitle: 'Accept payment from your users',
     corner: {
       icon: 'plus',
