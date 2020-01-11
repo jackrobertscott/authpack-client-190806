@@ -115,6 +115,8 @@ const useGetCluster = createUseServer<{
   cluster: {
     id: string
     stripe_publishable_key: string
+    stripe_user_product_id: string
+    stripe_team_product_id: string
     name: string
     theme_preference: string
     enable_team: boolean
@@ -126,6 +128,8 @@ const useGetCluster = createUseServer<{
       cluster: GetClusterCurrentClient {
         id
         stripe_publishable_key
+        stripe_user_product_id
+        stripe_team_product_id
         name
         theme_preference
         enable_team

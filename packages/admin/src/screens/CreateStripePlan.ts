@@ -57,7 +57,7 @@ export const CreateStripePlan: FC<{
           children: element(InputString, {
             value: schema.value('description'),
             change: schema.change('description'),
-            placeholder: 'You gain access to...',
+            placeholder: 'Upgrade and get access to...',
           }),
         }),
         element(Layout, {

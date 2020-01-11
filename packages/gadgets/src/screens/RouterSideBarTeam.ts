@@ -6,6 +6,9 @@ import { SwitchTeam } from './SwitchTeam'
 import { UpdateTeam } from './UpdateTeam'
 import { RemoveTeam } from './RemoveTeam'
 import { RouterMemberships } from './RouterMemberships'
+import { UpdateTeamCustomer } from './UpdateTeamCustomer'
+import { UpdateTeamSubscription } from './UpdateTeamSubscription'
+import { RemoveTeamSubscription } from './RemoveTeamSubscription'
 
 export const RouterSideBarTeam: FC = () => {
   const settings = useSettings()
@@ -30,6 +33,27 @@ export const RouterSideBarTeam: FC = () => {
           },
           { key: '/team/members', children: element(RouterMemberships) },
           { key: '/team/danger', children: element(RemoveTeam), nosave: true },
+          {
+            key: '/team/payments',
+            children: element(UpdateTeamCustomer, {
+              cancel: () => router.change('/team/payments/danger'),
+              update: () => router.change('/team/payments/update'),
+            }),
+          },
+          {
+            key: '/team/payments/update',
+            children: element(UpdateTeamSubscription, {
+              change: () => router.change('/team/payments'),
+            }),
+            nosave: true,
+          },
+          {
+            key: '/team/payments/danger',
+            children: element(RemoveTeamSubscription, {
+              change: () => router.change('/team/payments'),
+            }),
+            nosave: true,
+          },
         ]
       : [
           {
@@ -61,6 +85,15 @@ export const RouterSideBarTeam: FC = () => {
             focused: router.current && router.current.key === '/team/members',
             click: () => router.change('/team/members'),
           },
+          !!settings.cluster &&
+            !!settings.cluster.stripe_publishable_key && {
+              icon: 'credit-card',
+              label: 'Billing',
+              focused:
+                router.current &&
+                router.current.key.startsWith('/team/payments'),
+              click: () => router.change('/team/payments'),
+            },
           {
             icon: 'random',
             label: 'Switch',

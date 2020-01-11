@@ -19,12 +19,14 @@ import {
   useMounted,
   Snippet,
   Markdown,
+  InputSelect,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { useSettings } from '../hooks/useSettings'
 import { createStripe } from '../utils/stripe'
+import { COUNTRIES } from '../utils/countries'
 
-export const UpdateUserPayment: FC<{
+export const UpdateUserCustomer: FC<{
   change?: (id?: string) => void
   cancel: () => void
   update: () => void
@@ -35,8 +37,9 @@ export const UpdateUserPayment: FC<{
   const stripeCard = useRef<any>()
   const [stripe, stripeChange] = useState()
   const [loading, loadingChange] = useState<boolean>(false)
-  const gqlGetUser = useGetUser()
+  const [filter, filterChange] = useState<string>('')
   const gqlUpsertPayment = useUpsertUserPayment()
+  const gqlGetUser = useGetUser()
   const payment = useStripe(stripe)
   const schema = useSchema({
     schema: SchemaUpdatePayment,
@@ -48,18 +51,21 @@ export const UpdateUserPayment: FC<{
           return gqlUpsertPayment
             .fetch({
               input: {
+                ...value,
                 token: token.id,
-                name: value.name,
-                email: value.email,
               },
             })
             .then(({ user }) => {
               if (change) change(user.id)
               gqlGetUser.fetch()
+              const helper =
+                gqlGetUser.data && gqlGetUser.data.user.stripe_plan
+                  ? 'Payment method was successfully accepted'
+                  : 'Payment method accepted. You can now add a choose a plan'
               toaster.add({
                 icon: 'credit-card',
                 label: 'Success',
-                helper: 'Payment method was successfully accepted',
+                helper,
               })
             })
         })
@@ -85,11 +91,21 @@ export const UpdateUserPayment: FC<{
   useEffect(() => {
     if (gqlGetUser.data) {
       const user = gqlGetUser.data.user
-      schema.set({
-        ...schema.state,
-        name: user.billing_name || user.name,
-        email: user.billing_email || user.email,
-      })
+      if (user.stripe_customer) {
+        schema.set({
+          ...schema.state,
+          name: user.stripe_customer.name,
+          email: user.stripe_customer.email,
+          country: user.stripe_customer.country,
+          zip_code: user.stripe_customer.zip_code,
+        })
+      } else {
+        schema.set({
+          ...schema.state,
+          name: user.name,
+          email: user.email,
+        })
+      }
     }
     // eslint-disable-next-line
   }, [gqlGetUser.data])
@@ -130,6 +146,7 @@ export const UpdateUserPayment: FC<{
               : gqlGetUser.data.user.billable
               ? element(Snippet, {
                   key: 'subscription',
+                  icon: 'exclamation-circle',
                   label: 'Subscription',
                   value: 'Add a payment plan',
                   click: update,
@@ -139,7 +156,7 @@ export const UpdateUserPayment: FC<{
                   padding: true,
                   styled: true,
                   children: element(Markdown, {
-                    value: 'Please add a payment card',
+                    value: 'Provide a payment method then select a plan.',
                   }),
                 }),
             element(Layout, {
@@ -189,6 +206,39 @@ export const UpdateUserPayment: FC<{
                     }),
                   ],
                 }),
+                element(Layout, {
+                  key: 'country',
+                  divide: true,
+                  media: true,
+                  children: [
+                    element(Control, {
+                      key: 'country',
+                      label: 'Country',
+                      error: schema.error('country'),
+                      children: element(InputSelect, {
+                        value: schema.value('country'),
+                        change: schema.change('country'),
+                        filter: writing => filterChange(writing),
+                        options: COUNTRIES.filter(country =>
+                          country.toLowerCase().includes(filter.toLowerCase())
+                        ).map(country => ({
+                          value: country,
+                          label: country,
+                        })),
+                      }),
+                    }),
+                    element(Control, {
+                      key: 'zip_code',
+                      label: 'Zip Code',
+                      error: schema.error('zip_code'),
+                      children: element(InputString, {
+                        value: schema.value('zip_code'),
+                        change: schema.change('zip_code'),
+                        placeholder: '...',
+                      }),
+                    }),
+                  ],
+                }),
                 element(Button, {
                   key: 'submit',
                   label: gqlGetUser.data.user.billable ? 'Update' : 'Add',
@@ -205,11 +255,19 @@ export const UpdateUserPayment: FC<{
 
 const SchemaUpdatePayment = yup.object().shape({
   name: yup.string().required('Please provide the name on the card'),
-  coupon: yup.string(),
   email: yup
     .string()
     .email('Please use a valid email')
     .required('Please provide a billing email'),
+  country: yup
+    .string()
+    .trim()
+    .oneOf(COUNTRIES)
+    .required('Please select your country'),
+  zip_code: yup
+    .string()
+    .trim()
+    .required('Please provide your zip code'),
 })
 
 const useUpsertUserPayment = createUseServer<{
@@ -218,8 +276,8 @@ const useUpsertUserPayment = createUseServer<{
   }
 }>({
   query: `
-    mutation UpsertUserPaymentClient($input: UpsertUserPaymentInput!) {
-      user: UpsertUserPaymentClient(input: $input) {
+    mutation UpsertUserStripeCustomerClient($input: UpsertUserStripeCustomerInput!) {
+      user: UpsertUserStripeCustomerClient(input: $input) {
         id
       }
     }
@@ -231,8 +289,12 @@ const useGetUser = createUseServer<{
     name: string
     email: string
     billable: boolean
-    billing_name: string
-    billing_email: string
+    stripe_customer?: {
+      name?: string
+      email: string
+      country?: string
+      zip_code?: string
+    }
     stripe_plan?: {
       id: string
       name?: string
@@ -250,8 +312,12 @@ const useGetUser = createUseServer<{
         name
         email
         billable
-        billing_name
-        billing_email
+        stripe_customer {
+          name
+          email
+          country
+          zip_code
+        }
         stripe_plan {
           id
           name

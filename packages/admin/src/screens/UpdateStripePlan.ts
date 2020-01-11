@@ -59,7 +59,7 @@ export const UpdateStripePlan: FC<{
               children: element(InputString, {
                 value: schema.value('description'),
                 change: schema.change('description'),
-                placeholder: 'Users gains access to...',
+                placeholder: 'Upgrade and get access to...',
               }),
             }),
             element(Button, {

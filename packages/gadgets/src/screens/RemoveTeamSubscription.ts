@@ -10,12 +10,12 @@ import {
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
 
-export const RemoveUserSubscription: FC<{
+export const RemoveTeamSubscription: FC<{
   change?: (id?: string) => void
 }> = ({ change }) => {
   const toaster = useToaster()
   const settings = useSettings()
-  const gqlRemoveUserSubscription = useRemoveUserSubscription()
+  const gqlRemoveTeamSubscription = teamemoveTeamSubscription()
   const [confirm, confirmChange] = useState<boolean>(false)
   return element(Page, {
     title: 'Danger',
@@ -52,9 +52,9 @@ export const RemoveUserSubscription: FC<{
               key: 'confirm',
               icon: 'check',
               label: 'Confirm',
-              loading: gqlRemoveUserSubscription.loading,
+              loading: gqlRemoveTeamSubscription.loading,
               click: () =>
-                gqlRemoveUserSubscription.fetch().then(() => {
+                gqlRemoveTeamSubscription.fetch().then(() => {
                   if (change) change()
                   toaster.add({
                     label: 'Cancelled',
@@ -76,14 +76,14 @@ export const RemoveUserSubscription: FC<{
   })
 }
 
-const useRemoveUserSubscription = createUseServer<{
-  user: {
+const teamemoveTeamSubscription = createUseServer<{
+  team: {
     id: string
   }
 }>({
   query: `
-    mutation CancelUserStripeSubscriptionClient {
-      user: CancelUserStripeSubscriptionClient {
+    mutation CancelTeamStripeSubscriptionClient {
+      team: CancelTeamStripeSubscriptionClient {
         id
       }
     }
