@@ -13,8 +13,8 @@
     "ship": "now --prod"
   },
   "dependencies": {
-    "@authpack/sdk": "^0.8.2",
-    "@authpack/theme": "^0.6.8",
+    "@authpack/sdk": "^0.8.3",
+    "@authpack/theme": "^0.6.9",
     "@fortawesome/fontawesome-free": "^5.11.2",
     "@sentry/browser": "^5.7.1",
     "@types/faker": "^4.1.7",
@@ -63,5 +63,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": ">=12.x"
   }
 }
