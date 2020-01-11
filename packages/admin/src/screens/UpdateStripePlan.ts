@@ -11,34 +11,34 @@ import {
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
-export const UpdateCoupon: FC<{
+export const UpdateStripePlan: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
   const toaster = useToaster()
-  const gqlGetCoupon = useGetCoupon()
-  const gqlUpdateCoupon = useUpdateCoupon()
+  const gqlGetPlan = useGetPlan()
+  const gqlUpdatePlan = useUpdatePlan()
   const schema = useSchema({
-    schema: SchemaUpdateCoupon,
+    schema: SchemaUpdatePlan,
     submit: value => {
-      gqlUpdateCoupon.fetch({ id, value }).then(({ coupon }) => {
-        if (change) change(coupon.id)
+      gqlUpdatePlan.fetch({ id, input: value }).then(({ plan }) => {
+        if (change) change(plan.id)
         toaster.add({ icon: 'check-circle', label: 'Success' })
       })
     },
   })
   useEffect(() => {
-    gqlGetCoupon.fetch({ id }).then(({ coupon }) => schema.set(coupon))
+    gqlGetPlan.fetch({ id }).then(({ plan }) => schema.set(plan))
     // eslint-disable-next-line
   }, [id])
   return element(Page, {
     title: 'Update',
-    subtitle: 'Coupon',
+    subtitle: 'Plan',
     children: element(Layout, {
       column: true,
       padding: true,
       divide: true,
-      children: !gqlGetCoupon.data
+      children: !gqlGetPlan.data
         ? null
         : [
             element(Control, {
@@ -49,7 +49,7 @@ export const UpdateCoupon: FC<{
               children: element(InputString, {
                 value: schema.value('name'),
                 change: schema.change('name'),
-                placeholder: 'Super Squad',
+                placeholder: 'Premium',
               }),
             }),
             element(Control, {
@@ -59,13 +59,13 @@ export const UpdateCoupon: FC<{
               children: element(InputString, {
                 value: schema.value('description'),
                 change: schema.change('description'),
-                placeholder: 'We do...',
+                placeholder: 'Upgrade and get access to...',
               }),
             }),
             element(Button, {
               key: 'submit',
               label: 'Save',
-              loading: gqlGetCoupon.loading || gqlUpdateCoupon.loading,
+              loading: gqlGetPlan.loading || gqlUpdatePlan.loading,
               disabled: !schema.valid,
               click: schema.submit,
             }),
@@ -74,20 +74,20 @@ export const UpdateCoupon: FC<{
   })
 }
 
-const SchemaUpdateCoupon = yup.object().shape({
-  name: yup.string().required('Please provide the coupon name'),
+const SchemaUpdatePlan = yup.object().shape({
+  name: yup.string().required('Please provide the plan name'),
   description: yup.string(),
 })
 
-const useGetCoupon = createUseServer<{
-  coupon: {
-    name: string
+const useGetPlan = createUseServer<{
+  plan: {
+    name?: string
     description?: string
   }
 }>({
   query: `
-    query GetCoupon($id: String!) {
-      coupon: GetCoupon(id: $id) {
+    query GetStripePlanClient($id: String!) {
+      plan: GetStripePlanClient(stripe_plan_id: $id) {
         name
         description
       }
@@ -95,14 +95,14 @@ const useGetCoupon = createUseServer<{
   `,
 })
 
-const useUpdateCoupon = createUseServer<{
-  coupon: {
+const useUpdatePlan = createUseServer<{
+  plan: {
     id: string
   }
 }>({
   query: `
-    mutation UpdateCoupon($id: String!, $value: UpdateCouponValue!) {
-      coupon: UpdateCoupon(id: $id, value: $value) {
+    mutation UpdateClusterStripePlanClient($id: String!, $input: UpdateClusterStripePlanInput!) {
+      plan: UpdateClusterStripePlanClient(id: $id, input: $input) {
         id
       }
     }

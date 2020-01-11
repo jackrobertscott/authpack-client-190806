@@ -3,7 +3,7 @@ import { Page } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { ConfirmRemove } from '../templates/ConfirmRemove'
 
-export const RemovePlan: FC<{
+export const RemoveStripePlan: FC<{
   id: string
   change?: (id?: string) => void
 }> = ({ id, change }) => {
@@ -15,8 +15,7 @@ export const RemovePlan: FC<{
       helper: 'Remove this plan',
       alert: 'Please confirm the removal of this plan',
       loading: gqlRemovePlan.loading,
-      change: () =>
-        gqlRemovePlan.fetch({ id }).then(() => change && change()),
+      change: () => gqlRemovePlan.fetch({ id }).then(() => change && change()),
     }),
   })
 }
@@ -27,8 +26,8 @@ const useRemovePlan = createUseServer<{
   }
 }>({
   query: `
-    mutation RemovePlan($id: String!) {
-      plan: RemovePlan(id: $id) {
+    mutation RemoveStripePlanClient($id: String!) {
+      plan: RemoveStripePlanClient(id: $id) {
         id
       }
     }

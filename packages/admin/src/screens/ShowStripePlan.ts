@@ -3,7 +3,7 @@ import { Layout, Snippet, Page } from '@authpack/theme'
 import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
 
-export const ShowPlan: FC<{
+export const ShowStripePlan: FC<{
   id: string
 }> = ({ id }) => {
   const gqlGetPlan = useGetPlan()
@@ -26,43 +26,17 @@ export const ShowPlan: FC<{
               label: 'Id',
               value: plan.id,
             }),
-            element(Layout, {
+            element(Snippet, {
               key: 'name',
-              grow: true,
-              media: true,
-              children: [
-                element(Snippet, {
-                  key: 'name',
-                  icon: 'users',
-                  label: 'Name',
-                  value: plan.name,
-                }),
-                element(Snippet, {
-                  key: 'tag',
-                  icon: 'tags',
-                  label: 'Tag',
-                  value: plan.tag,
-                }),
-              ],
+              icon: 'users',
+              label: 'Name',
+              value: plan.name,
             }),
-            element(Layout, {
+            element(Snippet, {
               key: 'description',
-              grow: true,
-              media: true,
-              children: [
-                element(Snippet, {
-                  key: 'description',
-                  icon: 'book',
-                  label: 'Description',
-                  value: plan.description || '...',
-                }),
-                element(Snippet, {
-                  key: 'statement',
-                  icon: 'credit-card',
-                  label: 'Statement',
-                  value: plan.statement || '...',
-                }),
-              ],
+              icon: 'book',
+              label: 'Description',
+              value: plan.description || '...',
             }),
             element(Layout, {
               key: 'amount',
@@ -73,7 +47,7 @@ export const ShowPlan: FC<{
                   key: 'amount',
                   icon: 'dollar-sign',
                   label: 'Amount',
-                  value: plan.amount / 100,
+                  value: (plan.amount / 100).toFixed(2),
                 }),
                 element(Snippet, {
                   key: 'currency',
@@ -95,10 +69,10 @@ export const ShowPlan: FC<{
                   value: plan.interval,
                 }),
                 element(Snippet, {
-                  key: 'interval_separator',
+                  key: 'interval_count',
                   icon: 'pause-circle',
                   label: 'Separator',
-                  value: plan.interval_separator,
+                  value: plan.interval_count,
                 }),
               ],
             }),
@@ -113,15 +87,10 @@ export const ShowPlan: FC<{
                   label: 'Created',
                   value:
                     plan.created &&
-                    format(new Date(plan.created), 'dd LLL yyyy @ h:mm a'),
-                }),
-                element(Snippet, {
-                  key: 'updated',
-                  icon: 'clock',
-                  label: 'Updated',
-                  value:
-                    plan.updated &&
-                    format(new Date(plan.updated), 'dd LLL yyyy @ h:mm a'),
+                    format(
+                      new Date(plan.created * 1000),
+                      'dd LLL yyyy @ h:mm a'
+                    ),
                 }),
               ],
             }),
@@ -133,32 +102,26 @@ export const ShowPlan: FC<{
 const useGetPlan = createUseServer<{
   plan: {
     id: string
-    created: string
-    updated: string
-    name: string
-    tag: string
+    name?: string
     description?: string
-    statement?: string
     amount: number
     currency: string
     interval: string
-    interval_separator: number
+    interval_count: number
+    created: number
   }
 }>({
   query: `
-    query GetPlan($id: String!) {
-      plan: GetPlan(id: $id) {
+    query GetStripePlanClient($id: String!) {
+      plan: GetStripePlanClient(stripe_plan_id: $id) {
         id
-        created
-        updated
         name
-        tag
         description
-        statement
         amount
         currency
         interval
-        interval_separator
+        interval_count
+        created
       }
     }
   `,

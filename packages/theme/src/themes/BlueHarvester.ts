@@ -14,9 +14,10 @@ const color = (
 
 export const BlueHarvester: ITheme = {
   global: {
+    text: color(65),
     radius: 3,
-    thick: 600,
-    thin: 500,
+    thick: 500,
+    thin: 400,
   },
   /**
    * Navigation.
@@ -33,6 +34,7 @@ export const BlueHarvester: ITheme = {
   sideBar: {
     title: color(95),
     footer: color(65),
+    heading: color(55),
     options: color(65),
     optionsHover: color(95),
     optionsFocused: color(95),

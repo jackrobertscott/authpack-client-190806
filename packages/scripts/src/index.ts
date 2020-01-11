@@ -1,88 +1,157 @@
 import { Authpack, IPlugin } from '@authpack/sdk'
-
-if (!window) {
-  const message = `Please ensure Authpack scripts are used in a browser`
-  throw new Error(message)
-}
-interface IContext {
-  authpack: Authpack
-  state: IPlugin
-}
-/**
- * Run initial events once the page has loaded.
- */
-window.addEventListener('load', () => {
-  const authpack = load()
-  const dispatch = (context: IContext) =>
-    [guard, plugin, replace, show, hide].map(dispatcher => {
-      return dispatcher(context)
-    })
-  dispatch({ authpack, state: authpack.plugin.current() })
-  authpack.plugin.listen(state => dispatch({ authpack, state }))
-})
-/**
- * Locate the authpack script tag and initialise the authpack instance.
- */
-const load = () => {
-  const filename = 'https://scripts.v1.authpack.io/index.js'
-  const selector = `script[src="${filename}"]`
-  const node: HTMLScriptElement = document.querySelector(selector)
-  if (!node) {
-    const message = `Authpack script tag not found i.e.:\n\n<script\n\tsrc="${filename}"\n\tdata-key="wga-client-key-..."\n></script>`
-    console.warn(message)
-    return
+;(() => {
+  if (!window) {
+    const message = `Please ensure Authpack scripts are used in a browser`
+    throw new Error(message)
   }
-  if (!node.dataset.key) {
-    const message = `Authpack script tag missing "data-key" attribute i.e.:\n\n<script\n\tsrc="${filename}"\n\tdata-key="wga-client-key-..."\n></script>`
-    console.warn(message)
-    return
+  interface IContext {
+    authpack: Authpack
+    state: IPlugin
   }
-  const config = { ...node.dataset } as { key: string; [key: string]: string }
-  return new Authpack(config)
-}
-/**
- * Redirect unauthenticated users from protected pages.
- */
-const guard = (context: IContext) => {
-  const node: HTMLElement = document.querySelector(`[data-authpack="guard"]`)
-  if (!node) {
-    return
-  }
-  if (!node.dataset.redirect) {
-    const message = `Authpack guard tag missing "data-redirect" attribute i.e.:\n\n<div\n\tdata-authpack="guard"\n\tdata-redirect="/home"\n></div>`
-    console.warn(message)
-    return
-  }
-  if (context.state.ready && !context.state.user) {
-    window.location.assign(node.dataset.redirect)
-  }
-}
-/**
- * Open the gadgets when item is clicked.
- */
-const plugin = (context: IContext) => {
-  const node: HTMLElement = document.querySelector(`[data-authpack="plugin"]`)
-  if (!node) {
-    return
-  }
-  if (node.dataset.listening !== 'true') {
-    node.dataset.listening = 'true'
-    node.addEventListener('click', event => {
-      context.authpack.plugin.show()
-      event.preventDefault()
+  /**
+   * Hide contents of page until ready.
+   */
+  const preready = () => {
+    if (document.body.dataset.ready === 'true') return
+    document.body.style.display = 'none'
+    document.body.style.opacity = '0'
+    setTimeout(() => {
+      if (document.body.dataset.ready === 'true') return
+      document.body.style.display = 'none'
+      document.body.style.opacity = '0'
+      setTimeout(() => {
+        if (document.body.dataset.ready === 'true') return
+        document.body.style.display = 'none'
+        document.body.style.opacity = '0'
+      })
     })
   }
-}
-/**
- * Replace attributes with currect state.
- */
-const replace = (context: IContext) => {
-  const data = document.querySelectorAll(`[data-authpack="replace"]`)
-  const nodes = [...data] as HTMLElement[]
-  if (!nodes.length) {
-    return
+  /**
+   * Show contents of page once is ready.
+   */
+  const postready = (context: IContext) => {
+    if (context.state.ready && document.body.dataset.ready !== 'true') {
+      document.body.dataset.ready = 'true'
+      document.body.style.display = 'initial'
+      document.body.style.opacity = 'initial'
+    }
   }
-  if (context.state.ready && context.state.user) {
+  /**
+   * Run initial events once the page has loaded.
+   */
+  setTimeout(() => preready())
+  window.addEventListener('load', () => {
+    const authpack = load()
+    const dispatch = (context: IContext) =>
+      [open, replace, show, hide, guard].map(dispatcher => {
+        return dispatcher(context)
+      })
+    const observer = new MutationObserver(mutationsList => {
+      for (const mutation of mutationsList) {
+        let shouldUpdate = false
+        if (mutation.type === 'attributes') {
+          const isAuthpack =
+            mutation.target instanceof HTMLElement &&
+            !!mutation.target.dataset.authpack
+          if (isAuthpack) shouldUpdate = true
+        }
+        if (mutation.type === 'childList') {
+          const all = [...mutation.addedNodes.values()].filter(node => {
+            if (node instanceof HTMLElement) return !!node.dataset.authpack
+          })
+          if (all.length) shouldUpdate = true
+        }
+        if (shouldUpdate) {
+          dispatch({
+            authpack,
+            state: authpack.current(),
+          })
+        }
+      }
+    })
+    observer.observe(document, {
+      subtree: true,
+      childList: true,
+      attributes: true,
+      attributeFilter: [
+        'data-authpack',
+        'data-redirect',
+        'data-value',
+        'data-trigger',
+      ],
+    })
+    dispatch({
+      authpack,
+      state: authpack.current(),
+    })
+    authpack.listen(state => {
+      dispatch({ authpack, state })
+    })
+  })
+  /**
+   * Locate the authpack script tag and initialise the authpack instance.
+   */
+  const load = () => {
+    const filename = 'https://scripts.v1.authpack.io/index.js'
+    const node: HTMLScriptElement =
+      document.querySelector(`script[src="${filename}"]`) ||
+      document.querySelector('script[src="index.js"][data-key]')
+    if (!node) {
+      const message = `Authpack script tag not found i.e.:\n\n<script\n\tsrc="${filename}"\n\tdata-key="wga-client-key-..."\n></script>`
+      console.warn(message)
+      return
+    }
+    if (!node.dataset.key) {
+      const message = `Authpack script tag missing "data-key" attribute i.e.:\n\n<script\n\tsrc="${filename}"\n\tdata-key="wga-client-key-..."\n></script>`
+      console.warn(message)
+      return
+    }
+    const config = { ...node.dataset } as { key: string; [key: string]: string }
+    return new Authpack(config)
+  }
+  /**
+   * Open the gadgets when item is clicked.
+   */
+  const open = (context: IContext) => {
+    if (!context.state.ready) {
+      return
+    }
+    const data = document.querySelectorAll(`[data-authpack="open"]`)
+    const nodes = [...data] as HTMLElement[]
+    if (!nodes.length) {
+      return
+    }
+    nodes.forEach(node => {
+      if (node.dataset.listening !== 'true') {
+        node.dataset.listening = 'true'
+        node.addEventListener('click', event => {
+          context.authpack.open()
+          const prompt =
+            event.target instanceof HTMLElement
+              ? event.target.dataset.prompt
+              : undefined
+          if (prompt) {
+            context.authpack.update({
+              prompt_plan: prompt,
+            })
+          }
+          event.preventDefault()
+        })
+      }
+    })
+  }
+  /**
+   * Replace attributes with currect state.
+   */
+  const replace = (context: IContext) => {
+    if (!context.state.ready) {
+      return
+    }
+    const data = document.querySelectorAll(`[data-authpack="replace"]`)
+    const nodes = [...data] as HTMLElement[]
+    if (!nodes.length) {
+      return
+    }
     nodes.forEach(node => {
       if (!node.dataset.value) {
         const message = `Authpack replace tag missing "data-value" attribute i.e.:\n\n<div\n\tdata-authpack="replace"\n\tdata-value="user.name"\n></div>`
@@ -90,60 +159,123 @@ const replace = (context: IContext) => {
         return
       }
       const steps = node.dataset.value.split('.').map(i => i.trim())
-      const value = steps.reduce((accum, next) => accum[next], context.state)
-      node.textContent = value
+      const value = steps.reduce(
+        (accum, next) => accum && accum[next],
+        context.state
+      )
+      node.textContent =
+        typeof value === 'object' ? JSON.stringify(value, null, 2) : value
     })
   }
-}
-/**
- * Show an element when it satisfies any of the conditions.
- */
-const show = (context: IContext) => {
-  const data = document.querySelectorAll(`[data-authpack="show"]`)
-  const nodes = [...data] as HTMLElement[]
-  if (!nodes.length) {
-    return
+  /**
+   * Redirect unauthenticated users from protected pages.
+   */
+  const guard = (context: IContext) => {
+    if (!context.state.ready) {
+      return
+    }
+    const data = document.querySelectorAll(`[data-authpack="guard"]`)
+    const nodes = [...data] as HTMLElement[]
+    if (!nodes.length) {
+      setTimeout(() => postready(context))
+      return
+    }
+    const assertions = nodes.map(node => {
+      if (!node.dataset.redirect) {
+        const message = `Authpack guard tag missing "data-redirect" attribute i.e.:\n\n<div\n\tdata-authpack="guard"\n\tdata-redirect="/home"\n></div>`
+        console.warn(message)
+        return
+      }
+      if (node.dataset.value) {
+        if (!node.dataset.trigger) {
+          const message = `Authpack guard tag missing "data-trigger" attribute i.e.:\n\n<div\n\tdata-authpack="guard"\n\tdata-redirect="/home"\n\tdata-value="user"\n\tdata-trigger="present"\n></div>`
+          console.warn(message)
+          return
+        }
+        const steps = node.dataset.value.split('.').map(i => i.trim())
+        const value = steps.reduce(
+          (accum, next) => accum && accum[next],
+          context.state
+        )
+        switch (node.dataset.trigger) {
+          case 'present':
+            if (!value) return
+            break
+          case 'missing':
+            if (!!value) return
+            break
+          default:
+            const message = `Authpack "data-trigger" attribute is incorrect: ${node.dataset.trigger}`
+            console.warn(message)
+            return
+        }
+      } else if (context.state.user) {
+        return
+      }
+      window.location.assign(node.dataset.redirect)
+      return true
+    })
+    if (!assertions.includes(true)) {
+      setTimeout(() => postready(context))
+    }
   }
-  if (context.state.ready && context.state.user) {
+  /**
+   * Helper method for show and hide nodes.
+   */
+  const conditional = (name: string, condition: boolean) => (
+    context: IContext
+  ) => {
+    if (!context.state.ready) {
+      return
+    }
+    const data = document.querySelectorAll(`[data-authpack="${name}"]`)
+    const nodes = [...data] as HTMLElement[]
+    if (!nodes.length) {
+      return
+    }
     nodes.forEach(node => {
-      const assertions = [
-        !node.dataset.plan ||
-          node.dataset.plan
-            .split(',')
-            .map(plan => plan.trim())
-            .includes(context.state.plan.tag),
-        // todo: more conditions
-      ]
-      node.dataset.display = node.dataset.display || node.style.display
-      node.style.display = assertions.includes(false)
-        ? 'none'
-        : node.dataset.display || node.style.display
+      if (!node.dataset.value) {
+        const message = `Authpack ${name} tag missing "data-value" attribute i.e.:\n\n<div\n\tdata-authpack="${name}"\n\tdata-value="user"\n\tdata-trigger="present"\n></div>`
+        console.warn(message)
+        return
+      }
+      if (!node.dataset.trigger) {
+        const message = `Authpack ${name} tag missing "data-trigger" attribute i.e.:\n\n<div\n\tdata-authpack="${name}"\n\tdata-value="user"\n\tdata-trigger="present"\n></div>`
+        console.warn(message)
+        return
+      }
+      let valid = false
+      node.dataset.display =
+        node.dataset.display || node.style.display || 'initial'
+      const steps = node.dataset.value.split('.').map(i => i.trim())
+      const value = steps.reduce(
+        (accum, next) => accum && accum[next],
+        context.state
+      )
+      switch (node.dataset.trigger) {
+        case 'present':
+          if (!!value) valid = true
+          break
+        case 'missing':
+          if (!value) valid = true
+          break
+        default:
+          const message = `Authpack "data-trigger" attribute is incorrect: ${node.dataset.trigger}`
+          console.warn(message)
+          return
+      }
+      node.style.display =
+        valid === condition
+          ? node.dataset.display || node.style.display
+          : 'none'
     })
   }
-}
-/**
- * Hide an element when it satisfies any of the conditions.
- */
-const hide = (context: IContext) => {
-  const data = document.querySelectorAll(`[data-authpack="hide"]`)
-  const nodes = [...data] as HTMLElement[]
-  if (!nodes.length) {
-    return
-  }
-  if (context.state.ready && context.state.user) {
-    nodes.forEach(node => {
-      const assertions = [
-        !node.dataset.plan ||
-          node.dataset.plan
-            .split(',')
-            .map(plan => plan.trim())
-            .includes(context.state.plan.tag),
-        // todo: more conditions
-      ]
-      node.dataset.display = node.dataset.display || node.style.display
-      node.style.display = assertions.includes(true)
-        ? 'none'
-        : node.dataset.display || node.style.display
-    })
-  }
-}
+  /**
+   * Show an element when it satisfies any of the conditions.
+   */
+  const show = conditional('show', true)
+  /**
+   * Hide an element when it satisfies any of the conditions.
+   */
+  const hide = conditional('hide', false)
+})()

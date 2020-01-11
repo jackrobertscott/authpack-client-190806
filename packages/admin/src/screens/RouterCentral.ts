@@ -9,11 +9,20 @@ import { authpack, useAuthpackCurrent } from '../utils/authpack'
 export const RouterCentral: FC = () => {
   const current = useAuthpackCurrent()
   const preferences = usePreferences()
-  const [apper, apperChange] = useState<boolean>(false)
+  const [appear, appearChange] = useState<boolean>(false)
+  const [goto, gotoChange] = useState<string | undefined>()
   const router = useRouter({
     nomatch: '/app',
     options: [
-      { path: '/app', children: element(RouterSideBarHome) },
+      {
+        path: '/app',
+        children: element(RouterSideBarHome, {
+          openSettings: key => {
+            gotoChange(key)
+            appearChange(true)
+          },
+        }),
+      },
       { path: '/developers', children: element(Explorer) },
     ],
   })
@@ -21,8 +30,9 @@ export const RouterCentral: FC = () => {
     children: [
       element(RouterManagerClusterClient, {
         key: 'cluster',
-        visible: apper,
-        close: () => apperChange(false),
+        visible: appear,
+        close: () => appearChange(false),
+        goto,
       }),
       router.current &&
         element(Fragment, {
@@ -57,7 +67,7 @@ export const RouterCentral: FC = () => {
             helper: 'See installation instructions',
             click: () =>
               window.open(
-                'https://github.com/jackrobertscott/authpack/blob/master/readme.md'
+                'https://github.com/jackrobertscott/authpack-client/wiki'
               ),
           },
           {
@@ -65,14 +75,18 @@ export const RouterCentral: FC = () => {
             label: 'Bug',
             helper: 'Report an problem',
             click: () =>
-              window.open('https://github.com/jackrobertscott/authpack/issues'),
+              window.open(
+                'https://github.com/jackrobertscott/authpack-client/issues'
+              ),
           },
           {
             icon: 'magic',
             label: 'Feedback',
             helper: 'Request a new feature',
             click: () =>
-              window.open('https://github.com/jackrobertscott/authpack/issues'),
+              window.open(
+                'https://github.com/jackrobertscott/authpack-client/issues'
+              ),
           },
         ],
       },
@@ -89,12 +103,12 @@ export const RouterCentral: FC = () => {
       {
         icon: 'cog',
         label: 'Settings',
-        click: () => apperChange(!apper),
+        click: () => appearChange(!appear),
       },
       {
         icon: 'user-circle',
         label: 'Account',
-        click: () => authpack.plugin.show(),
+        click: () => authpack.open(),
       },
     ],
   })

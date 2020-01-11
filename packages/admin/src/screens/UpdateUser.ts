@@ -9,6 +9,7 @@ import {
   Page,
   Button,
   useToaster,
+  InputBoolean,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
@@ -69,15 +70,31 @@ export const UpdateUser: FC<{
                 }),
               ],
             }),
-            element(Control, {
-              key: 'username',
-              label: 'Username',
-              error: schema.error('username'),
-              children: element(InputString, {
-                value: schema.value('username'),
-                change: schema.change('username'),
-                placeholder: 'example_username_123',
-              }),
+            element(Layout, {
+              key: 'name',
+              divide: true,
+              media: true,
+              children: [
+                element(Control, {
+                  key: 'username',
+                  label: 'Username',
+                  error: schema.error('username'),
+                  children: element(InputString, {
+                    value: schema.value('username'),
+                    change: schema.change('username'),
+                    placeholder: 'example_username_123',
+                  }),
+                }),
+                element(Control, {
+                  key: 'verified',
+                  label: 'Verified',
+                  error: schema.error('verified'),
+                  children: element(InputBoolean, {
+                    value: schema.value('verified'),
+                    change: schema.change('verified'),
+                  }),
+                }),
+              ],
             }),
             element(Button, {
               key: 'submit',
@@ -101,6 +118,7 @@ const SchemaUpdateUser = yup.object().shape({
       'Please use only numbers, letters and underscores',
       testAlphanumeric
     ),
+  verified: yup.boolean(),
 })
 
 const useGetUser = createUseServer<{
@@ -108,6 +126,7 @@ const useGetUser = createUseServer<{
     name_given: string
     name_family: string
     username: string
+    verified: boolean
   }
 }>({
   query: `
@@ -116,6 +135,7 @@ const useGetUser = createUseServer<{
         name_given
         name_family
         username
+        verified
       }
     }
   `,

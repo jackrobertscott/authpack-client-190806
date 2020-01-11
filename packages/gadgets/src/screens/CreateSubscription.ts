@@ -18,12 +18,15 @@ import {
   Page,
   useMounted,
   InputSelect,
+  Markdown,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { useSettings } from '../hooks/useSettings'
 import { createStripe } from '../utils/stripe'
+import { COUNTRIES } from '../utils/countries'
 
 export const CreateSubscription: FC<{
+  stripe_plan_id: string
   change?: (id?: string) => void
 }> = ({ change }) => {
   const toaster = useToaster()
@@ -32,34 +35,33 @@ export const CreateSubscription: FC<{
   const stripeCard = useRef<any>()
   const [stripe, stripeChange] = useState()
   const [loading, loadingChange] = useState<boolean>(false)
+  const [filter, filterChange] = useState<string>('')
   const gqlGetUser = useGetUser()
-  const gqlListPlans = useListPlans()
-  const gqlUpsertPayment = useUpsertUserPayment()
+  const gqlGetStripePlan = useGetStripePlan()
+  const gqlUpsertSubscription = useUpsertSubscription()
   const payment = useStripe(stripe)
   const schema = useSchema({
-    schema: SchemaUpdatePayment,
+    schema: SchemaUpsertSubscription,
     submit: value => {
       loadingChange(true)
       payment
         .tokenize(stripeCard.current)
         .then(token => {
-          return gqlUpsertPayment
+          return gqlUpsertSubscription
             .fetch({
               input: {
+                ...value,
+                stripe_plan_id: settings.options.prompt_plan,
                 token: token.id,
-                plan_id: value.plan_id,
-                name: value.name,
-                coupon: value.coupon,
-                email: value.email,
               },
             })
-            .then(({ user }) => {
-              if (change) change(user.id)
+            .then(({ stripe_plan_id }) => {
+              if (change) change(stripe_plan_id)
               gqlGetUser.fetch()
               toaster.add({
-                icon: 'credit-card',
+                icon: 'check-circle',
                 label: 'Success',
-                helper: 'Payment method was successfully accepted',
+                helper: 'You are now subscribed',
               })
             })
         })
@@ -78,143 +80,172 @@ export const CreateSubscription: FC<{
   })
   useEffect(() => {
     gqlGetUser.fetch()
-    gqlListPlans.fetch()
     if (settings.cluster && settings.cluster.stripe_publishable_key)
       stripeChange(createStripe(settings.cluster.stripe_publishable_key))
     // eslint-disable-next-line
   }, [])
   useEffect(() => {
-    const unplanned = !schema.state.plan_id
-    if (gqlGetUser.data && gqlGetUser.data.user.plan_id && unplanned) {
+    if (!settings.options.prompt_plan && change) change()
+    gqlGetStripePlan
+      .fetch({ stripe_plan_id: settings.options.prompt_plan })
+      .catch(() => change && change())
+    // eslint-disable-next-line
+  }, [settings.options.prompt_plan])
+  useEffect(() => {
+    if (gqlGetUser.data) {
       const user = gqlGetUser.data.user
-      if (user.plan_id) schema.set({ ...schema.state, plan_id: user.plan_id })
-      else schema.set({ ...schema.state, name: user.name, email: user.email })
+      if (user.stripe_customer) {
+        schema.set({
+          ...schema.state,
+          name: user.stripe_customer.name,
+          email: user.stripe_customer.email,
+          country: user.stripe_customer.country,
+          zip_code: user.stripe_customer.zip_code,
+        })
+      } else {
+        schema.set({
+          ...schema.state,
+          name: user.name,
+          email: user.email,
+        })
+      }
     }
     // eslint-disable-next-line
   }, [gqlGetUser.data])
+  const planCurrent = gqlGetStripePlan.data && gqlGetStripePlan.data.stripe_plan
   return element(Page, {
-    title: 'Payment',
-    subtitle: settings.cluster && settings.cluster.name,
-    children: !gqlGetUser.data
-      ? null
-      : element(Layout, {
-          key: 'layout',
-          column: true,
-          padding: true,
-          divide: true,
-          children: [
-            element(Control, {
-              key: 'plan_id',
-              label: 'Plan',
-              helper: 'Which subscription would you like?',
-              error: schema.error('plan_id'),
-              children: element(InputSelect, {
-                value: schema.value('plan_id'),
-                change: schema.change('plan_id'),
-                options: !gqlListPlans.data
-                  ? []
-                  : gqlListPlans.data.plans.map(plan => ({
-                      value: plan.id,
-                      label: plan.name,
-                      helper: `$${plan.amount / 100} ${plan.currency} every ${
-                        plan.interval_separator
-                      } ${plan.interval}${
-                        plan.interval_separator === 1 ? '' : 's'
-                      }`,
-                    })),
+    title: planCurrent ? planCurrent.name || 'Payment' : '',
+    subtitle:
+      planCurrent &&
+      (planCurrent.description || (settings.cluster && settings.cluster.name)),
+    children:
+      !planCurrent || !gqlGetUser.data
+        ? null
+        : element(Layout, {
+            column: true,
+            children: [
+              element(Layout, {
+                key: 'details',
+                column: true,
+                padding: true,
+                styled: true,
+                children: element(Markdown, {
+                  value: `**$${(planCurrent.amount / 100).toFixed(2)}** ${
+                    planCurrent.currency
+                  } billed every ${planCurrent.interval_count} ${
+                    planCurrent.interval
+                  }s as ${
+                    planCurrent.team_plan ? '**team**' : '**user**'
+                  } plan.`.trim(),
+                }),
               }),
-            }),
-            element(Layout, {
-              key: 'card',
-              divide: true,
-              media: true,
-              children: [
-                element(Control, {
-                  key: 'card',
-                  label: 'Card',
-                  helper: 'Powered by Stripe',
-                  error: schema.error('card'),
-                  children: element(InputStripe, {
-                    stripe,
-                    change: value => {
-                      if (mounted.current) stripeCard.current = value
-                    },
+              element(Layout, {
+                key: 'layout',
+                column: true,
+                padding: true,
+                divide: true,
+                children: [
+                  element(Control, {
+                    key: 'card',
+                    label: 'Card',
+                    helper: 'Powered by Stripe',
+                    error: schema.error('card'),
+                    children: element(InputStripe, {
+                      stripe,
+                      change: value => {
+                        if (mounted.current) stripeCard.current = value
+                      },
+                    }),
                   }),
-                }),
-                element(Control, {
-                  key: 'coupon',
-                  label: 'Code',
-                  helper: 'Optional payment code',
-                  error: schema.error('coupon'),
-                  children: element(InputString, {
-                    value: schema.value('coupon'),
-                    change: schema.change('coupon'),
-                    placeholder: '...',
+                  element(Control, {
+                    key: 'name',
+                    label: 'Name on Card',
+                    error: schema.error('name'),
+                    children: element(InputString, {
+                      value: schema.value('name'),
+                      change: schema.change('name'),
+                      placeholder: '...',
+                    }),
                   }),
-                }),
-              ],
-            }),
-            element(Layout, {
-              key: 'top',
-              divide: true,
-              media: true,
-              children: [
-                element(Control, {
-                  key: 'name',
-                  label: 'Name',
-                  helper: 'Found on card',
-                  error: schema.error('name'),
-                  children: element(InputString, {
-                    value: schema.value('name'),
-                    change: schema.change('name'),
-                    placeholder: 'Fred Blogs',
+                  element(Control, {
+                    key: 'email',
+                    label: 'Email',
+                    error: schema.error('email'),
+                    children: element(InputString, {
+                      value: schema.value('email'),
+                      change: schema.change('email'),
+                      placeholder: '...',
+                    }),
                   }),
-                }),
-                element(Control, {
-                  key: 'email',
-                  label: 'Billing Email',
-                  helper: 'Payment invoices will be sent here',
-                  error: schema.error('email'),
-                  children: element(InputString, {
-                    value: schema.value('email'),
-                    change: schema.change('email'),
-                    placeholder: 'fred@example.com',
+                  element(Control, {
+                    key: 'country',
+                    label: 'Country',
+                    error: schema.error('country'),
+                    children: element(InputSelect, {
+                      value: schema.value('country'),
+                      change: schema.change('country'),
+                      filter: writing => filterChange(writing),
+                      options: COUNTRIES.filter(country =>
+                        country.toLowerCase().includes(filter)
+                      ).map(country => ({
+                        value: country,
+                        label: country,
+                      })),
+                    }),
                   }),
-                }),
-              ],
-            }),
-            element(Button, {
-              key: 'submit',
-              label: 'Update',
-              disabled: !schema.valid,
-              click: schema.submit,
-              loading,
-            }),
-          ],
-        }),
+                  element(Control, {
+                    key: 'zip_code',
+                    label: 'Zip Code',
+                    error: schema.error('zip_code'),
+                    children: element(InputString, {
+                      value: schema.value('zip_code'),
+                      change: schema.change('zip_code'),
+                      placeholder: '...',
+                    }),
+                  }),
+                  element(Control, {
+                    key: 'coupon',
+                    label: 'Coupon',
+                    helper: 'Optional payment code',
+                    error: schema.error('coupon'),
+                    children: element(InputString, {
+                      value: schema.value('coupon'),
+                      change: schema.change('coupon'),
+                      placeholder: '...',
+                    }),
+                  }),
+                  element(Control, {
+                    key: 'submit',
+                    helper: 'You can cancel at any time',
+                    children: element(Button, {
+                      key: 'submit',
+                      label: 'Pay Now',
+                      disabled: !schema.valid,
+                      click: schema.submit,
+                      loading,
+                    }),
+                  }),
+                ],
+              }),
+            ],
+          }),
   })
 }
 
-const SchemaUpdatePayment = yup.object().shape({
-  plan_id: yup.string().required('Please select a plan'),
-  name: yup.string().required('Please provide the name on the card'),
+const SchemaUpsertSubscription = yup.object().shape({
+  name: yup.string().required('Please provide your card name'),
+  email: yup.string().required('Please provide your billing email'),
+  country: yup.string().required('Please select your country'),
+  zip_code: yup.string().required('Please select your zip code'),
   coupon: yup.string(),
-  email: yup
-    .string()
-    .email('Please use a valid email')
-    .required('Please provide a billing email'),
 })
 
-const useUpsertUserPayment = createUseServer<{
-  user: {
-    id: string
-  }
+const useUpsertSubscription = createUseServer<{
+  stripe_plan_id: string
 }>({
   query: `
-    mutation UpsertUserPaymentClient($input: UpsertUserPaymentInput!) {
-      user: UpsertUserPaymentClient(input: $input) {
-        id
-      }
+    mutation UpsertStripeSubscriptionClient($input: UpsertStripeSubscriptionInput!) {
+      stripe_plan_id: UpsertStripeSubscriptionClient(input: $input)
     }
   `,
 })
@@ -223,7 +254,12 @@ const useGetUser = createUseServer<{
   user: {
     name: string
     email: string
-    plan_id: string
+    stripe_customer?: {
+      name?: string
+      email?: string
+      country?: string
+      zip_code?: string
+    }
   }
 }>({
   query: `
@@ -231,35 +267,40 @@ const useGetUser = createUseServer<{
       user: GetUserClient {
         name
         email
-        plan_id
+        stripe_customer {
+          name
+          email
+          country
+          zip_code
+        }
       }
     }
   `,
 })
 
-const useListPlans = createUseServer<{
-  plans: Array<{
+const useGetStripePlan = createUseServer<{
+  stripe_plan: {
     id: string
-    name: string
-    tag: string
+    name?: string
     description?: string
     amount: number
     currency: string
     interval: string
-    interval_separator: number
-  }>
+    interval_count: number
+    team_plan: boolean
+  }
 }>({
   query: `
-    query ListPlansClient {
-      plans: ListPlansClient {
+    query GetStripePlanClient($stripe_plan_id: String!) {
+      stripe_plan: GetStripePlanClient(stripe_plan_id: $stripe_plan_id) {
         id
         name
-        tag
         description
         amount
         currency
         interval
-        interval_separator
+        interval_count
+        team_plan
       }
     }
   `,

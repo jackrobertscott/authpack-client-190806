@@ -4,23 +4,46 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- <meta
+      data-authpack="guard"
+      data-redirect="/home.html"
+      data-value="user"
+      data-trigger="present"
+    /> -->
     <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
+    <!-- inject authpack -->
     <script
       src="index.js"
-      data-key="wga-client-key-85068bfcfc17da6c9ff1d5f66"
+      data-key="wga-client-key-109e31db9bcdebd9dbc5e4e4c"
       data-url="http://localhost:3100"
       data-gql="http://localhost:4000"
       data-debug="true"
     ></script>
-    <!-- the following opens the plugin -->
-    <div
-      data-authpack="guard"
-      data-required="true"
-      data-redirect="/home.html"
-    ></div>
-    <!-- the following populates text inside node -->
-    <div data-authpack="replace" data-value="user.name">Loading...</div>
+    <!-- redirect unauthenticated users -->
+  </head>
+  <body>
+    <h1>Index</h1>
+    <a href="/home.html">Home</a>
+    <br />
+    <br />
+    <button data-authpack="open" data-prompt="plan_GWbzr3DQAEGuIP">Account</button>
+    <br />
+    <br />
+    <!-- replace text with state data -->
+    <div data-authpack="replace" data-value="user.name"></div>
+    <!-- show an item once logged in -->
+    <div data-authpack="show" data-value="user" data-trigger="present">
+      User is authenticated
+    </div>
+    <div data-authpack="show" data-value="team" data-trigger="present">
+      User has a team
+    </div>
+    <!-- hide an item with conditions -->
+    <div data-authpack="hide" data-value="user" data-trigger="present">
+      User is not present
+    </div>
+    <div data-authpack="hide" data-value="team" data-trigger="present">
+      User does not have a team
+    </div>
   </body>
 </html>

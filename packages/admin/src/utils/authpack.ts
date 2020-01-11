@@ -16,10 +16,6 @@ export const authpack = new Authpack({
   url: document.location.hostname.includes('localhost')
     ? 'http://localhost:3100'
     : undefined,
-  options: {
-    enable_teams: true,
-    prompt_teams: true,
-  },
 })
 
 export const AuthpackContext = createContext<IPlugin>(undefined as any)
@@ -27,8 +23,8 @@ export const AuthpackContext = createContext<IPlugin>(undefined as any)
 export const AuthpackProvider: FC<{
   children: ReactNode
 }> = ({ children }) => {
-  const [current, currentChange] = useState<IPlugin>(authpack.plugin.current())
-  useEffect(() => authpack.plugin.listen(update => currentChange(update)), [])
+  const [current, currentChange] = useState<IPlugin>(authpack.current())
+  useEffect(() => authpack.listen(update => currentChange(update)), [])
   return createElement(AuthpackContext.Provider, {
     value: current,
     children,

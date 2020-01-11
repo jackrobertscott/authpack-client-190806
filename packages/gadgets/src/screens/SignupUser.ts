@@ -29,6 +29,7 @@ export const SignupUser: FC = () => {
       gqlSignupUser.fetch({ input }).then(({ session }) => {
         SettingsStore.update({
           bearer: `Bearer ${session.token}`,
+          open: settings.options.prompt_plan ? true : false,
         })
       })
     },
@@ -46,8 +47,8 @@ export const SignupUser: FC = () => {
         })
         .then(({ session }) => {
           SettingsStore.update({
-            open: false,
             bearer: `Bearer ${session.token}`,
+            open: settings.options.prompt_plan ? true : false,
           })
         })
         .finally(() => {

@@ -15,17 +15,19 @@ export const SideBar: FC<{
   title: string
   footer?: string
   children: ReactNode
+  space?: boolean
   options: Array<
     | {
         label: string
-        icon: string
+        icon?: string
         prefix?: string
+        heading?: boolean
         click?: () => void
         focused?: boolean
       }
     | false
   >
-}> = ({ title, footer, children, options }) => {
+}> = ({ title, footer, space, children, options }) => {
   const theme = useTheme()
   const [open, openChange] = useState<boolean>(true)
   const bp = `@media (max-width: ${1035 + 50}px)`
@@ -69,6 +71,7 @@ export const SideBar: FC<{
             element(Title, {
               key: 'title',
               title,
+              space,
             }),
             element(Options, {
               key: 'options',
@@ -114,6 +117,7 @@ export const SideBar: FC<{
               icon: 'angle-left',
               label: 'Back',
               click: () => openChange(true),
+              noicon: true,
             }),
           }),
           element(Fragment, {
@@ -128,7 +132,8 @@ export const SideBar: FC<{
 
 const Title: FC<{
   title: string
-}> = ({ title }) => {
+  space?: boolean
+}> = ({ title, space }) => {
   const theme = useTheme()
   return element('div', {
     children: title,
@@ -136,8 +141,8 @@ const Title: FC<{
       lineHeight: '1em',
       fontSize: '1.5rem',
       padding: '25px 25px 20px',
-      marginBottom: 40,
       color: theme.sideBar.title,
+      marginBottom: space ? 35 : undefined,
     }),
   })
 }
@@ -162,8 +167,9 @@ const Options: FC<{
   bp: string
   options: Array<{
     label: string
-    icon: string
+    icon?: string
     prefix?: string
+    heading?: boolean
     click?: () => void
     focused?: boolean
   }>
@@ -176,54 +182,102 @@ const Options: FC<{
       flexDirection: 'column',
       marginBottom: 40,
     }),
-    children: options.map(({ label, icon, prefix, click, focused }, index) => {
-      return element('div', {
-        key: `option-${index}`,
-        onClick: click,
-        className: css({
-          all: 'unset',
-          display: 'flex',
-          alignItems: 'center',
-          cursor: 'pointer',
-          transition: '200ms',
-          padding: '15px 25px',
-          color: focused ? theme.sideBar.optionsFocused : theme.sideBar.options,
-          background: focused ? theme.sideBar.backgroundFocused : undefined,
-          '&:hover': {
-            color: theme.sideBar.optionsHover,
-            background: theme.sideBar.backgroundHover,
-          },
-        }),
-        children: [
-          element(Icon, {
-            key: 'icon',
-            icon,
-            prefix,
-          }),
-          element('div', {
-            key: 'label',
-            children: label,
-            className: css({
-              marginLeft: 10,
-            }),
-          }),
-          element('div', {
-            key: 'right',
+    children: options.map(
+      ({ label, icon, prefix, heading, click, focused }, index) => {
+        if (heading) {
+          return element('div', {
+            key: `option-${index}`,
             className: css({
               all: 'unset',
-              display: 'none',
-              marginLeft: 'auto',
-              [bp]: {
-                display: 'flex',
-              },
+              display: 'flex',
+              alignItems: 'center',
+              padding: '15px 25px',
+              marginTop: 35,
+              color: theme.sideBar.heading,
             }),
-            children: element(Icon, {
-              key: 'icon',
-              icon: 'angle-right',
-            }),
+            children: [
+              element('div', {
+                key: 'label',
+                children: label,
+                className: css({
+                  marginRight: 'auto',
+                }),
+              }),
+              icon &&
+                element('div', {
+                  key: 'icon',
+                  onClick: click,
+                  className: css({
+                    padding: 7.5,
+                    margin: -7.5,
+                    cursor: 'pointer',
+                    transition: '200ms',
+                    borderRadius: theme.global.radius,
+                    '&:hover': {
+                      color: theme.sideBar.optionsHover,
+                      background: theme.sideBar.backgroundHover,
+                    },
+                  }),
+                  children: element(Icon, {
+                    key: 'icon',
+                    icon,
+                    prefix,
+                  }),
+                }),
+            ],
+          })
+        }
+        return element('div', {
+          key: `option-${index}`,
+          onClick: click,
+          className: css({
+            all: 'unset',
+            display: 'flex',
+            alignItems: 'center',
+            cursor: 'pointer',
+            transition: '200ms',
+            padding: '15px 25px',
+            color: focused
+              ? theme.sideBar.optionsFocused
+              : theme.sideBar.options,
+            background: focused ? theme.sideBar.backgroundFocused : undefined,
+            '&:hover': {
+              color: theme.sideBar.optionsHover,
+              background: theme.sideBar.backgroundHover,
+            },
           }),
-        ],
-      })
-    }),
+          children: [
+            icon &&
+              element(Icon, {
+                key: 'icon',
+                icon,
+                prefix,
+              }),
+            element('div', {
+              key: 'label',
+              children: label,
+              className: css({
+                marginLeft: 10,
+              }),
+            }),
+            element('div', {
+              key: 'right',
+              className: css({
+                all: 'unset',
+                display: 'none',
+                marginLeft: 'auto',
+                [bp]: {
+                  display: 'flex',
+                },
+              }),
+              children: element(Icon, {
+                key: 'icon',
+                icon: 'angle-right',
+              }),
+            }),
+          ],
+        })
+      }
+    ),
   })
 }

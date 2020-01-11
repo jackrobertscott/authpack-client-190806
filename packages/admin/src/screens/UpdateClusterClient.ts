@@ -10,6 +10,7 @@ import {
   Page,
   Button,
   useToaster,
+  InputBoolean,
 } from '@authpack/theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { createUseServer } from '../hooks/useServer'
@@ -50,15 +51,75 @@ export const UpdateClusterClient: FC<{
       children: !gqlGetCluster.data
         ? null
         : [
-            element(Control, {
+            element(Layout, {
               key: 'name',
-              label: 'Name',
-              error: schema.error('name'),
-              children: element(InputString, {
-                value: schema.value('name'),
-                change: schema.change('name'),
-                placeholder: 'Cluster',
-              }),
+              divide: true,
+              media: true,
+              children: [
+                element(Control, {
+                  key: 'name',
+                  label: 'Name',
+                  error: schema.error('name'),
+                  children: element(InputString, {
+                    value: schema.value('name'),
+                    change: schema.change('name'),
+                    placeholder: 'Cluster',
+                  }),
+                }),
+                element(Control, {
+                  key: 'theme_preference',
+                  label: 'Theme',
+                  error: schema.error('theme_preference'),
+                  children: element(InputSelect, {
+                    value: schema.value('theme_preference'),
+                    change: schema.change('theme_preference'),
+                    options: [
+                      {
+                        value: 'night_sky',
+                        label: 'Night Sky',
+                        helper: 'Dark theme',
+                      },
+                      {
+                        value: 'snow_storm',
+                        label: 'Snow Storm',
+                        helper: 'Light theme',
+                      },
+                      {
+                        value: 'blue_harvester',
+                        label: 'Blue Harvester',
+                        helper: 'Eye Friendly',
+                      },
+                    ],
+                  }),
+                }),
+              ],
+            }),
+            element(Layout, {
+              key: 'teams',
+              divide: true,
+              media: true,
+              children: [
+                element(Control, {
+                  key: 'enable_team',
+                  label: 'Enable Teams',
+                  helper: "User's will be able to create a team once logged in",
+                  error: schema.error('enable_team'),
+                  children: element(InputBoolean, {
+                    value: schema.value('enable_team'),
+                    change: schema.change('enable_team'),
+                  }),
+                }),
+                element(Control, {
+                  key: 'prompt_team',
+                  label: 'Prompt Teams',
+                  helper: 'User will be asked to create a team when they login',
+                  error: schema.error('prompt_team'),
+                  children: element(InputBoolean, {
+                    value: schema.value('prompt_team'),
+                    change: schema.change('prompt_team'),
+                  }),
+                }),
+              ],
             }),
             element(Control, {
               key: 'domains',
@@ -69,33 +130,6 @@ export const UpdateClusterClient: FC<{
                 value: schema.value('domains'),
                 change: schema.change('domains'),
                 placeholder: '...',
-              }),
-            }),
-            element(Control, {
-              key: 'theme_preference',
-              label: 'Theme',
-              helper: 'Choose the color of your login gadgets',
-              error: schema.error('theme_preference'),
-              children: element(InputSelect, {
-                value: schema.value('theme_preference'),
-                change: schema.change('theme_preference'),
-                options: [
-                  {
-                    value: 'night_sky',
-                    label: 'Night Sky',
-                    helper: 'Dark theme',
-                  },
-                  {
-                    value: 'snow_storm',
-                    label: 'Snow Storm',
-                    helper: 'Light theme',
-                  },
-                  {
-                    value: 'blue_harvester',
-                    label: 'Blue Harvester',
-                    helper: 'Eye Friendly',
-                  },
-                ],
               }),
             }),
             element(Button, {
@@ -117,6 +151,8 @@ const SchemaUpdateCluster = yup.object().shape({
     .of(yup.string().required())
     .default([]),
   theme_preference: yup.string().required('Please select a theme'),
+  enable_team: yup.boolean(),
+  prompt_team: yup.boolean(),
 })
 
 const useGetCluster = createUseServer<{
@@ -124,6 +160,8 @@ const useGetCluster = createUseServer<{
     name: string
     domains: string[]
     theme_preference: string
+    enable_team: boolean
+    prompt_team: boolean
   }
 }>({
   query: `
@@ -132,6 +170,8 @@ const useGetCluster = createUseServer<{
         name
         domains
         theme_preference
+        enable_team
+        prompt_team
       }
     }
   `,

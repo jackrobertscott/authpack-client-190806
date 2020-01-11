@@ -21,6 +21,8 @@ import {
   Root,
   Page,
   SideBar,
+  Code,
+  Markdown,
 } from '../src/index'
 
 console.clear()
@@ -261,6 +263,29 @@ const SimpleButtons: FC = () => {
         label: 'Buttons',
         helper:
           'Lots of pretty buttons and this is a really long sentence to see what it looks like',
+      }),
+      element(Layout, {
+        key: 'marked',
+        column: true,
+        padding: true,
+        divide: true,
+        styled: true,
+        children: [
+          element(Markdown, {
+            key: 'marked',
+            value: `By click any of the buttons below; you agree to our [terms of service](https://authpack.io)`,
+          }),
+        ],
+      }),
+      element(Snippet, {
+        key: 'key',
+        icon: 'key',
+        label: 'Client key',
+        value: 'You can use this publically',
+        children: element(Code, {
+          key: 'code',
+          value: `wga-client-key-12459097654321`,
+        }),
       }),
       element(Layout, {
         key: 'Layout',

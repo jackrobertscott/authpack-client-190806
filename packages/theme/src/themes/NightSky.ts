@@ -3,7 +3,7 @@ import { ITheme } from '../contexts/Theme'
 const slate = (
   lightness: number = 0,
   opacity: number = 1,
-  saturation: number = 10,
+  saturation: number = 0,
   hue: number = 210
 ) =>
   opacity === 1
@@ -12,9 +12,10 @@ const slate = (
 
 export const NightSky: ITheme = {
   global: {
+    text: slate(65),
     radius: 3,
-    thick: 600,
-    thin: 500,
+    thick: 500,
+    thin: 400,
   },
   /**
    * Navigation.
@@ -31,6 +32,7 @@ export const NightSky: ITheme = {
   sideBar: {
     title: slate(95),
     footer: slate(65),
+    heading: slate(45),
     options: slate(65),
     optionsHover: slate(95),
     optionsFocused: slate(95),

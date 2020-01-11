@@ -79,6 +79,28 @@ const SimpleSidebar: FC<{ children: ReactNode }> = ({ children }) => {
     children,
     options: [
       {
+        icon: 'plus',
+        label: 'Example',
+        heading: true,
+      },
+      {
+        icon: 'user',
+        label: 'Users',
+        focused: true,
+      },
+      {
+        icon: 'users',
+        label: 'Teams',
+      },
+      {
+        icon: 'history',
+        label: 'Sessions',
+      },
+      {
+        label: 'Example',
+        heading: true,
+      },
+      {
         icon: 'user',
         label: 'Users',
         focused: true,

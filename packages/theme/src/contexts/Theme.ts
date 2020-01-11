@@ -7,6 +7,7 @@ interface IKeys {
 
 export interface ITheme extends IKeys {
   global: {
+    text: string
     radius: number
     thick: number
     thin: number
@@ -26,6 +27,7 @@ export interface ITheme extends IKeys {
   sideBar: {
     title: string
     footer: string
+    heading: string
     options: string
     optionsHover: string
     optionsFocused: string

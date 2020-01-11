@@ -11,7 +11,7 @@
     "ship": "now --prod"
   },
   "dependencies": {
-    "@authpack/theme": "^0.6.8",
+    "@authpack/theme": "^0.6.9",
     "@fortawesome/fontawesome-free": "^5.11.2",
     "@sentry/browser": "^5.7.1",
     "@types/jest": "^24.0.23",
@@ -43,5 +43,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": ">=12.x"
   }
 }

@@ -1,14 +1,21 @@
 import { useEffect, useRef } from 'react'
-import { useAuthpackCurrent } from '../utils/authpack'
+import { useAuthpackCurrent, authpack } from '../utils/authpack'
 import { createUseServer } from './useServer'
 import { UniversalStore } from '../utils/universal'
 import { useUniversal } from './useUniversal'
+import { usePreferences } from '../utils/preferences'
 
 export const useSetup = () => {
   const universal = useUniversal()
+  const preferences = usePreferences()
   const gqlGetCluster = useGetCluster()
   const auth = useAuthpackCurrent()
   const ids = useRef<{ cluster?: string; team?: string }>({})
+  useEffect(() => {
+    authpack.update({
+      theme_preset: preferences.theme,
+    })
+  }, [preferences.theme])
   useEffect(() => {
     if (auth.team && auth.team.id) {
       // when the team changes, we want to ignore the currently saved cluster id
@@ -31,6 +38,7 @@ export const useSetup = () => {
             cluster_id: cluster.id,
             cluster_name: cluster.name,
             cluster_key_client: cluster.key_client,
+            cluster_stripe_pending: cluster.stripe_pending,
           })
         })
         .catch(() => {
@@ -55,6 +63,7 @@ const useGetCluster = createUseServer<{
     key_client: string
     name: string
     theme_preference: string
+    stripe_pending: boolean
   }
 }>({
   query: `
@@ -64,6 +73,7 @@ const useGetCluster = createUseServer<{
         key_client
         name
         theme_preference
+        stripe_pending
       }
     }
   `,

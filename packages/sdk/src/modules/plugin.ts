@@ -46,6 +46,9 @@ export class Plugin {
   public listen(callback: (current: IPlugin) => void) {
     return this.store.listen(callback)
   }
+  public update(options: Partial<IPluginOptions>) {
+    this.sendMessage('plugin:options', options)
+  }
   /**
    * Private...
    */
@@ -129,13 +132,20 @@ export interface IPlugin {
   options: IPluginOptions
   cluster?: {
     id: string
+    stripe_publishable_key: string
     name: string
     theme_preference: string
-    stripe_publishable_key: string
+    enable_team: boolean
+    prompt_team: boolean
   }
   session?: {
     id: string
     token: string
+  }
+  membership?: {
+    id: string
+    admin: boolean
+    superadmin: boolean
   }
   user?: {
     id: string
@@ -145,35 +155,36 @@ export interface IPlugin {
     name?: string
     name_given?: string
     name_family?: string
-  }
-  plan?: {
-    id: string
-    name: string
-    tag: string
-    description?: string
-    statement?: string
-    amount: number
-    currency: string
-    interval: string
-    interval_seperator: number
+    stripe_plan?: {
+      id: string
+      name?: string
+      description?: string
+      amount: number
+      currency: string
+      interval: string
+      interval_count: number
+    }
   }
   team?: {
     id: string
     name: string
     tag: string
     description?: string
-  }
-  membership?: {
-    id: string
-    admin: boolean
-    superadmin: boolean
+    stripe_plan?: {
+      id: string
+      name?: string
+      description?: string
+      amount: number
+      currency: string
+      interval: string
+      interval_count: number
+    }
   }
 }
 
 export interface IPluginOptions {
-  enable_teams?: boolean
-  prompt_teams?: boolean
   theme_preset?: string
+  prompt_plan?: string
 }
 
 const createStore = (data: Partial<IPlugin> = {}) => {
@@ -182,8 +193,6 @@ const createStore = (data: Partial<IPlugin> = {}) => {
     ready: false,
     ...data,
     options: {
-      enable_teams: false,
-      prompt_teams: false,
       ...data.options,
     },
   })

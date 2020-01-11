@@ -2,7 +2,6 @@ import * as yup from 'yup'
 import { createElement as element, FC } from 'react'
 import {
   useSchema,
-  Poster,
   Layout,
   Control,
   InputString,
@@ -45,12 +44,6 @@ export const UpdateUserEmail: FC<{
     title: 'Email',
     subtitle: settings.cluster && settings.cluster.name,
     children: [
-      element(Poster, {
-        key: 'poster',
-        icon: 'at',
-        label: 'Update Email',
-        helper: 'You will need to reverify your account',
-      }),
       element(Layout, {
         key: 'layout',
         column: true,
@@ -59,7 +52,7 @@ export const UpdateUserEmail: FC<{
         children: [
           element(Control, {
             key: 'email',
-            label: 'Email',
+            label: 'New Email',
             error: schema.error('email'),
             children: element(InputString, {
               value: schema.value('email'),
@@ -69,7 +62,7 @@ export const UpdateUserEmail: FC<{
           }),
           element(Button, {
             key: 'submit',
-            label: 'Update',
+            label: 'Change',
             loading: gqlUpdateEmail.loading,
             disabled: !schema.valid,
             click: schema.submit,

@@ -1,4 +1,4 @@
-import { createElement as element, FC } from 'react'
+import { createElement as element, FC, useEffect, useState } from 'react'
 import { useLocalRouter, Modal, IconBar } from '@authpack/theme'
 import { UpdateClusterClient } from './UpdateClusterClient'
 import { ShowClusterClient } from './ShowClusterClient'
@@ -6,11 +6,20 @@ import { SwitchClusterClient } from './SwitchClusterClient'
 import { ShowClusterKeysClient } from './ShowClusterKeysClient'
 import { CreateClusterClient } from './CreateClusterClient'
 import { UpdateClusterStripeClient } from './UpdateClusterStripeClient'
+import { ListStripePlans } from './ListStripePlans'
 
 export const RouterManagerClusterClient: FC<{
   visible?: boolean
   close: () => void
-}> = ({ close, visible }) => {
+  goto?: string
+}> = ({ close, visible, goto }) => {
+  const [stripeProduct, stripeProductChange] = useState<
+    | {
+        id: string
+        name?: string
+      }
+    | undefined
+  >()
   const router = useLocalRouter({
     nomatch: '/inspect',
     options: [
@@ -41,10 +50,33 @@ export const RouterManagerClusterClient: FC<{
       },
       {
         key: '/stripe',
-        children: element(UpdateClusterStripeClient),
+        children: element(UpdateClusterStripeClient, {
+          chooseProduct: (id, name) => stripeProductChange({ id, name }),
+        }),
+      },
+      {
+        key: '/stripe/plans',
+        children: stripeProduct
+          ? element(ListStripePlans, {
+              stripe_product_id: stripeProduct.id,
+              name: stripeProduct.name,
+            })
+          : null,
       },
     ],
   })
+  useEffect(() => {
+    if (goto) router.change(goto)
+    // eslint-disable-next-line
+  }, [goto])
+  useEffect(() => {
+    if (stripeProduct) router.change('/stripe/plans')
+    // eslint-disable-next-line
+  }, [stripeProduct])
+  const navigate = (go: string) => {
+    if (stripeProduct) stripeProductChange(undefined)
+    router.change(go)
+  }
   return element(Modal, {
     close,
     visible,
@@ -55,31 +87,31 @@ export const RouterManagerClusterClient: FC<{
           icon: 'glasses',
           label: 'Inspect',
           focused: !!router.current && router.current.key === '/inspect',
-          click: () => router.change('/inspect'),
+          click: () => navigate('/inspect'),
         },
         {
           icon: 'sliders-h',
           label: 'Update',
           focused: !!router.current && router.current.key === '/update',
-          click: () => router.change('/update'),
+          click: () => navigate('/update'),
         },
         {
           icon: 'key',
           label: 'API Keys',
           focused: !!router.current && router.current.key === '/keys',
-          click: () => router.change('/keys'),
+          click: () => navigate('/keys'),
         },
         {
           icon: 'piggy-bank',
           label: 'Accept Payments',
-          focused: !!router.current && router.current.key === '/stripe',
-          click: () => router.change('/stripe'),
+          focused: !!router.current && router.current.key.startsWith('/stripe'),
+          click: () => navigate('/stripe'),
         },
         {
           icon: 'random',
           label: 'Switch',
           focused: !!router.current && router.current.key === '/switch',
-          click: () => router.change('/switch'),
+          click: () => navigate('/switch'),
         },
         {
           icon: 'times-circle',

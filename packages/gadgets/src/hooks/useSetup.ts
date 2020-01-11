@@ -10,44 +10,24 @@ export const useSetup = () => {
   const gqlGetCluster = useGetCluster()
   const gqlGetSession = useGetSession()
   const gqlLogoutUser = useLogoutUser()
-  useEffect(() => {
-    if (settings.client) {
-      gqlGetCluster.fetch().then(({ cluster }) => {
-        SettingsStore.update({ cluster })
-      })
-    }
-    // eslint-disable-next-line
-  }, [settings.client, settings.open])
-  useEffect(() => {
-    SettingsStore.update({
-      ready: false,
-      session: undefined,
-      user: undefined,
-      plan: undefined,
-      team: undefined,
-      membership: undefined,
-    })
+  const updateSession = () => {
     if (settings.bearer && settings.client) {
       gqlGetSession
         .fetch()
-        .then(({ session: { user, plan, team, membership, ...session } }) => {
+        .then(({ session: { user, team, membership, ...session } }) => {
           SettingsStore.update({
             ready: true,
             bearer: `Bearer ${session.token}`,
             session,
             user,
-            plan,
             team,
             membership,
           })
         })
-        .catch(error => {
+        .catch(() => {
           SettingsStore.update({
             ready: true,
-            bearer:
-              !error.code || error.code === 401
-                ? undefined
-                : SettingsStore.current.bearer,
+            bearer: undefined,
           })
         })
     } else {
@@ -56,6 +36,25 @@ export const useSetup = () => {
         bearer: undefined,
       })
     }
+  }
+  useEffect(() => {
+    if (settings.client) {
+      gqlGetCluster
+        .fetch()
+        .then(({ cluster }) => SettingsStore.update({ cluster }))
+        .then(() => updateSession())
+    }
+    // eslint-disable-next-line
+  }, [settings.client, settings.open])
+  useEffect(() => {
+    SettingsStore.update({
+      ready: false,
+      session: undefined,
+      user: undefined,
+      team: undefined,
+      membership: undefined,
+    })
+    updateSession()
     // eslint-disable-next-line
   }, [settings.client, settings.bearer])
   useEffect(() => {
@@ -86,6 +85,14 @@ export const useSetup = () => {
         case 'plugin:hide':
           SettingsStore.update({ open: false })
           break
+        case 'plugin:options':
+          SettingsStore.update({
+            options: {
+              ...SettingsStore.current.options,
+              ...payload,
+            },
+          })
+          break
         case 'plugin:exit':
           if (settings.bearer)
             gqlLogoutUser
@@ -103,18 +110,26 @@ export const useSetup = () => {
 const useGetCluster = createUseServer<{
   cluster: {
     id: string
+    stripe_publishable_key: string
+    stripe_user_product_id: string
+    stripe_team_product_id: string
     name: string
     theme_preference: string
-    stripe_publishable_key: string
+    enable_team: boolean
+    prompt_team: boolean
   }
 }>({
   query: `
     query GetClusterCurrentClient {
       cluster: GetClusterCurrentClient {
         id
+        stripe_publishable_key
+        stripe_user_product_id
+        stripe_team_product_id
         name
         theme_preference
-        stripe_publishable_key
+        enable_team
+        prompt_team
       }
     }
   `,
@@ -124,7 +139,12 @@ const useGetSession = createUseServer<{
   session: {
     id: string
     token: string
-    user: {
+    membership?: {
+      id: string
+      admin: boolean
+      superadmin: boolean
+    }
+    user?: {
       id: string
       email: string
       verified: boolean
@@ -132,28 +152,30 @@ const useGetSession = createUseServer<{
       name?: string
       name_given?: string
       name_family?: string
-    }
-    plan?: {
-      id: string
-      name: string
-      tag: string
-      description?: string
-      statement?: string
-      amount: number
-      currency: string
-      interval: string
-      interval_seperator: number
+      stripe_plan?: {
+        id: string
+        name?: string
+        description?: string
+        amount: number
+        currency: string
+        interval: string
+        interval_count: number
+      }
     }
     team?: {
       id: string
       name: string
       tag: string
       description?: string
-    }
-    membership?: {
-      id: string
-      admin: boolean
-      superadmin: boolean
+      stripe_plan?: {
+        id: string
+        name?: string
+        description?: string
+        amount: number
+        currency: string
+        interval: string
+        interval_count: number
+      }
     }
   }
 }>({
@@ -162,6 +184,11 @@ const useGetSession = createUseServer<{
       session: GetSessionClient {
         id
         token
+        membership {
+          id
+          admin
+          superadmin
+        }
         user {
           id
           email
@@ -170,28 +197,30 @@ const useGetSession = createUseServer<{
           name
           name_given
           name_family
-        }
-        plan {
-          id
-          name
-          tag
-          description
-          statement
-          amount
-          currency
-          interval
-          interval_separator
+          stripe_plan {
+            id
+            name
+            description
+            amount
+            currency
+            interval
+            interval_count
+          }
         }
         team {
           id
           name
           tag
           description
-        }
-        membership {
-          id
-          admin
-          superadmin
+          stripe_plan {
+            id
+            name
+            description
+            amount
+            currency
+            interval
+            interval_count
+          }
         }
       }
     }

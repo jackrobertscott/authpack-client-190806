@@ -17,13 +17,22 @@ export type ISettings = {
   options: IOptions
   cluster?: {
     id: string
+    stripe_publishable_key: string
+    stripe_user_product_id: string
+    stripe_team_product_id: string
     name: string
     theme_preference: string
-    stripe_publishable_key: string
+    enable_team: boolean
+    prompt_team: boolean
   }
   session?: {
     id: string
     token: string
+  }
+  membership?: {
+    id: string
+    admin: boolean
+    superadmin: boolean
   }
   user?: {
     id: string
@@ -33,43 +42,56 @@ export type ISettings = {
     name?: string
     name_given?: string
     name_family?: string
-  }
-  plan?: {
-    id: string
-    name: string
-    tag: string
-    description?: string
-    statement?: string
-    amount: number
-    currency: string
-    interval: string
-    interval_seperator: number
+    plan?: {
+      id: string
+      name: string
+      tag: string
+      description?: string
+      statement?: string
+      amount: number
+      currency: string
+      interval: string
+      interval_count: number
+    }
+    subscription?: {
+      id: string
+      cancellation_requested: boolean
+      cancelled: boolean
+    }
   }
   team?: {
     id: string
     name: string
     tag: string
     description?: string
-  }
-  membership?: {
-    id: string
-    admin: boolean
+    plan?: {
+      id: string
+      name: string
+      tag: string
+      description?: string
+      statement?: string
+      amount: number
+      currency: string
+      interval: string
+      interval_count: number
+    }
+    subscription?: {
+      id: string
+      cancellation_requested: boolean
+      cancelled: boolean
+    }
   }
 }
 
 export interface IOptions {
-  enable_teams?: boolean
-  prompt_teams?: boolean
   theme_preset?: string
+  prompt_plan?: string
 }
 
 export const defaults: ISettings = {
   open: false,
   ready: false,
-  options: {
-    enable_teams: false,
-    prompt_teams: false,
-  },
+  options: {},
 }
 
 export const SettingsStore = new KeyStore<ISettings>(defaults)
