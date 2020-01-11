@@ -8,6 +8,9 @@
     "now-build": "NODE_ENV=production webpack",
     "ship": "now --prod"
   },
+  "dependencies": {
+    "@authpack/sdk": "^0.8.4"
+  },
   "devDependencies": {
     "@babel/core": "^7.7.5",
     "@babel/preset-typescript": "^7.7.4",
@@ -20,7 +23,7 @@
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0"
   },
-  "dependencies": {
-    "@authpack/sdk": "^0.8.2"
+  "engines": {
+    "node": ">=12.x"
   }
 }
