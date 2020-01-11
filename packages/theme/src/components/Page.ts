@@ -53,7 +53,7 @@ export const Page: FC<{
               element(Branding, {
                 key: 'branding',
                 url: 'https://authpack.io',
-                text: `Authpack`,
+                text: `Powered by Authpack`,
               }),
             ],
             className: css({
@@ -211,7 +211,7 @@ const Branding: FC<{
       all: 'unset',
       display: 'flex',
       justifyContent: 'flex-start',
-      padding: '20px 25px 25px',
+      padding: '30px 25px 30px',
       marginTop: 'auto',
     }),
     children: element('a', {
@@ -225,6 +225,7 @@ const Branding: FC<{
         cursor: 'pointer',
         transition: '200ms',
         color: theme.page.branding,
+        fontWeight: theme.global.thin,
         '&:hover': {
           color: theme.page.brandingHover,
         },

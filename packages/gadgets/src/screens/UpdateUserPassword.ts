@@ -2,7 +2,6 @@ import * as yup from 'yup'
 import { createElement as element, FC } from 'react'
 import {
   useSchema,
-  Poster,
   Layout,
   Control,
   InputString,
@@ -37,12 +36,6 @@ export const UpdateUserPassword: FC<{
     title: 'Password',
     subtitle: settings.cluster && settings.cluster.name,
     children: [
-      element(Poster, {
-        key: 'poster',
-        icon: 'unlock',
-        label: 'Change Password',
-        helper: 'Passwords are encrypted',
-      }),
       element(Layout, {
         key: 'layout',
         column: true,
@@ -74,7 +67,7 @@ export const UpdateUserPassword: FC<{
           }),
           element(Button, {
             key: 'submit',
-            label: 'Update',
+            label: 'Change',
             loading: gqlUpdatePassword.loading,
             disabled: !schema.valid,
             click: schema.submit,

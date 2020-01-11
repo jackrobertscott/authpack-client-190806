@@ -47,7 +47,7 @@ export const SnowStorm: ITheme = {
   page: {
     title: slate(25),
     subtitle: slate(60),
-    branding: slate(70),
+    branding: slate(80),
     brandingHover: slate(50),
     label: slate(60),
     labelHover: slate(25),

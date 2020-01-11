@@ -61,16 +61,16 @@ export const RouterSideBarUser: FC = () => {
         click: () => router.change('/user/update'),
       },
       {
-        icon: 'at',
-        label: 'Email',
-        focused: router.current && router.current.key === '/user/email',
-        click: () => router.change('/user/email'),
-      },
-      {
         icon: 'key',
         label: 'Password',
         focused: router.current && router.current.key === '/user/password',
         click: () => router.change('/user/password'),
+      },
+      {
+        icon: 'at',
+        label: 'Email',
+        focused: router.current && router.current.key === '/user/email',
+        click: () => router.change('/user/email'),
       },
       !!settings.cluster &&
         !!settings.cluster.stripe_publishable_key && {

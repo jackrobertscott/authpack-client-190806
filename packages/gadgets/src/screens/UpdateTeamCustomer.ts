@@ -119,9 +119,9 @@ export const UpdateTeamCustomer: FC<{
                     gqlGetTeam.data.team.stripe_plan.amount / 100
                   ).toFixed(2)} ${
                     gqlGetTeam.data.team.stripe_plan.currency
-                  } every ${gqlGetTeam.data.team.stripe_plan.interval_count} ${
-                    gqlGetTeam.data.team.stripe_plan.interval
-                  }`,
+                  } billed every ${
+                    gqlGetTeam.data.team.stripe_plan.interval_count
+                  } ${gqlGetTeam.data.team.stripe_plan.interval}s`,
                   options: [
                     {
                       icon: 'sliders-h',

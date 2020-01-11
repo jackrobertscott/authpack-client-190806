@@ -24,14 +24,10 @@ export const useSetup = () => {
             membership,
           })
         })
-        .catch(error => {
-          const bearer =
-            !error.code || error.code === 401
-              ? undefined
-              : SettingsStore.current.bearer
+        .catch(() => {
           SettingsStore.update({
             ready: true,
-            bearer,
+            bearer: undefined,
           })
         })
     } else {

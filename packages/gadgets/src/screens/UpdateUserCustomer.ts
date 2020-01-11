@@ -125,9 +125,9 @@ export const UpdateUserCustomer: FC<{
                     gqlGetUser.data.user.stripe_plan.amount / 100
                   ).toFixed(2)} ${
                     gqlGetUser.data.user.stripe_plan.currency
-                  } every ${gqlGetUser.data.user.stripe_plan.interval_count} ${
-                    gqlGetUser.data.user.stripe_plan.interval
-                  }`,
+                  } billed every ${
+                    gqlGetUser.data.user.stripe_plan.interval_count
+                  } ${gqlGetUser.data.user.stripe_plan.interval}s`,
                   options: [
                     {
                       icon: 'sliders-h',
