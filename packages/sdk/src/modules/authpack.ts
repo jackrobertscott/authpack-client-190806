@@ -1,36 +1,34 @@
-import { Plugin, IPluginConstructor, IPlugin } from './plugin'
-import { API, IAPIConstructor } from './api'
+import { Plugin, IPluginConstructor, IPlugin, IPluginOptions } from './plugin'
+import { API, IAPIConstructor, IAPIGraphql } from './api'
 
 export class Authpack {
-  private internal: {
-    api: API
-    plugin: Plugin
-    current: IPlugin
-  }
+  private api: API
+  private plugin: Plugin
   constructor(options: IAuthpackConstructor) {
     if (!options.key || !options.key.includes('wga-client-key')) {
       const message = 'Please provide your client key i.e. "wga-client-key-..."'
       throw new Error(message)
     }
-    const api = new API(options)
-    const plugin = new Plugin(options)
-    this.internal = {
-      api,
-      plugin,
-      current: plugin.current(),
-    }
-    this.internal.plugin.listen(data => {
-      this.internal.current = data
-    })
+    this.api = new API(options)
+    this.plugin = new Plugin(options)
   }
-  get plugin() {
-    return this.internal.plugin
+  public current() {
+    return this.plugin.current()
   }
-  get api() {
-    return this.internal.api
+  public open() {
+    return this.plugin.show()
   }
-  get current() {
-    return this.internal.current
+  public exit() {
+    return this.plugin.exit()
+  }
+  public update(options: Partial<IPluginOptions>) {
+    return this.plugin.update(options)
+  }
+  public listen(callback: (current: IPlugin) => void) {
+    return this.plugin.listen(callback)
+  }
+  public graphql<T>(options: IAPIGraphql) {
+    return this.api.graphql<T>(options)
   }
 }
 

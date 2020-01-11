@@ -29,7 +29,7 @@ export const Explorer: FC = () => {
       defaultQuery: startingQuery,
       fetcher: async (graphQLParams: any) => {
         try {
-          const data = await authpack.api.graphql<any>({
+          const data = await authpack.graphql<any>({
             url: config.api,
             key: universal.cluster_key_client,
             bearer: auth.bearer,
