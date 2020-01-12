@@ -187,17 +187,12 @@ import { Authpack, IPlugin } from '@authpack/sdk'
         return
       }
       if (node.dataset.value) {
-        if (!node.dataset.trigger) {
-          const message = `Authpack guard tag missing "data-trigger" attribute i.e.:\n\n<div\n\tdata-authpack="guard"\n\tdata-redirect="/home"\n\tdata-value="user"\n\tdata-trigger="present"\n></div>`
-          console.warn(message)
-          return
-        }
         const steps = node.dataset.value.split('.').map(i => i.trim())
         const value = steps.reduce(
           (accum, next) => accum && accum[next],
           context.state
         )
-        switch (node.dataset.trigger) {
+        switch (node.dataset.trigger || 'present') {
           case 'present':
             if (!value) return
             break
@@ -239,11 +234,6 @@ import { Authpack, IPlugin } from '@authpack/sdk'
         console.warn(message)
         return
       }
-      if (!node.dataset.trigger) {
-        const message = `Authpack ${name} tag missing "data-trigger" attribute i.e.:\n\n<div\n\tdata-authpack="${name}"\n\tdata-value="user"\n\tdata-trigger="present"\n></div>`
-        console.warn(message)
-        return
-      }
       let valid = false
       node.dataset.display =
         node.dataset.display || node.style.display || 'initial'
@@ -252,7 +242,7 @@ import { Authpack, IPlugin } from '@authpack/sdk'
         (accum, next) => accum && accum[next],
         context.state
       )
-      switch (node.dataset.trigger) {
+      switch (node.dataset.trigger || 'present') {
         case 'present':
           if (!!value) valid = true
           break

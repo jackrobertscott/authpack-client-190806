@@ -1,4 +1,4 @@
-import { createElement as element, FC } from 'react'
+import { createElement as element, FC, useEffect } from 'react'
 import { Focus, Button, Root } from '@authpack/theme'
 import { useUniversal } from '../hooks/useUniversal'
 import { useSetup } from '../hooks/useSetup'
@@ -12,6 +12,9 @@ export const Admin: FC = () => {
   const universal = useUniversal()
   const preferences = usePreferences()
   const auth = useAuthpackCurrent()
+  useEffect(() => {
+    if (!authpack.current().bearer) authpack.open()
+  }, [])
   return element(Root, {
     theme: preferences.theme,
     children: !Boolean(auth.ready && universal.ready)

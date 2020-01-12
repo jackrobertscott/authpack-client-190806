@@ -53,12 +53,12 @@ export const SnowStorm: ITheme = {
     labelHover: slate(25),
     header: slate(92.5),
     headerHover: slate(97.5),
-    border: `1px solid ${slate(90)}`,
+    border: `1px solid ${slate(87.5)}`,
     background: slate(92.5),
   },
   layout: {
     background: slate(97.5),
-    border: `1px solid ${slate(92.5)}`,
+    border: `1px solid ${slate(87.5)}`,
   },
   searchBar: {
     label: slate(60),
