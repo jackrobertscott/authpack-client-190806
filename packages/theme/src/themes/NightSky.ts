@@ -47,7 +47,7 @@ export const NightSky: ITheme = {
   page: {
     title: slate(95),
     subtitle: slate(65),
-    branding: slate(35),
+    branding: slate(25),
     brandingHover: slate(65),
     label: slate(65),
     labelHover: slate(95),
