@@ -22,7 +22,7 @@ export const RemoveUser: FC<{
   const schema = useSchema({ schema: SchemaPassword })
   const [confirm, confirmChange] = useState<boolean>(false)
   return element(Page, {
-    title: 'Danger',
+    title: 'Remove',
     subtitle: settings.cluster && settings.cluster.name,
     children: [
       element(Poster, {

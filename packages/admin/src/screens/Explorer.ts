@@ -2,10 +2,11 @@ import 'graphiql/graphiql.css'
 import GraphiQL from 'graphiql'
 import { createElement as element, FC } from 'react'
 import { useTheme } from '@authpack/theme'
+import { useAuthpack } from '@authpack/react'
 import { css } from 'emotion'
 import { config } from '../config'
 import { useUniversal } from '../hooks/useUniversal'
-import { useAuthpackCurrent, authpack } from '../utils/authpack'
+import { authpack } from '../utils/authpack'
 
 const startingQuery = `
 query First10Users {
@@ -23,7 +24,7 @@ query First10Users {
 export const Explorer: FC = () => {
   const theme = useTheme()
   const universal = useUniversal()
-  const auth = useAuthpackCurrent()
+  const auth = useAuthpack()
   return element('div', {
     children: element(GraphiQL, {
       defaultQuery: startingQuery,

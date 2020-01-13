@@ -1,5 +1,5 @@
 import { useGQL } from '@authpack/theme'
-import { useAuthpackCurrent } from '../utils/authpack'
+import { useAuthpack } from '@authpack/react'
 import { useUniversal } from './useUniversal'
 import { config } from '../config'
 
@@ -14,7 +14,7 @@ export const useServer = <T>(options: {
   operationName?: string
   query: string
 }) => {
-  const auth = useAuthpackCurrent()
+  const auth = useAuthpack()
   const universal = useUniversal()
   return useGQL<T>({
     ...options,

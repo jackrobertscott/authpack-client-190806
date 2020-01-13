@@ -102,7 +102,7 @@ export const RouterManagerClusterClient: FC<{
           click: () => navigate('/keys'),
         },
         {
-          icon: 'piggy-bank',
+          icon: 'donate',
           label: 'Accept Payments',
           focused: !!router.current && router.current.key.startsWith('/stripe'),
           click: () => navigate('/stripe'),
