@@ -21,15 +21,21 @@ export class Authpack {
   public exit() {
     return this.plugin.exit()
   }
-  public update(options: Partial<IPluginOptions>) {
+  public update(options: Partial<IAuthpackOptions>) {
     return this.plugin.update(options)
   }
-  public listen(callback: (current: IPlugin) => void) {
+  public listen(callback: (current: IAuthpackCurrent) => void) {
     return this.plugin.listen(callback)
   }
-  public graphql<T>(options: IAPIGraphql) {
+  public graphql<T>(options: IAuthpackGraphql) {
     return this.api.graphql<T>(options)
   }
 }
 
 export type IAuthpackConstructor = IPluginConstructor & IAPIConstructor & {}
+
+export type IAuthpackOptions = IPluginOptions
+
+export type IAuthpackCurrent = IPlugin
+
+export type IAuthpackGraphql = IAPIGraphql
