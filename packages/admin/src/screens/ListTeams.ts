@@ -83,7 +83,7 @@ export const ListTeams: FC = () => {
           key: 'empty',
           icon: 'users',
           label: 'Teams',
-          helper: 'Would you like to create a team?',
+          helper: 'View and manage Authpack teams',
           children: element(Button, {
             key: 'Regular',
             icon: 'plus',

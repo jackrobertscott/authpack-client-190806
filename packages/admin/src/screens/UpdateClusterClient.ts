@@ -150,7 +150,10 @@ const SchemaUpdateCluster = yup.object().shape({
     .array()
     .of(yup.string().required())
     .default([]),
-  theme_preference: yup.string().required('Please select a theme'),
+  theme_preference: yup
+    .string()
+    .default('snow_storm')
+    .required('Please select a theme'),
   enable_team: yup.boolean(),
   prompt_team: yup.boolean(),
 })

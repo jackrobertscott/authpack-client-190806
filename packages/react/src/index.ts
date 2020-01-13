@@ -23,11 +23,6 @@ export const AuthpackProvider: FC<{
       'Property "value" is missing on <AuthpackProvider /> component.'
     throw new Error(message)
   }
-  if (!(value instanceof Authpack)) {
-    const message =
-      'Property "value" on <AuthpackProvider /> must be an Authpack instance.'
-    throw new Error(message)
-  }
   const [current, currentChange] = useState<IAuthpackCurrent>(value.current())
   useEffect(() => value.listen(next => currentChange(next)), [value])
   const data = useMemo(() => current, [value, current])

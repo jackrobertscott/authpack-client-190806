@@ -6,6 +6,7 @@ import { RouterManagerClusterClient } from './RouterManagerClusterClient'
 import { Explorer } from './Explorer'
 import { usePreferences } from '../utils/preferences'
 import { authpack } from '../utils/authpack'
+import { config } from '../config'
 
 export const RouterCentral: FC = () => {
   const auth = useAuthpack()
@@ -66,10 +67,7 @@ export const RouterCentral: FC = () => {
             icon: 'book',
             label: 'Documents',
             helper: 'See installation instructions',
-            click: () =>
-              window.open(
-                'https://www.notion.so/Documents-5aacd2c94989476283d0e18117e490c4'
-              ),
+            click: () => window.open(config.documents),
           },
           {
             icon: 'bug',

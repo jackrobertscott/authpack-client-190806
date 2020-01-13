@@ -12,6 +12,7 @@ import { RouterManagerUser } from './RouterManagerUser'
 import { TemplateSearchBar } from '../templates/TemplateSearchBar'
 import { createUseServer } from '../hooks/useServer'
 import { useUniversal } from '../hooks/useUniversal'
+import { config } from '../config'
 
 export const ListUsers: FC = () => {
   const universal = useUniversal()
@@ -83,14 +84,14 @@ export const ListUsers: FC = () => {
         !gqlListUsers.data.count &&
         element(Empty, {
           key: 'empty',
-          icon: 'user',
-          label: 'Users',
-          helper: 'Would you like to create a user?',
+          icon: 'user-lock',
+          label: 'Get Started',
+          helper: 'Please install Authpack',
           children: element(Button, {
             key: 'Regular',
-            icon: 'plus',
-            label: 'New User',
-            click: newUser,
+            icon: 'exclamation-triangle',
+            label: 'Install Now',
+            click: () => window.open(config.documents),
           }),
         }),
       gqlListUsers.data &&

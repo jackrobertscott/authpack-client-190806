@@ -7,6 +7,7 @@ import { ListProviders } from './ListProviders'
 import { ListTeams } from './ListTeams'
 import { ListWebhooks } from './ListWebhooks'
 import { ListClusters } from './ListClusters'
+import { config } from '../config'
 
 export const RouterSideBarHome: FC<{
   openSettings: (key: string) => void
@@ -69,6 +70,11 @@ export const RouterSideBarHome: FC<{
         icon: 'key',
         label: 'API Keys',
         click: () => openSettings('/keys'),
+      },
+      {
+        icon: 'book',
+        label: 'Tutorials',
+        click: () => window.open(config.documents),
       },
       {
         icon: universal.cluster_stripe_pending ? 'plus' : 'donate',
