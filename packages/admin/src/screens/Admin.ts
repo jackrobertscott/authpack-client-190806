@@ -1,17 +1,18 @@
 import { createElement as element, FC, useEffect } from 'react'
 import { Focus, Button, Root } from '@authpack/theme'
+import { useAuthpack } from '@authpack/react'
 import { useUniversal } from '../hooks/useUniversal'
 import { useSetup } from '../hooks/useSetup'
 import { RouterCentral } from './RouterCentral'
 import { Loading } from './Loading'
 import { usePreferences } from '../utils/preferences'
-import { useAuthpackCurrent, authpack } from '../utils/authpack'
+import { authpack } from '../utils/authpack'
 
 export const Admin: FC = () => {
   useSetup()
   const universal = useUniversal()
   const preferences = usePreferences()
-  const auth = useAuthpackCurrent()
+  const auth = useAuthpack()
   useEffect(() => {
     if (!authpack.current().bearer) authpack.open()
   }, [])

@@ -1,17 +1,17 @@
 import { createElement as element, FC } from 'react'
 import { useRouter, SideBar } from '@authpack/theme'
+import { useAuthpack } from '@authpack/react'
 import { useUniversal } from '../hooks/useUniversal'
 import { ListUsers } from './ListUsers'
 import { ListProviders } from './ListProviders'
 import { ListTeams } from './ListTeams'
 import { ListWebhooks } from './ListWebhooks'
 import { ListClusters } from './ListClusters'
-import { useAuthpackCurrent } from '../utils/authpack'
 
 export const RouterSideBarHome: FC<{
   openSettings: (key: string) => void
 }> = ({ openSettings }) => {
-  const current = useAuthpackCurrent()
+  const auth = useAuthpack()
   const universal = useUniversal()
   const router = useRouter({
     base: '/app',
@@ -20,7 +20,7 @@ export const RouterSideBarHome: FC<{
       {
         path: '/clusters',
         children:
-          current.membership && current.membership.superadmin
+          auth.membership && auth.membership.superadmin
             ? element(ListClusters)
             : null,
       },
@@ -52,8 +52,8 @@ export const RouterSideBarHome: FC<{
         focused: !!router.current && router.current.path === '/teams',
         click: () => router.change('/teams'),
       },
-      !!current.membership &&
-        !!current.membership.superadmin && {
+      !!auth.membership &&
+        !!auth.membership.superadmin && {
           icon: 'server',
           label: 'Clusters',
           focused: !!router.current && router.current.path === '/clusters',

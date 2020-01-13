@@ -12,22 +12,22 @@ export class Authpack {
     this.api = new API(options)
     this.plugin = new Plugin(options)
   }
-  public current() {
+  public current(): IAuthpackCurrent {
     return this.plugin.current()
   }
-  public open() {
+  public open(): void {
     return this.plugin.show()
   }
-  public exit() {
+  public exit(): void {
     return this.plugin.exit()
   }
-  public update(options: Partial<IAuthpackOptions>) {
+  public update(options: Partial<IAuthpackOptions>): void {
     return this.plugin.update(options)
   }
-  public listen(callback: (current: IAuthpackCurrent) => void) {
+  public listen(callback: (current: IAuthpackCurrent) => void): () => void {
     return this.plugin.listen(callback)
   }
-  public graphql<T>(options: IAuthpackGraphql) {
+  public graphql<T>(options: IAuthpackGraphql): Promise<T> {
     return this.api.graphql<T>(options)
   }
 }

@@ -13,6 +13,7 @@
     "ship": "now --prod"
   },
   "dependencies": {
+    "@authpack/react": "^0.5.8",
     "@authpack/sdk": "^0.8.4",
     "@authpack/theme": "^0.6.9",
     "@fortawesome/fontawesome-free": "^5.11.2",

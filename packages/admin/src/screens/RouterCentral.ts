@@ -1,13 +1,14 @@
 import { createElement as element, FC, Fragment, useState } from 'react'
 import { IconBar, useRouter } from '@authpack/theme'
+import { useAuthpack } from '@authpack/react'
 import { RouterSideBarHome } from './RouterSideBarHome'
 import { RouterManagerClusterClient } from './RouterManagerClusterClient'
 import { Explorer } from './Explorer'
 import { usePreferences } from '../utils/preferences'
-import { authpack, useAuthpackCurrent } from '../utils/authpack'
+import { authpack } from '../utils/authpack'
 
 export const RouterCentral: FC = () => {
-  const current = useAuthpackCurrent()
+  const auth = useAuthpack()
   const preferences = usePreferences()
   const [appear, appearChange] = useState<boolean>(false)
   const [goto, gotoChange] = useState<string | undefined>()
@@ -47,8 +48,8 @@ export const RouterCentral: FC = () => {
         focused: !!router.current && router.current.path.startsWith('/app'),
         click: () => router.change('/app'),
       },
-      !!current.membership &&
-        !!current.membership.superadmin && {
+      !!auth.membership &&
+        !!auth.membership.superadmin && {
           icon: 'code',
           label: 'Developers',
           focused: !!router.current && router.current.path === '/developers',

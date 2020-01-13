@@ -5,50 +5,46 @@ import {
   createContext,
   createElement,
   useContext,
-  useRef,
   ReactNode,
   useMemo,
 } from 'react'
-import { Gadgets, IGadgets, IConstructor } from '@authpack/sdk'
+import { Authpack, IAuthpackCurrent } from '@authpack/sdk'
 
 const AuthpackContext = createContext<{
-  gadgets?: Gadgets
-  current?: IGadgets
+  current?: IAuthpackCurrent
 }>({})
 
-let instance: Gadgets
-export const Provider: FC<{
+export const AuthpackProvider: FC<{
   children: ReactNode
-  value: IConstructor
+  value: Authpack
 }> = ({ children, value }) => {
-  if (!value)
-    throw new Error('Property "value" is missing on <Authpack /> component.')
-  if (!instance) instance = new Gadgets(value)
-  const gadgets = useRef(instance)
-  const [current, currentChange] = useState<IGadgets>(gadgets.current.current())
-  useEffect(() => gadgets.current.listen(update => currentChange(update)), [])
-  const data = useMemo(() => {
-    return {
-      gadgets: gadgets.current,
-      current,
-    }
-  }, [gadgets.current, current])
+  if (!value) {
+    const message =
+      'Property "value" is missing on <AuthpackProvider /> component.'
+    throw new Error(message)
+  }
+  if (!(value instanceof Authpack)) {
+    const message =
+      'Property "value" on <AuthpackProvider /> must be an Authpack instance.'
+    throw new Error(message)
+  }
+  const [current, currentChange] = useState<IAuthpackCurrent>(value.current())
+  useEffect(() => value.listen(next => currentChange(next)), [value])
+  const data = useMemo(() => current, [value, current])
   return createElement(AuthpackContext.Provider, {
-    value: data,
     children,
+    value: {
+      current: data,
+    },
   })
 }
 
-export const useAuthpack = () => {
-  const authpack = useContext(AuthpackContext)
-  if (!authpack.current)
-    throw new Error('Please wrap Authpack hooks in the <Authpack /> component.')
-  return authpack.current
-}
-
-export const useGadgets = () => {
-  const authpack = useContext(AuthpackContext)
-  if (!authpack.gadgets)
-    throw new Error('Please wrap Authpack hooks in the <Authpack /> component.')
-  return authpack.gadgets
+export const useAuthpack = (): IAuthpackCurrent => {
+  const { current } = useContext(AuthpackContext)
+  if (!current) {
+    const message =
+      'Please wrap Authpack hooks in the <AuthpackProvider /> component.'
+    throw new Error(message)
+  }
+  return current
 }

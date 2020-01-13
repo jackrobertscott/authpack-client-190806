@@ -1,28 +1,28 @@
 import Vue, { PluginFunction } from 'vue'
-import { Gadgets, IConstructor } from '@authpack/sdk'
+import { Authpack } from '@authpack/sdk'
 
-export const Plugin: { install: PluginFunction<IConstructor> } = {
+export const Plugin: { install: PluginFunction<{ value: Authpack }> } = {
   install: (vue, options) => {
     if (!options) throw new Error('Please provide Authpack plugin options')
-    const gadgets = new Gadgets(options)
-    vue.prototype.$authpack = createAuthpack(gadgets)
+    if (!options.value)
+      throw new Error('Please provide Authpack as the "value" option')
+    vue.prototype.$authpack = createAuthpack(options.value)
   },
 }
 
 let instance: Vue
 let unlisten: () => void
-const createAuthpack = (gadgets: Gadgets) => {
+const createAuthpack = (authpack: Authpack) => {
   if (!instance)
     instance = new Vue({
       data() {
         return {
-          gadgets,
-          current: gadgets.current(),
+          current: authpack.current(),
         }
       },
       created() {
         if (unlisten) unlisten()
-        unlisten = this.gadgets.listen(current => {
+        unlisten = authpack.listen(current => {
           this.current = current
         })
       },
