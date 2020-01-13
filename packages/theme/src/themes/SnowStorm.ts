@@ -53,12 +53,12 @@ export const SnowStorm: ITheme = {
     labelHover: slate(25),
     header: slate(92.5),
     headerHover: slate(97.5),
-    border: 'none',
+    border: `1px solid ${slate(87.5)}`,
     background: slate(92.5),
   },
   layout: {
     background: slate(97.5),
-    border: `1px solid ${slate(92.5)}`,
+    border: `1px solid ${slate(87.5)}`,
   },
   searchBar: {
     label: slate(60),
@@ -121,6 +121,7 @@ export const SnowStorm: ITheme = {
     on: slate(65, 1, 80, 125),
     off: slate(87.5),
     payment: '#333333',
+    error: '#00b4ff',
   },
   button: {
     label: slate(60),
@@ -137,11 +138,11 @@ export const SnowStorm: ITheme = {
    * Helpers.
    */
   pointer: {
-    label: slate(25),
-    helper: slate(60),
-    background: slate(100),
-    shadow: `0 0 13px -3px ${slate(80, 0.5)}`,
-    border: `1px solid ${slate(87.5)}`,
+    label: slate(95),
+    helper: slate(80),
+    background: slate(50),
+    shadow: `0 0 13px -3px ${slate(25, 0.25)}`,
+    border: `1px solid ${slate(35)}`,
   },
   menu: {
     label: slate(25),
@@ -176,6 +177,6 @@ export const SnowStorm: ITheme = {
     background: slate(50),
     backgroundHover: slate(35),
     shadow: `0 0 13px -3px ${slate(25, 0.25)}`,
-    border: `none`,
+    border: `1px solid ${slate(35)}`,
   },
 }

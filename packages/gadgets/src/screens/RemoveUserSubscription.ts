@@ -18,7 +18,7 @@ export const RemoveUserSubscription: FC<{
   const gqlRemoveUserSubscription = useRemoveUserSubscription()
   const [confirm, confirmChange] = useState<boolean>(false)
   return element(Page, {
-    title: 'Danger',
+    title: 'Remove',
     subtitle: settings.cluster && settings.cluster.name,
     children: [
       element(Poster, {

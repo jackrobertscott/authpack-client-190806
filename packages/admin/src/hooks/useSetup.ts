@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
-import { useAuthpackCurrent, authpack } from '../utils/authpack'
+import { useAuthpack } from '@authpack/react'
+import { authpack } from '../utils/authpack'
 import { createUseServer } from './useServer'
 import { UniversalStore } from '../utils/universal'
 import { useUniversal } from './useUniversal'
@@ -9,7 +10,7 @@ export const useSetup = () => {
   const universal = useUniversal()
   const preferences = usePreferences()
   const gqlGetCluster = useGetCluster()
-  const auth = useAuthpackCurrent()
+  const auth = useAuthpack()
   const ids = useRef<{ cluster?: string; team?: string }>({})
   useEffect(() => {
     authpack.update({

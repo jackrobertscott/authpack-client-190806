@@ -123,6 +123,7 @@ export const BlueHarvester: ITheme = {
     on: color(32.5),
     off: color(12.5),
     payment: '#ffffff',
+    error: '#00b4ff',
   },
   button: {
     label: color(65),

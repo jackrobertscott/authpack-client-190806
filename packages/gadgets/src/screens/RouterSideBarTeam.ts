@@ -32,11 +32,11 @@ export const RouterSideBarTeam: FC = () => {
             }),
           },
           { key: '/team/members', children: element(RouterMemberships) },
-          { key: '/team/danger', children: element(RemoveTeam), nosave: true },
+          { key: '/team/remove', children: element(RemoveTeam), nosave: true },
           {
             key: '/team/payments',
             children: element(UpdateTeamCustomer, {
-              cancel: () => router.change('/team/payments/danger'),
+              cancel: () => router.change('/team/payments/remove'),
               update: () => router.change('/team/payments/update'),
             }),
           },
@@ -48,7 +48,7 @@ export const RouterSideBarTeam: FC = () => {
             nosave: true,
           },
           {
-            key: '/team/payments/danger',
+            key: '/team/payments/remove',
             children: element(RemoveTeamSubscription, {
               change: () => router.change('/team/payments'),
             }),
@@ -109,8 +109,8 @@ export const RouterSideBarTeam: FC = () => {
           {
             icon: 'trash-alt',
             label: 'Remove',
-            focused: router.current && router.current.key === '/team/danger',
-            click: () => router.change('/team/danger'),
+            focused: router.current && router.current.key === '/team/remove',
+            click: () => router.change('/team/remove'),
           },
         ]
       : [

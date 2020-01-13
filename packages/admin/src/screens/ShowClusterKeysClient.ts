@@ -1,11 +1,11 @@
 import { createElement as element, FC, useEffect } from 'react'
 import { Layout, Snippet, Page, Code } from '@authpack/theme'
+import { useAuthpack } from '@authpack/react'
 import { createUseServer } from '../hooks/useServer'
 import { useUniversal } from '../hooks/useUniversal'
-import { useAuthpackCurrent } from '../utils/authpack'
 
 export const ShowClusterKeysClient: FC<{ back: () => void }> = ({ back }) => {
-  const current = useAuthpackCurrent()
+  const auth = useAuthpack()
   const universal = useUniversal()
   const gqlGetCluster = useGetCluster()
   useEffect(() => {
@@ -55,12 +55,12 @@ export const ShowClusterKeysClient: FC<{ back: () => void }> = ({ back }) => {
               icon: 'key',
               label: 'Secret Key',
               value:
-                current.membership && current.membership.admin
+                auth.membership && auth.membership.admin
                   ? 'Keep this private - never use inside a web browser'
                   : 'Only team admin can see the secret key',
               children:
-                current.membership &&
-                current.membership.admin &&
+                auth.membership &&
+                auth.membership.admin &&
                 element(Code, {
                   value: cluster.key_secret,
                 }),

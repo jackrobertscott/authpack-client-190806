@@ -22,11 +22,11 @@ export const RouterSideBarUser: FC = () => {
       { key: '/user/password', children: element(UpdateUserPassword) },
       { key: '/user/apps', children: element(ListProviders) },
       { key: '/user/sessions', children: element(ListSessions) },
-      { key: '/user/danger', children: element(RemoveUser), nosave: true },
+      { key: '/user/remove', children: element(RemoveUser), nosave: true },
       {
         key: '/user/payments',
         children: element(UpdateUserCustomer, {
-          cancel: () => router.change('/user/payments/danger'),
+          cancel: () => router.change('/user/payments/remove'),
           update: () => router.change('/user/payments/update'),
         }),
       },
@@ -38,7 +38,7 @@ export const RouterSideBarUser: FC = () => {
         nosave: true,
       },
       {
-        key: '/user/payments/danger',
+        key: '/user/payments/remove',
         children: element(RemoveUserSubscription, {
           change: () => router.change('/user/payments'),
         }),
@@ -95,8 +95,8 @@ export const RouterSideBarUser: FC = () => {
       {
         icon: 'trash-alt',
         label: 'Remove',
-        focused: router.current && router.current.key === '/user/danger',
-        click: () => router.change('/user/danger'),
+        focused: router.current && router.current.key === '/user/remove',
+        click: () => router.change('/user/remove'),
       },
     ],
   })

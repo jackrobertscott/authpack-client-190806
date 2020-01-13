@@ -18,7 +18,7 @@ export const RemoveTeamSubscription: FC<{
   const gqlRemoveTeamSubscription = teamemoveTeamSubscription()
   const [confirm, confirmChange] = useState<boolean>(false)
   return element(Page, {
-    title: 'Danger',
+    title: 'Remove',
     subtitle: settings.cluster && settings.cluster.name,
     children: [
       element(Poster, {
