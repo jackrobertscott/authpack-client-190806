@@ -68,7 +68,7 @@ export const RouterCentral: FC = () => {
             helper: 'See installation instructions',
             click: () =>
               window.open(
-                'https://github.com/jackrobertscott/authpack-client/wiki'
+                'https://www.notion.so/Documents-5aacd2c94989476283d0e18117e490c4'
               ),
           },
           {
