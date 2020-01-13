@@ -72,11 +72,6 @@ export const RouterSideBarHome: FC<{
         click: () => openSettings('/keys'),
       },
       {
-        icon: 'book',
-        label: 'Tutorials',
-        click: () => window.open(config.documents),
-      },
-      {
         icon: universal.cluster_stripe_pending ? 'plus' : 'donate',
         label: 'Payments',
         click: () => openSettings('/stripe'),
@@ -92,6 +87,11 @@ export const RouterSideBarHome: FC<{
         label: 'Providers',
         focused: !!router.current && router.current.path === '/providers',
         click: () => router.change('/providers'),
+      },
+      {
+        icon: 'book',
+        label: 'Tutorials',
+        click: () => window.open(config.documents),
       },
     ],
   })
