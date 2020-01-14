@@ -36,8 +36,8 @@ export const ShowClusterKeysClient: FC<{ back: () => void }> = ({ back }) => {
                 value: `
 <script
   src="https://scripts.v1.authpack.io/index.js"
-  data-key="${cluster.key_client}"
-></script>
+  data-key="${cluster.key_client}">
+</script>
                 `.trim(),
               }),
             }),
