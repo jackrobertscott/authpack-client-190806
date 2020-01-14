@@ -1,7 +1,9 @@
 import Vue, { PluginFunction } from 'vue'
 import { Authpack } from '@authpack/sdk'
 
-export const Plugin: { install: PluginFunction<{ value: Authpack }> } = {
+export const AuthpackPlugin: {
+  install: PluginFunction<{ value: Authpack }>
+} = {
   install: (vue, options) => {
     if (!options) throw new Error('Please provide Authpack plugin options')
     if (!options.value)

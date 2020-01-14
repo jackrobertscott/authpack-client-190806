@@ -138,14 +138,20 @@ const useGetCluster = createUseServer<{
 const useGetSession = createUseServer<{
   session: {
     id: string
+    created: string
+    updated: string
     token: string
     membership?: {
       id: string
+      created: string
+      updated: string
       admin: boolean
       superadmin: boolean
     }
     user?: {
       id: string
+      created: string
+      updated: string
       email: string
       verified: boolean
       username: string
@@ -164,6 +170,8 @@ const useGetSession = createUseServer<{
     }
     team?: {
       id: string
+      created: string
+      updated: string
       name: string
       tag: string
       description?: string
@@ -183,14 +191,20 @@ const useGetSession = createUseServer<{
     query GetSessionClient {
       session: GetSessionClient {
         id
+        created
+        updated
         token
         membership {
           id
+          created
+          updated
           admin
           superadmin
         }
         user {
           id
+          created
+          updated
           email
           verified
           username
@@ -209,6 +223,8 @@ const useGetSession = createUseServer<{
         }
         team {
           id
+          created
+          updated
           name
           tag
           description

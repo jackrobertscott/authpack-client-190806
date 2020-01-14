@@ -140,15 +140,21 @@ export interface IPlugin {
   }
   session?: {
     id: string
+    created: string
+    updated: string
     token: string
   }
   membership?: {
     id: string
+    created: string
+    updated: string
     admin: boolean
     superadmin: boolean
   }
   user?: {
     id: string
+    created: string
+    updated: string
     email: string
     verified: boolean
     username: string
@@ -167,6 +173,8 @@ export interface IPlugin {
   }
   team?: {
     id: string
+    created: string
+    updated: string
     name: string
     tag: string
     description?: string

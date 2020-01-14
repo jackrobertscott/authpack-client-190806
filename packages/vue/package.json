@@ -1,6 +1,6 @@
 {
   "name": "@authpack/vue",
-  "version": "0.3.11",
+  "version": "0.3.12",
   "private": false,
   "description": "Authpack's official integration for Vue",
   "license": "MIT",

@@ -7,9 +7,11 @@ import { RouterCentral } from './RouterCentral'
 import { Loading } from './Loading'
 import { usePreferences } from '../utils/preferences'
 import { authpack } from '../utils/authpack'
+import { useFullStory } from '../hooks/useFullStory'
 
 export const Admin: FC = () => {
   useSetup()
+  useFullStory()
   const universal = useUniversal()
   const preferences = usePreferences()
   const auth = useAuthpack()
