@@ -18,8 +18,8 @@ export const useFullStory = () => {
       firstName_str: auth.user.name_given,
       lastName_str: auth.user.name_family,
       username_str: auth.user.username,
-      created_date: auth.user.created,
-      updated_date: auth.user.updated,
+      created_date: new Date(auth.user.created),
+      updated_date: new Date(auth.user.updated),
     })
     // eslint-disable-next-line
   }, [auth.user && auth.user.id])
