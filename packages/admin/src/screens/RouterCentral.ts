@@ -1,4 +1,10 @@
-import { createElement as element, FC, Fragment, useState } from 'react'
+import {
+  createElement as element,
+  FC,
+  Fragment,
+  useState,
+  useEffect,
+} from 'react'
 import { IconBar, useRouter } from '@authpack/theme'
 import { useAuthpack } from '@authpack/react'
 import { RouterSideBarHome } from './RouterSideBarHome'
@@ -13,6 +19,7 @@ export const RouterCentral: FC = () => {
   const preferences = usePreferences()
   const [appear, appearChange] = useState<boolean>(false)
   const [goto, gotoChange] = useState<string | undefined>()
+  const superadmin = !!auth.membership && !!auth.membership.superadmin
   const router = useRouter({
     nomatch: '/app',
     options: [
@@ -28,6 +35,12 @@ export const RouterCentral: FC = () => {
       { path: '/developers', children: element(Explorer) },
     ],
   })
+  useEffect(() => {
+    if (!superadmin && router.current.path.startsWith('/developers')) {
+      router.change('/app')
+    }
+    // eslint-disable-next-line
+  }, [superadmin])
   return element(IconBar, {
     children: [
       element(RouterManagerClusterClient, {
@@ -49,14 +62,13 @@ export const RouterCentral: FC = () => {
         focused: !!router.current && router.current.path.startsWith('/app'),
         click: () => router.change('/app'),
       },
-      !!auth.membership &&
-        !!auth.membership.superadmin && {
-          icon: 'code',
-          label: 'Developers',
-          focused: !!router.current && router.current.path === '/developers',
-          click: () => router.change('/developers'),
-          hidesmall: true,
-        },
+      superadmin && {
+        icon: 'code',
+        label: 'Developers',
+        focused: !!router.current && router.current.path === '/developers',
+        click: () => router.change('/developers'),
+        hidesmall: true,
+      },
       {
         prefix: 'far',
         icon: 'question-circle',

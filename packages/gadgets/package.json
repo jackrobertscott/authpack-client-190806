@@ -11,7 +11,7 @@
     "ship": "now --prod"
   },
   "dependencies": {
-    "@authpack/theme": "^0.6.10",
+    "@authpack/theme": "^0.6.11",
     "@fortawesome/fontawesome-free": "^5.11.2",
     "@sentry/browser": "^5.11.0",
     "@types/jest": "^24.0.23",
@@ -21,7 +21,7 @@
     "@types/yup": "^0.26.24",
     "date-fns": "^2.8.0",
     "emotion": "^10.0.17",
-    "events-and-things": "^0.7.3",
+    "events-and-things": "^0.7.4",
     "query-string": "^6.9.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",

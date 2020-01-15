@@ -9,7 +9,7 @@
     "ship": "now --prod"
   },
   "dependencies": {
-    "@authpack/sdk": "^0.8.5"
+    "@authpack/sdk": "^0.8.9"
   },
   "devDependencies": {
     "@babel/core": "^7.7.5",
