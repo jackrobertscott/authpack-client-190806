@@ -4,9 +4,9 @@ import { Radio, KeyStore } from 'events-and-things'
 export class Plugin {
   private options: IPluginOptions
   private store: KeyStore<IPlugin>
-  private iframe: HTMLIFrameElement
+  private iframe?: HTMLIFrameElement
   private queue: Array<{ name: string; payload?: any }>
-  private radio: Radio<{ name: string; payload?: any }>
+  private radio?: Radio<{ name: string; payload?: any }>
   private loaded: boolean
   private id: string
   private key: string
@@ -25,8 +25,10 @@ export class Plugin {
     this.url = typeof url === 'string' ? url : 'https://gadgets.v1.authpack.io'
     this.debug = typeof debug === 'boolean' ? debug : false
     this.store = this.createStore()
-    this.iframe = this.createIFrame()
-    this.radio = this.createRadio(this.iframe)
+    if (window) {
+      this.iframe = this.createIFrame()
+      this.radio = this.iframe && this.createRadio(this.iframe)
+    }
   }
   /**
    * Public...
@@ -54,8 +56,7 @@ export class Plugin {
    */
   private sendMessage(name: string, payload?: any, before?: boolean) {
     const message = { name, payload }
-    if (!this.radio)
-      throw new Error('Failed to send message as radio does not exist')
+    if (!this.radio) return
     this.queue = before ? [message, ...this.queue] : [...this.queue, message]
     if (this.loaded) {
       const stack = this.queue.slice()
@@ -65,16 +66,18 @@ export class Plugin {
   }
   private createStore() {
     const store = createStore()
+    const bearer = localStorage && localStorage.getItem('authpack.bearer')
     store.update({
-      bearer: localStorage.getItem('authpack.bearer') || undefined,
+      bearer: bearer ? bearer : undefined,
       client: this.key,
-      domain: window.location.origin,
+      domain: window && window.location.origin,
       options: {
         ...store.current.options,
         ...this.options,
       },
     })
     store.listen(data => {
+      if (!localStorage) return
       if (data.bearer) localStorage.setItem('authpack.bearer', data.bearer)
       else localStorage.removeItem('authpack.bearer')
       if (this.iframe)
@@ -83,6 +86,7 @@ export class Plugin {
     return store
   }
   private createIFrame() {
+    if (!window) return
     const iframe = createIFrame(this.url)
     if (this.id) iframe.id = this.id
     document.body.appendChild(iframe)
