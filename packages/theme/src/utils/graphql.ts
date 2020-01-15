@@ -32,6 +32,9 @@ export const graphql = async <T>({
     }
     return done.data && done.data.data
   } catch (error) {
+    if (error.code && error.message) {
+      return Promise.reject(error)
+    }
     if (error.response) {
       return Promise.reject(error.response.data)
     }

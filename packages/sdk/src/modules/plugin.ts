@@ -165,6 +165,8 @@ export interface IPlugin {
     name?: string
     name_given?: string
     name_family?: string
+    teams_count: number
+    sessions_count: number
     stripe_plan?: {
       id: string
       name?: string
@@ -182,6 +184,7 @@ export interface IPlugin {
     name: string
     tag: string
     description?: string
+    users_count: number
     stripe_plan?: {
       id: string
       name?: string

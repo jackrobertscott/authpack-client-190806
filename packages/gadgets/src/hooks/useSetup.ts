@@ -158,6 +158,8 @@ const useGetSession = createUseServer<{
       name?: string
       name_given?: string
       name_family?: string
+      teams_count: number
+      sessions_count: number
       stripe_plan?: {
         id: string
         name?: string
@@ -175,6 +177,7 @@ const useGetSession = createUseServer<{
       name: string
       tag: string
       description?: string
+      users_count: number
       stripe_plan?: {
         id: string
         name?: string
@@ -211,6 +214,8 @@ const useGetSession = createUseServer<{
           name
           name_given
           name_family
+          teams_count
+          sessions_count
           stripe_plan {
             id
             name
@@ -228,6 +233,7 @@ const useGetSession = createUseServer<{
           name
           tag
           description
+          users_count
           stripe_plan {
             id
             name
