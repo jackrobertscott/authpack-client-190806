@@ -25,7 +25,7 @@ export class Plugin {
     this.url = typeof url === 'string' ? url : 'https://gadgets.v1.authpack.io'
     this.debug = typeof debug === 'boolean' ? debug : false
     this.store = this.createStore()
-    if (window) {
+    if (typeof window !== 'undefined') {
       this.iframe = this.createIFrame()
       this.radio = this.iframe && this.createRadio(this.iframe)
     }
@@ -66,18 +66,22 @@ export class Plugin {
   }
   private createStore() {
     const store = createStore()
-    const bearer = localStorage && localStorage.getItem('authpack.bearer')
+    const bearer =
+      typeof window !== 'undefined'
+        ? localStorage.getItem('authpack.bearer')
+        : undefined
     store.update({
       bearer: bearer ? bearer : undefined,
       client: this.key,
-      domain: window && window.location.origin,
+      domain:
+        typeof window !== 'undefined' ? window.location.origin : undefined,
       options: {
         ...store.current.options,
         ...this.options,
       },
     })
     store.listen(data => {
-      if (!localStorage) return
+      if (typeof window === 'undefined') return
       if (data.bearer) localStorage.setItem('authpack.bearer', data.bearer)
       else localStorage.removeItem('authpack.bearer')
       if (this.iframe)
@@ -86,7 +90,7 @@ export class Plugin {
     return store
   }
   private createIFrame() {
-    if (!window) return
+    if (typeof window === 'undefined') return
     const iframe = createIFrame(this.url)
     if (this.id) iframe.id = this.id
     document.body.appendChild(iframe)

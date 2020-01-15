@@ -1,6 +1,6 @@
 {
   "name": "@authpack/vue",
-  "version": "0.3.13",
+  "version": "0.3.14",
   "private": false,
   "description": "Authpack's official integration for Vue",
   "license": "MIT",
@@ -29,7 +29,7 @@
     "typescript": "^3.7.2"
   },
   "dependencies": {
-    "@authpack/sdk": "^0.8.9",
+    "@authpack/sdk": "^0.8.12",
     "vue": ">=2.6.0"
   }
 }
