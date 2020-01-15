@@ -38,7 +38,7 @@ You can test out his GraphQL query from within the Authpack dashboard in the **d
 
 The following is required to make a request to the Authpack API.
 
-- url: `https://graphql.v1.authpack.io`
+- url: `https://api.v1.authpack.io/graphql`
 - method: `post`
 - headers
   - `Content-Type`: `application/json`
@@ -71,7 +71,7 @@ The following demonstrates how you can use [axios](https://github.com/axios/axio
 import axios from 'axios'
 
 const { data } = await axios({
-  url: 'https://graphql.v1.authpack.io',
+  url: 'https://api.v1.authpack.io/graphql',
   method: 'post',
   headers: {
     'Content-Type': 'application/json',

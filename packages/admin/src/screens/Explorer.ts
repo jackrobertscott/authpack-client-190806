@@ -30,13 +30,12 @@ export const Explorer: FC = () => {
       defaultQuery: startingQuery,
       fetcher: async (graphQLParams: any) => {
         try {
-          const data = await authpack.graphql<any>({
-            url: config.api,
+          return await authpack.graphql<any>({
+            url: `${config.api}/graphql`,
             key: universal.cluster_key_client,
             bearer: auth.bearer,
             ...graphQLParams,
           })
-          return data.__schema ? { data } : data
         } catch (error) {
           return Promise.resolve(error)
         }

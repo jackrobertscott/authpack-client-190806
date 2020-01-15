@@ -18,7 +18,7 @@ export const useServer = <T>(options: {
   const universal = useUniversal()
   return useGQL<T>({
     ...options,
-    url: config.api,
+    url: `${config.api}/graphql`,
     authorization: [
       universal.cluster_key_client || config.gadgets_key_client,
       auth.bearer,

@@ -1,4 +1,5 @@
 import { graphql } from '../utils/graphql'
+import { config } from '../config'
 
 export class API {
   private key: string
@@ -8,7 +9,7 @@ export class API {
       const message = 'Please provide your client key i.e. "wga-client-key-..."'
       throw new Error(message)
     }
-    this.gql = gql || 'https://graphql.v1.authpack.io'
+    this.gql = gql || `${config.api}/graphql`
     this.key = key
   }
   public async graphql<T>({

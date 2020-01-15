@@ -19,7 +19,7 @@ export const useServer = <T>(options: {
     .join(',')
   return useGQL<T>({
     ...options,
-    url: config.api,
+    url: `${config.api}/graphql`,
     authorization,
   })
 }
