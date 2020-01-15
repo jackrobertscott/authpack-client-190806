@@ -36,7 +36,9 @@ export const RouterCentral: FC = () => {
     ],
   })
   useEffect(() => {
-    if (!superadmin && router.current.path.startsWith('/developers')) {
+    const ondevpage =
+      router.current && router.current.path.startsWith('/developers')
+    if (!superadmin && ondevpage) {
       router.change('/app')
     }
     // eslint-disable-next-line
