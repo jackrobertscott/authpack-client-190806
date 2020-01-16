@@ -85,7 +85,8 @@ export const UpdateClusterStripeClient: FC<{
                 key: 'poster',
                 icon: 'piggy-bank',
                 label: 'Payments',
-                helper: 'Start accepting payments',
+                helper:
+                  'You will be able to see and create payment plans once a Stripe account is connected',
               }),
           gqlGetCluster.data.cluster.stripe_user_product_id &&
             element(Snippet, {

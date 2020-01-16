@@ -44,6 +44,7 @@ export const UpdateTeamCustomer: FC<{
   const schema = useSchema({
     schema: SchemaUpdatePayment,
     submit: value => {
+      if (!mounted.current) return
       loadingChange(true)
       payment
         .tokenize(stripeCard.current)
@@ -79,7 +80,7 @@ export const UpdateTeamCustomer: FC<{
             })
           }
         })
-        .finally(() => loadingChange(false))
+        .finally(() => mounted.current && loadingChange(false))
     },
   })
   useEffect(() => {

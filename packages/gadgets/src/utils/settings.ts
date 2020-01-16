@@ -24,6 +24,9 @@ export type ISettings = {
     theme_preference: string
     enable_team: boolean
     prompt_team: boolean
+    prompt_verify: boolean
+    hide_signup: boolean
+    hide_sidebar_payments: boolean
   }
   session?: {
     id: string

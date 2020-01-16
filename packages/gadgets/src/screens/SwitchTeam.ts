@@ -28,9 +28,12 @@ export const SwitchTeam: FC<{
       children: [
         element(Poster, {
           key: 'poster',
-          icon: 'users',
+          icon: settings.user && settings.user.verified ? 'users' : 'bell',
           label: 'Team',
-          helper: 'Select a team to switch',
+          helper:
+            settings.user && settings.user.verified
+              ? 'Select a team to switch'
+              : 'Some teams may be hidden until you verify your email address',
         }),
         gqlListTeams.data &&
           gqlListTeams.data.teams.map(({ id, name, description }) => {

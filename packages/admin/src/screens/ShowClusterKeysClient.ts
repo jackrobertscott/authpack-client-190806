@@ -51,9 +51,9 @@ export const ShowClusterKeysClient: FC<{ back: () => void }> = ({ back }) => {
               }),
             }),
             element('div', {
+              key: 'secret',
               id: 'key_hidden',
               children: element(Snippet, {
-                key: 'name',
                 icon: 'exclamation-circle',
                 label: 'Secret Key',
                 value:

@@ -32,6 +32,7 @@ export const useSchema = ({
       if (value[next] !== null) all[next] = value[next]
       return all
     }, {})
+    if (!mounted.current) return
     stateChange(clean)
   }
   const update = (key: string) => (data: any) => {

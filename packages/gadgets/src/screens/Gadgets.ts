@@ -13,23 +13,35 @@ import { config } from '../config'
 export const Gadgets: FC = () => {
   useSetup()
   const settings = useSettings()
-  const close = useRef(() => SettingsStore.update({ open: false }))
+  const close = useRef(() => {
+    SettingsStore.update({ open: false })
+    setTimeout(() => {
+      if (SettingsStore.current.options.prompt_plan) {
+        SettingsStore.update({
+          options: {
+            ...SettingsStore.current.options,
+            prompt_plan: undefined,
+          },
+        })
+      }
+    }, 200)
+  })
+  const large =
+    settings.client &&
+    settings.bearer &&
+    settings.user &&
+    !settings.options.prompt_plan
   if (!settings.cluster) return null
   const allowed = settings.domain
     ? settings.domain.startsWith('http://localhost') ||
       settings.domain.startsWith(config.admin)
     : false
-  const largeGadgets =
-    settings.client &&
-    settings.bearer &&
-    settings.user &&
-    !settings.options.prompt_plan
   return element(Root, {
     theme: settings.options.theme_preset || settings.cluster.theme_preference,
     children: element(Modal, {
       close: close.current,
       visible: Boolean(settings.ready && settings.open),
-      large: Boolean(largeGadgets),
+      large: Boolean(large),
       children: !settings.ready
         ? element(Loading)
         : !settings.client

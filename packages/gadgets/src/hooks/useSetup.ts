@@ -117,6 +117,9 @@ const useGetCluster = createUseServer<{
     theme_preference: string
     enable_team: boolean
     prompt_team: boolean
+    prompt_verify: boolean
+    hide_signup: boolean
+    hide_sidebar_payments: boolean
   }
 }>({
   query: `
@@ -130,6 +133,9 @@ const useGetCluster = createUseServer<{
         theme_preference
         enable_team
         prompt_team
+        prompt_verify
+        hide_signup
+        hide_sidebar_payments
       }
     }
   `,

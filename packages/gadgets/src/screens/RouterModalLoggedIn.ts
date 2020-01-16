@@ -12,15 +12,21 @@ export const RouterModalLoggedIn: FC<{
   close: () => void
 }> = ({ close }) => {
   const settings = useSettings()
-  const nomatch =
-    !settings.user || !settings.user.verified
-      ? '/verify'
-      : settings.cluster &&
-        settings.cluster.enable_team &&
-        settings.cluster.prompt_team &&
-        !settings.team
-      ? '/teams'
-      : '/users'
+  const promptVerify =
+    settings.cluster &&
+    settings.cluster.prompt_verify &&
+    settings.user &&
+    !settings.user.verified
+  const promptTeam =
+    settings.cluster &&
+    settings.cluster.enable_team &&
+    settings.cluster.prompt_team &&
+    !settings.team
+  const hideSidebar =
+    settings.cluster &&
+    settings.cluster.hide_sidebar_payments &&
+    settings.options.prompt_plan
+  const nomatch = promptVerify ? '/verify' : promptTeam ? '/teams' : '/users'
   const router = useLocalRouter({
     name: nomatch === '/users' ? 'onauthed' : undefined,
     nomatch,
@@ -92,6 +98,7 @@ export const RouterModalLoggedIn: FC<{
   }
   if (!settings.bearer || !settings.user) return null
   return element(IconBar, {
+    hide: !!hideSidebar,
     children: router.current && router.current.children,
     icons: [
       {
@@ -114,7 +121,7 @@ export const RouterModalLoggedIn: FC<{
         click: () => navigate('/logout'),
       },
       !settings.user.verified && {
-        icon: 'exclamation-circle',
+        icon: 'exclamation-triangle',
         label: 'Verify Email',
         focused: router.current && router.current.key === '/verify',
         click: () => navigate('/verify'),

@@ -94,6 +94,17 @@ export const UpdateClusterClient: FC<{
                 }),
               ],
             }),
+            element(Control, {
+              key: 'domains',
+              label: 'Whitelisted Domains',
+              helper: 'Domains allowed to make authorized requests',
+              error: schema.error('domains'),
+              children: element(InputStringArray, {
+                value: schema.value('domains'),
+                change: schema.change('domains'),
+                placeholder: '...',
+              }),
+            }),
             element(Layout, {
               key: 'teams',
               divide: true,
@@ -121,16 +132,49 @@ export const UpdateClusterClient: FC<{
                 }),
               ],
             }),
-            element(Control, {
-              key: 'domains',
-              label: 'Whitelisted Domains',
-              helper: 'Domains allowed to make authorized requests',
-              error: schema.error('domains'),
-              children: element(InputStringArray, {
-                value: schema.value('domains'),
-                change: schema.change('domains'),
-                placeholder: '...',
-              }),
+            element(Layout, {
+              key: 'hide',
+              divide: true,
+              media: true,
+              children: [
+                element(Control, {
+                  key: 'hide_signup',
+                  label: 'Hide Signup Page',
+                  helper: 'Good for invite only apps',
+                  error: schema.error('hide_signup'),
+                  children: element(InputBoolean, {
+                    value: schema.value('hide_signup'),
+                    change: schema.change('hide_signup'),
+                  }),
+                }),
+                element(Control, {
+                  key: 'hide_sidebar_payments',
+                  label: 'Hide Sidebar During Payment',
+                  helper: 'Keep the user focused on the payment',
+                  error: schema.error('hide_sidebar_payments'),
+                  children: element(InputBoolean, {
+                    value: schema.value('hide_sidebar_payments'),
+                    change: schema.change('hide_sidebar_payments'),
+                  }),
+                }),
+              ],
+            }),
+            element(Layout, {
+              key: 'verify',
+              divide: true,
+              media: true,
+              children: [
+                element(Control, {
+                  key: 'prompt_verify',
+                  label: 'Prompt Verify',
+                  helper: 'Prompt the user to verify their email',
+                  error: schema.error('prompt_verify'),
+                  children: element(InputBoolean, {
+                    value: schema.value('prompt_verify'),
+                    change: schema.change('prompt_verify'),
+                  }),
+                }),
+              ],
             }),
             element(Button, {
               key: 'submit',
@@ -154,8 +198,11 @@ const SchemaUpdateCluster = yup.object().shape({
     .string()
     .default('snow_storm')
     .required('Please select a theme'),
-  enable_team: yup.boolean(),
-  prompt_team: yup.boolean(),
+  enable_team: yup.boolean().default(false),
+  prompt_team: yup.boolean().default(false),
+  prompt_verify: yup.boolean().default(false),
+  hide_signup: yup.boolean().default(false),
+  hide_sidebar_payments: yup.boolean().default(false),
 })
 
 const useGetCluster = createUseServer<{
@@ -165,6 +212,9 @@ const useGetCluster = createUseServer<{
     theme_preference: string
     enable_team: boolean
     prompt_team: boolean
+    prompt_verify: boolean
+    hide_signup: boolean
+    hide_sidebar_payments: boolean
   }
 }>({
   query: `
@@ -175,6 +225,9 @@ const useGetCluster = createUseServer<{
         theme_preference
         enable_team
         prompt_team
+        prompt_verify
+        hide_signup
+        hide_sidebar_payments
       }
     }
   `,

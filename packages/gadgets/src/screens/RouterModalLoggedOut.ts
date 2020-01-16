@@ -4,16 +4,22 @@ import { LoginUser } from './LoginUser'
 import { SignupUser } from './SignupUser'
 import { RecoverUserPassword } from './RecoverUserPassword'
 import { GetStarted } from './GetStarted'
+import { useSettings } from '../hooks/useSettings'
 
 export const RouterModalLoggedOut: FC<{
   close: () => void
 }> = ({ close }) => {
+  const settings = useSettings()
+  const hideSignup = Boolean(settings.cluster && settings.cluster.hide_signup)
   const [startup, startupChange] = useState<boolean>(true)
   const router = useLocalRouter({
     nomatch: '/login',
     options: [
       { key: '/login', children: element(LoginUser) },
-      { key: '/signup', children: element(SignupUser) },
+      {
+        key: '/signup',
+        children: !hideSignup ? element(SignupUser) : null,
+      },
       { key: '/forgot', children: element(RecoverUserPassword) },
     ],
   })
@@ -22,17 +28,18 @@ export const RouterModalLoggedOut: FC<{
     router.change(screen)
   }
   return element(IconBar, {
-    children: startup
-      ? element(GetStarted, {
-          key: 'started',
-          login: clicker('/login'),
-          signup: clicker('/signup'),
-        })
-      : router.current &&
-        element(Fragment, {
-          key: 'children',
-          children: router.current.children,
-        }),
+    children:
+      startup && !hideSignup
+        ? element(GetStarted, {
+            key: 'started',
+            login: clicker('/login'),
+            signup: clicker('/signup'),
+          })
+        : router.current &&
+          element(Fragment, {
+            key: 'children',
+            children: router.current.children,
+          }),
     icons: [
       {
         icon: 'unlock',
@@ -40,7 +47,7 @@ export const RouterModalLoggedOut: FC<{
         focused: router.current && router.current.key === '/login',
         click: clicker('/login'),
       },
-      {
+      !hideSignup && {
         icon: 'plus',
         label: 'Signup',
         focused: router.current && router.current.key === '/signup',

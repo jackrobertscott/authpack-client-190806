@@ -134,7 +134,7 @@ export const CreateSubscription: FC<{
                     planCurrent.currency
                   } billed every ${planCurrent.interval_count} ${
                     planCurrent.interval
-                  }s as ${
+                  }s. This will be set as your ${
                     planCurrent.team_plan ? '**team**' : '**user**'
                   } plan.`.trim(),
                 }),

@@ -9,6 +9,7 @@ import { useMounted } from '../hooks/useMounted'
 import { useMedia } from '../hooks/useMedia'
 
 export const IconBar: FC<{
+  hide?: boolean
   children: ReactNode
   icons: Array<
     | {
@@ -30,7 +31,7 @@ export const IconBar: FC<{
       }
     | false
   >
-}> = ({ icons, children }) => {
+}> = ({ hide, icons, children }) => {
   const theme = useTheme()
   const media = useMedia()
   const bp = `@media (max-width: ${515 + 50}px)`
@@ -46,41 +47,42 @@ export const IconBar: FC<{
       },
     }),
     children: [
-      element('div', {
-        key: 'iconBar',
-        className: css({
-          all: 'unset',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'flex-start',
-          position: 'relative',
-          alignItems: 'center',
-          flexShrink: 0,
-          background: theme.iconBar.background,
-          borderRight: theme.iconBar.border,
-          [bp]: {
-            flexDirection: 'row',
-            borderTop: theme.page.border,
-            background: theme.page.background,
-            borderRight: 'none',
-          },
-        }),
-        children: element(IconSpacer, {
-          bp,
-          children: icons
-            .filter((data: any) => {
-              return media.width >= 515 + 50 ? true : !data.hidesmall
-            })
-            .filter(Boolean)
-            .map((data: any, index) => {
-              return element(IconPointer, {
-                key: `icon-${index}`,
-                bp,
-                ...data,
+      !hide &&
+        element('div', {
+          key: 'iconBar',
+          className: css({
+            all: 'unset',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            position: 'relative',
+            alignItems: 'center',
+            flexShrink: 0,
+            background: theme.iconBar.background,
+            borderRight: theme.iconBar.border,
+            [bp]: {
+              flexDirection: 'row',
+              borderTop: theme.page.border,
+              background: theme.page.background,
+              borderRight: 'none',
+            },
+          }),
+          children: element(IconSpacer, {
+            bp,
+            children: icons
+              .filter((data: any) => {
+                return media.width >= 515 + 50 ? true : !data.hidesmall
               })
-            }),
+              .filter(Boolean)
+              .map((data: any, index) => {
+                return element(IconPointer, {
+                  key: `icon-${index}`,
+                  bp,
+                  ...data,
+                })
+              }),
+          }),
         }),
-      }),
       element('div', {
         key: 'children',
         children,
