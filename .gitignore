@@ -30,3 +30,6 @@ package-lock.json
 # documentation
 .docz
 .cache
+
+# yarn version
+.yarn
