@@ -39,7 +39,9 @@ export const RouterModalLoggedIn: FC<{
           },
           {
             key: '/teams',
-            children: element(RouterSideBarTeam),
+            children: element(RouterSideBarTeam, {
+              close,
+            }),
           },
           {
             key: '/subscription',

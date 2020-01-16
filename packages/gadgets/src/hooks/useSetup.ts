@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { SettingsStore } from '../utils/settings'
 import { radio } from '../utils/radio'
 import { useSettings } from './useSettings'
@@ -10,31 +10,41 @@ export const useSetup = () => {
   const gqlGetCluster = useGetCluster()
   const gqlGetSession = useGetSession()
   const gqlLogoutUser = useLogoutUser()
+  const bearerOld = useRef<string | undefined>()
   const updateSession = () => {
     if (settings.bearer && settings.client) {
       gqlGetSession
         .fetch()
         .then(({ session: { user, team, membership, ...session } }) => {
+          const bearer = `Bearer ${session.token}`
+          const teamPrompt =
+            settings.cluster && settings.cluster.prompt_team && !team
+          const stayOpen =
+            bearerOld.current || settings.options.prompt_plan || teamPrompt
           SettingsStore.update({
             ready: true,
-            bearer: `Bearer ${session.token}`,
+            bearer,
             session,
             user,
             team,
             membership,
+            open: stayOpen ? SettingsStore.current.open : false,
           })
+          bearerOld.current = bearer
         })
         .catch(() => {
           SettingsStore.update({
             ready: true,
             bearer: undefined,
           })
+          bearerOld.current = undefined
         })
     } else {
       SettingsStore.update({
         ready: true,
         bearer: undefined,
       })
+      bearerOld.current = undefined
     }
   }
   useEffect(() => {
@@ -95,9 +105,10 @@ export const useSetup = () => {
           break
         case 'plugin:exit':
           if (settings.bearer)
-            gqlLogoutUser
-              .fetch()
-              .finally(() => SettingsStore.update({ bearer: undefined }))
+            gqlLogoutUser.fetch().finally(() => {
+              bearerOld.current = undefined
+              SettingsStore.update({ bearer: undefined })
+            })
           break
         default:
           throw new Error(`Failed to process radio message: ${name}`)

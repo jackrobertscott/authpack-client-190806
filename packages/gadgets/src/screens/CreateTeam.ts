@@ -6,7 +6,6 @@ import {
   Control,
   InputString,
   Button,
-  testAlphanumeric,
   Page,
 } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
@@ -41,39 +40,21 @@ export const CreateTeam: FC<{
         padding: true,
         divide: true,
         children: [
-          element(Layout, {
+          element(Control, {
             key: 'name',
-            divide: true,
-            media: true,
-            children: [
-              element(Control, {
-                key: 'name',
-                label: 'Name',
-                helper: "Your team's name",
-                error: schema.error('name'),
-                children: element(InputString, {
-                  value: schema.value('name'),
-                  change: schema.change('name'),
-                  placeholder: 'Super Squad',
-                }),
-              }),
-              element(Control, {
-                key: 'tag',
-                label: 'Tag',
-                helper: "Claim your team's unique id tag",
-                error: schema.error('tag'),
-                children: element(InputString, {
-                  value: schema.value('tag'),
-                  change: schema.change('tag'),
-                  placeholder: 'super_squad',
-                }),
-              }),
-            ],
+            label: 'Name',
+            helper: "Your team's name",
+            error: schema.error('name'),
+            children: element(InputString, {
+              value: schema.value('name'),
+              change: schema.change('name'),
+              placeholder: 'Super Squad',
+            }),
           }),
           element(Control, {
             key: 'description',
             label: 'Description',
-            helper: 'Optionally describe what your team does',
+            helper: 'Give your team a nice description',
             error: schema.error('description'),
             children: element(InputString, {
               value: schema.value('description'),
@@ -96,13 +77,6 @@ export const CreateTeam: FC<{
 
 const SchemaCreateTeam = yup.object().shape({
   name: yup.string().required('Please provide a team name'),
-  tag: yup
-    .string()
-    .test(
-      'alphamun',
-      'Please use only numbers, letters and underscores',
-      testAlphanumeric
-    ),
   description: yup.string(),
 })
 

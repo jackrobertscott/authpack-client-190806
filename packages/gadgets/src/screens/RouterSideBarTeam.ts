@@ -10,7 +10,7 @@ import { UpdateTeamCustomer } from './UpdateTeamCustomer'
 import { UpdateTeamSubscription } from './UpdateTeamSubscription'
 import { RemoveTeamSubscription } from './RemoveTeamSubscription'
 
-export const RouterSideBarTeam: FC = () => {
+export const RouterSideBarTeam: FC<{ close: () => void }> = ({ close }) => {
   const settings = useSettings()
   const current = settings.bearer && settings.team ? settings.team : undefined
   const router = useLocalRouter({
@@ -27,8 +27,9 @@ export const RouterSideBarTeam: FC = () => {
           },
           {
             key: '/team/create',
+            nosave: true,
             children: element(CreateTeam, {
-              change: () => router.change('/team/update'),
+              change: () => close(),
             }),
           },
           { key: '/team/members', children: element(RouterMemberships) },
@@ -42,24 +43,25 @@ export const RouterSideBarTeam: FC = () => {
           },
           {
             key: '/team/payments/update',
+            nosave: true,
             children: element(UpdateTeamSubscription, {
               change: () => router.change('/team/payments'),
             }),
-            nosave: true,
           },
           {
             key: '/team/payments/remove',
+            nosave: true,
             children: element(RemoveTeamSubscription, {
               change: () => router.change('/team/payments'),
             }),
-            nosave: true,
           },
         ]
       : [
           {
             key: '/team/create',
+            nosave: true,
             children: element(CreateTeam, {
-              change: () => setTimeout(() => router.change('/team/update')),
+              change: () => close(),
             }),
           },
         ],
