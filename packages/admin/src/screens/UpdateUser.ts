@@ -71,7 +71,7 @@ export const UpdateUser: FC<{
               ],
             }),
             element(Layout, {
-              key: 'name',
+              key: 'username',
               divide: true,
               media: true,
               children: [
