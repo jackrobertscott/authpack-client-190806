@@ -51,6 +51,64 @@ export const ShowClusterClient: FC<{ keys: () => void }> = ({ keys }) => {
               ],
             }),
             element(Layout, {
+              key: 'team',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'enable_team',
+                  icon: 'users',
+                  label: 'Teams',
+                  value: cluster.enable_team ? 'Enabled' : 'Disabled',
+                }),
+                element(Snippet, {
+                  key: 'prompt_verify',
+                  icon: 'user-check',
+                  label: 'Prompt Users to Verify Email',
+                  value: cluster.prompt_verify ? 'Yes' : 'No',
+                }),
+              ],
+            }),
+            cluster.enable_team &&
+              element(Layout, {
+                key: 'team-options',
+                grow: true,
+                media: true,
+                children: [
+                  element(Snippet, {
+                    key: 'signup_create_team',
+                    icon: 'plus',
+                    label: 'Create Team on Signup',
+                    value: cluster.signup_create_team ? 'Yes' : 'No',
+                  }),
+                  element(Snippet, {
+                    key: 'prompt_team',
+                    icon: 'bullhorn',
+                    label: 'Prompt Team',
+                    value: cluster.prompt_team ? 'Yes' : 'No',
+                  }),
+                ],
+              }),
+            element(Layout, {
+              key: 'hiders',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'hide_signup',
+                  icon: 'eye-slash',
+                  label: 'Hide Signup',
+                  value: cluster.hide_signup ? 'Yes' : 'No',
+                }),
+                element(Snippet, {
+                  key: 'hide_sidebar_payments',
+                  icon: 'eye-slash',
+                  label: 'Hide Sidebar During Payment',
+                  value: cluster.hide_sidebar_payments ? 'Yes' : 'No',
+                }),
+              ],
+            }),
+            element(Layout, {
               key: 'dates',
               grow: true,
               media: true,
@@ -85,6 +143,12 @@ const useGetCluster = createUseServer<{
     updated: string
     name: string
     theme_preference: string
+    enable_team: boolean
+    signup_create_team: boolean
+    prompt_team: boolean
+    prompt_verify: boolean
+    hide_signup: boolean
+    hide_sidebar_payments: boolean
   }
 }>({
   query: `
@@ -95,6 +159,12 @@ const useGetCluster = createUseServer<{
         updated
         name
         theme_preference
+        enable_team
+        signup_create_team
+        prompt_team
+        prompt_verify
+        hide_signup
+        hide_sidebar_payments
       }
     }
   `,

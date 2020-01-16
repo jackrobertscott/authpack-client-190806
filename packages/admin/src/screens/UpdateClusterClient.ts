@@ -121,23 +121,6 @@ export const UpdateClusterClient: FC<{
                   }),
                 }),
                 element(Control, {
-                  key: 'prompt_team',
-                  label: 'Prompt Teams',
-                  helper: 'User will be asked to create a team when they login',
-                  error: schema.error('prompt_team'),
-                  children: element(InputBoolean, {
-                    value: schema.value('prompt_team'),
-                    change: schema.change('prompt_team'),
-                  }),
-                }),
-              ],
-            }),
-            element(Layout, {
-              key: 'hide',
-              divide: true,
-              media: true,
-              children: [
-                element(Control, {
                   key: 'hide_signup',
                   label: 'Hide Signup Page',
                   helper: 'Good for invite only apps',
@@ -147,18 +130,37 @@ export const UpdateClusterClient: FC<{
                     change: schema.change('hide_signup'),
                   }),
                 }),
-                element(Control, {
-                  key: 'hide_sidebar_payments',
-                  label: 'Hide Sidebar During Payment',
-                  helper: 'Keep the user focused on the payment',
-                  error: schema.error('hide_sidebar_payments'),
-                  children: element(InputBoolean, {
-                    value: schema.value('hide_sidebar_payments'),
-                    change: schema.change('hide_sidebar_payments'),
-                  }),
-                }),
               ],
             }),
+            schema.state.enable_team &&
+              element(Layout, {
+                key: 'hide',
+                divide: true,
+                media: true,
+                children: [
+                  element(Control, {
+                    key: 'signup_create_team',
+                    label: 'Create Team on Signup',
+                    helper: 'Team will be created for all new users on signup',
+                    error: schema.error('signup_create_team'),
+                    children: element(InputBoolean, {
+                      value: schema.value('signup_create_team'),
+                      change: schema.change('signup_create_team'),
+                    }),
+                  }),
+                  element(Control, {
+                    key: 'prompt_team',
+                    label: 'Prompt Teams',
+                    helper:
+                      'Users without a team will be prompted to create one',
+                    error: schema.error('prompt_team'),
+                    children: element(InputBoolean, {
+                      value: schema.value('prompt_team'),
+                      change: schema.change('prompt_team'),
+                    }),
+                  }),
+                ],
+              }),
             element(Layout, {
               key: 'verify',
               divide: true,
@@ -172,6 +174,16 @@ export const UpdateClusterClient: FC<{
                   children: element(InputBoolean, {
                     value: schema.value('prompt_verify'),
                     change: schema.change('prompt_verify'),
+                  }),
+                }),
+                element(Control, {
+                  key: 'hide_sidebar_payments',
+                  label: 'Hide Sidebar During Payment',
+                  helper: 'Keep the user focused on the payment',
+                  error: schema.error('hide_sidebar_payments'),
+                  children: element(InputBoolean, {
+                    value: schema.value('hide_sidebar_payments'),
+                    change: schema.change('hide_sidebar_payments'),
                   }),
                 }),
               ],
@@ -199,6 +211,7 @@ const SchemaUpdateCluster = yup.object().shape({
     .default('snow_storm')
     .required('Please select a theme'),
   enable_team: yup.boolean().default(false),
+  signup_create_team: yup.boolean().default(false),
   prompt_team: yup.boolean().default(false),
   prompt_verify: yup.boolean().default(false),
   hide_signup: yup.boolean().default(false),
@@ -211,6 +224,7 @@ const useGetCluster = createUseServer<{
     domains: string[]
     theme_preference: string
     enable_team: boolean
+    signup_create_team: boolean
     prompt_team: boolean
     prompt_verify: boolean
     hide_signup: boolean
@@ -224,6 +238,7 @@ const useGetCluster = createUseServer<{
         domains
         theme_preference
         enable_team
+        signup_create_team
         prompt_team
         prompt_verify
         hide_signup
