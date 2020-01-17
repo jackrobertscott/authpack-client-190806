@@ -18,7 +18,7 @@ export const RemoveMembership: FC<{
       element(Poster, {
         key: 'poster',
         icon: 'trash-alt',
-        label: 'Remove',
+        label: 'Delete',
         helper: 'Remove this team member',
       }),
       element(Layout, {

@@ -119,8 +119,7 @@ const SchemaCreateTeam = yup.object().shape({
       'alphamun',
       'Please use only numbers, letters and underscores',
       testAlphanumeric
-    )
-    .required('Please provide the team tag'),
+    ),
   description: yup.string(),
   user_id: yup.string().required('Please select a user'),
 })

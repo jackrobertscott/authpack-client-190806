@@ -28,7 +28,7 @@ export const RemoveUser: FC<{
       element(Poster, {
         key: 'poster',
         icon: 'trash-alt',
-        label: 'Remove',
+        label: 'Delete',
         helper: 'Remove your account',
       }),
       element(Layout, {
