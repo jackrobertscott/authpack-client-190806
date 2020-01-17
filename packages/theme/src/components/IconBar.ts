@@ -13,7 +13,7 @@ export const IconBar: FC<{
   children: ReactNode
   icons: Array<
     | {
-        icon: string
+        icon: string | number
         label: string
         helper?: string
         prefix?: string
@@ -129,7 +129,7 @@ const IconSpacer: FC<{
 
 const IconPointer: FC<{
   bp: string
-  icon: string
+  icon: string | number
   label: string
   helper?: string
   prefix?: string
@@ -189,17 +189,40 @@ const IconPointer: FC<{
           '&:hover': {
             color: theme.iconBar.iconHover,
             background: theme.iconBar.iconBackgroundHover,
+            '& > div': {
+              borderColor: theme.iconBar.iconHover,
+            },
           },
           [bp]: {
             background: theme.page.background,
           },
         }),
-        children: element(Icon, {
-          icon,
-          size: 22,
-          padding: 8,
-          prefix,
-        }),
+        children:
+          typeof icon === 'number'
+            ? element('div', {
+                children: icon,
+                className: css({
+                  all: 'unset',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 'bold',
+                  height: 23,
+                  width: 25,
+                  paddingBottom: 2,
+                  borderRadius: 100,
+                  margin: 4,
+                  border: `2px solid ${
+                    focused ? theme.iconBar.iconFocused : theme.iconBar.icon
+                  }`,
+                }),
+              })
+            : element(Icon, {
+                icon,
+                size: 22,
+                padding: 8,
+                prefix,
+              }),
       }),
       element('div', {
         key: 'pointer',
@@ -223,7 +246,7 @@ const IconPointer: FC<{
           disabled: !open,
           click: () => openChange(false),
           children: element(Pointer, {
-            icon,
+            icon: typeof icon === 'string' ? icon : 'bars',
             label,
             helper,
             prefix,
