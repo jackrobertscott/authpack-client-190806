@@ -28,6 +28,12 @@ export const Markdown: FC<{ value: string }> = ({ value = '' }) => {
       p: {
         fontWeight: theme.global.thin,
       },
+      code: {
+        padding: '2px 3px',
+        background: theme.layout.background,
+        fontSize: '0.9em',
+        borderRadius: 3,
+      },
       '& > *': {
         margin: '0 0 15px 0',
         lineHeight: '1.5em',

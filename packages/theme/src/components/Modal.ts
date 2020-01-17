@@ -39,6 +39,7 @@ export const Modal: FC<{
           top: 0,
           bottom: 0,
           zIndex: 1000,
+          padding: 15,
           transition: '200ms',
           pointerEvents: visible ? 'all' : 'none',
           opacity: visible ? 1 : 0,
@@ -64,9 +65,8 @@ export const Modal: FC<{
             [bp]: {
               width: '100%',
               height: '100%',
-              flexGrow: 1,
-              borderRadius: 0,
               border: 'none',
+              flexGrow: 1,
             },
           }),
         }),

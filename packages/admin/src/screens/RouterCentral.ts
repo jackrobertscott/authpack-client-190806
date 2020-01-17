@@ -13,10 +13,12 @@ import { Explorer } from './Explorer'
 import { usePreferences } from '../utils/preferences'
 import { authpack } from '../utils/authpack'
 import { config } from '../config'
+import { RouterWizard } from '../wizard/RouterWizard'
 
 export const RouterCentral: FC = () => {
   const auth = useAuthpack()
   const preferences = usePreferences()
+  const [wizard, wizardChange] = useState<boolean>(false)
   const [appear, appearChange] = useState<boolean>(false)
   const [goto, gotoChange] = useState<string | undefined>()
   const superadmin = !!auth.membership && !!auth.membership.superadmin
@@ -51,6 +53,11 @@ export const RouterCentral: FC = () => {
         close: () => appearChange(false),
         goto,
       }),
+      element(RouterWizard, {
+        key: 'wizard',
+        visible: wizard,
+        close: () => wizardChange(false),
+      }),
       router.current &&
         element(Fragment, {
           key: 'children',
@@ -63,6 +70,11 @@ export const RouterCentral: FC = () => {
         label: 'Home',
         focused: !!router.current && router.current.path.startsWith('/app'),
         click: () => router.change('/app'),
+      },
+      {
+        icon: 'hat-wizard',
+        label: 'Setup Wizard',
+        click: () => wizardChange(!wizard),
       },
       superadmin && {
         icon: 'code',
