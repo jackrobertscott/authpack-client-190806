@@ -26,6 +26,8 @@ export const Focus: FC<{
       top: 0,
       bottom: 0,
       zIndex: 250,
+      height: '100%',
+      width: '100%',
       transition: '200ms',
       pointerEvents: visible ? 'all' : 'none',
       opacity: visible ? 1 : 0,

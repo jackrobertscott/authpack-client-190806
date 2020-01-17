@@ -36,6 +36,8 @@ export const Root: FC<{
           flexGrow: 1,
           fontWeight: value.global.thick,
           color: value.global.text,
+          height: '100%',
+          width: '100%',
           '*': {
             WebkitTextFillColor: 'initial !important',
           },
