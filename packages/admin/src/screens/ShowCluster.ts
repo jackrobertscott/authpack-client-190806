@@ -2,24 +2,19 @@ import { createElement as element, FC, useEffect } from 'react'
 import { Layout, Snippet, Page } from '@authpack/theme'
 import { format } from 'date-fns'
 import { createUseServer } from '../hooks/useServer'
-import { useUniversal } from '../hooks/useUniversal'
 
-export const ShowClusterClient: FC<{ keys: () => void }> = ({ keys }) => {
-  const universal = useUniversal()
+export const ShowCluster: FC<{
+  id: string
+}> = ({ id }) => {
   const gqlGetCluster = useGetCluster()
   useEffect(() => {
-    gqlGetCluster.fetch({ id: universal.cluster_id })
+    gqlGetCluster.fetch({ id })
     // eslint-disable-next-line
-  }, [universal.cluster_id])
+  }, [id])
   const cluster = gqlGetCluster.data ? gqlGetCluster.data.cluster : undefined
   return element(Page, {
     title: 'Inspect',
-    subtitle: 'Cluster',
-    corner: {
-      icon: 'key',
-      label: 'Show Keys',
-      click: keys,
-    },
+    subtitle: 'See your current settings',
     children: !cluster
       ? null
       : element(Layout, {
@@ -30,6 +25,25 @@ export const ShowClusterClient: FC<{ keys: () => void }> = ({ keys }) => {
               icon: 'fingerprint',
               label: 'Id',
               value: cluster.id,
+            }),
+            element(Layout, {
+              key: 'counts',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'count_users',
+                  icon: 'hashtag',
+                  label: 'User Count',
+                  value: `${cluster.count_users} Users`,
+                }),
+                element(Snippet, {
+                  key: 'count_team',
+                  icon: 'hashtag',
+                  label: 'Team Count',
+                  value: `${cluster.count_teams} Teams`,
+                }),
+              ],
             }),
             element(Layout, {
               key: 'name',
@@ -141,7 +155,10 @@ const useGetCluster = createUseServer<{
     id: string
     created: string
     updated: string
+    count_users: number
+    count_teams: number
     name: string
+    redirect_uri: string
     theme_preference: string
     enable_team: boolean
     signup_create_team: boolean
@@ -152,12 +169,15 @@ const useGetCluster = createUseServer<{
   }
 }>({
   query: `
-    query GetClusterClient($id: String!) {
-      cluster: GetClusterClient(id: $id) {
+    query GetCluster($id: String!) {
+      cluster: GetCluster(id: $id) {
         id
         created
         updated
+        count_users
+        count_teams
         name
+        redirect_uri
         theme_preference
         enable_team
         signup_create_team

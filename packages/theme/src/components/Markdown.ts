@@ -14,7 +14,6 @@ export const Markdown: FC<{ value: string }> = ({ value = '' }) => {
     }
     renderChange({
       __html: marked(value, {
-        sanitize: true,
         renderer,
       }),
     })

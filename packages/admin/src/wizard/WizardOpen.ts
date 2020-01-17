@@ -12,7 +12,7 @@ export const WizardOpen: FC<{ next: () => void }> = ({ next }) => {
       children: [
         element(Markdown, {
           key: 'contents',
-          value: `You can make any element on your website a login button. To do this, simply add the data-authpack="open" attribute to the element. Once this attribute has been added, clicking on the element will cause the Authpack plugin to appear. Your users may login through this plugin.
+          value: `You can make any element on your website a login button. To do this, simply add the \`data-authpack="open"\` attribute to the element. Once this attribute has been added, clicking on the element will cause the Authpack plugin to appear. Your users may login through this plugin.
           
 Here is an example:`,
         }),

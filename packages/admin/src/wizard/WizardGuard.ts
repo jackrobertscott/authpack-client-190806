@@ -1,9 +1,9 @@
 import { createElement as element, FC } from 'react'
 import { Layout, Page, Markdown, Code, Button } from '@authpack/theme'
 
-export const WizardGuard: FC<{ next: () => void; close: () => void }> = ({
+export const WizardGuard: FC<{ next: () => void; more: () => void }> = ({
   next,
-  close,
+  more,
 }) => {
   return element(Page, {
     title: 'Step 3',
@@ -35,16 +35,16 @@ export const WizardGuard: FC<{ next: () => void; close: () => void }> = ({
           divide: true,
           children: [
             element(Button, {
-              key: 'next',
-              icon: 'external-link-alt',
-              label: 'More',
-              click: next,
-            }),
-            element(Button, {
               key: 'close',
               icon: 'times-circle',
               label: 'Close',
-              click: close,
+              click: next,
+            }),
+            element(Button, {
+              key: 'next',
+              icon: 'external-link-alt',
+              label: 'Learn More',
+              click: more,
             }),
           ],
         }),

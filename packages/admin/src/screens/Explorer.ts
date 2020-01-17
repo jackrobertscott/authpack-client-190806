@@ -2,11 +2,11 @@ import 'graphiql/graphiql.css'
 import GraphiQL from 'graphiql'
 import { createElement as element, FC } from 'react'
 import { useTheme } from '@authpack/theme'
-import { useAuthpack } from '@authpack/react'
 import { css } from 'emotion'
 import { config } from '../config'
 import { useUniversal } from '../hooks/useUniversal'
 import { authpack } from '../utils/authpack'
+import { useAuthpack } from '@authpack/react'
 
 const startingQuery = `
 query First10Users {
@@ -23,19 +23,51 @@ query First10Users {
 
 export const Explorer: FC = () => {
   const theme = useTheme()
-  const universal = useUniversal()
   const auth = useAuthpack()
+  const universal = useUniversal()
   return element('div', {
     children: element(GraphiQL, {
       defaultQuery: startingQuery,
       fetcher: async (graphQLParams: any) => {
         try {
-          return await authpack.graphql<any>({
+          const data = await authpack.graphql<any>({
             url: `${config.api}/graphql`,
             key: universal.cluster_key_client,
             bearer: auth.bearer,
             ...graphQLParams,
           })
+          /**
+           * Filter the schema of Client endpoints.
+           */
+          const isSchema =
+            data.data &&
+            data.data.__schema &&
+            Array.isArray(data.data.__schema.types)
+          if (isSchema) {
+            const queryIndex = data.data.__schema.types.findIndex(
+              ({ name }: { name: string }) => {
+                return name === 'Query'
+              }
+            )
+            const mutationIndex = data.data.__schema.types.findIndex(
+              ({ name }: { name: string }) => name === 'Mutation'
+            )
+            if (queryIndex !== -1) {
+              data.data.__schema.types[
+                queryIndex
+              ].fields = data.data.__schema.types[queryIndex].fields.filter(
+                ({ name }: { name: string }) => !name.endsWith('Client')
+              )
+            }
+            if (mutationIndex !== -1) {
+              data.data.__schema.types[
+                mutationIndex
+              ].fields = data.data.__schema.types[mutationIndex].fields.filter(
+                ({ name }: { name: string }) => !name.endsWith('Client')
+              )
+            }
+          }
+          return data
         } catch (error) {
           return Promise.resolve(error)
         }

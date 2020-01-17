@@ -90,17 +90,6 @@ export const CreateProvider: FC<{
             placeholder: '...',
           }),
         }),
-        element(Control, {
-          key: 'redirect_uri',
-          label: 'Advanced Redirect Uri',
-          helper: 'Leave this empty unless creating a custom login system',
-          error: schema.error('redirect_uri'),
-          children: element(InputString, {
-            value: schema.value('redirect_uri'),
-            change: schema.change('redirect_uri'),
-            placeholder: 'https://gadgets.v1.authpack.io',
-          }),
-        }),
         element(Button, {
           key: 'submit',
           label: 'Create',
@@ -117,10 +106,10 @@ const SchemaCreateProvider = yup.object().shape({
   preset: yup
     .string()
     .oneOf(['facebook', 'google', 'github', 'slack'])
+    .default('google')
     .required('Please provide a preset'),
   client: yup.string().required('Please provide the oauth client id'),
   secret: yup.string().required('Please provide the oauth secret'),
-  redirect_uri: yup.string(),
   scopes: yup
     .array()
     .of(yup.string().required())

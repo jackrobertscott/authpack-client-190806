@@ -103,18 +103,6 @@ export const UpdateProvider: FC<{
                   placeholder: '...',
                 }),
               }),
-              element(Control, {
-                key: 'redirect_uri',
-                label: 'Advanced Redirect Uri',
-                helper:
-                  'Leave this empty unless you are creating your own login system',
-                error: schema.error('redirect_uri'),
-                children: element(InputString, {
-                  value: schema.value('redirect_uri'),
-                  change: schema.change('redirect_uri'),
-                  placeholder: 'https://gadgets.v1.authpack.io',
-                }),
-              }),
               element(Button, {
                 key: 'submit',
                 label: 'Save',
@@ -131,7 +119,6 @@ export const UpdateProvider: FC<{
 const SchemaUpdateProvider = yup.object().shape({
   client: yup.string().required('Please provide the oauth client id'),
   secret: yup.string(),
-  redirect_uri: yup.string(),
   scopes: yup
     .array()
     .of(yup.string().required())
@@ -143,7 +130,6 @@ const useGetProvider = createUseServer<{
     name: string
     preset: string
     client: string
-    redirect_uri: string
     scopes: string[]
   }
 }>({
@@ -153,7 +139,6 @@ const useGetProvider = createUseServer<{
         name
         preset
         client
-        redirect_uri
         scopes
       }
     }

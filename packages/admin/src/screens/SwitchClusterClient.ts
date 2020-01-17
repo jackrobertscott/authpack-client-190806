@@ -1,5 +1,5 @@
 import { createElement as element, FC, useEffect } from 'react'
-import { Layout, Poster, Snippet, Page } from '@authpack/theme'
+import { Layout, Snippet, Page } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { useUniversal } from '../hooks/useUniversal'
 import { UniversalStore } from '../utils/universal'
@@ -16,7 +16,7 @@ export const SwitchClusterClient: FC<{
   }, [])
   return element(Page, {
     title: 'Switch',
-    subtitle: 'Cluster',
+    subtitle: 'Create a new Authpack cluster',
     corner: {
       icon: 'plus',
       label: 'New Cluster',
@@ -25,12 +25,6 @@ export const SwitchClusterClient: FC<{
     children: element(Layout, {
       column: true,
       children: [
-        element(Poster, {
-          key: 'poster',
-          icon: 'users',
-          label: 'Cluster',
-          helper: 'Select a cluster to switch',
-        }),
         gqlListClusters.data &&
           gqlListClusters.data.clusters.map(({ id, name }) => {
             return element(Snippet, {

@@ -42,8 +42,8 @@ export const UpdateClusterClient: FC<{
     // eslint-disable-next-line
   }, [universal.cluster_id])
   return element(Page, {
-    title: 'Update',
-    subtitle: 'Cluster',
+    title: 'Settings',
+    subtitle: 'Refine your login system',
     children: element(Layout, {
       column: true,
       padding: true,
@@ -102,6 +102,17 @@ export const UpdateClusterClient: FC<{
               children: element(InputStringArray, {
                 value: schema.value('domains'),
                 change: schema.change('domains'),
+                placeholder: '...',
+              }),
+            }),
+            element(Control, {
+              key: 'redirect_uri',
+              label: 'Login Redirect Url',
+              helper: 'Where does the user go when they sign in?',
+              error: schema.error('redirect_uri'),
+              children: element(InputString, {
+                value: schema.value('redirect_uri'),
+                change: schema.change('redirect_uri'),
                 placeholder: '...',
               }),
             }),
@@ -210,6 +221,10 @@ const SchemaUpdateCluster = yup.object().shape({
     .string()
     .default('snow_storm')
     .required('Please select a theme'),
+  redirect_uri: yup
+    .string()
+    .trim()
+    .required('Please provide a login redirect url'),
   enable_team: yup.boolean().default(false),
   signup_create_team: yup.boolean().default(false),
   prompt_team: yup.boolean().default(false),

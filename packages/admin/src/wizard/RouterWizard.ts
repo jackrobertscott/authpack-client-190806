@@ -27,8 +27,8 @@ export const RouterWizard: FC<{
       {
         key: '/guard',
         children: element(WizardGuard, {
-          next: () => window.open(config.documents),
-          close: () => close(),
+          next: () => close(),
+          more: () => window.open(config.documents),
         }),
       },
     ],

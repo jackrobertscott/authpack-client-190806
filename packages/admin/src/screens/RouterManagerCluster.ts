@@ -3,7 +3,7 @@ import { useLocalRouter, Modal, IconBar } from '@authpack/theme'
 // import { CreateCluster } from './CreateCluster'
 // import { UpdateCluster } from './UpdateCluster'
 // import { RemoveCluster } from './RemoveCluster'
-// import { ShowCluster } from './ShowCluster'
+import { ShowCluster } from './ShowCluster'
 
 export const RouterManagerCluster: FC<{
   id?: string
@@ -12,7 +12,10 @@ export const RouterManagerCluster: FC<{
   close: () => void
 }> = ({ id, change, close, visible }) => {
   const router = useLocalRouter({
-    options: [],
+    nomatch: id ? '/inspect' : undefined,
+    options: id
+      ? [{ key: '/inspect', children: element(ShowCluster, { id }) }]
+      : [],
   })
   return element(Modal, {
     close,
@@ -21,6 +24,12 @@ export const RouterManagerCluster: FC<{
       children: router.current && router.current.children,
       icons: id
         ? [
+            {
+              icon: 'glasses',
+              label: 'Inspect',
+              focused: !!router.current && router.current.key === '/inspect',
+              click: () => router.change('/inspect'),
+            },
             {
               icon: 'times-circle',
               label: 'Close',

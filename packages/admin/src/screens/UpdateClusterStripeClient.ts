@@ -52,7 +52,7 @@ export const UpdateClusterStripeClient: FC<{
   }, [oauthCode.current, oauthCode.code])
   return element(Page, {
     title: 'Payments',
-    subtitle: 'Cluster',
+    subtitle: 'Charge your users money',
     children: oauthCode.current
       ? element(Focus, {
           icon: 'sync-alt',

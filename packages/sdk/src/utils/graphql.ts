@@ -27,10 +27,7 @@ export const graphql = async <T>({
         operationName,
       },
     })
-    if (done.data.errors && done.data.errors.length) {
-      throw done.data.errors[0]
-    }
-    return done.data && done.data.data
+    return done.data
   } catch (error) {
     if (error.code && error.message) {
       return Promise.reject(error)

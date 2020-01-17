@@ -4,7 +4,7 @@ import { useAuthpack } from '@authpack/react'
 import { createUseServer } from '../hooks/useServer'
 import { useUniversal } from '../hooks/useUniversal'
 
-export const ShowClusterKeysClient: FC<{ back: () => void }> = ({ back }) => {
+export const ShowClusterKeysClient: FC = () => {
   const auth = useAuthpack()
   const universal = useUniversal()
   const gqlGetCluster = useGetCluster()
@@ -15,12 +15,7 @@ export const ShowClusterKeysClient: FC<{ back: () => void }> = ({ back }) => {
   const cluster = gqlGetCluster.data ? gqlGetCluster.data.cluster : undefined
   return element(Page, {
     title: 'API Keys',
-    subtitle: 'Cluster',
-    corner: {
-      icon: 'undo-alt',
-      label: 'Go Back',
-      click: back,
-    },
+    subtitle: 'Used to perform authenticated requests',
     children: !cluster
       ? null
       : element(Layout, {

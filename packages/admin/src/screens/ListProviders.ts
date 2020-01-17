@@ -37,8 +37,8 @@ export const ListProviders: FC = () => {
       ? []
       : FakeProviders
   return element(Page, {
-    title: 'Providers',
-    subtitle: 'Login with Facebook, Google, GitHub and more',
+    title: 'Social Providers',
+    subtitle: 'Login with an app such as Facebook',
     hidden: !gqlListProviders.data || !gqlListProviders.data.count,
     corner: {
       icon: 'plus',
