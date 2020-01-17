@@ -21,7 +21,6 @@ export const ReconcileUserPassword: FC<{
       gqlReconcileUser.fetch({ ...value, email }).then(({ session }) => {
         schema.change('password')('')
         SettingsStore.update({
-          open: false,
           bearer: `Bearer ${session.token}`,
         })
       })

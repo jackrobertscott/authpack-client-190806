@@ -66,12 +66,7 @@ export class Plugin {
   }
   private createStore() {
     const store = createStore()
-    const bearer =
-      typeof window !== 'undefined'
-        ? localStorage.getItem('authpack.bearer')
-        : undefined
     store.update({
-      bearer: bearer ? bearer : undefined,
       client: this.key,
       domain:
         typeof window !== 'undefined' ? window.location.origin : undefined,
@@ -82,8 +77,6 @@ export class Plugin {
     })
     store.listen(data => {
       if (typeof window === 'undefined') return
-      if (data.bearer) localStorage.setItem('authpack.bearer', data.bearer)
-      else localStorage.removeItem('authpack.bearer')
       if (this.iframe)
         this.iframe.style.pointerEvents = data.open ? 'all' : 'none'
     })

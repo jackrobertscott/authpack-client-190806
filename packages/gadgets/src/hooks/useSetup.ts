@@ -1,16 +1,37 @@
 import { useEffect, useRef } from 'react'
 import { SettingsStore } from '../utils/settings'
-import { radio } from '../utils/radio'
-import { useSettings } from './useSettings'
 import { createUseServer } from './useServer'
-import { config } from '../config'
+import { useSettings } from './useSettings'
+import { useRadio } from './useRadio'
 
 export const useSetup = () => {
+  useRadio()
   const settings = useSettings()
   const gqlGetCluster = useGetCluster()
   const gqlGetSession = useGetSession()
-  const gqlLogoutUser = useLogoutUser()
   const bearerOld = useRef<string | undefined>()
+  const clusterId = settings.cluster && settings.cluster.id
+  const bearerkey = 'authpack.bearer'
+  const bearermapGet = () => {
+    let data
+    const bearermap = localStorage.getItem(bearerkey) || JSON.stringify({})
+    try {
+      data = JSON.parse(bearermap)
+    } catch {
+      data = {}
+    }
+    return data
+  }
+  const endSession = () => {
+    bearerOld.current = undefined
+    const requredUpdate =
+      !SettingsStore.current.ready || !!SettingsStore.current.bearer
+    if (requredUpdate)
+      SettingsStore.update({
+        ready: true,
+        bearer: undefined,
+      })
+  }
   const updateSession = () => {
     if (settings.bearer && settings.client) {
       gqlGetSession
@@ -32,90 +53,54 @@ export const useSetup = () => {
           })
           bearerOld.current = bearer
         })
-        .catch(() => {
-          SettingsStore.update({
-            ready: true,
-            bearer: undefined,
-          })
-          bearerOld.current = undefined
-        })
-    } else {
-      SettingsStore.update({
-        ready: true,
-        bearer: undefined,
-      })
-      bearerOld.current = undefined
-    }
+        .catch(() => endSession())
+    } else endSession()
   }
+  /**
+   * Load the cluster associated to the client key.
+   */
   useEffect(() => {
     if (settings.client) {
       gqlGetCluster
-        .fetch()
-        .then(({ cluster }) => SettingsStore.update({ cluster }))
-        .then(() => updateSession())
+        .fetch({ domain: settings.domain })
+        .then(({ cluster }) => {
+          const data = bearermapGet()
+          SettingsStore.update({
+            cluster,
+            bearer: data[cluster.id],
+          })
+        })
+        .catch(() => endSession())
     }
     // eslint-disable-next-line
   }, [settings.client, settings.open])
+  /**
+   * Refresh the session when client or bearer changes.
+   */
   useEffect(() => {
-    SettingsStore.update({
-      ready: false,
-      session: undefined,
-      user: undefined,
-      team: undefined,
-      membership: undefined,
-    })
-    updateSession()
+    if (settings.ready || settings.user)
+      SettingsStore.update({
+        ready: false,
+        session: undefined,
+        user: undefined,
+        team: undefined,
+        membership: undefined,
+      })
+    bearerOld.current = undefined
+    if (clusterId) updateSession()
     // eslint-disable-next-line
-  }, [settings.client, settings.bearer])
+  }, [clusterId, settings.bearer])
+  /**
+   * Listen to changes on the bearer.
+   */
   useEffect(() => {
-    radio.message({
-      name: 'gadgets:loaded',
-    })
-    return SettingsStore.listen(data => {
-      if ((data.bearer && data.user) || !data.bearer) {
-        radio.message({
-          name: 'gadgets:update',
-          payload: data,
-        })
-      }
-    })
+    if (clusterId) {
+      const data = bearermapGet()
+      data[clusterId] = settings.bearer ? settings.bearer : undefined
+      localStorage.setItem(bearerkey, JSON.stringify(data))
+    }
     // eslint-disable-next-line
-  }, [])
-  useEffect(() => {
-    return radio.listen(({ name, payload = {} }) => {
-      if (!name.startsWith('plugin:')) return
-      if (config.debug) console.log(`${name} @ ${Date.now() % 86400000}`)
-      switch (name) {
-        case 'plugin:current':
-          SettingsStore.update({ ...payload })
-          break
-        case 'plugin:show':
-          SettingsStore.update({ open: true })
-          break
-        case 'plugin:hide':
-          SettingsStore.update({ open: false })
-          break
-        case 'plugin:options':
-          SettingsStore.update({
-            options: {
-              ...SettingsStore.current.options,
-              ...payload,
-            },
-          })
-          break
-        case 'plugin:exit':
-          if (settings.bearer)
-            gqlLogoutUser.fetch().finally(() => {
-              bearerOld.current = undefined
-              SettingsStore.update({ bearer: undefined })
-            })
-          break
-        default:
-          throw new Error(`Failed to process radio message: ${name}`)
-      }
-    })
-    // eslint-disable-next-line
-  }, [settings.client, settings.bearer])
+  }, [clusterId, settings.bearer])
 }
 
 const useGetCluster = createUseServer<{
@@ -134,8 +119,8 @@ const useGetCluster = createUseServer<{
   }
 }>({
   query: `
-    query GetClusterCurrentClient {
-      cluster: GetClusterCurrentClient {
+    query GetClusterCurrentClient($domain: String!) {
+      cluster: GetClusterCurrentClient(domain: $domain) {
         id
         stripe_publishable_key
         stripe_user_product_id
@@ -261,20 +246,6 @@ const useGetSession = createUseServer<{
             interval_count
           }
         }
-      }
-    }
-  `,
-})
-
-const useLogoutUser = createUseServer<{
-  session: {
-    id: string
-  }
-}>({
-  query: `
-    mutation LogoutUserClient {
-      session: LogoutUserClient {
-        id
       }
     }
   `,
