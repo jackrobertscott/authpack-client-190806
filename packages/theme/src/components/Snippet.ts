@@ -44,6 +44,7 @@ export const Snippet: FC<{
       transition: '200ms',
       cursor: click && 'pointer',
       padding: '20px 25px',
+      flexBasis: 0,
       color: theme.snippet.label,
       background: theme.snippet.background,
       borderBottom: theme.snippet.border,
