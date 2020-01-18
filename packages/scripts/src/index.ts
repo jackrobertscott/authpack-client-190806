@@ -36,16 +36,13 @@ import { Authpack, IPlugin } from '@authpack/sdk'
    */
   const preready = () => {
     if (document.body.dataset.ready === 'true') return
-    document.body.style.display = 'none'
     document.body.style.opacity = '0'
     createCover()
     setTimeout(() => {
       if (document.body.dataset.ready === 'true') return
-      document.body.style.display = 'none'
       document.body.style.opacity = '0'
       setTimeout(() => {
         if (document.body.dataset.ready === 'true') return
-        document.body.style.display = 'none'
         document.body.style.opacity = '0'
       })
     })
@@ -57,8 +54,7 @@ import { Authpack, IPlugin } from '@authpack/sdk'
     if (context.state.ready && document.body.dataset.ready !== 'true') {
       destroyCover()
       document.body.dataset.ready = 'true'
-      document.body.style.display = 'initial'
-      document.body.style.opacity = 'initial'
+      document.body.style.opacity = ''
     }
   }
   /**
