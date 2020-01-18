@@ -221,10 +221,7 @@ const SchemaUpdateCluster = yup.object().shape({
     .string()
     .default('snow_storm')
     .required('Please select a theme'),
-  redirect_uri: yup
-    .string()
-    .trim()
-    .required('Please provide a login redirect url'),
+  redirect_uri: yup.string().trim(),
   enable_team: yup.boolean().default(false),
   signup_create_team: yup.boolean().default(false),
   prompt_team: yup.boolean().default(false),
