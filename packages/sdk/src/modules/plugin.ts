@@ -77,8 +77,11 @@ export class Plugin {
     })
     store.listen(data => {
       if (typeof window === 'undefined') return
-      if (this.iframe)
+      if (this.iframe) {
         this.iframe.style.pointerEvents = data.open ? 'all' : 'none'
+        this.iframe.style.height = data.open ? '100%' : '0'
+        this.iframe.style.width = data.open ? '100%' : '0'
+      }
     })
     return store
   }

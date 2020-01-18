@@ -26,7 +26,7 @@ export const Page: FC<{
       flexDirection: 'column',
       justifyContent: 'stretch',
       position: 'relative',
-      maxHeight: '100vh',
+      maxHeight: '100%',
       overflow: 'hidden',
       flexGrow: 1,
       background: theme.page.background,

@@ -198,7 +198,7 @@ export const Explorer: FC = () => {
           boxShadow: 'none',
         },
         '.doc-explorer': {
-          height: '100vh',
+          height: '100%',
           display: 'flex',
           flexDirection: 'column',
           overflowY: 'hidden',

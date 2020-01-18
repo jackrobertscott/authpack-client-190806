@@ -11,7 +11,6 @@ export const createIFrame = (url: string) => {
   iframe.style.right = '0'
   iframe.style.left = '0'
   iframe.style.zIndex = '1000'
-  iframe.style.transition = '200ms'
   iframe.style.pointerEvents = 'none'
   return iframe
 }

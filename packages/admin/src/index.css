@@ -6,22 +6,23 @@ html {
     'sans-serif';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
 }
 body {
   margin: 0;
   padding: 0;
   background: hsl(0, 0%, 97.5%);
-  height: 100vh;
   overflow: hidden;
-}
-code {
-  font-family: 'source-code-pro', 'Menlo', 'Monaco', 'Consolas', 'Courier New',
-    monospace;
+  height: 100%;
 }
 #root {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  height: 100vh;
   overflow: auto;
+  height: 100%;
+}
+code {
+  font-family: 'source-code-pro', 'Menlo', 'Monaco', 'Consolas', 'Courier New',
+    monospace;
 }
