@@ -23,6 +23,7 @@ import {
   SideBar,
   Code,
   Markdown,
+  InputColor,
 } from '../src/index'
 
 console.clear()
@@ -150,6 +151,7 @@ const SimpleForm: FC = () => {
         .default('')
         .required('This is a required field')
         .min(5, 'Must be at least 5 characters long'),
+      color: yup.string().default(`hsl(0, 0%, 0%)`),
       age: yup.string().required('This is a required field'),
       dogs: yup.boolean().required('This is a required field'),
       food: yup.string().required('Tell me your fav food!'),
@@ -185,6 +187,16 @@ const SimpleForm: FC = () => {
           change: schema.change('age'),
           placeholder: 'E.g. 33',
           integer: true,
+        }),
+      }),
+      element(Control, {
+        key: 'color',
+        label: 'Background',
+        helper: 'Please choose a color',
+        error: schema.error('color'),
+        children: element(InputColor, {
+          value: schema.value('color'),
+          change: schema.change('color'),
         }),
       }),
       element(Control, {

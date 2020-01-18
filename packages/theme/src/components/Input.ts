@@ -85,7 +85,6 @@ export const InputPopover: FC<{
         zIndex: 100,
         marginBottom: 25,
         overflow: 'hidden',
-        transition: '200ms',
         borderRadius: theme.global.radius,
         background: theme.input.background,
         boxShadow: theme.input.shadow,
