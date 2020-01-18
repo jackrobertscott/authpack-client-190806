@@ -85,12 +85,14 @@ export const RouterManagerUser: FC<{
               focused:
                 !!router.current && router.current.key === '/memberships',
               click: () => router.change('/memberships'),
+              hidesmall: true,
             },
             {
               icon: 'history',
               label: 'Sessions',
               focused: !!router.current && router.current.key === '/sessions',
               click: () => router.change('/sessions'),
+              hidesmall: true,
             },
             {
               icon: 'share-alt',
@@ -98,6 +100,7 @@ export const RouterManagerUser: FC<{
               focused:
                 !!router.current && router.current.key === '/credentials',
               click: () => router.change('/credentials'),
+              hidesmall: true,
             },
             {
               icon: 'trash-alt',

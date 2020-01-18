@@ -6,8 +6,12 @@ export const Oauth: FC<{
   code: string
 }> = ({ code }) => {
   useEffect(() => {
-    const data = JSON.stringify({ code, created: Date.now() })
+    const data = JSON.stringify({
+      message: 'authpack.code',
+      payload: { code, created: Date.now() },
+    })
     localStorage.setItem('authpack.code', data)
+    window.postMessage(data, window.origin)
     setTimeout(() => localStorage.removeItem('authpack.code'), 60 * 1000)
   }, [code])
   return element(Root, {

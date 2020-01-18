@@ -10,6 +10,35 @@ export const useOauthCode = () => {
   const [current, currentChange] = useState<string | undefined>()
   useEffect(() => {
     if (tab) {
+      /**
+       * Handler of the data payload.
+       */
+      const handle = (message: string) => {
+        let data
+        try {
+          data = JSON.parse(message)
+        } catch {
+          data = {}
+        }
+        if (data.message !== 'authpack.code') return
+        const parsed = data.payload || {}
+        const minuteAgo = Date.now() - 1000 * 60
+        if (parsed.created < minuteAgo) {
+          toaster.add({
+            icon: 'flag',
+            label: 'Error',
+            helper: 'OAuth code expired, please try again',
+          })
+          return
+        }
+        if (tab) tab.close()
+        if (!mounted.current) return
+        tabChange(undefined)
+        if (parsed.code) codeChange(parsed.code)
+      }
+      /**
+       * Local storage event listener.
+       */
       let count = 0
       const interval = setInterval(() => {
         if (!mounted.current) {
@@ -27,29 +56,30 @@ export const useOauthCode = () => {
         }
         const data = localStorage.getItem('authpack.code')
         if (!data) return // continue polling
-        if (tab) tab.close()
         if (interval) clearTimeout(interval)
-        tabChange(undefined)
         localStorage.removeItem('authpack.code')
-        const parsed = JSON.parse(data)
-        const minuteAgo = Date.now() - 1000 * 60
-        if (parsed.created < minuteAgo) {
-          toaster.add({
-            icon: 'flag',
-            label: 'Error',
-            helper: 'OAuth code expired, please try again',
-          })
-          return
-        }
-        codeChange(parsed.code)
+        handle(data)
       }, 1000)
-      return () => interval && clearTimeout(interval)
+      /**
+       * Post message event listener.
+       */
+      const listener = (event: MessageEvent) => {
+        if (!event.origin.startsWith(window.origin)) return
+        if (!event.data) return
+        handle(event.data)
+      }
+      tab.addEventListener('message', listener)
+      return () => {
+        if (interval) clearInterval(interval)
+        if (typeof tab !== 'undefined' && tab.removeEventListener)
+          tab.removeEventListener('message', listener)
+      }
     }
     // eslint-disable-next-line
   }, [tab])
   const open = (id: string, url: string) => {
-    localStorage.removeItem('authpack.code')
     if (!mounted.current) return
+    localStorage.removeItem('authpack.code')
     currentChange(id)
     setTimeout(() => mounted.current && tabChange(window.open(url)))
   }
