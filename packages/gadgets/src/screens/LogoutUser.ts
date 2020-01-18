@@ -2,13 +2,15 @@ import { createElement as element, FC } from 'react'
 import { Layout, Button, Focus } from '@authpack/theme'
 import { SettingsStore } from '../utils/settings'
 import { createUseServer } from '../hooks/useServer'
+import { radio } from '../utils/radio'
 
 export const LogoutUser: FC = () => {
   const gqlLogoutUser = useLogoutUser()
   const logout = () =>
-    gqlLogoutUser
-      .fetch()
-      .finally(() => SettingsStore.update({ bearer: undefined, open: false }))
+    gqlLogoutUser.fetch().finally(() => {
+      SettingsStore.update({ bearer: undefined, open: false })
+      radio.message({ name: 'gadgets:unauth' })
+    })
   return element(Layout, {
     grow: true,
     children: [

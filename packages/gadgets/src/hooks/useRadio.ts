@@ -59,6 +59,7 @@ export const useRadio = () => {
           if (SettingsStore.current.bearer)
             logout.current().finally(() => {
               SettingsStore.update({ bearer: undefined })
+              radio.message({ name: 'gadgets:unauth' })
             })
           break
         default:

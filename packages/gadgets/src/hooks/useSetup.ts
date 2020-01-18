@@ -110,7 +110,9 @@ const useGetCluster = createUseServer<{
     stripe_user_product_id: string
     stripe_team_product_id: string
     name: string
-    theme_preference: string
+    login_redirect_uri?: string
+    logout_redirect_uri?: string
+    theme_preference?: string
     enable_team: boolean
     prompt_team: boolean
     prompt_verify: boolean
@@ -126,6 +128,8 @@ const useGetCluster = createUseServer<{
         stripe_user_product_id
         stripe_team_product_id
         name
+        login_redirect_uri
+        logout_redirect_uri
         theme_preference
         enable_team
         prompt_team

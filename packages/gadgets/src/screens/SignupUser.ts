@@ -15,6 +15,7 @@ import { useSettings } from '../hooks/useSettings'
 import { SettingsStore } from '../utils/settings'
 import { createUseServer } from '../hooks/useServer'
 import { presetColors } from '../utils/presets'
+import { radio } from '../utils/radio'
 
 export const SignupUser: FC = () => {
   const mounted = useMounted()
@@ -23,14 +24,16 @@ export const SignupUser: FC = () => {
   const gqlSignupUser = useSignupUser()
   const gqlListProviders = useListProviders()
   const gqlSignupUserOauth = useSignupUserOauth()
+  const authenticate = (token: string) => {
+    SettingsStore.update({ bearer: `Bearer ${token}` })
+    radio.message({ name: 'gadgets:auth' })
+  }
   const schema = useSchema({
     schema: SchemaSignupUser,
     submit: input => {
-      gqlSignupUser.fetch({ input }).then(({ session }) => {
-        SettingsStore.update({
-          bearer: `Bearer ${session.token}`,
-        })
-      })
+      gqlSignupUser
+        .fetch({ input })
+        .then(({ session }) => authenticate(session.token))
     },
   })
   useEffect(() => {
@@ -40,15 +43,8 @@ export const SignupUser: FC = () => {
   useEffect(() => {
     if (oauthCode.current && oauthCode.code) {
       gqlSignupUserOauth
-        .fetch({
-          provider_id: oauthCode.current,
-          code: oauthCode.code,
-        })
-        .then(({ session }) => {
-          SettingsStore.update({
-            bearer: `Bearer ${session.token}`,
-          })
-        })
+        .fetch({ provider_id: oauthCode.current, code: oauthCode.code })
+        .then(({ session }) => authenticate(session.token))
         .finally(() => {
           if (!mounted.current) return
           oauthCode.clear()

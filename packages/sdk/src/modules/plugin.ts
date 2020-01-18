@@ -111,6 +111,18 @@ export class Plugin {
         case 'gadgets:update':
           this.store.update({ ...payload })
           break
+        case 'gadgets:auth':
+          const loginUri =
+            this.store.current.cluster &&
+            this.store.current.cluster.login_redirect_uri
+          if (loginUri) window.location.assign(loginUri)
+          break
+        case 'gadgets:unauth':
+          const logoutUri =
+            this.store.current.cluster &&
+            this.store.current.cluster.logout_redirect_uri
+          if (logoutUri) window.location.assign(logoutUri)
+          break
         default:
           throw new Error(`Failed to process radio message: ${name}`)
       }
@@ -137,10 +149,17 @@ export interface IPlugin {
   cluster?: {
     id: string
     stripe_publishable_key: string
+    stripe_user_product_id: string
+    stripe_team_product_id: string
     name: string
-    theme_preference: string
+    login_redirect_uri?: string
+    logout_redirect_uri?: string
+    theme_preference?: string
     enable_team: boolean
     prompt_team: boolean
+    prompt_verify: boolean
+    hide_signup: boolean
+    hide_sidebar_payments: boolean
   }
   session?: {
     id: string

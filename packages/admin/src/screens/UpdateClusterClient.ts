@@ -105,16 +105,35 @@ export const UpdateClusterClient: FC<{
                 placeholder: '...',
               }),
             }),
-            element(Control, {
-              key: 'redirect_uri',
-              label: 'Login Redirect Url',
-              helper: 'Where does the user go when they sign in?',
-              error: schema.error('redirect_uri'),
-              children: element(InputString, {
-                value: schema.value('redirect_uri'),
-                change: schema.change('redirect_uri'),
-                placeholder: '...',
-              }),
+            element(Layout, {
+              key: 'redirects',
+              divide: true,
+              media: true,
+              children: [
+                element(Control, {
+                  key: 'login_redirect_uri',
+                  label: 'Login Redirect Url',
+                  helper:
+                    'Redirect user to this address when they login or signup',
+                  error: schema.error('login_redirect_uri'),
+                  children: element(InputString, {
+                    value: schema.value('login_redirect_uri'),
+                    change: schema.change('login_redirect_uri'),
+                    placeholder: '...',
+                  }),
+                }),
+                element(Control, {
+                  key: 'logout_redirect_uri',
+                  label: 'Logout Redirect Url',
+                  helper: 'Redirect user to this address when they logout',
+                  error: schema.error('logout_redirect_uri'),
+                  children: element(InputString, {
+                    value: schema.value('logout_redirect_uri'),
+                    change: schema.change('logout_redirect_uri'),
+                    placeholder: '...',
+                  }),
+                }),
+              ],
             }),
             element(Layout, {
               key: 'teams',
@@ -221,7 +240,8 @@ const SchemaUpdateCluster = yup.object().shape({
     .string()
     .default('snow_storm')
     .required('Please select a theme'),
-  redirect_uri: yup.string().trim(),
+  login_redirect_uri: yup.string().trim(),
+  logout_redirect_uri: yup.string().trim(),
   enable_team: yup.boolean().default(false),
   signup_create_team: yup.boolean().default(false),
   prompt_team: yup.boolean().default(false),
@@ -234,6 +254,8 @@ const useGetCluster = createUseServer<{
   cluster: {
     name: string
     domains: string[]
+    login_redirect_uri: string
+    logout_redirect_uri: string
     theme_preference: string
     enable_team: boolean
     signup_create_team: boolean
@@ -248,6 +270,8 @@ const useGetCluster = createUseServer<{
       cluster: GetClusterClient(id: $id) {
         name
         domains
+        login_redirect_uri
+        logout_redirect_uri
         theme_preference
         enable_team
         signup_create_team
