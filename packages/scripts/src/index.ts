@@ -9,12 +9,36 @@ import { Authpack, IPlugin } from '@authpack/sdk'
     state: IPlugin
   }
   /**
+   * Create a cover for page.
+   */
+  let cover: HTMLDivElement
+  const createCover = () => {
+    cover = document.createElement('div')
+    cover.style.background = '#fafafa'
+    cover.style.position = 'fixed'
+    cover.style.left = '0'
+    cover.style.right = '0'
+    cover.style.top = '0'
+    cover.style.bottom = '0'
+    cover.style.height = '100%'
+    cover.style.width = '100%'
+    cover.style.zIndex = '2147483647'
+    document.body.appendChild(cover)
+  }
+  const destroyCover = () => {
+    if (cover) {
+      cover.remove()
+      cover = undefined
+    }
+  }
+  /**
    * Hide contents of page until ready.
    */
   const preready = () => {
     if (document.body.dataset.ready === 'true') return
     document.body.style.display = 'none'
     document.body.style.opacity = '0'
+    createCover()
     setTimeout(() => {
       if (document.body.dataset.ready === 'true') return
       document.body.style.display = 'none'
@@ -31,6 +55,7 @@ import { Authpack, IPlugin } from '@authpack/sdk'
    */
   const postready = (context: IContext) => {
     if (context.state.ready && document.body.dataset.ready !== 'true') {
+      destroyCover()
       document.body.dataset.ready = 'true'
       document.body.style.display = 'initial'
       document.body.style.opacity = 'initial'
