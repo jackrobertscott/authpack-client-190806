@@ -40,6 +40,7 @@ export const Root: FC<{
           width: '100%',
           '*': {
             WebkitTextFillColor: 'initial !important',
+            touchAction: 'auto',
           },
         }),
         children: [

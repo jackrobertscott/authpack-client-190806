@@ -171,6 +171,7 @@ const Corner: FC<{
       all: 'unset',
       display: 'flex',
       flexDirection: 'column',
+      flexShrink: 0,
       alignItems: 'flex-end',
       padding: '25px 25px 20px',
       cursor: 'pointer',
