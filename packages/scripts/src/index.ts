@@ -23,29 +23,38 @@ import { Authpack, IPlugin } from '@authpack/sdk'
     cover.style.height = '100%'
     cover.style.width = '100%'
     cover.style.zIndex = '2147483647'
+    cover.style.opacity = '1'
+    cover.style.transition = '200ms'
     document.body.appendChild(cover)
   }
   const destroyCover = () => {
-    if (cover) {
-      cover.remove()
-      cover = undefined
-    }
+    if (!cover) return
+    cover.style.opacity = '0'
+    setTimeout(() => {
+      if (!cover) return
+      cover.style.display = 'none'
+      cover.style.height = '0'
+      cover.style.width = '0'
+    }, 200)
+    // cover.remove()
+    // cover = undefined
   }
   /**
    * Hide contents of page until ready.
    */
   const preready = () => {
+    if (!document.body) return
     if (document.body.dataset.ready === 'true') return
-    document.body.style.opacity = '0'
-    createCover()
-    setTimeout(() => {
-      if (document.body.dataset.ready === 'true') return
-      document.body.style.opacity = '0'
-      setTimeout(() => {
-        if (document.body.dataset.ready === 'true') return
-        document.body.style.opacity = '0'
-      })
-    })
+    if (!cover) createCover()
+    // document.body.style.opacity = '0'
+    // setTimeout(() => {
+    //   if (document.body.dataset.ready === 'true') return
+    //   document.body.style.opacity = '0'
+    //   setTimeout(() => {
+    //     if (document.body.dataset.ready === 'true') return
+    //     document.body.style.opacity = '0'
+    //   })
+    // })
   }
   /**
    * Show contents of page once is ready.
@@ -54,12 +63,14 @@ import { Authpack, IPlugin } from '@authpack/sdk'
     if (context.state.ready && document.body.dataset.ready !== 'true') {
       destroyCover()
       document.body.dataset.ready = 'true'
-      document.body.style.opacity = ''
+      // document.body.style.transition = '200ms'
+      // document.body.style.opacity = '1'
     }
   }
   /**
    * Run initial events once the page has loaded.
    */
+  preready()
   setTimeout(() => preready())
   window.addEventListener('load', () => {
     const authpack = load()
@@ -250,19 +261,17 @@ import { Authpack, IPlugin } from '@authpack/sdk'
       return
     }
     nodes.forEach(node => {
-      if (!node.dataset.value) {
-        const message = `Authpack ${name} tag missing "data-value" attribute i.e.:\n\n<div\n\tdata-authpack="${name}"\n\tdata-value="user"\n\tdata-trigger="present"\n></div>`
-        console.warn(message)
-        return
-      }
+      let value = context.state.user
       let valid = false
       node.dataset.display =
         node.dataset.display || node.style.display || 'initial'
-      const steps = node.dataset.value.split('.').map(i => i.trim())
-      const value = steps.reduce(
-        (accum, next) => accum && accum[next],
-        context.state
-      )
+      if (node.dataset.value) {
+        const steps = node.dataset.value.split('.').map(i => i.trim())
+        value = steps.reduce(
+          (accum, next) => accum && accum[next],
+          context.state
+        )
+      }
       switch (node.dataset.trigger || 'present') {
         case 'present':
           if (!!value) valid = true
