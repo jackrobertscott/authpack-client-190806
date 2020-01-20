@@ -123,6 +123,25 @@ export const ShowCluster: FC<{
               ],
             }),
             element(Layout, {
+              key: 'redirects',
+              grow: true,
+              media: true,
+              children: [
+                element(Snippet, {
+                  key: 'login_redirect_uri',
+                  icon: 'link',
+                  label: 'Login Redirect Uri',
+                  value: cluster.login_redirect_uri || '...',
+                }),
+                element(Snippet, {
+                  key: 'logout_redirect_uri',
+                  icon: 'link',
+                  label: 'Logout Redirect Uri',
+                  value: cluster.logout_redirect_uri || '...',
+                }),
+              ],
+            }),
+            element(Layout, {
               key: 'dates',
               grow: true,
               media: true,
@@ -158,7 +177,8 @@ const useGetCluster = createUseServer<{
     count_users: number
     count_teams: number
     name: string
-    redirect_uri: string
+    login_redirect_uri?: string
+    logout_redirect_uri?: string
     theme_preference: string
     enable_team: boolean
     signup_create_team: boolean
@@ -177,7 +197,8 @@ const useGetCluster = createUseServer<{
         count_users
         count_teams
         name
-        redirect_uri
+        login_redirect_uri
+        logout_redirect_uri
         theme_preference
         enable_team
         signup_create_team
