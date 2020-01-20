@@ -73,12 +73,6 @@ export const RouterManagerMembership: FC<{
           ]
         : [
             {
-              icon: 'plus',
-              label: 'Create',
-              focused: !!router.current && router.current.key === '/create',
-              click: () => router.change('/create'),
-            },
-            {
               icon: 'arrow-alt-circle-left',
               label: 'Close',
               click: close,

@@ -118,12 +118,6 @@ export const RouterManagerUser: FC<{
           ]
         : [
             {
-              icon: 'plus',
-              label: 'Create',
-              focused: !!router.current && router.current.key === '/create',
-              click: () => router.change('/create'),
-            },
-            {
               icon: 'times-circle',
               label: 'Close',
               click: close,

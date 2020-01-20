@@ -1,5 +1,11 @@
 import * as yup from 'yup'
-import { createElement as element, FC, useEffect, useRef } from 'react'
+import {
+  createElement as element,
+  FC,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import {
   useSchema,
   Button,
@@ -19,6 +25,7 @@ export const CreateTeam: FC<{
   const gqlCreateTeam = useCreateTeam()
   const gqlListUsers = useListUsers()
   const queryListUsers = useRef(drip(1000, gqlListUsers.fetch))
+  const [search, searchChange] = useState<string>('')
   const schema = useSchema({
     schema: SchemaCreateTeam,
     submit: value => {
@@ -31,6 +38,10 @@ export const CreateTeam: FC<{
     queryListUsers.current()
     // eslint-disable-next-line
   }, [])
+  useEffect(() => {
+    queryListUsers.current({ phrase: search })
+    // eslint-disable-next-line
+  }, [search])
   return element(Page, {
     title: 'New',
     subtitle: 'Team',
@@ -39,6 +50,33 @@ export const CreateTeam: FC<{
       padding: true,
       divide: true,
       children: [
+        element(Control, {
+          key: 'user_id',
+          label: 'Admin User',
+          helper:
+            gqlListUsers.data &&
+            !gqlListUsers.data.users.length &&
+            !search.length
+              ? 'Please create a user in the "Users" menu tab'
+              : 'This user will have full control of the team',
+          error: schema.error('user_id'),
+          children: element(InputSelect, {
+            value: schema.value('user_id'),
+            change: schema.change('user_id'),
+            placeholder: 'Select user...',
+            filter: phrase => searchChange(phrase),
+            options: !gqlListUsers.data
+              ? []
+              : gqlListUsers.data.users.map(user => ({
+                  value: user.id,
+                  label:
+                    user.name && user.username
+                      ? `${user.name} - ${user.username}`
+                      : user.name || user.username,
+                  helper: user.email,
+                })),
+          }),
+        }),
         element(Layout, {
           key: 'name',
           divide: true,
@@ -76,27 +114,6 @@ export const CreateTeam: FC<{
             value: schema.value('description'),
             change: schema.change('description'),
             placeholder: 'We do...',
-          }),
-        }),
-        element(Control, {
-          key: 'user_id',
-          label: 'User',
-          error: schema.error('user_id'),
-          children: element(InputSelect, {
-            value: schema.value('user_id'),
-            change: schema.change('user_id'),
-            placeholder: 'Select user...',
-            filter: phrase => queryListUsers.current({ phrase }),
-            options: !gqlListUsers.data
-              ? []
-              : gqlListUsers.data.users.map(user => ({
-                  value: user.id,
-                  label:
-                    user.name && user.username
-                      ? `${user.name} - ${user.username}`
-                      : user.name || user.username,
-                  helper: user.email,
-                })),
           }),
         }),
         element(Button, {
