@@ -9,6 +9,7 @@ import {
   InputSelect,
   InputStringArray,
   Page,
+  Snippet,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
@@ -27,78 +28,85 @@ export const CreateProvider: FC<{
   return element(Page, {
     title: 'New',
     subtitle: 'Provider',
-    children: element(Layout, {
-      column: true,
-      padding: true,
-      divide: true,
-      children: [
-        element(Control, {
-          key: 'preset',
-          label: 'Preset',
-          error: schema.error('preset'),
-          children: element(InputSelect, {
-            value: schema.value('preset'),
-            change: schema.change('preset'),
-            options: [
-              { value: 'facebook', label: 'Facebook' },
-              { value: 'google', label: 'Google' },
-              { value: 'github', label: 'GitHub' },
-              { value: 'slack', label: 'Slack' },
+    children: [
+      element(Snippet, {
+        label: 'Redirect Url',
+        value: 'https://oauth.v1.authpack.io',
+      }),
+      element(Layout, {
+        column: true,
+        padding: true,
+        divide: true,
+        children: [
+          element(Control, {
+            key: 'preset',
+            label: 'Preset',
+            error: schema.error('preset'),
+            children: element(InputSelect, {
+              value: schema.value('preset'),
+              change: schema.change('preset'),
+              options: [
+                { value: 'facebook', label: 'Facebook' },
+                { value: 'google', label: 'Google' },
+                { value: 'github', label: 'GitHub' },
+                { value: 'slack', label: 'Slack' },
+              ],
+            }),
+          }),
+          element(Layout, {
+            key: 'ids',
+            divide: true,
+            media: true,
+            children: [
+              element(Control, {
+                key: 'client',
+                label: 'Client Id',
+                helper: `The oauth client id provided by ${schema.value(
+                  'preset'
+                ) || 'the app'}`,
+                error: schema.error('client'),
+                children: element(InputString, {
+                  value: schema.value('client'),
+                  change: schema.change('client'),
+                  placeholder: '...',
+                }),
+              }),
+              element(Control, {
+                key: 'secret',
+                label: 'Secret',
+                helper: `The oauth secret provided by ${schema.value(
+                  'preset'
+                ) || 'the app'}`,
+                error: schema.error('secret'),
+                children: element(InputString, {
+                  value: schema.value('secret'),
+                  change: schema.change('secret'),
+                  placeholder: '...',
+                }),
+              }),
             ],
           }),
-        }),
-        element(Layout, {
-          key: 'ids',
-          divide: true,
-          media: true,
-          children: [
-            element(Control, {
-              key: 'client',
-              label: 'Client Id',
-              helper: `The oauth client id provided by ${schema.value(
-                'preset'
-              ) || 'the app'}`,
-              error: schema.error('client'),
-              children: element(InputString, {
-                value: schema.value('client'),
-                change: schema.change('client'),
-                placeholder: '...',
-              }),
+          element(Control, {
+            key: 'scopes',
+            label: 'Scopes',
+            helper: 'A set of oauth access scopes',
+            error: schema.error('scopes'),
+            children: element(InputStringArray, {
+              value: schema.value('scopes'),
+              change: schema.change('scopes'),
+              placeholder: '...',
             }),
-            element(Control, {
-              key: 'secret',
-              label: 'Secret',
-              helper: `The oauth secret provided by ${schema.value('preset') ||
-                'the app'}`,
-              error: schema.error('secret'),
-              children: element(InputString, {
-                value: schema.value('secret'),
-                change: schema.change('secret'),
-                placeholder: '...',
-              }),
-            }),
-          ],
-        }),
-        element(Control, {
-          key: 'scopes',
-          label: 'Scopes',
-          helper: 'A set of oauth access scopes',
-          error: schema.error('scopes'),
-          children: element(InputStringArray, {
-            value: schema.value('scopes'),
-            change: schema.change('scopes'),
-            placeholder: '...',
           }),
-        }),
-        element(Button, {
-          key: 'submit',
-          label: 'Create',
-          loading: gqlCreateProvider.loading,
-          disabled: !schema.valid,
-          click: schema.submit,
-        }),
-      ],
-    }),
+          element(Button, {
+            key: 'submit',
+            label: 'Create',
+            loading: gqlCreateProvider.loading,
+            disabled: !schema.valid,
+            click: schema.submit,
+          }),
+        ],
+      }),
+    ],
   })
 }
 

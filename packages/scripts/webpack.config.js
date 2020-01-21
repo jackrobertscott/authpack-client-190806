@@ -16,6 +16,7 @@ const config = {
   },
   entry: {
     index: path.resolve(__dirname, 'src/index.ts'),
+    sdk: path.resolve(__dirname, 'src/sdk.ts'),
   },
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -70,6 +71,12 @@ const config = {
       filename: 'home.html',
       template: 'src/home.html',
       title: 'Home',
+    }),
+    new HtmlWebpackPlugin({
+      inject: false,
+      filename: 'sdk.html',
+      template: 'src/sdk.html',
+      title: 'SDK',
     }),
   ],
 }

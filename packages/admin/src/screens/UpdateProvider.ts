@@ -10,6 +10,7 @@ import {
   Page,
   Button,
   useToaster,
+  Snippet,
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 
@@ -53,6 +54,10 @@ export const UpdateProvider: FC<{
           label: details.name,
           helper: 'Update provider details',
         }),
+      element(Snippet, {
+        label: 'Redirect Url',
+        value: 'https://oauth.v1.authpack.io',
+      }),
       element(Layout, {
         key: 'layout',
         column: true,
