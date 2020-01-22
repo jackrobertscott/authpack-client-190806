@@ -1,6 +1,6 @@
 import { createElement as element, FC, ReactNode, Fragment } from 'react'
 import { css } from 'emotion'
-import { ThemeContext } from '../contexts/Theme'
+import { ThemeContext, ITheme } from '../contexts/Theme'
 import { NightSky } from '../themes/NightSky'
 import { SnowStorm } from '../themes/SnowStorm'
 import { BlueHarvester } from '../themes/BlueHarvester'
@@ -8,8 +8,9 @@ import { Spinner } from './Spinner'
 
 export const Root: FC<{
   theme?: string
+  merge?: Partial<ITheme>
   children: ReactNode
-}> = ({ theme, children }) => {
+}> = ({ theme, merge, children }) => {
   let value
   switch (theme) {
     case 'night_sky':
@@ -24,6 +25,9 @@ export const Root: FC<{
     default:
       value = NightSky
       break
+  }
+  if (merge) {
+    Object.assign(value, merge)
   }
   return element(Spinner, {
     children: element(ThemeContext.Provider, {

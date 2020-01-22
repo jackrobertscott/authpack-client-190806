@@ -11,7 +11,7 @@
     "ship": "now --prod"
   },
   "dependencies": {
-    "@authpack/theme": "^0.6.19",
+    "@authpack/theme": "^0.6.20",
     "@fortawesome/fontawesome-free": "^5.11.2",
     "@sentry/browser": "^5.11.0",
     "@types/jest": "^24.0.23",

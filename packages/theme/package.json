@@ -1,6 +1,6 @@
 {
   "name": "@authpack/theme",
-  "version": "0.6.19",
+  "version": "0.6.20",
   "private": false,
   "description": "Theme for Authpack.",
   "license": "MIT",

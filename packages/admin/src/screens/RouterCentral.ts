@@ -5,6 +5,7 @@ import { RouterManagerClusterClient } from './RouterManagerClusterClient'
 import { Explorer } from './Explorer'
 import { usePreferences } from '../utils/preferences'
 import { authpack } from '../utils/authpack'
+import { config } from '../config'
 
 export const RouterCentral: FC = () => {
   const preferences = usePreferences()
@@ -53,6 +54,13 @@ export const RouterCentral: FC = () => {
         helper: 'Explore the GraphQL API',
         focused: !!router.current && router.current.path === '/explorer',
         click: () => router.change('/explorer'),
+        hidesmall: true,
+      },
+      {
+        icon: 'book',
+        label: 'Documents',
+        helper: 'Learn from our help guides',
+        click: () => window.open(config.documents),
         hidesmall: true,
       },
       {

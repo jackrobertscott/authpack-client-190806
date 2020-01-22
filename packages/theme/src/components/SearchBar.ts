@@ -37,6 +37,7 @@ export const SearchBar: FC<{
         display: 'flex',
         justifyContent: 'flex-end',
         width: '100%',
+        flexShrink: 0,
         position: 'relative',
         minWidth: '660px',
         background: theme.searchBar.background,

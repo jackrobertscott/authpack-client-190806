@@ -55,8 +55,14 @@ export const UpdateProvider: FC<{
           helper: 'Update provider details',
         }),
       element(Snippet, {
-        label: 'Redirect Url',
-        value: 'https://oauth.v1.authpack.io',
+        icon: 'book',
+        label: 'Tutorials',
+        value: 'Learn how to setup a social provider',
+        click: () => {
+          const url =
+            'https://www.notion.so/0fd04d0855c6467182e44de838e3ed37?v=e9c6ebeee2e844bab3f9adabc701d3bb'
+          window.open(url)
+        },
       }),
       element(Layout, {
         key: 'layout',
