@@ -62,14 +62,14 @@ export const CreateSubscription: FC<{
                 SettingsStore.update({
                   open: false,
                   user: {
-                    ...(SettingsStore.current.user as any),
+                    ...SettingsStore.current.user!,
                     updated: user.updated,
                   },
                   team:
                     team && SettingsStore.current.team
                       ? {
-                          ...(SettingsStore.current.team as any),
-                          updated: team?.updated,
+                          ...SettingsStore.current.team!,
+                          updated: team.updated,
                         }
                       : undefined,
                 })

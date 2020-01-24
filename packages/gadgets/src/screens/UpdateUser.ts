@@ -12,6 +12,7 @@ import {
 } from '@authpack/theme'
 import { useSettings } from '../hooks/useSettings'
 import { createUseServer } from '../hooks/useServer'
+import { SettingsStore } from '../utils/settings'
 
 export const UpdateUser: FC<{
   change?: (id?: string) => void
@@ -25,6 +26,12 @@ export const UpdateUser: FC<{
     submit: input => {
       gqlUpdateUser.fetch({ input }).then(({ user }) => {
         if (change) change(user.id)
+        SettingsStore.update({
+          user: {
+            ...SettingsStore.current.user!,
+            updated: user.updated,
+          },
+        })
         toaster.add({ icon: 'check-circle', label: 'Success' })
       })
     },
@@ -125,12 +132,14 @@ const useGetUser = createUseServer<{
 const useUpdateUser = createUseServer<{
   user: {
     id: string
+    updated: string
   }
 }>({
   query: `
     mutation UpdateUserClient($input: UpdateUserInput!) {
       user: UpdateUserClient(input: $input) {
         id
+        updated
       }
     }
   `,

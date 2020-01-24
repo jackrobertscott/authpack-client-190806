@@ -35,6 +35,7 @@ export const UpdateUserEmail: FC<{
             ...settings.user!,
             email: user.email,
             verified: user.verified,
+            updated: user.updated,
           },
         })
       })
@@ -85,6 +86,7 @@ const useUpdateEmail = createUseServer<{
     id: string
     email: string
     verified: boolean
+    updated: string
   }
 }>({
   query: `
@@ -93,6 +95,7 @@ const useUpdateEmail = createUseServer<{
         id
         email
         verified
+        updated
       }
     }
   `,

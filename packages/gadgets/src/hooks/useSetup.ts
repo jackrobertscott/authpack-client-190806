@@ -10,7 +10,7 @@ export const useSetup = () => {
   const gqlGetCluster = useGetCluster()
   const gqlGetSession = useGetSession()
   const bearerOld = useRef<string | undefined>()
-  const updating = useRef<boolean>(false)
+  const updatedDates = useRef<{ user?: string; team?: string }>({})
   const clusterId = settings.cluster && settings.cluster.id
   const bearerkey = 'authpack.bearer'
   const bearermapGet = () => {
@@ -34,8 +34,7 @@ export const useSetup = () => {
       })
   }
   const updateSession = () => {
-    if (settings.bearer && settings.client && !updating.current) {
-      updating.current = true
+    if (settings.bearer && settings.client) {
       gqlGetSession
         .fetch()
         .then(({ session: { user, team, membership, ...session } }) => {
@@ -56,9 +55,6 @@ export const useSetup = () => {
           bearerOld.current = bearer
         })
         .catch(() => endSession())
-        .finally(() => {
-          updating.current = false
-        })
     } else endSession()
   }
   /**
@@ -112,7 +108,21 @@ export const useSetup = () => {
   const userUpdatedDate = settings.user && settings.user.updated
   const teamUpdatedDate = settings.team && settings.team.updated
   useEffect(() => {
-    updateSession()
+    const userShouldUpdate =
+      settings.user &&
+      updatedDates.current.user &&
+      updatedDates.current.user !== settings.user.updated
+    const teamShouldUpdate =
+      settings.team &&
+      updatedDates.current.team &&
+      updatedDates.current.team !== settings.team.updated
+    if (userShouldUpdate || teamShouldUpdate) {
+      updateSession()
+    }
+    updatedDates.current = {
+      user: settings.user ? settings.user.updated : undefined,
+      team: settings.team ? settings.team.updated : undefined,
+    }
     // eslint-disable-next-line
   }, [userUpdatedDate, teamUpdatedDate])
 }

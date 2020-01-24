@@ -13,6 +13,7 @@ import {
 } from '@authpack/theme'
 import { createUseServer } from '../hooks/useServer'
 import { useSettings } from '../hooks/useSettings'
+import { SettingsStore } from '../utils/settings'
 
 export const UpdateTeamSubscription: FC<{
   change?: (id?: string) => void
@@ -32,6 +33,12 @@ export const UpdateTeamSubscription: FC<{
         })
         .then(({ team }) => {
           if (change) change(team.id)
+          SettingsStore.update({
+            team: {
+              ...SettingsStore.current.team!,
+              updated: team.updated,
+            },
+          })
           gqlGetTeam.fetch()
           toaster.add({
             icon: 'credit-card',
@@ -128,12 +135,14 @@ const SchemaUpdatePayment = yup.object().shape({
 const useUpsertSubscription = createUseServer<{
   team: {
     id: string
+    updated: string
   }
 }>({
   query: `
     mutation UpsertTeamStripeSubscriptionClient($stripe_plan_id: String!, $coupon: String) {
       team: UpsertTeamStripeSubscriptionClient(stripe_plan_id: $stripe_plan_id, coupon: $coupon) {
         id
+        updated: string
       }
     }
   `,
