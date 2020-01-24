@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { SettingsStore } from '../utils/settings'
+import { Bearermap } from '../utils/bearermap'
 import { createUseServer } from './useServer'
 import { useSettings } from './useSettings'
 import { useRadio } from './useRadio'
@@ -12,17 +13,6 @@ export const useSetup = () => {
   const bearerOld = useRef<string | undefined>()
   const updatedDates = useRef<{ user?: string; team?: string }>({})
   const clusterId = settings.cluster && settings.cluster.id
-  const bearerkey = 'authpack.bearer'
-  const bearermapGet = () => {
-    let data
-    const bearermap = localStorage.getItem(bearerkey) || JSON.stringify({})
-    try {
-      data = JSON.parse(bearermap)
-    } catch {
-      data = {}
-    }
-    return data
-  }
   const endSession = () => {
     bearerOld.current = undefined
     const requredUpdate =
@@ -65,10 +55,10 @@ export const useSetup = () => {
       gqlGetCluster
         .fetch({ domain: settings.domain })
         .then(({ cluster }) => {
-          const data = bearermapGet()
+          console.log(Bearermap.current)
           SettingsStore.update({
             cluster,
-            bearer: data[cluster.id],
+            bearer: Bearermap.current[cluster.id],
           })
         })
         .catch(() => endSession())
@@ -96,9 +86,9 @@ export const useSetup = () => {
    */
   useEffect(() => {
     if (clusterId) {
-      const data = bearermapGet()
-      data[clusterId] = settings.bearer ? settings.bearer : undefined
-      localStorage.setItem(bearerkey, JSON.stringify(data))
+      Bearermap.update({
+        [clusterId]: settings.bearer ? settings.bearer : undefined,
+      })
     }
     // eslint-disable-next-line
   }, [clusterId, settings.bearer])

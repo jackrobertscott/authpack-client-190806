@@ -21,7 +21,7 @@
     "@types/yup": "^0.26.24",
     "date-fns": "^2.8.0",
     "emotion": "^10.0.17",
-    "events-and-things": "^0.7.4",
+    "events-and-things": "^0.7.8",
     "query-string": "^6.9.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
