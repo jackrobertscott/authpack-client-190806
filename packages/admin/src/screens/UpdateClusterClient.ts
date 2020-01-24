@@ -192,6 +192,33 @@ export const UpdateClusterClient: FC<{
                 ],
               }),
             element(Layout, {
+              key: 'namer',
+              divide: true,
+              media: true,
+              children: [
+                element(Control, {
+                  key: 'prompt_name_given',
+                  label: 'First Name',
+                  helper: 'Ask user for their first name on signup',
+                  error: schema.error('prompt_name_given'),
+                  children: element(InputBoolean, {
+                    value: schema.value('prompt_name_given'),
+                    change: schema.change('prompt_name_given'),
+                  }),
+                }),
+                element(Control, {
+                  key: 'prompt_name_family',
+                  label: 'Last Name',
+                  helper: 'Ask user for their last name on signup',
+                  error: schema.error('prompt_name_family'),
+                  children: element(InputBoolean, {
+                    value: schema.value('prompt_name_family'),
+                    change: schema.change('prompt_name_family'),
+                  }),
+                }),
+              ],
+            }),
+            element(Layout, {
               key: 'verify',
               divide: true,
               media: true,
@@ -248,6 +275,8 @@ const SchemaUpdateCluster = yup.object().shape({
   prompt_verify: yup.boolean().default(false),
   hide_signup: yup.boolean().default(false),
   hide_sidebar_payments: yup.boolean().default(false),
+  prompt_name_given: yup.boolean().default(false),
+  prompt_name_family: yup.boolean().default(false),
 })
 
 const useGetCluster = createUseServer<{
@@ -263,6 +292,8 @@ const useGetCluster = createUseServer<{
     prompt_verify: boolean
     hide_signup: boolean
     hide_sidebar_payments: boolean
+    prompt_name_given: boolean
+    prompt_name_family: boolean
   }
 }>({
   query: `
@@ -279,6 +310,8 @@ const useGetCluster = createUseServer<{
         prompt_verify
         hide_signup
         hide_sidebar_payments
+        prompt_name_given
+        prompt_name_family
       }
     }
   `,

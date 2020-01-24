@@ -29,6 +29,8 @@ export type ISettings = {
     prompt_verify: boolean
     hide_signup: boolean
     hide_sidebar_payments: boolean
+    prompt_name_given: boolean
+    prompt_name_family: boolean
   }
   session?: {
     id: string

@@ -142,6 +142,8 @@ const useGetCluster = createUseServer<{
     prompt_verify: boolean
     hide_signup: boolean
     hide_sidebar_payments: boolean
+    prompt_name_given: boolean
+    prompt_name_family: boolean
   }
 }>({
   query: `
@@ -160,6 +162,8 @@ const useGetCluster = createUseServer<{
         prompt_verify
         hide_signup
         hide_sidebar_payments
+        prompt_name_given
+        prompt_name_family
       }
     }
   `,

@@ -93,33 +93,38 @@ export const SignupUser: FC = () => {
             padding: true,
             divide: true,
             children: [
-              element(Layout, {
-                key: 'name',
-                divide: true,
-                media: true,
-                children: [
-                  element(Control, {
-                    key: 'name_given',
-                    label: 'First Name',
-                    error: schema.error('name_given'),
-                    children: element(InputString, {
-                      value: schema.value('name_given'),
-                      change: schema.change('name_given'),
-                      placeholder: 'Fred',
-                    }),
-                  }),
-                  element(Control, {
-                    key: 'name_family',
-                    label: 'Last Name',
-                    error: schema.error('name_family'),
-                    children: element(InputString, {
-                      value: schema.value('name_family'),
-                      change: schema.change('name_family'),
-                      placeholder: 'Blogs',
-                    }),
-                  }),
-                ],
-              }),
+              settings.cluster &&
+                (settings.cluster.prompt_name_given ||
+                  settings.cluster.prompt_name_family) &&
+                element(Layout, {
+                  key: 'name',
+                  divide: true,
+                  media: true,
+                  children: [
+                    settings.cluster.prompt_name_given &&
+                      element(Control, {
+                        key: 'name_given',
+                        label: 'First Name',
+                        error: schema.error('name_given'),
+                        children: element(InputString, {
+                          value: schema.value('name_given'),
+                          change: schema.change('name_given'),
+                          placeholder: 'Fred',
+                        }),
+                      }),
+                    settings.cluster.prompt_name_family &&
+                      element(Control, {
+                        key: 'name_family',
+                        label: 'Last Name',
+                        error: schema.error('name_family'),
+                        children: element(InputString, {
+                          value: schema.value('name_family'),
+                          change: schema.change('name_family'),
+                          placeholder: 'Blogs',
+                        }),
+                      }),
+                  ],
+                }),
               element(Control, {
                 key: 'email',
                 label: 'Email',
