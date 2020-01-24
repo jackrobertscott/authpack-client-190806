@@ -55,7 +55,6 @@ export const useSetup = () => {
       gqlGetCluster
         .fetch({ domain: settings.domain })
         .then(({ cluster }) => {
-          console.log(Bearermap.current)
           SettingsStore.update({
             cluster,
             bearer: Bearermap.current[cluster.id],
