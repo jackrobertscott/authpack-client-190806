@@ -146,11 +146,11 @@ export const CreateSubscription: FC<{
                 padding: true,
                 styled: true,
                 children: element(Markdown, {
-                  value: `**$${(planCurrent.amount / 100).toFixed(2)}** ${
-                    planCurrent.currency
-                  } billed every ${planCurrent.interval_count} ${
-                    planCurrent.interval
-                  }s. This will be set as your ${
+                  value: `You will be billed **$${(
+                    planCurrent.amount / 100
+                  ).toFixed(2)}** ${planCurrent.currency} every ${
+                    planCurrent.interval_count
+                  } ${planCurrent.interval}s. This will be set as your ${
                     planCurrent.team_plan ? '**team**' : '**user**'
                   } plan.`.trim(),
                 }),
