@@ -24,6 +24,7 @@ import { createUseServer } from '../hooks/useServer'
 import { useSettings } from '../hooks/useSettings'
 import { createStripe } from '../utils/stripe'
 import { COUNTRIES } from '../utils/countries'
+import { SettingsStore } from '../utils/settings'
 
 export const CreateSubscription: FC<{
   stripe_plan_id: string
@@ -36,7 +37,7 @@ export const CreateSubscription: FC<{
   const [stripe, stripeChange] = useState()
   const [loading, loadingChange] = useState<boolean>(false)
   const [filter, filterChange] = useState<string>('')
-  const gqlGetUser = useGetUser()
+  const gqlGetUserAndTeam = useGetUserAndTeam()
   const gqlGetStripePlan = useGetStripePlan()
   const gqlUpsertSubscription = useUpsertSubscription()
   const payment = useStripe(stripe)
@@ -57,7 +58,22 @@ export const CreateSubscription: FC<{
             })
             .then(({ stripe_plan_id }) => {
               if (change) change(stripe_plan_id)
-              gqlGetUser.fetch()
+              gqlGetUserAndTeam.fetch().then(({ user, team }) => {
+                SettingsStore.update({
+                  open: false,
+                  user: {
+                    ...(SettingsStore.current.user as any),
+                    updated: user.updated,
+                  },
+                  team:
+                    team && SettingsStore.current.team
+                      ? {
+                          ...(SettingsStore.current.team as any),
+                          updated: team?.updated,
+                        }
+                      : undefined,
+                })
+              })
               toaster.add({
                 icon: 'check-circle',
                 label: 'Success',
@@ -79,7 +95,7 @@ export const CreateSubscription: FC<{
     },
   })
   useEffect(() => {
-    gqlGetUser.fetch()
+    gqlGetUserAndTeam.fetch()
     if (settings.cluster && settings.cluster.stripe_publishable_key)
       stripeChange(createStripe(settings.cluster.stripe_publishable_key))
     // eslint-disable-next-line
@@ -92,8 +108,8 @@ export const CreateSubscription: FC<{
     // eslint-disable-next-line
   }, [settings.options.prompt_plan])
   useEffect(() => {
-    if (gqlGetUser.data) {
-      const user = gqlGetUser.data.user
+    if (gqlGetUserAndTeam.data) {
+      const user = gqlGetUserAndTeam.data.user
       if (user.stripe_customer) {
         schema.set({
           ...schema.state,
@@ -111,7 +127,7 @@ export const CreateSubscription: FC<{
       }
     }
     // eslint-disable-next-line
-  }, [gqlGetUser.data])
+  }, [gqlGetUserAndTeam.data])
   const planCurrent = gqlGetStripePlan.data && gqlGetStripePlan.data.stripe_plan
   return element(Page, {
     title: planCurrent ? planCurrent.name || 'Payment' : '',
@@ -119,7 +135,7 @@ export const CreateSubscription: FC<{
       planCurrent &&
       (planCurrent.description || (settings.cluster && settings.cluster.name)),
     children:
-      !planCurrent || !gqlGetUser.data
+      !planCurrent || !gqlGetUserAndTeam.data
         ? null
         : element(Layout, {
             column: true,
@@ -250,10 +266,11 @@ const useUpsertSubscription = createUseServer<{
   `,
 })
 
-const useGetUser = createUseServer<{
+const useGetUserAndTeam = createUseServer<{
   user: {
     name: string
     email: string
+    updated: string
     stripe_customer?: {
       name?: string
       email?: string
@@ -261,18 +278,25 @@ const useGetUser = createUseServer<{
       zip_code?: string
     }
   }
+  team?: {
+    updated: string
+  }
 }>({
   query: `
     query GetUserClient {
       user: GetUserClient {
         name
         email
+        updated
         stripe_customer {
           name
           email
           country
           zip_code
         }
+      }
+      team: GetTeamClient {
+        updated
       }
     }
   `,

@@ -32,58 +32,55 @@ export type ISettings = {
   }
   session?: {
     id: string
+    created: string
+    updated: string
     token: string
   }
   membership?: {
     id: string
+    created: string
+    updated: string
     admin: boolean
     superadmin: boolean
   }
   user?: {
     id: string
+    created: string
+    updated: string
     email: string
     verified: boolean
     username: string
     name?: string
     name_given?: string
     name_family?: string
-    plan?: {
+    teams_count: number
+    sessions_count: number
+    stripe_plan?: {
       id: string
-      name: string
-      tag: string
+      name?: string
       description?: string
-      statement?: string
       amount: number
       currency: string
       interval: string
       interval_count: number
-    }
-    subscription?: {
-      id: string
-      cancellation_requested: boolean
-      cancelled: boolean
     }
   }
   team?: {
     id: string
+    created: string
+    updated: string
     name: string
     tag: string
     description?: string
-    plan?: {
+    users_count: number
+    stripe_plan?: {
       id: string
-      name: string
-      tag: string
+      name?: string
       description?: string
-      statement?: string
       amount: number
       currency: string
       interval: string
       interval_count: number
-    }
-    subscription?: {
-      id: string
-      cancellation_requested: boolean
-      cancelled: boolean
     }
   }
 }
